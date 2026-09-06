@@ -1,0 +1,143 @@
+format: 1
+id: tool.packages.rust-dependencies
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Projected Rust dependencies
+  title-style: text
+  summary: >-
+    Declares exact Rust crate dependencies, imports their admitted API through
+    /deps namespaces, and explains projection identity, collection crossings,
+    transitive owners, caching, and explicit declines.
+  tags:
+    - packages
+    - dependencies
+    - rust
+    - projection
+    - imports
+  sections:
+    - id: manifest
+      title: Declaring a Rust crate
+      blocks:
+        - type: markdown
+          markdown: |-
+            A projected Rust crate is declared in `package.toml`. The dependency
+            key is its Terrane alias; `package` names the crates.io package when
+            the alias differs. Versions and feature sets are part of projection
+            identity, so applications should state the exact contract they have
+            reviewed.
+
+        - type: example
+          id: projected-rust-manifest
+          title: Declare an exact dependency surface
+          language: toml
+          mode: illustrative
+          target: package.toml
+          timeout-ms: null
+          source: |-
+            [rust-dependencies.codec]
+            package = "base64"
+            version = "=0.22.1"
+            default-features = false
+            features = ["alloc"]
+            effects = ["build"]
+          response: null
+          diagnostic: null
+          markdown: null
+
+    - id: imports
+      title: Importing admitted members
+      blocks:
+        - type: rule
+          id: rule.dependencies.explicit-import
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-deferred-surface
+          markdown: |-
+            Declaring a crate does not flood a source namespace. Import an
+            admitted member explicitly from `/deps/<alias>/...`. Projection
+            follows canonical Rust item identity, so re-exports of one item are
+            one type while unrelated same-named items remain distinct.
+
+    - id: crossed-types
+      title: Values crossing the generated shim
+      blocks:
+        - type: markdown
+          markdown: |-
+            `Option<T>` crosses as `T|none`. Rust sequences, ordered and
+            unordered maps, sets, and homogeneous tuples cross recursively as
+            the matching Terrane collections when every component is
+            representable. Map keys and set items must be Terrane scalars;
+            optionals, collections, tuples, and foreign objects are rejected in
+            those positions. Shims reuse the vector backing for identity
+            element conversions and move uniquely owned tuple elements rather
+            than cloning them. Shared tuple storage fails at the dependency
+            boundary instead of panicking. `Vec<u8>` remains `bytes`.
+
+            Heterogeneous tuples and aggregates containing an unsupported
+            component are declined rather than partially reinterpreted.
+
+    - id: transitive-owners
+      title: Types owned by another crate
+      blocks:
+        - type: rule
+          id: rule.dependencies.transitive-owner-declaration
+          level: must
+          since: null
+          evidence:
+            - transitive-type-owner-must-be-declared-at-one-version
+          markdown: |-
+            A member whose signature exposes a type owned by an undeclared
+            transitive crate is unavailable. The diagnostic names the owner and
+            its lock-resolved version. Declare that crate directly with a
+            unifying version to make its canonical identity and members
+            reachable. Merely receiving the type through another dependency
+            does not declare its owner. If the crossed owner resolves to
+            multiple versions, projection validation fails after Cargo lock
+            resolution and before semantic import resolution or Rust lowering,
+            and reports every conflicting version.
+
+    - id: resolution
+      title: Projection resolution and cache behavior
+      blocks:
+        - type: markdown
+          markdown: |-
+            Terrane first checks its exact project-local projection cache. A
+            configured trusted HTTPS artifact may satisfy a miss only when its
+            dependency, feature, target, build-toolchain, rustdoc-toolchain,
+            rustdoc-format, projection-schema, and SHA-256 content identity all
+            match. Otherwise Terrane generates rustdoc locally with its pinned
+            nightly toolchain. Every cache, published, bundled, and local
+            attempt records its outcome and fallback reason. A verified
+            published projection enters the local cache for offline reuse.
+            Bundled artifacts are explicitly deferred until Terrane has a
+            release artifact channel rather than being silently attempted.
+
+            Unsupported members remain explicit declines in the transferable
+            projection artifact. The compiler does not replace one Rust API
+            shape with a nearby Terrane operation or silently admit unknown
+            metadata.
+  see-also:
+    - lang.functions.declarations
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "29"
+  conformance:
+    - rust-dependency-deferred-surface
+    - transitive-type-owner-must-be-declared-at-one-version
+    - rust-dependency-reqwest
+  compiler: null

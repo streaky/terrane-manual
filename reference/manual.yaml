@@ -7,3 +7,6 @@ navigation:
       - page: lang.lexical-structure.keywords
       - page: lang.functions.declarations
       - page: lang.types.optional-refinement
+  - group: Packages
+    children:
+      - page: tool.packages.rust-dependencies
