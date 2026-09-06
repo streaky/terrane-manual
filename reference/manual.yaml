@@ -5,3 +5,5 @@ navigation:
   - group: Language
     children:
       - page: lang.lexical-structure.keywords
+      - page: lang.functions.declarations
+      - page: lang.types.optional-refinement

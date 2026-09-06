@@ -104,6 +104,47 @@ documentation:
             Rename the binding according to its role, such as `item` or
             `created-item`.
 
+    - id: implementation-language-keywords
+      title: Words reserved by an implementation language
+      blocks:
+        - type: markdown
+          markdown: |-
+            Terrane's identifier rules do not inherit keywords from the
+            compiler's implementation language. In particular, these ordinary
+            Terrane identifiers are legal even though Rust reserves them:
+
+            `abstract`, `become`, `box`, `do`, `final`, `gen`, `macro`,
+            `override`, `priv`, `typeof`, `unsized`, and `virtual`.
+
+            The compiler maps such names to safe generated-Rust identifiers.
+            Generated Rust therefore remains an implementation receipt rather
+            than an extra naming restriction on Terrane source.
+
+        - type: example
+          id: rust-reserved-terrane-bindings
+          title: Use implementation-language keywords as Terrane names
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/implementation-keywords
+
+            function main;
+              box = 3
+              final = 5
+              print; box + final
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              8
+          diagnostic: null
+          markdown: >-
+            These names are legal because neither spelling has a structural
+            role in Terrane.
+
     - id: structural-words
       title: Structural words
       blocks:
@@ -335,4 +376,5 @@ provenance:
     - contextual-this-binding
     - linear-class-qualifier
     - linear-ordinary-identifier
+    - rust-reserved-identifiers
   compiler: null

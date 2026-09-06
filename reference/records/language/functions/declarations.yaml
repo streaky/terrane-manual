@@ -1,0 +1,126 @@
+format: 1
+id: lang.functions.declarations
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Function declarations and references
+  title-style: text
+  summary: >-
+    Defines top-level functions, distinguishes declaring a function from
+    invoking it, and records W4005 for an authored function with no reference.
+  tags:
+    - functions
+    - declarations
+    - calls
+    - diagnostics
+    - warnings
+  sections:
+    - id: declaration
+      title: Declaring a function
+      blocks:
+        - type: markdown
+          markdown: |-
+            A top-level function declaration creates a callable object in its
+            namespace. The semicolon in the header introduces its parameters;
+            it is present even when the parameter list is empty. A declared
+            result type is a contract for every reachable return path.
+
+        - type: example
+          id: declared-and-called-function
+          title: Declare and call a function
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/function-declaration
+
+            function double int; value int
+              return value * 2
+
+            function main;
+              print; (double; 4)
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              8
+          diagnostic: null
+          markdown: null
+
+    - id: references
+      title: Referring to a function
+      blocks:
+        - type: rule
+          id: rule.functions.declaration-is-not-invocation
+          level: must
+          since: null
+          evidence:
+            - unused-top-level-function
+          markdown: |-
+            Declaring a function does not execute it. A call uses `;` after the
+            callable expression. Writing the function name without that call
+            marker refers to the callable value instead.
+
+    - id: unreferenced
+      title: Unreferenced top-level functions
+      blocks:
+        - type: rule
+          id: rule.functions.unreferenced-warning
+          level: should
+          since: null
+          evidence:
+            - unused-top-level-function
+          markdown: |-
+            An authored top-level function other than `main` that has no
+            resolved reference anywhere in the program reports warning
+            `W4005`. The declaration name itself is not a reference. Calling,
+            passing, or otherwise selecting the function by its resolved
+            identity counts as a reference; recursive self-reference may
+            conservatively count as use.
+
+            `W4005` is non-blocking. Generated Rust suppresses only the matching
+            dead-code warning so an unused Terrane function remains a
+            source-oriented warning rather than a backend compilation failure.
+
+        - type: example
+          id: unused-top-level-function
+          title: Keep an unreferenced function as warning-only
+          language: terrane
+          mode: check
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/unused-function
+
+            function prepared string;
+              return 'ready later'
+
+            function main;
+              print; 'ready now'
+          diagnostic: null
+          markdown: >-
+            This source checks successfully and reports `W4005` on `prepared`.
+            Remove the declaration if it is obsolete, or retain it while its
+            first caller is being connected.
+  see-also: []
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "29"
+  conformance:
+    - unused-top-level-function
+  compiler: null
