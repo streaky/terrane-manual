@@ -1,0 +1,152 @@
+format: 1
+id: lang.functions.asynchronous
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Asynchronous functions and cancellation
+  title-style: text
+  summary: >-
+    Defines async invocation, linear task consumption, suspension, and the
+    cleanup contract when cancellation reaches a suspended operation.
+  tags:
+    - functions
+    - async
+    - tasks
+    - cancellation
+    - finally
+  sections:
+    - id: invocation
+      title: Invoking and awaiting asynchronous functions
+      blocks:
+        - type: rule
+          id: rule.async.invocation-task
+          level: must
+          since: null
+          evidence:
+            - async-await
+            - rust-dependency-async-function
+          markdown: |-
+            Calling an `async function` constructs a linear Terrane task.
+            `await` consumes that task exactly once and is valid only in an
+            async callable. An asynchronous entrypoint enters one runtime
+            selected by the manifest profile. A projected Rust future is
+            constructed when its Terrane task is first polled inside that
+            context, where pending timers and sockets sleep until their waker
+            fires rather than being repeatedly polled.
+
+            Projected async completion and hover information report wake,
+            runtime-context, and transfer requirements in Terrane terms. An
+            unknown requirement remains conservative rather than selecting a
+            hidden blocking fallback.
+
+    - id: transferability
+      title: Local and transferable tasks
+      blocks:
+        - type: rule
+          id: rule.async.task-transferability
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-function
+            - projected-async-local-task-threaded
+          markdown: |-
+            Every async callable and task retains compiler-inferred local or
+            transferable execution metadata. Parameters, captures, values live
+            across suspension, and called async boundaries contribute to that
+            decision. A projected Rust future is local unless its admitted
+            contract proves transferability.
+
+            A cooperative scope may spawn local work. A threaded scope requires
+            a transferable callable and reports a source diagnostic rather than
+            relying on a generated-Rust `Send` error. Direct calls and immediate
+            `await` keep concrete future types; boxing and pinning occur only at
+            erased callable or heterogeneous task-storage boundaries.
+
+    - id: structured-concurrency
+      title: Scoped child tasks
+      blocks:
+        - type: rule
+          id: rule.async.scope-join-await
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-function
+            - rejoined-task-scope-child
+            - unawaited-task-scope-join
+          markdown: |-
+            `scope.spawn; callable` creates a linear scoped child. It also
+            accepts an unpolled, statically non-copyable task that transfers
+            into the scope automatically, which lets resource-owning arguments
+            enter the child without a suspension borrow. Joining consumes the
+            child by the same automatic by-value transfer and returns an
+            asynchronous task of its outcome, so the observing form is:
+
+            ```terrane
+            outcome = await scope.join; child
+            ```
+
+            The child transfers into `join` without source-level `move`, and
+            the join task must be awaited. On the selected runtime, sibling
+            children can make progress while a join is pending. A failed child
+            retains its error in its outcome and requests cancellation of
+            surviving siblings; each child remains joined exactly once.
+    - id: cancellation
+      title: Cancellation at suspension
+      blocks:
+        - type: rule
+          id: rule.async.cancellation-cleanup
+          level: must
+          since: null
+          evidence:
+            - async-finally-after-await
+            - borrow-parameter-in-async-finally
+          markdown: |-
+            Cancellation observed while a task is suspended drops the in-flight
+            operation but does not skip Terrane `finally` blocks. The compiler
+            retains cleanup-owned state separately, enters applicable cleanup
+            blocks once in innermost-first order, and drives asynchronous cleanup
+            shielded from the cancellation that initiated it. The scope's join
+            remains pending until cleanup finishes.
+
+            Owned foreign values held only by the dropped operation run Rust
+            `Drop` first. Values required by Terrane cleanup remain owned by the
+            cleanup state and are destroyed after that cleanup. A borrow shape
+            that cannot assign those responsibilities unambiguously is rejected
+            at the suspension point.
+
+        - type: note
+          id: note.async.cleanup-liveness
+          style: warning
+          markdown: |-
+            A deadline requests cancellation; it does not hard-kill cleanup. If
+            cleanup awaits a foreign operation that never wakes, joining the
+            task can remain pending. Cleanup should therefore use bounded,
+            cancellation-safe operations whenever progress depends on an
+            external system.
+  see-also:
+    - tool.packages.rust-dependencies
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "21.3"
+    - document: language-spec
+      section: "21.4"
+  conformance:
+    - async-await
+    - async-finally-after-await
+    - borrow-parameter-in-async-finally
+    - projected-async-local-task-threaded
+    - rust-dependency-async-function
+  compiler: null

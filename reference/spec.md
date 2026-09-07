@@ -2,10 +2,11 @@
 
 This document defines a structured source format for producing the Terrane reference manual. The canonical authoring unit is a YAML record, normally one file per reference surface or conceptual page. Human prose is written as Markdown inside YAML block scalars. Compiler-known facts remain structured data and can be emitted, compared, and updated without treating Markdown as an API database.
 
-The intended manual combines two forms of reference:
+The intended manual combines three forms of reference:
 
 - a browsable language reference, where syntax and semantic rules can be read independently and linked precisely, in the style of the Rust Reference;
-- an entity reference, where namespaces, descriptors, classes, interfaces, traits, functions, methods, properties, constants, and diagnostics have predictable generated synopses, in the style of the PHP manual.
+- an entity reference, where namespaces, descriptors, classes, interfaces, traits, functions, methods, properties, constants, and diagnostics have predictable generated synopses, in the style of the PHP manual;
+- an internals reference, where durable compiler, lowering, runtime, generated-code, projection, tooling, cache, artifact, diagnostic, and host-ABI contracts can be located without treating their implementation as an importable Terrane surface.
 
 This format is a reference representation and publication system. It is not an independent language-design authority. Until the project explicitly changes that relationship:
 
@@ -84,6 +85,8 @@ reference/
 │   │           └── string/
 │   │               ├── index.yaml
 │   │               └── concat.yaml
+│   ├── internals/
+│   │   └── execution-runtime.yaml
 │   └── diagnostics/
 │       └── unknown-name.yaml
 ├── lifecycle/
@@ -1454,18 +1457,19 @@ Reference authors should:
 1. Put compiler-known facts in `surface`, never in duplicated Markdown tables.
 2. Put explanations and consequences in Markdown documentation fields.
 3. Attach parameter and throwable prose through stable local IDs, not source list positions.
-4. State observable Terrane behaviour rather than Rust implementation details.
-5. Use an `implementation` admonition when lowering details are genuinely useful.
-6. Give each semantic fact one authoritative home and link to it elsewhere.
-7. Keep examples focused on one contract.
-8. Distinguish accepted, runnable, rejected, and illustrative examples honestly.
-9. Describe plausible negative boundaries, not only successful forms.
-10. Distinguish `none`, empty data, iteration end, cancellation, throwable failure, and panic according to Terrane semantics.
-11. Never describe planned behaviour as current merely because it exists in the design specification.
-12. Never mark a missing compiler entity removed without an explicit lifecycle decision.
-13. Avoid time-relative prose such as “currently” and “soon”; use lifecycle and release fields.
-14. Use generated indexes rather than copied member inventories.
-15. Keep entity pages useful when opened from search without duplicating their owner's general contract.
+4. In public language and entity records, state observable Terrane behaviour rather than Rust implementation details.
+5. In internals records, document durable current responsibilities, boundaries, invariants, formats, and implementation evidence without presenting them as public language APIs.
+6. Use an `implementation` admonition in a public record when lowering details are genuinely useful but do not warrant their own internals topic.
+7. Give each semantic or internal contract one authoritative home and link to it elsewhere.
+8. Keep examples focused on one contract.
+9. Distinguish accepted, runnable, rejected, and illustrative examples honestly.
+10. Describe plausible negative boundaries, not only successful forms.
+11. Distinguish `none`, empty data, iteration end, cancellation, throwable failure, and panic according to Terrane semantics.
+12. Never describe planned behaviour as current merely because it exists in the design specification.
+13. Never mark a missing compiler entity removed without an explicit lifecycle decision.
+14. Avoid time-relative prose such as “currently” and “soon”; use lifecycle and release fields.
+15. Use generated indexes rather than copied member inventories.
+16. Keep entity pages useful when opened from search without duplicating their owner's general contract.
 
 ## 25. Format evolution
 

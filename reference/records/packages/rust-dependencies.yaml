@@ -109,6 +109,22 @@ documentation:
             resolution and before semantic import resolution or Rust lowering,
             and reports every conflicting version.
 
+    - id: async-members
+      title: Awaiting asynchronous members
+      blocks:
+        - type: rule
+          id: rule.dependencies.async-member-task
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-function
+          markdown: |-
+            A projected Rust `async fn` is an asynchronous Terrane callable.
+            Calling it constructs a linear task, and `await` consumes that task
+            inside an async callable. Argument and result conversion, returned
+            Rust errors, receiver ownership, and dependency panic handling use
+            the same boundary contract as synchronous projected members.
+
     - id: resolution
       title: Projection resolution and cache behavior
       blocks:
@@ -140,4 +156,5 @@ provenance:
     - rust-dependency-deferred-surface
     - transitive-type-owner-must-be-declared-at-one-version
     - rust-dependency-reqwest
+    - rust-dependency-async-function
   compiler: null

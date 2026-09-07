@@ -1,0 +1,97 @@
+format: 1
+id: std.networking.operations
+kind: topic
+
+surface: /core/networking
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Asynchronous networking operations
+  title-style: text
+  summary: >-
+    Describes the asynchronous TCP, UDP, DNS, and TLS operations, their
+    deadline and cancellation options, and their executor behavior.
+  tags:
+    - standard-library
+    - networking
+    - async
+    - tcp
+    - udp
+    - dns
+    - tls
+  sections:
+    - id: operations
+      title: Operations and results
+      blocks:
+        - type: rule
+          id: rule.networking.async-operations
+          level: must
+          since: null
+          evidence:
+            - networking-tcp-loopback
+            - networking-udp-loopback
+            - networking-values
+          markdown: |-
+            TCP connect, listener accept, stream read and write, UDP send and
+            receive, and DNS lookup are asynchronous operations. Call them in
+            an `async function` and consume the returned task with `await`.
+            TLS client handshake, encrypted read and write, and shutdown use
+            the same task contract.
+
+            The existing result values remain explicit: callers inspect
+            fields such as `failed`, `deadline-exceeded`, `message`, data,
+            completion count, and peer address as appropriate to the
+            operation. Ordinary TLS connection always performs certificate
+            chain and hostname validation.
+
+    - id: cancellation
+      title: Deadlines and cancellation
+      blocks:
+        - type: rule
+          id: rule.networking.deadline-cancellation
+          level: must
+          since: null
+          evidence:
+            - networking-values
+            - cancelled-stream-operation
+          markdown: |-
+            `network-operation-options` carries the operation deadline and
+            cancellation token. A deadline or cancellation request is
+            reported through the operation's established result contract; it
+            does not detach the task or permit its scoped handle to be left
+            unjoined.
+
+    - id: scheduling
+      title: Executor scheduling
+      blocks:
+        - type: rule
+          id: rule.networking.executor-progress
+          level: must
+          since: null
+          evidence:
+            - networking-tcp-loopback
+          markdown: |-
+            Compiler-owned asynchronous stream and network operations suspend
+            through the runtime selected by the package executor profile. If
+            the host ABI is unavoidably blocking, the compiler delegates that
+            call to the runtime's blocking pool. A pending standard-input or
+            socket operation therefore does not occupy an executor worker or
+            prevent unrelated tasks from making progress.
+
+relationships:
+  see-also:
+    - lang.functions.asynchronous
+  supersedes: []
+  superseded-by: []
+  conflicts-with: []
+
+implementation:
+  compiler: null

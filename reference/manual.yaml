@@ -6,7 +6,15 @@ navigation:
     children:
       - page: lang.lexical-structure.keywords
       - page: lang.functions.declarations
+      - page: lang.functions.asynchronous
       - page: lang.types.optional-refinement
+  - group: Standard library
+    children:
+      - page: std.networking.operations
   - group: Packages
     children:
       - page: tool.packages.rust-dependencies
+  - group: Compiler internals
+    children:
+      - page: internals.execution.runtime-selection
+      - page: internals.projection.resolution

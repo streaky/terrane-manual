@@ -1,0 +1,130 @@
+format: 1
+id: internals.projection.resolution
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Dependency projection resolution
+  title-style: text
+  summary: >-
+    Describes the exact identities, ordered resolution sources, artifact
+    validation, and durable history used to turn locked Rust dependencies into
+    one reusable compiler projection.
+  tags:
+    - compiler-internals
+    - dependencies
+    - projection
+    - artifacts
+    - caching
+    - reproducibility
+  sections:
+    - id: identity
+      title: Exact cache identity
+      blocks:
+        - type: rule
+          id: rule.internals.projection.cache-identity-is-exact
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-deferred-surface
+            - rust-dependency-reqwest
+          markdown: |-
+            A projection cache identity covers the package manifest, resolved
+            Cargo lock, complete dependency inputs, effective compilation
+            target, stable build toolchain, nightly rustdoc toolchain, rustdoc
+            JSON format, projection schema, and containment tier. Every field is
+            length-delimited before entering the SHA-256 digest so different
+            input boundaries cannot produce the same encoded sequence.
+
+            The effective target is selected from `CARGO_BUILD_TARGET`, then
+            Cargo's `build.target`, then the pinned stable compiler's host. A
+            change to any identity input selects a different cache record rather
+            than reusing and conditionally repairing an older projection.
+
+            Identity construction lives in
+            `crates/terrane-compiler/src/projection.rs` under `cache_identity`
+            and `selected_target`.
+
+    - id: resolution
+      title: Ordered resolution transaction
+      blocks:
+        - type: rule
+          id: rule.internals.projection.artifacts-never-widen
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-deferred-surface
+            - rust-dependency-reqwest
+          markdown: |-
+            Projection resolution is one transaction owned by `resolve`. It
+            checks the exact project-local cache first, records bundled
+            distribution as explicitly skipped while no release channel exists,
+            attempts a configured published artifact, and otherwise generates
+            rustdoc locally with the pinned nightly toolchain. Every attempted
+            source records a status and reason, and the final projection records
+            its resolution outcome.
+
+            A published artifact is admitted only when its envelope format,
+            cache identity, target, stable and rustdoc toolchains, rustdoc
+            format, projection schema, and payload identity match. Dependency
+            names, packages, exact versions, and effects are checked separately
+            from feature/default-feature metadata and each dependency's target
+            condition. The SHA-256 content hash must agree with both the
+            envelope and the projection payload.
+
+            Missing or rejected published artifacts fall back to local rustdoc;
+            validation never weakens a mismatch into a nearby reusable result.
+            A verified published result is written into the same exact local
+            cache used by later offline resolution. The focused unit test
+            `remote_artifact_requires_exact_projection_inputs` exercises the
+            artifact boundary and its distinct mismatch causes.
+
+    - id: history
+      title: Durable origin and replay history
+      blocks:
+        - type: rule
+          id: rule.internals.projection.history-preserves-origin
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-deferred-surface
+          markdown: |-
+            `terrane-projection.lock` is durable project history rather than a
+            cache index. History format 2 records projected dependency members,
+            removed members, content origin, rustdoc format, projection schema,
+            cache identity, verified content hash, and the resolution events
+            that produced that content.
+
+            An exact-cache hit for unchanged content preserves the original
+            local or published content-origin history instead of rewriting it as
+            cache provenance. If the same format-2 identity and dependency
+            surface later produce a different content hash, projection fails
+            with a replay-mismatch diagnostic. Version changes retain removed
+            member identities so a later missing import can be distinguished
+            from a member that never existed.
+
+            History migration, origin preservation, and replay detection live in
+            `apply_projection_history`; focused unit coverage includes
+            `projection_history_keeps_content_origin_across_cache_hits` and
+            `projection_history_migrates_provenance_and_detects_replay_drift`.
+  see-also:
+    - tool.packages.rust-dependencies
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "23.8"
+  conformance:
+    - rust-dependency-deferred-surface
+    - rust-dependency-reqwest
+  compiler: null
