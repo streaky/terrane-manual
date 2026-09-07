@@ -88,7 +88,102 @@ documentation:
             cache used by later offline resolution. The focused unit test
             `remote_artifact_requires_exact_projection_inputs` exercises the
             artifact boundary and its distinct mismatch causes.
+    - id: callbacks
+      title: Concrete callback projection
+      blocks:
+        - type: rule
+          id: rule.internals.projection.callbacks-preserve-bounds
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-callbacks
+            - projected-callback-open-bound
+          markdown: |-
+            Projection schema 17 represents a concrete Rust callback with its
+            monomorphic inputs and output, `Fn`/`FnMut`/`FnOnce` multiplicity,
+            synchronous or future-returning shape, retention, and `Send`/`Sync`
+            bounds. The rendered dependency declaration uses the same Terrane
+            function type shown by editor hover and signature help.
 
+            The lowering boundary constructs the exact Rust closure and
+            converts callback inputs and results at both free-function and
+            projected-method calls. `FnMut` records Rust invocation multiplicity
+            but adds no mutable Terrane capture cell. Open generic,
+            higher-ranked, and lifetime-dependent callable shapes are declined;
+            the compiler does not erase them into a universal callback value.
+
+
+    - id: async-sequences
+      title: Async-sequence recognition and lowering
+      blocks:
+        - type: rule
+          id: rule.internals.projection.async-sequence-state
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-sequences
+            - projected-async-sequence-borrowed-item
+            - projected-async-sequence-open-item
+          markdown: |-
+            Projection schema 19 recognizes a concrete owned producer only
+            when an async borrowed `next` returns `Result<Option<Item>, E>` and
+            the type also supplies a consuming `close`. Its transferable step
+            metadata preserves the concrete item type while lowering converts
+            Rust `Some` and `None` into explicit item and end states.
+
+            The generated native future is constructed before the async
+            containment wrapper. The operation must be awaited directly, which
+            keeps the mutable receiver borrow local to one suspension rather
+            than storing it in a task. Borrowed results and open associated item
+            types are declined before lowering.
+    - id: async-sinks
+      title: Async-sink recognition and lowering
+      blocks:
+        - type: rule
+          id: rule.internals.projection.async-sink-state
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-sinks
+            - projected-async-sink-suspended-borrow
+          markdown: |-
+            Projection schema 19 recognizes an asynchronous borrowed
+            `send(Item)` returning `Result<bool, E>`. Lowering converts the
+            boolean into the compiler-owned `async-sink-outcome` with distinct
+            accepted and remote-closed state while retaining Rust failure,
+            cancellation, and deadline boundaries.
+
+            The native future is constructed before containment and the call
+            must be awaited directly, so the mutable receiver borrow spans one
+            suspension. Any asynchronous or consuming projected receiver makes
+            its opaque foreign type resource-owning; consuming `close` and
+            `split` therefore participate in source ownership diagnostics.
+
+    - id: chain-only
+      title: Chain-only projection and containment
+      blocks:
+        - type: rule
+          id: rule.internals.projection.chain-only
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-chain-only
+            - projected-chain-binding
+            - projected-chain-return
+            - projected-chain-capture
+            - projected-chain-suspension
+          markdown: |-
+            Projection schema 20 marks chain roots, continuing members, and
+            owned terminals explicitly. Semantic validation permits an
+            intermediate only as the receiver subtree of another chain member
+            in the same nested expression and emits one source diagnostic for
+            every escape form.
+
+            Lowering emits root and continuation calls without independent
+            wrappers. The terminal applies argument conversion, panic and error
+            containment, asynchronous awaiting, and result conversion to the
+            complete Rust expression. Projection details shown by editor
+            tooling identify the chain-only, non-escaping constraint.
     - id: history
       title: Durable origin and replay history
       blocks:

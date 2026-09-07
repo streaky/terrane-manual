@@ -11,6 +11,8 @@ navigation:
   - group: Standard library
     children:
       - page: std.networking.operations
+      - page: std.concurrency.channels
+      - page: std.concurrency.shared-state
   - group: Packages
     children:
       - page: tool.packages.rust-dependencies

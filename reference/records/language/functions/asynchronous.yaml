@@ -41,9 +41,10 @@ documentation:
             `await` consumes that task exactly once and is valid only in an
             async callable. An asynchronous entrypoint enters one runtime
             selected by the manifest profile. A projected Rust future is
-            constructed when its Terrane task is first polled inside that
-            context, where pending timers and sockets sleep until their waker
-            fires rather than being repeatedly polled.
+            constructed when the Terrane call expression is evaluated, before
+            its generated async containment wrapper begins polling it. Pending
+            timers and sockets sleep until their waker fires rather than being
+            repeatedly polled.
 
             Projected async completion and hover information report wake,
             runtime-context, and transfer requirements in Terrane terms. An

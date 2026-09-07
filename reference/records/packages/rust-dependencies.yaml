@@ -125,6 +125,121 @@ documentation:
             Rust errors, receiver ownership, and dependency panic handling use
             the same boundary contract as synchronous projected members.
 
+    - id: callbacks
+      title: Passing Terrane callables to Rust
+      blocks:
+        - type: rule
+          id: rule.dependencies.callback-projection
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-callbacks
+            - projected-callback-borrowed-capture
+            - projected-callback-nontransferable-capture
+            - projected-callback-throwable
+          markdown: |-
+            A concrete monomorphic Rust `Fn`, `FnMut`, or `FnOnce` bound
+            projects as the corresponding Terrane function contract at either
+            a free-function or method call. A callback whose result is a bounded
+            future projects as an `async function`. The generated boundary
+            closure converts each argument and result without introducing a
+            foreign callback runtime.
+
+            Rust `FnMut` describes repeated mutable invocation by the dependency;
+            it does not add a mutable Terrane capture cell. Version-one anonymous
+            functions capture ordinary values by value, so aliased mutable
+            captured state remains rejected. Put coordinated mutable state behind
+            an explicit owner task and typed channels.
+
+            Rust `'static`, `Send`, and `Sync` requirements remain ownership
+            requirements in Terrane. A retained callback cannot capture a
+            borrowed reference or object receiver. A transferable callback
+            cannot capture a local-only value, and an escaping throwable is
+            rejected when the Rust callback result has no matching failure
+            representation. Open generic, higher-ranked, and
+            lifetime-dependent callback shapes remain unavailable.
+    - id: async-sequences
+      title: Consuming projected asynchronous sequences
+      blocks:
+        - type: rule
+          id: rule.dependencies.async-sequence-lifecycle
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-sequences
+            - projected-async-sequence-use-after-close
+            - projected-async-sequence-transfer
+            - projected-async-sequence-double-owner
+            - projected-async-sequence-unconsumed-task
+          markdown: |-
+            A concrete owned Rust producer with an asynchronous borrowed `next`
+            returning `Result<Option<Item>, E>` and a consuming `close`
+            projects as a resource-owning linear endpoint. Awaiting `next`
+            returns `async-iteration-step of Item`: `item`, `end`, and `value`
+            distinguish an item from exhaustion. A Rust error enters the
+            `dependency-error` path, while cancellation remains the enclosing
+            task outcome.
+
+            Each borrowed operation must be awaited directly and reborrows the
+            producer for one suspension. `close` consumes the producer, so
+            later use is a source ownership error. Dropping an endpoint releases
+            its Rust value but does not promise a graceful protocol close.
+            Borrowed items and open associated item types remain unavailable.
+    - id: async-sinks
+      title: Sending through projected asynchronous sinks
+      blocks:
+        - type: rule
+          id: rule.dependencies.async-sink-lifecycle
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-async-sinks
+            - projected-async-sink-use-after-split
+            - projected-async-sink-use-after-close
+            - projected-async-sink-double-owner
+            - projected-async-sink-suspended-borrow
+          markdown: |-
+            A concrete owned Rust endpoint with an asynchronous borrowed
+            `send(Item)` returning `Result<bool, E>` projects as a
+            resource-owning linear sink. Awaiting `send` returns
+            `async-sink-outcome`: `accepted` reports successful acceptance and
+            `closed` reports remote closure. Dependency failure, task
+            cancellation, and deadline expiry remain separate outcomes.
+
+            A borrowed send must be awaited directly so its mutable borrow spans
+            one suspension. `flush` preserves its projected failure contract,
+            while `close` consumes the endpoint and performs graceful protocol
+            close. A consuming `split` transfers the whole duplex object into
+            independently owned halves. Drop releases an endpoint but does not
+            claim graceful close.
+
+    - id: chain-only-values
+      title: Completing non-escaping dependency chains
+      blocks:
+        - type: rule
+          id: rule.dependencies.chain-only-values
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-chain-only
+            - projected-chain-binding
+            - projected-chain-return
+            - projected-chain-capture
+            - projected-chain-suspension
+          markdown: |-
+            A projected root may return a chain-only intermediate when its
+            receiver methods can continue that same concrete chain or terminate
+            in an owned projected value. The intermediate may retain a borrow
+            from a named input that outlives the expression. It must remain
+            inside one nested expression as the receiver of the next member.
+
+            A chain-only value cannot be bound, returned, captured, passed to
+            Terrane code, or held across `await`. Complete the chain at once.
+            The generated Rust keeps the intermediate inside one expression and
+            applies conversion, dependency failure, panic, and asynchronous
+            boundaries at the terminal operation. A concrete adapter may run an
+            open generic API internally; that does not make the open generic
+            directly projectable.
     - id: resolution
       title: Projection resolution and cache behavior
       blocks:
@@ -157,4 +272,8 @@ provenance:
     - transitive-type-owner-must-be-declared-at-one-version
     - rust-dependency-reqwest
     - rust-dependency-async-function
+    - rust-dependency-callbacks
+    - projected-callback-borrowed-capture
+    - projected-callback-nontransferable-capture
+    - projected-callback-throwable
   compiler: null
