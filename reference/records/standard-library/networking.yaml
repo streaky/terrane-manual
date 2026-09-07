@@ -78,13 +78,20 @@ documentation:
           since: null
           evidence:
             - networking-tcp-loopback
+            - networking-readiness-outcomes
           markdown: |-
-            Compiler-owned asynchronous stream and network operations suspend
-            through the runtime selected by the package executor profile. If
-            the host ABI is unavoidably blocking, the compiler delegates that
-            call to the runtime's blocking pool. A pending standard-input or
-            socket operation therefore does not occupy an executor worker or
-            prevent unrelated tasks from making progress.
+            Compiler-owned asynchronous socket operations suspend on
+            readiness through the runtime selected by the package executor
+            profile. TLS uses the same asynchronous transport. Host-name
+            connection delegates DNS resolution, then races socket candidates
+            on the selected runtime. Interfaces that remain unavoidably
+            blocking, including the current standalone resolver, are delegated
+            to the runtime's bounded blocking pool.
+
+            A pending standard-input or socket operation therefore does not
+            occupy an executor worker or prevent unrelated tasks from making
+            progress. Socket deadline and cancellation results retain the same
+            explicit source contract as other network failures.
 
 relationships:
   see-also:
