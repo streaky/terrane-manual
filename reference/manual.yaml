@@ -6,6 +6,7 @@ navigation:
     children:
       - page: lang.lexical-structure.keywords
       - page: lang.functions.declarations
+      - page: lang.classes.fields
       - page: lang.functions.asynchronous
       - page: lang.types.optional-refinement
   - group: Standard library
@@ -13,6 +14,8 @@ navigation:
       - page: std.networking.operations
       - page: std.concurrency.channels
       - page: std.concurrency.shared-state
+      - page: std.documents.typed-decoding
+      - page: std.logging
   - group: Packages
     children:
       - page: tool.packages.rust-dependencies
@@ -20,3 +23,4 @@ navigation:
     children:
       - page: internals.execution.runtime-selection
       - page: internals.projection.resolution
+      - page: internals.observability.runtime

@@ -1,0 +1,97 @@
+format: 1
+id: lang.classes.fields
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Class fields and metadata
+  title-style: text
+  summary: >-
+    Defines class field initialization, external names, secrecy policy, and
+    descriptor reflection over one coherent field metadata model.
+  tags:
+    - classes
+    - fields
+    - metadata
+    - reflection
+  sections:
+    - id: declaration
+      title: Declaring field metadata
+      blocks:
+        - type: rule
+          id: rule.classes.field-metadata
+          level: must
+          since: null
+          evidence:
+            - class-field-metadata
+            - duplicate-class-field-metadata
+            - conflicting-external-field-name
+            - malformed-class-field-metadata
+          markdown: |-
+            An instance field may carry one trailing `metadata (...)` clause.
+            Version one defines string `external-name` and boolean `secret`.
+            A metadata name cannot repeat, static and non-field declarations
+            cannot carry field metadata, and effective external names must be
+            unique within a class.
+
+            The ordinary initializer remains the field default, and `T|none`
+            remains the source spelling for optionality. The resolved field
+            descriptor derives `defaulted` and `optional`; facilities must not
+            introduce parallel default or optional metadata.
+
+    - id: reflection
+      title: Reflecting resolved fields
+      blocks:
+        - type: rule
+          id: rule.classes.field-metadata-reflection
+          level: must
+          since: null
+          evidence:
+            - class-field-metadata
+          markdown: |-
+            A class descriptor exposes `field-count` and parallel,
+            declaration-ordered `field-names`, `field-external-names`,
+            `field-defaulted`, `field-optional`, and `field-secret` lists.
+            Inherited replacement is resolved before observation. Names are
+            Terrane semantic names rather than generated Rust identifiers.
+
+relationships:
+  related:
+    - std.documents.typed-decoding
+    - std.logging.events
+  supersedes: []
+  superseded-by: []
+
+migration:
+  summary: null
+  steps: []
+
+notes:
+  implementation: >-
+    The compiler retains metadata on ObjectField and materializes immutable
+    metadata slices only when descriptor reflection is required.
+  compatibility: null
+  security: >-
+    Secret metadata is policy input. Logging redacts the value before every
+    sink rather than asking each sink to remember the policy.
+  performance: >-
+    Static metadata is emitted once; field reflection allocates only the
+    requested observed list.
+
+examples: []
+
+sources:
+  specification:
+    - docs/language-spec-and-compiler-architecture-draft.md#181-fields
+  compiler-plan: null
+  compiler: null
