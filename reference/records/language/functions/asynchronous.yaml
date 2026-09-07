@@ -109,7 +109,9 @@ documentation:
           level: must
           since: null
           evidence:
-            - async-finally-after-await
+            - cancelled-foreign-await-runs-finally
+            - cancelled-nested-finally-order
+            - cancelled-finally-error-wins
             - borrow-parameter-in-async-finally
           markdown: |-
             Cancellation observed while a task is suspended drops the in-flight
@@ -118,6 +120,11 @@ documentation:
             blocks once in innermost-first order, and drives asynchronous cleanup
             shielded from the cancellation that initiated it. The scope's join
             remains pending until cleanup finishes.
+
+            If cleanup fails, that error replaces pending cancellation in the
+            affected child's outcome: `error` is present and `cancelled` is
+            false. The scope's cancellation request is not withdrawn, so its
+            other children continue to observe cancellation normally.
 
             Owned foreign values held only by the dropped operation run Rust
             `Drop` first. Values required by Terrane cleanup remain owned by the
@@ -147,6 +154,7 @@ provenance:
     - async-await
     - async-finally-after-await
     - borrow-parameter-in-async-finally
+    - cancelled-nested-finally-order
     - projected-async-local-task-threaded
     - rust-dependency-async-function
   compiler: null

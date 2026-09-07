@@ -104,6 +104,49 @@ documentation:
             modules follow the same semantic decision so synchronous packages
             do not acquire an unused runtime. Generated module assembly remains
             deterministic for identical semantic input.
+    - id: cancellation
+      title: Wake-driven cancellation and cleanup
+      blocks:
+        - type: rule
+          id: rule.internals.execution.cancellation-preserves-finally
+          level: must
+          since: null
+          evidence:
+            - cancelled-foreign-await-runs-finally
+            - cancelled-nested-finally-order
+            - cancelled-finally-error-wins
+            - borrow-parameter-in-async-finally
+          markdown: |-
+            Native task scopes share a compiler-owned cancellation state that
+            registers and wakes suspended task wakers. Cancellation requests
+            and effective deadlines therefore wake blocked tasks directly;
+            native scope execution does not poll cancellation with a periodic
+            timer.
+
+            Lowered asynchronous `try` regions with `finally` install nested
+            finalization guards. Only the innermost active guard may observe
+            the request; it drops the pending Rust future, including
+            operation-only foreign owners, before generated `finally` dispatch
+            runs. The guard then exposes cancellation to its parent. Cleanup
+            runs exactly once in innermost-first order, and cleanup containing
+            `await` remains protected until the outermost guard releases the
+            request to the scoped-task result boundary. Guard state is
+            compiler-internal, cannot be caught as a Terrane throwable, uses
+            no Rust panic or unwind control flow, and does not alter dependency
+            panic policy.
+
+            A cleanup failure replaces pending cancellation only while shaping
+            that child's result: the child reports an error rather than
+            cancellation. It does not clear the compiler-owned scope
+            cancellation signal, which remains visible to other child guards
+            and join outcomes.
+
+            The native cancellation support is assembled from
+            `crates/terrane-compiler/src/runtime/async_native.rs`; scope state
+            and join outcome shaping live in the selected
+            `tasks_native_local.rs` or `tasks_native_parallel.rs` template;
+            finalization guards and cleanup dispatch are emitted by
+            `crates/terrane-compiler/src/lowering/emitter/statements.rs`.
     - id: task-ownership-lowering
       title: Task ownership across the lowering boundary
       blocks:
@@ -141,7 +184,12 @@ provenance:
   specification:
     - document: language-spec
       section: "21.3"
+    - document: language-spec
+      section: "21.4"
   conformance:
+    - cancelled-foreign-await-runs-finally
+    - cancelled-nested-finally-order
+    - cancelled-finally-error-wins
     - async-await
     - cooperative-task-scope
     - networking-tcp-loopback
