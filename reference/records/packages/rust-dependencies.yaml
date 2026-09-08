@@ -240,6 +240,22 @@ documentation:
             boundaries at the terminal operation. A concrete adapter may run an
             open generic API internally; that does not make the open generic
             directly projectable.
+
+        - type: note
+          id: note.dependencies.open-generic-results
+          style: warning
+          markdown: |-
+            Terrane does not currently select an open Rust generic result from
+            the destination type written at a call site. An API such as a
+            generic row extractor therefore remains declined even when each
+            intended concrete result type projects independently. The
+            projection oracle can prove exact concrete calls, but production
+            projection does not yet consume those proofs as type selection.
+
+            Complete such an operation through a concrete projected member or
+            a chain-only adapter whose public result type is already fixed.
+            This preserves static ownership and conversion boundaries; it does
+            not make the upstream open generic directly callable.
     - id: resolution
       title: Projection resolution and cache behavior
       blocks:

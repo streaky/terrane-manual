@@ -102,6 +102,21 @@ documentation:
             children can make progress while a join is pending. A failed child
             retains its error in its outcome and requests cancellation of
             surviving siblings; each child remains joined exactly once.
+
+        - type: note
+          id: note.async.selection-boundary
+          style: warning
+          markdown: |-
+            The current task-scope surface joins one named child at a time. It
+            does not provide a general `select` or race across arbitrary tasks,
+            channel receives, timers, and socket operations. The public core
+            surface also has operation deadlines but no general-purpose clock,
+            cancellable sleep or interval, or process-signal subscription.
+
+            Applications that require multiplexed service loops, deterministic
+            scheduling, or graceful SIGTERM/SIGINT handling must first add or
+            project an explicit typed facility. Busy polling and detached,
+            unjoined tasks are not substitutes for that missing contract.
     - id: cancellation
       title: Cancellation at suspension
       blocks:

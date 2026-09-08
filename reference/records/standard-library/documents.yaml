@@ -48,6 +48,16 @@ documentation:
             recursively sized, and otherwise unsupported classes must implement
             `deserializable` manually.
 
+        - type: note
+          id: note.documents.no-derived-encoding
+          style: warning
+          markdown: |-
+            Compiler-derived mapping currently covers document input only.
+            There is no matching derived class-to-document encoder. A class may
+            implement `serializable` with an explicit `to-document` method, but
+            that method is responsible for external field names, nested values,
+            optional policy, finite numeric output, and any secrecy rule.
+
     - id: mapping
       title: Mapping and numeric rules
       blocks:
