@@ -88,9 +88,13 @@ documentation:
             - optional-member-before-narrowing
             - throwable-value-flow
           markdown: |-
-            Member, index, and call expressions are not narrowing subjects.
-            Evaluate an optional-producing expression once, bind its result,
-            guard that name, and select members from the narrowed name.
+            Member, index, and call expressions are not general narrowing
+            subjects. Evaluate an optional-producing expression once, bind its
+            result, guard that name, and select members from the narrowed name.
+            The sole post-if exception is return validation for an exact static
+            optional member that a preceding no-else absence guard initializes
+            once with a compatible value and that no intervening statement
+            rewrites.
 
         - type: example
           id: unguarded-optional-member
@@ -142,5 +146,6 @@ provenance:
       section: "14.1"
   conformance:
     - optional-member-before-narrowing
+    - optional-member-post-if-return
+    - static-class-singleton
     - throwable-value-flow
-  compiler: null

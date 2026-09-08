@@ -9,6 +9,7 @@ navigation:
       - page: lang.classes.fields
       - page: lang.functions.asynchronous
       - page: lang.types.optional-refinement
+      - page: lang.collections.protocols
   - group: Standard library
     children:
       - page: std.networking.operations
@@ -24,3 +25,6 @@ navigation:
       - page: internals.execution.runtime-selection
       - page: internals.projection.resolution
       - page: internals.observability.runtime
+      - page: internals.build.toolchain-profiles
+      - page: internals.semantics.return-validation
+      - page: internals.collections.lifetime

@@ -1,0 +1,96 @@
+format: 1
+id: internals.build.toolchain-profiles
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Build toolchain profiles
+  title-style: text
+  summary: >-
+    Explains how generated native builds pin Rust and Unicode inputs instead of
+    inheriting accidental host changes.
+  tags:
+    - compiler-internals
+    - toolchain
+    - unicode
+    - reproducibility
+  sections:
+    - id: selected-inputs
+      title: Compiler-selected inputs
+      blocks:
+        - type: rule
+          id: rule.internals.build.selected-inputs
+          level: must
+          since: null
+          evidence:
+            - byte-index-and-slice
+          markdown: |-
+            The default build profile selects the compiler's exact stable Rust
+            release. A package may explicitly request the system Rust toolchain,
+            but that changes only which compatible Rust installation Cargo invokes.
+
+            Unicode behavior is a separate compiler-owned part of the toolchain
+            profile. Version one selects Unicode 16.0.0 for full case folding,
+            normalization, Unicode word segmentation, and extended grapheme
+            segmentation. Pinned and system Rust builds use the same Unicode profile.
+
+    - id: generated-artifacts
+      title: Generated artifacts
+      blocks:
+        - type: description
+          id: description.internals.build.generated-artifacts
+          since: null
+          evidence:
+            - byte-index-and-slice
+          markdown: |-
+            Every generated program manifest records
+            `unicode-data-version = "16.0.0"` under
+            `[package.metadata.terrane]`. Generated support manifests use exact
+            dependency versions whose embedded tables all implement that profile.
+
+            String and collection support each expose their selected Unicode
+            version and assert the versions embedded by their table providers.
+            The compiler test suite mechanically compares both support versions
+            with the compiler profile constant. Updating any one provider or
+            component alone therefore fails the build rather than silently
+            producing mixed Unicode semantics.
+
+    - id: maintenance
+      title: Maintenance rule
+      blocks:
+        - type: rule
+          id: rule.internals.build.maintenance
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            A Unicode upgrade is one toolchain-profile change. Update the compiler
+            constant, every affected support dependency, generated manifest
+            metadata, conformance witnesses, and language/manual claims together.
+            Never allow a semver-compatible dependency update to select a new table
+            version on its own.
+
+relationships:
+  see-also:
+    - internals.projection.resolution
+  supersedes: []
+  superseded-by: []
+  conflicts-with: []
+
+implementation:
+  compiler:
+    - crates/terrane-compiler/src/lib.rs
+    - crates/terrane-compiler/src/package.rs
+    - crates/terrane-cli/src/main.rs
+    - crates/terrane-string-support/src/lib.rs
+    - crates/terrane-collection-support/src/lib.rs

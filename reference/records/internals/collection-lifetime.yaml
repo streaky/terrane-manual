@@ -1,0 +1,96 @@
+format: 1
+id: internals.collections.lifetime
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Collection lifetime lowering
+  title-style: text
+  summary: >-
+    Explains how collection mutation, destruction, and reference identity remain
+    source-observable across copy-on-write Rust lowering.
+  tags:
+    - compiler-internals
+    - collections
+    - lifetime
+    - identity
+  sections:
+    - id: mutation-release-points
+      title: Mutation release points
+      blocks:
+        - type: rule
+          id: rule.internals.collections.release-points
+          level: must
+          since: null
+          evidence:
+            - collection-identity-lifetime
+          markdown: |-
+            List replacement performs copy-on-write separation before mutation.
+            A displaced logical value is dropped before the Terrane call returns
+            only when no preserved copy still owns it; otherwise the unchanged
+            copy remains readable and releases that value at its own lifetime
+            boundary. Separation never exposes backing sharing as identity.
+            List removal uses Rust's `Vec::remove` after separation and returns
+            the removed value; lowering must not insert an earlier drop.
+            List-only `clear` and ordered collection destruction release
+            elements in backing iteration order.
+
+    - id: representation-identity
+      title: Representation is not identity
+      blocks:
+        - type: rule
+          id: rule.internals.collections.representation-identity
+          level: must
+          since: null
+          evidence:
+            - collection-identity-lifetime
+          markdown: |-
+            Copy-on-write `Arc` storage is never exposed through Terrane `is`.
+            Ordinary collection and class operands therefore lower to false after
+            preserving operand effects. Explicit `ref` and `shared ref` operands
+            compare their weak or strong allocation pointers, including mixed
+            weak/strong comparisons, so aliases of one referent compare true and
+            different referents compare false.
+
+    - id: descriptor-metadata
+      title: Descriptor metadata
+      blocks:
+        - type: description
+          id: description.internals.collections.descriptor-metadata
+          since: null
+          evidence:
+            - collection-identity-lifetime
+          markdown: |-
+            Materialized descriptors carry `inherently_identity_bearing` alongside
+            canonical identity, name, kind, and field metadata. The emitter derives
+            this record from the semantic `ValueType`, not a diagnostic spelling:
+            source classes retain namespace-qualified identity, explicit reference
+            descriptors and resource-owning objects are true, and ordinary values
+            and collection types are false. Runtime storage choices never change
+            this bit. Inline `.type` expressions request the descriptor runtime;
+            declared object members named `type` retain precedence.
+
+relationships:
+  see-also:
+    - lang.collections.protocols
+  supersedes: []
+  superseded-by: []
+  conflicts-with: []
+
+implementation:
+  compiler:
+    - crates/terrane-collection-support/src/lib.rs
+    - crates/terrane-compiler/src/lowering/emitter/calls.rs
+    - crates/terrane-compiler/src/lowering/emitter/expressions.rs
+    - crates/terrane-compiler/src/lowering/emitter/members.rs
+    - crates/terrane-compiler/src/lowering/runtime_support.rs
