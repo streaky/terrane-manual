@@ -6,9 +6,13 @@ navigation:
     children:
       - page: lang.lexical-structure.keywords
       - page: lang.functions.declarations
+      - page: lang.numerics.conversion
       - page: lang.classes.fields
+      - page: lang.classes.protocols
       - page: lang.functions.asynchronous
       - page: lang.types.optional-refinement
+      - page: lang.types.descriptors
+      - page: lang.types.references
       - page: lang.collections.protocols
   - group: Standard library
     children:
@@ -23,6 +27,9 @@ navigation:
   - group: Compiler internals
     children:
       - page: internals.execution.runtime-selection
+      - page: internals.semantics.conversion-lowering
+      - page: internals.semantics.descriptor-contracts
+      - page: internals.semantics.reference-provenance
       - page: internals.projection.resolution
       - page: internals.observability.runtime
       - page: internals.build.toolchain-profiles

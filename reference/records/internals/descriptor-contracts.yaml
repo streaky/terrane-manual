@@ -1,0 +1,57 @@
+format: 1
+id: internals.semantics.descriptor-contracts
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Canonical descriptor contracts
+  title-style: text
+  summary: >-
+    Records the delivered source-object descriptor model and the remaining built-in unification.
+  tags: [compiler, semantics, descriptors, protocols]
+  sections:
+    - id: model
+      title: Semantic model
+      blocks:
+        - type: markdown
+          markdown: |-
+            `DescriptorContract` is the compiler-owned semantic record for each
+            source-declared class, interface, or trait. Semantic units expose these as
+            `descriptors`; the former source-object `ObjectContract`/`objects` naming no
+            longer exists. Source-object lookup, compatibility, dispatch, reflection, and
+            lowering consume those records. Built-in scalar aliases and numeric, string,
+            and collection family tables remain separate, so this is not yet the single
+            version-one descriptor representation.
+    - id: protocols
+      title: Structural queries
+      blocks:
+        - type: markdown
+          markdown: |-
+            `descriptor_protocol_method` recursively resolves a required non-static member
+            from a source descriptor, its traits, base, and interfaces. Iteration and truth
+            validation layer their signature constraints over this common query, so
+            structural satisfaction does not create a hidden interface or a
+            protocol-specific source-object table.
+  see-also:
+    - lang.types.descriptors
+    - lang.classes.protocols
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "11.7"
+  conformance:
+    - descriptor-reflection
+    - truth-protocol
+    - iterator-protocol
+  compiler: null

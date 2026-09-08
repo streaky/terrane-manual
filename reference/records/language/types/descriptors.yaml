@@ -1,0 +1,62 @@
+format: 1
+id: lang.types.descriptors
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Type descriptors
+  title-style: text
+  summary: >-
+    Defines version-one canonical type identity and the currently partial compiler representation.
+  tags: [types, descriptors, reflection, objects]
+  sections:
+    - id: identity
+      title: Canonical identity
+      blocks:
+        - type: markdown
+          markdown: |-
+            Type descriptors are compiler-owned semantic objects with stable canonical
+            identity, not ordinary values. Version one requires built-ins and
+            source-declared classes, interfaces, and traits to share one descriptor contract
+            model. A source descriptor keeps namespace-qualified nominal identity through
+            imports and aliases.
+    - id: delivery
+      title: Current compiler delivery
+      blocks:
+        - type: markdown
+          markdown: |-
+            Source classes, interfaces, and traits currently use `DescriptorContract` for
+            member lookup, nominal compatibility, conformance, dispatch, reflection, and
+            structural protocols. Built-in scalars, string families, and collection
+            families still use separate aliases, tables, and receiver-specific switches.
+            The compiler plan tracks the remaining unification work.
+    - id: queries
+      title: Version-one query contract
+      blocks:
+        - type: markdown
+          markdown: |-
+            The finished model must answer member lookup, nominal compatibility, interface
+            conformance, dispatch metadata, reflection, and structural protocol queries
+            from one descriptor contract. A statically known descriptor may erase during
+            lowering only when doing so does not change observable identity or reflection.
+  see-also:
+    - lang.classes.protocols
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "11.7"
+  conformance:
+    - descriptor-reflection
+    - nominal-object-identity
+  compiler: null

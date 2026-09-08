@@ -1,0 +1,79 @@
+format: 1
+id: lang.classes.protocols
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Structural protocols
+  title-style: text
+  summary: >-
+    Defines descriptor-member shape checks that do not require a nominal interface declaration.
+  tags: [classes, protocols, truth, iteration]
+  sections:
+    - id: satisfaction
+      title: Descriptor-based satisfaction
+      blocks:
+        - type: markdown
+          markdown: |-
+            Structural protocols are satisfied by the required member shape on the canonical
+            source descriptor. They are not hidden nominal interfaces. Iteration and truth
+            use the same recursive protocol-member query, including members inherited from
+            a base or supplied by trait/interface composition.
+    - id: truth
+      title: Truth protocol
+      blocks:
+        - type: markdown
+          markdown: |-
+            A class instance may be an `if` or `while` condition when its descriptor defines
+            a non-static `truth` method. The method must be synchronous, non-throwing,
+            non-mutating, parameterless, and return `bool`. A malformed or missing method is
+            rejected at the condition.
+        - type: example
+          id: truth-protocol
+          title: Use a class as a condition
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/truth-protocol
+
+            class gate
+              function truth bool;
+                return true
+
+            function main;
+              value gate = instance gate;
+              if value
+                print; 'open'
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              open
+          diagnostic: null
+          markdown: null
+  see-also:
+    - lang.types.descriptors
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "12.3"
+  conformance:
+    - truth-protocol
+    - truth-protocol-signature
+    - iterator-protocol
+    - structural-protocol-composition
+  compiler: null

@@ -1,0 +1,106 @@
+format: 1
+id: lang.numerics.conversion
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Numeric arrival and explicit conversion
+  title-style: text
+  summary: >-
+    Distinguishes exact destination-directed numeric arrival, declared coercion policies,
+    and one caller-supplied typed conversion callback.
+  tags:
+    - numerics
+    - coercion
+    - callbacks
+    - errors
+  sections:
+    - id: destinations
+      title: Destination-directed numeric arrival
+      blocks:
+        - type: markdown
+          markdown: |-
+            A numeric value arriving at a declared binding, argument, return, field, or
+            element destination must preserve its exact value or fail. Integer destination
+            failure raises `integer-conversion-overflow`; integer-to-floating arrival must
+            be exactly representable. No unrelated category is converted implicitly.
+    - id: declared-family
+      title: Declared coercion policies
+      blocks:
+        - type: markdown
+          markdown: |-
+            `value.coerce; Destination` selects the compiler-declared throwing conversion.
+            `coerce.checked` returns `Destination|none`; `coerce.wrap` and
+            `coerce.saturate` exist only for supported fixed-width integer pairs. Written
+            integer-to-float coercion permits IEEE round-to-nearest, ties-to-even. No
+            floating-to-integer pair is declared: choose `round`, `floor`, `ceiling`, or
+            `truncate` before the integer destination.
+        - type: rule
+          id: rule.conversion.family-not-storable
+          level: must
+          since: null
+          evidence:
+            - unbound-coercion-family
+          markdown: |-
+            A coercion family selection is compile-time policy metadata and must be invoked
+            in the same expression. It is not a storable bound method value.
+    - id: callback
+      title: Caller-supplied conversion
+      blocks:
+        - type: markdown
+          markdown: |-
+            `value.coerce; Destination, converter` handles a source/destination pair for
+            which no compiler conversion is selected. Both arguments are positional.
+            `converter` must be one ordinary synchronous `function from Source to
+            Destination`, using the receiver's exact static type and a concrete destination
+            descriptor. The receiver evaluates once and the converter is invoked once.
+            Declared converter throwables propagate through the ordinary call ABI.
+
+            Named arguments, multiple converters, asynchronous converters, parameter or
+            result mismatches, and callbacks on policy children are compile-time errors.
+        - type: example
+          id: coercion-callback
+          title: Convert through a typed callback
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/coercion-callback
+
+            function render string; value int
+              return 'converted'
+
+            function main;
+              print; (7.coerce; string, render)
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              converted
+          diagnostic: null
+          markdown: null
+  see-also:
+    - lang.functions.declarations
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "11.6"
+  conformance:
+    - coercion-callback
+    - coercion-callback-source
+    - coercion-callback-result
+    - coercion-callback-ambiguous
+  compiler: null
