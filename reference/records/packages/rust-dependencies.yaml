@@ -68,8 +68,19 @@ documentation:
           markdown: |-
             Declaring a crate does not flood a source namespace. Import an
             admitted member explicitly from `/deps/<alias>/...`. Projection
-            follows canonical Rust item identity, so re-exports of one item are
-            one type while unrelated same-named items remain distinct.
+            prefers a substantive public path over one beneath a `prelude`
+            module, then chooses the shortest path and lexical order at equal
+            depth. Re-exports of one item are therefore one type while
+            unrelated same-named items remain distinct.
+
+            Rust associated functions remain static members of their projected
+            class and use `Class::function`; they are not imported as
+            independent namespace functions.
+
+            A generic declaration with one admitted concrete instantiation
+            keeps its readable Rust type name. Hash-suffixed names are reserved
+            for multiple admitted instantiations whose canonical Rust
+            identities must remain distinct.
 
     - id: crossed-types
       title: Values crossing the generated shim

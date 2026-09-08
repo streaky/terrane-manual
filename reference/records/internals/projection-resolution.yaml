@@ -98,18 +98,28 @@ documentation:
           evidence:
             - namespace-qualified-projected-object-identity
           markdown: |-
-            Projection schema 22 resolves every public item through its shortest
-            reachable public Rust path, with lexical ordering as the tie-breaker
-            between paths of equal depth. That selected path supplies both the
-            callable Rust path and the Terrane namespace and object identity;
-            the item's deeper defining-module path cannot override a public
-            re-export.
+            Projection schema 24 resolves every public item through a
+            substantive reachable Rust path before considering paths beneath a
+            `prelude` module, then uses shortest depth and lexical ordering as
+            tie-breakers. That selected path supplies both the callable Rust
+            path and the Terrane namespace and object identity; the item's
+            deeper defining-module or convenience-prelude path cannot override
+            a canonical public re-export.
 
             `record_public_module_items` discovers public definitions, named
-            re-exports, and glob re-exports. `project_rustdoc` then replaces
-            rustdoc's defining paths with those canonical paths before creating
-            projected items, so compiler lookup, generated Rust, editor tooling,
-            and durable projection history expose one matching surface.
+            re-exports, and glob re-exports once per rustdoc document. The
+            resulting map is reused for cross-dependency aliases and item
+            projection. `project_rustdoc` replaces rustdoc's defining paths
+            with those canonical paths before creating projected items, so
+            compiler lookup, generated Rust, editor tooling, and durable
+            projection history expose one matching surface. Associated
+            functions are recorded on their owning foreign type and emitted as
+            Terrane static members rather than duplicate namespace functions.
+            A single admitted concrete generic instantiation keeps the readable
+            type name; only multiple admitted instantiations require canonical
+            hash suffixes. Projection history records instance members as
+            `Type.member` and static members as `Type::member`, so method-level
+            surface loss is visible across dependency upgrades.
     - id: callbacks
       title: Concrete callback projection
       blocks:
