@@ -88,6 +88,28 @@ documentation:
             cache used by later offline resolution. The focused unit test
             `remote_artifact_requires_exact_projection_inputs` exercises the
             artifact boundary and its distinct mismatch causes.
+    - id: public-paths
+      title: Canonical public paths
+      blocks:
+        - type: rule
+          id: rule.internals.projection.public-paths-are-canonical
+          level: must
+          since: null
+          evidence:
+            - namespace-qualified-projected-object-identity
+          markdown: |-
+            Projection schema 22 resolves every public item through its shortest
+            reachable public Rust path, with lexical ordering as the tie-breaker
+            between paths of equal depth. That selected path supplies both the
+            callable Rust path and the Terrane namespace and object identity;
+            the item's deeper defining-module path cannot override a public
+            re-export.
+
+            `record_public_module_items` discovers public definitions, named
+            re-exports, and glob re-exports. `project_rustdoc` then replaces
+            rustdoc's defining paths with those canonical paths before creating
+            projected items, so compiler lookup, generated Rust, editor tooling,
+            and durable projection history expose one matching surface.
     - id: callbacks
       title: Concrete callback projection
       blocks:
