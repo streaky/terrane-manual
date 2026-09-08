@@ -38,12 +38,14 @@ documentation:
             top-level functions and class methods. The compiler rejects an
             incompatible returned value before generating Rust.
 
-            One conservative post-condition is recognized for static optional
-            members: after an `if member == none` without an `else` assigns one
-            compatible present value to that exact member, and no intervening
-            statement rewrites it, returning the member satisfies its inner
-            result type. This supports lazy singleton initialization without
-            treating member expressions as generally flow-refined.
+            One conservative post-condition is recognized only for an exact
+            static `T|none` member returned from a concrete function or method
+            declared as `T`. A preceding sibling `if member == none` or
+            `if none == member` must have no `else`, contain exactly one direct
+            compatible assignment to the same textual target and no other
+            target write, and no intervening sibling may rewrite it. This
+            supports lazy singleton initialization without treating member
+            expressions as generally flow-refined.
 
         - type: example
           id: declared-and-called-function

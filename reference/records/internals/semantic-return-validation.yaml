@@ -54,13 +54,15 @@ documentation:
             - optional-member-post-if-return
             - static-class-singleton
           markdown: |-
-            Return validation proves a static `T|none` member present after one
-            preceding sibling `if member == none` with no `else` directly
-            assigns exactly one compatible `T` value to that same textual
-            member. Any other write in the branch or between the guard and
-            return invalidates the proof. This is deliberately not general
-            member-expression dataflow; unsupported shapes retain their
-            optional type and are rejected at the source boundary.
+            Return validation proves an exact static `T|none` member present
+            only when a preceding sibling `if member == none` or
+            `if none == member` has no `else`, directly assigns exactly one
+            compatible `T` value to that same textual target, has no other
+            target write, and no intervening sibling rewrites it before the
+            return. This return-only postcondition is deliberately not general
+            in-block member-expression narrowing and never applies to instance
+            members; unsupported shapes retain their optional type and are
+            rejected at the source boundary.
 
 relationships:
   see-also:

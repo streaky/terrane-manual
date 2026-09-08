@@ -91,10 +91,12 @@ documentation:
             Member, index, and call expressions are not general narrowing
             subjects. Evaluate an optional-producing expression once, bind its
             result, guard that name, and select members from the narrowed name.
-            The sole post-if exception is return validation for an exact static
-            optional member that a preceding no-else absence guard initializes
-            once with a compatible value and that no intervening statement
-            rewrites.
+            A distinct return-only postcondition applies to an exact static
+            `T|none` member after a preceding sibling no-else absence guard:
+            its body must directly assign one compatible `T` to that same
+            textual target, contain no other target write, and no intervening
+            sibling may rewrite it. This never narrows inside the block and
+            never applies to instance members.
 
         - type: example
           id: unguarded-optional-member

@@ -240,6 +240,14 @@ documentation:
             member identities so a later missing import can be distinguished
             from a member that never existed.
 
+            Removed-member history participates in every projected lookup tier:
+            top-level names use their namespace entry, static members use
+            `Type::member`, and instance receivers use `Type.member`. Declared
+            members resolve first; only an absent declared member consults
+            matching removal history and emits S2031 with the recorded version
+            transition. A member absent from both the declaration and history
+            remains the ordinary unknown-member diagnostic.
+
             History migration, origin preservation, and replay detection live in
             `apply_projection_history`; focused unit coverage includes
             `projection_history_keeps_content_origin_across_cache_hits` and
@@ -253,5 +261,7 @@ provenance:
       section: "23.8"
   conformance:
     - rust-dependency-deferred-surface
+    - removed-rust-dependency-member
+    - removed-rust-dependency-instance-member
     - rust-dependency-reqwest
   compiler: null
