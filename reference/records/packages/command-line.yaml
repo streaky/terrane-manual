@@ -1,0 +1,102 @@
+format: 1
+id: tool.packages.command-line
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Command-line execution
+  title-style: text
+  summary: >-
+    Runs package-backed programs, individual source files, and executable
+    shebang scripts through Terrane's shared native compilation pipeline.
+  tags:
+    - packages
+    - command-line
+    - scripts
+    - shebang
+    - execution
+  sections:
+    - id: commands
+      title: Running a source file
+      blocks:
+        - type: rule
+          id: rule.command-line.implicit-run
+          level: must
+          since: null
+          evidence:
+            - executable-shebang-script
+          markdown: |-
+            `terrane run <path>` runs a manifest or individual `.trn` source
+            through the ordinary semantic, lowering, generated-Cargo, cache,
+            and native execution pipeline. When the first CLI argument is an
+            existing file or ends in `.trn`, `terrane <path>` is the same run
+            operation. Remaining arguments are forwarded to the program; the
+            implicit form accepts but does not require a leading `--`.
+
+    - id: scripts
+      title: Executing a shebang script
+      blocks:
+        - type: rule
+          id: rule.command-line.shebang
+          level: must
+          since: null
+          evidence:
+            - executable-shebang-script
+            - manifest-shebang-missing-namespace
+            - shebang-script-without-main
+          markdown: |-
+            A direct single-file source beginning at byte zero with `#!` is an
+            executable script. The shebang is ordinary comment trivia. The
+            source may omit `namespace`, in which case the compiler supplies an
+            implementation-owned identity outside the authored namespace grammar,
+            making source collision impossible. A manifest-discovered source
+            receives no such exemption and must declare its mapped namespace.
+
+            Script execution does not remove Terrane's entrypoint contract. An
+            executable script must declare one parameterless top-level `main`.
+
+        - type: example
+          id: executable-terrane-script
+          title: Run a source file directly
+          language: terrane
+          mode: run
+          target: thing.trn
+          timeout-ms: null
+          source: |-
+            #!/usr/bin/env terrane
+            function main;
+              print; >hello
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              hello
+          diagnostic: null
+          markdown: |-
+            With `terrane` on `PATH`, run `chmod +x thing.trn` once and then
+            execute `./thing.trn`.
+  see-also:
+    - lang.functions.declarations
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "7"
+    - document: language-spec
+      section: "31.1"
+  conformance:
+    - executable-shebang-script
+    - shebang-script-without-main
+    - manifest-shebang-missing-namespace
+  compiler: null
