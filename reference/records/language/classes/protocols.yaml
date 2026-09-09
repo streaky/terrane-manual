@@ -53,7 +53,7 @@ documentation:
                 return true
 
             function main;
-              value gate = instance gate;
+              value = instance gate;
               if value
                 print; 'open'
           response:
