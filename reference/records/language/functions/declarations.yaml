@@ -71,6 +71,22 @@ documentation:
           diagnostic: null
           markdown: null
 
+    - id: returns
+      title: Returning a value
+      blocks:
+        - type: rule
+          id: rule.functions.return-expression
+          level: must
+          since: null
+          evidence:
+            - return-tail-block-strings
+          markdown: |-
+            `return` immediately completes the current function or method. A
+            value-bearing return accepts any compatible expression. Because
+            the position after `return` begins an expression, `return >text`
+            and `return >>` followed by an indented block return tail and block
+            text directly without parentheses or an intermediate binding.
+
     - id: references
       title: Referring to a function
       blocks:
@@ -126,7 +142,8 @@ documentation:
             This source checks successfully and reports `W4005` on `prepared`.
             Remove the declaration if it is obsolete, or retain it while its
             first caller is being connected.
-  see-also: []
+  see-also:
+    - lang.lexical-structure.text-blocks
 
 provenance:
   specification:
@@ -137,4 +154,5 @@ provenance:
     - ordinary-method-wrong-return
     - optional-member-post-if-return
     - static-class-singleton
+    - return-tail-block-strings
   compiler: null
