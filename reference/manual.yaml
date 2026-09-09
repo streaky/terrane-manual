@@ -5,6 +5,7 @@ navigation:
   - group: Language
     children:
       - page: lang.lexical-structure.keywords
+      - page: lang.lexical-structure.text-blocks
       - page: lang.functions.declarations
       - page: lang.numerics.conversion
       - page: lang.classes.fields
@@ -24,12 +25,14 @@ navigation:
   - group: Packages
     children:
       - page: tool.packages.rust-dependencies
+      - page: tool.packages.command-line
   - group: Compiler internals
     children:
       - page: internals.execution.runtime-selection
       - page: internals.semantics.conversion-lowering
       - page: internals.semantics.descriptor-contracts
       - page: internals.semantics.reference-provenance
+      - page: internals.testing.conformance-timing
       - page: internals.projection.resolution
       - page: internals.observability.runtime
       - page: internals.build.toolchain-profiles
