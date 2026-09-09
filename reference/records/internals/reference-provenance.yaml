@@ -53,6 +53,10 @@ documentation:
             iteration yields `&T`. Only explicit `shared ref T` storage uses `Arc<Mutex<T>>`.
             When an ordinary ref observes that same explicitly shared owner, it remains non-owning
             through a `Weak` handle. No ordinary reference is silently promoted to ownership.
+            Reference-address lowering records an internal `S9005` diagnostic and aborts
+            compilation if a semantically admitted provenance shape has no native lowering arm.
+            The compiler does not panic or pass a partial generated program to Cargo when semantic
+            and lowering support drift apart.
   see-also:
     - lang.types.references
 

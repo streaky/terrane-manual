@@ -1,0 +1,54 @@
+format: 1
+id: internals.testing.conformance-timing
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Nested conformance timing
+  title-style: text
+  summary: >-
+    Describes how the full-suite timing collector records individual conformance manifests instead
+    of attributing the whole corpus to one Rust test.
+  sections:
+    - title: Collection protocol
+      body: >-
+        `docs/measure-test-times.py` creates a temporary file and exports its path as
+        `TERRANE_TEST_TIMING_FILE` to the serial Cargo test process. The conformance driver times
+        each manifest from case setup through checking, compilation, and execution, then appends a
+        versioned tab-separated record containing the relative case path, status, and elapsed
+        seconds. A drop guard records a failed status if a case unwinds. Normal test runs without
+        the environment variable perform no timing-file I/O.
+    - title: Scoreboard identity
+      body: >-
+        Nested records use the `conformance cases [terrane_compiler]` target and the manifest's
+        corpus-relative directory as the stable test name. If at least one nested record is
+        present, the collector omits and removes the enclosing
+        `every_manifest_drives_a_conformance_case` entry. Ordinary libtest timings and nested case
+        timings otherwise share the same bounded history and run summary.
+    - title: Measurement boundary
+      body: >-
+        A case measurement includes manifest and source loading, semantic analysis, lowering,
+        generated-crate compilation where required, and program execution for run cases. Shared
+        build-cache warmup can make the first compiling case slower, so timings are comparative
+        development evidence rather than benchmark results. Do not run competing Cargo work while
+        collecting the full workspace.
+  examples: []
+  errors: []
+  notes:
+    - The timing file is a private compiler-test protocol, not a Terrane language or runtime API.
+    - The collector deletes its temporary timing file after every run.
+  see-also:
+    - internals.build.toolchain-profiles
+provenance:
+  specification: []
+  conformance: []
+  compiler:
+    - docs/measure-test-times.py
+    - crates/terrane-compiler/tests/conformance.rs
