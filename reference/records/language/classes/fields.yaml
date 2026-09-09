@@ -25,6 +25,35 @@ documentation:
     - metadata
     - reflection
   sections:
+    - id: initialization
+      title: Initializing fields
+      blocks:
+        - type: rule
+          id: rule.classes.field-defaults
+          level: must
+          since: null
+          evidence:
+            - implicit-class-field-defaults
+            - trait-field-defaults
+            - cross-unit-inherited-initializer
+            - nondefaultable-class-field
+            - nondefaultable-trait-field
+            - nondefaultable-tuple-field
+          markdown: |-
+            A typed class or trait field may omit its initializer when its
+            declared type has a canonical default. Boolean fields receive
+            `false`, numeric fields receive typed zero, strings and bytes
+            receive empty values, `T|none` receives `none`, and list, map, set,
+            unordered-map, and unordered-set fields receive empty collections.
+
+            Plain `none`, tuples, source objects, references, callables,
+            resources, and other runtime contracts are nondefaultable. Every
+            effective class field must have a canonical or explicit default.
+            A trait may provide an initializer, or the using class may override
+            the field with one. Inherited initializers retain their declaring
+            source and object context. Omission never infers a type, invokes an
+            arbitrary constructor, or puts hidden `none` into `T`.
+
     - id: declaration
       title: Declaring field metadata
       blocks:
@@ -44,10 +73,11 @@ documentation:
             cannot carry field metadata, and effective external names must be
             unique within a class.
 
-            The ordinary initializer remains the field default, and `T|none`
-            remains the source spelling for optionality. The resolved field
-            descriptor derives `defaulted` and `optional`; facilities must not
-            introduce parallel default or optional metadata.
+            A canonical type default or ordinary initializer is the effective
+            field default, including when contributed by a trait or inherited
+            from a base. `T|none` remains the source spelling for optionality.
+            The resolved field descriptor derives `defaulted` and `optional`;
+            facilities must not introduce parallel default or optional metadata.
 
     - id: reflection
       title: Reflecting resolved fields
@@ -58,6 +88,7 @@ documentation:
           since: null
           evidence:
             - class-field-metadata
+            - implicit-class-field-defaults
           markdown: |-
             A class descriptor exposes `field-count` and parallel,
             declaration-ordered `field-names`, `field-external-names`,

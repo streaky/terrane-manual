@@ -69,10 +69,10 @@ documentation:
             - typed-document-decoding
           markdown: |-
             External keys come from the class field descriptor. Missing fields
-            use ordinary initializers; absent `T|none` fields retain their
-            initialized optional value; other missing fields diagnose. Unknown
-            fields are recursively rejected or ignored only by the explicit
-            call policy.
+            retain their canonical type default or explicit initializer;
+            absent `T|none` fields retain their initialized optional value.
+            Fields without a default diagnose. Unknown fields are recursively
+            rejected or ignored only by the explicit call policy.
 
             Integer conversions are exact and range checked. Decimal or integer
             input to a binary float rounds to the nearest finite destination
