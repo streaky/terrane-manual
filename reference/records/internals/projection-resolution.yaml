@@ -161,6 +161,7 @@ documentation:
           evidence:
             - projected-destination-results
             - projected-serde-json-result
+            - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
           markdown: |-
@@ -170,12 +171,20 @@ documentation:
             Semantic analysis gathers the exact Rust representation selected by
             each written Terrane destination and batches those questions through
             the projection oracle against the resolved dependency workspace.
+            Higher-ranked and nested bound paths are rewritten at every Rust
+            path-root occurrence when a dependency uses a manifest alias.
             A public bound owner from a transitive crates.io package is pinned at
-            its lock-resolved version and added to probe and generated manifests
-            so rustdoc's canonical path remains nameable; ambiguous or
-            non-registry owners decline explicitly.
-            Lowering names the concrete type argument and applies the existing
-            recursive result conversion without a boxed universal value.
+            its lock-resolved version and added as a featureless, default-disabled
+            edge to probe and generated manifests. Existing transitive edges keep
+            the resolved feature set, so the injected edge cannot widen it;
+            ambiguous or non-registry owners decline explicitly.
+
+            Projection-history format 3 records those exact bound-owner edges.
+            Their deliberate manifest rewrite resolves offline without Cargo's
+            `--locked` flag; integrity comes from the pre-injection manifest and
+            lock in the projection identity plus the content-hashed exact edge
+            list. Lowering names the concrete type argument and applies the
+            existing recursive result conversion without a boxed universal value.
 
     - id: async-sequences
       title: Async-sequence recognition and lowering
@@ -259,18 +268,18 @@ documentation:
             - rust-dependency-deferred-surface
           markdown: |-
             `terrane-projection.lock` is durable project history rather than a
-            cache index. History format 2 records projected dependency members,
-            removed members, content origin, rustdoc format, projection schema,
-            cache identity, verified content hash, and the resolution events
-            that produced that content.
+            cache index. History format 3 records projected dependency members,
+            removed members, injected exact bound-owner dependencies, content
+            origin, rustdoc format, projection schema, cache identity, verified
+            content hash, and the resolution events that produced that content.
 
             An exact-cache hit for unchanged content preserves the original
             local or published content-origin history instead of rewriting it as
-            cache provenance. If the same format-2 identity and dependency
-            surface later produce a different content hash, projection fails
-            with a replay-mismatch diagnostic. Version changes retain removed
-            member identities so a later missing import can be distinguished
-            from a member that never existed.
+            cache provenance. If the same format-3 identity, dependency surface,
+            and bound-owner edge list later produce a different content hash,
+            projection fails with a replay-mismatch diagnostic. Version changes
+            retain removed member identities so a later missing import can be
+            distinguished from a member that never existed.
 
             Removed-member history participates in every projected lookup tier:
             top-level names use their namespace entry, static members use

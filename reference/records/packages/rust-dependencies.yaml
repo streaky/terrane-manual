@@ -261,6 +261,7 @@ documentation:
             - projected-serde-json-result
             - projected-result-without-destination
             - projected-result-conflicting-destinations
+            - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
             - projected-result-borrowed
@@ -274,10 +275,16 @@ documentation:
             absent, incompatible, or conflicting destinations are compile-time
             failures. Higher-ranked lifetimes and associated constraints remain
             part of the proof rather than being approximated from rustdoc
-            implementation lists. When rustdoc names a public bound through a
-            transitive crates.io package, that owner is pinned at its lock-resolved
-            version and added to the generated manifest so the bound is
-            nameable; ambiguous or non-registry owners decline.
+            implementation lists. Higher-ranked and nested bound paths use the
+            dependency's manifest alias at every Rust path-root occurrence.
+
+            When rustdoc names a public bound through a transitive crates.io
+            package, that owner is pinned at its lock-resolved version, recorded
+            in projection-history format 3, and added to the generated manifest
+            with no explicit or default features. Existing transitive edges keep
+            the resolved feature set, so this direct edge makes the bound
+            nameable without widening it; ambiguous or non-registry owners
+            decline.
 
             Closed scalar, string, bytes, optional, sequence, mapping, set,
             homogeneous tuple, and projected foreign-object shapes recurse
@@ -302,6 +309,13 @@ documentation:
             published projection enters the local cache for offline reuse.
             Bundled artifacts are explicitly deferred until Terrane has a
             release artifact channel rather than being silently attempted.
+
+            Injecting an exact bound-owner edge deliberately rewrites only the
+            generated projection manifest, so its offline fetch cannot use
+            Cargo's `--locked` mode. The pre-injection manifest and lock already
+            participate in projection identity, and the injected edge list is
+            exact, content-hashed, and reviewable in `terrane-projection.lock`;
+            these invariants replace Cargo lock enforcement for that step.
 
             Unsupported members remain explicit declines in the transferable
             projection artifact. The compiler does not replace one Rust API
