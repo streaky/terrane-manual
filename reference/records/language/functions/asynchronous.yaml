@@ -158,6 +158,7 @@ documentation:
             cancellation-safe operations whenever progress depends on an
             external system.
   see-also:
+    - lang.functions.callable-types
     - tool.packages.rust-dependencies
 
 provenance:

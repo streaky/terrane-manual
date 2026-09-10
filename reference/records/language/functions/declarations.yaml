@@ -143,6 +143,7 @@ documentation:
             Remove the declaration if it is obsolete, or retain it while its
             first caller is being connected.
   see-also:
+    - lang.functions.callable-types
     - lang.lexical-structure.text-blocks
 
 provenance:
