@@ -20,35 +20,45 @@ documentation:
     - title: Collection protocol
       body: >-
         `docs/measure-test-times.py` creates a temporary file and exports its path as
-        `TERRANE_TEST_TIMING_FILE` to the serial Cargo test process. The conformance driver times
-        each manifest from case setup through checking, compilation, and execution, then appends a
-        versioned tab-separated record containing the relative case path, status, and elapsed
-        seconds. A drop guard records a failed status if a case unwinds. Normal test runs without
-        the environment variable perform no timing-file I/O.
+        `TERRANE_TEST_TIMING_FILE` to the serial Cargo test process. The conformance driver tracks
+        each manifest's setup, checking, and execution work, then appends a versioned tab-separated
+        record containing the relative case path, status, and elapsed seconds. Dependency-free
+        accepted cases share one generated-crate build, which receives its own synthetic timing
+        record instead of being estimated per case. A deferred case that never reaches that build
+        is recorded as ignored rather than falsely failed; a drop guard still records a real active
+        case failure. Normal test runs without the environment variable perform no timing-file I/O.
     - title: Scoreboard identity
       body: >-
         Nested records use the `conformance cases [terrane_compiler]` target and the manifest's
         corpus-relative directory as the stable test name. If at least one nested record is
         present, the collector omits and removes the enclosing
-        `every_manifest_drives_a_conformance_case` entry. Ordinary libtest timings and nested case
-        timings otherwise share the same bounded history and run summary.
+        `every_manifest_drives_a_conformance_case` entry. The shared dependency-free build uses the
+        stable name `generated-rust/batched-dependency-free-build`. Ordinary libtest timings,
+        manifest timings, and that build timing otherwise share the same bounded history and run
+        summary.
     - title: Generated-crate isolation
       body: >-
-        Compiling cases share one Cargo target directory for dependency reuse, but each sorted
-        manifest receives its own deterministic binary name and source path. The driver executes
-        that exact case-specific artifact; no case can reuse the preceding case's executable when
-        Cargo decides that another target is fresh. Package fixtures are staged outside the corpus.
-        When a package carries a reviewed `terrane-projection.lock`, the driver compares the staged
-        post-compilation history with the source fixture after excluding only machine-derived cache
-        identity and content hash fields. A format migration or any semantic projection change
-        fails the case instead of silently rewriting the reviewed fixture.
+        Every sorted accepted manifest receives its own deterministic binary name and source path.
+        Dependency-free binaries are declared in one generated Cargo manifest and built together,
+        allowing Cargo to schedule their independent rustc and linker work in parallel. Cases with
+        projected Rust dependencies retain separate manifests and builds because their dependency
+        graphs may conflict. The driver removes fixture-specific Cargo configuration before the
+        shared dependency-free build, while all builds retain one Cargo target directory for
+        dependency reuse. The driver executes each exact case-specific artifact; no case can reuse
+        another case's executable when Cargo decides that a target is fresh. Package fixtures are
+        staged outside the corpus. When a package carries a reviewed `terrane-projection.lock`, the
+        driver compares the staged post-compilation history with the source fixture after excluding
+        only machine-derived cache identity and content hash fields. A format migration or any
+        semantic projection change fails the case instead of silently rewriting the reviewed
+        fixture.
     - title: Measurement boundary
       body: >-
-        A case measurement includes manifest and source loading, semantic analysis, lowering,
-        generated-crate compilation where required, and program execution for run cases. Shared
-        build-cache warmup can make the first compiling case slower, so timings are comparative
-        development evidence rather than benchmark results. Do not run competing Cargo work while
-        collecting the full workspace.
+        A case measurement includes manifest and source loading, semantic analysis, lowering, and
+        program execution for run cases. The synthetic dependency-free generated-crate row reports
+        its complete shared build wall time; isolated dependency builds remain attributed to their
+        cases. Build-cache warmup can make an early compiling case slower, so timings are
+        comparative development evidence rather than benchmark results. Do not run competing Cargo
+        work while collecting the full workspace.
   examples: []
   errors: []
   notes:
