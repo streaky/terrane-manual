@@ -258,6 +258,7 @@ documentation:
           since: null
           evidence:
             - projected-destination-results
+            - projected-serde-json-result
             - projected-result-without-destination
             - projected-result-conflicting-destinations
             - projected-result-unsatisfied-bound
@@ -273,7 +274,10 @@ documentation:
             absent, incompatible, or conflicting destinations are compile-time
             failures. Higher-ranked lifetimes and associated constraints remain
             part of the proof rather than being approximated from rustdoc
-            implementation lists.
+            implementation lists. When rustdoc names a public bound through a
+            transitive crates.io package, that owner is pinned at its lock-resolved
+            version and added to the generated manifest so the bound is
+            nameable; ambiguous or non-registry owners decline.
 
             Closed scalar, string, bytes, optional, sequence, mapping, set,
             homogeneous tuple, and projected foreign-object shapes recurse
