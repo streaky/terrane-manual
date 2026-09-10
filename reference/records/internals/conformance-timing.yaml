@@ -32,6 +32,16 @@ documentation:
         present, the collector omits and removes the enclosing
         `every_manifest_drives_a_conformance_case` entry. Ordinary libtest timings and nested case
         timings otherwise share the same bounded history and run summary.
+    - title: Generated-crate isolation
+      body: >-
+        Compiling cases share one Cargo target directory for dependency reuse, but each sorted
+        manifest receives its own deterministic binary name and source path. The driver executes
+        that exact case-specific artifact; no case can reuse the preceding case's executable when
+        Cargo decides that another target is fresh. Package fixtures are staged outside the corpus.
+        When a package carries a reviewed `terrane-projection.lock`, the driver compares the staged
+        post-compilation history with the source fixture after excluding only machine-derived cache
+        identity and content hash fields. A format migration or any semantic projection change
+        fails the case instead of silently rewriting the reviewed fixture.
     - title: Measurement boundary
       body: >-
         A case measurement includes manifest and source loading, semantic analysis, lowering,

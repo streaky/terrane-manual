@@ -88,6 +88,22 @@ documentation:
             parameterized, or wrongly typed protocol methods produce targeted
             source diagnostics.
 
+    - id: compiler-produced-read-only-lists
+      title: Compiler-produced read-only lists
+      blocks:
+        - type: rule
+          id: rule.collections.compiler-produced-read-only-lists
+          level: must
+          since: null
+          evidence:
+            - string-result-list-iteration
+          markdown: |-
+            Compiler-produced `list of string` and `list of text-range` results
+            are ordered, read-only collections. Both expose `length` and may be
+            consumed by `for`: `string.split` yields strings and
+            `string.find.all` yields text ranges in source order. Split results
+            additionally support indexing.
+
     - id: lifetime-and-identity
       title: Lifetime and identity
       blocks:

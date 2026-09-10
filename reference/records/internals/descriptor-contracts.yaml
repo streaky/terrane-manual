@@ -17,7 +17,7 @@ documentation:
   title: Canonical descriptor contracts
   title-style: text
   summary: >-
-    Records the delivered source-object descriptor model and the remaining built-in unification.
+    Records the unified semantic descriptor model for built-in and source-declared types.
   tags: [compiler, semantics, descriptors, protocols]
   sections:
     - id: model
@@ -25,23 +25,28 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `DescriptorContract` is the compiler-owned semantic record for each
-            source-declared class, interface, or trait. Semantic units expose these as
-            `descriptors`; the former source-object `ObjectContract`/`objects` naming no
-            longer exists. Source-object lookup, compatibility, dispatch, reflection, and
-            lowering consume those records. Built-in scalar aliases and numeric, string,
-            and collection family tables remain separate, so this is not yet the single
-            version-one descriptor representation.
+            `DescriptorContract` is the compiler-owned semantic record for built-in
+            types and source-declared classes, interfaces, and traits. Semantic units
+            keep only source-declared descriptors in their mutable local collection and
+            share one immutable compiler-owned built-in template registry. A contract
+            owns canonical identity, kind, category conformance, instance and static
+            member inventories, stable built-in operation IDs, and reflection data.
+            Compiler-produced string and text-range result lists select a dedicated
+            read-only list template rather than inheriting mutable list operations;
+            the template exposes `length` and the canonical collection iterator
+            operation. Function contracts retain the full canonical owner identity so
+            same-named classes from different namespaces cannot cross-select methods.
     - id: protocols
       title: Structural queries
       blocks:
         - type: markdown
           markdown: |-
-            `descriptor_protocol_method` recursively resolves a required non-static member
-            from a source descriptor, its traits, base, and interfaces. Iteration and truth
-            validation layer their signature constraints over this common query, so
-            structural satisfaction does not create a hidden interface or a
-            protocol-specific source-object table.
+            `descriptor_protocol_method` recursively resolves a required non-static
+            member from a source descriptor, its traits, base, and interfaces. Built-in
+            truth and iteration satisfaction query the canonical operation inventory;
+            source protocols layer signature constraints over the same descriptor
+            member model. Neither path creates a hidden interface or receiver-family
+            availability table.
   see-also:
     - lang.types.descriptors
     - lang.classes.protocols
@@ -52,6 +57,12 @@ provenance:
       section: "11.7"
   conformance:
     - descriptor-reflection
+    - builtin-descriptor-contracts
+    - builtin-name-class
+    - composed-descriptor-identities
+    - same-named-cross-namespace-methods
+    - string-result-list-iteration
+    - string-result-list-mutation
     - truth-protocol
     - iterator-protocol
   compiler: null

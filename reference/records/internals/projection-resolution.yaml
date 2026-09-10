@@ -53,7 +53,13 @@ documentation:
 
             Identity construction lives in
             `crates/terrane-compiler/src/projection.rs` under `cache_identity`
-            and `selected_target`.
+            and `selected_target`. The identity is deliberately environment-
+            specific when the resolved Cargo lock, effective target, toolchain,
+            or containment tier differs; it is not part of the reviewed semantic
+            surface fixture. `target_identity_reads_effective_cargo_configuration`
+            covers target-sensitive construction, while
+            `projection_history_migrates_provenance_and_detects_replay_drift`
+            proves that one exact identity cannot admit two content hashes.
 
     - id: resolution
       title: Ordered resolution transaction

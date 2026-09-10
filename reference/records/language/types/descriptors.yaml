@@ -17,7 +17,7 @@ documentation:
   title: Type descriptors
   title-style: text
   summary: >-
-    Defines version-one canonical type identity and the currently partial compiler representation.
+    Defines canonical type identity and the unified compiler descriptor representation.
   tags: [types, descriptors, reflection, objects]
   sections:
     - id: identity
@@ -26,29 +26,34 @@ documentation:
         - type: markdown
           markdown: |-
             Type descriptors are compiler-owned semantic objects with stable canonical
-            identity, not ordinary values. Version one requires built-ins and
-            source-declared classes, interfaces, and traits to share one descriptor contract
-            model. A source descriptor keeps namespace-qualified nominal identity through
-            imports and aliases.
+            identity. Built-ins and source-declared classes, interfaces, and traits
+            share one descriptor contract model. Source descriptors keep
+            namespace-qualified nominal identity through imports and aliases. Named
+            built-ins use their canonical `/core` identity, including instantiated
+            collection-family names. Synthesized references, callables, optionals, and
+            unions retain canonical source-shaped identity unless assigned a named
+            namespace family.
     - id: delivery
       title: Current compiler delivery
       blocks:
         - type: markdown
           markdown: |-
-            Source classes, interfaces, and traits currently use `DescriptorContract` for
-            member lookup, nominal compatibility, conformance, dispatch, reflection, and
-            structural protocols. Built-in scalars, string families, and collection
-            families still use separate aliases, tables, and receiver-specific switches.
-            The compiler plan tracks the remaining unification work.
+            `DescriptorContract` drives member lookup, nominal compatibility,
+            conformance, dispatch, reflection, and structural protocols for both
+            built-in and source-declared types. Scalar and category descriptor aliases
+            retain canonical contract identities. String, numeric, and collection
+            member availability selects stable operation IDs from the receiver's
+            descriptor before operation-specific checking and lowering.
     - id: queries
       title: Version-one query contract
       blocks:
         - type: markdown
           markdown: |-
-            The finished model must answer member lookup, nominal compatibility, interface
-            conformance, dispatch metadata, reflection, and structural protocol queries
-            from one descriptor contract. A statically known descriptor may erase during
-            lowering only when doing so does not change observable identity or reflection.
+            The model answers member lookup, nominal compatibility, interface
+            conformance, dispatch metadata, reflection, and structural protocol queries.
+            A statically known descriptor may erase during lowering only when doing so
+            does not change observable identity or reflection. Materialized descriptors
+            obtain name, kind, identity, and field metadata from the selected contract.
   see-also:
     - lang.classes.protocols
 
@@ -58,5 +63,8 @@ provenance:
       section: "11.7"
   conformance:
     - descriptor-reflection
+    - builtin-descriptor-contracts
+    - composed-descriptor-identities
+    - same-named-cross-namespace-methods
     - nominal-object-identity
   compiler: null
