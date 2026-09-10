@@ -39,6 +39,13 @@ documentation:
             release. A package may explicitly request the system Rust toolchain,
             but that changes only which compatible Rust installation Cargo invokes.
 
+            Each Terrane version selects one stable Rust release. The compiler
+            workspace `rust-toolchain.toml` pins it and the workspace
+            `rust-version`, generated manifest `rust-version`, and generated
+            `rust-toolchain.toml` all name that same release. Direct generated
+            lowering and vendored support therefore share one Rust compatibility
+            target.
+
             Unicode behavior is a separate compiler-owned part of the toolchain
             profile. Version one selects Unicode 16.0.0 for full case folding,
             normalization, Unicode word segmentation, and extended grapheme
