@@ -104,7 +104,7 @@ documentation:
           evidence:
             - namespace-qualified-projected-object-identity
           markdown: |-
-            Projection schema 24 resolves every public item through a
+            Projection schema 28 resolves every public item through a
             substantive reachable Rust path before considering paths beneath a
             `prelude` module, then uses shortest depth and lexical ordering as
             tie-breakers. That selected path supplies both the callable Rust
@@ -150,6 +150,31 @@ documentation:
             higher-ranked, and lifetime-dependent callable shapes are declined;
             the compiler does not erase them into a universal callback value.
 
+
+    - id: destination-results
+      title: Destination-result proof
+      blocks:
+        - type: rule
+          id: rule.internals.projection.destination-result-proof
+          level: must
+          since: null
+          evidence:
+            - projected-destination-results
+            - projected-result-unsatisfied-bound
+            - projected-result-unknown-bound
+          markdown: |-
+            Projection schema 28 retains one result-only Rust generic parameter,
+            its recursive result template, and the complete rendered bounds,
+            including higher-ranked lifetimes and associated constraints.
+            Semantic analysis gathers the exact Rust representation selected by
+            each written Terrane destination and batches those questions through
+            the projection oracle against the resolved dependency workspace.
+
+            Only `yes` admits the specialization. `no`, `unknown`, a missing
+            answer, or an oracle execution failure produces a source diagnostic.
+            Probe evidence and wall time join the resolved projection artifact.
+            Lowering names the concrete type argument and applies the existing
+            recursive result conversion without a boxed universal value.
 
     - id: async-sequences
       title: Async-sequence recognition and lowering

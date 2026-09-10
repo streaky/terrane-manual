@@ -252,21 +252,37 @@ documentation:
             open generic API internally; that does not make the open generic
             directly projectable.
 
-        - type: note
-          id: note.dependencies.open-generic-results
-          style: warning
+        - type: rule
+          id: rule.dependencies.destination-directed-results
+          level: must
+          since: null
+          evidence:
+            - projected-destination-results
+            - projected-result-without-destination
+            - projected-result-conflicting-destinations
+            - projected-result-unsatisfied-bound
+            - projected-result-unknown-bound
+            - projected-result-borrowed
+            - projected-result-source-object
           markdown: |-
-            Terrane does not currently select an open Rust generic result from
-            the destination type written at a call site. An API such as a
-            generic row extractor therefore remains declined even when each
-            intended concrete result type projects independently. The
-            projection oracle can prove exact concrete calls, but production
-            projection does not yet consume those proofs as type selection.
+            A projected dependency function or method may leave one result-only
+            Rust type parameter for the caller. Terrane selects that parameter
+            from exactly one written binding, argument, class-field, or return
+            destination. The projection oracle must prove every rendered Rust
+            bound for the exact concrete representation; `no`, `unknown`,
+            absent, incompatible, or conflicting destinations are compile-time
+            failures. Higher-ranked lifetimes and associated constraints remain
+            part of the proof rather than being approximated from rustdoc
+            implementation lists.
 
-            Complete such an operation through a concrete projected member or
-            a chain-only adapter whose public result type is already fixed.
-            This preserves static ownership and conversion boundaries; it does
-            not make the upstream open generic directly callable.
+            Closed scalar, string, bytes, optional, sequence, mapping, set,
+            homogeneous tuple, and projected foreign-object shapes recurse
+            through the result template. Source-declared object destinations
+            remain unavailable because dependencies have no authored conversion
+            contract for their generated Rust representation. Borrowed results
+            are declined; accepted values cross the boundary owned. Calls name
+            the selected Rust type explicitly in generated Rust. Terrane does
+            not expose Rust angle-bracket generic arguments in source.
     - id: resolution
       title: Projection resolution and cache behavior
       blocks:
