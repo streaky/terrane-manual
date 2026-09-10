@@ -1,0 +1,128 @@
+format: 1
+id: lang.numerics.floating-point
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Floating-point values and foundational mathematics
+  title-style: text
+  summary: >-
+    Defines binary32 and binary64 values, their foundational scalar methods,
+    IEEE classification and boundary utilities, decomposition, scaling, and descriptor constants.
+  tags:
+    - numerics
+    - floating-point
+    - ieee-754
+    - mathematics
+  sections:
+    - id: values
+      title: Values and method shape
+      blocks:
+        - type: markdown
+          markdown: |-
+            `float32` and `float64` are the implemented floating widths. `float` is the
+            default-precision spelling of `float64`, not a third descriptor. Every method
+            returning a floating value preserves the receiver width.
+
+            `finite`, `infinite`, `not-a-number`, `negative-sign`, `zero`, `normal`, and
+            `subnormal` are properties. All computations are methods, including operations
+            with no arguments, and therefore require `;` when invoked.
+    - id: operations
+      title: Foundational operations
+      blocks:
+        - type: markdown
+          markdown: |-
+            Roots and powers are `square-root`, `cube-root`, `hypotenuse`, `power`, and
+            `integer-power`. Exponential and logarithmic methods are `exponential`,
+            `binary-exponential`, `exponential-minus-one`, `natural-log`,
+            `natural-log-one-plus`, `binary-log`, `decimal-log`, and `logarithm`.
+            Trigonometric methods are `sine`, `cosine`, `sine-cosine`, `tangent`,
+            `arc-sine`, `arc-cosine`, `arc-tangent`, and `arc-tangent-two`; angles are radians.
+
+            Scalar utilities are `absolute`, `copy-sign`, `minimum`, `maximum`, `clamp`,
+            `fractional-part`, and `multiply-add`. `next-up` and `next-down` traverse one
+            representable value. `decompose` returns `.mantissa` at receiver precision and
+            an `.exponent` of `int32`; `scale-binary` applies an `int32` power of two with
+            one final receiver-precision rounding.
+    - id: ieee-boundaries
+      title: IEEE boundaries and accuracy
+      blocks:
+        - type: markdown
+          markdown: |-
+            Floating domain and range conditions do not throw. Operations return the specified
+            NaN, infinity, signed zero, normal, or subnormal result. `hypotenuse` lets infinity
+            win over NaN. `minimum` and `maximum` prefer a number over one NaN and order negative
+            zero below positive zero. `clamp` retains a receiver NaN and returns canonical NaN
+            for a NaN bound or reversed bounds. `copy-sign`, adjacent-value traversal, and
+            decomposition retain the input bits required by their definitions.
+
+            `fractional-part` returns NaN for NaN or either infinity.
+
+            Classification and bit utilities are exact. Binary scaling has one ties-to-even
+            rounding and `multiply-add` is fused. Elementary and transcendental methods use the
+            target primitive's documented result; cross-target bit identity and a portable ULP
+            bound are not promised. No foundational method introduces a scientific dependency.
+    - id: descriptors
+      title: Descriptor constants
+      blocks:
+        - type: markdown
+          markdown: |-
+            `float32` and `float64` expose `.radix`, `.significand-digits`, `.epsilon`,
+            `.minimum-positive-normal`, `.minimum-positive-subnormal`, `.minimum`, and
+            `.maximum`. Radix is 2; significand precision is 24 digits for `float32` and
+            53 digits for `float64`.
+    - id: decomposition-example
+      title: Decompose and reconstruct a value
+      blocks:
+        - type: example
+          id: complete-float-surface
+          title: Round-trip through a binary exponent
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/float-decomposition
+
+            function main;
+              value float64 = 12.0
+              parts = value.decompose;
+              print; parts.mantissa
+              print; parts.exponent
+              print; (parts.mantissa.scale-binary; parts.exponent)
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              0.75
+              4
+              12
+          diagnostic: null
+          markdown: null
+  see-also:
+    - lang.numerics.conversion
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "11.3"
+  conformance:
+    - foundational-float-math
+    - complete-float-surface
+    - invalid-float-member-receiver
+    - float-operation-argument-count
+    - float-operation-incompatible-argument
+    - float-integer-operation-argument
+    - non-callable-float-property
+  compiler: null

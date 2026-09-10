@@ -8,6 +8,7 @@ navigation:
       - page: lang.lexical-structure.text-blocks
       - page: lang.functions.declarations
       - page: lang.numerics.conversion
+      - page: lang.numerics.floating-point
       - page: lang.classes.fields
       - page: lang.classes.protocols
       - page: lang.functions.asynchronous
