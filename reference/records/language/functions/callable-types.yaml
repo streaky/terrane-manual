@@ -92,19 +92,19 @@ documentation:
           markdown: |-
             Named functions, anonymous closures, stored bound methods, and
             inferred callable bindings retain their exact inferred escaping set.
-            A callable binding or field with a written type retains that written
-            contract as its storage ABI, so invocation through it uses the bound.
+            A callable binding or field with a written type retains both the exact
+            initializer summary for reflection and the written contract as its
+            storage ABI and invocation bound.
 
-            A callable proven to have an empty escaping set lowers to an
-            infallible callable ABI. Its invocation has no error propagation and
-            registers no semantic error site. Widening that value into a broader
-            written callable destination inserts a result-bearing adapter at the
-            conversion boundary. The same rules apply to synchronous and
-            asynchronous callable values.
+            ABI selection follows the written bound independently. A proven-empty
+            implementation widened into a throwing destination therefore receives
+            result-bearing storage without falsifying its empty exact escaping set.
+            Its invocation through that storage observes the written bound. The
+            same rules apply to synchronous and asynchronous callable values.
 
-            Reflection exposes the stored written promise as
-            `throwable-contract`, the effective set as `escaping-throwables`, and
-            the aggregate marker through `contracts`.
+            Reflection exposes the written promise as `throwable-contract`, the
+            exact initializer set as `escaping-throwables`, and the aggregate
+            marker through `contracts`.
   see-also:
     - lang.functions.declarations
     - lang.functions.asynchronous
