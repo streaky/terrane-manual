@@ -14,30 +14,54 @@ lifecycle:
 
 documentation:
   status: complete
-  title: Structural protocols
+  title: Protocols, interfaces, and traits
   title-style: text
   summary: >-
-    Defines descriptor-member shape checks that do not require a nominal interface declaration.
-  tags: [classes, protocols, truth, iteration]
+    Distinguishes unnamed structural operation shapes, named nominal dispatch
+    contracts, and reusable source implementation.
+  tags: [classes, protocols, interfaces, traits, truth, iteration]
   sections:
-    - id: satisfaction
-      title: Descriptor-based satisfaction
+    - id: roles
+      title: Three distinct object mechanisms
       blocks:
         - type: markdown
           markdown: |-
-            Structural protocols are satisfied by the required member shape on the canonical
-            source descriptor. They are not hidden nominal interfaces. Iteration and truth
-            use the same recursive protocol-member query, including members inherited from
-            a base or supplied by trait/interface composition.
+            A **protocol** is an unnamed structural operation shape. It is
+            satisfied by the required members on a canonical descriptor without
+            a declaration, nominal identity, or dispatch object.
+
+            An **interface** is a named nominal contract and type object. A class
+            adopts it explicitly with `implements`; the compiler checks its
+            required signatures and uses it as a typed dispatch boundary.
+
+            A **trait** is reusable Terrane source implementation. `uses`
+            composes its fields and methods into a class with explicit conflict
+            handling. It is not a type or a subtyping relation. In particular,
+            Terrane traits do not play Rust traits' role: a projected Rust trait
+            maps toward a Terrane interface because both are named conformance
+            contracts.
+
+            Compiler descriptor operations implement lookup and reflection
+            internally. They are not a fourth public source construct.
+
+    - id: satisfaction
+      title: Descriptor-based protocol satisfaction
+      blocks:
+        - type: markdown
+          markdown: |-
+            Structural protocols are satisfied by the required member shape on
+            the canonical source descriptor. Iteration and truth use the same
+            recursive protocol-member query, including members inherited from a
+            base or supplied by trait or interface composition.
     - id: truth
       title: Truth protocol
       blocks:
         - type: markdown
           markdown: |-
-            A class instance may be an `if` or `while` condition when its descriptor defines
-            a non-static `truth` method. The method must be synchronous, non-throwing,
-            non-mutating, parameterless, and return `bool`. A malformed or missing method is
-            rejected at the condition.
+            A class instance may be an `if` or `while` condition when its
+            descriptor defines a non-static `truth` method. The method must be
+            synchronous, non-throwing, shared, parameterless, and return `bool`.
+            A malformed or missing method is rejected at the condition.
         - type: example
           id: truth-protocol
           title: Use a class as a condition

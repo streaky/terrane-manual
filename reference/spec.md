@@ -292,7 +292,7 @@ A type reference is structured rather than a presentation string:
 ```yaml
 type:
   display: text-display
-  entity: api.core.protocol.text-display
+  entity: api.core.interface.text-display
   arguments: []
   nullable: false
 ```
@@ -338,7 +338,7 @@ surface:
           name: values
           type:
             display: text-display
-            entity: api.core.protocol.text-display
+            entity: api.core.interface.text-display
             arguments: []
             nullable: false
           mode: variadic
@@ -404,7 +404,7 @@ surface:
 
   extends: []
   implements:
-    - api.core.protocol.text-display
+    - api.core.interface.text-display
   uses: []
   construct-signature: default
   ownership: resource
@@ -993,7 +993,7 @@ surface:
           name: values
           type:
             display: text-display
-            entity: api.core.protocol.text-display
+            entity: api.core.interface.text-display
             arguments: []
             nullable: false
           mode: variadic

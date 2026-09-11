@@ -32,11 +32,17 @@ documentation:
         - type: markdown
           markdown: |-
             A top-level function declaration creates a callable object in its
-            namespace. The semicolon in the header introduces its parameters;
-            it is present even when the parameter list is empty. A declared
-            result type is a contract for every reachable return path in both
-            top-level functions and class methods. The compiler rejects an
-            incompatible returned value before generating Rust.
+            namespace. Plain `function` is shared; `mutable function` and
+            `consuming function` declare repeatable mutation and one-shot
+            transfer authority. The optional invocation prefix precedes `async`,
+            while `throws` follows the signature. The same spellings apply to
+            methods, anonymous closures, and function types.
+
+            The semicolon in the header introduces parameters and is present
+            even when the parameter list is empty. A declared result type is a
+            contract for every reachable return path in both top-level functions
+            and class methods. The compiler rejects an incompatible returned
+            value before generating Rust.
 
             One conservative post-condition is recognized only for an exact
             static `T|none` member returned from a concrete function or method
