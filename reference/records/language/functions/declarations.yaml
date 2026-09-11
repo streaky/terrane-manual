@@ -44,6 +44,13 @@ documentation:
             and class methods. The compiler rejects an incompatible returned
             value before generating Rust.
 
+            A method body may use less receiver authority than its written
+            declaration, never more. `construct` has intrinsic mutable
+            lifecycle authority. An authored `destruct` is written
+            `consuming function destruct;`, making its one-shot lifecycle
+            contract explicit even though generated Rust cleanup may receive a
+            mutable borrow.
+
             One conservative post-condition is recognized only for an exact
             static `T|none` member returned from a concrete function or method
             declared as `T`. A preceding sibling `if member == none` or

@@ -53,6 +53,22 @@ documentation:
             the canonical source descriptor. Iteration and truth use the same
             recursive protocol-member query, including members inherited from a
             base or supplied by trait or interface composition.
+    - id: invocation-authority
+      title: Operation authority in structural and nominal contracts
+      blocks:
+        - type: markdown
+          markdown: |-
+            Invocation mode is part of an operation shape. Plain `function` is
+            shared, `mutable function` grants repeatable update authority, and
+            `consuming function` grants one-shot transfer authority. An
+            interface requirement writes that boundary explicitly; the
+            compiler does not infer it from one implementing class.
+
+            An implementation may use less authority than its destination,
+            never more: shared satisfies shared, mutable, or consuming;
+            mutable satisfies mutable or consuming; consuming satisfies only
+            consuming. Structural protocol checks apply the same mode-aware
+            shape comparison without introducing a nominal protocol identity.
     - id: truth
       title: Truth protocol
       blocks:
@@ -89,7 +105,9 @@ documentation:
           diagnostic: null
           markdown: null
   see-also:
+    - lang.functions.callable-types
     - lang.types.descriptors
+    - tool.packages.rust-dependencies
 
 provenance:
   specification:
