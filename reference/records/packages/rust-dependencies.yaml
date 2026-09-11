@@ -150,25 +150,27 @@ documentation:
             - projected-callback-throwable
           markdown: |-
             A concrete monomorphic Rust `Fn`, `FnMut`, or `FnOnce` bound
-            projects as the corresponding Terrane function contract at either
-            a free-function or method call. A callback whose result is a bounded
-            future projects as an `async function`. The generated boundary
-            closure converts each argument and result without introducing a
-            foreign callback runtime.
+            projects as a shared, mutable, or consuming Terrane function
+            contract respectively at either a free-function or method call. A
+            callback whose result is a bounded future adds the orthogonal
+            `async` contract. The generated boundary closure converts each
+            argument and result without introducing a foreign callback runtime.
 
-            Rust `FnMut` describes repeated mutable invocation by the dependency;
-            it does not add a mutable Terrane capture cell. Version-one anonymous
-            functions capture ordinary values by value, so aliased mutable
-            captured state remains rejected. Put coordinated mutable state behind
-            an explicit owner task and typed channels.
+            Mutable callbacks retain repeatable owned state, and separating the
+            Terrane callable copies its current environment instead of aliasing
+            it. A consuming callback transfers that environment into one
+            one-shot Rust closure. Rust `'static`, `Send`, and `Sync`
+            requirements remain independent ownership requirements in Terrane.
+            A retained callback cannot capture a borrowed reference or object
+            receiver. A transferable callback cannot capture a local-only value,
+            and an escaping throwable is rejected when the Rust callback result
+            has no matching failure representation. Open generic, higher-ranked,
+            and lifetime-dependent callback shapes remain unavailable.
 
-            Rust `'static`, `Send`, and `Sync` requirements remain ownership
-            requirements in Terrane. A retained callback cannot capture a
-            borrowed reference or object receiver. A transferable callback
-            cannot capture a local-only value, and an escaping throwable is
-            rejected when the Rust callback result has no matching failure
-            representation. Open generic, higher-ranked, and
-            lifetime-dependent callback shapes remain unavailable.
+            Rust traits and Terrane traits only share a word. Rust traits are
+            named conformance contracts, so admissible trait projection targets
+            Terrane interfaces. Terrane traits compose source fields and methods
+            through `uses`; they do not represent foreign implementations.
     - id: async-sequences
       title: Consuming projected asynchronous sequences
       blocks:
