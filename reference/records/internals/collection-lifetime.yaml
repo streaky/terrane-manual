@@ -46,9 +46,12 @@ documentation:
 
             List removal uses `Vec::remove` after separation. Ordered-map
             removal uses one `IndexMap::shift_remove`, preserving the remaining
-            order without rebuilding the map. Unordered maps retain a key-to-
-            iteration-position index so successful unique removal is expected
-            amortized constant time. Both map representations test a shared miss
+            order without rebuilding the map. Unordered maps store each key's
+            iteration position beside its value so successful unique removal is
+            expected amortized constant time. A reordering removal makes later
+            new-key insertions append rather than relying on stable-hash sorted
+            storage; traversal remains deterministic for the operation history.
+            Both map representations test a shared miss
             before separation; a successful shared mutation clones backing
             storage once. Removal returns the stored value without an earlier
             drop. List-only `clear` and ordered collection destruction release
