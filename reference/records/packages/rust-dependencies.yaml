@@ -220,6 +220,8 @@ documentation:
             - projected-async-runtime-context
             - projected-async-nonsend
             - projected-dyn-declines
+            - projected-box-non-interface
+            - projected-boxed-trait-result
             - projected-canonical-drop-import
             - projected-boxed-erased-auto-trait
           markdown: |-
