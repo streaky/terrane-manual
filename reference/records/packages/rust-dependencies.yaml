@@ -129,6 +129,8 @@ documentation:
           since: null
           evidence:
             - rust-dependency-async-function
+            - rust-dependency-callbacks
+            - sync-main-later-async
           markdown: |-
             A projected Rust `async fn` is an asynchronous Terrane callable.
             Calling it constructs a linear task, and `await` consumes that task
@@ -136,11 +138,16 @@ documentation:
             Rust errors, receiver ownership, and dependency panic handling use
             the same boundary contract as synchronous projected members.
 
-            When Rust owns a projected `Send` interface future, the adapter owns
-            a separable receiver value. Dropping that Rust future requests
-            Terrane cancellation, lets nested `finally` cleanup finish, and
-            releases the receiver only after cleanup. Mutable receiver state is
-            copied back only on successful completion.
+            Projected asynchronous interface methods require `Send` and an
+            asynchronous package entry. When Rust owns such a method future,
+            the adapter owns a separable receiver value. Dropping that future
+            requests Terrane cancellation, lets nested `finally` cleanup
+            finish, and releases the receiver only after cleanup. Mutable
+            receiver state is copied back only on successful completion.
+            Resource-owning classes therefore require a consuming receiver.
+            Executor shutdown drains detached cleanup before releasing the
+            runtime. An unrelated async function in a sync-main package retains
+            the smaller non-Tokio runtime.
 
     - id: callbacks
       title: Passing Terrane callables to Rust
@@ -181,13 +188,18 @@ documentation:
           since: null
           evidence:
             - rust-dependency-nonclone-field
+            - projected-interface-send-field
+            - projected-interface-sync-field
           markdown: |-
             Projection records whether an owned foreign Rust type implements
-            `Clone`. When a source class stores a non-`Clone` foreign value in
-            a field, that class becomes resource-owning transitively.
-            Assignment transfers the enclosing class value; generated Rust
-            never derives `Clone` across a field whose foreign type does not
-            support it.
+            `Clone`, `Send`, and `Sync`; the latter two are independently proven
+            against the resolved crate by the projection oracle. When a source
+            class stores a non-`Clone` foreign value in a field, that class
+            becomes resource-owning transitively. Assignment transfers the
+            enclosing class value; generated Rust never derives `Clone` across
+            a field whose foreign type does not support it. Projected interface
+            and retained-bound checks recursively follow nested source fields
+            and these closed foreign auto-trait facts.
 
     - id: interfaces
       title: Implementing projected Rust traits
@@ -201,6 +213,15 @@ documentation:
             - projected-generic-interface-argument
             - projected-generic-non-immediate-bound
             - projected-interface-send-field
+            - projected-interface-sync-field
+            - projected-retained-bound
+            - projected-drop-missing-destruct
+            - projected-async-resource-borrow
+            - projected-async-runtime-context
+            - projected-async-nonsend
+            - projected-dyn-declines
+            - projected-canonical-drop-import
+            - projected-boxed-erased-auto-trait
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane
             interface. Plain Rust `&self`, `&mut self`, and `self` receivers
@@ -214,24 +235,29 @@ documentation:
             foreign Rust implementation.
 
             Owned concrete generic and `impl Trait` inputs retain their Rust
-            lifetime and thread bounds and specialize from the written class
-            argument. A supported `Box<dyn Trait>` input accepts either a
-            concrete class implementor or the exact generated Terrane interface
-            wrapper; the dependency shim performs the owning box conversion.
-            Projected `Send` and `Sync` obligations are checked against the
-            complete class field graph before Rust lowering.
+            lifetime, `Send`, and `Sync` bounds and specialize from the written
+            class argument. Only an owning `Box<dyn Interface + Send/Sync>`
+            parameter projects. Every object auto-trait is retained; the
+            dependency shim boxes a conforming concrete class or the exact
+            generated Terrane interface wrapper. Bare or borrowed trait
+            objects, non-interface `Box<T>`, multiple principal traits, boxed
+            trait-object results, and wrappers lacking requested auto traits
+            decline before lowering.
 
-            Canonical Rust `Drop` is not directly imported as a source
-            interface. When an otherwise projectable trait requires canonical
-            `Drop`, its Terrane implementor must provide `consuming destruct`;
-            lowering reuses the class's single lineage-aware `Drop`
-            implementation. Other supertrait chains remain unavailable.
+            `Send` and `Sync` are proven independently for each closed foreign
+            type. Interface and retained-bound checks recursively traverse the
+            complete effective local-class field graph. Canonical Rust `Drop`
+            is not directly imported as a source interface, including through
+            a public reexport. The declined item points to `consuming destruct`.
+            When an otherwise projectable trait requires canonical `Drop`, its
+            Terrane implementor must provide that destructor; lowering reuses
+            the class's single lineage-aware `Drop` implementation.
 
             Interface-typed arguments still cannot select an ordinary source
             generic bound. Required borrowed parameters, required `Result`
-            methods, static requirements, generic methods, unresolved associated
-            types, higher-ranked lifetimes, unsupported owning containers, and
-            unprojectable members decline with stable projection reasons.
+            methods, static requirements, generic methods, unresolved
+            associated types, higher-ranked lifetimes, other owning containers,
+            and unprojectable members decline with stable projection reasons.
             Projected error metadata contributes ordinary throwable
             compatibility and protocol eligibility.
 
