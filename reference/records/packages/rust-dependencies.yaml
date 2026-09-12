@@ -136,6 +136,12 @@ documentation:
             Rust errors, receiver ownership, and dependency panic handling use
             the same boundary contract as synchronous projected members.
 
+            When Rust owns a projected `Send` interface future, the adapter owns
+            a separable receiver value. Dropping that Rust future requests
+            Terrane cancellation, lets nested `finally` cleanup finish, and
+            releases the receiver only after cleanup. Mutable receiver state is
+            copied back only on successful completion.
+
     - id: callbacks
       title: Passing Terrane callables to Rust
       blocks:
@@ -194,6 +200,7 @@ documentation:
             - rust-dependency-callbacks
             - projected-generic-interface-argument
             - projected-generic-non-immediate-bound
+            - projected-interface-send-field
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane
             interface. Plain Rust `&self`, `&mut self`, and `self` receivers
@@ -206,18 +213,27 @@ documentation:
             with ordinary `implements`, and lowering emits the corresponding
             foreign Rust implementation.
 
-            Immediate concrete generic and `impl Trait` inputs may specialize
-            only when exactly one written class argument selects the concrete
-            implementation. Interface-typed arguments, non-immediate or
-            ambiguous inputs, required borrowed parameters, required `Result`
-            methods, static requirements, generic methods, unresolved associated
-            types, higher-ranked lifetimes, and unprojectable members decline
-            with stable projection reasons. Projected error metadata contributes
-            ordinary throwable compatibility and protocol eligibility.
+            Owned concrete generic and `impl Trait` inputs retain their Rust
+            lifetime and thread bounds and specialize from the written class
+            argument. A supported `Box<dyn Trait>` input accepts either a
+            concrete class implementor or the exact generated Terrane interface
+            wrapper; the dependency shim performs the owning box conversion.
+            Projected `Send` and `Sync` obligations are checked against the
+            complete class field graph before Rust lowering.
 
-            Projected `Send` and `Sync` obligations are recorded now; semantic
-            enforcement against arbitrary Terrane class field graphs is deferred
-            to the owned and erased conformance work.
+            Canonical Rust `Drop` is not directly imported as a source
+            interface. When an otherwise projectable trait requires canonical
+            `Drop`, its Terrane implementor must provide `consuming destruct`;
+            lowering reuses the class's single lineage-aware `Drop`
+            implementation. Other supertrait chains remain unavailable.
+
+            Interface-typed arguments still cannot select an ordinary source
+            generic bound. Required borrowed parameters, required `Result`
+            methods, static requirements, generic methods, unresolved associated
+            types, higher-ranked lifetimes, unsupported owning containers, and
+            unprojectable members decline with stable projection reasons.
+            Projected error metadata contributes ordinary throwable
+            compatibility and protocol eligibility.
 
             Rust traits and Terrane traits only share a word. Rust traits are
             named conformance contracts, so their projection target is a Terrane
