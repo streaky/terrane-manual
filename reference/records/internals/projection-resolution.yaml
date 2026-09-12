@@ -186,6 +186,47 @@ documentation:
             list. Lowering names the concrete type argument and applies the
             existing recursive result conversion without a boxed universal value.
 
+    - id: interface-impls
+      title: Projected interface implementation proof
+      blocks:
+        - type: rule
+          id: rule.internals.projection.interface-impl-proof
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-callbacks
+            - rust-dependency-nonclone-field
+            - projected-interface-missing-member
+            - projected-interface-receiver-mismatch
+            - projected-interface-signature-mismatch
+            - projected-interface-throwable-mismatch
+            - projected-interface-provided-override-borrowed
+            - projected-interface-provided-override-result
+          markdown: |-
+            Projection schema 39 records eligible Rust traits as nominal
+            interfaces with canonical identity, receiver mode, required/provided
+            membership, signatures, documentation, thread obligations, and
+            foreign-type cloneability.
+            Semantic conformance uses that descriptor metadata directly, while
+            lowering emits one readable foreign trait implementation per adopted
+            class-interface pair.
+
+            The projection oracle accepts impl-shaped questions in addition to
+            bound and call questions. Each complete implementation witness is
+            compiled against the exact resolved dependency workspace and cached
+            by its full source shape. A candidate interface enters the admitted
+            artifact only after that witness succeeds; one failed witness declines
+            only that interface and cannot block unrelated proven interfaces.
+            Unsupported public traits and members remain in the dependency
+            artifact with stable tooling-visible decline reasons.
+
+            Trait admission accepts only plain `self`, `&self`, and `&mut self`
+            receivers. Required borrowed parameters and required `Result`
+            methods decline; equivalent provided methods remain callable through
+            Rust defaults but cannot be overridden by Terrane classes. Thread
+            obligations are retained in the artifact for later class-field
+            enforcement.
+
     - id: async-sequences
       title: Async-sequence recognition and lowering
       blocks:

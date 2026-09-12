@@ -79,8 +79,12 @@ documentation:
             than written, never more. Shared implementations satisfy shared,
             mutable, or consuming destinations; mutable implementations satisfy
             mutable or consuming destinations; consuming implementations satisfy
-            only consuming destinations. Mutable value separation copies the
-            current environment rather than aliasing it.
+            only consuming destinations. One mutable invocation owns its
+            receiver and captures exclusively for the full call, including
+            suspension; overlapping invocations of the same callable value
+            execute serially. Mutable value separation copies the current
+            environment into an independent invocation boundary rather than
+            aliasing it.
 
             Invocation mode, `async`, and `throws` are orthogonal contracts.
             Their canonical order is invocation prefix, `async`, `function`,

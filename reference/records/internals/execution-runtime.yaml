@@ -104,6 +104,29 @@ documentation:
             modules follow the same semantic decision so synchronous packages
             do not acquire an unused runtime. Generated module assembly remains
             deterministic for identical semantic input.
+    - id: mutable-async-callables
+      title: Mutable async callable serialization
+      blocks:
+        - type: rule
+          id: rule.internals.execution.mutable-async-callables-serialize
+          level: must
+          since: null
+          evidence:
+            - mutable-async-overlap-serialization
+          markdown: |-
+            Generated mutable async callable values own one invocation gate.
+            Bound-method adapters acquire it through
+            `TerraneAsyncMutableState::with_receiver`; anonymous functions
+            acquire the same kind of gate around their complete generated
+            body. The gate spans suspension, while committed capture and
+            receiver values use only short synchronous snapshot and commit
+            locks.
+
+            Separating a callable clones its committed environment and creates
+            an independent gate. Per-call handles share the original gate.
+            This distinction permits separation while a call is suspended
+            without allowing overlapping calls through one callable value to
+            lose updates.
     - id: readiness-io
       title: Readiness-native network I/O
       blocks:
