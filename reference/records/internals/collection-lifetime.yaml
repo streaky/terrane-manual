@@ -34,16 +34,31 @@ documentation:
           since: null
           evidence:
             - collection-identity-lifetime
+            - map-key-removal
+            - stable-list-sorting
           markdown: |-
-            List replacement performs copy-on-write separation before mutation.
-            A displaced logical value is dropped before the Terrane call returns
-            only when no preserved copy still owns it; otherwise the unchanged
-            copy remains readable and releases that value at its own lifetime
-            boundary. Separation never exposes backing sharing as identity.
-            List removal uses Rust's `Vec::remove` after separation and returns
-            the removed value; lowering must not insert an earlier drop.
-            List-only `clear` and ordered collection destruction release
+            List replacement and stable sorting perform copy-on-write separation
+            before mutation. A displaced logical value is dropped before the
+            Terrane call returns only when no preserved copy still owns it;
+            otherwise the unchanged copy remains readable and releases that
+            value at its own lifetime boundary. Separation never exposes
+            backing sharing as identity.
+
+            List removal uses `Vec::remove` after separation. Ordered-map
+            removal uses one `IndexMap::shift_remove`, preserving the remaining
+            order without rebuilding the map. Unordered maps retain a key-to-
+            iteration-position index so successful unique removal is expected
+            amortized constant time. Both map representations test a shared miss
+            before separation; a successful shared mutation clones backing
+            storage once. Removal returns the stored value without an earlier
+            drop. List-only `clear` and ordered collection destruction release
             elements in backing iteration order.
+
+            Sorting calls Rust's stable slice sort once on unique backing
+            storage. The emitted comparator is monomorphic for the admitted item
+            descriptor, performs no cloning or allocation, compares adaptive
+            integers directly, and uses explicit floating helpers so NaNs remain
+            last in both directions.
 
     - id: representation-identity
       title: Representation is not identity

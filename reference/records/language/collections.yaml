@@ -113,15 +113,19 @@ documentation:
           since: null
           evidence:
             - collection-identity-lifetime
+            - map-key-removal
           markdown: |-
             Replacement releases a displaced logical item before returning once
             no remaining owner retains it. Copy-on-write separation preserves
             the unmutated collection and a read of each logical value observes
-            its own contents without creating source identity. Removal transfers
-            the removed item to the caller, so the item's lifetime ends when
-            that returned value is released. `.clear` is intentionally a
-            list-only member in the current surface; list clearing and ordered
-            collection destruction release remaining items in iteration order.
+            its own contents without creating source identity. List and map
+            removal transfer the removed item to the caller, so the item's
+            lifetime ends when that returned value is released. A failed checked
+            or default map removal does not separate shared backing storage.
+            Successful mutation separates once, while unique storage mutates
+            directly. `.clear` is intentionally a list-only member; list clearing
+            and ordered collection destruction release remaining items in
+            iteration order.
 
             Collections have no identity of their own, including when their
             backing storage is shared or their elements are references.

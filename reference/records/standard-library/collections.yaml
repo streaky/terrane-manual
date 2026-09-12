@@ -183,12 +183,16 @@ documentation:
             - list-append-bulk-mutation
             - tuple-type-boundaries
             - tuple-append-fixed
+            - stable-list-sorting
           markdown: |-
             Lists expose `.length`, integer indexing, `.get.checked`,
-            `.append; value`, `.set; index, value`, `.remove; index`, and
-            `.clear;`. Append, set, and clear return the resulting list.
-            Remove transfers and returns the removed item; an invalid index
-            throws `index-error`.
+            `.append; value`, `.set; index, value`, `.remove; index`, `.clear;`,
+            `.sort;`, and `.sort.descending;`. Append, set, clear, and both sort
+            forms mutate and return the resulting list. Remove transfers and
+            returns the removed item; an invalid index throws `index-error`.
+            Sorting is stable and admits only integer, floating, and string
+            item descriptors; it rejects optional, union, boolean, object,
+            collection, reference, resource, and comparator-callback forms.
 
             Tuples expose `.length`, integer indexing, and `.get.checked`.
             They are homogeneous and fixed-length after construction, so they
@@ -207,24 +211,22 @@ documentation:
             - collections-value-semantics
             - entry-valued-maps
             - map-entry-destructuring
+            - map-key-removal
           markdown: |-
             Maps and unordered maps expose `.length`, key lookup,
-            `.get.checked`, `.set; key, value`, `.keys;`, `.values;`, and
-            `.entries;`. Set returns the resulting map. Keys, values, and
-            entries return typed lists in the map's iteration order. An entry
-            exposes cloned `.key` and `.value` properties.
+            `.get.checked`, `.set; key, value`, `.remove; key`,
+            `.remove.checked; key`, `.keys;`, `.values;`, and `.entries;`.
+            Default removal transfers and returns the stored value or throws
+            `missing-key`; checked removal returns `Value|none`. A miss leaves
+            storage unmodified. Set returns the resulting map. Keys, values,
+            and entries return typed lists in the map's iteration order. An
+            entry exposes cloned `.key` and `.value` properties.
 
             Iterating a map yields `entry of Key, Value`. A `for` loop may bind
             that entry as one value or destructure it directly as `for key,
             value in mapping`. The loop bindings are logical values; changing
             them does not mutate the map.
 
-        - type: note
-          id: note.collections.map-removal-boundary
-          style: warning
-          markdown: |-
-            The current map and unordered-map surface has no key-removal or
-            clear operation. It also has no key-order sorting operation.
 
     - id: sets
       title: Sets
@@ -275,12 +277,21 @@ documentation:
             - map-entry-destructuring
             - collection-identity-lifetime
             - iterator-protocol
+            - map-key-removal
+            - stable-list-sorting
           markdown: |-
-            Lists, tuples, maps, and sets iterate in value order or insertion
-            order. Map and set insertion order is observable. Unordered maps
-            and unordered sets do not preserve insertion order, but use a fixed
-            deterministic hash policy so identical insertions have reproducible
-            traversal within the language contract.
+            Lists and tuples iterate in value order; maps and sets iterate in
+            insertion order. Removing an ordered-map key preserves the relative
+            order of every remaining entry, and reinserting it places it at the
+            end. Unordered maps and sets do not preserve insertion order, but a
+            fixed deterministic hash policy makes identical operation sequences
+            reproducible.
+
+            List sorting is stable. Strings compare lexicographically by Unicode
+            scalar sequence, and integers by mathematical value. Floating
+            infinities retain numeric order, signed zeros compare equal, and all
+            NaNs form one stable final bucket in both directions. Descending sort
+            compares directly rather than reversing ascending output.
 
             `for` takes a value snapshot of a built-in collection. Mutating or
             replacing the source binding during the loop does not change the
@@ -293,12 +304,6 @@ documentation:
             collection language-contract and lowering pages for iterator
             protocol and detailed lifetime rules.
 
-        - type: note
-          id: note.collections.sort-boundary
-          style: warning
-          markdown: |-
-            The current standard collection surface has no list sorting,
-            sorted traversal, or ordered-by-key map operation.
 
 relationships:
   see-also:
