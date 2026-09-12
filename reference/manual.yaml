@@ -18,6 +18,7 @@ navigation:
       - page: lang.collections.protocols
   - group: Standard library
     children:
+      - page: std.collections
       - page: std.networking.operations
       - page: std.concurrency.channels
       - page: std.concurrency.shared-state

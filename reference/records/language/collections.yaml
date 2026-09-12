@@ -135,7 +135,9 @@ documentation:
             values and collections report false.
 
 relationships:
-  see-also: []
+  see-also:
+    - std.collections
+    - internals.collections.lifetime
   supersedes: []
   superseded-by: []
   conflicts-with: []
