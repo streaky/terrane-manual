@@ -285,7 +285,9 @@ documentation:
             order of every remaining entry, and reinserting it places it at the
             end. Unordered maps and sets do not preserve insertion order, but a
             fixed deterministic hash policy makes identical operation sequences
-            reproducible.
+            reproducible. Their order may depend on prior removals and
+            insertions, so content-equal values reached through different
+            histories need not traverse identically.
 
             List sorting is stable. Strings compare lexicographically by Unicode
             scalar sequence, and integers by mathematical value. Floating
