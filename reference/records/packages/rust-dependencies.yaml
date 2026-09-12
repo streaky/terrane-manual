@@ -152,6 +152,40 @@ documentation:
             before releasing the runtime. An unrelated async function in a
             sync-main package retains the smaller non-Tokio runtime.
 
+    - id: associated-interfaces
+      title: Closing associated interface types
+      blocks:
+        - type: rule
+          id: rule.dependencies.associated-interface
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-associated-interface
+            - rust-dependency-supertrait-interface
+            - projected-associated-bare
+            - projected-associated-bound
+            - projected-unprojectable-supertrait
+          markdown: |-
+            A projected Rust trait may expose exactly one non-generic associated
+            type. Terrane closes it explicitly with `Interface of ConcreteType`
+            in `implements` clauses and value annotations. The application is
+            part of nominal identity; the compiler substitutes it through
+            inherited methods and reflection, validates the retained Rust
+            bounds, and emits the corresponding Rust associated type.
+
+            `ConcreteType` is currently limited to a closed
+            boundary-representable scalar, aggregate, or projected foreign
+            type. A Terrane source class cannot fill the slot until source
+            objects have an explicit Rust boundary conversion contract.
+
+            Every non-marker supertrait must project independently. The complete
+            chain contributes inherited requirements and receives one generated
+            Rust implementation per distinct trait, including diamond
+            closures. Bare or inferred applications, source-class arguments,
+            multiple or generic associated slots, failed bounds,
+            unprojectable supertraits, and incoherent erased bindings are
+            rejected before lowering.
+
     - id: callbacks
       title: Passing Terrane callables to Rust
       blocks:
