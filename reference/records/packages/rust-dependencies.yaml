@@ -167,7 +167,7 @@ documentation:
             has no matching failure representation. Open generic, higher-ranked,
             and lifetime-dependent callback shapes remain unavailable.
     - id: foreign-value-ownership
-      title: Foreign value ownership
+      title: Foreign fields and value ownership
       blocks:
         - type: rule
           id: rule.dependencies.foreign-value-ownership
@@ -177,11 +177,11 @@ documentation:
             - rust-dependency-nonclone-field
           markdown: |-
             Projection records whether an owned foreign Rust type implements
-            `Clone`. Cloneable values may participate in ordinary Terrane value
-            separation. A non-`Clone` foreign value is resource-owning, and a
-            source class containing one becomes resource-owning transitively.
-            Assignment transfers that class value; generated Rust never derives
-            `Clone` across a field whose foreign type does not support it.
+            `Clone`. When a source class stores a non-`Clone` foreign value in
+            a field, that class becomes resource-owning transitively.
+            Assignment transfers the enclosing class value; generated Rust
+            never derives `Clone` across a field whose foreign type does not
+            support it.
 
     - id: interfaces
       title: Implementing projected Rust traits
