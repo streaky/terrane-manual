@@ -181,10 +181,17 @@ documentation:
             Every non-marker supertrait must project independently. The complete
             chain contributes inherited requirements and receives one generated
             Rust implementation per distinct trait, including diamond
-            closures. An applied subinterface value may cross an ancestor's
-            owning erased boundary when the inherited associated binding and
-            auto-trait obligations agree. Open applications are rejected
-            recursively inside aggregate and callable annotations. Final oracle
+            closures. Applied identities resolve recursively inside aggregate
+            annotations, subject to each aggregate's ordinary element constraints.
+            `(Interface of ConcreteType)|none` groups the completed application
+            when it is optional; optionality admits any otherwise valid declared
+            value type, including aggregates. A source subclass inherits its
+            base classes' complete projected-interface set at generic calls and
+            generated Rust implementations. An applied subinterface value may
+            cross an ancestor's owning erased boundary when the inherited
+            associated binding and auto-trait obligations agree. Open
+            applications are rejected recursively inside aggregate and callable
+            annotations. Final oracle
             admission also removes generic functions whose projected interface
             bound was declined. Bare or inferred applications, source-class
             arguments, multiple or generic associated slots, failed bounds,
