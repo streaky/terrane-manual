@@ -72,6 +72,21 @@ documentation:
         `test` profiles with incremental compilation enabled. Its shared Cargo
         target therefore retains reusable dependencies and binaries without a
         full local-variable debug-information copy for every generated case.
+    - title: Reviewed lowering artifacts
+      body: >-
+        Every accepted conformance case keeps a `lower.rs` golden, but the reviewed rendering
+        contains only program-owned lowering after two deterministic manifest comments. The
+        runtime manifest names selected compiler `src/runtime` files in concatenation order, and
+        the vendored-support manifest names support crates referenced by the standalone program.
+        Runtime implementations remain in the standalone Rust used by `terrane rust`, canonical
+        Rust validation, generated-crate compilation, and execution; they are never copied into
+        `lower.rs`.
+
+        Set `TERRANE_UPDATE_GOLDENS` together with `TERRANE_CONFORMANCE_FILTER` for a focused
+        regeneration. A corpus-wide regeneration requires the explicit value
+        `TERRANE_UPDATE_GOLDENS=all`. The driver reports only files whose contents changed.
+        `docs/summarize-golden-churn.py <git range>` emits YAML containing each distinct
+        `lower.rs` diff hunk once, its affected paths, and its file count.
     - title: Measurement boundary
       body: >-
         A case measurement includes manifest and source loading, semantic analysis, lowering, and
