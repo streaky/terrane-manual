@@ -279,15 +279,18 @@ documentation:
             - iterator-protocol
             - map-key-removal
             - stable-list-sorting
+            - discarded-temporary-list-append
+            - discarded-temporary-list-sort
           markdown: |-
             Lists and tuples iterate in value order; maps and sets iterate in
             insertion order. Removing an ordered-map key preserves the relative
             order of every remaining entry, and reinserting it places it at the
-            end. Unordered maps and sets do not preserve insertion order, but a
-            fixed deterministic hash policy makes identical operation sequences
-            reproducible. Their order may depend on prior removals and
-            insertions, so content-equal values reached through different
-            histories need not traverse identically.
+            end. Unordered maps and sets do not promise insertion order, but
+            identical operation sequences are reproducible. New items append to
+            the current traversal sequence, while removal may fill the removed
+            position with the prior final item. Their order may therefore depend
+            on prior removals and insertions, so content-equal values reached
+            through different histories need not traverse identically.
 
             List sorting is stable. Strings compare lexicographically by Unicode
             scalar sequence, and integers by mathematical value. Floating
@@ -299,6 +302,13 @@ documentation:
             replacing the source binding during the loop does not change the
             remaining traversal. The iterator is a linear state machine and is
             consumed when transferred into `for`.
+
+            A statement-form mutable collection call requires a retained binding
+            receiver. A property such as `entry.value` is a snapshot value:
+            mutating it and discarding the result is rejected because no
+            observable destination exists. The property may still receive the
+            same mutator in expression position when its returned collection is
+            consumed.
 
             Collections are identity-less values even when copy-on-write
             storage is shared. Replacement, removal, clear, and destruction
