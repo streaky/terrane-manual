@@ -60,8 +60,8 @@ documentation:
             `terrane tooling --stdio` reads one JSON request per line and writes one
             JSON response per line. Protocol frames are the only stdout content.
             `terrane query --request <json-file>` accepts one request or a request
-            array; `$last` and `$last-build` address the most recently opened snapshot
-            and generated build in that batch.
+            array; `$last`, `$last-build`, and `$last-proposal` address the latest
+            successful snapshot, generated build, and edit proposal in the session.
             Schema `1.0` requires `schema_version`, `request_id`, and a kebab-case
             `operation`; unknown fields are rejected.
 
@@ -160,12 +160,13 @@ documentation:
           markdown: |-
             The language server stores compiler snapshot IDs for open documents and
             uses the shared engine for diagnostics, semantic hover, definitions,
-            references, identity-safe rename, document symbols, and formatting.
-            Rename returns versioned workspace edits. UTF-8, UTF-16, or UTF-32 LSP
-            positions are negotiated and converted only at the protocol boundary;
-            compiler spans remain canonical UTF-8 byte offsets. Token highlighting
-            retains a direct lossless-lexer encoding pass and does not define syntax
-            or semantic meaning.
+            references, implementations, identity-safe rename, document symbols,
+            formatting, and source code actions. The custom `terrane/generatedRust`
+            request exposes exact-build source associations. Rename returns versioned
+            workspace edits. UTF-8, UTF-16, or UTF-32 LSP positions are negotiated and
+            converted only at the protocol boundary; compiler spans remain canonical
+            UTF-8 byte offsets. Token highlighting retains a direct lossless-lexer
+            encoding pass and does not define syntax or semantic meaning.
 
         - type: example
           id: source-intelligence-omp-project-server
