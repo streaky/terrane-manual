@@ -104,6 +104,33 @@ documentation:
             modules follow the same semantic decision so synchronous packages
             do not acquire an unused runtime. Generated module assembly remains
             deterministic for identical semantic input.
+    - id: heterogeneous-selection
+      title: Selection state and cancellation runtime
+      blocks:
+        - type: rule
+          id: rule.internals.execution.selection-is-activation-local
+          level: must
+          since: null
+          evidence:
+            - heterogeneous-select
+            - select-pending-wakeup
+            - select-concurrent-activations
+            - select-async-closure
+            - select-cleanup-shield
+            - rust-dependency-async-function
+          markdown: |-
+            Lowering emits one fairness cursor in the actual async callable
+            activation that owns each static `select`, including anonymous
+            async functions. Each case retains a distinct pinned future and
+            typed result slot; no helper task or universal result box is used.
+
+            Source-only selection uses the cooperative poll-future support.
+            Task scopes, asynchronous finalization, or projected async cases
+            select native cancellation support through ordinary execution
+            requirements. Once a winner is fixed, one finalization guard
+            shields the complete reverse-order loser drain. Native cancellation
+            continues polling the suspended selection while cleanup depth is
+            nonzero rather than dropping it before nested cleanup can finish.
     - id: mutable-async-callables
       title: Mutable async callable serialization
       blocks:

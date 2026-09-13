@@ -17,14 +17,15 @@ documentation:
   title: Asynchronous functions and cancellation
   title-style: text
   summary: >-
-    Defines async invocation, linear task consumption, suspension, and the
-    cleanup contract when cancellation reaches a suspended operation.
+    Defines async invocation, linear task consumption, heterogeneous selection,
+    suspension, and cleanup when cancellation reaches an operation.
   tags:
     - functions
     - async
     - tasks
     - cancellation
     - finally
+    - select
   sections:
     - id: invocation
       title: Invoking and awaiting asynchronous functions
@@ -103,20 +104,67 @@ documentation:
             retains its error in its outcome and requests cancellation of
             surviving siblings; each child remains joined exactly once.
 
-        - type: note
-          id: note.async.selection-boundary
-          style: warning
+    - id: selection
+      title: Heterogeneous asynchronous selection
+      blocks:
+        - type: rule
+          id: rule.async.select
+          level: must
+          since: null
+          evidence:
+            - heterogeneous-select
+            - select-pending-wakeup
+            - select-terminal-cursor
+            - select-concurrent-activations
+            - select-async-closure
+            - select-loser-cleanup
+            - select-cleanup-shield
+            - select-resource-release
+            - select-error-propagation
+            - select-external-cancellation
+            - select-case-control-flow
+            - select-exclusive-case-move
+            - select-definite-assignment
+            - rust-dependency-async-function
           markdown: |-
-            The current task-scope surface joins one named child at a time. It
-            does not provide a general `select` or race across arbitrary tasks,
-            channel receives, timers, and socket operations. The public core
-            surface also has operation deadlines but no general-purpose clock,
-            cancellable sleep or interval, or process-signal subscription.
+            `select` waits for the first ready operation among at least two
+            static cases. A case header is `await expression` or one ordinary
+            local binding initialized by exactly one top-level `await`; that
+            binding exists only in its case body. Case result types may differ.
 
-            Applications that require multiplexed service loops, deterministic
-            scheduling, or graceful SIGTERM/SIGINT handling must first add or
-            project an explicit typed facility. Busy polling and detached,
-            unjoined tasks are not substitutes for that missing contract.
+            ```terrane
+            select
+              case count int = await (next-count;)
+                print; count
+              case received = await receiver.receive;
+                print; received.value
+            ```
+
+            Operations and header tasks are constructed or consumed once in
+            source order. They are polled wakefully from a cursor local to the
+            current callable activation; concurrent calls and async closures
+            therefore do not share fairness state. Simultaneously ready cases
+            rotate deterministically. A ready value or terminal error advances
+            the cursor before cleanup, while an all-pending poll, construction
+            failure, or pre-winner cancellation does not.
+
+            Once a winner is fixed, every loser receives cancellation before
+            any drain begins. Losers drain and release in reverse source order,
+            including async `finally`, channel waiter removal, and projected
+            Rust cleanup. Cleanup is shielded from cancellation after winner
+            selection, and the winning body cannot begin early. Cleanup
+            continues after a failure; a later cleanup failure replaces the
+            earlier outcome and releases any displaced winning value.
+
+            Storage is stack-local: one pinned future and typed result slot per
+            case plus the cursor. Selection creates no helper tasks, universal
+            payload box, busy-polling loop, or private event loop. Case bodies
+            retain ordinary `return`, `throw`, `break`, and `continue`
+            behavior after cleanup.
+
+            Dynamic case lists, guards, default cases, expression-position
+            `select`, duplicate linear tasks, and incompatible simultaneous
+            receiver borrows are rejected before lowering.
     - id: cancellation
       title: Cancellation at suspension
       blocks:
