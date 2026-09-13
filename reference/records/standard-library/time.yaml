@@ -1,0 +1,92 @@
+format: 1
+id: std.time
+kind: topic
+
+surface: /core/time
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Exact time, deadlines, sleeps, and tickers
+  title-style: text
+  summary: >-
+    Describes exact duration values, wall and monotonic clocks, absolute
+    deadlines, wake-driven sleeps, and anchored ticker delivery.
+  tags:
+    - standard-library
+    - time
+    - async
+  sections:
+    - id: values
+      title: Exact time values
+      blocks:
+        - type: rule
+          id: rule.time.values
+          level: must
+          since: null
+          evidence:
+            - time-exact-values
+            - time-negative-duration
+          markdown: |-
+            `duration` is an exact non-negative value with canonical `seconds`,
+            `nanoseconds`, and arbitrary-precision `total-nanoseconds` fields.
+            Construct values with `duration::seconds`, `::milliseconds`,
+            `::microseconds`, or `::nanoseconds`. Negative constants are
+            rejected and dynamic negative inputs throw `invalid-duration`.
+
+            `clock::wall` returns a UTC `instant`. `clock::monotonic` returns a
+            `monotonic-instant` from the current runtime activation; monotonic
+            values are meaningful only within that activation and domain.
+    - id: deadlines
+      title: Deadlines and sleeping
+      blocks:
+        - type: rule
+          id: rule.time.deadlines
+          level: must
+          since: null
+          evidence:
+            - time-sleep-ticker
+            - task-scope-typed-deadline
+          markdown: |-
+            `clock::deadline` captures an absolute monotonic target from a
+            duration. `deadline::at` retains an existing target. `remaining`
+            returns an exact duration or `none`; `expired` reports whether the
+            target has passed.
+
+            `clock::sleep` captures its target when called, and
+            `clock::sleep-until` waits for an absolute monotonic target. Pending
+            sleeps register wake-driven timers and cancellation drops the
+            losing registration.
+    - id: tickers
+      title: Anchored tickers
+      blocks:
+        - type: rule
+          id: rule.time.tickers
+          level: must
+          since: null
+          evidence:
+            - time-sleep-ticker
+            - time-zero-ticker
+          markdown: |-
+            `clock::interval` creates a linear ticker anchored at construction.
+            `next` returns the most recent scheduled tick, its observation time,
+            and the exact number of coalesced expirations. Scheduling always
+            advances from the original anchor. `close` consumes the ticker.
+
+relationships:
+  see-also:
+    - lang.functions.asynchronous
+    - std.networking.operations
+  supersedes: []
+  superseded-by: []
+  conflicts-with: []
+
+implementation:
+  compiler: null
