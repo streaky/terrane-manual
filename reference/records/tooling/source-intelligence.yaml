@@ -174,7 +174,7 @@ documentation:
 
         - type: example
           id: source-intelligence-omp-project-server
-          title: Use the repository-local server from Oh My Pi
+          title: Use the repository-local server from oh-my-pi
           language: json
           mode: static
           target: .omp/lsp.json
@@ -198,7 +198,7 @@ documentation:
             content: ""
           diagnostic: null
           markdown: |-
-            This development configuration requires Oh My Pi to start at the
+            This development configuration requires oh-my-pi to start at the
             repository root. Build the executable with
             `cargo build -p terrane-language-server`; installation and `PATH`
             changes are unnecessary.
