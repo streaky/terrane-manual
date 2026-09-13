@@ -100,17 +100,18 @@ documentation:
           markdown: |-
             `syntax` returns exact tokens, trivia and byte spans plus deterministic
             snapshot-local node IDs, named child fields, and complete/error/recovery/
-            unsupported state. Syntax remains available when semantic analysis fails.
+            contains-recovery/unsupported state. Syntax remains available when semantic
+            analysis fails.
             `locate`, `definition`, `references`, `find`, and `generated-rust` consume
             the same compiler snapshot. Structural selectors may constrain kind,
             child field, containing span, source text, token kind, or canonical
             symbol/descriptor identity. Recovery matching is opt-in.
 
             Results are ordered by URI and UTF-8 byte offset. `find` is bounded and
-            reports `complete` plus an opaque snapshot/query-bound continuation.
-            Facts distinguish `known`, `unresolved`, `invalid`,
-            `not-yet-analyzed`, and `unsupported`; absence is not encoded as a
-            fabricated empty type, effect set, or source association.
+            reports `complete` plus an opaque snapshot/query-bound continuation whose
+            remaining matches are retained. Facts distinguish `known`, `unresolved`,
+            `invalid`, `not-yet-analyzed`, and `unsupported`; absence is not encoded as
+            a fabricated empty type, effect set, ownership state, or source association.
 
     - id: edits
       title: Validated edits and rename
@@ -127,8 +128,8 @@ documentation:
             references by canonical symbol identity and rejects an existing binding
             that would capture the new spelling. `apply-edits` preflights every disk
             hash before writing and uses same-directory temporary files; stale bytes
-            are refused. A partial host failure names committed, uncommitted, and
-            recovery files rather than continuing silently.
+            are refused. A partial host failure returns a structured report naming
+            committed, uncommitted, and recovery files rather than continuing silently.
 
     - id: formatting
       title: Source formatting
