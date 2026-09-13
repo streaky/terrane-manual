@@ -103,10 +103,17 @@ documentation:
             snapshot-local node IDs, named child fields, and complete/error/recovery/
             contains-recovery/unsupported state. Syntax remains available when semantic
             analysis fails.
-            `locate`, `definition`, `references`, `find`, and `generated-rust` consume
-            the same compiler snapshot. Structural selectors may constrain kind,
-            child field, containing span, source text, token kind, or canonical
-            symbol/descriptor identity. Recovery matching is opt-in.
+            `locate`, `definition`, `references`, `implementations`, `find`, and
+            `generated-rust` consume the same compiler snapshot through either stdio or
+            one-shot query transport. Implementation queries on an interface or its
+            method return the implementing descriptors or methods; a query from a
+            concrete method use follows the resolved method's owning interface contract
+            and returns every method implementing that contract.
+
+            Structural selectors may constrain kind, child field, containing span,
+            source text, token kind, or canonical symbol/descriptor identity. With
+            recovery matching disabled, only directly error/recovery/unsupported nodes
+            are excluded; valid `contains-recovery` ancestors remain eligible.
 
             Results are ordered by URI and UTF-8 byte offset. `find` is bounded and
             reports `complete` plus an opaque snapshot/query-bound continuation whose
@@ -161,12 +168,15 @@ documentation:
             The language server stores compiler snapshot IDs for open documents and
             uses the shared engine for diagnostics, semantic hover, definitions,
             references, implementations, identity-safe rename, document symbols,
-            formatting, and source code actions. The custom `terrane/generatedRust`
-            request exposes exact-build source associations. Rename returns versioned
-            workspace edits. UTF-8, UTF-16, or UTF-32 LSP positions are negotiated and
-            converted only at the protocol boundary; compiler spans remain canonical
-            UTF-8 byte offsets. Token highlighting retains a direct lossless-lexer
-            encoding pass and does not define syntax or semantic meaning.
+            formatting, and source code actions. Ordinary open/change analysis does not
+            compile generated Rust. The custom `terrane/generatedRust` request lazily
+            opens a short-lived generated snapshot from the exact current package and
+            editor overlays, exposes exact-build source associations, and closes it
+            before responding. Rename returns versioned workspace edits. UTF-8, UTF-16,
+            or UTF-32 LSP positions are negotiated and converted only at the protocol
+            boundary; compiler spans remain canonical UTF-8 byte offsets. Token
+            highlighting retains a direct lossless-lexer encoding pass and does not
+            define syntax or semantic meaning.
 
         - type: example
           id: source-intelligence-omp-project-server
