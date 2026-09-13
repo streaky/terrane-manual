@@ -171,6 +171,48 @@ documentation:
             compiler spans remain canonical UTF-8 byte offsets. Token highlighting
             retains a direct lossless-lexer encoding pass and does not define syntax
             or semantic meaning.
+
+        - type: example
+          id: source-intelligence-omp-project-server
+          title: Use the repository-local server from Oh My Pi
+          language: json
+          mode: static
+          target: .omp/lsp.json
+          timeout-ms: null
+          source: |-
+            {
+              "servers": {
+                "terrane-language-server": {
+                  "command": "./target/debug/terrane-language-server",
+                  "args": [],
+                  "fileTypes": [".trn"],
+                  "languageId": "terrane",
+                  "rootMarkers": ["Cargo.toml"]
+                }
+              }
+            }
+          response:
+            kind: none
+            language: text
+            display: never
+            content: ""
+          diagnostic: null
+          markdown: |-
+            This development configuration requires Oh My Pi to start at the
+            repository root. Build the executable with
+            `cargo build -p terrane-language-server`; installation and `PATH`
+            changes are unnecessary.
+
+        - type: note
+          id: note.source-intelligence-running-server-rebuild
+          style: warning
+          markdown: |-
+            Rebuilding replaces the executable on disk but does not update a
+            language-server process that is already running. Restart that server
+            process after a rebuild. Restarting only an editor or terminal client
+            may be insufficient when a shared language-server manager remains
+            alive; confirm the new process uses the rebuilt executable before
+            diagnosing stale results.
   see-also:
     - tool.packages.command-line
 
