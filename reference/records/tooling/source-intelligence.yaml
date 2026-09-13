@@ -34,9 +34,7 @@ documentation:
           id: rule.source-intelligence.snapshots
           level: must
           since: null
-          evidence:
-            - tooling-lossless-syntax
-            - tooling-snapshot-expiry
+          evidence: []
           markdown: |-
             `open-snapshot` accepts explicit logical source URIs and source text,
             plus optional manifest/lock inputs and analysis options. The returned
@@ -57,14 +55,14 @@ documentation:
           id: rule.source-intelligence.protocol
           level: must
           since: null
-          evidence:
-            - tooling-external-clients
+          evidence: []
           markdown: |-
             `terrane tooling --stdio` reads one JSON request per line and writes one
             JSON response per line. Protocol frames are the only stdout content.
-            `terrane query --request <json-file>` executes the same request envelope
-            once for scripts. Schema `1.0` requires `schema_version`, `request_id`,
-            and a kebab-case `operation`.
+            `terrane query --request <json-file>` accepts one request or a request
+            array; `$last` addresses the most recently opened snapshot in that batch.
+            Schema `1.0` requires `schema_version`, `request_id`, and a kebab-case
+            `operation`; unknown fields are rejected.
 
             Response envelopes carry compiler/schema versions and the request ID;
             snapshot/source requests also carry snapshot ID, logical source URI,
@@ -98,9 +96,7 @@ documentation:
           id: rule.source-intelligence.queries
           level: must
           since: null
-          evidence:
-            - tooling-semantic-navigation
-            - tooling-generated-navigation
+          evidence: []
           markdown: |-
             `syntax` returns exact tokens, trivia and byte spans plus deterministic
             snapshot-local node IDs, named child fields, and complete/error/recovery/
@@ -123,8 +119,7 @@ documentation:
           id: rule.source-intelligence.edits
           level: must
           since: null
-          evidence:
-            - tooling-stale-write
+          evidence: []
           markdown: |-
             `propose-edits` validates UTF-8 boundaries, overlap, reparsing, and
             available semantic reanalysis before returning replacements, affected
@@ -142,8 +137,7 @@ documentation:
           id: rule.source-intelligence.formatting
           level: must
           since: null
-          evidence:
-            - tooling-format-idempotence
+          evidence: []
           markdown: |-
             `terrane fmt <file-or-manifest>` and LSP formatting use the recovered
             compiler tree. The formatter removes safe trailing whitespace and
@@ -160,8 +154,7 @@ documentation:
           id: rule.source-intelligence.language-server
           level: must
           since: null
-          evidence:
-            - tooling-lsp-protocol
+          evidence: []
           markdown: |-
             The language server stores compiler snapshot IDs for open documents and
             uses the shared engine for diagnostics, semantic hover, definitions,
