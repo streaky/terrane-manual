@@ -72,6 +72,30 @@ documentation:
             component alone therefore fails the build rather than silently
             producing mixed Unicode semantics.
 
+    - id: workspace-artifact-size
+      title: Workspace artifact size
+      blocks:
+        - type: description
+          id: description.internals.build.workspace-artifact-size
+          since: null
+          evidence: []
+          markdown: |-
+            Workspace `dev` and `test` profiles retain incremental compilation
+            while selecting line-table-only debug information. Rust backtraces,
+            source locations, breakpoints, and stepping remain available without
+            emitting full local-variable DWARF for every dependency and test
+            artifact. A debugging task that needs complete native local-variable
+            inspection may override the profile deliberately; full debuginfo is
+            not the persistent workspace default.
+
+            Changing the profile does not delete older Cargo artifacts. Existing
+            `target/debug` entries remain usable until a separately chosen stale-
+            artifact policy removes them, while newly compiled artifacts use the
+            smaller profile. Generated Terrane programs retain their ordinary
+            project-local cache today. A future shared generated-target pool must
+            use exact toolchain, target, profile, rustflag, support, and dependency
+            identities plus bounded eviction; a merely similar build is never a
+            valid cache hit.
     - id: maintenance
       title: Maintenance rule
       blocks:
@@ -99,5 +123,6 @@ implementation:
     - crates/terrane-compiler/src/lib.rs
     - crates/terrane-compiler/src/package.rs
     - crates/terrane-cli/src/main.rs
+    - Cargo.toml
     - crates/terrane-string-support/src/lib.rs
     - crates/terrane-collection-support/src/lib.rs

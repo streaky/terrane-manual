@@ -51,6 +51,22 @@ documentation:
         only machine-derived cache identity and content hash fields. A format migration or any
         semantic projection change fails the case instead of silently rewriting the reviewed
         fixture.
+    - title: Focused execution and cache locality
+      body: >-
+        Set `TERRANE_CONFORMANCE_FILTER` to one case-name or to comma-separated
+        corpus-path fragments when running
+        `every_manifest_drives_a_conformance_case`. Filtering happens before
+        staging, so only matching manifests are compiled and executed while the
+        harness retains its shared generated-Cargo target. An empty match fails
+        rather than reporting a vacuous pass.
+
+        Do not invoke `terrane run` directly inside a tracked conformance case
+        directory for focused checking. The ordinary CLI correctly creates its
+        project-local `.trn/cache/target`, but doing that across many fixtures
+        duplicates the same dependency graph under every case. CLI integration
+        tests that exercise this project-local behavior stage the source in a
+        temporary directory; the tracked corpus must remain free of `.trn`
+        build caches.
     - title: Measurement boundary
       body: >-
         A case measurement includes manifest and source loading, semantic analysis, lowering, and
@@ -71,4 +87,5 @@ provenance:
   conformance: []
   compiler:
     - docs/measure-test-times.py
+    - crates/terrane-cli/tests/cli.rs
     - crates/terrane-compiler/tests/conformance.rs
