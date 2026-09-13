@@ -67,6 +67,11 @@ documentation:
         tests that exercise this project-local behavior stage the source in a
         temporary directory; the tracked corpus must remain free of `.trn`
         build caches.
+
+        The generated conformance workspace defines line-table-only `dev` and
+        `test` profiles with incremental compilation enabled. Its shared Cargo
+        target therefore retains reusable dependencies and binaries without a
+        full local-variable debug-information copy for every generated case.
     - title: Measurement boundary
       body: >-
         A case measurement includes manifest and source loading, semantic analysis, lowering, and

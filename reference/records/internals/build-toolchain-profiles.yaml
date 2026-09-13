@@ -86,7 +86,9 @@ documentation:
             emitting full local-variable DWARF for every dependency and test
             artifact. A debugging task that needs complete native local-variable
             inspection may override the profile deliberately; full debuginfo is
-            not the persistent workspace default.
+            not the persistent workspace default. The generated conformance
+            workspace declares the same profile explicitly because its separate
+            Cargo manifest does not inherit workspace-root profile settings.
 
             Changing the profile does not delete older Cargo artifacts. Existing
             `target/debug` entries remain usable until a separately chosen stale-

@@ -291,6 +291,10 @@ documentation:
             position with the prior final item. Their order may therefore depend
             on prior removals and insertions, so content-equal values reached
             through different histories need not traverse identically.
+            Milestone 29.0 intentionally replaced the earlier stable-hash
+            traversal with this append/swap-fill behavior so insertion and
+            removal are both expected amortized constant time. Code must not
+            depend on unordered output produced by an older compiler.
 
             List sorting is stable. Strings compare lexicographically by Unicode
             scalar sequence, and integers by mathematical value. Floating
@@ -304,11 +308,11 @@ documentation:
             consumed when transferred into `for`.
 
             A statement-form mutable collection call requires a retained binding
-            receiver. A property such as `entry.value` is a snapshot value:
+            receiver. An `entry.value` or indexed element is a snapshot value:
             mutating it and discarding the result is rejected because no
-            observable destination exists. The property may still receive the
-            same mutator in expression position when its returned collection is
-            consumed.
+            observable destination exists. Terrane does not implicitly write
+            the value back; consume and store the result explicitly, for example
+            `nested.set; index, (nested[index].append; value)`.
 
             Collections are identity-less values even when copy-on-write
             storage is shared. Replacement, removal, clear, and destruction
