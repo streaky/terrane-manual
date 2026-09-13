@@ -60,7 +60,8 @@ documentation:
             `terrane tooling --stdio` reads one JSON request per line and writes one
             JSON response per line. Protocol frames are the only stdout content.
             `terrane query --request <json-file>` accepts one request or a request
-            array; `$last` addresses the most recently opened snapshot in that batch.
+            array; `$last` and `$last-build` address the most recently opened snapshot
+            and generated build in that batch.
             Schema `1.0` requires `schema_version`, `request_id`, and a kebab-case
             `operation`; unknown fields are rejected.
 
