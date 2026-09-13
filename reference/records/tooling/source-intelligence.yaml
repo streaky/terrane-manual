@@ -1,0 +1,182 @@
+format: 1
+id: tool.source-intelligence
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Compiler-backed source intelligence
+  title-style: text
+  summary: >-
+    Exposes Terrane's recovered syntax, canonical semantic identities, generated
+    source associations, validated edits, and source formatting through one
+    versioned snapshot engine shared by the CLI and language server.
+  tags:
+    - tooling
+    - syntax
+    - semantics
+    - language-server
+    - formatting
+  sections:
+    - id: snapshots
+      title: Immutable snapshots
+      blocks:
+        - type: rule
+          id: rule.source-intelligence.snapshots
+          level: must
+          since: null
+          evidence:
+            - tooling-lossless-syntax
+            - tooling-snapshot-expiry
+          markdown: |-
+            `open-snapshot` accepts explicit logical source URIs and source text,
+            plus optional manifest/lock inputs and analysis options. The returned
+            metadata identifies the compiler and schema versions, a content-derived
+            immutable snapshot ID, every source hash, the selected target/profile,
+            capabilities, and an optional exact build ID. Unsaved overlays are the
+            supplied bytes; queries never replace them with disk contents.
+
+            Retention is bounded by snapshot count and source bytes. `close-snapshot`
+            releases a snapshot eagerly. A closed or evicted ID returns
+            `expired-snapshot` with `retry-fresh-query: true`; continuations and edit
+            proposals tied to it expire too.
+
+    - id: protocol
+      title: JSON protocol
+      blocks:
+        - type: rule
+          id: rule.source-intelligence.protocol
+          level: must
+          since: null
+          evidence:
+            - tooling-external-clients
+          markdown: |-
+            `terrane tooling --stdio` reads one JSON request per line and writes one
+            JSON response per line. Protocol frames are the only stdout content.
+            `terrane query --request <json-file>` executes the same request envelope
+            once for scripts. Schema `1.0` requires `schema_version`, `request_id`,
+            and a kebab-case `operation`.
+
+            Response envelopes carry compiler/schema versions and the request ID;
+            snapshot/source requests also carry snapshot ID, logical source URI,
+            and source hash. Failures use stable error codes and never disguise
+            cancellation, expiry, invalid source, or unavailable analysis as an
+            empty successful result.
+
+        - type: example
+          id: source-intelligence-open-request
+          title: Open a parse snapshot
+          language: json
+          mode: static
+          target: null
+          timeout-ms: null
+          source: |-
+            {"schema_version":"1.0","request_id":"open-1","operation":"open-snapshot","sources":[{"uri":"file:///work/main.trn","text":"function main;\n"}]}
+          response:
+            kind: none
+            language: text
+            display: never
+            content: ""
+          diagnostic: null
+          markdown: |-
+            Set `options.semantic` for canonical symbol/type queries and
+            `options.generated` for build-bound generated-Rust associations.
+
+    - id: queries
+      title: Trees and queries
+      blocks:
+        - type: rule
+          id: rule.source-intelligence.queries
+          level: must
+          since: null
+          evidence:
+            - tooling-semantic-navigation
+            - tooling-generated-navigation
+          markdown: |-
+            `syntax` returns exact tokens, trivia and byte spans plus deterministic
+            snapshot-local node IDs, named child fields, and complete/error/recovery/
+            unsupported state. Syntax remains available when semantic analysis fails.
+            `locate`, `definition`, `references`, `find`, and `generated-rust` consume
+            the same compiler snapshot. Structural selectors may constrain kind,
+            child field, containing span, source text, token kind, or canonical
+            symbol/descriptor identity. Recovery matching is opt-in.
+
+            Results are ordered by URI and UTF-8 byte offset. `find` is bounded and
+            reports `complete` plus an opaque snapshot/query-bound continuation.
+            Facts distinguish `known`, `unresolved`, `invalid`,
+            `not-yet-analyzed`, and `unsupported`; absence is not encoded as a
+            fabricated empty type, effect set, or source association.
+
+    - id: edits
+      title: Validated edits and rename
+      blocks:
+        - type: rule
+          id: rule.source-intelligence.edits
+          level: must
+          since: null
+          evidence:
+            - tooling-stale-write
+          markdown: |-
+            `propose-edits` validates UTF-8 boundaries, overlap, reparsing, and
+            available semantic reanalysis before returning replacements, affected
+            hashes, preview diagnostics, and a proposal ID. `propose-rename` selects
+            references by canonical symbol identity and rejects an existing binding
+            that would capture the new spelling. `apply-edits` preflights every disk
+            hash before writing and uses same-directory temporary files; stale bytes
+            are refused. A partial host failure names committed, uncommitted, and
+            recovery files rather than continuing silently.
+
+    - id: formatting
+      title: Source formatting
+      blocks:
+        - type: rule
+          id: rule.source-intelligence.formatting
+          level: must
+          since: null
+          evidence:
+            - tooling-format-idempotence
+          markdown: |-
+            `terrane fmt <file-or-manifest>` and LSP formatting use the recovered
+            compiler tree. The formatter removes safe trailing whitespace and
+            canonicalises parser-proven assignment and infix operator gaps without
+            splitting operator-bearing identifiers. It preserves CRLF/LF style,
+            comments, multiline text, untouched bytes, and malformed input it cannot
+            safely rewrite. `--check` prints drifting paths, exits 1, and writes
+            nothing. A second pass over formatted source is byte-identical.
+
+    - id: language-server
+      title: Language server integration
+      blocks:
+        - type: rule
+          id: rule.source-intelligence.language-server
+          level: must
+          since: null
+          evidence:
+            - tooling-lsp-protocol
+          markdown: |-
+            The language server stores compiler snapshot IDs for open documents and
+            uses the shared engine for diagnostics, semantic hover, definitions,
+            references, identity-safe rename, document symbols, and formatting.
+            Rename returns versioned workspace edits. UTF-8, UTF-16, or UTF-32 LSP
+            positions are negotiated and converted only at the protocol boundary;
+            compiler spans remain canonical UTF-8 byte offsets. Token highlighting
+            retains a direct lossless-lexer encoding pass and does not define syntax
+            or semantic meaning.
+  see-also:
+    - tool.packages.command-line
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "31"
+  conformance: []
+  compiler: terrane_compiler::tooling
