@@ -115,6 +115,7 @@ documentation:
             - heterogeneous-select
             - select-pending-wakeup
             - select-concurrent-activations
+            - select-task-outcomes
             - select-async-closure
             - select-cleanup-shield
             - rust-dependency-async-function

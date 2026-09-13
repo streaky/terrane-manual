@@ -116,6 +116,7 @@ documentation:
             - select-pending-wakeup
             - select-terminal-cursor
             - select-concurrent-activations
+            - select-task-outcomes
             - select-async-closure
             - select-loser-cleanup
             - select-cleanup-shield
