@@ -123,15 +123,19 @@ documentation:
             - select-resource-release
             - select-error-propagation
             - select-external-cancellation
+            - select-post-borrow-use
             - select-case-control-flow
             - select-exclusive-case-move
             - select-definite-assignment
             - rust-dependency-async-function
           markdown: |-
-            `select` waits for the first ready operation among at least two
-            static cases. A case header is `await expression` or one ordinary
-            local binding initialized by exactly one top-level `await`; that
-            binding exists only in its case body. Case result types may differ.
+            `select` is an async-only structural word at statement start, so
+            that position does not resolve an ordinary binding named
+            `select`. It waits for the first ready operation among at least
+            two static cases. A case header is `await expression` or one
+            ordinary local binding initialized by exactly one top-level
+            `await`; that binding exists only in its case body. Case result
+            types may differ.
 
             ```terrane
             select
@@ -165,7 +169,9 @@ documentation:
 
             Dynamic case lists, guards, default cases, expression-position
             `select`, duplicate linear tasks, and incompatible simultaneous
-            receiver borrows are rejected before lowering.
+            receiver borrows are rejected before lowering. Case-operation
+            borrows end after loser cleanup at the end of the statement, so
+            the following statement may read or mutate the receiver.
     - id: cancellation
       title: Cancellation at suspension
       blocks:
