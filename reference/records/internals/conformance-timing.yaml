@@ -40,7 +40,9 @@ documentation:
         `every_manifest_drives_a_conformance_case` entry. The shared dependency-free build uses the
         stable name `generated-rust/batched-dependency-free-build`. Ordinary libtest timings,
         manifest timings, and that build timing otherwise share the same bounded history and run
-        summary.
+        summary. Changing the collector's timing mode retains aggregate run records but begins a
+        fresh per-test comparison history so serial and parallel durations are not compared as
+        regressions.
     - title: Generated-crate isolation
       body: >-
         Every sorted accepted manifest receives its own deterministic binary name and source path.
