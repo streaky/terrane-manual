@@ -1,0 +1,173 @@
+format: 1
+id: tool.debugging
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Native source debugging
+  title-style: text
+  summary: >-
+    Builds debug-profile Terrane executables with versioned, build-bound provenance
+    and translates source debugger operations to one selected LLDB DAP backend.
+  tags:
+    - tooling
+    - debugging
+    - lldb
+    - dap
+    - provenance
+  sections:
+    - id: commands
+      title: Commands and support boundary
+      blocks:
+        - type: rule
+          id: rule.debugging.commands
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            `terrane debug <file-or-manifest> [-- arguments]` builds with full debug
+            information, optimization disabled, and stripping disabled, then opens the
+            interactive Terrane source debugger. `terrane debug-adapter --stdio` serves
+            the same translation engine as a Debug Adapter Protocol endpoint. Protocol
+            frames are the only adapter stdout content; backend and adapter diagnostics
+            use stderr or framed output events.
+
+            The selected implementation is `lldb-dap`. Linux x86-64 with LLDB 22 is
+            exercised end to end. Launch is supported there. Attach is forwarded only
+            where the selected LLDB and host process policy permit it. Other operating
+            systems, architectures, LLDB versions, optimized modules, and stripped
+            modules remain experimental and must report unavailable fidelity rather
+            than claiming equivalent support.
+
+        - type: note
+          id: note.debugging.experimental-boundary
+          style: warning
+          markdown: |-
+            The CLI, DAP command set, and provenance schema are experimental in 0.1.
+            Conditional breakpoints, logpoints, restart, expression evaluation in the
+            Terrane language, and time-travel debugging are not supported. Native LLDB
+            commands remain an explicit escape hatch and are not Terrane expressions.
+
+    - id: provenance
+      title: Exact-build provenance
+      blocks:
+        - type: rule
+          id: rule.debugging.provenance
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            Every debug build writes deterministic schema `1.0` provenance beside the
+            generated Rust and executable. It records compiler/toolchain/target/profile
+            identity; manifest and projection-lock hashes when present; every logical
+            source hash; final generated-file hashes and byte/line associations; stable
+            function, scope, binding, object, and field identities; the executable hash;
+            and source/build relocation roots.
+
+            Source translation is enabled only when the sidecar, native module,
+            generated files, and current source hashes agree. A DAP client may supply
+            explicit `terraneRelocation.buildRoot` and `sourceRoot` mappings when copied
+            artifacts retain identical bytes. Identity and relocation are independent.
+            Missing, stale, malformed, or mismatched metadata disables Terrane
+            translation with a diagnostic while leaving raw native debugging available.
+
+    - id: breakpoints-stepping
+      title: Breakpoints and stepping
+      blocks:
+        - type: rule
+          id: rule.debugging.breakpoints
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            Source breakpoints resolve through compiler-owned sequence points in final
+            formatted Rust. One Terrane location may produce multiple native locations;
+            each remains represented. A non-executable requested line may adjust only to
+            the nearest declared sequence point in the same function. Otherwise the
+            breakpoint is returned unverified with an explanation. Verification reports
+            both requested and resolved locations.
+
+        - type: rule
+          id: rule.debugging.stepping
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            Continue, step-in, step-over, and step-out delegate process control to LLDB.
+            Source stepping suppresses unmapped generated/runtime stops until an authored
+            sequence point is reached, a terminal event occurs, or 64 native steps have
+            been attempted. Reaching that bound exposes the native stop and reports why;
+            it never loops without bound. Generated Rust, native frames, registers,
+            memory, and raw LLDB commands remain explicit escape hatches.
+
+    - id: frames-values
+      title: Frames, values, and privacy
+      blocks:
+        - type: rule
+          id: rule.debugging.frames-values
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            Mapped frames use Terrane namespace/function names and logical source
+            locations. Unmapped backend frames stay available as native frames and are
+            subtle in the ordinary source view. Variable names come from lexical
+            compiler bindings rather than demangling guesses.
+
+            Preserved fixed scalars use LLDB values. Adaptive integers are decoded
+            exactly across small, wide, and arbitrary-precision tiers from the
+            compiler-selected 64-bit Linux layout. Strings and bytes use bounded
+            read-memory summaries. Object and collection values retain lazy backend
+            child references; every variable response is capped at 100 entries and each
+            displayed value at 4096 bytes. Missing, moved, optimized-out, unavailable,
+            unsupported-layout, and truncated values are distinct states rather than
+            fabricated values.
+
+        - type: rule
+          id: rule.debugging.privacy
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            Compiler object metadata carries field secrecy into debugger provenance.
+            Ordinary variable expansion replaces secret field values with `<secret>`
+            and removes their child, memory, and evaluation references before sending a
+            frontend response. Explicit raw backend/native inspection is a separate
+            opt-in escape hatch and may reveal physical memory.
+
+    - id: lifecycle
+      title: DAP and process lifecycle
+      blocks:
+        - type: rule
+          id: rule.debugging.lifecycle
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            Requests and responses remain correlated by DAP sequence IDs. Launch owns
+            the debuggee and disconnect terminates it by default; attach never terminates
+            the target on disconnect. Cancellation, termination, register/memory access,
+            and backend failures are delegated without converting them into successful
+            source operations. Debuggee stdout and stderr are framed DAP output events
+            and cannot corrupt adapter protocol stdout.
+
+  see-also:
+    - tool.source-intelligence
+    - tool.packages.command-line
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "31"
+  conformance: []
+  compiler: terrane_compiler::debugging
