@@ -132,12 +132,15 @@ documentation:
           markdown: |-
             `propose-edits` validates UTF-8 boundaries, overlap, reparsing, and
             available semantic reanalysis before returning replacements, affected
-            hashes, preview diagnostics, and a proposal ID. `propose-rename` selects
-            references by canonical symbol identity and rejects an existing binding
-            that would capture the new spelling. `apply-edits` preflights every disk
-            hash before writing and uses same-directory temporary files; stale bytes
-            are refused. A partial host failure returns a structured report naming
-            committed, uncommitted, and recovery files rather than continuing silently.
+            hashes, preview diagnostics, and a proposal ID. `propose-rename` treats an
+            interface method and every implementing override as one canonical contract
+            family regardless of which member initiated the request. It rejects
+            identifiers, capture, or candidates with parse or semantic diagnostics and
+            does not retain rejected proposals. `apply-edits` refuses every proposal
+            carrying preview diagnostics, preflights every disk hash before writing, and
+            uses same-directory temporary files; stale bytes are refused. A partial host
+            failure returns a structured report naming committed, uncommitted, and
+            recovery files rather than continuing silently.
 
     - id: formatting
       title: Source formatting
