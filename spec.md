@@ -1342,7 +1342,7 @@ Publication IDs use the stable-ID segment syntax from §6. `publication.kind` is
 
 For compatibility with reference roots authored before publications were named, omission of `publication` means `{ id: reference, kind: reference }` and omission of `imports` means an empty sequence. New manifests write both fields explicitly.
 
-A book imports the reference registry and uses navigation groups to derive visible chapter and appendix labels:
+A book imports the reference registry and uses navigation groups to derive visible chapter and appendix labels. During a source migration, its navigation may contain canonical record pages, explicitly transitional Markdown pages, and unpublished planned pages:
 
 ```yaml
 format: 1
@@ -1358,31 +1358,70 @@ navigation:
     numbering: none
     children:
       - page: book.introduction
+        contents:
+          - section: audience
+            title: Who this book is for
+          - section: examples
+            title: How to read the examples
   - group: Chapters
     numbering: decimal
     children:
-      - page: book.first-taste
-      - page: book.values-and-names
+      - markdown-page:
+          id: book.first-taste
+          kind: chapter
+          title: A First Taste of Terrane
+          source: chapters/01.md
+          contents:
+            - id: purpose
+              title: What Terrane is for
+            - id: toolchain
+              title: Installing the toolchain
+      - planned-page:
+          id: book.larger-program
+          kind: chapter
+          title: A Larger Program, Step by Step
+          contents:
+            - id: application
+              title: Choosing a manageable application
   - group: Appendices
     numbering: upper-alpha
     children:
-      - page: book.appendix.syntax-map
+      - planned-page:
+          id: book.appendix.syntax-map
+          kind: appendix
+          title: A Reader's Syntax Map
+          contents:
+            - id: bindings
+              title: Bindings and assignment
 ```
+
+`contents` is an ordered expanded-contents list:
+
+- On a canonical `page`, each item has `section` and `title`. `section` names a top-level local section in that record, and `title` must exactly match the section title. The sequence must list every top-level section exactly once in record order.
+- On a `markdown-page` or `planned-page`, each item has `id` and `title`. IDs follow the local-ID rules and are reserved immediately within the page identity.
+
+A `markdown-page` is a transitional book-only source form. Its mapping contains `id`, `kind`, `title`, `source`, and `contents`. `kind` is `topic`, `chapter`, or `appendix`; `source` is a publication-root-relative `.md` file. The Markdown H1 must equal the navigation-derived number followed by the authored title, or just the title for an unnumbered page. Its H2 headings must exactly equal the `contents` titles in order. The processor assigns the corresponding content IDs to those H2 sections while lowering the Markdown page into the assembled manual IR. The body is CommonMark 0.31.2 plus strikethrough and may retain ordinary Markdown headings, tables, images, and fenced examples during migration; it is not required to conform to the YAML record/block schema until cutover. Raw HTML, unsafe URLs, and paths outside the publication root remain errors.
+
+A `planned-page` reserves intended book structure without publishing a page. Its mapping contains `id`, `kind`, `title`, and `contents`, has no source or record, and is excluded from expanded navigation, previous/next links, search, links, and rendered output. A planning view may display it. When content is authored, the entry becomes either a `markdown-page` or canonical `page` without changing its page or content IDs.
+
+Migrating a `markdown-page` to the canonical IR is a clean cutover: transfer its page ID, title, and content IDs into one YAML record, replace the manifest entry with `page` plus checked `contents`, and remove the Markdown source. The manifest therefore remains the complete book outline while records remain the canonical home of migrated page structure.
 
 Rules:
 
 - A `page` item references exactly one record owned by the current publication.
+- `markdown-page` and `planned-page` are allowed only in a `book` publication.
+- Every navigation child is exactly one of `page`, `markdown-page`, `planned-page`, `group`, or `generated`; fields from different alternatives cannot be combined.
 - A `group` is a label and does not create a page.
-- Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. Numbering applies in authored order to the group's direct page children and restarts in each numbered group.
-- In a `book` publication, a decimal-numbered group's direct pages are `chapter` records and an `upper-alpha` group's direct pages are `appendix` records. Unnumbered front and back matter normally uses `topic` records; one unnumbered `chapter` may appear before the first decimal-numbered group as the book introduction.
+- Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. Numbering follows authored order across `page`, `markdown-page`, and `planned-page` children and restarts in each numbered group. A decimal label is `<number>. ` and an alphabetic label is `<uppercase-letter>. `. A planned page reserves its prospective label for planning views, but that label is absent from the public navigation until the page is published.
+- In a `book` publication, every page-bearing entry in a decimal-numbered group has `chapter` kind and every page-bearing entry in an `upper-alpha` group has `appendix` kind. Canonical `page` entries obtain that kind from their record; Markdown and planned entries declare it. Unnumbered front and back matter normally uses `topic` records; one unnumbered `chapter` may appear before the first decimal-numbered group as the book introduction.
 - A `reference` publication does not own `chapter` or `appendix` records.
-- Generated numbers are presentation, not identity, and are not included in record titles or links.
+- Generated numbers are presentation, not identity, and are not included in canonical record or manifest titles.
 - A `generated` item declares a deterministic query over the current publication.
 - Every published non-member page must be reachable once from its publication's navigation unless marked as intentionally index-only by the format.
 - Member pages may be reached through generated owner indexes without all appearing in the global sidebar.
 - Navigation order does not imply namespace, ownership, inheritance, or lifecycle.
-- Previous/next links follow the current publication's expanded navigation order.
-- Duplicate global IDs across the transitive publication import graph are errors.
+- Previous/next links follow the current publication's expanded published navigation order.
+- Duplicate global IDs across records, transitional Markdown pages, planned pages, or the transitive publication import graph are errors.
 
 ## 17. Compiler snapshot
 
@@ -1543,15 +1582,16 @@ The manual processor:
 
 1. loads the selected publication and its transitive configured imports;
 2. parses all YAML while retaining source spans and comments;
-3. validates local record schemas, assets, example files, and source annotations;
-4. builds the documentation-set publication, global ID, and redirect registries;
-5. resolves owners, namespaces, inheritance, interfaces, traits, type references, and cross-publication links;
-6. joins lifecycle, documentation, provenance, and selected compiler/profile facts;
-7. validates Markdown references and local IDs;
-8. verifies examples when explicitly requested by the build workflow;
-9. expands navigation and entity-index queries;
-10. creates the assembled manual IR;
-11. renders HTML, Markdown, search data, indexes, print views, and optional machine-readable output.
+3. parses and validates any transitional Markdown pages;
+4. validates local record schemas, assets, example files, and source annotations;
+5. builds the documentation-set publication, global ID, and redirect registries;
+6. resolves owners, namespaces, inheritance, interfaces, traits, type references, and cross-publication links;
+7. joins lifecycle, documentation, provenance, and selected compiler/profile facts;
+8. validates Markdown references and local IDs;
+9. verifies examples when explicitly requested by the build workflow;
+10. expands navigation and entity-index queries;
+11. creates the assembled manual IR;
+12. renders HTML, Markdown, search data, indexes, print views, and optional machine-readable output.
 
 ### 19.1 Generated entity page shape
 
@@ -1608,7 +1648,7 @@ A default build provides:
 - machine-readable assembled IR for editors and other tools;
 - a reconciliation and example-evidence report.
 
-HTML, Markdown, and print renderers consume the same profile-selected assembled content. They may differ in navigation chrome, disclosure controls, annotation placement, and other medium-specific presentation, but cannot silently omit a semantic block because the target lacks its richer display. Generated Markdown is a publication artifact, not canonical source; authors edit the YAML records.
+HTML, Markdown, and print renderers consume the same profile-selected assembled content. They may differ in navigation chrome, disclosure controls, annotation placement, and other medium-specific presentation, but cannot silently omit a semantic block because the target lacks its richer display. Generated Markdown is a publication artifact, not canonical source; authors edit YAML records, except while an explicitly declared transitional `markdown-page` remains canonical for its body.
 
 Search ranks exact canonical symbols and aliases above prose matches. Excluded profiles do not leak planned or removed material into results.
 
@@ -1669,8 +1709,8 @@ A public build fails on:
 - invalid, out-of-bounds, or missing-file source annotations;
 - invalid or failed required example evidence;
 - unsafe or duplicate multi-file example paths;
-- navigation duplication, incompatible publication and record kinds, incompatible numbering, or unreachable required pages;
-- raw HTML, unsafe URLs, missing assets, missing required image alternatives, or source-root escapes.
+- navigation duplication, incompatible publication and record kinds, incompatible numbering, stale `contents`, missing transitional Markdown sources, or unreachable required pages;
+- raw HTML, unsafe URLs, missing assets, missing required image alternatives, or record, Markdown-source, example-file, or asset path escapes.
 
 A strict quality profile additionally requires:
 
@@ -1709,7 +1749,7 @@ The processor:
 - sanitizes active assets according to explicit policy;
 - escapes all authored content at the renderer boundary;
 - runs verified examples only in an isolated temporary package without network access and under resource limits;
-- never follows a record, example-file, or asset path outside its configured publication root.
+- never follows a record, transitional Markdown source, example-file, or asset path outside its configured publication root.
 
 Renderers preserve semantic heading order, visible keyboard focus, table headers, code-language labels, textual callout labels, figure captions, image alternatives, exercise boundaries, and source-annotation locations. Non-decorative images require alt text; decorative images are explicitly marked and use no alternative text. Colour, position, interactivity, and iconography are never the only means of conveying status, sequence, or warning. Generated relationship diagrams have equivalent text lists.
 
@@ -1719,7 +1759,7 @@ Manual authors should:
 
 1. Put compiler-known facts in `surface`, never in duplicated Markdown tables.
 2. Put continuous prose and explanations in Markdown fields; structure a unit when its identity, validation, accessibility, reuse, or semantic display role matters.
-3. Use the section tree for headings and stable destinations rather than embedding headings in Markdown.
+3. In canonical YAML records, use the section tree for headings and stable destinations rather than embedding headings in Markdown.
 4. Give images meaningful alternatives or mark them decorative; do not repeat a caption mechanically as alt text.
 5. Use typed examples for source with a claimed check, build, run, rejection, response, project layout, or annotation contract.
 6. Use an admonition kind for rationale, guidance, warnings, and other semantic callouts rather than styling a blockquote to resemble one.
@@ -1739,6 +1779,7 @@ Manual authors should:
 20. Use generated indexes rather than copied member inventories.
 21. Keep entity pages useful when opened from search without duplicating their owner's general contract.
 22. Keep tutorial progression selective: link to the reference for exhaustive detail rather than turning every chapter into an API inventory.
+23. Keep `manual.yaml` `contents` synchronized with the complete top-level section order; use `planned-page` rather than inventing an empty source file for unwritten material.
 
 ## 25. Format evolution
 

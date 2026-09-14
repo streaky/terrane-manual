@@ -11,3 +11,598 @@ navigation:
     numbering: none
     children:
       - page: book.introduction
+        contents:
+          - section: audience
+            title: Who this book is for
+          - section: scope
+            title: What this book will teach
+          - section: reference-boundary
+            title: What this book deliberately leaves to the reference
+          - section: examples
+            title: How to read the examples
+          - section: continuum-of-competence
+            title: Terrane's continuum of competence
+  - group: Chapters
+    numbering: decimal
+    children:
+      - markdown-page:
+          id: book.first-taste
+          kind: chapter
+          title: A First Taste of Terrane
+          source: chapters/01.md
+          contents:
+            - id: what-terrane-is-for
+              title: What Terrane is for
+            - id: installing-the-toolchain
+              title: Installing the toolchain
+            - id: your-first-program
+              title: Your first program
+            - id: running-a-source-file
+              title: Running a source file
+            - id: the-edit-check-and-run-cycle
+              title: The edit, check, and run cycle
+            - id: reading-a-compiler-diagnostic
+              title: Reading a compiler diagnostic
+            - id: a-slightly-more-useful-program
+              title: A slightly more useful program
+            - id: where-terrane-fits-between-scripting-and-systems-programming
+              title: Where Terrane fits between scripting and systems programming
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.values-and-names
+          kind: chapter
+          title: Values, Names, and Everyday Expressions
+          source: chapters/02.md
+          contents:
+            - id: numbers-truth-values-and-text
+              title: Numbers, truth values, and text
+            - id: giving-a-value-a-name
+              title: Giving a value a name
+            - id: changing-a-binding
+              title: Changing a binding
+            - id: arithmetic-and-comparisons
+              title: Arithmetic and comparisons
+            - id: member-access-with
+              title: Member access with `.`
+            - id: calling-with-semicolon
+              title: Calling with `;`
+            - id: nested-calls-and-parentheses
+              title: Nested calls and parentheses
+            - id: comments-and-readable-layout
+              title: Comments and readable layout
+            - id: everything-is-an-object-semantically
+              title: Everything is an object—semantically
+            - id: why-terrane-why-calls-use-semicolon
+              title: 'Why Terrane: why calls use `;`'
+            - id: project-calculate-a-small-purchase
+              title: 'Project: calculate a small purchase'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.decisions-and-repetition
+          kind: chapter
+          title: Making Decisions and Repeating Work
+          source: chapters/03.md
+          contents:
+            - id: choosing-with-if-and-else
+              title: Choosing with `if` and `else`
+            - id: combining-conditions
+              title: Combining conditions
+            - id: repeating-with-while
+              title: Repeating with `while`
+            - id: iterating-with-for
+              title: Iterating with `for`
+            - id: ranges-and-ordinary-iteration
+              title: Ranges and ordinary iteration
+            - id: break-and-continue
+              title: '`break` and `continue`'
+            - id: loop-local-names
+              title: Loop-local names
+            - id: choosing-the-clearest-loop
+              title: Choosing the clearest loop
+            - id: project-classify-a-range-of-numbers
+              title: 'Project: classify a range of numbers'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.functions
+          kind: chapter
+          title: 'Functions: Giving Work a Name'
+          source: chapters/04.md
+          contents:
+            - id: defining-and-calling-a-function
+              title: Defining and calling a function
+            - id: parameters-and-results
+              title: Parameters and results
+            - id: required-optional-and-named-arguments
+              title: Required, optional, and named arguments
+            - id: returning-early
+              title: Returning early
+            - id: local-scope
+              title: Local scope
+            - id: passing-functions-as-values
+              title: Passing functions as values
+            - id: small-functions-that-compose
+              title: Small functions that compose
+            - id: project-turn-the-number-classifier-into-functions
+              title: 'Project: turn the number classifier into functions'
+            - id: terrane-style-express-contracts-not-ceremony
+              title: 'Terrane style: express contracts, not ceremony'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.text-and-collections
+          kind: chapter
+          title: Text and Collections
+          source: chapters/05.md
+          contents:
+            - id: quoted-tail-and-block-text
+              title: Quoted, tail, and block text
+            - id: common-string-operations
+              title: Common string operations
+            - id: bytes-unicode-scalars-and-grapheme-clusters
+              title: Bytes, Unicode scalars, and grapheme clusters
+            - id: creating-lists
+              title: Creating lists
+            - id: iterating-over-lists
+              title: Iterating over lists
+            - id: creating-and-updating-maps
+              title: Creating and updating maps
+            - id: building-collections-from-existing-values
+              title: Building collections from existing values
+            - id: choosing-the-right-collection
+              title: Choosing the right collection
+            - id: assignment-and-copy-on-write-value-behavior
+              title: Assignment and copy-on-write value behavior
+            - id: why-terrane-values-without-accidental-aliasing
+              title: 'Why Terrane: values without accidental aliasing'
+            - id: project-word-frequency
+              title: 'Project: word frequency'
+            - id: terrane-style-make-data-shape-visible
+              title: 'Terrane style: make data shape visible'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.complete-program
+          kind: chapter
+          title: Building a Complete Program
+          source: chapters/06.md
+          contents:
+            - id: starting-from-a-user-story
+              title: Starting from a user story
+            - id: dividing-the-program-into-functions
+              title: Dividing the program into functions
+            - id: modeling-the-program-s-data
+              title: Modeling the program's data
+            - id: validating-values
+              title: Validating values
+            - id: reporting-useful-output
+              title: Reporting useful output
+            - id: keeping-decisions-separate-from-presentation
+              title: Keeping decisions separate from presentation
+            - id: checking-and-testing-behavior
+              title: Checking and testing behavior
+            - id: growing-the-program-without-losing-its-shape
+              title: Growing the program without losing its shape
+            - id: project-a-small-in-memory-reporting-tool
+              title: 'Project: a small in-memory reporting tool'
+            - id: terrane-style-let-the-program-read-like-its-decisions
+              title: 'Terrane style: let the program read like its decisions'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.errors
+          kind: chapter
+          title: Errors Are Part of the Program
+          source: chapters/07.md
+          contents:
+            - id: mistakes-failures-and-exceptional-conditions
+              title: Mistakes, failures, and exceptional conditions
+            - id: throwing-an-error
+              title: Throwing an error
+            - id: handling-errors-with-try-and-catch
+              title: Handling errors with `try` and `catch`
+            - id: cleaning-up-with-finally
+              title: Cleaning up with `finally`
+            - id: letting-an-error-travel-to-the-right-layer
+              title: Letting an error travel to the right layer
+            - id: replacing-and-preserving-errors
+              title: Replacing and preserving errors
+            - id: designing-useful-error-values
+              title: Designing useful error values
+            - id: when-not-to-catch-an-error
+              title: When not to catch an error
+            - id: improving-the-reporting-tool-s-failures
+              title: Improving the reporting tool's failures
+            - id: terrane-style-make-failure-boundaries-as-clear-as-success-boundaries
+              title: 'Terrane style: make failure boundaries as clear as success boundaries'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.namespaces-imports-and-packages
+          kind: chapter
+          title: Namespaces, Imports, and Packages
+          source: chapters/08.md
+          contents:
+            - id: from-one-file-to-a-project
+              title: From one file to a project
+            - id: namespaces-and-paths
+              title: Namespaces and paths
+            - id: imports
+              title: Imports
+            - id: organizing-the-source-tree
+              title: Organizing the source tree
+            - id: visibility
+              title: Visibility
+            - id: the-package-manifest
+              title: The package manifest
+            - id: dependencies
+              title: Dependencies
+            - id: building-and-running-a-package
+              title: Building and running a package
+            - id: project-split-the-reporting-tool-across-files
+              title: 'Project: split the reporting tool across files'
+            - id: terrane-style-let-namespace-boundaries-follow-responsibility
+              title: 'Terrane style: let namespace boundaries follow responsibility'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.classes-interfaces-and-traits
+          kind: chapter
+          title: Classes, Interfaces, and Traits
+          source: chapters/09.md
+          contents:
+            - id: objects-as-behavior
+              title: Objects as behavior
+            - id: defining-a-class
+              title: Defining a class
+            - id: constructing-an-instance
+              title: Constructing an instance
+            - id: typed-fields-and-ordinary-methods
+              title: Typed fields and ordinary methods
+            - id: initialization-with-construct
+              title: Initialization with `construct`
+            - id: cleanup-with-destruct
+              title: Cleanup with `destruct`
+            - id: encapsulation-and-visibility
+              title: Encapsulation and visibility
+            - id: extending-one-base-class
+              title: Extending one base class
+            - id: describing-shared-behavior-with-an-interface
+              title: Describing shared behavior with an interface
+            - id: reusing-fields-and-methods-with-traits
+              title: Reusing fields and methods with traits
+            - id: designing-an-object-that-earns-its-existence
+              title: Designing an object that earns its existence
+            - id: project-model-a-small-task-list
+              title: 'Project: model a small task list'
+            - id: under-the-surface-the-object-model-is-a-semantic-abstraction
+              title: 'Under the surface: the object model is a semantic abstraction'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.types
+          kind: chapter
+          title: Types Without Ceremony
+          source: chapters/10.md
+          contents:
+            - id: type-inference
+              title: Type inference
+            - id: annotations-where-they-communicate-intent
+              title: Annotations where they communicate intent
+            - id: union-types-and-optional-values
+              title: Union types and optional values
+            - id: refinement-after-a-check
+              title: Refinement after a check
+            - id: coercion
+              title: Coercion
+            - id: generic-types
+              title: Generic types
+            - id: function-types
+              title: Function types
+            - id: compile-time-guarantees
+              title: Compile-time guarantees
+            - id: project-strengthen-the-task-list-program-with-types
+              title: 'Project: strengthen the task-list program with types'
+            - id: terrane-style-state-contracts-not-compiler-trivia
+              title: 'Terrane style: state contracts, not compiler trivia'
+            - id: exercises
+              title: Exercises
+            - id: what-we-learned
+              title: What we learned
+      - markdown-page:
+          id: book.identity-and-movement
+          kind: chapter
+          title: Values, Shared Identity, and Movement
+          source: chapters/11.md
+          contents:
+            - id: ordinary-assignment-first
+              title: Ordinary assignment first
+            - id: independent-logical-values
+              title: Independent logical values
+            - id: copy-on-write-behavior-in-practice
+              title: Copy-on-write behavior in practice
+            - id: sharing-identity-explicitly-with-ref
+              title: Sharing identity explicitly with `ref`
+            - id: shared-references-and-ownership
+              title: Shared references and ownership
+            - id: transferring-a-value-with-move
+              title: Transferring a value with `move`
+            - id: when-a-value-is-no-longer-available
+              title: When a value is no longer available
+            - id: lifetimes-without-annotation-clutter
+              title: Lifetimes without annotation clutter
+            - id: choosing-between-assignment-ref-and-move
+              title: Choosing between assignment, `ref`, and `move`
+            - id: common-designs-that-do-not-need-references
+              title: Common designs that do not need references
+            - id: project-observing-a-work-list
+              title: 'Project: observing a work list'
+            - id: terrane-style-make-identity-part-of-the-model-only-when-it-matters
+              title: 'Terrane style: make identity part of the model only when it matters'
+            - id: exercises
+              title: Exercises
+            - id: chapter-summary
+              title: Chapter summary
+      - markdown-page:
+          id: book.async
+          kind: chapter
+          title: Asynchronous Work and Structured Concurrency
+          source: chapters/12.md
+          contents:
+            - id: when-a-program-should-be-asynchronous
+              title: When a program should be asynchronous
+            - id: declaring-and-awaiting-asynchronous-work
+              title: Declaring and awaiting asynchronous work
+            - id: task-scopes
+              title: Task scopes
+            - id: spawning-work-within-a-scope
+              title: Spawning work within a scope
+            - id: joining-tasks-and-observing-outcomes
+              title: Joining tasks and observing outcomes
+            - id: failure-inside-a-task
+              title: Failure inside a task
+            - id: cancellation-and-partial-progress
+              title: Cancellation and partial progress
+            - id: deadlines
+              title: Deadlines
+            - id: project-coordinating-a-heartbeat-with-an-overall-time-budget
+              title: 'Project: coordinating a heartbeat with an overall time budget'
+            - id: sharing-mutable-state-by-giving-it-one-owner
+              title: Sharing mutable state by giving it one owner
+            - id: carrying-log-events-through-typed-channels
+              title: Carrying log events through typed channels
+            - id: threaded-and-cooperative-executor-profiles
+              title: Threaded and cooperative executor profiles
+            - id: project-processing-several-values-concurrently
+              title: 'Project: processing several values concurrently'
+            - id: terrane-style-keep-concurrency-within-a-scope
+              title: 'Terrane style: keep concurrency within a scope'
+            - id: why-terrane-async-is-structured
+              title: 'Why Terrane: async is structured'
+            - id: exercises
+              title: Exercises
+            - id: chapter-summary
+              title: Chapter summary
+      - markdown-page:
+          id: book.native-program
+          kind: chapter
+          title: How Terrane Becomes a Native Program
+          source: chapters/13.md
+          contents:
+            - id: from-terrane-source-to-an-executable
+              title: From Terrane source to an executable
+            - id: the-semantic-model-between-source-and-rust
+              title: The semantic model between source and Rust
+            - id: reading-generated-rust
+              title: Reading generated Rust
+            - id: source-locations-and-diagnostics-across-lowering
+              title: Source locations and diagnostics across lowering
+            - id: debug-and-release-builds
+              title: Debug and release builds
+            - id: what-optimization-may-erase
+              title: What optimization may erase
+            - id: why-a-terrane-object-need-not-become-a-rust-object
+              title: Why a Terrane object need not become a Rust object
+            - id: behavior-is-the-contract-semicolon-representation-is-a-compiler-decision
+              title: Behavior is the contract; representation is a compiler decision
+            - id: debugging-at-the-terrane-and-rust-levels
+              title: Debugging at the Terrane and Rust levels
+            - id: the-continuum-of-competence
+              title: The continuum of competence
+            - id: exercises
+              title: Exercises
+            - id: chapter-summary
+              title: Chapter summary
+      - markdown-page:
+          id: book.terrane-shaped-programs
+          kind: chapter
+          title: Writing Terrane-Shaped Programs
+          source: chapters/14.md
+          contents:
+            - id: prefer-the-ordinary-operation
+              title: Prefer the ordinary operation
+            - id: let-inference-remove-noise
+              title: Let inference remove noise
+            - id: use-types-to-state-real-contracts
+              title: Use types to state real contracts
+            - id: pass-values-unless-identity-matters
+              title: Pass values unless identity matters
+            - id: give-errors-an-appropriate-owner
+              title: Give errors an appropriate owner
+            - id: use-iteration-rather-than-managing-indexes
+              title: Use iteration rather than managing indexes
+            - id: keep-concurrency-within-a-scope
+              title: Keep concurrency within a scope
+            - id: favor-readable-generated-behavior-over-clever-source-tricks
+              title: Favor readable generated behavior over clever source tricks
+            - id: refactoring-the-book-s-project-as-a-whole
+              title: Refactoring the book's project as a whole
+            - id: a-practical-review-checklist
+              title: A practical review checklist
+            - id: exercises
+              title: Exercises
+            - id: chapter-summary
+              title: Chapter summary
+      - planned-page:
+          id: book.larger-program
+          kind: chapter
+          title: A Larger Program, Step by Step
+          contents:
+            - id: choosing-a-manageable-application
+              title: Choosing a manageable application
+            - id: sketching-behavior-before-structure
+              title: Sketching behavior before structure
+            - id: establishing-the-package-layout
+              title: Establishing the package layout
+            - id: modeling-the-core-values
+              title: Modeling the core values
+            - id: writing-the-first-vertical-slice
+              title: Writing the first vertical slice
+            - id: adding-collections-and-iteration
+              title: Adding collections and iteration
+            - id: adding-structured-error-handling
+              title: Adding structured error handling
+            - id: adding-classes-and-an-interface
+              title: Adding classes and an interface
+            - id: adding-an-explicit-ownership-boundary
+              title: Adding an explicit ownership boundary
+            - id: adding-concurrent-work-where-it-helps
+              title: Adding concurrent work where it helps
+            - id: testing-observable-behavior
+              title: Testing observable behavior
+            - id: inspecting-the-generated-rust
+              title: Inspecting the generated Rust
+            - id: building-and-running-the-finished-application
+              title: Building and running the finished application
+            - id: what-we-deliberately-did-not-build
+              title: What we deliberately did not build
+      - planned-page:
+          id: book.next
+          kind: chapter
+          title: Where to Go Next
+          contents:
+            - id: navigating-the-language-reference
+              title: Navigating the language reference
+            - id: reading-compiler-diagnostics-as-guidance
+              title: Reading compiler diagnostics as guidance
+            - id: exploring-generated-rust
+              title: Exploring generated Rust
+            - id: profiling-and-debugging-native-programs
+              title: Profiling and debugging native programs
+            - id: standard-facilities-as-they-become-available
+              title: Standard facilities as they become available
+            - id: going-lower-rust-abi-types-and-foreign-boundaries
+              title: 'Going lower: Rust, ABI types, and foreign boundaries'
+            - id: specialized-and-deferred-territory
+              title: Specialized and deferred territory
+            - id: contributing-packages
+              title: Contributing packages
+            - id: contributing-to-terrane
+              title: Contributing to Terrane
+            - id: continuing-the-continuum-of-competence
+              title: Continuing the continuum of competence
+  - group: Appendices
+    numbering: upper-alpha
+    children:
+      - planned-page:
+          id: book.appendix.installing
+          kind: appendix
+          title: Installing Terrane on Supported Platforms
+          contents:
+            - id: toolchain-requirements
+              title: Toolchain requirements
+            - id: editor-integration
+              title: Editor integration
+            - id: updating-and-troubleshooting
+              title: Updating and troubleshooting
+      - planned-page:
+          id: book.appendix.commands
+          kind: appendix
+          title: The Commands Used in This Book
+          contents:
+            - id: terrane-check
+              title: '`terrane check`'
+            - id: terrane-rust
+              title: '`terrane rust`'
+            - id: terrane-build
+              title: '`terrane build`'
+            - id: terrane-run
+              title: '`terrane run`'
+            - id: package-manifests-and-use-declarations
+              title: Package manifests and `use` declarations
+      - planned-page:
+          id: book.appendix.syntax-map
+          kind: appendix
+          title: A Reader's Syntax Map
+          contents:
+            - id: bindings-and-assignment
+              title: Bindings and assignment
+            - id: calls-and-member-access
+              title: Calls and member access
+            - id: function-declarations
+              title: Function declarations
+            - id: control-flow
+              title: Control flow
+            - id: imports-and-namespaces
+              title: Imports and namespaces
+            - id: types-ref-and-move
+              title: Types, `ref`, and `move`
+            - id: error-handling
+              title: Error handling
+            - id: async-forms
+              title: Async forms
+      - planned-page:
+          id: book.appendix.answers
+          kind: appendix
+          title: Answers and Further Experiments
+          contents:
+            - id: chapter-exercises
+              title: Chapter exercises
+            - id: alternative-solutions
+              title: Alternative solutions
+            - id: ideas-for-extending-the-projects
+              title: Ideas for extending the projects
+      - planned-page:
+          id: book.appendix.reference-map
+          kind: appendix
+          title: From Tutorial to Reference
+          contents:
+            - id: topic-by-topic-pointers-into-the-language-and-package-references
+              title: Topic-by-topic pointers into the language and package references
+            - id: features-intentionally-not-taught-in-the-main-progression
+              title: Features intentionally not taught in the main progression
+      - planned-page:
+          id: book.appendix.beyond-tutorial
+          kind: appendix
+          title: Beyond the Tutorial
+          contents:
+            - id: standard-streams-files-paths-processes-and-command-line-parsing
+              title: Standard streams, files, paths, processes, and command-line parsing
+            - id: documents-networking-time-and-structured-logging
+              title: Documents, networking, time, and structured logging
+            - id: native-rust-and-foreign-runtime-boundaries
+              title: Native Rust and foreign-runtime boundaries
+            - id: raw-addresses-and-abi-level-facilities
+              title: Raw addresses and ABI-level facilities
+            - id: deliberately-deferred-features-generators-labels-and-goto-hot-code-replacement-no-std-embedded-firmware-and-kernel-targets
+              title: 'Deliberately deferred features: generators, labels and `goto`, hot-code replacement, `no_std`, embedded, firmware, and kernel targets'
