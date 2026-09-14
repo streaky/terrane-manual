@@ -113,12 +113,13 @@ documentation:
           evidence: []
           markdown: |-
             Source breakpoints resolve through compiler-owned sequence points in final
-            formatted Rust. One Terrane location may produce multiple native locations;
-            each remains represented in one grouped backend update. A non-executable
-            requested line may adjust only forward to the nearest declared sequence
-            point in the same exact lexical scope. Otherwise it remains pending and
-            unverified with an explanation. Verification reports the requested and
-            resolved Terrane locations and the generated location.
+            formatted Rust. Relative paths resolve from the debugger invocation
+            directory before the package root. One Terrane location may produce
+            multiple native locations; each remains represented in one grouped backend
+            update. A non-executable requested line may adjust only forward to the
+            nearest declared sequence point in the same exact lexical scope. Otherwise
+            it remains pending and unverified with an explanation. Verification reports
+            the requested and resolved Terrane locations and the generated location.
 
         - type: rule
           id: rule.debugging.stepping
@@ -129,12 +130,12 @@ documentation:
             Continue, step-in, step-over, and step-out delegate process control to LLDB.
             `next` targets another authored point in the selected frame or its caller,
             including loop re-entry; `stepOut` requires an exact frame-depth decrease.
-            Only a breakpoint at the current native location may be suspended while
-            leaving it. Every other user breakpoint remains active, and temporary
-            breakpoints are deleted individually after completion or interruption.
-            Unmapped fallback is bounded to 64 native steps; reaching the bound exposes
-            the native stop and limitation. Generated Rust, native frames, registers,
-            memory, and raw LLDB commands remain explicit escape hatches.
+            The breakpoint at the current native location is suspended while leaving
+            it. Every other user breakpoint remains active. Up to 512 temporary source
+            targets are installed and removed in batched LLDB requests; larger sets
+            fall back without truncation to at most 64 native steps. Reaching the bound
+            exposes the native stop and limitation. Generated Rust, native frames,
+            registers, memory, and raw LLDB commands remain explicit escape hatches.
 
     - id: frames-values
       title: Frames, values, and privacy
@@ -186,7 +187,8 @@ documentation:
           evidence: []
           markdown: |-
             Requests and responses remain correlated by DAP sequence IDs, including
-            backend responses that arrive while another request is expected.
+            backend responses that arrive while another request is expected. Delayed
+            launch and attach results are retained and validated after configuration.
             `initialize` receives exactly one immediate `initialized` event. Disconnect
             terminates a launched debuggee by default and detaches from an attached
             process by default; clients may explicitly choose the DAP
