@@ -27,7 +27,8 @@ navigation:
   - group: Chapters
     numbering: decimal
     children:
-      - page: book.first-taste
+      - number: 1
+        page: book.first-taste
         contents:
           - section: what-terrane-is-for
             title: What Terrane is for
@@ -49,7 +50,8 @@ navigation:
             title: Exercises
           - section: what-we-learned
             title: What we learned
-      - page: book.values-and-names
+      - number: 2
+        page: book.values-and-names
         contents:
           - section: numbers-truth-values-and-text
             title: Numbers, truth values, and text
@@ -77,7 +79,8 @@ navigation:
             title: Exercises
           - section: what-we-learned
             title: What we learned
-      - page: book.decisions-and-repetition
+      - number: 3
+        page: book.decisions-and-repetition
         contents:
           - section: choosing-with-if-and-else
             title: Choosing with `if` and `else`
@@ -101,7 +104,8 @@ navigation:
             title: Exercises
           - section: what-we-learned
             title: What we learned
-      - page: book.functions
+      - number: 4
+        page: book.functions
         contents:
           - section: defining-and-calling-a-function
             title: Defining and calling a function
@@ -125,7 +129,8 @@ navigation:
             title: Exercises
           - section: what-we-learned
             title: What we learned
-      - page: book.text-and-collections
+      - number: 5
+        page: book.text-and-collections
         contents:
           - section: quoted-tail-and-block-text
             title: Quoted, tail, and block text
@@ -155,7 +160,8 @@ navigation:
             title: Exercises
           - section: what-we-learned
             title: What we learned
-      - markdown-page:
+      - number: 6
+        markdown-page:
           id: book.complete-program
           kind: chapter
           title: Building a Complete Program
@@ -185,7 +191,8 @@ navigation:
               title: Exercises
             - id: what-we-learned
               title: What we learned
-      - markdown-page:
+      - number: 7
+        markdown-page:
           id: book.errors
           kind: chapter
           title: Errors Are Part of the Program
@@ -215,7 +222,8 @@ navigation:
               title: Exercises
             - id: what-we-learned
               title: What we learned
-      - markdown-page:
+      - number: 8
+        markdown-page:
           id: book.namespaces-imports-and-packages
           kind: chapter
           title: Namespaces, Imports, and Packages
@@ -245,7 +253,8 @@ navigation:
               title: Exercises
             - id: what-we-learned
               title: What we learned
-      - markdown-page:
+      - number: 9
+        markdown-page:
           id: book.classes-interfaces-and-traits
           kind: chapter
           title: Classes, Interfaces, and Traits
@@ -281,7 +290,8 @@ navigation:
               title: Exercises
             - id: what-we-learned
               title: What we learned
-      - markdown-page:
+      - number: 10
+        markdown-page:
           id: book.types
           kind: chapter
           title: Types Without Ceremony
@@ -311,7 +321,8 @@ navigation:
               title: Exercises
             - id: what-we-learned
               title: What we learned
-      - markdown-page:
+      - number: 11
+        markdown-page:
           id: book.identity-and-movement
           kind: chapter
           title: Values, Shared Identity, and Movement
@@ -345,7 +356,8 @@ navigation:
               title: Exercises
             - id: chapter-summary
               title: Chapter summary
-      - markdown-page:
+      - number: 12
+        markdown-page:
           id: book.async
           kind: chapter
           title: Asynchronous Work and Structured Concurrency
@@ -385,7 +397,8 @@ navigation:
               title: Exercises
             - id: chapter-summary
               title: Chapter summary
-      - markdown-page:
+      - number: 13
+        markdown-page:
           id: book.native-program
           kind: chapter
           title: How Terrane Becomes a Native Program
@@ -415,7 +428,8 @@ navigation:
               title: Exercises
             - id: chapter-summary
               title: Chapter summary
-      - markdown-page:
+      - number: 14
+        markdown-page:
           id: book.terrane-shaped-programs
           kind: chapter
           title: Writing Terrane-Shaped Programs
@@ -445,7 +459,8 @@ navigation:
               title: Exercises
             - id: chapter-summary
               title: Chapter summary
-      - planned-page:
+      - number: 15
+        planned-page:
           id: book.larger-program
           kind: chapter
           title: A Larger Program, Step by Step
@@ -478,7 +493,8 @@ navigation:
               title: Building and running the finished application
             - id: what-we-deliberately-did-not-build
               title: What we deliberately did not build
-      - planned-page:
+      - number: 16
+        planned-page:
           id: book.next
           kind: chapter
           title: Where to Go Next
@@ -506,7 +522,8 @@ navigation:
   - group: Appendices
     numbering: upper-alpha
     children:
-      - planned-page:
+      - number: "A"
+        planned-page:
           id: book.appendix.installing
           kind: appendix
           title: Installing Terrane on Supported Platforms
@@ -517,7 +534,8 @@ navigation:
               title: Editor integration
             - id: updating-and-troubleshooting
               title: Updating and troubleshooting
-      - planned-page:
+      - number: "B"
+        planned-page:
           id: book.appendix.commands
           kind: appendix
           title: The Commands Used in This Book
@@ -532,7 +550,8 @@ navigation:
               title: '`terrane run`'
             - id: package-manifests-and-use-declarations
               title: Package manifests and `use` declarations
-      - planned-page:
+      - number: "C"
+        planned-page:
           id: book.appendix.syntax-map
           kind: appendix
           title: A Reader's Syntax Map
@@ -553,7 +572,8 @@ navigation:
               title: Error handling
             - id: async-forms
               title: Async forms
-      - planned-page:
+      - number: "D"
+        planned-page:
           id: book.appendix.answers
           kind: appendix
           title: Answers and Further Experiments
@@ -564,7 +584,8 @@ navigation:
               title: Alternative solutions
             - id: ideas-for-extending-the-projects
               title: Ideas for extending the projects
-      - planned-page:
+      - number: "E"
+        planned-page:
           id: book.appendix.reference-map
           kind: appendix
           title: From Tutorial to Reference
@@ -573,7 +594,8 @@ navigation:
               title: Topic-by-topic pointers into the language and package references
             - id: features-intentionally-not-taught-in-the-main-progression
               title: Features intentionally not taught in the main progression
-      - planned-page:
+      - number: "F"
+        planned-page:
           id: book.appendix.beyond-tutorial
           kind: appendix
           title: Beyond the Tutorial

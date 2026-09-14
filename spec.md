@@ -147,8 +147,8 @@ tutorial-book/
 ├── records/
 │   ├── preface.yaml
 │   ├── chapters/
-│   │   ├── first-taste.yaml
-│   │   └── values-and-names.yaml
+│   │   ├── 01-first-taste.yaml
+│   │   └── 02-values-and-names.yaml
 │   └── appendices/
 │       └── syntax-map.yaml
 └── assets/
@@ -158,6 +158,7 @@ tutorial-book/
 Rules:
 
 - Every record file uses lowercase kebab-case and the `.yaml` extension.
+- A numbered book chapter record prefixes its descriptive filename with the zero-padded decimal `number` from `manual.yaml`, for example `01-first-taste.yaml`. The prefix keeps file views in reading order but does not participate in record identity.
 - A record file defines exactly one page or entity.
 - Source paths organize work but do not define identity, ownership, navigation, chapter numbering, or output URLs.
 - Moving a record does not change its ID.
@@ -1368,7 +1369,8 @@ navigation:
   - group: Chapters
     numbering: decimal
     children:
-      - markdown-page:
+      - number: 6
+        markdown-page:
           id: book.complete-program
           kind: chapter
           title: Building a Complete Program
@@ -1378,7 +1380,8 @@ navigation:
               title: Starting from a user story
             - id: dividing-the-program-into-functions
               title: Dividing the program into functions
-      - planned-page:
+      - number: 15
+        planned-page:
           id: book.larger-program
           kind: chapter
           title: A Larger Program, Step by Step
@@ -1388,7 +1391,8 @@ navigation:
   - group: Appendices
     numbering: upper-alpha
     children:
-      - planned-page:
+      - number: "C"
+        planned-page:
           id: book.appendix.syntax-map
           kind: appendix
           title: A Reader's Syntax Map
@@ -1402,7 +1406,7 @@ navigation:
 - On a canonical `page`, each item has `section` and `title`. `section` names a top-level local section in that record, and `title` must exactly match the section title. The sequence must list every top-level section exactly once in record order.
 - On a `markdown-page` or `planned-page`, each item has `id` and `title`. IDs follow the local-ID rules and are reserved immediately within the page identity.
 
-A `markdown-page` is a transitional book-only source form. Its mapping contains `id`, `kind`, `title`, `source`, and `contents`. `kind` is `topic`, `chapter`, or `appendix`; `source` is a publication-root-relative `.md` file. The Markdown H1 must equal the navigation-derived number followed by the authored title, or just the title for an unnumbered page. Its H2 headings must exactly equal the `contents` titles in order. The processor assigns the corresponding content IDs to those H2 sections while lowering the Markdown page into the assembled manual IR. The body is CommonMark 0.31.2 plus strikethrough and may retain ordinary Markdown headings, tables, images, and fenced examples during migration; it is not required to conform to the YAML record/block schema until cutover. Raw HTML, unsafe URLs, and paths outside the publication root remain errors.
+A `markdown-page` is a transitional book-only source form. Its mapping contains `id`, `kind`, `title`, `source`, and `contents`; its navigation child also carries `number` when it belongs to a numbered group. `kind` is `topic`, `chapter`, or `appendix`; `source` is a publication-root-relative `.md` file. The Markdown H1 must begin with the child entry's explicit number followed by `. ` and the authored title, or contain just the title for an unnumbered page. Its H2 headings must exactly equal the `contents` titles in order. The processor assigns the corresponding content IDs to those H2 sections while lowering the Markdown page into the assembled manual IR. The body is CommonMark 0.31.2 plus strikethrough and may retain ordinary Markdown headings, tables, images, and fenced examples during migration; it is not required to conform to the YAML record/block schema until cutover. Raw HTML, unsafe URLs, and paths outside the publication root remain errors.
 
 A `planned-page` reserves intended book structure without publishing a page. Its mapping contains `id`, `kind`, `title`, and `contents`, has no source or record, and is excluded from expanded navigation, previous/next links, search, links, and rendered output. A planning view may display it. When content is authored, the entry becomes either a `markdown-page` or canonical `page` without changing its page or content IDs.
 
@@ -1412,12 +1416,13 @@ Rules:
 
 - A `page` item references exactly one record owned by the current publication.
 - `markdown-page` and `planned-page` are allowed only in a `book` publication.
-- Every navigation child is exactly one of `page`, `markdown-page`, `planned-page`, `group`, or `generated`; fields from different alternatives cannot be combined.
+- Every navigation child is exactly one of `page`, `markdown-page`, `planned-page`, `group`, or `generated`; `number` and `contents` are common page-bearing fields, and fields from different alternatives cannot otherwise be combined.
 - A `group` is a label and does not create a page.
-- Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. Numbering follows authored order across `page`, `markdown-page`, and `planned-page` children and restarts in each numbered group. A decimal label is `<number>. ` and an alphabetic label is `<uppercase-letter>. `. A planned page reserves its prospective label for planning views, but that label is absent from the public navigation until the page is published.
+- Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. A page-bearing child of a `none` group omits `number`. Every page-bearing child of a numbered group provides it explicitly.
+- In a `decimal` group, `number` is a positive integer. In an `upper-alpha` group, it is an uppercase ASCII sequence such as `A` or `AA`. Numbers are unique and strictly increase in authored child order, including planned pages; gaps are permitted so a publication excerpt or reserved position does not require false entries.
 - In a `book` publication, every page-bearing entry in a decimal-numbered group has `chapter` kind and every page-bearing entry in an `upper-alpha` group has `appendix` kind. Canonical `page` entries obtain that kind from their record; Markdown and planned entries declare it. Unnumbered front and back matter normally uses `topic` records; one unnumbered `chapter` may appear before the first decimal-numbered group as the book introduction.
 - A `reference` publication does not own `chapter` or `appendix` records.
-- Generated numbers are presentation, not identity, and are not included in canonical record or manifest titles.
+- Displayed numbers are navigation metadata, not identity, and are not included in canonical record or manifest titles.
 - A `generated` item declares a deterministic query over the current publication.
 - Every published non-member page must be reachable once from its publication's navigation unless marked as intentionally index-only by the format.
 - Member pages may be reached through generated owner indexes without all appearing in the global sidebar.
