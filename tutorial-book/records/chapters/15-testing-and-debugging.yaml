@@ -18,8 +18,9 @@ documentation:
   title-style: text
   summary: >-
     Develops a practical workflow for testing Terrane packages at unit,
-    integration, and end-to-end boundaries, then diagnosing failures from
-    Terrane source evidence before descending into generated code.
+    integration, and end-to-end boundaries, then diagnosing failures with
+    source evidence, the LLDB-backed Terrane debugger, and explicit native
+    escape hatches.
   tags:
     - testing
     - debugging
@@ -34,7 +35,7 @@ documentation:
 
         Terrane tests are ordinary Terrane functions. They use the same parser, type system, failure model, asynchronous runtime, capability checks, and native lowering as production code. `terrane test` discovers those functions, compiles a native registry, and runs each selected case in its own process and temporary working directory.
 
-        This chapter turns the writing-plan program from Chapter 14 into a tested package. We will begin with one small unit test, move outward through public integration behavior and the built executable, and finish with a repeatable debugging workflow. The debugging material is intentionally source-first: use the evidence Terrane already provides before inspecting a lower implementation layer.
+        This chapter turns the writing-plan program from Chapter 14 into a tested package. We will begin with one small unit test, move outward through public integration behavior and the built executable, and finish with a repeatable debugging workflow. Debugging remains source-first: use the evidence Terrane already provides, then use source breakpoints and stepping before inspecting generated Rust or native state.
   sections:
     - id: begin-with-one-observable-behavior
       title: Begin with one observable behavior
@@ -654,19 +655,109 @@ documentation:
             terrane test --filter /writing-plan::test-completion-label --show-output writing-plan
             ```
 
-            Second, read the Terrane diagnostic, assertion site, explicit cause, and both captured streams. Confirm which tier is running and whether the case depends on process context, capability policy, controlled time, or a fixture deadline.
+            Read the Terrane diagnostic, assertion site, explicit cause, and both captured streams. Confirm which tier is running and whether the case depends on process context, capability policy, controlled time, or a fixture deadline.
 
-            Third, reduce the source-level question. Give an intermediate value a descriptive name and assert it directly. Run the same identity again. Do not add retries, sleeps, or a wider tolerance merely to make an intermittent symptom disappear.
+            Next, reduce the source-level question. Give an intermediate value a descriptive name and assert it directly. Run the same identity again. Do not add retries, sleeps, or a wider tolerance merely to make an intermittent symptom disappear.
 
-            Fourth, inspect boundaries. For a unit test, verify the private rule. For an integration test, verify the public import and returned value. For an end-to-end test, inspect the exact fixture arguments, environment, input bytes, exit status, and captured output.
+            Then inspect the boundary under test. For a unit test, verify the private rule. For an integration test, verify the public import and returned value. For an end-to-end test, inspect the exact fixture arguments, environment, input bytes, exit status, and captured output.
 
-            Only then descend into generated Rust when the Terrane-level evidence says the compiler or runtime representation may be involved:
+            When the remaining question needs execution state, launch the package's production entry through the source debugger:
 
             ```console
-            terrane rust --output build/review.rs package.toml
+            terrane debug writing-plan
             ```
 
-            Chapter 13 explained how to distinguish the review artifact from the emitted crate and how to validate canonical output. The same rule applies here: generated Rust is useful evidence, but it is not a second source contract. Preserve a small Terrane reproduction and compare observable behavior before rewriting clear source around an implementation detail.
+            This command builds a dedicated executable with full debug information, optimization disabled, and stripping disabled. The debugger stops at entry before the program continues. It does not run a selected `terrane test` case: preserve the failure as a small test, then exercise the same production path through the package entry or a minimal source reproducer.
+
+        - type: example
+          id: source-debugger-session
+          title: Stop in the writing-plan source
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            $ terrane debug writing-plan
+            Terrane debugger stopped at entry. Type `help` for commands.
+            (terrane-debug) break src/plan.trn:11
+            verified breakpoint src/plan.trn:11 -> src/main.rs:42
+            (terrane-debug) continue
+            /writing-plan::summarize at src/plan.trn:11
+            (terrane-debug) frames
+            #1   /writing-plan::summarize at src/plan.trn:11
+            #2   /writing-plan::main at src/main.trn:6
+            (terrane-debug) locals
+            completed = 3
+            total = 5
+            (terrane-debug) next
+            /writing-plan::summarize at src/plan.trn:12
+            (terrane-debug) continue
+            in progress
+          files: null
+          entry: null
+          annotations: []
+          response: null
+          diagnostic: null
+          markdown: >-
+            Native line numbers and timing may vary, but the requested and
+            resolved Terrane locations remain explicit. One Terrane source
+            point may map to more than one native location.
+
+        - type: markdown
+          markdown: |-
+            `break PATH:LINE` places a Terrane source breakpoint. An executable source line may map to several native locations, and the debugger keeps every one. If the requested line has no sequence point, adjustment is permitted only to the nearest declared point in the same function. Otherwise the breakpoint stays unverified and explains why.
+
+            Use `continue` to resume, `next` to step over, `step` to step in, and `out` to step out. Stepping targets compiler-declared Terrane sequence points rather than every generated Rust line. This matters around calls, loops, asynchronous suspension, `select`, cleanup, and error propagation. If source progress cannot be found after a bounded native search, the debugger exposes the native stop and says that source fidelity is unavailable; it never spins forever.
+
+            `frames` shows mapped Terrane frames. `locals` uses lexical Terrane names and presents fixed scalars, adaptive integers, strings, and bytes when their selected debug layout is available. Structured values expand lazily and all views are bounded. `<moved>`, `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Secret object fields appear as `<secret>` and lose ordinary child, memory, and evaluation references.
+
+        - type: table
+          id: debugger-command-table
+          title: Interactive debugger commands
+          show-header: true
+          columns:
+            - id: command
+              title: Command
+              cell:
+                type: code
+            - id: purpose
+              title: Purpose
+              cell:
+                type: text
+          rows:
+            - command: break PATH:LINE
+              purpose: Set or adjust a Terrane source breakpoint
+            - command: continue
+              purpose: Resume until a breakpoint, failure, or process exit
+            - command: next
+              purpose: Step over to another source sequence point
+            - command: step
+              purpose: Step into a called source function
+            - command: out
+              purpose: Step out to a caller's source sequence point
+            - command: frames
+              purpose: Show mapped Terrane stack frames
+            - command: locals
+              purpose: Show bounded source-level local values
+            - command: generated
+              purpose: Show the generated Rust location for the selected frame
+            - command: native
+              purpose: Show the native stack without source filtering
+            - command: registers
+              purpose: Inspect native registers explicitly
+            - command: lldb COMMAND
+              purpose: Run an explicit raw LLDB command
+            - command: quit
+              purpose: Disconnect and terminate a debugger-launched process
+
+        - type: admonition
+          id: exact-build-debugging
+          kind: important
+          title: Debug the executable that produced the evidence
+          markdown: |-
+            A debug build records versioned provenance beside both generated Rust and the executable. It binds compiler, toolchain, target, profile, manifest, projection lock, logical source, final generated files, semantic identities, and native module by hash. Changed source or generated files, a mismatched executable, or malformed metadata disables Terrane translation with a diagnostic instead of showing plausible but wrong locations.
+
+            Explicit relocation mappings may point copied-but-identical artifacts at new source and build roots; relocation never changes identity. Raw native debugging remains available when source translation is disabled.
 
         - type: admonition
           id: do-not-debug-by-diluting-the-contract
@@ -677,7 +768,11 @@ documentation:
 
         - type: markdown
           markdown: |-
-            The workflow in this section is useful now: focused reruns, source frames, deterministic context, exact streams, reports, and generated artifacts are all present. Future interactive debugging facilities can extend this chapter without changing the source-first order.
+            Descend into lower layers deliberately. `generated` and `terrane rust --output build/review.rs package.toml` answer questions about lowered structure. `native`, `registers`, memory requests, and `lldb COMMAND` answer explicitly native questions. Raw backend commands are not Terrane expressions and may reveal secret physical memory, so they are an opt-in boundary rather than the ordinary value view.
+
+            Chapter 13 explained how to distinguish the review artifact from the emitted crate and how to validate canonical output. Generated Rust remains useful evidence, not a second source contract. Preserve the small Terrane reproduction and compare observable behavior before rewriting clear source around an implementation detail.
+
+            The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end. Attach additionally depends on host process policy. Other hosts and optimized or stripped modules report reduced fidelity. Conditional breakpoints, logpoints, restart, Terrane expression evaluation, and time-travel debugging are not currently supported. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages.
       sections: []
 
     - id: complete-project-testing-a-writing-plan
@@ -856,7 +951,7 @@ documentation:
           id: exercise-debugging-evidence
           title: Diagnose before changing the contract
           markdown: |-
-            Deliberately break the `complete` boundary. Capture a machine report, rerun only the failing identity with output shown, and write down the first source-level fact that differs from the expectation. Restore the production behavior without weakening the assertion.
+            Deliberately break the `complete` boundary. Capture a machine report and rerun only the failing identity with output shown. Then launch `terrane debug writing-plan`, set a source breakpoint in `summarize`, inspect the preserved inputs, and step to the returned label. Write down the first source-level fact that differs from the expectation. Restore the production behavior without weakening the assertion.
 
         - type: exercise
           id: exercise-ci-selection
@@ -876,16 +971,19 @@ documentation:
 
             Filtering and tier selection narrow lowering, backend validation, native compilation, and execution without hiding frontend semantic errors; an unselected tier's backend-only error appears when that tier is selected. Human output counts timeout, crash, and infrastructure outcomes separately; schema `1.2.0` JSON preserves effective run metadata, per-tier compilation results, deterministic identities, outcomes, source spans, structured causes, precise durations, and byte-exact captures for automation.
 
-            Debug from the Terrane boundary inward. Reproduce one identity, read its source frame and streams, reduce the source-level question, inspect the relevant tier boundary, and descend into generated Rust only when the evidence points there. A good test makes the application contract clearer; a good debugging change fixes the cause without making that contract less true.
+            Debug from the Terrane boundary inward. Reproduce one identity, read its source frame and streams, reduce the source-level question, and inspect the relevant tier boundary. When execution state is needed, use the exact-build debugger for Terrane breakpoints, frames, sequence-point stepping, and bounded values. Generated Rust and raw LLDB state remain explicit lower-level escape hatches. A good test makes the application contract clearer; a good debugging change fixes the cause without making that contract less true.
       sections: []
   see-also:
     - tool.packages.testing
     - tool.packages.command-line
     - lang.functions.asynchronous
+    - tool.debugging
 
 provenance:
   specification:
     - document: language-spec
       section: "31.5"
+    - document: language-spec
+      section: "31.6"
   conformance: []
   compiler: null
