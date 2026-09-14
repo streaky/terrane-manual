@@ -169,7 +169,7 @@ documentation:
           markdown: |-
             Import assertions from `/core/testing`. Choose the assertion that communicates the contract rather than reducing every check to an opaque Boolean.
 
-            `assert` and `deny` cover conditions. Typed equality and inequality assertions cover integers, strings, and Boolean values. Optional assertions distinguish presence from absence. `assert-near` states a floating-point tolerance explicitly. `assert-throws` accepts a typed callback that throws `test-failure`. `fail` records an unconditional failure, while `skip` records that a case was deliberately not executed under the current conditions.
+            `assert` and `deny` cover conditions. Typed equality and inequality assertions cover integers, strings, Booleans, floating-point values, and bytes. Optional assertions distinguish presence from absence. `assert-near` states a floating-point tolerance explicitly. `assert-throws` accepts a typed callback and an expected throwable descriptor. Custom assertions can compare concrete fields and call `fail-values` with operands implementing `test-value`, preserving typed comparison while producing useful rendered values. `fail` records an unconditional failure, while `skip` records that a case was deliberately not executed under the current conditions.
 
         - type: example
           id: assertion-surface
@@ -195,7 +195,7 @@ documentation:
               assert-present-string; 'owner'
               assert-none-string; none
               assert-near; 1.0, 1.05, 0.1
-              assert-throws; expected-failure
+              assert-throws; expected-failure, test-failure.identity
               return none
           files: null
           entry: null
@@ -339,12 +339,15 @@ documentation:
             namespace writing-plan
 
             from /core/errors import throwable
-            from /core/testing import advance-time, assert-equal-int, assert-present-string, deterministic-seed, temporary-directory, test-failure
+            from /core/testing import advance-time, assert, assert-equal-int, assert-present-string, deterministic-seed, temporary-directory, test-arguments, test-deadline
             from /core/time import clock
 
             function test-controlled-context none throws throwable;
               assert-present-string; (deterministic-seed;)
               assert-present-string; (temporary-directory;)
+              assert-equal-int; (test-arguments;).length, 0
+              limit = test-deadline;
+              assert; limit.total-nanoseconds > 0
 
               started = clock::monotonic;
               advance-time; 25000000
@@ -402,9 +405,9 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            An end-to-end test should cross the same boundary as a real caller. `application-artifact` returns the production executable selected for the end-to-end tier. A `process-fixture` then describes the invocation explicitly.
+            An end-to-end test should cross the same boundary as a real caller. `application-artifact` returns `string|none`, so the test handles the unavailable case explicitly. A `process-fixture` from capability-gated `/core/testing/process` then describes the invocation.
 
-            Native arguments and environment entries use lossless platform values. `native-text` creates a text argument, `native-raw` creates a raw byte value when the platform permits it, and `environment-pair` creates one explicit environment entry. The fixture starts with an empty argument list and environment, so the test does not accidentally inherit a developer's shell state.
+            Native arguments and environment entries use lossless platform values. `native-text` creates a text argument, `native-raw` creates a raw byte value when the platform permits it, and `environment-pair` creates one explicit environment entry. Fixtures are clonable value-style builders: each `run-process` call consumes an independent snapshot. The fixture starts with empty argument and environment lists, so it does not accidentally inherit a developer's shell state.
 
         - type: example
           id: application-process-fixture
@@ -416,20 +419,25 @@ documentation:
           source: |-
             namespace writing-plan-end-to-end
 
+            from /core/errors import throwable
             from /core/process import environment-pair, native-text
-            from /core/testing import application-artifact, assert-equal-int, process-fixture, run-process, test-failure
+            from /core/testing import application-artifact, assert-equal-int, fail
+            from /core/testing/process import process-fixture, run-process
 
-            function test-command-line-application none throws test-failure;
-              fixture = instance process-fixture; (application-artifact;)
-              fixture.arguments.append; (native-text; '--summary')
-              fixture.environment.append; (environment-pair; (native-text; 'WRITING_PLAN_MODE'), (native-text; 'test'))
-              fixture.standard-input = b'3 5'
-              fixture.deadline-milliseconds = 2000
-
-              result = run-process; fixture
-              assert-equal-int; result.exit-code, 0
-              assert-equal-int; result.stdout.length, 37
-              assert-equal-int; result.stderr.length, 0
+            function test-command-line-application none throws throwable;
+              artifact = application-artifact;
+              if artifact != none
+                fixture = instance process-fixture; artifact
+                fixture.arguments.append; (native-text; '--summary')
+                fixture.environment.append; (environment-pair; (native-text; 'WRITING_PLAN_MODE'), (native-text; 'test'))
+                fixture.standard-input = b'3 5'
+                fixture.deadline-milliseconds = 2000
+                result = run-process; fixture
+                assert-equal-int; result.exit-code, 0
+                assert-equal-int; result.stdout.length, 37
+                assert-equal-int; result.stderr.length, 0
+              else
+                fail; 'missing application artifact'
               return none
           files: null
           entry: null
@@ -437,8 +445,8 @@ documentation:
             - id: explicit-fixture-inputs
               file: null
               lines:
-                start: 7
-                end: 11
+                start: 9
+                end: 13
               markdown: >-
                 Arguments, environment, standard input, and deadline are all
                 visible in source. No host process state is inherited implicitly.
@@ -471,7 +479,7 @@ documentation:
             terrane test --tier unit --filter completion writing-plan
             ```
 
-            `--filter` is a stable substring match against the full test identity. `--tier` may be repeated with `unit`, `integration`, or `end-to-end`. Selection affects execution only; it does not create a differently compiled version of the test declarations.
+            `--filter` is a stable substring match against the full test identity. Use `--exact` for one full identity, `--glob` for shell-style `*` and `?` matching, or `--regex` for a regular expression; selector modes are mutually exclusive. `--tier` may be repeated with `unit`, `integration`, or `end-to-end`. Selection affects execution only; it does not create a differently compiled version of the test declarations.
 
             List the deterministic selection without running cases:
 
@@ -504,12 +512,20 @@ documentation:
               purpose: Show selected identities without executing them
             - option: --filter TEXT
               purpose: Select identities containing a stable substring
+            - option: --exact IDENTITY
+              purpose: Select one complete stable identity
+            - option: --glob PATTERN
+              purpose: Select identities with shell-style star and question-mark matching
+            - option: --regex PATTERN
+              purpose: Select identities with a regular expression
             - option: --tier TIER
               purpose: Select one or more test tiers
             - option: --jobs N
               purpose: Bound parallel isolated case processes
             - option: --timeout Nms|Ns
-              purpose: Enforce an external deadline per case
+              purpose: Enforce an external deadline per case; bare values are seconds
+            - option: --argument VALUE
+              purpose: Add one controlled test process argument; repeat as needed
             - option: --fail-fast
               purpose: Stop after the first unsuccessful case
             - option: --show-output
@@ -536,12 +552,11 @@ documentation:
           timeout-ms: null
           source: |-
             failed /writing-plan::test-completion-label (0.001s)
-            --- stderr ---
-            __TERRANE_TEST_THROWN__
-            error: TERRANE_TEST_FAILURE:string values are not equal
-              at tests/unit/status.trn:7:3
-            --- cause ---
-            test process exited with status 101
+            --- cause: assertion ---
+            string values differ
+            actual: in progress
+            expected: done
+            at tests/unit/status.trn:7:3
             0 passed; 0 skipped; 1 failed
           files: null
           entry: null
@@ -554,7 +569,7 @@ documentation:
 
         - type: markdown
           markdown: |-
-            CI can request schema `1.0.0` JSON:
+            CI can request schema `1.1.0` JSON:
 
             ```console
             terrane test --report build/test-report.json writing-plan
@@ -571,7 +586,17 @@ documentation:
           timeout-ms: null
           source: |-
             {
-              "schema_version": "1.0.0",
+              "schema_version": "1.1.0",
+              "run": {
+                "status": "completed",
+                "package": "writing-plan",
+                "filter": null,
+                "tiers": [],
+                "jobs": 4,
+                "timeout_milliseconds": "30000",
+                "fail_fast": false,
+                "show_output": false
+              },
               "cases": [
                 {
                   "identity": "/writing-plan::test-completion-label",
@@ -717,15 +742,21 @@ documentation:
               source: |-
                 namespace writing-plan-end-to-end
 
-                from /core/testing import application-artifact, assert-equal-int, process-fixture, run-process, test-failure
+                from /core/errors import throwable
+                from /core/testing import application-artifact, assert-equal-int, fail
+                from /core/testing/process import process-fixture, run-process
 
-                function test-application none throws test-failure;
-                  fixture = instance process-fixture; (application-artifact;)
-                  fixture.deadline-milliseconds = 2000
-                  result = run-process; fixture
-                  assert-equal-int; result.exit-code, 0
-                  assert-equal-int; result.stdout.length, 12
-                  assert-equal-int; result.stderr.length, 0
+                function test-application none throws throwable;
+                  artifact = application-artifact;
+                  if artifact != none
+                    fixture = instance process-fixture; artifact
+                    fixture.deadline-milliseconds = 2000
+                    result = run-process; fixture
+                    assert-equal-int; result.exit-code, 0
+                    assert-equal-int; result.stdout.length, 12
+                    assert-equal-int; result.stderr.length, 0
+                  else
+                    fail; 'missing application artifact'
                   return none
           source: null
           entry: package.toml
@@ -749,8 +780,8 @@ documentation:
             - id: executable-boundary
               file: tests/end-to-end/application.trn
               lines:
-                start: 5
-                end: 11
+                start: 6
+                end: 16
               markdown: >-
                 The end-to-end case observes the production executable through
                 exit status and byte-exact captured streams.
@@ -780,7 +811,7 @@ documentation:
             terrane test --jobs 3 --timeout 5s --report build/tests.json writing-plan
             ```
 
-            The compiler analyzes the shared package and generates one native test registry. The CLI executes three isolated cases and reports them in deterministic discovery order even if their processes finish in another order.
+            The compiler analyzes each populated tier independently and generates one native registry for each. The CLI executes three isolated cases and reports them in deterministic discovery order even if their processes finish in another order.
       sections: []
 
     - id: exercises
@@ -824,9 +855,9 @@ documentation:
           markdown: |-
             Terrane tests are ordinary typed functions discovered from package test roots. Unit, integration, and end-to-end tiers preserve different boundaries: same-namespace implementation, public consumer surface, and built process behavior.
 
-            `/core/testing` provides assertions, explicit skips and failures, deterministic context, controlled monotonic time, and process fixtures. The CLI compiles a native registry and runs each selected case in an isolated process with a fresh working directory, bounded streams, and an external timeout.
+            `/core/testing` provides assertions, explicit skips and failures, deterministic context, and controlled monotonic time. Capability-gated `/core/testing/process` provides value-style process fixtures. The CLI compiles one native registry per populated tier and runs each selected case in an isolated process with a fresh working directory, bounded streams, and an external timeout.
 
-            Filtering and tier selection narrow execution without creating a different compiled suite. Human output supports local diagnosis; schema `1.0.0` JSON preserves deterministic identities, outcomes, source spans, causes, precise durations, and byte-exact captures for automation.
+            Filtering and tier selection narrow execution without creating a different compiled suite. Human output supports local diagnosis; schema `1.1.0` JSON preserves run metadata, deterministic identities, outcomes, source spans, structured causes, precise durations, and byte-exact captures for automation.
 
             Debug from the Terrane boundary inward. Reproduce one identity, read its source frame and streams, reduce the source-level question, inspect the relevant tier boundary, and descend into generated Rust only when the evidence points there. A good test makes the application contract clearer; a good debugging change fixes the cause without making that contract less true.
       sections: []

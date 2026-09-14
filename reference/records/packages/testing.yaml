@@ -43,9 +43,9 @@ documentation:
             source order, and function name.
 
             `[testing]` may override each relative root. `[testing.profile]`
-            selects a test profile name, capability allowlist, and panic policy;
-            omitted settings inherit the ordinary package profile and never
-            grant capabilities implicitly.
+            explicitly selects a test profile name, capability allowlist, and
+            panic policy; omitted settings inherit the ordinary package profile.
+            Tests acquire no capability absent from those declarations.
 
     - id: execution
       title: Running isolated cases
@@ -58,14 +58,16 @@ documentation:
             - native_test_timeout_terminates_the_isolated_process
             - end_to_end_tests_receive_the_built_application_artifact
           markdown: |-
-            The compiler lowers one native dispatch registry. The CLI runs each
-            selected case in a fresh working directory and process with a
-            deterministic seed, controlled environment, bounded stdout/stderr,
-            and an enforced deadline. A crash, exit, or timeout is confined to
-            that case. End-to-end cases receive the actual built application
-            through `application-artifact` and can drive it with
-            `process-fixture` using explicit arguments, environment, standard
-            input, and deadline.
+            The compiler lowers one native dispatch registry per populated tier.
+            The CLI runs each selected case in a fresh working directory and
+            process with a deterministic seed, controlled environment and
+            arguments, bounded stdout/stderr, and an enforced typed deadline.
+            A crash, exit, or timeout is confined to that case. End-to-end cases
+            receive the actual built application as `string|none` through
+            `application-artifact`. Capability-gated `/core/testing/process`
+            provides clonable value-style `process-fixture` builders whose
+            independent snapshots carry arguments, environment, standard input,
+            and deadline into `run-process`.
 
     - id: framework
       title: Assertions and reports
@@ -77,15 +79,22 @@ documentation:
           evidence:
             - native_test_command_reports_isolated_cases_deterministically
           markdown: |-
-            `/core/testing` provides boolean, equality, inequality, optional,
-            near-equality, throwing-callback, failure, and skip assertions. Test
-            failures retain ordinary Terrane source call frames. `--list`,
-            repeatable `--tier`, and substring `--filter` selection do not
-            change compilation; `--jobs`, `--timeout`, `--fail-fast`, and
-            `--show-output` control execution. `--report <path>` writes schema
-            `1.0.0` JSON with stable
-            case identities, outcomes, causes, source spans, durations, and
-            byte-exact captured output plus truncation flags.
+            `/core/testing` provides boolean assertions, concrete scalar and
+            byte equality/inequality, matching optional presence checks,
+            floating near-equality, expected-descriptor throwable assertions,
+            explicit failure and skip, typed deadline and controlled-argument
+            accessors, source-framed structured causes, and bounded useful value
+            rendering. `fail-values` lets custom assertions keep comparisons in
+            their concrete types while rendering operands through `test-value`.
+            `--list`, repeatable `--tier`, and one mutually exclusive
+            substring `--filter`, exact `--exact`, `--glob`, or `--regex` selector
+            do not change compilation; `--jobs`, `--timeout`, repeatable
+            `--argument`, `--fail-fast`, and `--show-output` control execution.
+            Bare timeout values are seconds; `ms` and `s` suffixes are accepted.
+            `--report <path>` writes schema `1.1.0` JSON with run metadata,
+            stable case identities, structured outcomes, causes, assertion details,
+            source spans, durations, and byte-exact captured output plus truncation
+            flags.
   see-also:
     - tool.packages.command-line
 
