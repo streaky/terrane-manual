@@ -671,7 +671,7 @@ documentation:
 
         - type: example
           id: source-debugger-session
-          title: Stop in the writing-plan source
+          title: Trace a value from callee to caller
           language: console
           mode: illustrative
           target: null
@@ -683,18 +683,33 @@ documentation:
             verified breakpoint src/plan.trn:11 (generated at src/main.rs:42)
             (terrane-debug) continue
             /writing-plan::summarize at src/plan.trn:11
-            (terrane-debug) frames
-            #0   /writing-plan::summarize at src/plan.trn:11
-            #1   /writing-plan::main at src/main.trn:6
-            (terrane-debug) frame 0
-            #0   /writing-plan::summarize at src/plan.trn:11
+            (terrane-debug) source 1
+            src/plan.trn:11
+                 10 | public function summarize string; completed int, total int
+            >    11 |   return completion-label; completed, total
             (terrane-debug) locals
             completed = 3
             total = 5
             (terrane-debug) value completed
             completed = 3
+            (terrane-debug) generated 1
+            .trn/build/<build-id>/src/main.rs:42
+                 41 |     /* terrane-debug-point:0:...:user */
+            >    42 |     return completion_label(completed, total);
+                 43 | }
+            (terrane-debug) frames
+            #0   /writing-plan::summarize at src/plan.trn:11
+            #1   /writing-plan::main at src/main.trn:6
+            (terrane-debug) frame 1
+            #1   /writing-plan::main at src/main.trn:6
+            (terrane-debug) source 1
+            src/main.trn:6
+                  5 | function main;
+            >     6 |   print; (summarize; 3, 5)
+            (terrane-debug) frame 0
+            #0   /writing-plan::summarize at src/plan.trn:11
             (terrane-debug) next
-            /writing-plan::summarize at src/plan.trn:12
+            /writing-plan::main at src/main.trn:6
             (terrane-debug) continue
             in progress
           files: null
@@ -703,17 +718,47 @@ documentation:
           response: null
           diagnostic: null
           markdown: >-
-            Native line numbers and timing may vary, but the requested and
-            resolved Terrane locations remain explicit. One Terrane source
+            Generated line numbers and build IDs may vary, but the requested
+            and resolved Terrane locations remain explicit. One Terrane source
             point may map to more than one native location.
 
         - type: markdown
           markdown: |-
+            Treat the session as an investigation rather than a command tour. `source` establishes the authored operation. `locals` surveys its live inputs, and `value NAME` focuses one hypothesis. `generated` answers a lowering question only after the source-level state is understood. `frames` and `frame N` then let you follow a value across a call boundary: frame 0 proves that `summarize` received `completed = 3`, while frame 1 shows the caller that supplied `3`.
+
             `break PATH:LINE` places a Terrane source breakpoint. An executable source line may map to several native locations, and the debugger keeps every one. If the requested line has no sequence point, adjustment is permitted only to the nearest declared point in the same function. Otherwise the breakpoint stays unverified and explains why. Verification names both the resolved Terrane location and its generated location.
 
-            Use `continue` to resume, `next` to step over, `step` to step in, and `out` to step out. Stepping targets compiler-declared Terrane sequence points rather than every generated Rust line. This matters around calls, loops, asynchronous suspension, `select`, cleanup, return to a caller from a function's final point, and error propagation. If source progress cannot be found after a bounded native search, the debugger exposes the native stop and says that source fidelity is unavailable; it never spins forever.
+            Use `continue` to resume, `next` to step over, `step` to step in, and `out` to step out. Stepping targets compiler-declared Terrane sequence points rather than every generated Rust line. In the session above, `next` at the final point of `summarize` returns to the caller rather than running through process exit. This source-oriented behavior also matters around loops, asynchronous suspension, `select`, cleanup, and error propagation. If source progress cannot be found after a bounded native search, the debugger exposes the native stop and says that source fidelity is unavailable; it never spins forever.
 
-            `frames` shows mapped Terrane frames with stable session-local indices; `frame N` selects one for later inspection. `source [RADIUS]` and `generated [RADIUS]` show bounded context around that frame. `locals` uses lexical Terrane names and presents fixed scalars, adaptive integers, strings, and bytes when their selected debug layout is available. `value NAME` recursively expands one structured value with depth, cycle, and count bounds. `<moved>`, `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Secret object fields appear as `<secret>` and lose ordinary child, memory, and evaluation references.
+            A value is available only when the exact native stop retains usable debug storage for it. `<moved>`, `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Seeing one is evidence about this stop, not automatically a debugger failure.
+
+            When a local is structured, focused inspection expands it recursively without dumping the whole frame:
+
+        - type: example
+          id: focused-structured-debug-value
+          title: Expand one value without crossing its privacy boundary
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            (terrane-debug) value auth
+            auth = credentials
+              username = "alice"
+              token = <secret>
+          files: null
+          entry: null
+          annotations: []
+          response: null
+          diagnostic: null
+          markdown: >-
+            Focused expansion is depth-, cycle-, count-, response-, and
+            byte-bounded. Secret fields remain redacted and lose ordinary
+            child, memory, and evaluation references.
+
+        - type: markdown
+          markdown: |-
+            `frames` shows mapped Terrane frames with stable session-local indices; `frame N` selects one for later inspection. `source [RADIUS]` and `generated [RADIUS]` show bounded context around that frame. `locals` uses lexical Terrane names and presents fixed scalars, adaptive integers, strings, and bytes when their selected debug layout is available. `value NAME` recursively expands one structured value. Raw LLDB remains a separate opt-in boundary that may expose physical memory, including values hidden by the ordinary Terrane view.
 
         - type: table
           id: debugger-command-table
@@ -761,6 +806,13 @@ documentation:
               purpose: Disconnect and terminate a debugger-launched process
 
         - type: admonition
+          id: source-breakpoints-persist
+          kind: guidance
+          title: A loop breakpoint stops on every matching iteration
+          markdown: |-
+            Source breakpoints remain active until disabled or deleted. After stopping inside a loop, `continue` normally reaches the same breakpoint on the next iteration; this is not a stuck debugger. The current source CLI does not yet have friendly breakpoint-lifecycle commands. Use an explicit raw command such as `lldb breakpoint disable` when that native escape hatch is appropriate, or end the investigation with `quit`.
+
+        - type: admonition
           id: exact-build-debugging
           kind: important
           title: Debug the executable that produced the evidence
@@ -776,11 +828,47 @@ documentation:
           markdown: |-
             A timeout that disappears after increasing every deadline has not necessarily been diagnosed. Neither has a numeric mismatch hidden by an arbitrary tolerance or a race hidden by serial execution. Change the expectation only when the application contract changed; otherwise identify the missing wake, ownership boundary, uncontrolled input, or incorrect value.
 
+        - type: admonition
+          id: debugger-validates-performance-hypotheses
+          kind: guidance
+          title: Use the debugger to test a performance hypothesis, not to invent one
+          markdown: |-
+            Suppose an operation intended to process ten thousand items receives a much larger bound:
+
+            ```terrane
+            function sum-to int64; limit int64
+              total int64 = 0
+              index int64 = 0
+              while index < limit
+                total = total + index
+                index++
+              return total
+
+            function main;
+              limit int64 = 100000000
+              result = sum-to; limit
+            ```
+
+            A source breakpoint inside the loop and `locals` can validate the suspected cause:
+
+            ```console
+            (terrane-debug) locals
+            limit = 100000000
+            total = 0
+            index = 0
+            ```
+
+            Use `frames`, select the caller with `frame 1`, and inspect `source` and `locals` there to determine where the bound originated. After correcting the source, repeat the same observation in caller and callee before measuring again.
+
+            This establishes an obvious live-state cause; it does not establish where an unfamiliar program spends its time. Debugger builds are intentionally unoptimized. Representative performance work requires profiling, while the debugger tests a specific hypothesis about state and execution.
+
         - type: markdown
           markdown: |-
-            Descend into lower layers deliberately. `generated` and `terrane rust --output build/review.rs package.toml` answer questions about lowered structure. `native`, `registers`, memory requests, and `lldb COMMAND` answer explicitly native questions. Raw backend commands are not Terrane expressions and may reveal secret physical memory, so they are an opt-in boundary rather than the ordinary value view.
+            Descend into lower layers deliberately. `generated` and `terrane rust --output build/review.rs package.toml` answer questions about lowered structure. If a native question remains, `lldb disassemble --frame --mixed` correlates generated lines with the exact debug artifact's machine instructions; `native`, `registers`, memory requests, and other `lldb COMMAND` forms expose additional machine state. Raw backend commands are not Terrane expressions and may reveal secret physical memory, so they are an opt-in boundary rather than the ordinary value view.
 
-            Chapter 13 explained how to distinguish the review artifact from the emitted crate and how to validate canonical output. Generated Rust remains useful evidence, not a second source contract. Preserve the small Terrane reproduction and compare observable behavior before rewriting clear source around an implementation detail.
+            Mixed disassembly describes the exact unoptimized debugger artifact, not representative production performance. Use it to corroborate a narrow hypothesis—for example, that a loop performs checked addition and branches back on every iteration—not as a substitute for a profiler.
+
+            Chapter 13 explained how to distinguish the review artifact from the emitted crate and how to validate canonical output. Generated Rust remains useful evidence, not a second source contract. Preserve the small Terrane reproduction, record the source-level fact that differs from the expectation, make the smallest source correction, and repeat the same observation before broad testing.
 
             The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end. Attach additionally depends on host process policy. Other hosts and optimized or stripped modules report reduced fidelity. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages, initialization emits one immediate `initialized` event, and `terrane/fidelity` reports source or native translation mode. Conditional breakpoints, logpoints, restart, direct isolated test-case debugging, Terrane expression evaluation, and time-travel debugging are not currently supported.
       sections: []
@@ -961,7 +1049,7 @@ documentation:
           id: exercise-debugging-evidence
           title: Diagnose before changing the contract
           markdown: |-
-            Deliberately break the `complete` boundary. Capture a machine report and rerun only the failing identity with output shown. Then launch `terrane debug writing-plan`, set a source breakpoint in `summarize`, inspect the preserved inputs, and step to the returned label. Write down the first source-level fact that differs from the expectation. Restore the production behavior without weakening the assertion.
+            Deliberately break the `complete` boundary. Capture a machine report and rerun only the failing identity with output shown. Then launch `terrane debug writing-plan`, set a source breakpoint in `summarize`, use `source`, `locals`, and `value` to identify the first differing fact, and use `frames` plus `frame 1` to trace that value to its caller. Inspect `generated` only if a lowering question remains. Restore the production behavior without weakening the assertion, then repeat the same debugger observation before rerunning the test.
 
         - type: exercise
           id: exercise-ci-selection
