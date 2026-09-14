@@ -94,7 +94,9 @@ documentation:
             and toolchain-bound ABI recipe, every named profile property, sidecar, native
             module, generated files, and current source hashes agree. A DAP client may
             supply explicit source/build relocation roots only when copied or archived
-            artifacts retain identical bytes. Identity and relocation are independent.
+            artifacts retain identical bytes. The adapter forwards that recorded-to-
+            relocated mapping to LLDB as well as applying it to provenance. Identity and
+            relocation remain independent.
             After launch or attach, `terrane/fidelity` reports mode `source` or `native`,
             target, ABI recipe, artifact profile, exact Rust compiler release, inlining
             state, and whether source translation is active. Missing, stale, malformed,
@@ -184,14 +186,16 @@ documentation:
           evidence: []
           markdown: |-
             Requests and responses remain correlated by DAP sequence IDs, including
-            responses that arrive while another request is expected. `initialize`
-            receives exactly one immediate `initialized` event. Launch owns the debuggee
-            and disconnect terminates it by default; attach never terminates the target
-            on disconnect. Variable handles are invalidated on resume. Request ingress
-            is serialized, so cancellation is not advertised. Debuggee exit status is
-            returned by the interactive CLI. Debuggee stdout and stderr are framed DAP
-            output events and cannot corrupt adapter protocol stdout. Terrane imports
-            `lldb_lookup.py` only from the Rust sysroot recorded in provenance, before
+            backend responses that arrive while another request is expected.
+            `initialize` receives exactly one immediate `initialized` event. Disconnect
+            terminates a launched debuggee by default and detaches from an attached
+            process by default; clients may explicitly choose the DAP
+            `terminateDebuggee` policy. Variable handles are invalidated on resume.
+            Request ingress is serialized, so cancellation is not advertised. Debuggee
+            exit status is returned by the interactive CLI. Debuggee stdout and stderr
+            are framed DAP output events and cannot corrupt adapter protocol stdout.
+            Terrane imports `lldb_lookup.py` only from the Rust sysroot recorded in
+            provenance, before
             client initialization commands; its absence does not prevent debugging.
 
   see-also:

@@ -730,7 +730,7 @@ documentation:
 
             Use `continue` to resume, `next` to step over, `step` to step in, and `out` to step out. Stepping targets compiler-declared Terrane sequence points rather than every generated Rust line. In the session above, `next` at the final point of `summarize` returns to the caller rather than running through process exit. This source-oriented behavior also matters around loops, asynchronous suspension, `select`, cleanup, and error propagation. If source progress cannot be found after a bounded native search, the debugger exposes the native stop and says that source fidelity is unavailable; it never spins forever.
 
-            A value is available only when the exact native stop retains usable debug storage for it. `<moved>`, `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Seeing one is evidence about this stop, not automatically a debugger failure.
+            A value is available only when the exact native stop retains usable debug storage for it. `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Seeing one is evidence about this stop, not automatically a debugger failure. A distinct moved-value state is not shown because current LLDB data does not prove source ownership transitions.
 
             When a local is structured, focused inspection expands it recursively without dumping the whole frame:
 
@@ -817,9 +817,9 @@ documentation:
           kind: important
           title: Debug the executable that produced the evidence
           markdown: |-
-            A debug build records versioned provenance beside both generated Rust and the executable. It binds compiler, toolchain, target, profile, manifest, projection lock, logical source, final generated files, semantic identities, and native module by hash. Changed source or generated files, a mismatched executable, or malformed metadata disables Terrane translation with a diagnostic instead of showing plausible but wrong locations.
+            A debug build records versioned provenance beside both generated Rust and the executable. It binds compiler, exact Rust release and sysroot, target, toolchain-bound ABI recipe, named unoptimized artifact profile, manifest, projection lock, logical source, final generated files, semantic identities, and native module by hash. Changed source or generated files, a mismatched executable, malformed metadata, or any profile/toolchain/ABI mismatch disables Terrane translation with a diagnostic instead of showing plausible but wrong locations.
 
-            Explicit relocation mappings may point copied-but-identical artifacts at new source and build roots; relocation never changes identity. Raw native debugging remains available when source translation is disabled.
+            Explicit relocation mappings may point copied-but-identical artifacts at new source and build roots; the adapter forwards the same mapping to LLDB so native line tables and provenance agree. Relocation never changes identity. Raw native debugging remains available when source translation is disabled. Generated source can be embedded independently with `--embed-generated-sources` for exact rendering when a build tree is unavailable.
 
         - type: admonition
           id: do-not-debug-by-diluting-the-contract
@@ -870,7 +870,7 @@ documentation:
 
             Chapter 13 explained how to distinguish the review artifact from the emitted crate and how to validate canonical output. Generated Rust remains useful evidence, not a second source contract. Preserve the small Terrane reproduction, record the source-level fact that differs from the expectation, make the smallest source correction, and repeat the same observation before broad testing.
 
-            The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end. Attach additionally depends on host process policy. Other hosts and optimized or stripped modules report reduced fidelity. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages, initialization emits one immediate `initialized` event, and `terrane/fidelity` reports source or native translation mode. Conditional breakpoints, logpoints, restart, direct isolated test-case debugging, Terrane expression evaluation, and time-travel debugging are not currently supported.
+            The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end, including standard DAP step-in/step-out, recursive step-over, fatal native stops, disconnect during stepping, relocated builds, split generated support, shadowed locals, and more than 500 sequence points. Attach reports the host process-policy outcome and remains host-dependent. Other hosts and optimized or stripped modules report reduced fidelity. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages, initialization emits one immediate `initialized` event, and `terrane/fidelity` reports source or native translation mode. Conditional breakpoints, logpoints, restart, Terrane expression evaluation, alternate backends, and time travel remain out of scope.
       sections: []
 
     - id: complete-project-testing-a-writing-plan
