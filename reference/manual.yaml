@@ -28,6 +28,7 @@ navigation:
     children:
       - source: records/packages/rust-dependencies.yaml
       - source: records/packages/command-line.yaml
+      - source: records/packages/testing.yaml
   - group: Compiler internals
     children:
       - source: records/internals/execution-runtime.yaml
