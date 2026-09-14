@@ -21,11 +21,10 @@ documentation:
       body: >-
         `docs/measure-test-times.py` creates a temporary file and exports its path as
         `TERRANE_TEST_TIMING_FILE` to a Cargo test process whose outer libtest execution is serial.
-        Within the corpus test, the driver first prepares one representative projected-dependency
-        package to warm shared compiler and Cargo state, then measures concurrent per-manifest
-        setup, checking, and lowering work. Each completed case appends a locked, versioned
-        tab-separated record containing its relative path, status, and active elapsed seconds;
-        scoreboard identity does not depend on completion order. Dependency-free accepted cases
+        Within the corpus test, the driver measures concurrent per-manifest setup, checking, and
+        lowering work. Each completed case appends a locked, versioned tab-separated record
+        containing its relative path, status, and active elapsed seconds; scoreboard identity does
+        not depend on completion order. Dependency-free accepted cases
         share one generated-crate build, which receives its own synthetic timing record instead of
         being estimated per case. A deferred case that never reaches that build is recorded as
         ignored rather than falsely failed; a drop guard still records a real active case failure.
@@ -42,8 +41,8 @@ documentation:
     - title: Generated-crate isolation
       body: >-
         Every sorted accepted manifest receives its own deterministic binary name and source path.
-        After the warm-up case, compiler-only preparation uses a bounded worker pool and returns
-        results to corpus order before mutating the shared generated workspace. Dependency-free
+        Compiler-only preparation uses a bounded worker pool and returns results to corpus order
+        before mutating the shared generated workspace. Dependency-free
         binaries are then declared in one generated Cargo manifest and built together, allowing
         Cargo to schedule their independent rustc and linker work in parallel. Cases with projected
         Rust dependencies retain separate serialized manifests and builds because their dependency
@@ -61,7 +60,7 @@ documentation:
       body: >-
         Set `TERRANE_CONFORMANCE_FILTER` to one case-name or to comma-separated corpus-path
         fragments when running `every_manifest_drives_a_conformance_case`. Filtering happens before
-        warm-up selection and staging, so only matching manifests are compiled and executed while
+        corpus staging, so only matching manifests are compiled and executed while
         the harness retains its shared generated-Cargo target. An empty match fails rather than
         reporting a vacuous pass. The preparation pool defaults to available parallelism capped at
         eight workers; set `TERRANE_CONFORMANCE_JOBS=1..8` to lower the bound for a constrained
