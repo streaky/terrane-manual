@@ -1352,11 +1352,13 @@ publication:
 imports:
   - reference
 title: The Terrane Book
-landing: book.introduction
+landing: book.preface
 navigation:
-  - group: Introduction
+  - group: Front matter
     numbering: none
     children:
+      - page: book.preface
+        contents: []
       - page: book.introduction
         contents:
           - section: audience
