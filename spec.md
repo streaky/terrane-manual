@@ -1369,15 +1369,15 @@ navigation:
     numbering: decimal
     children:
       - markdown-page:
-          id: book.first-taste
+          id: book.complete-program
           kind: chapter
-          title: A First Taste of Terrane
-          source: chapters/01.md
+          title: Building a Complete Program
+          source: chapters/06.md
           contents:
-            - id: purpose
-              title: What Terrane is for
-            - id: toolchain
-              title: Installing the toolchain
+            - id: starting-from-a-user-story
+              title: Starting from a user story
+            - id: dividing-the-program-into-functions
+              title: Dividing the program into functions
       - planned-page:
           id: book.larger-program
           kind: chapter

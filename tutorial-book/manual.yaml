@@ -27,154 +27,134 @@ navigation:
   - group: Chapters
     numbering: decimal
     children:
-      - markdown-page:
-          id: book.first-taste
-          kind: chapter
-          title: A First Taste of Terrane
-          source: chapters/01.md
-          contents:
-            - id: what-terrane-is-for
-              title: What Terrane is for
-            - id: installing-the-toolchain
-              title: Installing the toolchain
-            - id: your-first-program
-              title: Your first program
-            - id: running-a-source-file
-              title: Running a source file
-            - id: the-edit-check-and-run-cycle
-              title: The edit, check, and run cycle
-            - id: reading-a-compiler-diagnostic
-              title: Reading a compiler diagnostic
-            - id: a-slightly-more-useful-program
-              title: A slightly more useful program
-            - id: where-terrane-fits-between-scripting-and-systems-programming
-              title: Where Terrane fits between scripting and systems programming
-            - id: exercises
-              title: Exercises
-            - id: what-we-learned
-              title: What we learned
-      - markdown-page:
-          id: book.values-and-names
-          kind: chapter
-          title: Values, Names, and Everyday Expressions
-          source: chapters/02.md
-          contents:
-            - id: numbers-truth-values-and-text
-              title: Numbers, truth values, and text
-            - id: giving-a-value-a-name
-              title: Giving a value a name
-            - id: changing-a-binding
-              title: Changing a binding
-            - id: arithmetic-and-comparisons
-              title: Arithmetic and comparisons
-            - id: member-access-with
-              title: Member access with `.`
-            - id: calling-with-semicolon
-              title: Calling with `;`
-            - id: nested-calls-and-parentheses
-              title: Nested calls and parentheses
-            - id: comments-and-readable-layout
-              title: Comments and readable layout
-            - id: everything-is-an-object-semantically
-              title: Everything is an object—semantically
-            - id: why-terrane-why-calls-use-semicolon
-              title: 'Why Terrane: why calls use `;`'
-            - id: project-calculate-a-small-purchase
-              title: 'Project: calculate a small purchase'
-            - id: exercises
-              title: Exercises
-            - id: what-we-learned
-              title: What we learned
-      - markdown-page:
-          id: book.decisions-and-repetition
-          kind: chapter
-          title: Making Decisions and Repeating Work
-          source: chapters/03.md
-          contents:
-            - id: choosing-with-if-and-else
-              title: Choosing with `if` and `else`
-            - id: combining-conditions
-              title: Combining conditions
-            - id: repeating-with-while
-              title: Repeating with `while`
-            - id: iterating-with-for
-              title: Iterating with `for`
-            - id: ranges-and-ordinary-iteration
-              title: Ranges and ordinary iteration
-            - id: break-and-continue
-              title: '`break` and `continue`'
-            - id: loop-local-names
-              title: Loop-local names
-            - id: choosing-the-clearest-loop
-              title: Choosing the clearest loop
-            - id: project-classify-a-range-of-numbers
-              title: 'Project: classify a range of numbers'
-            - id: exercises
-              title: Exercises
-            - id: what-we-learned
-              title: What we learned
-      - markdown-page:
-          id: book.functions
-          kind: chapter
-          title: 'Functions: Giving Work a Name'
-          source: chapters/04.md
-          contents:
-            - id: defining-and-calling-a-function
-              title: Defining and calling a function
-            - id: parameters-and-results
-              title: Parameters and results
-            - id: required-optional-and-named-arguments
-              title: Required, optional, and named arguments
-            - id: returning-early
-              title: Returning early
-            - id: local-scope
-              title: Local scope
-            - id: passing-functions-as-values
-              title: Passing functions as values
-            - id: small-functions-that-compose
-              title: Small functions that compose
-            - id: project-turn-the-number-classifier-into-functions
-              title: 'Project: turn the number classifier into functions'
-            - id: terrane-style-express-contracts-not-ceremony
-              title: 'Terrane style: express contracts, not ceremony'
-            - id: exercises
-              title: Exercises
-            - id: what-we-learned
-              title: What we learned
-      - markdown-page:
-          id: book.text-and-collections
-          kind: chapter
-          title: Text and Collections
-          source: chapters/05.md
-          contents:
-            - id: quoted-tail-and-block-text
-              title: Quoted, tail, and block text
-            - id: common-string-operations
-              title: Common string operations
-            - id: bytes-unicode-scalars-and-grapheme-clusters
-              title: Bytes, Unicode scalars, and grapheme clusters
-            - id: creating-lists
-              title: Creating lists
-            - id: iterating-over-lists
-              title: Iterating over lists
-            - id: creating-and-updating-maps
-              title: Creating and updating maps
-            - id: building-collections-from-existing-values
-              title: Building collections from existing values
-            - id: choosing-the-right-collection
-              title: Choosing the right collection
-            - id: assignment-and-copy-on-write-value-behavior
-              title: Assignment and copy-on-write value behavior
-            - id: why-terrane-values-without-accidental-aliasing
-              title: 'Why Terrane: values without accidental aliasing'
-            - id: project-word-frequency
-              title: 'Project: word frequency'
-            - id: terrane-style-make-data-shape-visible
-              title: 'Terrane style: make data shape visible'
-            - id: exercises
-              title: Exercises
-            - id: what-we-learned
-              title: What we learned
+      - page: book.first-taste
+        contents:
+          - section: what-terrane-is-for
+            title: What Terrane is for
+          - section: installing-the-toolchain
+            title: Installing the toolchain
+          - section: your-first-program
+            title: Your first program
+          - section: running-a-source-file
+            title: Running a source file
+          - section: the-edit-check-and-run-cycle
+            title: The edit, check, and run cycle
+          - section: reading-a-compiler-diagnostic
+            title: Reading a compiler diagnostic
+          - section: a-slightly-more-useful-program
+            title: A slightly more useful program
+          - section: where-terrane-fits-between-scripting-and-systems-programming
+            title: Where Terrane fits between scripting and systems programming
+          - section: exercises
+            title: Exercises
+          - section: what-we-learned
+            title: What we learned
+      - page: book.values-and-names
+        contents:
+          - section: numbers-truth-values-and-text
+            title: Numbers, truth values, and text
+          - section: giving-a-value-a-name
+            title: Giving a value a name
+          - section: changing-a-binding
+            title: Changing a binding
+          - section: arithmetic-and-comparisons
+            title: Arithmetic and comparisons
+          - section: member-access-with
+            title: Member access with `.`
+          - section: calling-with-semicolon
+            title: Calling with `;`
+          - section: nested-calls-and-parentheses
+            title: Nested calls and parentheses
+          - section: comments-and-readable-layout
+            title: Comments and readable layout
+          - section: everything-is-an-object-semantically
+            title: Everything is an object—semantically
+          - section: why-terrane-why-calls-use-semicolon
+            title: 'Why Terrane: why calls use `;`'
+          - section: project-calculate-a-small-purchase
+            title: 'Project: calculate a small purchase'
+          - section: exercises
+            title: Exercises
+          - section: what-we-learned
+            title: What we learned
+      - page: book.decisions-and-repetition
+        contents:
+          - section: choosing-with-if-and-else
+            title: Choosing with `if` and `else`
+          - section: combining-conditions
+            title: Combining conditions
+          - section: repeating-with-while
+            title: Repeating with `while`
+          - section: iterating-with-for
+            title: Iterating with `for`
+          - section: ranges-and-ordinary-iteration
+            title: Ranges and ordinary iteration
+          - section: break-and-continue
+            title: '`break` and `continue`'
+          - section: loop-local-names
+            title: Loop-local names
+          - section: choosing-the-clearest-loop
+            title: Choosing the clearest loop
+          - section: project-classify-a-range-of-numbers
+            title: 'Project: classify a range of numbers'
+          - section: exercises
+            title: Exercises
+          - section: what-we-learned
+            title: What we learned
+      - page: book.functions
+        contents:
+          - section: defining-and-calling-a-function
+            title: Defining and calling a function
+          - section: parameters-and-results
+            title: Parameters and results
+          - section: required-optional-and-named-arguments
+            title: Required, optional, and named arguments
+          - section: returning-early
+            title: Returning early
+          - section: local-scope
+            title: Local scope
+          - section: passing-functions-as-values
+            title: Passing functions as values
+          - section: small-functions-that-compose
+            title: Small functions that compose
+          - section: project-turn-the-number-classifier-into-functions
+            title: 'Project: turn the number classifier into functions'
+          - section: terrane-style-express-contracts-not-ceremony
+            title: 'Terrane style: express contracts, not ceremony'
+          - section: exercises
+            title: Exercises
+          - section: what-we-learned
+            title: What we learned
+      - page: book.text-and-collections
+        contents:
+          - section: quoted-tail-and-block-text
+            title: Quoted, tail, and block text
+          - section: common-string-operations
+            title: Common string operations
+          - section: bytes-unicode-scalars-and-grapheme-clusters
+            title: Bytes, Unicode scalars, and grapheme clusters
+          - section: creating-lists
+            title: Creating lists
+          - section: iterating-over-lists
+            title: Iterating over lists
+          - section: creating-and-updating-maps
+            title: Creating and updating maps
+          - section: building-collections-from-existing-values
+            title: Building collections from existing values
+          - section: choosing-the-right-collection
+            title: Choosing the right collection
+          - section: assignment-and-copy-on-write-value-behavior
+            title: Assignment and copy-on-write value behavior
+          - section: why-terrane-values-without-accidental-aliasing
+            title: 'Why Terrane: values without accidental aliasing'
+          - section: project-word-frequency
+            title: 'Project: word frequency'
+          - section: terrane-style-make-data-shape-visible
+            title: 'Terrane style: make data shape visible'
+          - section: exercises
+            title: Exercises
+          - section: what-we-learned
+            title: What we learned
       - markdown-page:
           id: book.complete-program
           kind: chapter
