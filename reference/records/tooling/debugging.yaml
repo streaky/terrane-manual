@@ -157,9 +157,10 @@ documentation:
             read-memory summaries. Object and collection values retain lazy backend
             child references; focused expansion remains depth-, cycle-, and
             count-bounded. Every variable page is capped at 100 entries plus an explicit
-            continuation marker and each displayed value at 4096 bytes. Moved,
-            optimized-out, unavailable, and truncated states remain explicit rather
-            than fabricated.
+            continuation marker and each displayed value at 4096 bytes. Optimized-out,
+            unavailable, and truncated states remain explicit rather than fabricated. A
+            distinct moved-value state is not claimed because current LLDB data does not
+            prove source ownership transitions.
 
         - type: rule
           id: rule.debugging.privacy
