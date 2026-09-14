@@ -20,15 +20,18 @@ documentation:
     - title: Collection protocol
       body: >-
         `docs/measure-test-times.py` creates a temporary file and exports its path as
-        `TERRANE_TEST_TIMING_FILE` to a Cargo test process whose outer libtest execution is serial.
+        `TERRANE_TEST_TIMING_FILE` to a Cargo test process. Each outer libtest binary uses
+        deterministic bounded parallelism, defaulting to available parallelism capped at eight
+        workers and reducible with `TERRANE_SCORECARD_JOBS`. The collector reconstructs active
+        per-test durations from libtest's alphabetical queue and timestamped completion events.
         Within the corpus test, the driver measures concurrent per-manifest setup, checking, and
         lowering work. Each completed case appends a locked, versioned tab-separated record
         containing its relative path, status, and active elapsed seconds; scoreboard identity does
-        not depend on completion order. Dependency-free accepted cases
-        share one generated-crate build, which receives its own synthetic timing record instead of
-        being estimated per case. A deferred case that never reaches that build is recorded as
-        ignored rather than falsely failed; a drop guard still records a real active case failure.
-        Normal test runs without the environment variable perform no timing-file I/O.
+        not depend on completion order. Dependency-free accepted cases share one generated-crate
+        build, which receives its own synthetic timing record instead of being estimated per case.
+        A deferred case that never reaches that build is recorded as ignored rather than falsely
+        failed; a drop guard still records a real active case failure. Normal test runs without the
+        environment variable perform no timing-file I/O.
     - title: Scoreboard identity
       body: >-
         Nested records use the `conformance cases [terrane_compiler]` target and the manifest's
