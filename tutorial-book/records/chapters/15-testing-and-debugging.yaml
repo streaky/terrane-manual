@@ -680,15 +680,19 @@ documentation:
             $ terrane debug writing-plan
             Terrane debugger stopped at entry. Type `help` for commands.
             (terrane-debug) break src/plan.trn:11
-            verified breakpoint src/plan.trn:11 -> src/main.rs:42
+            verified breakpoint src/plan.trn:11 (generated at src/main.rs:42)
             (terrane-debug) continue
             /writing-plan::summarize at src/plan.trn:11
             (terrane-debug) frames
-            #1   /writing-plan::summarize at src/plan.trn:11
-            #2   /writing-plan::main at src/main.trn:6
+            #0   /writing-plan::summarize at src/plan.trn:11
+            #1   /writing-plan::main at src/main.trn:6
+            (terrane-debug) frame 0
+            #0   /writing-plan::summarize at src/plan.trn:11
             (terrane-debug) locals
             completed = 3
             total = 5
+            (terrane-debug) value completed
+            completed = 3
             (terrane-debug) next
             /writing-plan::summarize at src/plan.trn:12
             (terrane-debug) continue
@@ -705,11 +709,11 @@ documentation:
 
         - type: markdown
           markdown: |-
-            `break PATH:LINE` places a Terrane source breakpoint. An executable source line may map to several native locations, and the debugger keeps every one. If the requested line has no sequence point, adjustment is permitted only to the nearest declared point in the same function. Otherwise the breakpoint stays unverified and explains why.
+            `break PATH:LINE` places a Terrane source breakpoint. An executable source line may map to several native locations, and the debugger keeps every one. If the requested line has no sequence point, adjustment is permitted only to the nearest declared point in the same function. Otherwise the breakpoint stays unverified and explains why. Verification names both the resolved Terrane location and its generated location.
 
-            Use `continue` to resume, `next` to step over, `step` to step in, and `out` to step out. Stepping targets compiler-declared Terrane sequence points rather than every generated Rust line. This matters around calls, loops, asynchronous suspension, `select`, cleanup, and error propagation. If source progress cannot be found after a bounded native search, the debugger exposes the native stop and says that source fidelity is unavailable; it never spins forever.
+            Use `continue` to resume, `next` to step over, `step` to step in, and `out` to step out. Stepping targets compiler-declared Terrane sequence points rather than every generated Rust line. This matters around calls, loops, asynchronous suspension, `select`, cleanup, return to a caller from a function's final point, and error propagation. If source progress cannot be found after a bounded native search, the debugger exposes the native stop and says that source fidelity is unavailable; it never spins forever.
 
-            `frames` shows mapped Terrane frames. `locals` uses lexical Terrane names and presents fixed scalars, adaptive integers, strings, and bytes when their selected debug layout is available. Structured values expand lazily and all views are bounded. `<moved>`, `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Secret object fields appear as `<secret>` and lose ordinary child, memory, and evaluation references.
+            `frames` shows mapped Terrane frames with stable session-local indices; `frame N` selects one for later inspection. `source [RADIUS]` and `generated [RADIUS]` show bounded context around that frame. `locals` uses lexical Terrane names and presents fixed scalars, adaptive integers, strings, and bytes when their selected debug layout is available. `value NAME` recursively expands one structured value with depth, cycle, and count bounds. `<moved>`, `<optimized out>`, `<unavailable debug information>`, `<unsupported layout>`, and `<truncated>` are states rather than guessed values. Secret object fields appear as `<secret>` and lose ordinary child, memory, and evaluation references.
 
         - type: table
           id: debugger-command-table
@@ -737,10 +741,16 @@ documentation:
               purpose: Step out to a caller's source sequence point
             - command: frames
               purpose: Show mapped Terrane stack frames
+            - command: frame N
+              purpose: Select a mapped frame by its session-local index
+            - command: source [RADIUS]
+              purpose: Show bounded Terrane source context for the selected frame
             - command: locals
-              purpose: Show bounded source-level local values
-            - command: generated
-              purpose: Show the generated Rust location for the selected frame
+              purpose: Show bounded source-level local values in the selected frame
+            - command: value NAME
+              purpose: Recursively expand one local value within privacy and size bounds
+            - command: generated [RADIUS]
+              purpose: Show bounded generated Rust context for the selected frame
             - command: native
               purpose: Show the native stack without source filtering
             - command: registers
@@ -772,7 +782,7 @@ documentation:
 
             Chapter 13 explained how to distinguish the review artifact from the emitted crate and how to validate canonical output. Generated Rust remains useful evidence, not a second source contract. Preserve the small Terrane reproduction and compare observable behavior before rewriting clear source around an implementation detail.
 
-            The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end. Attach additionally depends on host process policy. Other hosts and optimized or stripped modules report reduced fidelity. Conditional breakpoints, logpoints, restart, Terrane expression evaluation, and time-travel debugging are not currently supported. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages.
+            The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end. Attach additionally depends on host process policy. Other hosts and optimized or stripped modules report reduced fidelity. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages, initialization emits one immediate `initialized` event, and `terrane/fidelity` reports source or native translation mode. Conditional breakpoints, logpoints, restart, direct isolated test-case debugging, Terrane expression evaluation, and time-travel debugging are not currently supported.
       sections: []
 
     - id: complete-project-testing-a-writing-plan
