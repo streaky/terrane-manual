@@ -58,9 +58,11 @@ documentation:
             - native_test_timeout_terminates_the_isolated_process
             - end_to_end_tests_receive_the_built_application_artifact
           markdown: |-
-            The compiler performs semantic discovery before selection, then lowers one
-            native dispatch registry only for each tier containing a selected case.
-            `--list` and an empty selection do not lower or build runners. The CLI runs
+            The compiler semantically analyzes production sources and every populated test root
+            before selection, then lowers and backend-validates one native dispatch registry only
+            for each tier containing a selected case. Consequently, filters never hide frontend
+            errors, while a backend-only failure in an unselected tier is reported when that tier
+            is selected. `--list` and an empty selection do not lower or build runners. The CLI runs
             each selected case in a fresh working directory and process with a
             deterministic seed, controlled environment and arguments, incrementally
             bounded stdout/stderr, and an enforced typed deadline. A crash, exit, or
@@ -86,8 +88,11 @@ documentation:
             floating near-equality, expected-descriptor throwable assertions,
             explicit failure and skip, typed deadline and controlled-argument
             accessors, source-framed structured causes, and bounded useful value
-            rendering. `fail-values` lets custom assertions keep comparisons in
-            their concrete types while rendering operands through `test-value`.
+            rendering. Reading runner-supplied identity, tier, seed, directory, deadline,
+            arguments, artifact, and controlled-time context is intentionally ungated because it
+            grants no external authority; operations such as process spawning retain their normal
+            capability gate through `/core/testing/process`. `fail-values` lets custom assertions
+            keep comparisons in their concrete types while rendering operands through `test-value`.
             `--list`, repeatable `--tier`, and one mutually exclusive substring
             `--filter`, exact `--exact`, `--glob`, or `--regex` selector first perform
             semantic discovery; only tiers with selected cases are lowered, built, and
