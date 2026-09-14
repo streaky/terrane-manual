@@ -424,6 +424,31 @@ navigation:
           - section: chapter-summary
             title: Chapter summary
       - number: 15
+        source: records/chapters/15-testing-and-debugging.yaml
+        contents:
+          - section: begin-with-one-observable-behavior
+            title: Begin with one observable behavior
+          - section: write-assertions-that-explain-the-contract
+            title: Write assertions that explain the contract
+          - section: choose-the-test-boundary-deliberately
+            title: Choose the test boundary deliberately
+          - section: make-time-and-context-deterministic
+            title: Make time and context deterministic
+          - section: drive-the-built-application
+            title: Drive the built application
+          - section: run-the-suite-at-the-right-scale
+            title: Run the suite at the right scale
+          - section: read-failures-and-machine-reports
+            title: Read failures and machine reports
+          - section: debug-from-the-terrane-boundary-inward
+            title: Debug from the Terrane boundary inward
+          - section: complete-project-testing-a-writing-plan
+            title: 'Complete project: testing a writing plan'
+          - section: exercises
+            title: Exercises
+          - section: chapter-summary
+            title: Chapter summary
+      - number: 16
         planned:
           id: book.larger-program
           kind: chapter
@@ -457,7 +482,7 @@ navigation:
               title: Building and running the finished application
             - section: what-we-deliberately-did-not-build
               title: What we deliberately did not build
-      - number: 16
+      - number: 17
         planned:
           id: book.next
           kind: chapter
