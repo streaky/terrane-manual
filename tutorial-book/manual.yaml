@@ -1,0 +1,13 @@
+format: 1
+publication:
+  id: tutorial
+  kind: book
+imports:
+  - reference
+title: The Terrane Book
+landing: book.introduction
+navigation:
+  - group: Introduction
+    numbering: none
+    children:
+      - page: book.introduction

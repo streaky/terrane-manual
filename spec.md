@@ -67,6 +67,7 @@ A book publication is primarily an authored reading sequence:
 ```text
 book publication
 ├── unnumbered front matter (`topic`)
+├── optional unnumbered introduction (`chapter`)
 ├── numbered body (`chapter`)
 ├── lettered back matter (`appendix`)
 └── links into imported reference publications
@@ -81,7 +82,7 @@ chapter or appendix
     └── exercises
 ```
 
-Book navigation defines progression, displayed numbering, and previous/next relationships. A chapter is expected to make sense in that progression, whereas a reference page is expected to remain useful when opened independently. Neither distinction changes the meaning of shared blocks: an `example`, `image`, `admonition`, or internal reference has the same schema and validation contract in both publications.
+Book navigation defines progression, displayed numbering, and previous/next relationships. A chapter is expected to make sense in that progression, whereas a reference page is expected to remain useful when opened independently. A book may place one unnumbered introductory `chapter` before its numbered body without treating that introduction as a preface. Neither distinction changes the meaning of shared blocks: an `example`, `image`, `admonition`, or internal reference has the same schema and validation contract in both publications.
 
 A record is owned by one publication and has one record kind. A book links to an imported reference contract instead of republishing that reference page as a chapter, and a reference publication does not use chapter order to imply semantic relationships.
 
@@ -1171,7 +1172,7 @@ provenance:
   compiler: null
 ```
 
-`chapter` and `appendix` records use authored order and numbering from `manual.yaml`. A book's unnumbered front or back matter uses `topic` records. Page-level `documentation.blocks` hold the opening prose before the first titled section; the section tree then preserves the chapter's heading hierarchy. Book prose is explanatory rather than normative unless it contains a structured `rule` block. Tutorial wording may introduce an approachable partial model and link to a more complete reference contract, but executable examples still describe their verification status honestly. When a publication imports another, its records can link directly to the imported publication's pages, sections, and blocks through the shared global ID registry.
+`chapter` and `appendix` records use authored order and numbering from `manual.yaml`. A book's unnumbered front or back matter normally uses `topic` records; one unnumbered `chapter` may serve as the book's introduction before the numbered body. Page-level `documentation.blocks` hold the opening prose before the first titled section; the section tree then preserves the chapter's heading hierarchy. Book prose is explanatory rather than normative unless it contains a structured `rule` block. Tutorial wording may introduce an approachable partial model and link to a more complete reference contract, but executable examples still describe their verification status honestly. When a publication imports another, its records can link directly to the imported publication's pages, sections, and blocks through the shared global ID registry.
 
 ## 15. Complete entity example
 
@@ -1351,12 +1352,12 @@ publication:
 imports:
   - reference
 title: The Terrane Book
-landing: book.preface
+landing: book.introduction
 navigation:
-  - group: Preface
+  - group: Introduction
     numbering: none
     children:
-      - page: book.preface
+      - page: book.introduction
   - group: Chapters
     numbering: decimal
     children:
@@ -1373,7 +1374,7 @@ Rules:
 - A `page` item references exactly one record owned by the current publication.
 - A `group` is a label and does not create a page.
 - Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. Numbering applies in authored order to the group's direct page children and restarts in each numbered group.
-- In a `book` publication, a decimal-numbered group's direct pages are `chapter` records and an `upper-alpha` group's direct pages are `appendix` records. Unnumbered front and back matter uses `topic` records.
+- In a `book` publication, a decimal-numbered group's direct pages are `chapter` records and an `upper-alpha` group's direct pages are `appendix` records. Unnumbered front and back matter normally uses `topic` records; one unnumbered `chapter` may appear before the first decimal-numbered group as the book introduction.
 - A `reference` publication does not own `chapter` or `appendix` records.
 - Generated numbers are presentation, not identity, and are not included in record titles or links.
 - A `generated` item declares a deterministic query over the current publication.

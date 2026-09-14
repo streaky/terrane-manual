@@ -1,6 +1,6 @@
 # Proposed table of contents
 
-## Preface
+## Introduction
 
 - Who this book is for
 - What this book will teach
