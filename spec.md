@@ -1318,17 +1318,17 @@ imports: []
 title: Terrane Reference
 landing: manual.introduction
 navigation:
-  - page: manual.introduction
+  - source: records/manual/introduction.yaml
   - group: Language
     numbering: none
     children:
-      - page: lang.lexical-structure
-      - page: lang.functions.arguments
+      - source: records/language/lexical-structure.yaml
+      - source: records/language/functions/arguments.yaml
   - group: Core API
     numbering: none
     children:
-      - page: api.core.output
-      - page: api.core.types.string
+      - source: records/api/core/output/index.yaml
+      - source: records/api/core/types/string/index.yaml
   - generated:
       title: Diagnostics
       query:
@@ -1343,7 +1343,7 @@ Publication IDs use the stable-ID segment syntax from §6. `publication.kind` is
 
 For compatibility with reference roots authored before publications were named, omission of `publication` means `{ id: reference, kind: reference }` and omission of `imports` means an empty sequence. New manifests write both fields explicitly.
 
-A book imports the reference registry and uses navigation groups to derive visible chapter and appendix labels. During a source migration, its navigation may contain canonical record pages, explicitly transitional Markdown pages, and unpublished planned pages:
+A book imports the reference registry and uses navigation groups to supply visible chapter and appendix labels. During a source migration, navigation may load canonical YAML records, transitional Markdown pages, and unpublished plans:
 
 ```yaml
 format: 1
@@ -1358,9 +1358,9 @@ navigation:
   - group: Front matter
     numbering: none
     children:
-      - page: book.preface
+      - source: records/preface.yaml
         contents: []
-      - page: book.introduction
+      - source: records/chapters/introduction.yaml
         contents:
           - section: audience
             title: Who this book is for
@@ -1370,57 +1370,60 @@ navigation:
     numbering: decimal
     children:
       - number: 6
-        markdown-page:
-          id: book.complete-program
-          kind: chapter
-          title: Building a Complete Program
-          source: chapters/06.md
-          contents:
-            - id: starting-from-a-user-story
-              title: Starting from a user story
-            - id: dividing-the-program-into-functions
-              title: Dividing the program into functions
+        source: chapters/06.md
+        id: book.complete-program
+        kind: chapter
+        title: Building a Complete Program
+        contents:
+          - section: starting-from-a-user-story
+            title: Starting from a user story
+          - section: dividing-the-program-into-functions
+            title: Dividing the program into functions
       - number: 15
-        planned-page:
+        planned:
           id: book.larger-program
           kind: chapter
           title: A Larger Program, Step by Step
           contents:
-            - id: application
+            - section: application
               title: Choosing a manageable application
   - group: Appendices
     numbering: upper-alpha
     children:
       - number: "C"
-        planned-page:
+        planned:
           id: book.appendix.syntax-map
           kind: appendix
           title: A Reader's Syntax Map
           contents:
-            - id: bindings
+            - section: bindings
               title: Bindings and assignment
 ```
 
-`contents` is an ordered expanded-contents list:
+`source` is a publication-root-relative authoring path. Its extension selects how the page is loaded:
 
-- On a canonical `page`, each item has `section` and `title`. `section` names a top-level local section in that record, and `title` must exactly match the section title. The sequence must list every top-level section exactly once in record order.
-- On a `markdown-page` or `planned-page`, each item has `id` and `title`. IDs follow the local-ID rules and are reserved immediately within the page identity.
+- A `.yaml` source names one canonical record. The processor obtains the page `id`, `kind`, title, and complete section tree from that record. The navigation child does not repeat `id`, `kind`, or title.
+- A `.md` source names one explicitly transitional book page. Its navigation child also supplies `id`, `kind`, title, and `contents` because those identities are not represented by the legacy Markdown source. `kind` is `topic`, `chapter`, or `appendix`.
+- Any other source extension is an error.
 
-A `markdown-page` is a transitional book-only source form. Its mapping contains `id`, `kind`, `title`, `source`, and `contents`; its navigation child also carries `number` when it belongs to a numbered group. `kind` is `topic`, `chapter`, or `appendix`; `source` is a publication-root-relative `.md` file. The Markdown H1 must begin with the child entry's explicit number followed by `. ` and the authored title, or contain just the title for an unnumbered page. Its H2 headings must exactly equal the `contents` titles in order. The processor assigns the corresponding content IDs to those H2 sections while lowering the Markdown page into the assembled manual IR. The body is CommonMark 0.31.2 plus strikethrough and may retain ordinary Markdown headings, tables, images, and fenced examples during migration; it is not required to conform to the YAML record/block schema until cutover. Raw HTML, unsafe URLs, and paths outside the publication root remain errors.
+On a source entry, `contents` is an ordered expanded-contents list. Book source entries require it. A reference YAML source may omit it when the manifest does not need to repeat the page outline. Each item has `section` and `title`. For a YAML record, `section` names a top-level local section, `title` must exactly match its title, and a present sequence lists every top-level section exactly once in record order. For a Markdown source, IDs follow the local-ID rules and are assigned to its H2 sections; the H2 headings must exactly equal the required `contents` titles in order.
 
-A `planned-page` reserves intended book structure without publishing a page. Its mapping contains `id`, `kind`, `title`, and `contents`, has no source or record, and is excluded from expanded navigation, previous/next links, search, links, and rendered output. A planning view may display it. When content is authored, the entry becomes either a `markdown-page` or canonical `page` without changing its page or content IDs.
+A transitional Markdown H1 begins with the entry's explicit number followed by `. ` and the authored title, or contains just the title for an unnumbered page. Its body is CommonMark 0.31.2 plus strikethrough and may retain ordinary Markdown headings, tables, images, and fenced examples during migration; it is not required to conform to the YAML record/block schema until cutover. Raw HTML, unsafe URLs, and paths outside the publication root remain errors.
 
-Migrating a `markdown-page` to the canonical IR is a clean cutover: transfer its page ID, title, and content IDs into one YAML record, replace the manifest entry with `page` plus checked `contents`, and remove the Markdown source. The manifest therefore remains the complete book outline while records remain the canonical home of migrated page structure.
+`planned` reserves intended book structure without publishing a page. Its mapping contains `id`, `kind`, title, and `contents`, has no source or record, and is excluded from expanded navigation, previous/next links, search, links, and rendered output. Its `contents` items use the same `section` and `title` shape and reserve those local IDs immediately. A planning view may display the entry.
+
+Migrating a Markdown source to the canonical IR is a clean cutover: transfer its page ID, title, and content IDs into one YAML record; change `source` to that record path; remove the duplicated `id`, `kind`, and title; and delete the Markdown file. The manifest remains the complete book outline while records remain the canonical home of migrated page structure.
 
 Rules:
 
-- A `page` item references exactly one record owned by the current publication.
-- `markdown-page` and `planned-page` are allowed only in a `book` publication.
-- Every navigation child is exactly one of `page`, `markdown-page`, `planned-page`, `group`, or `generated`; `number` and `contents` are common page-bearing fields, and fields from different alternatives cannot otherwise be combined.
+- `landing` is a global ID and must resolve to one published source entry in the current publication.
+- Every navigation child is exactly one of `source`, `planned`, `group`, or `generated`; fields from different alternatives cannot be combined.
+- A source path names exactly one file inside the current publication root. Two entries cannot name the same source.
+- YAML source entries are allowed in every publication. Markdown sources and `planned` entries are allowed only in a `book` publication.
 - A `group` is a label and does not create a page.
 - Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. A page-bearing child of a `none` group omits `number`. Every page-bearing child of a numbered group provides it explicitly.
 - In a `decimal` group, `number` is a positive integer. In an `upper-alpha` group, it is an uppercase ASCII sequence such as `A` or `AA`. Numbers are unique and strictly increase in authored child order, including planned pages; gaps are permitted so a publication excerpt or reserved position does not require false entries.
-- In a `book` publication, every page-bearing entry in a decimal-numbered group has `chapter` kind and every page-bearing entry in an `upper-alpha` group has `appendix` kind. Canonical `page` entries obtain that kind from their record; Markdown and planned entries declare it. Unnumbered front and back matter normally uses `topic` records; one unnumbered `chapter` may appear before the first decimal-numbered group as the book introduction.
+- In a `book` publication, every source or plan in a decimal-numbered group has `chapter` kind and every source or plan in an `upper-alpha` group has `appendix` kind. YAML sources obtain that kind from their record; Markdown sources and plans declare it. Unnumbered front and back matter normally uses `topic` records; one unnumbered `chapter` may appear before the first decimal-numbered group as the book introduction.
 - A `reference` publication does not own `chapter` or `appendix` records.
 - Displayed numbers are navigation metadata, not identity, and are not included in canonical record or manifest titles.
 - A `generated` item declares a deterministic query over the current publication.
@@ -1428,7 +1431,7 @@ Rules:
 - Member pages may be reached through generated owner indexes without all appearing in the global sidebar.
 - Navigation order does not imply namespace, ownership, inheritance, or lifecycle.
 - Previous/next links follow the current publication's expanded published navigation order.
-- Duplicate global IDs across records, transitional Markdown pages, planned pages, or the transitive publication import graph are errors.
+- Duplicate global IDs across YAML records, transitional Markdown sources, planned entries, or the transitive publication import graph are errors.
 
 ## 17. Compiler snapshot
 
@@ -1655,7 +1658,7 @@ A default build provides:
 - machine-readable assembled IR for editors and other tools;
 - a reconciliation and example-evidence report.
 
-HTML, Markdown, and print renderers consume the same profile-selected assembled content. They may differ in navigation chrome, disclosure controls, annotation placement, and other medium-specific presentation, but cannot silently omit a semantic block because the target lacks its richer display. Generated Markdown is a publication artifact, not canonical source; authors edit YAML records, except while an explicitly declared transitional `markdown-page` remains canonical for its body.
+HTML, Markdown, and print renderers consume the same profile-selected assembled content. They may differ in navigation chrome, disclosure controls, annotation placement, and other medium-specific presentation, but cannot silently omit a semantic block because the target lacks its richer display. Generated Markdown is a publication artifact, not canonical source; authors edit YAML records, except while an explicitly declared `.md` source remains canonical for its transitional body.
 
 Search ranks exact canonical symbols and aliases above prose matches. Excluded profiles do not leak planned or removed material into results.
 
@@ -1786,7 +1789,7 @@ Manual authors should:
 20. Use generated indexes rather than copied member inventories.
 21. Keep entity pages useful when opened from search without duplicating their owner's general contract.
 22. Keep tutorial progression selective: link to the reference for exhaustive detail rather than turning every chapter into an API inventory.
-23. Keep `manual.yaml` `contents` synchronized with the complete top-level section order; use `planned-page` rather than inventing an empty source file for unwritten material.
+23. Keep book `manual.yaml` `contents` synchronized with the complete top-level section order; use `planned` rather than inventing an empty source file for unwritten material.
 
 ## 25. Format evolution
 
