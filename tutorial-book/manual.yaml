@@ -161,10 +161,7 @@ navigation:
           - section: what-we-learned
             title: What we learned
       - number: 6
-        source: chapters/06.md
-        id: book.complete-program
-        kind: chapter
-        title: Building a Complete Program
+        source: records/chapters/06-complete-program.yaml
         contents:
           - section: starting-from-a-user-story
             title: Starting from a user story
@@ -191,10 +188,7 @@ navigation:
           - section: what-we-learned
             title: What we learned
       - number: 7
-        source: chapters/07.md
-        id: book.errors
-        kind: chapter
-        title: Errors Are Part of the Program
+        source: records/chapters/07-errors.yaml
         contents:
           - section: mistakes-failures-and-exceptional-conditions
             title: Mistakes, failures, and exceptional conditions
@@ -221,10 +215,7 @@ navigation:
           - section: what-we-learned
             title: What we learned
       - number: 8
-        source: chapters/08.md
-        id: book.namespaces-imports-and-packages
-        kind: chapter
-        title: Namespaces, Imports, and Packages
+        source: records/chapters/08-namespaces-imports-and-packages.yaml
         contents:
           - section: from-one-file-to-a-project
             title: From one file to a project
@@ -251,10 +242,7 @@ navigation:
           - section: what-we-learned
             title: What we learned
       - number: 9
-        source: chapters/09.md
-        id: book.classes-interfaces-and-traits
-        kind: chapter
-        title: Classes, Interfaces, and Traits
+        source: records/chapters/09-classes-interfaces-and-traits.yaml
         contents:
           - section: objects-as-behavior
             title: Objects as behavior
@@ -287,10 +275,7 @@ navigation:
           - section: what-we-learned
             title: What we learned
       - number: 10
-        source: chapters/10.md
-        id: book.types
-        kind: chapter
-        title: Types Without Ceremony
+        source: records/chapters/10-types.yaml
         contents:
           - section: type-inference
             title: Type inference
@@ -317,10 +302,7 @@ navigation:
           - section: what-we-learned
             title: What we learned
       - number: 11
-        source: chapters/11.md
-        id: book.identity-and-movement
-        kind: chapter
-        title: Values, Shared Identity, and Movement
+        source: records/chapters/11-identity-and-movement.yaml
         contents:
           - section: ordinary-assignment-first
             title: Ordinary assignment first
@@ -351,10 +333,7 @@ navigation:
           - section: chapter-summary
             title: Chapter summary
       - number: 12
-        source: chapters/12.md
-        id: book.async
-        kind: chapter
-        title: Asynchronous Work and Structured Concurrency
+        source: records/chapters/12-async.yaml
         contents:
           - section: when-a-program-should-be-asynchronous
             title: When a program should be asynchronous
@@ -391,10 +370,7 @@ navigation:
           - section: chapter-summary
             title: Chapter summary
       - number: 13
-        source: chapters/13.md
-        id: book.native-program
-        kind: chapter
-        title: How Terrane Becomes a Native Program
+        source: records/chapters/13-native-program.yaml
         contents:
           - section: from-terrane-source-to-an-executable
             title: From Terrane source to an executable
@@ -421,10 +397,7 @@ navigation:
           - section: chapter-summary
             title: Chapter summary
       - number: 14
-        source: chapters/14.md
-        id: book.terrane-shaped-programs
-        kind: chapter
-        title: Writing Terrane-Shaped Programs
+        source: records/chapters/14-terrane-shaped-programs.yaml
         contents:
           - section: prefer-the-ordinary-operation
             title: Prefer the ordinary operation

@@ -1370,7 +1370,7 @@ navigation:
     numbering: decimal
     children:
       - number: 6
-        source: chapters/06.md
+        source: legacy/06-complete-program.md
         id: book.complete-program
         kind: chapter
         title: Building a Complete Program
