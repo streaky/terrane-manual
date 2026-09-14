@@ -1,14 +1,15 @@
-# Terrane reference IR and authoring format
+# Terrane manual IR and authoring format
 
-This document defines a structured source format for producing the Terrane reference manual. The canonical authoring unit is a YAML record, normally one file per reference surface or conceptual page. Human prose is written as Markdown inside YAML block scalars. Compiler-known facts remain structured data and can be emitted, compared, and updated without treating Markdown as an API database.
+This document defines a structured source format for producing Terrane manuals. The canonical authoring unit is a YAML record, normally one file per reference surface, conceptual page, tutorial chapter, or appendix. Human prose is written as Markdown inside YAML block scalars. Facts and content units that need stable identity, validation, reuse, or renderer-specific presentation remain structured rather than being inferred from Markdown.
 
-The intended manual combines three forms of reference:
+The intended documentation set combines four forms:
 
 - a browsable language reference, where syntax and semantic rules can be read independently and linked precisely, in the style of the Rust Reference;
 - an entity reference, where namespaces, descriptors, classes, interfaces, traits, functions, methods, properties, constants, and diagnostics have predictable generated synopses, in the style of the PHP manual;
-- an internals reference, where durable compiler, lowering, runtime, generated-code, projection, tooling, cache, artifact, diagnostic, and host-ABI contracts can be located without treating their implementation as an importable Terrane surface.
+- an internals reference, where durable compiler, lowering, runtime, generated-code, projection, tooling, cache, artifact, diagnostic, and host-ABI contracts can be located without treating their implementation as an importable Terrane surface;
+- a tutorial book, where concepts are introduced in an authored learning order and structured examples, exercises, figures, callouts, and cross-references are rendered as a continuous narrative.
 
-This format is a reference representation and publication system. It is not an independent language-design authority. Until the project explicitly changes that relationship:
+This format is a manual representation and publication system. It is not an independent language-design authority. Until the project explicitly changes that relationship:
 
 - `docs/language-spec-and-compiler-architecture-draft.md` remains authoritative for the settled language design;
 - executable conformance cases define what the current compiler supports;
@@ -17,7 +18,7 @@ This format is a reference representation and publication system. It is not an i
 
 ## 1. Central model
 
-The reference system has four inputs and one assembled IR:
+The manual system has authored records and navigation, optional compiler inputs, and one assembled IR:
 
 ```text
 compiler semantic model
@@ -25,7 +26,7 @@ compiler semantic model
         v
 compiler surface snapshot ---------+
                                     |
-authored YAML reference records ----+--> assembled reference IR --> renderers
+authored YAML manual records -------+--> assembled manual IR --> renderers
                                     |
 manual navigation -----------------+
                                     |
@@ -38,34 +39,76 @@ The important separation is:
 surface facts       compiler-owned
 lifecycle decisions human/release-owned
 documentation       human-owned
+document structure  human-owned
 provenance          shared, with field-level ownership
 presentation        renderer-owned
 ```
 
-Markdown is not used to encode signatures, parameters, inheritance, availability, or member ownership. It is used for explanation, examples surrounding a contract, warnings, migration guidance, and conceptual language material.
+Markdown is not used to encode signatures, parameters, inheritance, availability, member ownership, example execution contracts, image alternatives, or the semantic role of a callout. It is used for continuous prose, lists, inline formatting, explanations attached to structured units, warnings, migration guidance, and conceptual material.
+
+### 1.1 Reference and book structures
+
+The YAML envelope, documentation blocks, ID rules, cross-references, validation, and renderers are unified. `publication.kind` selects how those shared records form a manual; it does not select a separate schema dialect.
+
+A reference publication is primarily a graph of independently useful pages and entities:
+
+```text
+reference publication
+├── authored conceptual pages (`manual`, `topic`, language kinds)
+├── compiler-backed entity pages
+├── authored relationships and cross-references
+└── generated entity, rule, term, namespace, and diagnostic indexes
+```
+
+Reference navigation makes that graph browsable but does not define the semantics or ownership of its records. A reader may enter an entity or topic directly from search, follow a relationship, or browse an index without reading preceding pages.
+
+A book publication is primarily an authored reading sequence:
+
+```text
+book publication
+├── unnumbered front matter (`topic`)
+├── numbered body (`chapter`)
+├── lettered back matter (`appendix`)
+└── links into imported reference publications
+
+chapter or appendix
+├── title and summary
+├── page-level introductory blocks
+└── ordered section tree
+    ├── prose and tables
+    ├── examples and source annotations
+    ├── images and callouts
+    └── exercises
+```
+
+Book navigation defines progression, displayed numbering, and previous/next relationships. A chapter is expected to make sense in that progression, whereas a reference page is expected to remain useful when opened independently. Neither distinction changes the meaning of shared blocks: an `example`, `image`, `admonition`, or internal reference has the same schema and validation contract in both publications.
+
+A record is owned by one publication and has one record kind. A book links to an imported reference contract instead of republishing that reference page as a chapter, and a reference publication does not use chapter order to imply semantic relationships.
 
 ## 2. Design goals
 
 The format must provide:
 
-1. **A real reference IR.** The processor receives typed entities and relationships rather than recovering them from prose.
+1. **A real manual IR.** The processor receives typed entities, document units, and relationships rather than recovering them from prose.
 2. **Compiler participation.** The compiler can emit the surface it actually understands from its semantic model.
 3. **Safe reconciliation.** A tool can add records and update compiler-owned fields without rewriting authored prose or silently removing entities.
 4. **Readable authoring.** YAML records and their Markdown scalars remain understandable in a normal editor.
-5. **Stable identity.** Entities, pages, rules, examples, terms, and sections retain IDs across renames and file moves.
-6. **One system for API and language reference material.** Both participate in navigation, search, cross-references, profiles, and rendering.
+5. **Stable identity.** Entities, pages, rules, examples, exercises, figures, terms, and sections retain IDs across title changes and file moves.
+6. **One system for reference and tutorial material.** Both participate in navigation, search, cross-references, profiles, validation, and rendering without forcing a tutorial to become an exhaustive reference.
 7. **Explicit lifecycle.** Presence in or absence from one compiler build is not confused with a human decision to add, deprecate, or remove a public contract.
-8. **Generated reference views.** Signatures, parameter tables, inheritance, member indexes, availability, and search records come from structured data.
+8. **Generated views.** Signatures, parameter tables, inheritance, member indexes, availability, chapter navigation, and search records come from structured data.
 9. **Checkable examples.** An example states whether it is illustrative, accepted, runnable, or intentionally rejected.
-10. **Deterministic output.** Identical inputs and tool versions produce equivalent assembled IR and rendered output.
-11. **Strict validation.** Unknown fields, stale references, ambiguous identities, surface drift, and incomplete documentation fail visibly.
-12. **Reusable package schema.** Compiler-owned, standard-library, source-declared, and projected dependency surfaces can use the same entity model where their contracts permit it.
+10. **Accessible semantic units.** Figures, tables, callouts, source annotations, and other special displays retain their meaning independently of one visual renderer.
+11. **Multiple publication formats.** HTML, Markdown, print, and machine-readable output are derived from the same assembled content.
+12. **Deterministic output.** Identical inputs and tool versions produce equivalent assembled IR and rendered output.
+13. **Strict validation.** Unknown fields, stale references, ambiguous identities, invalid source annotations, missing accessibility text, surface drift, and incomplete documentation fail visibly.
+14. **Reusable package schema.** Compiler-owned, standard-library, source-declared, and projected dependency surfaces can use the same entity model where their contracts permit it.
 
-The first format deliberately excludes arbitrary YAML tags, anchors and aliases, raw HTML, embedded scripts, remote includes, prose macros, and executable templates.
+The first format deliberately excludes arbitrary YAML tags, anchors and aliases, raw HTML, embedded scripts, remote includes, prose macros, executable templates, and arbitrary renderer components.
 
 ## 3. Source layout
 
-A reference source root has this shape:
+A manual source root has this shape:
 
 ```text
 reference/
@@ -95,20 +138,36 @@ reference/
     └── object-model.svg
 ```
 
+A book uses the same source-root contract but may organize records by reading role:
+
+```text
+tutorial-book/
+├── manual.yaml
+├── records/
+│   ├── preface.yaml
+│   ├── chapters/
+│   │   ├── first-taste.yaml
+│   │   └── values-and-names.yaml
+│   └── appendices/
+│       └── syntax-map.yaml
+└── assets/
+    └── compiler-pipeline.svg
+```
+
 Rules:
 
 - Every record file uses lowercase kebab-case and the `.yaml` extension.
 - A record file defines exactly one page or entity.
-- Source paths organize work but do not define identity, ownership, navigation, or output URLs.
+- Source paths organize work but do not define identity, ownership, navigation, chapter numbering, or output URLs.
 - Moving a record does not change its ID.
-- `manual.yaml` defines navigation and grouping.
-- `lifecycle/renames.yaml` records explicit identity migrations used during reconciliation.
+- `manual.yaml` defines the publication, imported publication dependencies, navigation, grouping, and numbering.
+- `lifecycle/renames.yaml` records explicit identity migrations used during reconciliation when the manual has lifecycle-managed identities.
 - Assets are local. A build does not fetch remote content.
 - Generated compiler snapshots are build inputs, not canonical authored files under `records/`.
 
 ## 4. YAML profile
 
-Reference records use the YAML 1.2 core schema with these restrictions:
+Manual records use the YAML 1.2 core schema with these restrictions:
 
 - UTF-8 only;
 - mappings, sequences, strings, integers, booleans, and `null` only;
@@ -160,14 +219,14 @@ Top-level fields:
 | Field | Required | Owner | Meaning |
 |---|---:|---|---|
 | `format` | yes | format | Integer record-format version. |
-| `id` | yes | identity/release | Stable global reference identity. |
+| `id` | yes | identity/release | Stable global manual identity. |
 | `kind` | yes | identity/release | Record kind from the registry. |
 | `surface` | entity kinds | compiler | Compiler-known source-facing contract. |
 | `lifecycle` | yes | human/release | Publication status and compatibility history. |
-| `documentation` | yes | human | Title, summary, prose, examples, and authored labels. |
+| `documentation` | yes | human | Title, summary, prose, examples, exercises, figures, and authored labels. |
 | `provenance` | yes | shared | Specification, compiler, and conformance evidence. |
 
-Conceptual records such as language chapters have `surface: null`. Their rules, grammar, and explanations live under `documentation` because they cannot be reconstructed merely by enumerating compiler symbols.
+Conceptual records such as language pages, tutorial chapters, and appendices have `surface: null`. Their explanations and authored structures live under `documentation` because they cannot be reconstructed merely by enumerating compiler symbols.
 
 A processor must reject unknown top-level fields. A format revision may add optional fields only under the format-evolution rules in this document.
 
@@ -184,6 +243,7 @@ Recommended roots:
 | Root | Use |
 |---|---|
 | `manual` | Introduction, conventions, and manual-level pages. |
+| `book` | Tutorial chapters, appendices, and other learning material. |
 | `lang` | Language syntax and semantic topics. |
 | `api` | Namespaces and object/API entities. |
 | `tool` | Compiler, command-line, manifest, and tooling reference. |
@@ -195,6 +255,9 @@ Examples:
 
 ```text
 manual.introduction
+book.first-taste
+book.async
+book.appendix.syntax-map
 lang.functions.arguments
 api.core.output.print
 api.core.types.string
@@ -204,11 +267,11 @@ rule.call.arguments.left-to-right
 term.callable
 ```
 
-IDs are identities, not generated slugs. A source rename does not automatically change an ID. If an ID itself must change, the release owner records an explicit rename and redirect.
+IDs are identities, not generated slugs. A source rename or title change does not automatically change an ID. If an ID itself must change, the release owner records an explicit rename and redirect.
 
-The default output URL replaces dots with slashes and appends `.html`. A deployment may map one configured landing ID to the site root, but other mappings remain deterministic.
+The default output URL replaces dots with slashes and uses the renderer's configured extension. A deployment may map one configured landing ID to the publication root, but other mappings remain deterministic.
 
-All pages, rules, and terms share one global ID registry. Section and example IDs are local to their page and are addressed as `page-id#local-id`.
+All pages, rules, and terms in a documentation set share one global ID registry. Section IDs and block IDs other than globally registered rule and term IDs are local to their page and are addressed as `page-id#local-id`.
 
 ## 7. Record kinds
 
@@ -216,14 +279,14 @@ Format version 1 defines:
 
 | Category | Kinds |
 |---|---|
-| Organizational | `manual`, `topic`, `namespace`, `index`, `glossary` |
+| Organizational | `manual`, `topic`, `chapter`, `appendix`, `namespace`, `index`, `glossary` |
 | Language | `syntax`, `statement`, `expression`, `operator`, `literal`, `protocol` |
 | Object/API | `descriptor`, `class`, `interface`, `trait`, `function`, `method-family`, `method`, `property`, `field`, `constant` |
 | Tooling | `command`, `option`, `manifest-key`, `diagnostic` |
 
 A new kind requires a format update. Unknown kinds are errors.
 
-Entity kinds have a non-null `surface`. Organizational and conceptual language pages may use `surface: null`. A protocol that has a compiler-visible descriptor uses a surface; a purely explanatory protocol page does not pretend to have one.
+Entity kinds have a non-null `surface`. Organizational and conceptual language pages have `surface: null`. `chapter` and `appendix` identify authored reading roles; their order and displayed numbering come from `manual.yaml`, not their IDs or filenames. A protocol that has a compiler-visible descriptor uses a surface; a purely explanatory protocol page does not pretend to have one.
 
 ## 8. Field ownership
 
@@ -531,6 +594,7 @@ documentation:
     - output
     - text-display
   callables: {}
+  blocks: []
   sections: []
   see-also: []
 ```
@@ -540,12 +604,13 @@ Fields:
 | Field | Required | Meaning |
 |---|---:|---|
 | `status` | yes | `missing`, `draft`, or `complete`. |
-| `title` | yes except a new scaffold | Plain display title. |
+| `title` | yes except a new scaffold | Plain display title without generated chapter or appendix numbering. |
 | `title-style` | yes | `text`, `code`, or another format-defined presentation enum. |
 | `summary` | complete records | Short Markdown standfirst, normally one sentence. |
 | `tags` | yes | Authored search terms; empty sequence when none. |
 | `callables` | callable entities | Descriptions keyed to compiler-owned signature components. |
-| `sections` | yes | Ordered authored content sections. |
+| `blocks` | no | Ordered page-level blocks rendered after the summary and before the first section; omission means empty. |
+| `sections` | yes | Ordered, recursively nested authored content sections. |
 | `see-also` | yes | Structured related-reference links. |
 
 `documentation.status` is independent of lifecycle. A compiler-present entity may have missing documentation; a removed entity may retain complete historical documentation.
@@ -581,7 +646,7 @@ Rules:
 
 ### 11.3 Sections and blocks
 
-Sections are ordered and have stable local IDs:
+Page-level `documentation.blocks` contain introductions, learning objectives, or other content that follows the page title and summary but precedes the first titled section. Sections are ordered, may nest, and have stable local IDs:
 
 ```yaml
 sections:
@@ -597,27 +662,30 @@ sections:
         level: must
         markdown: |-
           Exactly one newline follows the concatenated display.
+    sections:
+      - id: examples
+        title: Examples
+        blocks:
+          - type: example
+            id: multiple-values
+            title: Print several values
+            language: terrane
+            mode: run
+            source: |-
+              namespace reference-examples/print-values
 
-  - id: examples
-    title: Examples
-    blocks:
-      - type: example
-        id: multiple-values
-        title: Print several values
-        language: terrane
-        mode: run
-        source: |-
-          namespace reference-examples/print-values
-
-          function main;
-            print; 'answer: ', 42
-        response:
-          kind: stdout
-          language: text
-          display: on-run
-          content: |-
-            answer: 42
+              function main;
+                print; 'answer: ', 42
+            response:
+              kind: stdout
+              language: text
+              display: on-run
+              content: |-
+                answer: 42
+        sections: []
 ```
+
+Section IDs are unique within a page regardless of nesting depth. Renderers derive semantic heading levels from the section tree; authors do not place headings in Markdown merely to simulate a subsection. The page title occupies heading level one, so a section tree may be at most five levels deep. A section's blocks precede its child sections. `blocks` and child `sections` are independently optional and omission means an empty sequence, but a complete published section must not leave both empty.
 
 Format version 1 block types are:
 
@@ -627,13 +695,15 @@ Format version 1 block types are:
 | `table` | Authored tabular data with typed columns and validated rows. |
 | `rule` | Addressable normative rule. |
 | `grammar` | Formal Terrane grammar productions. |
-| `example` | Structured source example and expected result. |
-| `admonition` | Note, warning, implementation detail, experimental notice, or deprecation guidance. |
+| `example` | Structured single-file or multi-file source example and expected result. |
+| `admonition` | Semantic callout such as a note, rationale, guidance, warning, or implementation detail. |
+| `image` | Local image with explicit accessibility and caption data. |
+| `exercise` | Addressable reader activity. |
 | `term` | Addressable term definition. |
 | `entity-index` | Generated query over assembled entities. |
 | `diagnostic` | Structured diagnostic condition where not represented by a dedicated record. |
 
-Blocks are tagged unions. Fields not allowed for the selected `type` are errors.
+Blocks are tagged unions. Fields not allowed for the selected `type` are errors. A renderer may give a block type a specialized visual treatment, but the block's meaning cannot depend on that treatment.
 
 ### 11.4 Markdown blocks
 
@@ -646,7 +716,7 @@ A Markdown block is:
     fenced code blocks.
 ```
 
-Markdown uses CommonMark 0.31.2 plus strikethrough. Raw HTML and Markdown table syntax are errors; authored tabular data uses a `table` block. Internal references use the syntax in §12. External links and local asset links use ordinary Markdown links.
+Markdown uses CommonMark 0.31.2 plus strikethrough. Raw HTML, Markdown headings, Markdown image syntax, and Markdown table syntax are errors inside a Markdown block; authored hierarchy, images, and tabular data use `sections`, `image` blocks, and `table` blocks. Internal references use the syntax in §12. External links use ordinary Markdown links.
 
 ### 11.5 Tables
 
@@ -748,6 +818,16 @@ Precedence is grouping, repetition/option, sequence, then choice. Empty alternat
 
     function main;
       print; 'answer: ', 42
+  files: null
+  entry: null
+  annotations:
+    - id: call
+      file: null
+      lines:
+        start: 4
+        end: 4
+      markdown: >-
+        The semicolon invokes `print`; it does not terminate a statement.
   response:
     kind: stdout
     language: text
@@ -758,7 +838,28 @@ Precedence is grouping, repetition/option, sequence, then choice. Empty alternat
   markdown: null
 ```
 
-`language` is required and identifies the source language for rendering and verification. It is a lowercase identifier rather than a closed format-version enum; publication profiles register the languages and runners they support. Use `text` when no programming or data language applies. An unknown language is an error for executable modes and may fall back to plain rendering only for `illustrative`.
+`language` is required and identifies the primary source language for rendering and verification. It is a lowercase identifier rather than a closed format-version enum; publication profiles register the languages and runners they support. Use `text` when no programming or data language applies. An unknown language is an error for executable modes and may fall back to plain rendering only for `illustrative`.
+
+An example provides exactly one of `source` and `files`. `source` contains one source unit. `files` contains a non-empty ordered project:
+
+```yaml
+files:
+  - path: package.toml
+    language: toml
+    source: |-
+      [package]
+      name = "work-report"
+  - path: app/main.trn
+    language: terrane
+    source: |-
+      namespace work-report/app
+
+      function main;
+        print; 'ready'
+entry: package.toml
+```
+
+File paths are unique, use `/` separators, are relative to the example root, and cannot contain an empty, `.` or `..` segment. `entry` is `null` for a single source and otherwise names the file or package entry selected by the configured runner. A renderer preserves authored file order. A verifier materializes the files under one isolated temporary root.
 
 Modes:
 
@@ -784,17 +885,20 @@ response:
 Response `kind` is `stdout`, `diagnostic`, `source`, or `text`. Response `language` is required under the same rules as example source language, including explicit `text`. Display is `shown`, `on-run`, or `hidden`:
 
 - `shown` renders the response immediately;
-- `on-run` keeps it out of the initial presentation and displays it when the reader runs the example; a non-interactive renderer may provide an equivalent collapsed reveal;
+- `on-run` keeps it out of the initial presentation and displays it when the reader runs the example; a non-interactive renderer provides an equivalent disclosure;
 - `hidden` retains the response for verification but does not publish it.
 
 For a `run` example, a `stdout` response must match normalized standard output exactly. A `reject` example still requires the stable code in `diagnostic`; a rendered diagnostic response supplements rather than replaces that stable contract. Other response kinds are validated by the runner selected for the source language and publication profile.
+
+Source annotations are ordered and attach authored explanation to an inclusive source-line range. `file` is `null` for a single source and required for a multi-file example. The range must be within the selected source and `start` must not exceed `end`. Annotation IDs are unique within the page. Overlapping ranges are allowed. Visual renderers may place annotations beside highlighted lines; linear, print, and Markdown renderers emit the same annotations after the example with explicit file and line labels.
 
 Rules:
 
 - `reject` requires `diagnostic`; other modes forbid it.
 - A response is optional. When present, all four response fields are required.
 - `markdown` provides optional explanation associated with the example.
-- Examples are independent programs in format version 1.
+- `annotations` is optional and omission means an empty sequence.
+- Examples are self-contained source units or projects in format version 1; one example cannot import the files of another.
 - The processor never executes `illustrative` examples.
 - Executable modes require a configured runner for `language`.
 - Verification uses the real language pipeline, not a documentation-specific parser.
@@ -803,13 +907,14 @@ Rules:
 
 ```yaml
 - type: admonition
-  kind: warning
-  title: null
+  id: why-explicit-calls
+  kind: rationale
+  title: Why calls use `;`
   markdown: |-
-    This operation may discard information under the selected policy.
+    The call marker keeps selection and invocation visibly distinct.
 ```
 
-Kinds are `note`, `important`, `warning`, `implementation`, `experimental`, and `deprecated`. Status and lifecycle remain structured fields; an admonition cannot change them.
+`id` and `title` may be `null`. Kinds are `note`, `tip`, `important`, `guidance`, `rationale`, `warning`, `implementation`, `experimental`, and `deprecated`. `rationale` explains why Terrane or its tooling makes a design choice; `guidance` identifies an authored practice such as a “Terrane style” recommendation. Status and lifecycle remain structured fields; an admonition cannot change them. Every renderer supplies a textual label for the kind even when it also uses colour, an icon, or distinctive placement.
 
 ### 11.10 Terms
 
@@ -822,7 +927,7 @@ Kinds are `note`, `important`, `warning`, `implementation`, `experimental`, and 
     call marker.
 ```
 
-Term IDs are globally unique and share the reference registry.
+Term IDs are globally unique and share the documentation-set registry.
 
 ### 11.11 Entity indexes
 
@@ -854,6 +959,36 @@ see-also:
 
 `label: null` uses the target's title. The processor validates every target after profile selection.
 
+
+### 11.13 Images
+
+```yaml
+- type: image
+  id: native-pipeline
+  asset: compiler-pipeline.svg
+  alt: >-
+    Terrane source passes through checking, Rust lowering, Cargo, and rustc
+    before becoming a native executable.
+  decorative: false
+  caption: >-
+    The visible path from Terrane source to a native program.
+```
+
+`asset` is relative to the source root's `assets/` directory. `id` and `caption` may be `null`; `caption` is Markdown inline content. A non-decorative image requires non-empty plain-text `alt`. A decorative image requires `alt: null` and has no semantic information that is absent from adjacent prose. The processor validates that the asset exists, remains inside the configured asset root, and has a permitted media type. Renderers preserve the distinction among alternative text, visible caption, and surrounding prose.
+
+### 11.14 Exercises
+
+```yaml
+- type: exercise
+  id: change-the-greeting
+  title: Change the greeting
+  markdown: |-
+    Change the greeting so that it prints your name or the name of a project.
+    Check the file before running it.
+```
+
+`id` is required and unique within the page. `title` may be `null`; `markdown` is the complete reader-facing prompt and may contain fenced illustrative code. Exercise numbering follows depth-first authored block order and is not part of the stable ID or title. Solutions and generated answer collections are deferred until the manual contains authored solutions whose requirements can determine their schema.
+
 ## 12. Markdown cross-references
 
 Markdown fields use one minimal custom inline syntax:
@@ -872,9 +1007,10 @@ The default label is:
 - the page title for a page;
 - the canonical code-styled ID or configured short label for a rule;
 - the defined term name for a term;
-- the block title for a local example or section.
+- the authored title for a local section, example, exercise, image, or admonition;
+- the local ID when an addressable unit has no authored title.
 
-Unresolved targets, ambiguous redirects, filtered required targets, and references to non-public local IDs are errors. Normal Markdown links must not point to another reference YAML source file.
+Unresolved targets, ambiguous redirects, filtered required targets, and references to non-public local IDs are errors. Normal Markdown links must not point to a manual YAML source file; authors use stable `[[...]]` identities rather than source paths.
 
 ## 13. Provenance
 
@@ -959,6 +1095,83 @@ provenance:
 ```
 
 Language pages can still be updated with compiler assistance: the processor can validate grammar, examples, diagnostics, and conformance links. The compiler does not own their explanatory rule text merely because it implements those rules.
+
+### 14.1 Tutorial chapters and appendices
+
+A tutorial chapter uses the same envelope and documentation blocks while remaining independent of compiler-owned surface data:
+
+```yaml
+format: 1
+id: book.first-taste
+kind: chapter
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: A First Taste of Terrane
+  title-style: text
+  summary: >-
+    Builds and runs a first Terrane program and introduces the compiler
+    development loop.
+  tags:
+    - introduction
+    - compiler
+  blocks:
+    - type: markdown
+      markdown: |-
+        This chapter takes the shortest route through building, checking, and
+        running a complete Terrane program.
+  sections:
+    - id: first-program
+      title: Your first program
+      blocks:
+        - type: markdown
+          markdown: |-
+            Create a file named `hello.trn` with this source:
+        - type: example
+          id: hello
+          title: Hello from Terrane
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace hello
+
+            function main;
+              print; 'Hello from Terrane!'
+          files: null
+          entry: null
+          annotations: []
+          response:
+            kind: stdout
+            language: text
+            display: shown
+            content: |-
+              Hello from Terrane!
+          diagnostic: null
+          markdown: null
+      sections: []
+  see-also:
+    - id: lang.functions.declarations
+      label: Function declarations and references
+
+provenance:
+  specification: []
+  conformance: []
+  compiler: null
+```
+
+`chapter` and `appendix` records use authored order and numbering from `manual.yaml`. A book's unnumbered front or back matter uses `topic` records. Page-level `documentation.blocks` hold the opening prose before the first titled section; the section tree then preserves the chapter's heading hierarchy. Book prose is explanatory rather than normative unless it contains a structured `rule` block. Tutorial wording may introduce an approachable partial model and link to a more complete reference contract, but executable examples still describe their verification status honestly. When a publication imports another, its records can link directly to the imported publication's pages, sections, and blocks through the shared global ID registry.
 
 ## 15. Complete entity example
 
@@ -1092,19 +1305,25 @@ IDs and case names in this example illustrate the format and become binding only
 
 ## 16. Manual navigation
 
-`manual.yaml` defines authored navigation separately from entity relationships:
+`manual.yaml` defines publication behavior, dependencies, and authored navigation separately from entity relationships:
 
 ```yaml
 format: 1
+publication:
+  id: reference
+  kind: reference
+imports: []
 title: Terrane Reference
 landing: manual.introduction
 navigation:
   - page: manual.introduction
   - group: Language
+    numbering: none
     children:
       - page: lang.lexical-structure
       - page: lang.functions.arguments
   - group: Core API
+    numbering: none
     children:
       - page: api.core.output
       - page: api.core.types.string
@@ -1118,15 +1337,51 @@ navigation:
       sort: symbol
 ```
 
+Publication IDs use the stable-ID segment syntax from §6. `publication.kind` is `reference` or `book`. A configured documentation set maps publication IDs to source roots and output bases; records and manifests never contain host paths or deployment URLs. `imports` names other publications whose included IDs may be referenced. Imports are acyclic, do not merge the imported publication's navigation into the importing publication, and do not republish imported pages. The processor resolves a cross-publication link using the imported publication's configured output base.
+
+For compatibility with reference roots authored before publications were named, omission of `publication` means `{ id: reference, kind: reference }` and omission of `imports` means an empty sequence. New manifests write both fields explicitly.
+
+A book imports the reference registry and uses navigation groups to derive visible chapter and appendix labels:
+
+```yaml
+format: 1
+publication:
+  id: tutorial
+  kind: book
+imports:
+  - reference
+title: The Terrane Book
+landing: book.preface
+navigation:
+  - group: Preface
+    numbering: none
+    children:
+      - page: book.preface
+  - group: Chapters
+    numbering: decimal
+    children:
+      - page: book.first-taste
+      - page: book.values-and-names
+  - group: Appendices
+    numbering: upper-alpha
+    children:
+      - page: book.appendix.syntax-map
+```
+
 Rules:
 
-- A `page` item references exactly one record.
+- A `page` item references exactly one record owned by the current publication.
 - A `group` is a label and does not create a page.
-- A `generated` item declares a deterministic query.
-- Every published non-member page must be reachable once from navigation unless marked as intentionally index-only by the format.
+- Group `numbering` is `none`, `decimal`, or `upper-alpha`; omission means `none`. Numbering applies in authored order to the group's direct page children and restarts in each numbered group.
+- In a `book` publication, a decimal-numbered group's direct pages are `chapter` records and an `upper-alpha` group's direct pages are `appendix` records. Unnumbered front and back matter uses `topic` records.
+- A `reference` publication does not own `chapter` or `appendix` records.
+- Generated numbers are presentation, not identity, and are not included in record titles or links.
+- A `generated` item declares a deterministic query over the current publication.
+- Every published non-member page must be reachable once from its publication's navigation unless marked as intentionally index-only by the format.
 - Member pages may be reached through generated owner indexes without all appearing in the global sidebar.
 - Navigation order does not imply namespace, ownership, inheritance, or lifecycle.
-- Previous/next links follow the expanded navigation order.
+- Previous/next links follow the current publication's expanded navigation order.
+- Duplicate global IDs across the transitive publication import graph are errors.
 
 ## 17. Compiler snapshot
 
@@ -1285,16 +1540,17 @@ Every item carries stable IDs and field paths. A machine-readable report uses th
 
 The manual processor:
 
-1. parses all YAML while retaining source spans and comments;
-2. validates local record schemas;
-3. builds the global ID and redirect registry;
-4. resolves owners, namespaces, inheritance, interfaces, traits, and type references;
-5. joins lifecycle, documentation, provenance, and selected compiler/profile facts;
-6. validates Markdown references and local IDs;
-7. verifies examples when explicitly requested by the build workflow;
-8. expands navigation and entity-index queries;
-9. creates the assembled reference IR;
-10. renders HTML, search data, indexes, print views, and optional machine-readable output.
+1. loads the selected publication and its transitive configured imports;
+2. parses all YAML while retaining source spans and comments;
+3. validates local record schemas, assets, example files, and source annotations;
+4. builds the documentation-set publication, global ID, and redirect registries;
+5. resolves owners, namespaces, inheritance, interfaces, traits, type references, and cross-publication links;
+6. joins lifecycle, documentation, provenance, and selected compiler/profile facts;
+7. validates Markdown references and local IDs;
+8. verifies examples when explicitly requested by the build workflow;
+9. expands navigation and entity-index queries;
+10. creates the assembled manual IR;
+11. renders HTML, Markdown, search data, indexes, print views, and optional machine-readable output.
 
 ### 19.1 Generated entity page shape
 
@@ -1328,7 +1584,7 @@ related references
 provenance/source links
 ```
 
-For a conceptual page, the renderer uses the authored sections directly and adds navigation, lifecycle, provenance, and indexes.
+For a conceptual page, chapter, or appendix, the renderer uses the authored section tree directly and adds the navigation, lifecycle, provenance, and indexes appropriate to its publication. A book renderer derives visible chapter or appendix numbering from navigation and does not make that numbering part of the page title or stable ID.
 
 ### 19.2 Generated outputs
 
@@ -1344,10 +1600,14 @@ A default build provides:
 - namespace indexes;
 - glossary and rule indexes;
 - diagnostic index;
+- semantically labelled tables, figures, callouts, exercises, examples, responses, and source annotations;
 - search by ID, title, symbol, alias, term, heading, summary, tag, and diagnostic code;
 - a printable no-JavaScript reading surface;
+- generated Markdown with resolved links and meaningful linear fallbacks for specialized blocks;
 - machine-readable assembled IR for editors and other tools;
 - a reconciliation and example-evidence report.
+
+HTML, Markdown, and print renderers consume the same profile-selected assembled content. They may differ in navigation chrome, disclosure controls, annotation placement, and other medium-specific presentation, but cannot silently omit a semantic block because the target lacks its richer display. Generated Markdown is a publication artifact, not canonical source; authors edit the YAML records.
 
 Search ranks exact canonical symbols and aliases above prose matches. Excluded profiles do not leak planned or removed material into results.
 
@@ -1390,14 +1650,14 @@ Diagnostics use stable `R` codes and include record path, YAML path, line, and c
 | `R0400`–`R0499` | Markdown links, sections, and navigation |
 | `R0500`–`R0599` | lifecycle and publication profiles |
 | `R0600`–`R0699` | compiler reconciliation and surface drift |
-| `R0700`–`R0799` | examples and conformance evidence |
-| `R0800`–`R0899` | assets, security, and rendering safety |
+| `R0700`–`R0799` | examples, example files, annotations, exercises, and conformance evidence |
+| `R0800`–`R0899` | assets, accessibility, security, and rendering safety |
 
 A public build fails on:
 
 - invalid YAML or unknown fields;
-- duplicate IDs, symbols, semantic identities, or local IDs;
-- unresolved owners, namespaces, type references, links, or redirects;
+- duplicate publication IDs, import cycles, duplicate global IDs across an import graph, or duplicate local section, block, exercise, figure, or source-annotation IDs;
+- unresolved publication imports, owners, namespaces, type references, links, or redirects;
 - relationship targets of the wrong kind;
 - object-model cycles forbidden by Terrane;
 - current/deprecated lifecycle inconsistent with the selected snapshot;
@@ -1405,30 +1665,32 @@ A public build fails on:
 - `documentation.status` other than `complete` for included public pages;
 - stale callable documentation keys;
 - missing required callable descriptions under a strict profile;
+- invalid, out-of-bounds, or missing-file source annotations;
 - invalid or failed required example evidence;
-- navigation duplication or unreachable required pages;
-- raw HTML, unsafe URLs, missing assets, or source-root escapes.
+- unsafe or duplicate multi-file example paths;
+- navigation duplication, incompatible publication and record kinds, incompatible numbering, or unreachable required pages;
+- raw HTML, unsafe URLs, missing assets, missing required image alternatives, or source-root escapes.
 
 A strict quality profile additionally requires:
 
-- specification or package-contract provenance;
+- specification or package-contract provenance where the record states a normative public contract;
 - conformance evidence for implemented observable contracts where applicable;
 - checked accepted and plausible rejected examples for materially documented language boundaries;
 - a summary within the configured search length;
-- explicit local IDs for linkable sections;
+- explicit local IDs for linkable sections and semantic display units;
 - deprecation migration guidance;
 - no hand-maintained member list duplicating assembled IR queries.
 
 ## 22. Determinism
 
-An assembled reference build records:
+An assembled manual build records:
 
 - record-format version;
-- compiler snapshot format and compiler version;
+- compiler snapshot format and compiler version when a snapshot participates;
 - processor version;
-- selected release and publication profile;
+- selected release, publication, and publication profile;
 - sorted input paths and content hashes;
-- lifecycle rename map hash;
+- lifecycle rename map hash when present;
 - example target/profile selections;
 - assembled IR hash.
 
@@ -1440,40 +1702,46 @@ Generated lists sort by explicit navigation order or Unicode code-point order ov
 
 The processor:
 
-- never executes YAML tags, Markdown, or attribute values;
+- never executes YAML tags, Markdown, or renderer attributes;
 - rejects raw HTML and unsafe URL schemes;
 - never fetches remote content during assembly;
 - sanitizes active assets according to explicit policy;
 - escapes all authored content at the renderer boundary;
 - runs verified examples only in an isolated temporary package without network access and under resource limits;
-- never follows a source or asset path outside the configured root.
+- never follows a record, example-file, or asset path outside its configured publication root.
 
-Renderers preserve semantic heading order, visible keyboard focus, table headers, code-language labels, and textual admonition labels. Images require alt text unless marked decorative. Colour is never the only status or warning signal. Generated relationship diagrams have equivalent text lists.
+Renderers preserve semantic heading order, visible keyboard focus, table headers, code-language labels, textual callout labels, figure captions, image alternatives, exercise boundaries, and source-annotation locations. Non-decorative images require alt text; decorative images are explicitly marked and use no alternative text. Colour, position, interactivity, and iconography are never the only means of conveying status, sequence, or warning. Generated relationship diagrams have equivalent text lists.
 
 ## 24. Authoring guidance
 
-Reference authors should:
+Manual authors should:
 
 1. Put compiler-known facts in `surface`, never in duplicated Markdown tables.
-2. Put explanations and consequences in Markdown documentation fields.
-3. Attach parameter and throwable prose through stable local IDs, not source list positions.
-4. In public language and entity records, state observable Terrane behaviour rather than Rust implementation details.
-5. In internals records, document durable current responsibilities, boundaries, invariants, formats, and implementation evidence without presenting them as public language APIs.
-6. Use an `implementation` admonition in a public record when lowering details are genuinely useful but do not warrant their own internals topic.
-7. Give each semantic or internal contract one authoritative home and link to it elsewhere.
-8. Keep examples focused on one contract.
-9. Distinguish accepted, runnable, rejected, and illustrative examples honestly.
-10. Describe plausible negative boundaries, not only successful forms.
-11. Distinguish `none`, empty data, iteration end, cancellation, throwable failure, and panic according to Terrane semantics.
-12. Never describe planned behaviour as current merely because it exists in the design specification.
-13. Never mark a missing compiler entity removed without an explicit lifecycle decision.
-14. Avoid time-relative prose such as “currently” and “soon”; use lifecycle and release fields.
-15. Use generated indexes rather than copied member inventories.
-16. Keep entity pages useful when opened from search without duplicating their owner's general contract.
+2. Put continuous prose and explanations in Markdown fields; structure a unit when its identity, validation, accessibility, reuse, or semantic display role matters.
+3. Use the section tree for headings and stable destinations rather than embedding headings in Markdown.
+4. Give images meaningful alternatives or mark them decorative; do not repeat a caption mechanically as alt text.
+5. Use typed examples for source with a claimed check, build, run, rejection, response, project layout, or annotation contract.
+6. Use an admonition kind for rationale, guidance, warnings, and other semantic callouts rather than styling a blockquote to resemble one.
+7. Use one exercise block per independently addressable reader activity.
+8. Attach parameter and throwable prose through stable local IDs, not source list positions.
+9. In public language and entity records, state observable Terrane behaviour rather than Rust implementation details.
+10. In internals records, document durable current responsibilities, boundaries, invariants, formats, and implementation evidence without presenting them as public language APIs.
+11. Use an `implementation` admonition in a public record when lowering details are genuinely useful but do not warrant their own internals topic.
+12. Give each semantic or internal contract one authoritative home and link to it elsewhere.
+13. Keep examples focused on one contract.
+14. Distinguish accepted, runnable, rejected, and illustrative examples honestly.
+15. Describe plausible negative boundaries, not only successful forms.
+16. Distinguish `none`, empty data, iteration end, cancellation, throwable failure, and panic according to Terrane semantics.
+17. Never describe planned behaviour as current merely because it exists in the design specification.
+18. Never mark a missing compiler entity removed without an explicit lifecycle decision.
+19. Avoid time-relative prose such as “currently” and “soon”; use lifecycle and release fields.
+20. Use generated indexes rather than copied member inventories.
+21. Keep entity pages useful when opened from search without duplicating their owner's general contract.
+22. Keep tutorial progression selective: link to the reference for exhaustive detail rather than turning every chapter into an API inventory.
 
 ## 25. Format evolution
 
-`format` versions the YAML reference-record syntax, not the Terrane language. A processor supports only declared versions and fails clearly on newer ones.
+`format` versions the YAML manual-record syntax, not the Terrane language. A processor supports only declared versions and fails clearly on newer ones.
 
 A backwards-compatible addition may introduce an optional field only if older processors already reject it rather than silently misrender it. Removing a field or changing its meaning requires a new integer version and a mechanical migration path.
 
@@ -1484,11 +1752,12 @@ Deferred until concrete need justifies them:
 - localization and translated-record identity;
 - reusable prose includes;
 - prose-level target and version conditions;
-- shared multi-file example fixtures;
+- shared example fixtures across otherwise independent records;
+- structured exercise solutions and generated answer collections;
 - user-contributed notes;
 - interactive playground execution;
 - arbitrary renderer components;
 - automatic ingestion of undocumented third-party prose;
 - lifecycle decisions inferred from compiler absence.
 
-The durable rule is: **the compiler owns what the surface is, humans own what it means and how its lifecycle changes, YAML carries the joined reference model, and Markdown carries prose inside that model.**
+The durable rule is: **the compiler owns what the surface is, humans own what it means, how it is taught, and how its lifecycle changes, YAML carries the joined manual model, Markdown carries prose inside that model, and renderers own presentation.**
