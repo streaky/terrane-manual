@@ -20,13 +20,16 @@ documentation:
     - title: Collection protocol
       body: >-
         `docs/measure-test-times.py` creates a temporary file and exports its path as
-        `TERRANE_TEST_TIMING_FILE` to the serial Cargo test process. The conformance driver tracks
-        each manifest's setup, checking, and execution work, then appends a versioned tab-separated
-        record containing the relative case path, status, and elapsed seconds. Dependency-free
-        accepted cases share one generated-crate build, which receives its own synthetic timing
-        record instead of being estimated per case. A deferred case that never reaches that build
-        is recorded as ignored rather than falsely failed; a drop guard still records a real active
-        case failure. Normal test runs without the environment variable perform no timing-file I/O.
+        `TERRANE_TEST_TIMING_FILE` to a Cargo test process whose outer libtest execution is serial.
+        Within the corpus test, the driver first prepares one representative projected-dependency
+        package to warm shared compiler and Cargo state, then measures concurrent per-manifest
+        setup, checking, and lowering work. Each completed case appends a locked, versioned
+        tab-separated record containing its relative path, status, and active elapsed seconds;
+        scoreboard identity does not depend on completion order. Dependency-free accepted cases
+        share one generated-crate build, which receives its own synthetic timing record instead of
+        being estimated per case. A deferred case that never reaches that build is recorded as
+        ignored rather than falsely failed; a drop guard still records a real active case failure.
+        Normal test runs without the environment variable perform no timing-file I/O.
     - title: Scoreboard identity
       body: >-
         Nested records use the `conformance cases [terrane_compiler]` target and the manifest's
@@ -39,13 +42,16 @@ documentation:
     - title: Generated-crate isolation
       body: >-
         Every sorted accepted manifest receives its own deterministic binary name and source path.
-        Dependency-free binaries are declared in one generated Cargo manifest and built together,
-        allowing Cargo to schedule their independent rustc and linker work in parallel. Cases with
-        projected Rust dependencies retain separate manifests and builds because their dependency
+        After the warm-up case, compiler-only preparation uses a bounded worker pool and returns
+        results to corpus order before mutating the shared generated workspace. Dependency-free
+        binaries are then declared in one generated Cargo manifest and built together, allowing
+        Cargo to schedule their independent rustc and linker work in parallel. Cases with projected
+        Rust dependencies retain separate serialized manifests and builds because their dependency
         graphs may conflict. The driver removes fixture-specific Cargo configuration before the
         shared dependency-free build, while all builds retain one Cargo target directory for
-        dependency reuse. The driver executes each exact case-specific artifact; no case can reuse
-        another case's executable when Cargo decides that a target is fresh. Package fixtures are
+        dependency reuse.
+        The driver executes each exact case-specific artifact; no case can reuse another case's
+        executable when Cargo decides that a target is fresh. Package fixtures are
         staged outside the corpus. When a package carries a reviewed `terrane-projection.lock`, the
         driver compares the staged post-compilation history with the source fixture after excluding
         only machine-derived cache identity and content hash fields. A format migration or any
@@ -53,12 +59,13 @@ documentation:
         fixture.
     - title: Focused execution and cache locality
       body: >-
-        Set `TERRANE_CONFORMANCE_FILTER` to one case-name or to comma-separated
-        corpus-path fragments when running
-        `every_manifest_drives_a_conformance_case`. Filtering happens before
-        staging, so only matching manifests are compiled and executed while the
-        harness retains its shared generated-Cargo target. An empty match fails
-        rather than reporting a vacuous pass.
+        Set `TERRANE_CONFORMANCE_FILTER` to one case-name or to comma-separated corpus-path
+        fragments when running `every_manifest_drives_a_conformance_case`. Filtering happens before
+        warm-up selection and staging, so only matching manifests are compiled and executed while
+        the harness retains its shared generated-Cargo target. An empty match fails rather than
+        reporting a vacuous pass. The preparation pool defaults to available parallelism capped at
+        eight workers; set `TERRANE_CONFORMANCE_JOBS=1..8` to lower the bound for a constrained
+        machine or a focused diagnostic run.
 
         Do not invoke `terrane run` directly inside a tracked conformance case
         directory for focused checking. The ordinary CLI correctly creates its
