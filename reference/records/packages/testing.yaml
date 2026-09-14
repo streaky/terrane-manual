@@ -58,16 +58,18 @@ documentation:
             - native_test_timeout_terminates_the_isolated_process
             - end_to_end_tests_receive_the_built_application_artifact
           markdown: |-
-            The compiler lowers one native dispatch registry per populated tier.
-            The CLI runs each selected case in a fresh working directory and
-            process with a deterministic seed, controlled environment and
-            arguments, bounded stdout/stderr, and an enforced typed deadline.
-            A crash, exit, or timeout is confined to that case. End-to-end cases
-            receive the actual built application as `string|none` through
-            `application-artifact`. Capability-gated `/core/testing/process`
-            provides clonable value-style `process-fixture` builders whose
-            independent snapshots carry arguments, environment, standard input,
-            and deadline into `run-process`.
+            The compiler performs semantic discovery before selection, then lowers one
+            native dispatch registry only for each tier containing a selected case.
+            `--list` and an empty selection do not lower or build runners. The CLI runs
+            each selected case in a fresh working directory and process with a
+            deterministic seed, controlled environment and arguments, incrementally
+            bounded stdout/stderr, and an enforced typed deadline. A crash, exit, or
+            timeout is confined to that case. End-to-end cases receive the actual built
+            application as `string|none` through `application-artifact`.
+            Capability-gated `/core/testing/process` provides clonable value-style
+            `process-fixture` builders whose independent snapshots carry arguments,
+            environment, standard input, and deadline into `run-process`. Results expose
+            independent stdout and stderr truncation flags.
 
     - id: framework
       title: Assertions and reports
@@ -86,15 +88,16 @@ documentation:
             accessors, source-framed structured causes, and bounded useful value
             rendering. `fail-values` lets custom assertions keep comparisons in
             their concrete types while rendering operands through `test-value`.
-            `--list`, repeatable `--tier`, and one mutually exclusive
-            substring `--filter`, exact `--exact`, `--glob`, or `--regex` selector
-            do not change compilation; `--jobs`, `--timeout`, repeatable
-            `--argument`, `--fail-fast`, and `--show-output` control execution.
-            Bare timeout values are seconds; `ms` and `s` suffixes are accepted.
-            `--report <path>` writes schema `1.1.0` JSON with run metadata,
-            stable case identities, structured outcomes, causes, assertion details,
-            source spans, durations, and byte-exact captured output plus truncation
-            flags.
+            `--list`, repeatable `--tier`, and one mutually exclusive substring
+            `--filter`, exact `--exact`, `--glob`, or `--regex` selector first perform
+            semantic discovery; only tiers with selected cases are lowered, built, and
+            executed. `--jobs`, `--timeout`, repeatable `--argument`, `--fail-fast`, and
+            `--show-output` control execution. Bare timeout values are seconds; `ms` and
+            `s` suffixes are accepted. `--report <path>` writes schema `1.2.0` JSON with
+            effective tiers, numeric timeout milliseconds, per-tier compilation status
+            and diagnostics, stable case identities, structured outcomes and causes,
+            source spans, precise durations, and byte-exact incrementally bounded output
+            with independent truncation flags.
   see-also:
     - tool.packages.command-line
 

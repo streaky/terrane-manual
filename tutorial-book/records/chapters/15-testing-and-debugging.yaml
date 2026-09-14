@@ -326,7 +326,7 @@ documentation:
           markdown: |-
             A case runs in a fresh process and working directory. `/core/testing` exposes the stable identity, selected tier, deterministic seed, and temporary directory supplied to that process. Use those values instead of depending on the developer's current directory, inherited shell environment, or a random seed chosen from wall time.
 
-            Test compilation also selects a controlled monotonic clock. `advance-time` moves that clock explicitly and wakes pending test-time waits. It never moves backward, and the production clock has no test-control entrypoint.
+            Test compilation also selects a controlled monotonic clock. Awaiting a test-clock sleep advances immediately to its target; no wall-clock wait or pending test waker is involved. `advance-time` remains the checked explicit operation for moving the clock without sleeping, never moves backward, and has no production entrypoint.
 
         - type: example
           id: deterministic-context-and-time
@@ -557,7 +557,7 @@ documentation:
             actual: in progress
             expected: done
             at tests/unit/status.trn:7:3
-            0 passed; 0 skipped; 1 failed
+            0 passed; 0 skipped; 1 failed; 0 timed out; 0 crashed; 0 infrastructure failed
           files: null
           entry: null
           annotations: []
@@ -569,13 +569,13 @@ documentation:
 
         - type: markdown
           markdown: |-
-            CI can request schema `1.1.0` JSON:
+            CI can request schema `1.2.0` JSON:
 
             ```console
             terrane test --report build/test-report.json writing-plan
             ```
 
-            Captured streams are arrays of byte values, not lossy text. Separate truncation flags say whether the bounded capture omitted later bytes. Durations are decimal nanosecond strings so a consumer does not lose integer precision.
+            Captured streams are arrays of byte values, not lossy text. Separate truncation flags say whether incremental bounded capture omitted later bytes. Case durations remain decimal nanosecond strings for precision; the configured timeout is numeric milliseconds. Reports name effective tiers and retain per-tier compilation status and diagnostics.
 
         - type: example
           id: machine-report-shape
@@ -586,17 +586,34 @@ documentation:
           timeout-ms: null
           source: |-
             {
-              "schema_version": "1.1.0",
+              "schema_version": "1.2.0",
               "run": {
                 "status": "completed",
                 "package": "writing-plan",
                 "filter": null,
-                "tiers": [],
+                "tiers": ["unit", "integration", "end-to-end"],
                 "jobs": 4,
-                "timeout_milliseconds": "30000",
+                "timeout_milliseconds": 30000,
                 "fail_fast": false,
                 "show_output": false
               },
+              "compilation": [
+                {
+                  "tier": "unit",
+                  "status": "compiled",
+                  "diagnostics": []
+                },
+                {
+                  "tier": "integration",
+                  "status": "compiled",
+                  "diagnostics": []
+                },
+                {
+                  "tier": "end-to-end",
+                  "status": "compiled",
+                  "diagnostics": []
+                }
+              ],
               "cases": [
                 {
                   "identity": "/writing-plan::test-completion-label",
@@ -855,9 +872,9 @@ documentation:
           markdown: |-
             Terrane tests are ordinary typed functions discovered from package test roots. Unit, integration, and end-to-end tiers preserve different boundaries: same-namespace implementation, public consumer surface, and built process behavior.
 
-            `/core/testing` provides assertions, explicit skips and failures, deterministic context, and controlled monotonic time. Capability-gated `/core/testing/process` provides value-style process fixtures. The CLI compiles one native registry per populated tier and runs each selected case in an isolated process with a fresh working directory, bounded streams, and an external timeout.
+            `/core/testing` provides assertions, explicit skips and failures, deterministic context, and controlled monotonic time. Awaited test-clock sleeps advance immediately to their target, while `advance-time` permits explicit checked movement. Capability-gated `/core/testing/process` provides value-style process fixtures with incrementally bounded stream capture and independent truncation flags. The CLI performs semantic discovery first, compiles one native registry only for each selected populated tier, and runs each selected case in an isolated process with a fresh working directory and external timeout.
 
-            Filtering and tier selection narrow execution without creating a different compiled suite. Human output supports local diagnosis; schema `1.1.0` JSON preserves run metadata, deterministic identities, outcomes, source spans, structured causes, precise durations, and byte-exact captures for automation.
+            Filtering and tier selection narrow lowering, native compilation, and execution without hiding semantic errors. Human output counts timeout, crash, and infrastructure outcomes separately; schema `1.2.0` JSON preserves effective run metadata, per-tier compilation results, deterministic identities, outcomes, source spans, structured causes, precise durations, and byte-exact captures for automation.
 
             Debug from the Terrane boundary inward. Reproduce one identity, read its source frame and streams, reduce the source-level question, inspect the relevant tier boundary, and descend into generated Rust only when the evidence points there. A good test makes the application contract clearer; a good debugging change fixes the cause without making that contract less true.
       sections: []
