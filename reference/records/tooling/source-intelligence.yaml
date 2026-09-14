@@ -105,10 +105,10 @@ documentation:
             analysis fails.
             `locate`, `definition`, `references`, `implementations`, `find`, and
             `generated-rust` consume the same compiler snapshot through either stdio or
-            one-shot query transport. Implementation queries on an interface or its
-            method return the implementing descriptors or methods; a query from a
-            concrete method use follows the resolved method's owning interface contract
-            and returns every method implementing that contract.
+            one-shot query transport. Interface-method references contain only sites
+            resolved directly to that interface identity; concrete-receiver calls belong
+            to the concrete override. Implementation queries connect the interface
+            contract to those implementing methods, including from a concrete method use.
 
             Structural selectors may constrain kind, child field, containing span,
             source text, token kind, or canonical symbol/descriptor identity. With
@@ -134,11 +134,13 @@ documentation:
             available semantic reanalysis before returning replacements, affected
             hashes, preview diagnostics, and a proposal ID. `propose-rename` treats an
             interface method and every implementing override as one canonical contract
-            family regardless of which member initiated the request. It rejects
-            identifiers, capture, or candidates with parse or semantic diagnostics and
-            does not retain rejected proposals. `apply-edits` refuses every proposal
-            carrying preview diagnostics, preflights every disk hash before writing, and
-            uses same-directory temporary files; stale bytes are refused. A partial host
+            family regardless of which member initiated the request. It rejects invalid
+            identifiers (`invalid-name`), capture (`rename-capture`), or candidates with
+            parse or semantic diagnostics (`invalid-rename`) and does not retain rejected
+            proposals. `invalid-rename` includes the first preview diagnostic explaining
+            the broken contract. `apply-edits` rejects diagnostic-bearing proposals with
+            `invalid-proposal`, preflights every disk hash before writing, and uses
+            same-directory temporary files; stale bytes are refused. A partial host
             failure returns a structured report naming committed, uncommitted, and
             recovery files rather than continuing silently.
 
@@ -175,9 +177,11 @@ documentation:
             compile generated Rust. The custom `terrane/generatedRust` request lazily
             opens a short-lived generated snapshot from the exact current package and
             editor overlays, exposes exact-build source associations, and closes it
-            before responding. Rename returns versioned workspace edits. UTF-8, UTF-16,
-            or UTF-32 LSP positions are negotiated and converted only at the protocol
-            boundary; compiler spans remain canonical UTF-8 byte offsets. Token
+            before responding. Rename returns versioned workspace edits and maps tooling
+            errors to JSON-RPC invalid params (`-32602`) while retaining the tooling code
+            and explanation. UTF-8, UTF-16, or UTF-32 LSP positions are negotiated and
+            converted only at the protocol boundary; compiler spans remain canonical
+            UTF-8 byte offsets. Token
             highlighting retains a direct lossless-lexer encoding pass and does not
             define syntax or semantic meaning.
 
