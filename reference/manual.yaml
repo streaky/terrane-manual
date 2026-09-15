@@ -41,6 +41,8 @@ navigation:
       - source: records/internals/reference-provenance.yaml
       - source: records/internals/conformance-timing.yaml
       - source: records/internals/projection-resolution.yaml
+      - source: records/internals/projection-namespace-overlays.yaml
+      - source: records/internals/integration-adapters.yaml
       - source: records/internals/observability-runtime.yaml
       - source: records/internals/build-toolchain-profiles.yaml
       - source: records/internals/semantic-return-validation.yaml

@@ -336,6 +336,8 @@ documentation:
             `projection_history_migrates_provenance_and_detects_replay_drift`.
   see-also:
     - tool.packages.rust-dependencies
+    - internals.projection.namespace-overlays
+    - internals.integration-adapters
 
 provenance:
   specification:

@@ -1,0 +1,174 @@
+format: 1
+id: internals.integration-adapters
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Temporary integration adapters
+  title-style: text
+  summary: >-
+    Defines the direct-first boundary, centralized gap ledger, feature isolation,
+    and removal lifecycle for temporary Rust ecosystem bridges.
+  tags:
+    - compiler-internals
+    - dependencies
+    - integration-adapters
+    - projection
+    - maintenance
+  sections:
+    - id: direct-first-boundary
+      title: Direct-first additive boundary
+      blocks:
+        - type: rule
+          id: rule.internals.adapters.preserve-upstream-surface
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            A maintained integration adapter supplements a directly projected
+            upstream dependency; it does not replace that dependency with a
+            second API. Applications declare both packages and use every upstream
+            type and operation that projection already represents. An adapter
+            signature accepting or returning such a value preserves the projected
+            upstream identity instead of introducing an adapter-owned wrapper.
+
+            Adapter operations retain upstream terminology, semantics, failure,
+            lifetime, and ownership behavior. They bridge only a concrete shape
+            that generic projection cannot currently expose. Application routing,
+            schema, policy, workflow, and domain types remain in Terrane source.
+
+    - id: registry
+      title: Central gap registry
+      blocks:
+        - type: rule
+          id: rule.internals.adapters.registry-is-accounting-only
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            `terrane_integration_adapters::registry` is the single accounting
+            source for shipped and known unbridged ecosystem gaps. Every entry has
+            a stable adapter ID and tracking key, affected dependency and version
+            range, exact unsupported shape, current status, and an objective
+            generic removal criterion. A shipped status additionally identifies
+            its adapter package version and feature.
+
+            The registry is Rust-side data beside the implementations it
+            describes. It is hidden from rustdoc-driven Terrane projection and
+            contributes no application names. Compiler projection, semantics, and
+            lowering never query it. Registry tests require unique IDs and
+            tracking keys and complete package/feature information for shipped
+            entries.
+
+    - id: feature-isolation
+      title: Package and feature isolation
+      blocks:
+        - type: rule
+          id: rule.internals.adapters.features-isolate-ecosystems
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Temporary bridges ship from the single publishable
+            `terrane-integration-adapters` package. Each dependency family has an
+            independently selected Cargo feature, so declaring the package does
+            not compile unrelated frameworks or database clients. Adapter modules
+            remain ordinary projected Rust dependency modules; namespace overlays
+            may present them beneath the upstream package without changing their
+            Rust owner.
+
+            Do not create one adapter crate per dependency or application, and do
+            not add package-name branches to generic compiler code. A bridge that
+            cannot fit this additive, feature-gated shape remains an explicitly
+            unbridged registry entry until a general compiler capability or an
+            appropriately narrow adapter exists.
+
+    - id: current-gap-groups
+      title: Current adapter gap groups
+      blocks:
+        - type: description
+          id: description.internals.adapters.current-gap-groups
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            The `sqlx-sqlite` feature currently bridges trait-provided connection
+            construction and close, lifetime-bearing query execution and binding,
+            and generic bytes-row extraction. It preserves the directly projected
+            upstream `SqliteConnection`; application SQL and schema remain in
+            Terrane.
+
+            The `axum-08` feature currently bridges Axum's closed response alias,
+            nested WebSocket receive and message-constructor shapes, Tokio
+            listener binding, and the `axum::serve` `IntoFuture` boundary. Axum
+            routers, routes, handlers, upgrade callbacks, and projectable
+            WebSocket operations remain direct upstream calls. The registry keeps
+            these limitations as separate records even when one feature supplies
+            several related operations.
+
+    - id: retirement
+      title: Independent removal lifecycle
+      blocks:
+        - type: rule
+          id: rule.internals.adapters.retire-each-gap-independently
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Record a stable gap before or with its bridge. Implement the eventual
+            capability in generic projection, semantics, or lowering and prove it
+            with non-framework-specific regression coverage satisfying the entry's
+            removal criterion. Never preserve an adapter merely as a compatibility
+            path once the direct operation is available.
+
+            A newly projected upstream item colliding with its overlaid adapter
+            name makes the obsolete bridge visible instead of choosing one
+            implementation silently. Remove that operation and its registry entry;
+            existing application `/deps/<crate>` imports remain unchanged. Remove
+            the adapter module, Cargo feature, and dependency family after its
+            final gap closes.
+
+relationships:
+  see-also:
+    - internals.projection.namespace-overlays
+    - internals.projection.resolution
+    - tool.packages.rust-dependencies
+  supersedes: []
+  superseded-by: []
+  conflicts-with: []
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "23.8"
+  conformance:
+    - integration-adapter-sqlx-sqlite
+    - projected-axum-boundaries
+  compiler: null
+
+implementation:
+  compiler:
+    - crates/terrane-integration-adapters/Cargo.toml
+    - crates/terrane-integration-adapters/src/lib.rs
+    - crates/terrane-integration-adapters/src/registry.rs
+    - crates/terrane-integration-adapters/src/sqlx_sqlite.rs
+    - crates/terrane-integration-adapters/src/axum_08.rs

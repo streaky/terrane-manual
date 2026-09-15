@@ -473,27 +473,18 @@ documentation:
 
             Keep adapters ecosystem-shaped: preserve upstream terminology and
             semantics, and do not move application routing, schema, policy, or
-            workflow into Rust. The adapter package owns a central Rust-side
-            ledger at `terrane_integration_adapters::registry`. Each entry names
-            one gap, its tracking key, affected dependency versions, supplying
-            feature, exact limitation, and objective removal criterion. That
-            accounting module is not projected into Terrane application
-            namespaces, and generic projection and lowering never dispatch on
-            it or on dependency names.
+            workflow into Rust. The `sqlx-sqlite` feature bridges its currently
+            unavailable connection, query, and row-extraction shapes while
+            retaining the upstream `SqliteConnection`. The `axum-08` feature
+            bridges its currently unavailable response, WebSocket-message,
+            listener-binding, and server-await shapes while routers, routes,
+            handlers, and projectable WebSocket operations remain direct Axum
+            calls.
 
-            The `sqlx-sqlite` feature bridges trait-provided connection
-            operations, lifetime-bearing query execution, and generic row
-            extraction while retaining the upstream `SqliteConnection`. The
-            `axum-08` feature bridges Axum's closed response alias, nested
-            WebSocket receive and message-constructor shapes, Tokio listener
-            binding, and the `axum::serve` `IntoFuture` boundary. Projectable
-            routers, routes, handlers, and `WebSocket.send` remain direct Axum
-            operations.
-
-            When an upstream operation becomes projectable, remove the
-            colliding adapter item and its ledger entry. Existing
-            `/deps/<crate>` imports remain unchanged; remove an adapter feature
-            when its final gap closes.
+            The adapter-owned registry and independent removal lifecycle are
+            compiler-internal maintenance contracts. See
+            `internals.integration-adapters` and
+            `internals.projection.namespace-overlays` for those contracts.
 
         - type: example
           id: example.dependencies.adapter-namespace-overlay
@@ -572,11 +563,12 @@ documentation:
             metadata.
   see-also:
     - lang.functions.declarations
-
+    - internals.projection.namespace-overlays
+    - internals.integration-adapters
 provenance:
   specification:
     - document: language-spec
-      section: "29"
+      section: "23.8"
   conformance:
     - rust-dependency-deferred-surface
     - transitive-type-owner-must-be-declared-at-one-version
