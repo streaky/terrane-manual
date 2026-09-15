@@ -19,7 +19,8 @@ documentation:
   summary: >-
     Declares exact Rust crate dependencies, imports their admitted API through
     /deps namespaces, and explains projection identity, collection crossings,
-    transitive owners, caching, and explicit declines.
+    transitive owners, temporary adapter layering, caching, and explicit
+    declines.
   tags:
     - packages
     - dependencies
@@ -441,6 +442,107 @@ documentation:
             are declined; accepted values cross the boundary owned. Calls name
             the selected Rust type explicitly in generated Rust. Terrane does
             not expose Rust angle-bracket generic arguments in source.
+    - id: integration-adapters
+      title: Layering temporary integration adapters
+      blocks:
+        - type: rule
+          id: rule.dependencies.integration-adapter-layering
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            A maintained integration adapter supplements an upstream projected
+            dependency; it does not replace that dependency with a second API.
+            The application declares both packages. Adapter signatures preserve
+            representable upstream identities rather than wrapping them.
+
+            A directly declared provider may attach one feature-gated module
+            beneath another directly declared dependency with
+            `package.metadata.terrane.namespace-overlays`. Terrane then presents
+            the provider's items in the target `/deps/<crate>` namespace while
+            retaining every item's actual Rust path and dependency provenance.
+            Imports therefore combine upstream and temporary operations without
+            exposing the adapter package path.
+
+            The named provider feature must be enabled. Undeclared, self,
+            ambiguous, empty, overlapping, and colliding overlays are projection
+            errors; an adapter cannot silently shadow an upstream item. Overlay
+            declarations participate in projection cache identity.
+
+            Keep adapters ecosystem-shaped: preserve upstream terminology and
+            semantics, and do not move application routing, schema, policy, or
+            workflow into Rust. The adapter package owns a central Rust-side
+            ledger at `terrane_integration_adapters::registry`. Each entry names
+            one gap, its tracking key, affected dependency versions, supplying
+            feature, exact limitation, and objective removal criterion. That
+            accounting module is not projected into Terrane application
+            namespaces, and generic projection and lowering never dispatch on
+            it or on dependency names.
+
+            The `sqlx-sqlite` feature bridges trait-provided connection
+            operations, lifetime-bearing query execution, and generic row
+            extraction while retaining the upstream `SqliteConnection`. The
+            `axum-08` feature bridges Axum's closed response alias, nested
+            WebSocket receive and message-constructor shapes, Tokio listener
+            binding, and the `axum::serve` `IntoFuture` boundary. Projectable
+            routers, routes, handlers, and `WebSocket.send` remain direct Axum
+            operations.
+
+            When an upstream operation becomes projectable, remove the
+            colliding adapter item and its ledger entry. Existing
+            `/deps/<crate>` imports remain unchanged; remove an adapter feature
+            when its final gap closes.
+
+        - type: example
+          id: example.dependencies.adapter-namespace-overlay
+          status: accepted
+          caption: Attach an enabled adapter module to its upstream namespace
+          source:
+            language: toml
+            text: |-
+              [[package.metadata.terrane.namespace-overlays]]
+              module = "sqlx_sqlite"
+              target-package = "sqlx-sqlite"
+              feature = "sqlx-sqlite"
+
+        - type: example
+          id: example.dependencies.layered-sqlx-adapter
+          status: accepted
+          caption: Import upstream and temporary SQLx operations together
+          source:
+            language: terrane
+            text: |-
+              namespace reference-examples/layered-sqlx-adapter
+
+              from /deps/sqlx-sqlite import SqliteConnection, open, execute, close
+              async function main;
+                  database SqliteConnection = await open; 'application.db'
+                  await (execute; database, 'CREATE TABLE events (body BLOB NOT NULL)')
+                  await (close; move database)
+
+        - type: example
+          id: example.dependencies.direct-first-axum-adapter
+          status: accepted
+          caption: Combine direct Axum routing with its narrow adapter overlay
+          source:
+            language: terrane
+            text: |-
+              namespace reference-examples/direct-first-axum-adapter
+
+              from /deps/axum import Router, bind_listener, serve_router
+              from /deps/axum/routing import get
+
+              async function health string;
+                  return 'ok'
+
+              async function main;
+                  router = Router::new
+                  router = router.route; '/health', (get; health)
+                  listener = await bind_listener; '127.0.0.1:0'
+                  if false
+                      await (serve_router; move listener, move router)
     - id: resolution
       title: Projection resolution and cache behavior
       blocks:
