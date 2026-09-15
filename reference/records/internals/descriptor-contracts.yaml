@@ -47,6 +47,19 @@ documentation:
             source protocols layer signature constraints over the same descriptor
             member model. Neither path creates a hidden interface or receiver-family
             availability table.
+    - id: imported-type-closure
+      title: Imported type closure
+      blocks:
+        - type: markdown
+          markdown: |-
+            An imported function or descriptor makes every canonically identified
+            source object reachable through its complete type graph available to
+            semantic member lookup. Dependency discovery recursively traverses
+            optional, collection, map and entry, callable, channel, task,
+            document-outcome, and reference wrappers in fields, parameters, and
+            results. Member access on an inferred nested value therefore does not
+            depend on separately importing the leaf class name into the consumer
+            namespace.
   see-also:
     - lang.types.descriptors
     - lang.classes.protocols
@@ -61,6 +74,7 @@ provenance:
     - builtin-name-class
     - composed-descriptor-identities
     - same-named-cross-namespace-methods
+    - member-access-without-type-import
     - string-result-list-iteration
     - string-result-list-mutation
     - truth-protocol
