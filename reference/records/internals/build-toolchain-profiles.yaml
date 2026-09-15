@@ -88,6 +88,11 @@ documentation:
             platform dynamic-library path. `run` and `debug` reject it because
             the package requires an external host.
 
+            Terrane declarations do not yet export host-visible symbols
+            automatically. A maintained authored Rust module supplies the host
+            entrypoint and may call ordinary lowered Terrane functions within
+            the generated crate.
+
             Generated-only packages continue to forbid unsafe Rust. When a
             package deliberately includes maintained authored Rust modules, the
             crate lint becomes `deny` instead. A reviewed module may then
