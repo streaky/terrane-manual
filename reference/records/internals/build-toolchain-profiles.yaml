@@ -72,6 +72,28 @@ documentation:
             component alone therefore fails the build rather than silently
             producing mixed Unicode semantics.
 
+    - id: native-artifact-kind
+      title: Native artifact kind
+      blocks:
+        - type: description
+          id: description.internals.build.native-artifact-kind
+          since: null
+          evidence: []
+          markdown: |-
+            A package selects `artifact = "executable"` by default or
+            `artifact = "dynamic-library"` for a host-loaded native extension.
+            Both use the ordinary Terrane semantic and Rust-lowering pipeline.
+            The dynamic-library form writes the generated entrypoint as
+            `src/lib.rs`, asks Cargo for a `cdylib`, and makes `build` return the
+            platform dynamic-library path. `run` and `debug` reject it because
+            the package requires an external host.
+
+            Generated-only packages continue to forbid unsafe Rust. When a
+            package deliberately includes maintained authored Rust modules, the
+            crate lint becomes `deny` instead. A reviewed module may then
+            explicitly allow the narrow unsafe ABI boundary it owns without
+            weakening compiler-generated modules.
+
     - id: workspace-artifact-size
       title: Workspace artifact size
       blocks:
