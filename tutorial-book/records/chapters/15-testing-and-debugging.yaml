@@ -873,6 +873,215 @@ documentation:
             The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1. Linux x86-64 with LLDB 22 is exercised end to end, including standard DAP step-in/step-out, recursive step-over, fatal native stops, disconnect during stepping, relocated builds, split generated support, shadowed locals, and more than 500 sequence points. Attach reports the host process-policy outcome and remains host-dependent. Other hosts and optimized or stripped modules report reduced fidelity. Editors can use `terrane debug-adapter --stdio`; protocol stdout contains only framed DAP messages, initialization emits one immediate `initialized` event, and `terrane/fidelity` reports source or native translation mode. Conditional breakpoints, logpoints, restart, Terrane expression evaluation, alternate backends, and time travel remain out of scope.
       sections: []
 
+    - id: profile-the-optimized-application
+      title: Profile the optimized application
+      blocks:
+        - type: markdown
+          markdown: |-
+            Tests tell you whether the application preserves its contract. The debugger can validate a specific hypothesis about live state. A profiler answers a different question: where does a representative optimized execution accumulate evidence?
+
+            Begin with a workload whose inputs and expected output are already covered by tests. Profile the production entry, not a test registry and not the debugger executable. The following small package gives the profiler enough repeated work to observe while keeping the authored hot path easy to recognize:
+
+        - type: example
+          id: cpu-profile-workload
+          title: A repeatable CPU-bound workload
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          files:
+            - path: package.toml
+              language: toml
+              source: |-
+                package = "profile-study"
+
+                [namespaces]
+                profile-study = "src"
+            - path: src/main.trn
+              language: terrane
+              source: |-
+                namespace profile-study
+
+                from /core/output import print
+
+                function configured-count int64;
+                  return 300000000
+
+                function reduce int64; count int64
+                  index int64 = 0
+                  total int64 = 0
+                  while index < count
+                    total = total + (index % 97)
+                    index++
+                  return total
+
+                function main;
+                  count = configured-count;
+                  print; (reduce; count)
+            - path: tests/unit/reduction.trn
+              language: terrane
+              source: |-
+                namespace profile-study
+
+                from /core/testing import assert-equal-int, test-failure
+
+                function test-reduction-contract none throws test-failure;
+                  assert-equal-int; (configured-count;), 300000000
+                  return none
+          source: null
+          entry: package.toml
+          annotations:
+            - id: representative-bound
+              file: src/main.trn
+              lines:
+                start: 5
+                end: 6
+              markdown: >-
+                Keep this bound and the expected printed result under test. If
+                the bound is wrong, correct the contract before interpreting
+                the performance change.
+            - id: sampled-hot-path
+              file: src/main.trn
+              lines:
+                start: 8
+                end: 14
+              markdown: >-
+                The optimized build may inline this function. The observed
+                source-first report therefore groups the sampled work with the
+                authored `main` call site; generated and native expansions retain
+                the lower-level constituents when that distinction matters.
+          response: null
+          diagnostic: null
+          markdown: null
+
+        - type: markdown
+          markdown: |-
+            Record one optimized CPU profile:
+
+            ```console
+            terrane profile record --cpu --output before.trnprof profile-study
+            ```
+
+            `profile record` builds a dedicated optimized artifact with line tables, no stripping, ThinLTO, and ordinary optimized inlining. On the currently supported Linux x86-64 backend, `perf` samples the launched process tree and all of its threads. The workload keeps the terminal's standard input, output, and error, and its exit or signal result remains the command result. The command finalizes usable partial evidence after an interruption.
+
+            The resulting `.trnprof` file binds the samples to the exact compiler, Rust toolchain, build profile, executable, loaded modules, generated Rust, and Terrane source identities. It records sample frequency, elapsed and active intervals, process and thread scope, and captured, lost, and truncated event counts. It does not silently turn a debug build into performance evidence.
+
+            Show the source-first report:
+
+        - type: example
+          id: source-first-cpu-profile
+          title: Read accounting before following the hot path
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            $ terrane profile show before.trnprof --limit 5
+            CPU samples: 391 captured, 0 lost, 0 truncated; 999 Hz; 0.772s elapsed
+            collector: linux-perf perf version 7.2.6-1; build: terrane-profile-cpu-v1; fidelity: exact-build-source
+
+            exclusive accounting (CPU sample count)
+                  389   99.48%  exact authored
+                    0    0.00%  shared or ambiguous
+                    0    0.00%  runtime-associated
+                    2    0.51%  generated-only
+                    0    0.00%  native-only
+                    0    0.00%  unavailable
+
+            hottest source groups (CPU sample count)
+            exclusive inclusive  quality               source group
+                  389       389  exact authored        /profile-study::main src/main.trn
+                    2         2  generated-only        src/main.rs:0
+
+            call tree (inclusive CPU sample count; root to leaf)
+                  389  terrane_program.c07bc568bd737873-cgu.0 -> main -> /profile-study::main src/main.trn
+
+            flame graph (folded stacks; weight = CPU sample count)
+            terrane_program.c07bc568bd737873-cgu.0;main;/profile-study::main src/main.trn 389
+          files: null
+          entry: null
+          annotations: []
+          response: null
+          diagnostic: null
+          markdown: >-
+            Sample counts vary between runs. The accounting invariant does not:
+            all 391 captured samples appear exactly once in the six exclusive
+            buckets, while lost events remain reported separately.
+
+        - type: markdown
+          markdown: |-
+            Read the report from the top. First confirm the workload, profile, frequency, duration, collector, and exact-build fidelity. Next confirm complete bucket accounting. Only then follow the hottest source group and its inclusive call path. CPU samples are statistical observations; they are not deterministic wall time, call counts, allocation counts, or proof that an unsampled path is free.
+
+            Each captured sample enters exactly one exclusive attribution bucket:
+
+            - **exact authored** identifies one most-specific Terrane source operation;
+            - **shared or ambiguous** retains multiple valid source causes instead of inventing one owner;
+            - **runtime-associated** connects compiler/runtime work to an explicit authored semantic parent;
+            - **generated-only** has valid generated Rust evidence but no authored owner;
+            - **native-only** has valid module and offset evidence without generated/source attribution;
+            - **unavailable** cannot be attributed safely because required evidence is unreadable, stale, or unsupported.
+
+            Inclusive counts answer which source groups were present in sampled stacks. A recursively repeated or inlined semantic group contributes at most once to its inclusive count for one sample. Folded flame-graph stacks are another view of the same typed evidence, not a second measurement.
+
+            Focus on one authored line while preserving whole-capture accounting:
+
+            ```console
+            terrane profile show before.trnprof --focus src/main.trn:18 --generated --native
+            ```
+
+            `--generated` adds the generated Rust ranges that justify each source group. `--native` adds module identities, load-relative offsets, and symbols. Descend to those layers only when the source group leaves a lowering or native-code question. `--format json` emits the same bounded report for a script.
+
+            Suppose a domain test now proves that `count` should be `5000000`, not `300000000`. Make that source correction, verify the expected result `239998879`, and repeat the profile under the same collector settings:
+
+        - type: example
+          id: before-and-after-cpu-profile
+          title: Repeat under the same collection conditions after a tested correction
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            $ terrane test profile-study
+            1 passed; 0 failed; 0 skipped
+            $ terrane profile record --cpu --output after.trnprof profile-study
+            239998879
+            recorded 7 CPU samples (0 lost, 0 truncated) in after.trnprof
+            $ terrane profile show after.trnprof --focus src/main.trn:18 --limit 3
+            CPU samples: 7 captured, 0 lost, 0 truncated; 999 Hz; 0.101s elapsed
+            collector: linux-perf perf version 7.2.6-1; build: terrane-profile-cpu-v1; fidelity: exact-build-source
+
+            exclusive accounting (CPU sample count)
+                    7  100.00%  exact authored
+                    0    0.00%  shared or ambiguous
+                    0    0.00%  runtime-associated
+                    0    0.00%  generated-only
+                    0    0.00%  native-only
+                    0    0.00%  unavailable
+          files: null
+          entry: null
+          annotations: []
+          response: null
+          diagnostic: null
+          markdown: >-
+            This illustrative rerun assumes that the tested contract established
+            a smaller correct bound. Compare like-for-like workload conditions,
+            output, frequency, loss, and profile identity before interpreting the
+            lower sample count. Terrane does not yet provide a comparison command.
+
+        - type: admonition
+          id: profile-artifacts-carry-diagnostic-data
+          kind: important
+          title: Choose what the profile artifact may retain
+          markdown: |-
+            A profile always declares that it contains source paths, symbols, timing, and workload structure. Authored source text is omitted unless `--embed-sources` is requested. Workload arguments are omitted from both conditions and raw collector configuration unless `--retain-arguments` is requested. These are independent privacy choices.
+
+            `profile show` validates current source, generated files, the executable, and loaded modules before assigning authored cost. `--source-root` and `--build-root` can relocate copied-but-identical trees. Changed or missing identities produce an explicit reduced-native view rather than plausible but false source attribution. Treat `.trnprof` files as diagnostic material when sharing or retaining them.
+
+        - type: markdown
+          markdown: |-
+            CPU sampling currently requires Linux x86-64, the host `perf` tool, and permission to collect user-space `cpu-clock` samples. Missing tools, unsupported hosts or targets, permission failures, collector failures, and unusable captures fail explicitly. Allocation profiling, retained-object analysis, process-memory timelines, thresholds, comparison commands, continuous-service capture, and non-Linux collectors are not current features.
+      sections: []
+
     - id: complete-project-testing-a-writing-plan
       title: 'Complete project: testing a writing plan'
       blocks:
@@ -1052,6 +1261,12 @@ documentation:
             Deliberately break the `complete` boundary. Capture a machine report and rerun only the failing identity with output shown. Then launch `terrane debug writing-plan`, set a source breakpoint in `summarize`, use `source`, `locals`, and `value` to identify the first differing fact, and use `frames` plus `frame 1` to trace that value to its caller. Inspect `generated` only if a lowering question remains. Restore the production behavior without weakening the assertion, then repeat the same debugger observation before rerunning the test.
 
         - type: exercise
+          id: exercise-profile-tested-hot-path
+          title: Profile a tested hot path
+          markdown: |-
+            Give a package a repeatable CPU-bound workload and preserve its output with a test. Record an optimized CPU profile, account for every captured sample, and identify the hottest authored source group. Use `--focus`, then inspect generated and native constituents only if a lower-layer question remains. Make one tested source correction, record a second profile under the same workload and collection conditions, and explain what the statistical evidence does and does not establish. Do not use a debugger build as either measurement.
+
+        - type: exercise
           id: exercise-ci-selection
           title: Design local and CI commands
           markdown: |-
@@ -1070,12 +1285,15 @@ documentation:
             Filtering and tier selection narrow lowering, backend validation, native compilation, and execution without hiding frontend semantic errors; an unselected tier's backend-only error appears when that tier is selected. Human output counts timeout, crash, and infrastructure outcomes separately; schema `1.2.0` JSON preserves effective run metadata, per-tier compilation results, deterministic identities, outcomes, source spans, structured causes, precise durations, and byte-exact captures for automation.
 
             Debug from the Terrane boundary inward. Reproduce one identity, read its source frame and streams, reduce the source-level question, and inspect the relevant tier boundary. When execution state is needed, use the exact-build debugger for Terrane breakpoints, frames, sequence-point stepping, and bounded values. Generated Rust and raw LLDB state remain explicit lower-level escape hatches. A good test makes the application contract clearer; a good debugging change fixes the cause without making that contract less true.
+
+            Representative performance evidence comes from `terrane profile record --cpu`, which measures a dedicated optimized exact build rather than the debugger artifact. Read capture conditions and complete quality-bucket accounting before following hottest source groups, inclusive call paths, or folded flame stacks. Sample counts are statistical evidence, and lower-level generated/native views remain explicit expansions. Preserve workload output with tests, repeat like-for-like conditions after a correction, and treat source embedding and argument retention as separate privacy choices.
       sections: []
   see-also:
     - tool.packages.testing
     - tool.packages.command-line
     - lang.functions.asynchronous
     - tool.debugging
+    - tool.profiling
 
 provenance:
   specification:
@@ -1083,5 +1301,7 @@ provenance:
       section: "31.5"
     - document: language-spec
       section: "31.6"
+    - document: language-spec
+      section: "26.6"
   conformance: []
   compiler: null
