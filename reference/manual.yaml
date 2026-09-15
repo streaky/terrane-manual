@@ -33,6 +33,7 @@ navigation:
     children:
       - source: records/tooling/source-intelligence.yaml
       - source: records/tooling/debugging.yaml
+      - source: records/tooling/profiling.yaml
   - group: Compiler internals
     children:
       - source: records/internals/execution-runtime.yaml
