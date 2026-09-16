@@ -81,7 +81,7 @@ documentation:
           since: null
           evidence: []
           markdown: |-
-            Every debug build writes deterministic schema `1.2` provenance beside the
+            Every debug build writes deterministic schema `1.3` provenance beside the
             generated Rust and executable. It records compiler/toolchain/exact Rust
             compiler release/sysroot/target/toolchain-bound ABI recipe/named artifact
             profile identity; manifest and projection-lock hashes when present; every

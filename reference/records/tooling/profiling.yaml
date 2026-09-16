@@ -77,19 +77,22 @@ documentation:
             Profiling does not measure the debugger artifact. The
             `terrane-profile-cpu-v1` profile uses optimization level 3, line-table
             debug information, no stripping, compiler-default optimized inlining,
-            ThinLTO, and one code-generation unit. Compiler lowering and Cargo emission
+            ThinLTO, and one code-generation unit. This deliberately differs from the
+            ordinary release profile's fat LTO so the selected sampler retains useful
+            location information. Compiler lowering and Cargo emission
             consume that same profile identity. The artifact binds compiler version,
             exact Rust release and sysroot, target, toolchain-bound ABI recipe, named
             profile properties, package inputs, executable hash, generated/source
             maps, loaded module identities, and source/build relocation roots.
 
-            The schema `1.0` evidence unit is CPU sample count. Normalized frames name
+            The schema `1.1` evidence unit is CPU sample count. Normalized frames name
             a captured module plus load-relative offset and may carry symbol,
             generated location, and inline evidence. Collector identity and raw
             configuration, frequency and period, included processes and threads,
-            elapsed and active intervals, process exit or signal state, and
-            captured/lost/truncated event counts remain explicit. Loss is reported and
-            never redistributed into source totals.
+            elapsed and active intervals, process exit or signal state, and captured,
+            lost-event, dropped-sample, and dropped-frame counts remain explicit.
+            Collector loss and locally dropped samples or frames are reported and never
+            redistributed into source totals.
 
     - id: attribution
       title: Source attribution and accounting
@@ -127,10 +130,10 @@ documentation:
           markdown: |-
             Authored source snapshots are excluded unless `--embed-sources` is given.
             Workload arguments are excluded from both conditions and raw collector
-            configuration unless `--retain-arguments` is given. Compiler-bundled source
-            may be embedded so compiler-owned runtime attribution remains verifiable.
-            Source paths, symbol names, and timing are present and declared in the
-            artifact privacy record.
+            configuration unless `--retain-arguments` is given. Generated Rust and
+            compiler-bundled source are embedded so exact source attribution remains
+            verifiable after relocation. Source paths, symbol names, and timing are
+            present and declared in the artifact privacy record.
 
         - type: note
           id: note.profiling.deferred

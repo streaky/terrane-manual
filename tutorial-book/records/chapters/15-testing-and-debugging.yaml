@@ -962,9 +962,9 @@ documentation:
             terrane profile record --cpu --output before.trnprof profile-study
             ```
 
-            `profile record` builds a dedicated optimized artifact with line tables, no stripping, ThinLTO, and ordinary optimized inlining. On the currently supported Linux x86-64 backend, `perf` samples the launched process tree and all of its threads. The workload keeps the terminal's standard input, output, and error, and its exit or signal result remains the command result. The command finalizes usable partial evidence after an interruption.
+            `profile record` builds a dedicated optimized artifact with line tables, no stripping, ThinLTO, and ordinary optimized inlining. This differs from the ordinary release profile's fat LTO so the selected sampler retains useful location information. On the currently supported Linux x86-64 backend, `perf` samples the launched process tree and all of its threads. The workload keeps the terminal's standard input, output, and error, and its exit or signal result remains the command result. The command finalizes usable partial evidence after an interruption.
 
-            The resulting `.trnprof` file binds the samples to the exact compiler, Rust toolchain, build profile, executable, loaded modules, generated Rust, and Terrane source identities. It records sample frequency, elapsed and active intervals, process and thread scope, and captured, lost, and truncated event counts. It does not silently turn a debug build into performance evidence.
+            The resulting `.trnprof` file binds the samples to the exact compiler, Rust toolchain, build profile, executable, loaded modules, generated Rust, and Terrane source identities. It records sample frequency, elapsed and active intervals, process and thread scope, and captured, lost-event, dropped-sample, and dropped-frame counts. It does not silently turn a debug build into performance evidence.
 
             Show the source-first report:
 
@@ -977,7 +977,7 @@ documentation:
           timeout-ms: null
           source: |-
             $ terrane profile show before.trnprof --limit 5
-            CPU samples: 391 captured, 0 lost, 0 truncated; 999 Hz; 0.772s elapsed
+            CPU samples: 391 captured, 0 lost, 0 samples dropped, 0 frames dropped; 999 Hz; 0.772s elapsed
             collector: linux-perf perf version 7.2.6-1; build: terrane-profile-cpu-v1; fidelity: exact-build-source
 
             exclusive accounting (CPU sample count)
@@ -1045,9 +1045,9 @@ documentation:
             1 passed; 0 failed; 0 skipped
             $ terrane profile record --cpu --output after.trnprof profile-study
             239998879
-            recorded 7 CPU samples (0 lost, 0 truncated) in after.trnprof
+            recorded 7 CPU samples (0 lost, 0 samples dropped, 0 frames dropped) in after.trnprof
             $ terrane profile show after.trnprof --focus src/main.trn:18 --limit 3
-            CPU samples: 7 captured, 0 lost, 0 truncated; 999 Hz; 0.101s elapsed
+            CPU samples: 7 captured, 0 lost, 0 samples dropped, 0 frames dropped; 999 Hz; 0.101s elapsed
             collector: linux-perf perf version 7.2.6-1; build: terrane-profile-cpu-v1; fidelity: exact-build-source
 
             exclusive accounting (CPU sample count)
@@ -1073,7 +1073,7 @@ documentation:
           kind: important
           title: Choose what the profile artifact may retain
           markdown: |-
-            A profile always declares that it contains source paths, symbols, timing, and workload structure. Authored source text is omitted unless `--embed-sources` is requested. Workload arguments are omitted from both conditions and raw collector configuration unless `--retain-arguments` is requested. These are independent privacy choices.
+            A profile always declares that it contains source paths, symbols, timing, and workload structure. Generated Rust and compiler-bundled sources are embedded for exact relocated attribution. Other authored source text is omitted unless `--embed-sources` is requested. Workload arguments are omitted from both conditions and raw collector configuration unless `--retain-arguments` is requested. These are independent privacy choices.
 
             `profile show` validates current source, generated files, the executable, and loaded modules before assigning authored cost. `--source-root` and `--build-root` can relocate copied-but-identical trees. Changed or missing identities produce an explicit reduced-native view rather than plausible but false source attribution. Treat `.trnprof` files as diagnostic material when sharing or retaining them.
 
