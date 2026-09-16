@@ -1,0 +1,135 @@
+format: 1
+id: internals.collections.list-builder-lowering
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Bounded list-builder lowering
+  title-style: text
+  summary: >-
+    Defines when a bounded append loop may become iterator-backed bulk construction
+    without changing collection, control-flow, failure, or allocation semantics.
+  tags:
+    - compiler-internals
+    - collections
+    - lowering
+    - optimization
+    - allocation
+  sections:
+    - id: recognition-proof
+      title: Recognition proof
+      blocks:
+        - type: rule
+          id: rule.internals.collections.list-builder-recognition
+          level: must
+          since: null
+          evidence:
+            - list-append-bulk-mutation
+          markdown: |-
+            Iterator-backed list construction is available only when semantic and
+            lowering analysis prove all of the following:
+
+            - the destination is a freshly constructed empty list whose backing
+              storage has not escaped, been aliased, or been observed;
+            - a fixed-width integer induction binding starts at zero, advances by
+              one, and is compared with a compatible upper bound using `<`;
+            - every completed iteration performs exactly one append to that list;
+            - statements before the append introduce only iteration-local bindings;
+            - the append is followed by the induction increment; and
+            - the body has no relevant early exit, suspension, or error-propagation
+              boundary that an iterator closure cannot preserve.
+
+            A failed or incomplete proof is not an error. The compiler retains the
+            ordinary statement-by-statement loop instead of guessing that a nearby
+            shape is equivalent. Non-empty, shared, aliased, multiply appended, or
+            otherwise observed collections are never treated as fresh builders.
+
+    - id: semantic-preservation
+      title: Semantic preservation
+      blocks:
+        - type: rule
+          id: rule.internals.collections.list-builder-semantics
+          level: must
+          since: null
+          evidence:
+            - list-append-bulk-mutation
+          markdown: |-
+            Bulk construction evaluates iterations, local bindings, conversions,
+            arithmetic, and appended values in the same order as the source loop.
+            Runtime failures retain their source behavior and location. The
+            transformation does not consume or expose the list's backing storage.
+
+            The induction binding retains its source-observable value after the
+            loop. A non-positive upper bound performs no iteration and leaves a
+            zero-valued induction binding unchanged; a positive bound leaves the
+            binding at that bound. Nested loops, early returns, thrown failures,
+            process exits, self-referential append expressions, and intervening
+            collection observations remain on the ordinary lowering unless an
+            independently complete proof covers them.
+
+    - id: bounded-allocation
+      title: Bounded allocation
+      blocks:
+        - type: rule
+          id: rule.internals.collections.list-builder-allocation
+          level: must
+          since: null
+          evidence:
+            - list-append-bulk-mutation
+          markdown: |-
+            Exact-size iterator collection is selected at run time only when the
+            range's complete backing allocation fits within the compiler's 256 MiB
+            list-preallocation ceiling. The limit is converted to an element count
+            from the lowered item representation, with a minimum element size of
+            one byte.
+
+            A larger range keeps the ordinary bounded-growth loop. That path may
+            reserve at most the ceiling and then grow according to `Vec` policy as
+            appends execute. The optimization must never turn a capped speculative
+            allocation into an arbitrarily large eager allocation.
+
+    - id: generated-strategy
+      title: Generated strategy
+      blocks:
+        - type: description
+          id: description.internals.collections.list-builder-strategy
+          since: null
+          evidence:
+            - list-append-bulk-mutation
+          markdown: |-
+            The compiler owns recognition and semantic proof. For a proven range
+            beneath the allocation ceiling, lowering expresses the producer as an
+            exact-size Rust range, mapping closure, and `collect` into the unique
+            list backing. Rust and LLVM then choose scalar, unrolled, or vectorized
+            machine code without changing the Terrane contract.
+
+            This generated shape exposes whole-producer facts that an explicit
+            `while` plus `Vec::push` loop may conceal from native optimization. SIMD
+            instructions, a particular vector width, and any fixed benchmark ratio
+            are not language or lowering guarantees. Generated Rust remains a
+            deterministic, readable, source-attributed implementation receipt.
+
+relationships:
+  see-also:
+    - internals.collections.lifetime
+    - lang.collections.protocols
+  supersedes: []
+  superseded-by: []
+  conflicts-with: []
+
+implementation:
+  compiler:
+    - crates/terrane-compiler/src/compiler.rs
+    - crates/terrane-compiler/src/lowering/emitter/context.rs
+    - crates/terrane-compiler/src/lowering/emitter/statements.rs
+    - tests/conformance/run/list-append-bulk-mutation/case.trn
