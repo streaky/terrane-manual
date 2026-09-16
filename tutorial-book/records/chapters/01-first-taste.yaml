@@ -248,6 +248,27 @@ documentation:
             Those are not six unrelated implementations. Terrane's `check`, `rust`, `build`, and `run` commands share one compiler pipeline. A program is not interpreted one way during development and translated according to different rules for release.
 
             The first run may take longer because Cargo must compile generated support code and populate its cache. Later runs reuse unchanged work. Terrane pays native compilation costs at development and build boundaries, not each time an already-built executable starts.
+
+        - type: admonition
+          id: ignore-generated-terrane-state
+          kind: important
+          title: Ignore generated `.trn` directories
+          markdown: |-
+            Terrane creates a `.trn/` directory for generated source, native build
+            artifacts, and reusable package state. This derived state should not
+            be committed.
+
+            If the program is in a Git repository, add this pattern to the
+            repository's root `.gitignore` now:
+
+            ```gitignore
+            **/.trn/
+            ```
+
+            Using the recursive pattern from the beginning also covers Terrane
+            packages that are later nested inside a larger repository or
+            workspace. You can still inspect generated files locally whenever
+            they help explain a build.
       sections:
         - id: running-a-source-file-if-the-command-cannot-be-found
           title: If the command cannot be found

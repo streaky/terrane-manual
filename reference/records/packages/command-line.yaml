@@ -43,6 +43,29 @@ documentation:
             operation. Remaining arguments are forwarded to the program; the
             implicit form accepts but does not require a leading `--`.
 
+    - id: generated-package-state
+      title: Generated package state and version control
+      blocks:
+        - type: note
+          id: note.command-line.ignore-generated-state
+          style: information
+          markdown: |-
+            Terrane stores generated source, native build artifacts, and reusable
+            package state in `.trn/` directories. This state is derived from the
+            package and should not be committed to version control.
+
+            Add this pattern to the repository's root `.gitignore` before the
+            first `check`, `build`, `run`, or `test`:
+
+            ```gitignore
+            **/.trn/
+            ```
+
+            The recursive pattern also covers Terrane packages nested inside a
+            larger repository or workspace. Generated files may still be
+            inspected locally when investigating a build; ignoring them prevents
+            editors and Git clients from treating the cache as authored work.
+
     - id: scripts
       title: Executing a shebang script
       blocks:
