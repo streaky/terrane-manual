@@ -45,6 +45,7 @@ documentation:
             conversion-specific wrapper.
   see-also:
     - lang.numerics.conversion
+    - internals.optimization.proof-guided-lowering
 
 provenance:
   specification:

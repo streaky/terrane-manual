@@ -48,4 +48,4 @@ navigation:
       - source: records/internals/build-toolchain-profiles.yaml
       - source: records/internals/semantic-return-validation.yaml
       - source: records/internals/collection-lifetime.yaml
-      - source: records/internals/list-builder-lowering.yaml
+      - source: records/internals/proof-guided-lowering.yaml

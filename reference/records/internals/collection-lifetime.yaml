@@ -120,7 +120,7 @@ documentation:
 relationships:
   see-also:
     - lang.collections.protocols
-    - internals.collections.list-builder-lowering
+    - internals.optimization.proof-guided-lowering
     - std.collections
   supersedes: []
   superseded-by: []
