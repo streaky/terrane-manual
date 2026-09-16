@@ -50,9 +50,9 @@ documentation:
             computation is permitted only when it is pure, cannot fail, and cannot
             be observed independently of the source operation it implements.
 
-            Debug lowering may deliberately retain a more direct source-shaped
-            implementation. Release-only optimization never weakens the language's
-            checked arithmetic, failure, or collection contracts.
+            Debug and release builds use the same proof-guided lowering decisions.
+            Optimization never weakens the language's checked arithmetic, failure,
+            collection, source-attribution, or debugging contracts.
 
     - id: bounded-facts
       title: Bounded facts
@@ -144,7 +144,7 @@ documentation:
           evidence:
             - guarded-checked-arithmetic
           markdown: |-
-            Release lowering may coalesce an `if`/`else` only when both branches
+            Lowering may coalesce an `if`/`else` only when both branches
             assign to the same ordinary local fixed-width integer, the condition is
             pure, and the target is neither global, projected, referenced, nor
             aliased through an uncertain representation.
@@ -176,8 +176,8 @@ documentation:
 
             The range guard and eager computations cannot throw or mutate state. The
             source condition is evaluated once on the selected path, and the checked
-            fallback retains the original failure site. Debug builds always keep the
-            ordinary conditional.
+            fallback retains the original failure site. Debug metadata describes the
+            same optimized generated program used by other build modes.
 
     - id: numeric-lowering-boundaries
       title: Numeric lowering boundaries
