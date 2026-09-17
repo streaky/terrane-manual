@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c2def2ebfcc6900c8af33b47985fde61bfe03d9be696d88c811788622a147619
+  input-sha256: 571e705807a16d321ae037bb3b8bf2cb2d6c562be7c023c3ae6badc9aab18873
 format: 1
 generated: true
 symbols:
@@ -564,6 +564,10 @@ symbols:
   record: std.collections
   section: sets
   declaration: bool
+- name: both-affine
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function both-affine int8; input int8
 - name: bottles-each
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -623,6 +627,10 @@ symbols:
 - name: build
   record: internals.build.toolchain-profiles
   section: native-artifact-kind
+  declaration: build
+- name: build
+  record: internals.integration-adapters
+  section: application-owned-adapters
   declaration: build
 - name: build
   record: tool.packages.command-line
@@ -1490,6 +1498,10 @@ symbols:
   record: internals.build.toolchain-profiles
   section: native-artifact-kind
   declaration: deny
+- name: deny
+  record: internals.integration-adapters
+  section: application-owned-adapters
+  declaration: deny
 - name: dependency
   record: internals.observability.runtime
   section: dependency-bridge
@@ -1610,6 +1622,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: do
+- name: docs-rendering
+  record: internals.integration-adapters
+  section: current-gap-groups
+  declaration: docs-rendering
 - name: document-decodable
   record: std.documents.typed-decoding
   section: opt-in
@@ -2421,6 +2437,10 @@ symbols:
   record: std.collections
   section: ordering-iteration-and-lifetime
   declaration: for
+- name: forbid
+  record: internals.integration-adapters
+  section: application-owned-adapters
+  declaration: forbid
 - name: format/text.trn
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
@@ -2521,6 +2541,10 @@ symbols:
   record: book.text-and-collections
   section: exercises
   declaration: get.checked
+- name: global-condition
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function global-condition int8; input int8
 - name: graphemes
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
@@ -2875,7 +2899,19 @@ symbols:
   declaration: internals.projection.namespace-overlays
 - name: IntoFuture
   record: internals.integration-adapters
+  section: authoring
+  declaration: IntoFuture
+- name: IntoFuture
+  record: internals.integration-adapters
   section: current-gap-groups
+  declaration: IntoFuture
+- name: IntoFuture
+  record: internals.integration-adapters
+  section: purpose
+  declaration: IntoFuture
+- name: IntoFuture
+  record: internals.integration-adapters
+  section: recognizing-a-gap
   declaration: IntoFuture
 - name: invalid
   record: tool.source-intelligence
@@ -3597,6 +3633,10 @@ symbols:
   record: lang.numerics.floating-point
   section: values
   declaration: negative-sign
+- name: nested-conditional
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function nested-conditional int8; input int8
 - name: network-operation-options
   record: std.networking.operations
   section: cancellation
@@ -3949,6 +3989,10 @@ symbols:
   section: the-package-manifest
   declaration: package.toml
 - name: package.toml
+  record: internals.integration-adapters
+  section: application-owned-adapters
+  declaration: package.toml
+- name: package.toml
   record: tool.packages.package-manifest
   section: complete-example
   declaration: package.toml
@@ -4140,6 +4184,10 @@ symbols:
   record: book.identity-and-movement
   section: copy-on-write-behavior-in-practice
   declaration: planned
+- name: positive-lower-bound
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function positive-lower-bound; input int8
 - name: power
   record: lang.numerics.floating-point
   section: operations
@@ -4904,6 +4952,10 @@ symbols:
   record: book.native-program
   section: from-terrane-source-to-an-executable
   declaration: rust
+- name: rust
+  record: internals.integration-adapters
+  section: application-owned-adapters
+  declaration: rust
 - name: rust-dependencies.<alias>.default-features
   record: tool.packages.package-manifest
   section: fields
@@ -5036,6 +5088,14 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: selected_target
+- name: Self
+  record: internals.integration-adapters
+  section: current-gap-groups
+  declaration: Self
+- name: Self
+  record: internals.integration-adapters
+  section: purpose
+  declaration: Self
 - name: self
   record: internals.projection.resolution
   section: interface-impls
@@ -5666,7 +5726,11 @@ symbols:
   declaration: terrane-debug-v1
 - name: terrane-integration-adapters
   record: internals.integration-adapters
-  section: feature-isolation
+  section: application-owned-adapters
+  declaration: terrane-integration-adapters
+- name: terrane-integration-adapters
+  record: internals.integration-adapters
+  section: using-an-adapter
   declaration: terrane-integration-adapters
 - name: terrane-integration-adapters
   record: tool.packages.rust-dependencies
@@ -5960,6 +6024,34 @@ symbols:
   record: book.identity-and-movement
   section: when-a-value-is-no-longer-available
   declaration: transferred
+- name: transition
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition int8; input int8
+- name: transition-int128
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition-int128 int128; input int128
+- name: transition-int64
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition-int64 int64; input int64
+- name: transition-negative-coefficient
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition-negative-coefficient int8; input int8
+- name: transition-remainder
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition-remainder int8; input int8
+- name: transition-then
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition-then int8; input int8
+- name: transition-uint8
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function transition-uint8 uint8; input uint8
 - name: travellers
   record: book.first-taste
   section: a-slightly-more-useful-program

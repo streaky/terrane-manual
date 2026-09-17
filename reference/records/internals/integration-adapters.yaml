@@ -14,11 +14,11 @@ lifecycle:
 
 documentation:
   status: complete
-  title: Temporary integration adapters
+  title: Rust integration adapters
   title-style: text
   summary: >-
-    Defines the direct-first boundary, centralized gap ledger, feature isolation,
-    and removal lifecycle for temporary Rust ecosystem bridges.
+    Explains how to use, diagnose, author, register, verify, and retire temporary
+    bridges for Rust dependency operations that Terrane cannot project directly.
   tags:
     - compiler-internals
     - dependencies
@@ -26,8 +26,8 @@ documentation:
     - projection
     - maintenance
   sections:
-    - id: direct-first-boundary
-      title: Direct-first additive boundary
+    - id: purpose
+      title: When an adapter is appropriate
       blocks:
         - type: rule
           id: rule.internals.adapters.preserve-upstream-surface
@@ -39,18 +39,354 @@ documentation:
           markdown: |-
             A maintained integration adapter supplements a directly projected
             upstream dependency; it does not replace that dependency with a
-            second API. Applications declare both packages and use every upstream
-            type and operation that projection already represents. An adapter
-            signature accepting or returning such a value preserves the projected
-            upstream identity instead of introducing an adapter-owned wrapper.
+            second API. Applications use every upstream type and operation that
+            projection already represents. An adapter signature accepting or
+            returning such a value preserves the projected upstream identity
+            instead of introducing an adapter-owned wrapper.
 
             Adapter operations retain upstream terminology, semantics, failure,
             lifetime, and ownership behavior. They bridge only a concrete shape
             that generic projection cannot currently expose. Application routing,
             schema, policy, workflow, and domain types remain in Terrane source.
 
+        - type: description
+          id: description.internals.adapters.decision-path
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Start with the direct `/deps/<package>` surface. Import the upstream
+            type or operation and compile the smallest call that the application
+            needs. If the operation is present, use it directly; an inconvenient
+            API is not by itself an adaptation gap.
+
+            When the operation is absent or declined, inspect the projection
+            diagnostic and the exact resolved dependency version. Reduce the
+            problem to the smallest missing boundary: for example, a
+            trait-provided member, a caller-selected generic result, an associated
+            constructor returning `Self`, an expression-local borrowed chain, a
+            payload-bearing enum, or an awaitable `IntoFuture` result. Record that
+            shape rather than describing the entire dependency as unsupported.
+
+            An application does not need commit access to Terrane or to the shared
+            adapter package to bridge a missing operation. Add a maintained Rust
+            module to the application itself when the operation is not available
+            directly or from a published adapter. This is the first-class escape
+            route for both reusable-looking projection gaps and deliberately
+            application-specific host ABI, registration macros, unsafe boundaries,
+            or native composition.
+
+            Contribute a bridge to the centralized adapter package when its narrow
+            operation is useful across applications and can preserve upstream
+            identities and semantics. Lack of an upstream contribution path must
+            never prevent an application from integrating a Rust dependency. If
+            neither a local typed boundary nor a shared bridge can express the
+            operation safely, keep the failure explicit rather than hiding it
+            behind a broad facade.
+
+    - id: recognizing-a-gap
+      title: Recognizing a projection gap
+      blocks:
+        - type: description
+          id: description.internals.adapters.recognizing-a-gap
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            A projection gap exists when the exact resolved Rust operation is
+            usable with a concrete Rust call, but Terrane cannot discover,
+            select, represent, or lower the corresponding boundary. Common signs
+            include:
+
+            - the foreign type is available but a trait-provided operation is not;
+            - a static or associated operation is declined although its concrete
+              owner is known;
+            - generic inputs are known from arguments but no specialization is
+              selected;
+            - an owned generic result has a written destination but remains open;
+            - an intermediate borrows from an input and is valid only inside one
+              terminal Rust expression;
+            - a closed alias, associated output, payload variant, or native
+              callback result has no Terrane representation; or
+            - Rust can await the returned concrete value through `IntoFuture`, but
+              Terrane cannot.
+
+            Do not infer a projection gap merely from a generated-Rust compiler
+            error. First distinguish an unavailable declaration from a supported
+            call used with the wrong type, ownership, effect, capability, feature,
+            or dependency version. A successful standalone Rust snippet is useful
+            evidence only when it uses the same resolved graph, features, target,
+            concrete types, conversions, and ownership shape as the intended
+            Terrane call.
+
+        - type: rule
+          id: rule.internals.adapters.declines-remain-honest
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Unsupported, ambiguous, and unproven operations remain explicit
+            declines. An adapter must not make an open generic value appear
+            storable, extend a borrow, guess among several implementations, hide
+            a required capability, erase a failure, or introduce cloning,
+            allocation, boxing, serialization, or dynamic dispatch merely to
+            make a boundary compile.
+
+    - id: using-an-adapter
+      title: Declaring and using an adapter
+      blocks:
+        - type: description
+          id: description.internals.adapters.application-configuration
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Declare `terrane-integration-adapters` as an ordinary Rust dependency,
+            select only the feature families the application uses, and declare
+            every build or runtime effect required by those dependencies. Keep the
+            upstream dependency direct when the application uses its projected
+            types or when an enabled namespace overlay targets that package.
+
+            A server using the current Axum and SQLite bridges has the following
+            shape; versions and effects must match the application's resolved
+            dependency graph and capability profile:
+
+            ```toml
+            [rust-dependencies.axum]
+            version = "=0.8.9"
+            features = ["ws"]
+            effects = ["build", "networking"]
+
+            [rust-dependencies.sqlx-sqlite]
+            version = "=0.8.6"
+            features = ["bundled"]
+            effects = ["build", "filesystem"]
+
+            [rust-dependencies.terrane-integration-adapters]
+            version = "=0.1.0"
+            features = ["axum-08", "sqlx-sqlite"]
+            effects = ["build", "filesystem", "networking", "threads"]
+            ```
+
+            The adapter package's metadata may present its operations beneath the
+            direct upstream namespace. This changes the Terrane import path only:
+            diagnostics, generated Rust, dependency provenance, and ownership
+            continue to name the adapter package as the operation's implementation
+            and the upstream package as the owner of preserved upstream values.
+
+            A feature without a namespace overlay remains under the adapter
+            package's projected namespace. Consult the selected package version's
+            projected surface rather than assuming that every adapter operation
+            appears beneath its upstream dependency.
+
+        - type: rule
+          id: rule.internals.adapters.features-isolate-ecosystems
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Reusable bridges maintained and released by the Terrane project ship
+            from the single publishable `terrane-integration-adapters` package.
+            Each dependency family has an independently selected Cargo feature,
+            so declaring the package does not compile unrelated frameworks,
+            renderers, or database clients.
+
+            Application-owned adapters remain ordinary maintained `.rs` files in
+            that application's package and require no dependency on the shared
+            adapter crate. Do not create one project-owned adapter crate per
+            dependency merely to call it from one application; use `[rust-modules]`
+            unless the Rust code is intentionally being published as an
+            independently versioned package. Never add package-name branches to
+            generic compiler code.
+
+    - id: application-owned-adapters
+      title: Writing an adapter in an application
+      blocks:
+        - type: rule
+          id: rule.internals.adapters.local-modules-are-first-class
+          level: must
+          since: null
+          evidence:
+            - authored-rust-module
+          markdown: |-
+            Every Terrane application may include maintained Rust adapter files
+            through its own `[rust-modules]` manifest table. This path is local to
+            the application repository and requires no change, issue, feature, or
+            release in the Terrane compiler or `terrane-integration-adapters`.
+            Projected dependencies and the local Rust module inhabit the same
+            generated Cargo crate graph, so calling the dependency does not add a
+            C ABI or foreign runtime boundary.
+
+        - type: description
+          id: description.internals.adapters.local-module-setup
+          since: null
+          evidence:
+            - authored-rust-module
+          markdown: |-
+            Put a maintained `.rs` file inside the application and map one valid
+            Rust module identifier to its normalized package-relative path:
+
+            ```toml
+            [profile]
+            name = "application"
+            capabilities = ["build"]
+
+            [rust-dependencies.example-library]
+            version = "=1.2.3"
+            effects = ["build"]
+
+            [rust-modules]
+            dependency_adapter = "rust/dependency_adapter.rs"
+            ```
+
+            Replace the example dependency, version, features, and effects with
+            the exact dependency graph required by the application. The path must
+            stay inside the package and end in `.rs`; each table key is a distinct
+            Rust identifier. An unrestricted profile already permits `build`, but
+            a restricted profile must list it explicitly. The dependency may
+            require additional effects and matching application capabilities.
+
+            The compiler copies the maintained file into the deterministic
+            generated crate and declares it as a crate-root module. An inline
+            Terrane `rust` expression or statement calls a public operation as
+            `crate::dependency_adapter::operation(...)`. For example, the
+            maintained file:
+
+            ```rust
+            pub fn answer() -> terrane_int_support::Int {
+                terrane_int_support::Int::from(42_i64)
+            }
+            ```
+
+            can be called from Terrane as:
+
+            ```terrane
+            answer int = rust
+              crate::dependency_adapter::answer()
+            ```
+
+            This small example shows the wiring, not an adapter design. A real
+            operation calls the declared Rust dependency and returns a native
+            representation that the surrounding typed Terrane expression can
+            accept.
+
+        - type: description
+          id: description.internals.adapters.local-typed-boundary
+          since: null
+          evidence:
+            - authored-rust-module
+          markdown: |-
+            Do not expose the `.rs` file as an untyped application API. Put the
+            inline Rust call behind the narrowest practical typed Terrane
+            function or method, and let that source declaration remain
+            authoritative for parameters, result type, ownership, errors, thread
+            safety, reflection, and required capabilities. Other application code
+            calls the typed Terrane operation rather than repeating raw Rust.
+
+            Values from declared Rust dependencies may cross through their
+            projected companion representations when those representations are
+            already supported. Keep an unnameable generic or lifetime-bearing
+            builder inside the maintained Rust operation and return only an owned
+            or otherwise supported result. Do not retain a reference to a
+            Terrane-owned temporary, fabricate a lifetime, or move a resource
+            through an ordinary raw block. Non-copyable resources and tasks need
+            an explicit typed adapter contract.
+
+            Safe `rust` is the default. If an application genuinely owns an
+            unsafe host or ABI boundary, confine the allowance to the maintained
+            module and document the invariant it establishes. Adding an authored
+            module changes the generated crate's unsafe lint from `forbid` to
+            `deny` only so that a reviewed module can opt into its narrow
+            boundary; it does not authorize generated code or unrelated modules
+            to use unsafe Rust.
+
+        - type: description
+          id: description.internals.adapters.local-maintenance
+          since: null
+          evidence:
+            - authored-rust-module
+          markdown: |-
+            Keep the local adapter beside the application, review it as source,
+            and pin its dependency versions and features in `package.toml`. Record
+            why direct projection was insufficient, the upstream declaration it
+            calls, and the condition under which the module operation can be
+            deleted. Test the typed Terrane boundary and the real success and
+            failure behavior that motivated it.
+
+            A local bridge may later be contributed to
+            `terrane-integration-adapters` when several applications need the same
+            structural operation. Conversely, a project may keep a bridge local
+            indefinitely when it contains application policy or a private host
+            contract. Neither choice changes the requirement to remove the local
+            Rust operation when the application adopts a direct generic compiler
+            surface for the same boundary.
+
+
+    - id: authoring
+      title: Authoring a reusable adapter operation
+      blocks:
+        - type: description
+          id: description.internals.adapters.authoring-workflow
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Reduce the missing surface before writing Rust. Record the exact
+            upstream declaration, resolved package and feature set, concrete
+            Terrane call, current decline, and the Rust call that demonstrates the
+            intended boundary. Prefer one adapter operation per independently
+            removable compiler gap.
+
+            The Rust implementation should be the narrowest ordinary public
+            function or concrete type needed to cross that boundary. Reuse
+            upstream argument and result identities wherever projection already
+            represents them. Close only those generics and lifetimes the
+            application cannot currently express, and keep borrowed intermediates
+            inside the Rust operation that owns their valid lifetime.
+
+            Preserve evaluation, failure, cancellation, and cleanup semantics.
+            An asynchronous adapter awaits the upstream operation at the same
+            logical boundary; it does not silently spawn or detach work. A
+            consuming upstream operation consumes its input. A mutable receiver
+            remains mutable. An upstream failure remains a typed projected failure
+            when that type is representable. If a temporary adapter-owned error is
+            unavoidable, it retains the upstream error as its source and uses the
+            smallest representation that projection can expose.
+
+            Document what the adapter closes and what it deliberately does not do.
+            Filtering WebSocket control messages, choosing database creation
+            policy, collecting every row, defining an application schema, or
+            selecting a rendering workflow is application behavior, not automatic
+            adaptation. A convenience helper that combines such behavior needs a
+            separate application justification and must not be presented as the
+            generic compiler gap.
+
+        - type: rule
+          id: rule.internals.adapters.no-dependency-dispatch
+          level: must
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Generic projection, semantic analysis, and lowering never consult the
+            adapter registry or dispatch on dependency names. A compiler fix that
+            retires an adapter implements a structural rule—such as associated
+            owner substitution, trait-operation selection, call-site generic
+            closure, expression-local chain lowering, or `IntoFuture`
+            adaptation—and proves it with at least one non-framework-specific
+            witness.
+
     - id: registry
-      title: Central gap registry
+      title: Registering the gap
       blocks:
         - type: rule
           id: rule.internals.adapters.registry-is-accounting-only
@@ -61,43 +397,85 @@ documentation:
             - projected-axum-boundaries
           markdown: |-
             `terrane_integration_adapters::registry` is the single accounting
-            source for shipped and known unbridged ecosystem gaps. Every entry has
-            a stable adapter ID and tracking key, affected dependency and version
+            source for ecosystem gaps shipped by the Terrane project and for
+            unbridged gaps the project has chosen to track. Every entry has a
+            stable adapter ID and tracking key, affected dependency and version
             range, exact unsupported shape, current status, and an objective
             generic removal criterion. A shipped status additionally identifies
             its adapter package version and feature.
 
-            The registry is Rust-side data beside the implementations it
-            describes. It is hidden from rustdoc-driven Terrane projection and
-            contributes no application names. Compiler projection, semantics, and
-            lowering never query it. Registry tests require unique IDs and
-            tracking keys and complete package/feature information for shipped
-            entries.
+            An application-owned Rust module does not require a registry entry,
+            Terrane issue, or upstream approval. Keep its reason and removal
+            condition with the application. Add a central entry only when the gap
+            or bridge is contributed to the Terrane project.
 
-    - id: feature-isolation
-      title: Package and feature isolation
-      blocks:
-        - type: rule
-          id: rule.internals.adapters.features-isolate-ecosystems
-          level: must
+            The central registry is Rust-side data beside the shared
+            implementations it describes. It is hidden from rustdoc-driven
+            Terrane projection and contributes no application names. Compiler
+            projection, semantics, and lowering never query it. Registry tests
+            require unique IDs and tracking keys and complete package/feature
+            information for shipped entries.
+
+        - type: description
+          id: description.internals.adapters.registry-fields
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
             - projected-axum-boundaries
           markdown: |-
-            Temporary bridges ship from the single publishable
-            `terrane-integration-adapters` package. Each dependency family has an
-            independently selected Cargo feature, so declaring the package does
-            not compile unrelated frameworks or database clients. Adapter modules
-            remain ordinary projected Rust dependency modules; namespace overlays
-            may present them beneath the upstream package without changing their
-            Rust owner.
+            Choose an ID for one independently removable gap and a tracking key
+            for the general compiler capability, not for an application task.
+            Name the package that owns the problematic declaration, the exact
+            supported version range of the bridge, and the unsupported type,
+            trait, lifetime, callback, or async shape.
 
-            Do not create one adapter crate per dependency or application, and do
-            not add package-name branches to generic compiler code. A bridge that
-            cannot fit this additive, feature-gated shape remains an explicitly
-            unbridged registry entry until a general compiler capability or an
-            appropriately narrow adapter exists.
+            The removal criterion describes observable direct use, not an internal
+            refactor. For example, it may require a direct projected row operation
+            to select its owned result from a written destination, or a direct
+            associated constructor to return its concrete owner. “Projection is
+            improved” and “the application no longer needs this helper” are not
+            sufficiently precise criteria.
+
+            Record a useful unbridged gap even when no shared adapter
+            implementation exists. The central entry gives diagnostics, design
+            work, and issue tracking a stable identity without promising that the
+            shape is safe or scheduled. Application authors who cannot add that
+            entry may use and document a local typed Rust module immediately;
+            central accounting is not a prerequisite for application capability.
+
+    - id: verification
+      title: Verifying the bridge
+      blocks:
+        - type: description
+          id: description.internals.adapters.verification
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            Verify three distinct boundaries:
+
+            1. The adapter's Rust implementation compiles against the exact
+               dependency versions and selected features.
+            2. A focused Terrane fixture projects and type-checks the adapter
+               operation while preserving every upstream value identity that
+               crosses it.
+            3. A bounded executable scenario exercises the behavior that can fail
+               only at runtime, such as database I/O, network serving, callback
+               invocation, cancellation, or resource closure.
+
+            Keep application policy out of the compiler regression. A generic
+            compiler fix needs a non-framework witness for the structural rule and
+            the real dependency witness that satisfies the registry removal
+            criterion. Compile-only evidence is sufficient only for a compile-time
+            contract; an unreachable server call does not demonstrate serving, and
+            a projection registry assertion does not demonstrate a usable call.
+
+            Review generated Rust for deterministic direct calls and conversions.
+            The bridge must not introduce avoidable allocation, cloning, boxing,
+            dynamic dispatch, or duplicated source evaluation. Test failure,
+            cleanup, and ownership paths when those are the reason Rust code was
+            required.
 
     - id: current-gap-groups
       title: Current adapter gap groups
@@ -119,9 +497,59 @@ documentation:
             nested WebSocket receive and message-constructor shapes, Tokio
             listener binding, and the `axum::serve` `IntoFuture` boundary. Axum
             routers, routes, handlers, upgrade callbacks, and projectable
-            WebSocket operations remain direct upstream calls. The registry keeps
-            these limitations as separate records even when one feature supplies
-            several related operations.
+            WebSocket operations remain direct upstream calls.
+
+            The `docs-rendering` feature currently bridges an associated Markdown
+            options constructor returning `Self` and PDF operations whose broader
+            projected member graph or generic path input is not yet usable. It
+            exposes narrow Markdown-to-HTML and HTML-to-PDF-bytes operations;
+            document structure, validation, templates, and output policy remain
+            application code.
+
+            The registry keeps limitations as separate records even when one
+            feature supplies several related operations. It also records Godot API
+            discovery and extension-registration gaps as unbridged. Generated API
+            discovery and host registration are separate problems: a maintained
+            authored Rust module remains appropriate for the current
+            macro-declared host class and entrypoint.
+
+    - id: troubleshooting
+      title: Troubleshooting and escalation
+      blocks:
+        - type: description
+          id: description.internals.adapters.troubleshooting
+          since: null
+          evidence:
+            - integration-adapter-sqlx-sqlite
+            - projected-axum-boundaries
+          markdown: |-
+            When an expected operation is missing, confirm the direct dependency,
+            exact version, enabled features, target, and required build
+            capabilities first. Read the complete projection diagnostic and check
+            whether the declaration itself is absent, a referenced type owner is
+            undeclared, a generic choice is ambiguous, a borrowed result would
+            escape, or a concrete proof is unknown. Those outcomes require
+            different fixes.
+
+            Reproduce the smallest call in a disposable fixture using the same
+            dependency graph. Compare the direct upstream surface with the
+            adapter's actual Rust signature and the registry entry. Do not edit
+            generated Rust, suppress a native compiler error, broaden dependency
+            features speculatively, or add a second wrapper before identifying
+            the first unsupported obligation.
+
+            If ordinary source annotations can select the required input or
+            result, prefer them. Otherwise, an application may immediately use a
+            maintained Rust module with an explicit typed Terrane boundary; this
+            is not limited to host registration or unsafe ABI work. Keep reusable
+            structural gaps eligible for a generic compiler fix, and distinguish
+            application policy from the missing structural operation in local
+            documentation and tests.
+
+            Ask for a new language or manifest binding only when a concrete
+            ambiguity cannot be expressed through the current call, receiver,
+            arguments, callback contract, written destination, and
+            `[rust-modules]` boundary.
 
     - id: retirement
       title: Independent removal lifecycle
@@ -147,11 +575,24 @@ documentation:
             the adapter module, Cargo feature, and dependency family after its
             final gap closes.
 
+            Migrate every consumer of the retired operation. Delete obsolete
+            wrapper types and conversions rather than retaining aliases. Update
+            package features, dependencies, projection locks, conformance
+            evidence, current limitations, and this internals record together so
+            the documented boundary matches the compiler that users run.
+
+            For an application-owned adapter, migrate every typed Terrane wrapper
+            to the direct operation and delete its maintained Rust operation when
+            the compiler or a selected shared adapter covers the boundary. Remove
+            the `[rust-modules]` entry only after no other local host or adapter
+            operation uses that file.
+
 relationships:
   see-also:
     - internals.projection.namespace-overlays
     - internals.projection.resolution
     - tool.packages.rust-dependencies
+    - tool.packages.package-manifest
   supersedes: []
   superseded-by: []
   conflicts-with: []
@@ -160,9 +601,12 @@ provenance:
   specification:
     - document: language-spec
       section: "23.8"
+    - document: language-spec
+      section: "24.7"
   conformance:
     - integration-adapter-sqlx-sqlite
     - projected-axum-boundaries
+    - authored-rust-module
   compiler: null
 
 implementation:
@@ -172,3 +616,5 @@ implementation:
     - crates/terrane-integration-adapters/src/registry.rs
     - crates/terrane-integration-adapters/src/sqlx_sqlite.rs
     - crates/terrane-integration-adapters/src/axum_08.rs
+    - crates/terrane-integration-adapters/src/docs_rendering.rs
+    - crates/terrane-compiler/src/package.rs

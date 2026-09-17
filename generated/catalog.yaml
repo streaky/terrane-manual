@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c2def2ebfcc6900c8af33b47985fde61bfe03d9be696d88c811788622a147619
+  input-sha256: 571e705807a16d321ae037bb3b8bf2cb2d6c562be7c023c3ae6badc9aab18873
 format: 1
 generated: true
 records:
@@ -1074,7 +1074,7 @@ records:
   - identity-and-genericity
   declaration-synopsis: []
 - id: internals.integration-adapters
-  title: Temporary integration adapters
+  title: Rust integration adapters
   kind: topic
   manual: reference
   group: Compiler internals
@@ -1087,15 +1087,23 @@ records:
     specification:
     - document: language-spec
       section: '23.8'
+    - document: language-spec
+      section: '24.7'
     conformance:
     - integration-adapter-sqlx-sqlite
     - projected-axum-boundaries
+    - authored-rust-module
     compiler: null
   sections:
-  - direct-first-boundary
+  - purpose
+  - recognizing-a-gap
+  - using-an-adapter
+  - application-owned-adapters
+  - authoring
   - registry
-  - feature-isolation
+  - verification
   - current-gap-groups
+  - troubleshooting
   - retirement
   declaration-synopsis: []
 - id: internals.observability.runtime
@@ -1203,6 +1211,18 @@ records:
   - function validate-exit
   - function validate-throw
   - function observe-prefix int64; value int64
+  - function main
+  - function transition int8; input int8
+  - function transition-uint8 uint8; input uint8
+  - function transition-then int8; input int8
+  - function transition-remainder int8; input int8
+  - function transition-negative-coefficient int8; input int8
+  - function transition-int64 int64; input int64
+  - function transition-int128 int128; input int128
+  - function both-affine int8; input int8
+  - function nested-conditional int8; input int8
+  - function positive-lower-bound; input int8
+  - function global-condition int8; input int8
   - function main
 - id: book.preface
   title: Preface
