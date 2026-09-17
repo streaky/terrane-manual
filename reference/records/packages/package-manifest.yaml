@@ -1,0 +1,284 @@
+format: 1
+id: tool.packages.package-manifest
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Package manifest
+  title-style: text
+  summary: >-
+    Defines every supported package.toml field, its default, and the adjacent
+    Cargo configuration used while developing projected dependencies locally.
+  tags:
+    - packages
+    - manifest
+    - capabilities
+    - dependencies
+    - testing
+  sections:
+    - id: complete-example
+      title: Complete working manifest
+      blocks:
+        - type: markdown
+          markdown: |-
+            `package.toml` is strict: unknown keys are errors. `package` and a
+            non-empty `[namespaces]` table are required. This example shows every
+            supported top-level area; remove optional entries that the package
+            does not use.
+
+            ```toml
+            package = "document-tool"
+            artifact = "executable"
+            prelude = true
+            reflection = "ordinary"
+            executor = "threaded"
+            rust-toolchain = "pinned"
+
+            [profile]
+            name = "document-tool"
+            capabilities = ["filesystem", "build"]
+            panic = "unwind"
+
+            [namespaces]
+            document-tool = "src"
+
+            [testing]
+            unit = "tests/unit"
+            integration = "tests/integration"
+            end-to-end = "tests/end-to-end"
+
+            [testing.profile]
+            name = "document-tool-tests"
+            capabilities = ["filesystem", "process", "build"]
+            panic = "unwind"
+
+            [rust-dependencies.codec]
+            package = "base64"
+            version = "=0.22.1"
+            default-features = false
+            features = ["alloc"]
+            target = "cfg(unix)"
+            effects = ["build"]
+
+            [rust-modules]
+            native-helper = "native/helper.rs"
+            ```
+
+    - id: fields
+      title: Field reference
+      blocks:
+        - type: table
+          id: manifest-fields
+          title: Supported package.toml fields
+          show-header: true
+          columns:
+            - id: path
+              title: TOML path
+              cell: code
+            - id: type
+              title: Value type
+              cell: text
+            - id: default
+              title: Default
+              cell: code
+            - id: repeatability
+              title: Repeatability
+              cell: text
+            - id: example
+              title: Minimal example
+              cell: code
+          rows:
+            - path: package
+              type: non-empty string
+              default: required
+              repeatability: once
+              example: package = "app"
+            - path: artifact
+              type: "\"executable\" or \"dynamic-library\""
+              default: executable
+              repeatability: once
+              example: artifact = "dynamic-library"
+            - path: prelude
+              type: boolean
+              default: "true"
+              repeatability: once
+              example: prelude = false
+            - path: reflection
+              type: "\"ordinary\" or \"minimal\""
+              default: ordinary
+              repeatability: once
+              example: reflection = "minimal"
+            - path: executor
+              type: "\"threaded\" or \"cooperative\""
+              default: threaded
+              repeatability: once
+              example: executor = "cooperative"
+            - path: rust-toolchain
+              type: "\"pinned\" or \"system\""
+              default: pinned
+              repeatability: once
+              example: rust-toolchain = "pinned"
+            - path: profile.name
+              type: string
+              default: default
+              repeatability: once
+              example: name = "application"
+            - path: profile.capabilities
+              type: array of capability names
+              default: unrestricted
+              repeatability: once
+              example: capabilities = ["filesystem"]
+            - path: profile.panic
+              type: "\"unwind\" or \"abort\""
+              default: unwind
+              repeatability: once
+              example: panic = "abort"
+            - path: namespaces.<namespace>
+              type: normalized relative directory
+              default: required non-empty table
+              repeatability: once per namespace
+              example: app = "src"
+            - path: testing.unit
+              type: bounded relative directory
+              default: tests/unit
+              repeatability: once
+              example: unit = "test/unit"
+            - path: testing.integration
+              type: bounded relative directory
+              default: tests/integration
+              repeatability: once
+              example: integration = "test/integration"
+            - path: testing.end-to-end
+              type: bounded relative directory
+              default: tests/end-to-end
+              repeatability: once
+              example: end-to-end = "test/system"
+            - path: testing.profile
+              type: profile table
+              default: inherits package profile
+              repeatability: once
+              example: capabilities = ["process"]
+            - path: rust-dependencies.<alias>.package
+              type: crates.io package name
+              default: dependency alias
+              repeatability: once per dependency
+              example: package = "base64"
+            - path: rust-dependencies.<alias>.version
+              type: Cargo version requirement string
+              default: required
+              repeatability: once per dependency
+              example: version = "=0.22.1"
+            - path: rust-dependencies.<alias>.default-features
+              type: boolean
+              default: "true"
+              repeatability: once per dependency
+              example: default-features = false
+            - path: rust-dependencies.<alias>.features
+              type: array of strings
+              default: "[]"
+              repeatability: once per dependency
+              example: features = ["alloc"]
+            - path: rust-dependencies.<alias>.target
+              type: Cargo target condition string
+              default: none
+              repeatability: once per dependency
+              example: target = "cfg(unix)"
+            - path: rust-dependencies.<alias>.effects
+              type: array of capability names
+              default: "[]"
+              repeatability: once per dependency
+              example: effects = ["build"]
+            - path: rust-modules.<module>
+              type: relative .rs file path
+              default: none
+              repeatability: once per Rust identifier
+              example: helper = "native/helper.rs"
+
+    - id: capabilities-and-effects
+      title: Profiles, capabilities, and dependency effects
+      blocks:
+        - type: markdown
+          markdown: |-
+            The recognized capability names are `build`, `clocks`, `entropy`,
+            `filesystem`, `logging`, `networking`, `process`, `process-signals`,
+            `threads`, and `tls`. Omitting `profile.capabilities` selects the
+            unrestricted profile; writing an empty array permits none. A projected
+            Rust dependency always requires `build` in addition to its declared
+            `effects`, and an authored Rust module requires `build`.
+
+            Test roots are optional directories. Each populated tier is analyzed as
+            a separate package. `[testing.profile]` inherits omitted values from the
+            ordinary profile and can grant only the capabilities explicitly listed
+            there.
+
+    - id: namespaces-and-artifacts
+      title: Namespace roots and artifact kinds
+      blocks:
+        - type: markdown
+          markdown: |-
+            A namespace key maps its canonical root to a package-relative source
+            directory. Nested `.trn` paths extend that namespace. Roots must be
+            portable lowercase kebab-case namespaces; directories must be normalized,
+            relative, non-empty paths, and two roots cannot map the same directory.
+
+            `artifact = "executable"` expects a package entrypoint and produces a
+            runnable program. `artifact = "dynamic-library"` emits the platform's
+            dynamic-library artifact and selects `src/lib.rs` as the generated Cargo
+            entrypoint. The artifact kind does not change source namespace rules.
+
+    - id: overlays-and-local-patches
+      title: Namespace overlays and local Cargo patches
+      blocks:
+        - type: markdown
+          markdown: |-
+            Namespace overlays are provider-package metadata, not an application
+            `package.toml` key. A Rust adapter crate declares them in its Cargo
+            manifest:
+
+            ```toml
+            [[package.metadata.terrane.namespace-overlays]]
+            module = "sqlx_sqlite"
+            target-package = "sqlx-sqlite"
+            feature = "sqlx-sqlite"
+            ```
+
+            During repository development, keep the application's exact
+            `[rust-dependencies]` contract and patch the crate source separately in
+            `.cargo/config.toml`:
+
+            ```toml
+            [patch.crates-io]
+            terrane-integration-adapters = { path = "../../crates/terrane-integration-adapters" }
+            ```
+
+            The patch changes where Cargo obtains matching package versions; it does
+            not alter the Terrane manifest, projected package identity, enabled
+            features, or review obligation. Do not add unsupported path keys to
+            `package.toml`.
+  see-also:
+    - tool.packages.rust-dependencies
+    - tool.packages.testing
+    - tool.packages.command-line
+    - internals.projection.namespace-overlays
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "31"
+  conformance: []
+  compiler: null
+
+implementation:
+  compiler:
+    - crates/terrane-compiler/src/package.rs
+    - crates/terrane-compiler/src/testing.rs

@@ -57,6 +57,74 @@ documentation:
           diagnostic: null
           markdown: null
 
+    - id: workflow
+      title: End-to-end projected dependency workflow
+      blocks:
+        - type: markdown
+          markdown: |-
+            1. Add one exact `[rust-dependencies.<alias>]` entry to
+               `package.toml`; select only reviewed features and declare every
+               required effect.
+            2. Run `terrane check <package>` (or another ordinary package command).
+               A cache miss invokes projection with the pinned rustdoc toolchain.
+            3. Import admitted names explicitly from `/deps/<alias>/...`.
+            4. Inspect `terrane-projection.lock` as the reviewable inventory for
+               the exact resolved package, feature, target, admitted member, and
+               declined-member surface.
+            5. Call a member only after distinguishing its projection state in
+               that inventory.
+            6. Catch `dependency-error` where a projected Rust `Result` or
+               dependency panic crosses into application policy.
+            7. If a required operation is declined, determine whether the missing
+               shape belongs in generic projection or in the central temporary
+               integration-adapter package. Record an objective generic removal
+               criterion before shipping a bridge.
+
+        - type: table
+          id: projection-member-states
+          title: Dependency member states
+          show-header: true
+          columns:
+            - id: state
+              title: State
+              cell: text
+            - id: meaning
+              title: Meaning
+              cell: text
+            - id: action
+              title: Application action
+              cell: text
+          rows:
+            - state: Upstream public member
+              meaning: Rust publishes the item, but Terrane has made no availability promise.
+              action: Check the projection inventory.
+            - state: Inventory member
+              meaning: Projection recorded the item and its exact Rust identity.
+              action: Check whether it was admitted, specialized, or declined.
+            - state: Directly callable
+              meaning: Terrane can type-check and lower the recorded shape as written.
+              action: Import and call it directly.
+            - state: Destination-directed
+              meaning: One result-only Rust type parameter is selected from a written Terrane destination.
+              action: Supply exactly one compatible typed destination.
+            - state: Declined
+              meaning: Projection retained an explicit reason instead of approximating the Rust contract.
+              action: Treat it as unavailable and review the reason.
+            - state: Adapter-only
+              meaning: A central feature-gated bridge exposes only the currently unprojectable operation.
+              action: Declare both packages and preserve upstream identities.
+
+        - type: note
+          id: projection-lock-review
+          style: information
+          markdown: |-
+            `terrane-projection.lock` is derived but reviewable package evidence.
+            Commit it with the application when reproducible dependency review is
+            required. A changed dependency version, feature set, target, rustdoc
+            toolchain, projection schema, or admitted/declined inventory deserves
+            review even when authored Terrane source is unchanged. Never edit the
+            lock to manufacture availability; regenerate it through the compiler.
+
     - id: imports
       title: Importing admitted members
       blocks:
@@ -471,20 +539,31 @@ documentation:
             errors; an adapter cannot silently shadow an upstream item. Overlay
             declarations participate in projection cache identity.
 
-            Keep adapters ecosystem-shaped: preserve upstream terminology and
-            semantics, and do not move application routing, schema, policy, or
-            workflow into Rust. The `sqlx-sqlite` feature bridges its currently
+            Application code follows a direct-first policy:
+
+            - use directly projected upstream APIs whenever possible;
+            - preserve each projectable upstream type and operation identity;
+            - bridge only the concrete operation shape projection still declines;
+            - keep every temporary bridge in the central, feature-gated
+              `terrane-integration-adapters` package;
+            - keep routing, schemas, policy, workflows, and domain types in
+              Terrane rather than an application-shaped Rust facade; and
+            - give every bridge a registry entry naming its stable ID, tracking
+              key, dependency and supported version, precise limitation, package
+              feature, and objective generic removal criterion.
+
+            The `sqlx-sqlite` feature therefore bridges only its currently
             unavailable connection, query, and row-extraction shapes while
             retaining the upstream `SqliteConnection`. The `axum-08` feature
-            bridges its currently unavailable response, WebSocket-message,
+            bridges only its unavailable response, WebSocket-message,
             listener-binding, and server-await shapes while routers, routes,
             handlers, and projectable WebSocket operations remain direct Axum
-            calls.
+            calls. Do not create one adapter crate per application or dependency.
 
             The adapter-owned registry and independent removal lifecycle are
-            compiler-internal maintenance contracts. See
+            maintenance contracts, not runtime dispatch. See
             `internals.integration-adapters` and
-            `internals.projection.namespace-overlays` for those contracts.
+            `internals.projection.namespace-overlays` for their exact contracts.
 
         - type: example
           id: example.dependencies.adapter-namespace-overlay

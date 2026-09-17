@@ -647,6 +647,26 @@ Rules:
 - Missing descriptions may be warnings or errors according to the publication profile.
 
 ### 11.3 Sections and blocks
+The currently supported block union is deliberately small. Use this table to
+choose a block before consulting the complete definition below.
+
+| `type` | Required distinguishing fields | Use it for |
+|---|---|---|
+| `markdown` | `markdown` | Ordinary prose, lists, quotations, and inline links; never headings, tables, images, or raw HTML. |
+| `table` | `id`, `title`, `show-header`, `columns`, `rows` | Semantic tabular data with typed cells and stable row order. |
+| `rule` | `id`, `level`, `since`, `evidence`, `markdown` | A stable normative contract that benefits from independent evidence or linking. |
+| `grammar` | `id`, `notation`, `source` | Formal Terrane grammar in the selected notation. |
+| `example` | `id`, `title`, `language`, `mode`, `target`, `timeout-ms`, `source`, `response`, `diagnostic`, `markdown` | Illustrative or verified source, requests, responses, and expected diagnostics. |
+| `admonition` | `id`, `kind`, `title`, `markdown` | Notes, guidance, rationale, warnings, implementation details, and lifecycle callouts. |
+| `term` | `id`, `name`, `definition` | A globally identified glossary definition. |
+| `entity-index` | `query`, `sort`, `layout` | A generated member list queried from the assembled IR. |
+| `image` | `id`, `asset`, `alt`, `caption` | A validated asset with explicit accessibility semantics. |
+| `exercise` | `id`, `title`, `prompt`, `starter`, `solution` | A structured learning task with optional starter and solution content. |
+
+Unknown block types and fields not allowed by the selected block type are
+errors. This table is an index, not a substitute for the field contracts and
+examples in §§11.4–11.14.
+
 
 Page-level `documentation.blocks` contain introductions, learning objectives, or other content that follows the page title and summary but precedes the first titled section. Sections are ordered, may nest, and have stable local IDs:
 
