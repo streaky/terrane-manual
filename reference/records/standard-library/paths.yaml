@@ -1,0 +1,132 @@
+format: 1
+id: std.paths
+kind: topic
+
+surface: /core/filesystem/paths
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Paths
+  title-style: text
+  summary: >-
+    Represents filesystem paths as explicit values and provides lexical
+    component, normalization, parent, name, extension, and joining operations.
+  tags: [standard-library, filesystem, paths]
+  sections:
+    - id: synopsis
+      title: Compiler-backed synopsis
+      blocks:
+        - type: markdown
+          markdown: |-
+            These declarations require no capability because they transform path
+            values without touching the filesystem. The synopsis is checked against
+            the compiler-owned source by `tools/generate_manual_catalog.py`.
+
+            ```terrane
+            class path
+            function path-components list of string; subject path
+            function path-is-absolute bool; subject path
+            function normalise-path path; subject path
+            function path-name string; subject path
+            function path-parent path; subject path
+            function path-stem string; subject path
+            function path-extension string; subject path
+            function join-path path; base path, child path
+            ```
+
+    - id: behavior
+      title: Lexical path behavior
+      blocks:
+        - type: table
+          id: path-operations
+          title: Path operations
+          show-header: true
+          columns:
+            - id: operation
+              title: Operation
+              cell: code
+            - id: result
+              title: Result
+              cell: text
+            - id: failure
+              title: Failure behavior
+              cell: text
+          rows:
+            - operation: path-components
+              result: Non-empty slash-separated components.
+              failure: Infallible.
+            - operation: path-is-absolute
+              result: Whether text begins with a slash.
+              failure: Infallible.
+            - operation: normalise-path
+              result: Removes empty and dot components and resolves lexical dot-dot components where possible.
+              failure: Infallible; performs no filesystem lookup.
+            - operation: path-name
+              result: Final normalized component, or empty text when absent.
+              failure: Infallible.
+            - operation: path-parent
+              result: Lexical normalized parent.
+              failure: Infallible.
+            - operation: path-stem
+              result: Name without its final extension.
+              failure: Infallible.
+            - operation: path-extension
+              result: Final extension without the dot, or empty text.
+              failure: Infallible.
+            - operation: join-path
+              result: Normalized child beneath base; an absolute child replaces base.
+              failure: Infallible.
+
+        - type: note
+          id: lexical-not-filesystem
+          style: warning
+          markdown: |-
+            Path normalization is lexical. It does not canonicalize symlinks,
+            prove containment, check existence, or grant filesystem authority.
+            Use `filesystem-canonical` or `filesystem-open-beneath` when the
+            operation requires host-backed identity or containment.
+
+    - id: examples
+      title: Constructing and joining paths
+      blocks:
+        - type: example
+          id: join-output-path
+          title: Join a relative child
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/paths
+
+            from /core/filesystem/paths import path, join-path, path-name
+
+            function output-name string; root string
+              combined = join-path; (instance path; root), (instance path; 'reports/result.json')
+              return path-name; combined
+          response: null
+          diagnostic: null
+          markdown: >-
+            `join-path` returns a new value. Neither input is moved or mutated.
+  see-also:
+    - std.filesystem
+    - std.text-bytes-codecs
+
+provenance:
+  specification:
+    - document: language-spec
+      section: "5"
+  conformance: []
+  compiler: null
+
+implementation:
+  compiler:
+    - crates/terrane-compiler/src/core/paths.trn

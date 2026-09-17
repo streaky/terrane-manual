@@ -15,6 +15,7 @@ navigation:
       - source: records/language/types/optional-refinement.yaml
       - source: records/language/types/descriptors.yaml
       - source: records/language/types/references.yaml
+      - source: records/language/types/authority-in-practice.yaml
       - source: records/language/collections.yaml
   - group: Standard library
     children:
@@ -24,16 +25,27 @@ navigation:
       - source: records/standard-library/shared-state.yaml
       - source: records/standard-library/documents.yaml
       - source: records/standard-library/logging.yaml
+      - source: records/standard-library/filesystem.yaml
+      - source: records/standard-library/paths.yaml
+      - source: records/standard-library/text-bytes-and-codecs.yaml
+      - source: records/standard-library/collection-and-string-idioms.yaml
   - group: Packages
     children:
+      - source: records/packages/package-manifest.yaml
       - source: records/packages/rust-dependencies.yaml
       - source: records/packages/command-line.yaml
       - source: records/packages/testing.yaml
+      - source: records/packages/error-boundaries.yaml
   - group: Tooling
     children:
       - source: records/tooling/source-intelligence.yaml
       - source: records/tooling/debugging.yaml
       - source: records/tooling/profiling.yaml
+      - source: records/tooling/diagnostics.yaml
+      - source: records/tooling/current-limitations.yaml
+  - group: Application development
+    children:
+      - source: records/manual/application-development-map.yaml
   - group: Compiler internals
     children:
       - source: records/internals/execution-runtime.yaml

@@ -1,0 +1,142 @@
+format: 1
+id: tool.diagnostics
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Diagnostic catalog
+  title-style: text
+  summary: >-
+    Explains diagnostic families, classification, and correction, with a
+    generated compiler-backed code inventory for exact lookup.
+  tags: [tooling, diagnostics, errors, limitations, search]
+  sections:
+    - id: generated-index
+      title: Generated code inventory
+      blocks:
+        - type: markdown
+          markdown: |-
+            `generated/diagnostics.yaml` is the machine-readable index of every
+            stable diagnostic code found in the compiler sources. Each entry
+            records the code, emitted message templates, and compiler source
+            locations. `tools/generate_manual_catalog.py --check` verifies that it
+            matches the selected compiler checkout.
+
+            The generated inventory answers whether a code exists and where its
+            invariant is enforced. Authored sections on this page add rejected and
+            corrected examples and classify a diagnostic as settled semantics or a
+            temporary implementation limitation. If a generated entry has no
+            authored guide yet, treat its message and source location as lookup
+            data—not as a new language rule.
+
+    - id: families
+      title: Diagnostic families
+      blocks:
+        - type: table
+          id: diagnostic-families
+          title: Stable code families
+          show-header: true
+          columns:
+            - id: prefix
+              title: Prefix
+              cell: code
+            - id: area
+              title: Area
+              cell: text
+            - id: interpretation
+              title: Interpretation
+              cell: text
+          rows:
+            - prefix: L
+              area: Lexing
+              interpretation: Source character, indentation, literal, or trivia invariant.
+            - prefix: S
+              area: Syntax and package structure
+              interpretation: Parsing, name resolution, manifest, import, or source-layout invariant.
+            - prefix: T
+              area: Types and semantics
+              interpretation: Type, ownership, call, member, control-flow, or projection-use invariant.
+            - prefix: W
+              area: Advisories
+              interpretation: Non-blocking source guidance.
+
+    - id: t0105
+      title: T0105 — projected receiver type outside receiver position
+      blocks:
+        - type: table
+          id: diagnostic-t0105
+          title: T0105 contract
+          show-header: true
+          columns:
+            - id: field
+              title: Field
+              cell: text
+            - id: value
+              title: Value
+              cell: markdown
+          rows:
+            - field: Invariant
+              value: Current projection declines a Rust member when its receiver type is also used in a non-receiver signature position that cannot yet be closed safely.
+            - field: Classification
+              value: Temporary implementation limitation.
+            - field: Related references
+              value: \"[[tool.current-limitations#projection-associated-self]] and [[tool.packages.rust-dependencies#integration-adapters]]\"
+
+        - type: example
+          id: t0105-rejected
+          title: Rejected associated-Self constructor
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/projected-associated-self
+
+            from /deps/markdown import Options
+
+            function options Options;
+              return Options::gfm
+          response: null
+          diagnostic: T0105
+          markdown: null
+
+        - type: example
+          id: t0105-corrected
+          title: Narrow central adapter
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/projected-associated-self-adapter
+
+            from /deps/terrane-integration-adapters/docs-rendering import markdown_to_html
+
+            function render string; source string
+              return markdown_to_html; source
+          response: null
+          diagnostic: null
+          markdown: |-
+            Rust exposes `Options::gfm() -> Self`, but current generic projection
+            declines that associated constructor. This is not a language ban on
+            static constructors. Use a registered narrow adapter only for the
+            missing operation, preserve every directly projectable upstream type,
+            and remove the bridge when associated-`Self` projection is available.
+  see-also:
+    - tool.current-limitations
+    - tool.packages.rust-dependencies
+
+provenance:
+  specification: []
+  conformance: []
+  compiler: null

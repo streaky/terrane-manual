@@ -1,0 +1,1698 @@
+generation:
+  tool: tools/generate_manual_catalog.py
+  input-sha256: 571e705807a16d321ae037bb3b8bf2cb2d6c562be7c023c3ae6badc9aab18873
+format: 1
+generated: true
+records:
+- id: lang.lexical-structure.keywords
+  title: Keywords and reserved names
+  kind: topic
+  manual: reference
+  group: Language
+  position: 1
+  source: reference/records/language/lexical-structure/keywords.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '6.5'
+    - document: language-spec
+      section: '6.6'
+    conformance:
+    - contextual-class-name-binding
+    - contextual-this-binding
+    - linear-class-qualifier
+    - linear-ordinary-identifier
+    - rust-reserved-identifiers
+    compiler: null
+  sections:
+  - overview
+  - always-reserved
+  - implementation-language-keywords
+  - structural-words
+  - label-example
+  - naming-guidance
+  declaration-synopsis: []
+- id: lang.lexical-structure.text-blocks
+  title: Tail and block text literals
+  kind: topic
+  manual: reference
+  group: Language
+  position: 2
+  source: reference/records/language/lexical-structure/text-blocks.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '6.7'
+    conformance:
+    - return-tail-block-strings
+    compiler: null
+  sections:
+  - forms
+  - placement
+  declaration-synopsis: []
+- id: lang.functions.declarations
+  title: Function declarations and references
+  kind: topic
+  manual: reference
+  group: Language
+  position: 3
+  source: reference/records/language/functions/declarations.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '29'
+    conformance:
+    - unused-top-level-function
+    - ordinary-method-wrong-return
+    - optional-member-post-if-return
+    - static-class-singleton
+    - return-tail-block-strings
+    compiler: null
+  sections:
+  - declaration
+  - returns
+  - references
+  - unreferenced
+  declaration-synopsis: []
+- id: lang.numerics.conversion
+  title: Numeric arrival and explicit conversion
+  kind: topic
+  manual: reference
+  group: Language
+  position: 4
+  source: reference/records/language/numerics/conversion.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '11.6'
+    conformance:
+    - coercion-callback
+    - coercion-callback-source
+    - coercion-callback-result
+    - coercion-callback-ambiguous
+    compiler: null
+  sections:
+  - destinations
+  - declared-family
+  - callback
+  declaration-synopsis: []
+- id: lang.numerics.floating-point
+  title: Floating-point values and foundational mathematics
+  kind: topic
+  manual: reference
+  group: Language
+  position: 5
+  source: reference/records/language/numerics/floating-point.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '11.3'
+    conformance:
+    - foundational-float-math
+    - complete-float-surface
+    - invalid-float-member-receiver
+    - float-operation-argument-count
+    - float-operation-incompatible-argument
+    - float-integer-operation-argument
+    - non-callable-float-property
+    compiler: null
+  sections:
+  - values
+  - operations
+  - ieee-boundaries
+  - descriptors
+  - decomposition-example
+  declaration-synopsis: []
+- id: lang.classes.fields
+  title: Class fields and metadata
+  kind: topic
+  manual: reference
+  group: Language
+  position: 6
+  source: reference/records/language/classes/fields.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - initialization
+  - declaration
+  - reflection
+  declaration-synopsis: []
+- id: lang.classes.protocols
+  title: Protocols, interfaces, and traits
+  kind: topic
+  manual: reference
+  group: Language
+  position: 7
+  source: reference/records/language/classes/protocols.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '12.3'
+    conformance:
+    - truth-protocol
+    - truth-protocol-signature
+    - iterator-protocol
+    - structural-protocol-composition
+    compiler: null
+  sections:
+  - roles
+  - satisfaction
+  - invocation-authority
+  - truth
+  declaration-synopsis: []
+- id: lang.functions.asynchronous
+  title: Asynchronous functions and cancellation
+  kind: topic
+  manual: reference
+  group: Language
+  position: 8
+  source: reference/records/language/functions/asynchronous.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '21.3'
+    - document: language-spec
+      section: '21.4'
+    conformance:
+    - async-await
+    - async-finally-after-await
+    - borrow-parameter-in-async-finally
+    - cancelled-nested-finally-order
+    - projected-async-local-task-threaded
+    - rust-dependency-async-function
+    compiler: null
+  sections:
+  - invocation
+  - transferability
+  - structured-concurrency
+  - selection
+  - cancellation
+  declaration-synopsis: []
+- id: lang.types.optional-refinement
+  title: Optional-value refinement
+  kind: topic
+  manual: reference
+  group: Language
+  position: 9
+  source: reference/records/language/types/optional-refinement.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '14.1'
+    conformance:
+    - optional-member-before-narrowing
+    - optional-member-post-if-return
+    - static-class-singleton
+    - throwable-value-flow
+    compiler: null
+  sections:
+  - overview
+  - direct-presence-guards
+  - bind-expression-once
+  declaration-synopsis: []
+- id: lang.types.descriptors
+  title: Type descriptors
+  kind: topic
+  manual: reference
+  group: Language
+  position: 10
+  source: reference/records/language/types/descriptors.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '11.7'
+    conformance:
+    - descriptor-reflection
+    - builtin-descriptor-contracts
+    - composed-descriptor-identities
+    - same-named-cross-namespace-methods
+    - nominal-object-identity
+    compiler: null
+  sections:
+  - identity
+  - delivery
+  - queries
+  declaration-synopsis: []
+- id: lang.types.references
+  title: References, provenance, and shared ownership
+  kind: topic
+  manual: reference
+  group: Language
+  position: 11
+  source: reference/records/language/types/references.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '12.4'
+    conformance:
+    - references-derived-provenance
+    - reference-return-selected-lender
+    - reference-group-map
+    - reference-call-result-invalidation
+    - reference-map-mutation
+    - reference-value-parameter-escape
+    - reference-shared-acyclic
+    - reference-shared-cycle
+    - reference-shared-promotion
+    - borrow-across-await
+    compiler: null
+  sections:
+  - forms
+  - provenance
+  - lifetime
+  - lowering
+  declaration-synopsis: []
+- id: lang.types.authority-in-practice
+  title: Parameter and receiver authority in practice
+  kind: topic
+  manual: reference
+  group: Language
+  position: 12
+  source: reference/records/language/types/authority-in-practice.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '12.4'
+    conformance: []
+    compiler: null
+  sections:
+  - declaration-table
+  - interfaces
+  - fields-and-collections
+  - repeated-use
+  declaration-synopsis: []
+- id: lang.collections.protocols
+  title: Collections, identity, and iteration
+  kind: topic
+  manual: reference
+  group: Language
+  position: 13
+  source: reference/records/language/collections.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - byte-indexing
+  - source-iteration
+  - compiler-produced-read-only-lists
+  - lifetime-and-identity
+  declaration-synopsis: []
+- id: std.collections
+  title: Built-in collections
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 14
+  source: reference/records/standard-library/collections.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/collections
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - collection-kinds
+  - construction-and-types
+  - lookup
+  - lists-and-tuples
+  - maps-and-entries
+  - sets
+  - ranges
+  - ordering-iteration-and-lifetime
+  declaration-synopsis: []
+- id: std.networking.operations
+  title: Asynchronous networking operations
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 15
+  source: reference/records/standard-library/networking.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/networking
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - operations
+  - cancellation
+  - scheduling
+  declaration-synopsis: []
+- id: std.concurrency.channels
+  title: Typed channels
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 16
+  source: reference/records/standard-library/channels.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/concurrency
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - construction
+  - operations
+  - overflow
+  - lifecycle
+  declaration-synopsis: []
+- id: std.concurrency.shared-state
+  title: Shared mutable state
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 17
+  source: reference/records/standard-library/shared-state.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/concurrency
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - owner-task
+  - unavailable-cells
+  declaration-synopsis: []
+- id: std.documents.typed-decoding
+  title: Typed document decoding
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 18
+  source: reference/records/standard-library/documents.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - opt-in
+  - mapping
+  - diagnostics
+  declaration-synopsis: []
+- id: std.logging
+  title: Structured logging
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 19
+  source: reference/records/standard-library/logging.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/logging
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - construction
+  - events
+  - redaction
+  - async-transport
+  - dependency-bridge
+  declaration-synopsis: []
+- id: std.filesystem
+  title: Filesystem access
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 20
+  source: reference/records/standard-library/filesystem.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/filesystem
+  provenance:
+    specification:
+    - document: language-spec
+      section: '5'
+    conformance: []
+    compiler: null
+  sections:
+  - authority
+  - whole-file-synopsis
+  - handles
+  - example
+  declaration-synopsis:
+  - class filesystem-operation-result
+  - function construct; failure bool, detail string
+  - class existence-result
+  - function construct; exists bool, failure bool, detail string
+  - class path-result
+  - function construct; target path, failure bool, detail string
+  - class file-metadata
+  - function construct; kind string, size int, readonly bool, permission-detail string, failure bool,
+    detail string
+  - class file-data
+  - function construct; data bytes, completed int, end bool, failure bool, detail string
+  - class file-handle
+  - class directory-handle
+  - function open-file file-handle; capability filesystem, target path, readable bool, writable bool,
+    create bool = false, truncate bool = false
+  - function file-read file-data; capability filesystem, file ref file-handle, limit int
+  - function file-write file-data; capability filesystem, file ref file-handle, data bytes, offset int
+    = 0
+  - function file-flush filesystem-operation-result; capability filesystem, file ref file-handle
+  - function file-sync-data filesystem-operation-result; capability filesystem, file ref file-handle
+  - function file-sync-all filesystem-operation-result; capability filesystem, file ref file-handle
+  - function file-close filesystem-operation-result; capability filesystem, file file-handle
+  - class filesystem
+  - function filesystem-capability filesystem
+  - function filesystem-exists existence-result; capability filesystem, target path
+  - function filesystem-metadata file-metadata; capability filesystem, target path
+  - function filesystem-symlink-metadata file-metadata; capability filesystem, target path
+  - function filesystem-canonical path-result; capability filesystem, target path
+  - function filesystem-realpath path-result; capability filesystem, target path
+  - function filesystem-read-link path-result; capability filesystem, target path
+  - function filesystem-open-beneath directory-handle; capability filesystem, directory path, relative
+    path, cross-filesystem bool = false
+  - function open-file-beneath file-handle; capability filesystem, directory ref directory-handle, relative
+    path, readable bool, writable bool, create bool = false, truncate bool = false
+  - function filesystem-read-bounded file-data; capability filesystem, target path, limit int
+  - function filesystem-write-atomic filesystem-operation-result; capability filesystem, target path,
+    data bytes
+  - function filesystem-rename filesystem-operation-result; capability filesystem, source path, destination
+    path
+  - function filesystem-remove filesystem-operation-result; capability filesystem, target path
+- id: std.paths
+  title: Paths
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 21
+  source: reference/records/standard-library/paths.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/filesystem/paths
+  provenance:
+    specification:
+    - document: language-spec
+      section: '5'
+    conformance: []
+    compiler: null
+  sections:
+  - synopsis
+  - behavior
+  - examples
+  declaration-synopsis:
+  - class path
+  - function construct; input string
+  - function path-components list of string; subject path
+  - function path-is-absolute bool; subject path
+  - function normalise-path path; subject path
+  - function path-name string; subject path
+  - function path-parent path; subject path
+  - function path-stem string; subject path
+  - function path-extension string; subject path
+  - function join-path path; base path, child path
+- id: std.text-bytes-codecs
+  title: Text, bytes, and codecs
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 22
+  source: reference/records/standard-library/text-bytes-and-codecs.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '9'
+    conformance: []
+    compiler: null
+  sections:
+  - text-and-bytes
+  - encodings
+  - string-operations
+  - octets-and-codecs
+  declaration-synopsis:
+  - class decode-result
+  - function construct; failed bool, message string, data bytes
+  - class hex-codec
+  - function encode string; data bytes
+  - function decode decode-result; text string
+  - class base64-codec
+  - function construct; url-safe bool
+  - function encode string; data bytes, padded bool
+  - function decode decode-result; text string, padded bool
+  - function hex hex-codec
+  - function base64 base64-codec
+  - function base64-url base64-codec
+  - function bytes-from-octets bytes; octets (list of uint8)
+  - function encode-hex string; data bytes
+  - function decode-hex decode-result; text string
+  - function encode-base64 string; data bytes, url-safe bool, padded bool
+  - function decode-base64 decode-result; text string, url-safe bool, padded bool
+- id: app.collection-string-idioms
+  title: Collection and string idioms
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 23
+  source: reference/records/standard-library/collection-and-string-idioms.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '9'
+    conformance: []
+    compiler: null
+  sections:
+  - typed-empty-values
+  - mutation
+  - iteration
+  - strings
+  - bytes
+  declaration-synopsis: []
+- id: tool.packages.package-manifest
+  title: Package manifest
+  kind: topic
+  manual: reference
+  group: Packages
+  position: 24
+  source: reference/records/packages/package-manifest.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '31'
+    conformance: []
+    compiler: null
+  sections:
+  - complete-example
+  - fields
+  - capabilities-and-effects
+  - namespaces-and-artifacts
+  - overlays-and-local-patches
+  declaration-synopsis: []
+- id: tool.packages.rust-dependencies
+  title: Projected Rust dependencies
+  kind: topic
+  manual: reference
+  group: Packages
+  position: 25
+  source: reference/records/packages/rust-dependencies.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '23.8'
+    conformance:
+    - rust-dependency-deferred-surface
+    - transitive-type-owner-must-be-declared-at-one-version
+    - rust-dependency-reqwest
+    - rust-dependency-async-function
+    - rust-dependency-callbacks
+    - projected-callback-borrowed-capture
+    - projected-callback-nontransferable-capture
+    - projected-callback-throwable
+    compiler: null
+  sections:
+  - manifest
+  - workflow
+  - imports
+  - crossed-types
+  - transitive-owners
+  - async-members
+  - associated-interfaces
+  - callbacks
+  - foreign-value-ownership
+  - interfaces
+  - async-sequences
+  - async-sinks
+  - chain-only-values
+  - integration-adapters
+  - resolution
+  declaration-synopsis: []
+- id: tool.packages.command-line
+  title: Command-line execution
+  kind: topic
+  manual: reference
+  group: Packages
+  position: 26
+  source: reference/records/packages/command-line.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '7'
+    - document: language-spec
+      section: '31.1'
+    conformance:
+    - executable-shebang-script
+    - shebang-script-without-main
+    - manifest-shebang-missing-namespace
+    compiler: null
+  sections:
+  - commands
+  - generated-package-state
+  - scripts
+  declaration-synopsis: []
+- id: tool.packages.testing
+  title: Native testing
+  kind: topic
+  manual: reference
+  group: Packages
+  position: 27
+  source: reference/records/packages/testing.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/testing
+  provenance:
+    specification:
+    - document: language-spec
+      section: '31.5'
+    conformance: []
+    compiler: null
+  sections:
+  - discovery
+  - execution
+  - framework
+  declaration-synopsis: []
+- id: app.error-boundaries
+  title: Error handling at application boundaries
+  kind: topic
+  manual: reference
+  group: Packages
+  position: 28
+  source: reference/records/packages/error-boundaries.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '22'
+    conformance:
+    - rust-dependency-error-catch
+    compiler: null
+  sections:
+  - choose-a-boundary
+  - filesystem-and-utf8
+  - documents
+  - projected-dependencies
+  - validation-and-exit
+  declaration-synopsis: []
+- id: tool.source-intelligence
+  title: Compiler-backed source intelligence
+  kind: topic
+  manual: reference
+  group: Tooling
+  position: 29
+  source: reference/records/tooling/source-intelligence.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '31'
+    conformance: []
+    compiler: terrane_compiler::tooling
+  sections:
+  - snapshots
+  - protocol
+  - queries
+  - edits
+  - formatting
+  - language-server
+  declaration-synopsis: []
+- id: tool.debugging
+  title: Native source debugging
+  kind: topic
+  manual: reference
+  group: Tooling
+  position: 30
+  source: reference/records/tooling/debugging.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '31'
+    conformance: []
+    compiler: terrane_compiler::debugging
+  sections:
+  - commands
+  - provenance
+  - breakpoints-stepping
+  - frames-values
+  - lifecycle
+  declaration-synopsis: []
+- id: tool.profiling
+  title: Native CPU profiling
+  kind: topic
+  manual: reference
+  group: Tooling
+  position: 31
+  source: reference/records/tooling/profiling.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '26.6'
+    conformance: []
+    compiler: terrane_compiler::profiling
+  sections:
+  - commands
+  - optimized-build
+  - attribution
+  - privacy-limitations
+  declaration-synopsis: []
+- id: tool.diagnostics
+  title: Diagnostic catalog
+  kind: topic
+  manual: reference
+  group: Tooling
+  position: 32
+  source: reference/records/tooling/diagnostics.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - generated-index
+  - families
+  - t0105
+  declaration-synopsis: []
+- id: tool.current-limitations
+  title: Current implementation limitations
+  kind: topic
+  manual: reference
+  group: Tooling
+  position: 33
+  source: reference/records/tooling/current-limitations.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - interpretation
+  - projection-associated-self
+  - projection-namespace-cycles
+  - implicit-support-dependencies
+  - test-executable-cache-identity
+  - field-mutation-inference
+  declaration-synopsis: []
+- id: manual.application-development-map
+  title: Application development map
+  kind: topic
+  manual: reference
+  group: Application development
+  position: 34
+  source: reference/records/manual/application-development-map.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - start
+  - common-foundations
+  declaration-synopsis: []
+- id: internals.execution.runtime-selection
+  title: Execution requirements and runtime selection
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 35
+  source: reference/records/internals/execution-runtime.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '21.3'
+    - document: language-spec
+      section: '21.4'
+    conformance:
+    - cancelled-foreign-await-runs-finally
+    - cancelled-nested-finally-order
+    - cancelled-finally-error-wins
+    - async-await
+    - cooperative-task-scope
+    - networking-tcp-loopback
+    - projected-async-local-task-threaded
+    - rust-dependency-async-function
+    compiler: null
+  sections:
+  - requirements
+  - strategy
+  - generated-support
+  - heterogeneous-selection
+  - mutable-async-callables
+  - readiness-io
+  - cancellation
+  - task-ownership-lowering
+  declaration-synopsis: []
+- id: internals.semantics.conversion-lowering
+  title: Conversion analysis and lowering
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 36
+  source: reference/records/internals/conversion-lowering.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '11.6'
+    conformance:
+    - coercion-callback
+    compiler: null
+  sections:
+  - resolution
+  - lowering
+  declaration-synopsis: []
+- id: internals.semantics.descriptor-contracts
+  title: Canonical descriptor contracts
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 37
+  source: reference/records/internals/descriptor-contracts.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '11.7'
+    conformance:
+    - descriptor-reflection
+    - builtin-descriptor-contracts
+    - builtin-name-class
+    - composed-descriptor-identities
+    - same-named-cross-namespace-methods
+    - member-access-without-type-import
+    - string-result-list-iteration
+    - string-result-list-mutation
+    - truth-protocol
+    - iterator-protocol
+    compiler: null
+  sections:
+  - model
+  - protocols
+  - imported-type-closure
+  declaration-synopsis: []
+- id: internals.semantics.reference-provenance
+  title: Reference provenance and native lowering
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 38
+  source: reference/records/internals/reference-provenance.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '12.4'
+    conformance:
+    - references-derived-provenance
+    - reference-return-selected-lender
+    - reference-group-map
+    - reference-call-result-invalidation
+    - borrow-across-await
+    compiler: null
+  sections:
+  - representation
+  - rejection
+  - lowering
+  declaration-synopsis: []
+- id: internals.testing.conformance-timing
+  title: Nested conformance timing
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 39
+  source: reference/records/internals/conformance-timing.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler:
+    - docs/measure-test-times.py
+    - crates/terrane-cli/tests/cli.rs
+    - crates/terrane-compiler/tests/conformance.rs
+  sections:
+  - null
+  - null
+  - null
+  - null
+  - null
+  - null
+  declaration-synopsis: []
+- id: internals.projection.resolution
+  title: Dependency projection resolution
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 40
+  source: reference/records/internals/projection-resolution.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '23.8'
+    conformance:
+    - rust-dependency-deferred-surface
+    - removed-rust-dependency-member
+    - removed-rust-dependency-instance-member
+    - rust-dependency-reqwest
+    compiler: null
+  sections:
+  - identity
+  - resolution
+  - public-paths
+  - callbacks
+  - destination-results
+  - interface-impls
+  - async-sequences
+  - async-sinks
+  - chain-only
+  - history
+  declaration-synopsis: []
+- id: internals.projection.namespace-overlays
+  title: Projection namespace overlays
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 41
+  source: reference/records/internals/projection-namespace-overlays.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '23.8'
+    conformance:
+    - integration-adapter-sqlx-sqlite
+    - projected-axum-boundaries
+    compiler: null
+  sections:
+  - declaration-discovery
+  - namespace-composition
+  - validation
+  - identity-and-genericity
+  declaration-synopsis: []
+- id: internals.integration-adapters
+  title: Rust integration adapters
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 42
+  source: reference/records/internals/integration-adapters.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '23.8'
+    - document: language-spec
+      section: '24.7'
+    conformance:
+    - integration-adapter-sqlx-sqlite
+    - projected-axum-boundaries
+    - authored-rust-module
+    compiler: null
+  sections:
+  - purpose
+  - recognizing-a-gap
+  - using-an-adapter
+  - application-owned-adapters
+  - authoring
+  - registry
+  - verification
+  - current-gap-groups
+  - troubleshooting
+  - retirement
+  declaration-synopsis: []
+- id: internals.observability.runtime
+  title: Observability runtime boundary
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 43
+  source: reference/records/internals/observability-runtime.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - ownership
+  - determinism
+  - dependency-bridge
+  declaration-synopsis: []
+- id: internals.build.toolchain-profiles
+  title: Build toolchain profiles
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 44
+  source: reference/records/internals/build-toolchain-profiles.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - selected-inputs
+  - generated-artifacts
+  - native-artifact-kind
+  - workspace-artifact-size
+  - maintenance
+  declaration-synopsis: []
+- id: internals.semantics.return-validation
+  title: Semantic return validation
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 45
+  source: reference/records/internals/semantic-return-validation.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - concrete-return-contracts
+  - initialized-static-optional
+  declaration-synopsis: []
+- id: internals.collections.lifetime
+  title: Collection lifetime lowering
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 46
+  source: reference/records/internals/collection-lifetime.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - mutation-release-points
+  - representation-identity
+  - borrowed-result-iteration
+  - descriptor-metadata
+  declaration-synopsis: []
+- id: internals.optimization.proof-guided-lowering
+  title: Proof-guided native optimization
+  kind: topic
+  manual: reference
+  group: Compiler internals
+  position: 47
+  source: reference/records/internals/proof-guided-lowering.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - optimization-contract
+  - bounded-facts
+  - bulk-collection-producers
+  - checked-arithmetic-regions
+  - numeric-lowering-boundaries
+  - backend-handoff
+  declaration-synopsis:
+  - function validate-large-literal; enabled bool
+  - function validate-return int
+  - function validate-exit
+  - function validate-throw
+  - function observe-prefix int64; value int64
+  - function main
+  - function transition int8; input int8
+  - function transition-uint8 uint8; input uint8
+  - function transition-then int8; input int8
+  - function transition-remainder int8; input int8
+  - function transition-negative-coefficient int8; input int8
+  - function transition-int64 int64; input int64
+  - function transition-int128 int128; input int128
+  - function both-affine int8; input int8
+  - function nested-conditional int8; input int8
+  - function positive-lower-bound; input int8
+  - function global-condition int8; input int8
+  - function main
+- id: book.preface
+  title: Preface
+  kind: topic
+  manual: tutorial
+  group: Front matter
+  position: 1
+  source: tutorial-book/records/preface.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections: []
+  declaration-synopsis: []
+- id: book.introduction
+  title: Introduction
+  kind: chapter
+  manual: tutorial
+  group: Front matter
+  position: 2
+  source: tutorial-book/records/chapters/introduction.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - audience
+  - scope
+  - reference-boundary
+  - examples
+  - continuum-of-competence
+  declaration-synopsis: []
+- id: book.first-taste
+  title: A First Taste of Terrane
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 3
+  source: tutorial-book/records/chapters/01-first-taste.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - what-terrane-is-for
+  - installing-the-toolchain
+  - your-first-program
+  - running-a-source-file
+  - the-edit-check-and-run-cycle
+  - reading-a-compiler-diagnostic
+  - a-slightly-more-useful-program
+  - where-terrane-fits-between-scripting-and-systems-programming
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.values-and-names
+  title: Values, Names, and Everyday Expressions
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 4
+  source: tutorial-book/records/chapters/02-values-and-names.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - numbers-truth-values-and-text
+  - giving-a-value-a-name
+  - changing-a-binding
+  - arithmetic-and-comparisons
+  - member-access-with
+  - calling-with-semicolon
+  - nested-calls-and-parentheses
+  - comments-and-readable-layout
+  - everything-is-an-object-semantically
+  - why-terrane-why-calls-use-semicolon
+  - project-calculate-a-small-purchase
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.decisions-and-repetition
+  title: Making Decisions and Repeating Work
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 5
+  source: tutorial-book/records/chapters/03-decisions-and-repetition.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - choosing-with-if-and-else
+  - combining-conditions
+  - repeating-with-while
+  - iterating-with-for
+  - ranges-and-ordinary-iteration
+  - break-and-continue
+  - loop-local-names
+  - choosing-the-clearest-loop
+  - project-classify-a-range-of-numbers
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.functions
+  title: 'Functions: Giving Work a Name'
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 6
+  source: tutorial-book/records/chapters/04-functions.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - defining-and-calling-a-function
+  - parameters-and-results
+  - required-optional-and-named-arguments
+  - returning-early
+  - local-scope
+  - passing-functions-as-values
+  - small-functions-that-compose
+  - project-turn-the-number-classifier-into-functions
+  - terrane-style-express-contracts-not-ceremony
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.text-and-collections
+  title: Text and Collections
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 7
+  source: tutorial-book/records/chapters/05-text-and-collections.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - quoted-tail-and-block-text
+  - common-string-operations
+  - bytes-unicode-scalars-and-grapheme-clusters
+  - creating-lists
+  - iterating-over-lists
+  - creating-and-updating-maps
+  - building-collections-from-existing-values
+  - choosing-the-right-collection
+  - assignment-and-copy-on-write-value-behavior
+  - why-terrane-values-without-accidental-aliasing
+  - project-word-frequency
+  - terrane-style-make-data-shape-visible
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.complete-program
+  title: Building a Complete Program
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 8
+  source: tutorial-book/records/chapters/06-complete-program.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - starting-from-a-user-story
+  - dividing-the-program-into-functions
+  - modeling-the-program-s-data
+  - validating-values
+  - reporting-useful-output
+  - keeping-decisions-separate-from-presentation
+  - checking-and-testing-behavior
+  - growing-the-program-without-losing-its-shape
+  - project-a-small-in-memory-reporting-tool
+  - terrane-style-let-the-program-read-like-its-decisions
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.errors
+  title: Errors Are Part of the Program
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 9
+  source: tutorial-book/records/chapters/07-errors.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - mistakes-failures-and-exceptional-conditions
+  - throwing-an-error
+  - handling-errors-with-try-and-catch
+  - cleaning-up-with-finally
+  - letting-an-error-travel-to-the-right-layer
+  - replacing-and-preserving-errors
+  - designing-useful-error-values
+  - when-not-to-catch-an-error
+  - improving-the-reporting-tool-s-failures
+  - terrane-style-make-failure-boundaries-as-clear-as-success-boundaries
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.namespaces-imports-and-packages
+  title: Namespaces, Imports, and Packages
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 10
+  source: tutorial-book/records/chapters/08-namespaces-imports-and-packages.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - from-one-file-to-a-project
+  - namespaces-and-paths
+  - imports
+  - organizing-the-source-tree
+  - visibility
+  - the-package-manifest
+  - dependencies
+  - building-and-running-a-package
+  - project-split-the-reporting-tool-across-files
+  - terrane-style-let-namespace-boundaries-follow-responsibility
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.classes-interfaces-and-traits
+  title: Classes, Interfaces, and Traits
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 11
+  source: tutorial-book/records/chapters/09-classes-interfaces-and-traits.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - objects-as-behavior
+  - defining-a-class
+  - constructing-an-instance
+  - typed-fields-and-ordinary-methods
+  - initialization-with-construct
+  - cleanup-with-destruct
+  - encapsulation-and-visibility
+  - extending-one-base-class
+  - describing-shared-behavior-with-an-interface
+  - reusing-fields-and-methods-with-traits
+  - designing-an-object-that-earns-its-existence
+  - project-model-a-small-task-list
+  - under-the-surface-the-object-model-is-a-semantic-abstraction
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.types
+  title: Types Without Ceremony
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 12
+  source: tutorial-book/records/chapters/10-types.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - type-inference
+  - annotations-where-they-communicate-intent
+  - union-types-and-optional-values
+  - refinement-after-a-check
+  - coercion
+  - generic-types
+  - function-types
+  - compile-time-guarantees
+  - project-strengthen-the-task-list-program-with-types
+  - terrane-style-state-contracts-not-compiler-trivia
+  - exercises
+  - what-we-learned
+  declaration-synopsis: []
+- id: book.identity-and-movement
+  title: Values, Shared Identity, and Movement
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 13
+  source: tutorial-book/records/chapters/11-identity-and-movement.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - ordinary-assignment-first
+  - independent-logical-values
+  - copy-on-write-behavior-in-practice
+  - sharing-identity-explicitly-with-ref
+  - shared-references-and-ownership
+  - transferring-a-value-with-move
+  - when-a-value-is-no-longer-available
+  - lifetimes-without-annotation-clutter
+  - choosing-between-assignment-ref-and-move
+  - common-designs-that-do-not-need-references
+  - project-observing-a-work-list
+  - terrane-style-make-identity-part-of-the-model-only-when-it-matters
+  - exercises
+  - chapter-summary
+  declaration-synopsis: []
+- id: book.async
+  title: Asynchronous Work and Structured Concurrency
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 14
+  source: tutorial-book/records/chapters/12-async.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - when-a-program-should-be-asynchronous
+  - declaring-and-awaiting-asynchronous-work
+  - task-scopes
+  - spawning-work-within-a-scope
+  - joining-tasks-and-observing-outcomes
+  - failure-inside-a-task
+  - cancellation-and-partial-progress
+  - deadlines
+  - project-coordinating-a-heartbeat-with-an-overall-time-budget
+  - sharing-mutable-state-by-giving-it-one-owner
+  - carrying-log-events-through-typed-channels
+  - threaded-and-cooperative-executor-profiles
+  - project-processing-several-values-concurrently
+  - terrane-style-keep-concurrency-within-a-scope
+  - why-terrane-async-is-structured
+  - exercises
+  - chapter-summary
+  declaration-synopsis: []
+- id: book.native-program
+  title: How Terrane Becomes a Native Program
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 15
+  source: tutorial-book/records/chapters/13-native-program.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - from-terrane-source-to-an-executable
+  - the-semantic-model-between-source-and-rust
+  - reading-generated-rust
+  - source-locations-and-diagnostics-across-lowering
+  - debug-and-release-builds
+  - what-optimization-may-erase
+  - why-a-terrane-object-need-not-become-a-rust-object
+  - behavior-is-the-contract-semicolon-representation-is-a-compiler-decision
+  - debugging-at-the-terrane-and-rust-levels
+  - the-continuum-of-competence
+  - exercises
+  - chapter-summary
+  declaration-synopsis: []
+- id: book.terrane-shaped-programs
+  title: Writing Terrane-Shaped Programs
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 16
+  source: tutorial-book/records/chapters/14-terrane-shaped-programs.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance: []
+    compiler: null
+  sections:
+  - prefer-the-ordinary-operation
+  - let-inference-remove-noise
+  - use-types-to-state-real-contracts
+  - pass-values-unless-identity-matters
+  - give-errors-an-appropriate-owner
+  - use-iteration-rather-than-managing-indexes
+  - keep-concurrency-within-a-scope
+  - favor-readable-generated-behavior-over-clever-source-tricks
+  - refactoring-the-book-s-project-as-a-whole
+  - a-practical-review-checklist
+  - exercises
+  - chapter-summary
+  declaration-synopsis: []
+- id: book.testing-and-debugging
+  title: Testing and Debugging
+  kind: chapter
+  manual: tutorial
+  group: Chapters
+  position: 17
+  source: tutorial-book/records/chapters/15-testing-and-debugging.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: language-spec
+      section: '31.5'
+    - document: language-spec
+      section: '31.6'
+    - document: language-spec
+      section: '26.6'
+    conformance: []
+    compiler: null
+  sections:
+  - begin-with-one-observable-behavior
+  - write-assertions-that-explain-the-contract
+  - choose-the-test-boundary-deliberately
+  - make-time-and-context-deterministic
+  - drive-the-built-application
+  - run-the-suite-at-the-right-scale
+  - read-failures-and-machine-reports
+  - debug-from-the-terrane-boundary-inward
+  - profile-the-optimized-application
+  - complete-project-testing-a-writing-plan
+  - exercises
+  - chapter-summary
+  declaration-synopsis: []
