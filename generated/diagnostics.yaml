@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 57b0f4641d751e8296371f6bad9591a752cd655ca3363d8435b71e4659e3c35c
+  input-sha256: 4b18615f8723670ae2f5408512627ca0c385dfec9121f1e5dc6b1617b4ab4ad6
 format: 1
 generated: true
 diagnostics:
@@ -659,7 +659,7 @@ diagnostics:
   - duplicate binding `{name}` in the same lexical scope
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1263
+    line: 1269
 - code: S2013
   messages:
   - unresolved name `{name}`
@@ -722,7 +722,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 1728
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 401
+    line: 407
 - code: S2022
   messages:
   - constant binding `{name}` cannot be reassigned
@@ -733,7 +733,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 47
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 389
+    line: 395
 - code: S2023
   messages:
   - binding `{}` cannot reference itself in its initializer
@@ -983,7 +983,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 194
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 590
+    line: 596
 - code: T0008
   messages:
   - '`{}` from `{source_type}` requires one numeric destination'
@@ -1098,17 +1098,17 @@ diagnostics:
   - an `if` statement requires a condition
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 728
+    line: 734
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 865
+    line: 871
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 891
+    line: 897
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 904
+    line: 910
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 915
+    line: 921
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 932
+    line: 938
 - code: T0015
   messages:
   - function `{}` may finish without returning a value
@@ -1117,15 +1117,15 @@ diagnostics:
   - function `{name}` must return `{expected}`
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 643
-  - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1113
+    line: 649
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 1119
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1140
+    line: 1125
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1158
+    line: 1146
+  - path: crates/terrane-compiler/src/semantics/scopes.rs
+    line: 1164
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1350
 - code: T0016
@@ -1150,9 +1150,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 252
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 815
+    line: 821
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 824
+    line: 830
 - code: T0017
   messages:
   - '`{member}` is not valid syntax; use `.coerce.{}`'
@@ -2160,4 +2160,4 @@ diagnostics:
   - binding `{}` is marked intentionally unused but is read
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 251
+    line: 252

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a3b18cb2f36a879348dae0259536e856a262b8d8c2a44a4dae5ef27e1a6289a8
+  input-sha256: fe971bfc4801bd2c2c57bf9c634b17b61d2c9fdf305627eca5ad395752a2fcb0
 format: 1
 generated: true
 symbols:
@@ -383,6 +383,10 @@ symbols:
 - name: as
   record: book.errors
   section: what-we-learned
+  declaration: as
+- name: as
+  record: internals.integration-adapters
+  section: recognizing-a-gap
   declaration: as
 - name: assert
   record: book.testing-and-debugging
@@ -956,6 +960,10 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: clocks
+- name: Clone
+  record: internals.integration-adapters
+  section: current-gap-groups
+  declaration: Clone
 - name: Clone
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
@@ -5088,10 +5096,6 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: selected_target
-- name: Self
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: Self
 - name: Self
   record: internals.integration-adapters
   section: purpose

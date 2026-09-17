@@ -121,6 +121,45 @@ documentation:
             concrete types, conversions, and ownership shape as the intended
             Terrane call.
 
+        - type: description
+          id: description.internals.adapters.projected-trait-operations
+          since: null
+          evidence:
+            - projected-foreign-trait-method-collision
+            - projected-sqlx-connection-lifecycle
+            - projected-sqlx-row-destination
+            - projected-axum-boundaries
+          markdown: |-
+            Trait-provided operations belong to the projected concrete owner, not
+            to a free-floating copy of the Rust trait. Import a unique operation
+            from:
+
+            ```text
+            /deps/<package>/<owner>
+            ```
+
+            For example, SQLx connection lifecycle operations are split by their
+            actual owner:
+
+            ```terrane
+            from /deps/sqlx-sqlite/sqliteconnection import close
+            from /deps/sqlx-sqlite/sqliteconnectoptions import connect
+            ```
+
+            When two traits expose the same operation name for one concrete
+            owner, projection retains both beneath deterministic
+            `trait/<canonical-trait-path>` child namespaces. Concrete trait
+            arguments become normalized path segments when one owner implements
+            several instantiations of the same generic trait. Use selective
+            imports with `as` when both operations are needed in one source
+            scope.
+
+            Generated reference material and projection tooling retain the
+            operation's exact qualified Rust path and upstream documentation, so
+            the owner-qualified Terrane path never hides which implementation is
+            called. A candidate declines only when concrete-owner and
+            trait-qualified naming still cannot distinguish it safely.
+
         - type: rule
           id: rule.internals.adapters.declines-remain-honest
           level: must
@@ -487,11 +526,12 @@ documentation:
             - integration-adapter-sqlx-sqlite
             - projected-axum-boundaries
           markdown: |-
-            The `sqlx-sqlite` feature currently bridges trait-provided connection
-            construction and close, lifetime-bearing query execution and binding,
-            and generic bytes-row extraction. It preserves the directly projected
-            upstream `SqliteConnection`; application SQL and schema remain in
-            Terrane.
+            The `sqlx-sqlite` feature currently bridges lifetime-bearing query
+            construction, binding, and execution plus collection of non-`Clone`
+            result rows. Connection construction and close and destination-selected
+            single-row extraction are direct projected trait operations. The
+            remaining bridge preserves the directly projected upstream
+            `SqliteConnection`; application SQL and schema remain in Terrane.
 
             The `axum-08` feature currently bridges Axum's closed response alias,
             nested WebSocket receive and message-constructor shapes, Tokio
@@ -499,12 +539,12 @@ documentation:
             routers, routes, handlers, upgrade callbacks, and projectable
             WebSocket operations remain direct upstream calls.
 
-            The `docs-rendering` feature currently bridges an associated Markdown
-            options constructor returning `Self` and PDF operations whose broader
-            projected member graph or generic path input is not yet usable. It
-            exposes narrow Markdown-to-HTML and HTML-to-PDF-bytes operations;
-            document structure, validation, templates, and output policy remain
-            application code.
+            The `docs-rendering` feature currently bridges PDF operations whose
+            broader projected member graph or generic path input is not yet usable.
+            Markdown options constructors now project directly; the feature still
+            includes a narrow Markdown rendering operation and HTML-to-PDF-bytes
+            operation. Document structure, validation, templates, and output policy
+            remain application code.
 
             The registry keeps limitations as separate records even when one
             feature supplies several related operations. It also records Godot API
