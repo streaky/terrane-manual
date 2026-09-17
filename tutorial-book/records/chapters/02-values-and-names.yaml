@@ -235,6 +235,29 @@ documentation:
                 print; 'second'     # displays the word second
                 ```
           sections: []
+        - id: giving-a-value-a-name-discarding-or-retaining-a-result
+          title: Discarding or retaining a result intentionally
+          blocks:
+            - type: markdown
+              markdown: |-
+                Use the bare name `_` when an operation matters but its result does not:
+
+                ```terrane
+                _ = record-metric; sample
+                _ list of bytes = await query-bytes; database, query
+                ```
+
+                The expression is evaluated exactly once. A type may follow `_` when the operation needs a destination type, as in the second example. No binding is created, so `_` cannot be read later and does not produce an unused-binding warning. The discarded value has only statement lifetime and is released before the next statement.
+
+                A name that merely starts with an underscore is different:
+
+                ```terrane
+                _guard = acquire-lock; resource
+                perform-update; resource
+                ```
+
+                `_guard` is an ordinary lexical binding. It retains ownership until its normal scope endpoint, but `W4001` is suppressed because the leading underscore marks the binding as intentionally unused. If code later reads `_guard`, the compiler reports `W4006` because the name no longer describes its use; rename it without the leading underscore. Use this form for lifetime guards, subscriptions, registrations, and similar values whose continued ownership matters even when their contents are never read.
+          sections: []
     - id: changing-a-binding
       title: Changing a binding
       blocks:
