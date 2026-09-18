@@ -273,6 +273,49 @@ documentation:
 
             Our project uses compiler-bundled core facilities, so it needs no third-party dependency entry. It imports `map` and `throwable` through their `/core` namespaces.
 
+            Terrane libraries use the same source language and namespace system as
+            the application. Their manifest selects `artifact = "library"`, their
+            namespace roots equal or descend from the package identity, and they do
+            not define `main`. The compiler analyzes and lowers library source
+            together with the application, so importing a library declaration is an
+            ordinary namespace import rather than a runtime plug-in boundary.
+
+            During local development, install a sibling library from the application
+            directory:
+
+            ```console
+            terrane package install ../work-report-formatters
+            ```
+
+            The command requires this application's `package.toml`, validates the
+            target library, calculates its deterministic source hash, and adds a
+            dependency table such as:
+
+            ```toml
+            [terrane-dependencies."work-report/formatters"]
+            path = "../work-report-formatters"
+            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            ```
+
+            The table declares which library source enters the build; source still
+            imports selected names explicitly:
+
+            ```terrane
+            from /work-report/formatters import progress-label
+            ```
+
+            A published package can be consumed directly from an exact Git tag:
+
+            ```console
+            terrane package install --git https://example.invalid/work-report-formatters.git --tag v1.2.3
+            ```
+
+            Terrane verifies that the checkout is exactly that tag and records a
+            full SHA-256 source-tree hash. This hash is not a Git commit ID and is
+            never abbreviated. `terrane package hash <directory>` and
+            `terrane package hash --git <url> --tag <tag>` print the same value
+            without changing the application manifest.
+
             Rust dependencies are declared in `package.toml`, never smuggled into source through an undeclared path. A later package might contain:
 
             ```toml

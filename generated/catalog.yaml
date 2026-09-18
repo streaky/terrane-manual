@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1daf42c58b0694ea9f82b9bfb5f9134728d9df12884ecac0011282c891b27329
+  input-sha256: bb68ef7ccef21e6c9604401b4880870c0460df5900dc39bec9a2f04abd8389dd
 format: 1
 generated: true
 records:
@@ -629,13 +629,15 @@ records:
     specification:
     - document: language-spec
       section: '31'
-    conformance: []
+    conformance:
+    - terrane-library-package
     compiler: null
   sections:
   - complete-example
   - fields
   - capabilities-and-effects
   - namespaces-and-artifacts
+  - terrane-library-dependencies
   - overlays-and-local-patches
   declaration-synopsis: []
 - id: tool.packages.rust-dependencies
@@ -699,10 +701,12 @@ records:
     - executable-shebang-script
     - shebang-script-without-main
     - manifest-shebang-missing-namespace
+    - terrane-library-package
     compiler: null
   sections:
   - commands
   - generated-package-state
+  - package-management
   - scripts
   declaration-synopsis: []
 - id: tool.packages.testing

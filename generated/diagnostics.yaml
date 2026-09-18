@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d41f009b40959326184e0aac82bfa4e88e07db23612b8fdfa72a89230e19fe93
+  input-sha256: 4e15875b096b78560669ae145485e0d77f9795c9e968e8cd8fff94ea5bd6ce1c
 format: 1
 generated: true
 diagnostics:
@@ -590,7 +590,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/package.rs
-    line: 220
+    line: 238
 - code: S2002
   messages:
   - each source unit must declare exactly one namespace
@@ -671,19 +671,22 @@ diagnostics:
   - package has no `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 365
+    line: 390
 - code: S2016
   messages:
   - package has more than one `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 384
+    line: 409
 - code: S2017
   messages:
+  - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
   sources:
+  - path: crates/terrane-compiler/src/compiler.rs
+    line: 366
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 568
+    line: 587
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
@@ -713,7 +716,7 @@ diagnostics:
   - declared namespace `{namespace}` does not match `{expected}` required by its source directory
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 174
+    line: 192
 - code: S2021
   messages:
   - plain namespace assignment cannot replace program-global binding `{}`
@@ -768,20 +771,20 @@ diagnostics:
   - Rust dependency `{dependency}` is not declared in `package.toml`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 708
+    line: 727
 - code: S2028
   messages:
   - <terrane>/projected/{}.trn
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 303
+    line: 322
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 487
+    line: 506
 - code: S2029
   messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 765
+    line: 784
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -791,7 +794,7 @@ diagnostics:
   - Rust dependency member `{}.{member_name}` was projected by version {} but is absent from version {}
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 732
+    line: 751
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1240
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -801,7 +804,7 @@ diagnostics:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 638
+    line: 657
 - code: S2033
   messages:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
@@ -820,14 +823,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 570
+    line: 621
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 526
+    line: 577
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 278
 - code: S2053
@@ -835,22 +838,22 @@ diagnostics:
   - test-only namespace `{}` is unavailable to production sources
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 625
+    line: 644
 - code: S2054
   messages:
   - integration test cannot declare production namespace `{}`
   - end-to-end test must drive the application artifact instead of importing `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 596
+    line: 615
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 684
+    line: 703
 - code: S2055
   messages:
   - production source cannot import test-only namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 671
+    line: 690
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
@@ -858,9 +861,9 @@ diagnostics:
     `two::Generic<B>`'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 256
+    line: 275
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 717
+    line: 736
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 55
 - code: S9004
@@ -869,11 +872,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 743
+    line: 794
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 771
+    line: 822
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 855
+    line: 906
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1172,25 +1175,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 884
+    line: 903
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 927
+    line: 946
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 978
+    line: 997
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 950
+    line: 969
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 987
+    line: 1006
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1530,7 +1533,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1238
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 3639
+    line: 3641
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -1784,7 +1787,7 @@ diagnostics:
   - conversion callback must accept exactly one `{source_type}` parameter
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 460
+    line: 479
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1250
   - path: crates/terrane-compiler/src/semantics/numeric.rs
@@ -2121,8 +2124,11 @@ diagnostics:
     line: 116
 - code: W4001
   messages:
+  - <stdout>
   - binding `{}` is never read
   sources:
+  - path: crates/terrane-compiler/src/compiler.rs
+    line: 447
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 283
 - code: W4002

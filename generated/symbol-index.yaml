@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1daf42c58b0694ea9f82b9bfb5f9134728d9df12884ecac0011282c891b27329
+  input-sha256: bb68ef7ccef21e6c9604401b4880870c0460df5900dc39bec9a2f04abd8389dd
 format: 1
 generated: true
 symbols:
@@ -2557,6 +2557,14 @@ symbols:
   record: book.text-and-collections
   section: exercises
   declaration: get.checked
+- name: git
+  record: tool.packages.command-line
+  section: package-management
+  declaration: git
+- name: git
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: git
 - name: global-condition
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -2569,6 +2577,10 @@ symbols:
   record: book.functions
   section: defining-and-calling-a-function
   declaration: function greet; name string
+- name: hash
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: hash
 - name: height
   record: book.functions
   section: local-scope
@@ -3319,6 +3331,10 @@ symbols:
   declaration: main
 - name: main
   record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: main
+- name: main
+  record: book.namespaces-imports-and-packages
   section: imports
   declaration: function main
 - name: main
@@ -3372,6 +3388,10 @@ symbols:
 - name: main
   record: tool.packages.command-line
   section: scripts
+  declaration: main
+- name: main
+  record: tool.packages.package-manifest
+  section: namespaces-and-artifacts
   declaration: main
 - name: make-event
   record: book.async
@@ -4021,12 +4041,20 @@ symbols:
   section: application-owned-adapters
   declaration: package.toml
 - name: package.toml
+  record: tool.packages.command-line
+  section: package-management
+  declaration: package.toml
+- name: package.toml
   record: tool.packages.package-manifest
   section: complete-example
   declaration: package.toml
 - name: package.toml
   record: tool.packages.package-manifest
   section: overlays-and-local-patches
+  declaration: package.toml
+- name: package.toml
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
   declaration: package.toml
 - name: package.toml
   record: tool.packages.rust-dependencies
@@ -4112,10 +4140,18 @@ symbols:
   record: std.paths
   section: synopsis
   declaration: class path
+- name: path
+  record: tool.packages.command-line
+  section: package-management
+  declaration: path
 - name: PATH
   record: tool.packages.command-line
   section: scripts
   declaration: PATH
+- name: path
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: path
 - name: PATH
   record: tool.source-intelligence
   section: language-server
@@ -5572,6 +5608,14 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: T0111
+- name: tag
+  record: tool.packages.command-line
+  section: package-management
+  declaration: tag
+- name: tag
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: tag
 - name: tangent
   record: lang.numerics.floating-point
   section: operations
@@ -5760,6 +5804,22 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: terrane-debug-v1
+- name: terrane-dependencies.<name>.git
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: terrane-dependencies.<name>.git
+- name: terrane-dependencies.<name>.hash
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: terrane-dependencies.<name>.hash
+- name: terrane-dependencies.<name>.path
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: terrane-dependencies.<name>.path
+- name: terrane-dependencies.<name>.tag
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: terrane-dependencies.<name>.tag
 - name: terrane-integration-adapters
   record: internals.integration-adapters
   section: application-owned-adapters

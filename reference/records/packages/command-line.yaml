@@ -17,14 +17,15 @@ documentation:
   title: Command-line execution
   title-style: text
   summary: >-
-    Runs package-backed programs, individual source files, and executable
-    shebang scripts through Terrane's shared native compilation pipeline.
+    Runs package-backed programs and source files, and manages deterministic
+    hashes and manifest entries for native Terrane library packages.
   tags:
     - packages
     - command-line
     - scripts
     - shebang
     - execution
+    - dependencies
   sections:
     - id: commands
       title: Running a source file
@@ -65,6 +66,43 @@ documentation:
             larger repository or workspace. Generated files may still be
             inspected locally when investigating a build; ignoring them prevents
             editors and Git clients from treating the cache as authored work.
+
+    - id: package-management
+      title: Hashing and installing Terrane libraries
+      blocks:
+        - type: markdown
+          markdown: |-
+            `terrane package hash` calculates the complete deterministic source
+            hash accepted by `[terrane-dependencies]`:
+
+            ```console
+            terrane package hash ../document-model
+            terrane package hash --git https://example.invalid/document-model.git --tag v1.2.3
+            ```
+
+            The remote form clones and verifies an exact Git tag before hashing
+            its source tree. It does not accept a branch or abbreviate the
+            resulting 64-digit SHA-256 value.
+
+            Run `package install` from an application directory containing
+            `package.toml`:
+
+            ```console
+            terrane package install ../document-model
+            terrane package install --git https://example.invalid/document-model.git --tag v1.2.3
+            terrane package install ../document-model --name model
+            ```
+
+            Installation validates `artifact = "library"`, obtains the library
+            package identity, calculates its hash, and adds one
+            `[terrane-dependencies.<name>]` table. The package identity is the
+            default name; `--name` selects another table key. Existing keys are
+            rejected rather than replaced.
+
+            A local install records its relative `path` and hash. A remote install
+            records `git`, `tag`, and hash. Installation fails when the current
+            directory has no `package.toml`; it never searches parent directories
+            for a different application manifest.
 
     - id: scripts
       title: Executing a shebang script
@@ -111,6 +149,7 @@ documentation:
             execute `./thing.trn`.
   see-also:
     - lang.functions.declarations
+    - tool.packages.package-manifest
 
 provenance:
   specification:
@@ -122,4 +161,5 @@ provenance:
     - executable-shebang-script
     - shebang-script-without-main
     - manifest-shebang-missing-namespace
+    - terrane-library-package
   compiler: null
