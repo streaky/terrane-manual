@@ -565,12 +565,15 @@ documentation:
             - integration-adapter-sqlx-sqlite
             - projected-axum-boundaries
           markdown: |-
-            The `sqlx-sqlite` feature currently bridges lifetime-bearing query
-            construction, binding, and execution plus collection of non-`Clone`
-            result rows. Connection construction and close and destination-selected
-            single-row extraction are direct projected trait operations. The
-            remaining bridge preserves the directly projected upstream
-            `SqliteConnection`; application SQL and schema remain in Terrane.
+            SQLx query construction, byte binding, execution, fetch-all,
+            fetch-one, connection lifecycle, and destination-selected row access
+            now use direct projected operations. Lifetime-bearing `Query` values
+            remain expression-local: their database and argument state is carried
+            only to a terminal call, whose exact emitted Rust call validates the
+            executor borrow. The `sqlx-sqlite` adapter remains only because
+            Terrane lists cannot yet consume every non-`Clone` row returned by
+            fetch-all; direct code can inspect the collection and access a row
+            returned by fetch-one without that adapter.
 
             The `axum-08` feature currently bridges Axum's closed response and
             retained upgrade-callback boundary plus the `axum::serve`

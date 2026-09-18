@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5d45b93bed2f32d90b7a917deb125a2675348e06ecfbdebd63457fb6eb7182e9
+  input-sha256: 6d5123c59a2232c56c9ad82f3d2e3b300c84a87623734d77b4b8eb1e1834ab0a
 format: 1
 generated: true
 symbols:
@@ -4528,6 +4528,10 @@ symbols:
   record: book.values-and-names
   section: exercises
   declaration: quantity
+- name: Query
+  record: internals.integration-adapters
+  section: current-gap-groups
+  declaration: Query
 - name: query_scalar
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -5328,10 +5332,6 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sinks
   declaration: split
-- name: SqliteConnection
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: SqliteConnection
 - name: SqliteConnection
   record: tool.packages.rust-dependencies
   section: integration-adapters
