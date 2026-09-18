@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 16d5ed46ed52d48d377a7a57982fe7e4e97b5db079c72ffa7a9c78e2e0975ada
+  input-sha256: 5d45b93bed2f32d90b7a917deb125a2675348e06ecfbdebd63457fb6eb7182e9
 format: 1
 generated: true
 symbols:
@@ -1718,6 +1718,10 @@ symbols:
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
   declaration: e
+- name: E
+  record: internals.integration-adapters
+  section: recognizing-a-gap
+  declaration: E
 - name: effects
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -3465,6 +3469,10 @@ symbols:
   record: std.text-bytes-codecs
   section: octets-and-codecs
   declaration: message
+- name: Message::Close
+  record: internals.integration-adapters
+  section: recognizing-a-gap
+  declaration: Message::Close
 - name: minimum
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -5019,6 +5027,10 @@ symbols:
 - name: rustc
   record: book.native-program
   section: source-locations-and-diagnostics-across-lowering
+  declaration: rustc
+- name: rustc
+  record: internals.integration-adapters
+  section: recognizing-a-gap
   declaration: rustc
 - name: S
   record: tool.diagnostics

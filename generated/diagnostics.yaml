@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 69c241cc1e207390c8dd9c71d60e5f8fd14d15ebd701fce0e058fdd7b8688245
+  input-sha256: fd90845988ff0a807079a2db7c4037c58d0ac4230e2a8c1d47b524b13d8af2b7
 format: 1
 generated: true
 diagnostics:
@@ -699,9 +699,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 90
+    line: 92
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 108
+    line: 110
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -862,7 +862,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 569
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 53
+    line: 55
 - code: S9004
   messages:
   - 'generated Rust `{}` cannot be checked for canonical formatting: {error}'

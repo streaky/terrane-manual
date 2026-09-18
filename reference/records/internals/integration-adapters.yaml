@@ -181,15 +181,23 @@ documentation:
             Nested `Option<Result<T, E>>` and `Result<Option<T>, E>` calls expose
             `T|none throws E` while retaining their native wrapper order. Import
             the projected error class and catch that identity; use the catch
-            binding's `message` operation only to display it. End-of-stream is
-            never converted into failure, and failure text is never used as a
-            classifier.
+            binding's `message` operation only to display it. Projection preserves
+            that identity and message, not arbitrary Rust error fields or the
+            native `E` value. End-of-stream is never converted into failure, and
+            failure text is never used as a classifier.
 
             A dependency-declared string or byte wrapper may cross an enum
-            payload boundary when the compiler proves the exact conversion in
-            the resolved graph. This is generated Rust-to-Rust boundary code,
-            not a package-specific adapter and not permission to invent
-            serialization or cloning.
+            payload boundary when projection selects a concrete non-generic
+            conversion from the exact resolved graph and the emitted call passes
+            `rustc`. Rustdoc enumeration is not itself a trait proof. This is
+            generated Rust-to-Rust boundary code, not a package-specific adapter
+            and not permission to invent serialization or cloning.
+
+            Axum's optional-foreign-payload `Message::Close` constructor and
+            extraction are not projected yet. Text, binary, ping, pong, receive,
+            and orderly end handling are direct; sending a Close frame remains
+            deferred to the later Axum/stream work rather than being supplied by
+            the retired shared helper.
 
         - type: rule
           id: rule.internals.adapters.declines-remain-honest
