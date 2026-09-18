@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fe971bfc4801bd2c2c57bf9c634b17b61d2c9fdf305627eca5ad395752a2fcb0
+  input-sha256: 16d5ed46ed52d48d377a7a57982fe7e4e97b5db079c72ffa7a9c78e2e0975ada
 format: 1
 generated: true
 records:
@@ -854,7 +854,6 @@ records:
     compiler: null
   sections:
   - interpretation
-  - projection-associated-self
   - projection-namespace-cycles
   - implicit-support-dependencies
   - test-executable-cache-identity

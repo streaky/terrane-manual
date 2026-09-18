@@ -160,6 +160,37 @@ documentation:
             called. A candidate declines only when concrete-owner and
             trait-qualified naming still cannot distinguish it safely.
 
+        - type: description
+          id: description.internals.adapters.projected-enums-and-failures
+          since: null
+          evidence:
+            - projected-payload-enum
+            - projected-nested-outcomes
+            - projected-markdown-typed-rendering
+            - projected-websocket-protocol
+          markdown: |-
+            Supported payload-bearing Rust enums are direct projected classes,
+            not a reason to author constructor or filtering helpers. Public unit
+            variants have zero-argument constructors. Public single-field tuple
+            variants with an owned boundary representation have one-argument
+            constructors, `variant-name` reports the exact Rust variant, and
+            consuming `into-<Variant>` operations return the payload or `none`.
+            Unsupported named, multi-field, borrowed, open-generic, and
+            unrepresentable variants remain explicit per-variant declines.
+
+            Nested `Option<Result<T, E>>` and `Result<Option<T>, E>` calls expose
+            `T|none throws E` while retaining their native wrapper order. Import
+            the projected error class and catch that identity; use the catch
+            binding's `message` operation only to display it. End-of-stream is
+            never converted into failure, and failure text is never used as a
+            classifier.
+
+            A dependency-declared string or byte wrapper may cross an enum
+            payload boundary when the compiler proves the exact conversion in
+            the resolved graph. This is generated Rust-to-Rust boundary code,
+            not a package-specific adapter and not permission to invent
+            serialization or cloning.
+
         - type: rule
           id: rule.internals.adapters.declines-remain-honest
           level: must
@@ -533,18 +564,19 @@ documentation:
             remaining bridge preserves the directly projected upstream
             `SqliteConnection`; application SQL and schema remain in Terrane.
 
-            The `axum-08` feature currently bridges Axum's closed response alias,
-            nested WebSocket receive and message-constructor shapes, Tokio
-            listener binding, and the `axum::serve` `IntoFuture` boundary. Axum
-            routers, routes, handlers, upgrade callbacks, and projectable
-            WebSocket operations remain direct upstream calls.
+            The `axum-08` feature currently bridges Axum's closed response and
+            retained upgrade-callback boundary plus the `axum::serve`
+            `IntoFuture` boundary. Tokio listener binding, payload-bearing
+            WebSocket message construction and inspection, nested receive
+            outcomes, and WebSocket send/receive calls project directly.
+            Protocol filtering and control-message policy remain Terrane code.
 
             The `docs-rendering` feature currently bridges PDF operations whose
             broader projected member graph or generic path input is not yet usable.
-            Markdown options constructors now project directly; the feature still
-            includes a narrow Markdown rendering operation and HTML-to-PDF-bytes
-            operation. Document structure, validation, templates, and output policy
-            remain application code.
+            Markdown options construction and HTML rendering now project directly;
+            the feature retains only the HTML-to-PDF-bytes operation. Document
+            structure, validation, templates, and output policy remain application
+            code.
 
             The registry keeps limitations as separate records even when one
             feature supplies several related operations. It also records Godot API

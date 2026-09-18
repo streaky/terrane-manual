@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fe971bfc4801bd2c2c57bf9c634b17b61d2c9fdf305627eca5ad395752a2fcb0
+  input-sha256: 16d5ed46ed52d48d377a7a57982fe7e4e97b5db079c72ffa7a9c78e2e0975ada
 format: 1
 generated: true
 symbols:
@@ -3450,6 +3450,10 @@ symbols:
   section: giving-a-value-a-name
   declaration: message
 - name: message
+  record: internals.integration-adapters
+  section: recognizing-a-gap
+  declaration: message
+- name: message
   record: std.filesystem
   section: whole-file-synopsis
   declaration: message
@@ -3756,6 +3760,10 @@ symbols:
 - name: none
   record: book.types
   section: union-types-and-optional-values
+  declaration: none
+- name: none
+  record: internals.integration-adapters
+  section: recognizing-a-gap
   declaration: none
 - name: None
   record: internals.projection.resolution
@@ -5112,10 +5120,6 @@ symbols:
   record: lang.lexical-structure.keywords
   section: overview
   declaration: self
-- name: Self
-  record: tool.diagnostics
-  section: t0105
-  declaration: Self
 - name: self
   record: tool.packages.rust-dependencies
   section: interfaces
@@ -6400,6 +6404,10 @@ symbols:
   record: book.identity-and-movement
   section: when-a-value-is-no-longer-available
   declaration: values
+- name: variant-name
+  record: internals.integration-adapters
+  section: recognizing-a-gap
+  declaration: variant-name
 - name: Vec
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers

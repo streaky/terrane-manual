@@ -71,7 +71,7 @@ documentation:
               interpretation: Non-blocking source guidance.
 
     - id: t0105
-      title: T0105 — projected receiver type outside receiver position
+      title: T0105 — invalid or unavailable static member
       blocks:
         - type: table
           id: diagnostic-t0105
@@ -86,52 +86,51 @@ documentation:
               cell: markdown
           rows:
             - field: Invariant
-              value: Current projection declines a Rust member when its receiver type is also used in a non-receiver signature position that cannot yet be closed safely.
+              value: A static member must exist on the selected class and, for projected Rust, must have an admitted representation and contract.
             - field: Classification
-              value: Temporary implementation limitation.
+              value: Source or temporary implementation error, depending on the declined member reason.
             - field: Related references
-              value: \"[[tool.current-limitations#projection-associated-self]] and [[tool.packages.rust-dependencies#integration-adapters]]\"
+              value: "[[tool.packages.rust-dependencies#integration-adapters]]"
 
         - type: example
           id: t0105-rejected
-          title: Rejected associated-Self constructor
+          title: Rejected projected enum variant
           language: terrane
           mode: illustrative
           target: null
           timeout-ms: null
           source: |-
-            namespace reference-examples/projected-associated-self
+            namespace reference-examples/projected-enum-member-rejected
 
-            from /deps/markdown import Options
+            from /deps/terrane-payload-enum-witness import Event
 
-            function options Options;
-              return Options::gfm
+            function event Event;
+              return Event::Pair; 1, 2
           response: null
           diagnostic: T0105
           markdown: null
 
         - type: example
           id: t0105-corrected
-          title: Narrow central adapter
+          title: Use an admitted projected variant
           language: terrane
           mode: illustrative
           target: null
           timeout-ms: null
           source: |-
-            namespace reference-examples/projected-associated-self-adapter
+            namespace reference-examples/projected-enum-member
 
-            from /deps/terrane-integration-adapters/docs-rendering import markdown_to_html
+            from /deps/terrane-payload-enum-witness import Event
 
-            function render string; source string
-              return markdown_to_html; source
+            function event Event;
+              return Event::Text; 'message'
           response: null
           diagnostic: null
           markdown: |-
-            Rust exposes `Options::gfm() -> Self`, but current generic projection
-            declines that associated constructor. This is not a language ban on
-            static constructors. Use a registered narrow adapter only for the
-            missing operation, preserve every directly projectable upstream type,
-            and remove the bridge when associated-`Self` projection is available.
+            The projected Rust enum exposes its public unit and supported
+            single-payload variants on the projected owner. A named, multi-field,
+            borrowed, open-generic, or unrepresentable variant remains an explicit
+            declined member rather than silently acquiring lossy adaptation.
   see-also:
     - tool.current-limitations
     - tool.packages.rust-dependencies

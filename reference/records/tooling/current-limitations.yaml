@@ -35,33 +35,6 @@ documentation:
             intended behavior. Use a workaround only when its semantic-effect field
             is acceptable, and remove it when the objective removal condition is met.
 
-    - id: projection-associated-self
-      title: LIM-PROJ-ASSOCIATED-SELF
-      blocks:
-        - type: table
-          id: limitation-projected-associated-self
-          title: Associated constructors returning Self
-          show-header: true
-          columns:
-            - id: field
-              title: Field
-              cell: text
-            - id: value
-              title: Value
-              cell: markdown
-          rows:
-            - field: Affected versions
-              value: Terrane compiler 0.1.x
-            - field: Observable failure
-              value: "`T0105`: receiver type used outside receiver position."
-            - field: Intended behavior
-              value: A static associated constructor returning an otherwise projectable receiver type is callable.
-            - field: Safe workaround
-              value: Use the narrow central integration-adapter operation when one is registered; do not wrap the whole dependency.
-            - field: Removal target
-              value: "`projection/associated-self-constructor`"
-            - field: Changes semantics
-              value: No, when the bridge preserves the upstream constructor contract and type identity.
 
     - id: projection-namespace-cycles
       title: LIM-PROJ-NAMESPACE-CYCLES

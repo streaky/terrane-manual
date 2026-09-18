@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4b18615f8723670ae2f5408512627ca0c385dfec9121f1e5dc6b1617b4ab4ad6
+  input-sha256: 69c241cc1e207390c8dd9c71d60e5f8fd14d15ebd701fce0e058fdd7b8688245
 format: 1
 generated: true
 diagnostics:
@@ -683,7 +683,7 @@ diagnostics:
   - cannot declare into compiler-owned namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 419
+    line: 420
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
@@ -768,7 +768,7 @@ diagnostics:
   - Rust dependency `{dependency}` is not declared in `package.toml`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 559
+    line: 560
 - code: S2028
   messages:
   - <terrane>/projected/{}.trn
@@ -781,7 +781,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 616
+    line: 617
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -791,7 +791,7 @@ diagnostics:
   - Rust dependency member `{}.{member_name}` was projected by version {} but is absent from version {}
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 583
+    line: 584
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1240
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -801,7 +801,7 @@ diagnostics:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 489
+    line: 490
 - code: S2033
   messages:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
@@ -835,22 +835,22 @@ diagnostics:
   - test-only namespace `{}` is unavailable to production sources
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 476
+    line: 477
 - code: S2054
   messages:
   - integration test cannot declare production namespace `{}`
   - end-to-end test must drive the application artifact instead of importing `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 447
+    line: 448
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 535
+    line: 536
 - code: S2055
   messages:
   - production source cannot import test-only namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 522
+    line: 523
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
@@ -860,7 +860,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 135
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 568
+    line: 569
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 53
 - code: S9004
@@ -1172,25 +1172,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 735
+    line: 736
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 778
+    line: 779
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 825
+    line: 830
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 801
+    line: 802
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 834
+    line: 839
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1604,7 +1604,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1247
+    line: 1262
 - code: T0074
   messages:
   - '`task-scope` requires a `/core/time` deadline'
@@ -1638,9 +1638,9 @@ diagnostics:
   - task `{}` must be awaited or joined before its scope ends
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1339
+    line: 1354
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1353
+    line: 1368
 - code: T0077
   messages: []
   sources:
@@ -1657,31 +1657,31 @@ diagnostics:
   - projected callback requires a transferable callable
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1642
+    line: 1657
 - code: T0082
   messages:
   - retained callback cannot borrow an object receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1648
+    line: 1663
 - code: T0083
   messages:
   - retained callback cannot capture a borrowed value
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1658
+    line: 1673
 - code: T0084
   messages:
   - projected callback requires transferable captured values
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1668
+    line: 1683
 - code: T0086
   messages:
   - one-shot projected callback was already consumed
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1683
+    line: 1698
 - code: T0087
   messages:
   - iteration step has no member `{member_name}`
@@ -1770,7 +1770,7 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1405
+    line: 1420
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 358
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1795,7 +1795,7 @@ diagnostics:
   - conversion callback must return `{destination}`, found `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1757
+    line: 1772
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 343
 - code: T0107
@@ -1856,7 +1856,7 @@ diagnostics:
   - channel pair `{}` endpoint `{}` was already moved
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1711
+    line: 1726
 - code: T0111
   messages:
   - typed shared cells are unavailable; keep mutable state in one owner task and communicate through bounded
@@ -1869,7 +1869,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1887
+    line: 1902
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
