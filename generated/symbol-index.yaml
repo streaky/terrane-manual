@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: bb68ef7ccef21e6c9604401b4880870c0460df5900dc39bec9a2f04abd8389dd
+  input-sha256: 2a2afa60b5ea660f6fa91b290f637cd7698d0e8d51eccd23d328ef97860582eb
 format: 1
 generated: true
 symbols:
@@ -4271,6 +4271,10 @@ symbols:
 - name: prelude
   record: tool.packages.package-manifest
   section: fields
+  declaration: prelude
+- name: prelude
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
   declaration: prelude
 - name: prelude
   record: tool.packages.rust-dependencies

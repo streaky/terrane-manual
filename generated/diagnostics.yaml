@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4e15875b096b78560669ae145485e0d77f9795c9e968e8cd8fff94ea5bd6ce1c
+  input-sha256: 833b9d97a972756168d1e8196a209ca38a3e5fedf18773093092bb4693a557b3
 format: 1
 generated: true
 diagnostics:
@@ -590,7 +590,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/package.rs
-    line: 238
+    line: 240
 - code: S2002
   messages:
   - each source unit must declare exactly one namespace
@@ -659,7 +659,7 @@ diagnostics:
   - duplicate binding `{name}` in the same lexical scope
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1269
+    line: 1276
 - code: S2013
   messages:
   - unresolved name `{name}`
@@ -815,22 +815,22 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/testing.rs
-    line: 423
+    line: 424
   - path: crates/terrane-compiler/src/testing.rs
-    line: 433
+    line: 434
 - code: S2051
   messages:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 621
+    line: 623
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 577
+    line: 579
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 278
 - code: S2053
@@ -872,11 +872,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 794
+    line: 796
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 822
+    line: 824
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 906
+    line: 908
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1175,25 +1175,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 903
+    line: 913
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 946
+    line: 956
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 997
+    line: 1007
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 969
+    line: 979
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1006
+    line: 1016
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1533,7 +1533,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1238
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 3641
+    line: 3644
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -2124,11 +2124,14 @@ diagnostics:
     line: 116
 - code: W4001
   messages:
-  - <stdout>
+  - ");\n            !dependency_warning && !library_export_warning\n        })\n        .collect();\n\
+    \    let rust_ir = crate::lowering::lower(&semantic, options.debug_build.enabled())\n        .map_err(|failure|\
+    \ lowering_failure(&semantic, failure))?;\n    let rendered_rust = rust_ir.rendered();\n    let mut\
+    \ standalone_file = rendered_rust.standalone_file("
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 447
+    line: 451
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 283
 - code: W4002
@@ -2157,8 +2160,11 @@ diagnostics:
     line: 519
 - code: W4005
   messages:
+  - <stdout>
   - function `{}` is never referenced
   sources:
+  - path: crates/terrane-compiler/src/compiler.rs
+    line: 451
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 198
 - code: W4006

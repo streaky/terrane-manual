@@ -272,12 +272,11 @@ documentation:
             development directory with `path`, or a remote repository with `git`
             and an exact `tag`. Git branches and untagged revisions are not
             accepted. A Git dependency requires `hash`; a local dependency may
-            omit it while actively developing, although installation records it.
+            omit it while actively developing, and local installation leaves it unpinned.
 
             ```toml
             [terrane-dependencies.document-model]
             path = "../document-model"
-            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 
             [terrane-dependencies.remote-codec]
             git = "https://example.invalid/remote-codec.git"
@@ -286,16 +285,21 @@ documentation:
             ```
 
             The hash is not a Git object ID. It is the complete deterministic
-            SHA-256 of normalized package-relative file paths and file bytes,
-            excluding `.git` and `.trn` directories. Symbolic links are rejected,
-            and abbreviated hashes are not accepted. For Git sources, Terrane
-            verifies that the checkout is exactly the requested tag and then
-            verifies its source tree before using the application-local
-            `.trn/packages/<digest>` cache.
+            SHA-256 of every normalized package-relative file path and file byte,
+            excluding only `.git` and `.trn` directories. README files, ignored
+            build output, and editor files therefore affect a local tree hash.
+            Symbolic links are rejected, and abbreviated hashes are not accepted.
+            For Git sources, Terrane verifies the exact requested tag and the
+            temporary checkout's source hash before publishing it into the
+            application-local `.trn/packages/<digest>` cache.
 
+            Each library source unit retains its own manifest's `prelude` setting.
+            Reflection, executor, capability and panic profile, build toolchain,
+            and testing policy remain application-owned for the final artifact.
             Library source units, their transitive Terrane libraries, projected
-            Rust dependencies, and authored Rust modules join the application's
-            semantic and lowering pipeline. Conflicting Rust aliases or authored
+            Rust dependencies, and authored Rust modules otherwise join the
+            application's semantic and lowering pipeline. Distinct source roots
+            cannot share one library identity. Conflicting Rust aliases or authored
             module names are errors. The consuming application's capability
             profile must permit every required dependency effect.
 
@@ -309,10 +313,12 @@ documentation:
             ```
 
             `package install` requires the consuming application's `package.toml`
-            in the current directory. It validates the library, computes the full
-            hash, preserves existing manifest content, and refuses to replace an
-            existing dependency. `--name <dependency-name>` overrides the table
-            key; otherwise the library package identity is used.
+            in the current directory. It validates the library, preserves existing
+            manifest content, and refuses to replace an existing dependency. A
+            local install writes only `path` so edits remain immediately visible;
+            a Git install records `git`, `tag`, and the full required hash.
+            `--name <dependency-name>` overrides the table key; otherwise the
+            library package identity is used.
 
     - id: overlays-and-local-patches
       title: Namespace overlays and local Cargo patches

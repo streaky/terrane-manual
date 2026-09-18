@@ -276,9 +276,12 @@ documentation:
             Terrane libraries use the same source language and namespace system as
             the application. Their manifest selects `artifact = "library"`, their
             namespace roots equal or descend from the package identity, and they do
-            not define `main`. The compiler analyzes and lowers library source
-            together with the application, so importing a library declaration is an
-            ordinary namespace import rather than a runtime plug-in boundary.
+            not define `main`. Each library keeps its own `prelude` choice, while
+            final artifact policy such as the executor and capability profile
+            belongs to the application. The compiler otherwise analyzes and lowers
+            library source together with the application, so importing a library
+            declaration is an ordinary namespace import rather than a runtime
+            plug-in boundary.
 
             During local development, install a sibling library from the application
             directory:
@@ -288,13 +291,11 @@ documentation:
             ```
 
             The command requires this application's `package.toml`, validates the
-            target library, calculates its deterministic source hash, and adds a
-            dependency table such as:
+            target library, and adds an unpinned dependency table:
 
             ```toml
             [terrane-dependencies."work-report/formatters"]
             path = "../work-report-formatters"
-            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
             ```
 
             The table declares which library source enters the build; source still
@@ -314,7 +315,9 @@ documentation:
             full SHA-256 source-tree hash. This hash is not a Git commit ID and is
             never abbreviated. `terrane package hash <directory>` and
             `terrane package hash --git <url> --tag <tag>` print the same value
-            without changing the application manifest.
+            without changing the application manifest. The local command hashes
+            every file outside `.git` and `.trn`, including README files or stray
+            build output, so use a clean tree when comparing it with a Git tag.
 
             Rust dependencies are declared in `package.toml`, never smuggled into source through an undeclared path. A later package might contain:
 

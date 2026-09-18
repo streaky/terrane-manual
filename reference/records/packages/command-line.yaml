@@ -94,15 +94,15 @@ documentation:
             ```
 
             Installation validates `artifact = "library"`, obtains the library
-            package identity, calculates its hash, and adds one
-            `[terrane-dependencies.<name>]` table. The package identity is the
-            default name; `--name` selects another table key. Existing keys are
-            rejected rather than replaced.
+            package identity, and adds one `[terrane-dependencies.<name>]` table.
+            The package identity is the default name; `--name` selects another
+            table key. Existing keys are rejected rather than replaced.
 
-            A local install records its relative `path` and hash. A remote install
-            records `git`, `tag`, and hash. Installation fails when the current
-            directory has no `package.toml`; it never searches parent directories
-            for a different application manifest.
+            A local install records only its relative `path`, leaving development
+            edits immediately visible. A remote install records `git`, `tag`, and
+            the required full hash. Installation fails when the current directory
+            has no `package.toml`; it never searches parent directories for a
+            different application manifest.
 
     - id: scripts
       title: Executing a shebang script
