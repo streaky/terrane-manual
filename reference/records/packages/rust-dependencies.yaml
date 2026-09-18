@@ -552,13 +552,13 @@ documentation:
               key, dependency and supported version, precise limitation, package
               feature, and objective generic removal criterion.
 
-            The `sqlx-sqlite` feature therefore bridges only its currently
-            unavailable connection, query, and row-extraction shapes while
-            retaining the upstream `SqliteConnection`. The `axum-08` feature
-            bridges only its unavailable response, WebSocket-message,
-            listener-binding, and server-await shapes while routers, routes,
-            handlers, and projectable WebSocket operations remain direct Axum
-            calls. Do not create one adapter crate per application or dependency.
+            The `sqlx-sqlite` feature retains only `query_bytes`, which consumes
+            non-`Clone` rows from a collected list until S1 adds consuming
+            collection or stream iteration. Query construction, binding,
+            execution, fetching, row access, errors, and connection lifecycle are
+            direct. PDF construction/serialization and Axum response, callback,
+            WebSocket, listener, and server-await shapes are also direct. Do not
+            create one adapter crate per application or dependency.
 
             The adapter-owned registry and independent removal lifecycle are
             maintenance contracts, not runtime dispatch. See
@@ -586,23 +586,27 @@ documentation:
             text: |-
               namespace reference-examples/layered-sqlx-adapter
 
-              from /deps/sqlx-sqlite import SqliteConnection, open, execute, close
+              from /deps/sqlx-sqlite import SqliteConnectOptions, SqliteConnection, query_bytes
+              from /deps/sqlx-sqlite/sqliteconnectoptions import connect
+              from /deps/sqlx-sqlite/sqliteconnection import close
               async function main;
-                  database SqliteConnection = await open; 'application.db'
-                  await (execute; database, 'CREATE TABLE events (body BLOB NOT NULL)')
+                  options = (SqliteConnectOptions::new).filename; 'application.db'
+                  database SqliteConnection = await connect; options
+                  rows list of bytes = await query_bytes; database, 'SELECT body FROM events', 'body'
                   await (close; move database)
 
         - type: example
-          id: example.dependencies.direct-first-axum-adapter
+          id: example.dependencies.direct-axum-server
           status: accepted
-          caption: Combine direct Axum routing with its narrow adapter overlay
+          caption: Use direct Axum response, callback, listener, and server operations
           source:
             language: terrane
             text: |-
-              namespace reference-examples/direct-first-axum-adapter
+              namespace reference-examples/direct-axum-server
 
-              from /deps/axum import Router, bind_listener, serve_router
+              from /deps/axum import Router, serve
               from /deps/axum/routing import get
+              from /deps/tokio/net import TcpListener
 
               async function health string;
                   return 'ok'
@@ -610,9 +614,8 @@ documentation:
               async function main;
                   router = Router::new
                   router = router.route; '/health', (get; health)
-                  listener = await bind_listener; '127.0.0.1:0'
-                  if false
-                      await (serve_router; move listener, move router)
+                  listener = await TcpListener::bind; '127.0.0.1:0'
+                  await (serve; move listener, move router)
     - id: resolution
       title: Projection resolution and cache behavior
       blocks:

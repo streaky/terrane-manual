@@ -193,11 +193,10 @@ documentation:
             generated Rust-to-Rust boundary code, not a package-specific adapter
             and not permission to invent serialization or cloning.
 
-            Axum's optional-foreign-payload `Message::Close` constructor and
-            extraction are not projected yet. Text, binary, ping, pong, receive,
-            and orderly end handling are direct; sending a Close frame remains
-            deferred to the later Axum/stream work rather than being supplied by
-            the retired shared helper.
+            Axum's optional-foreign-payload `Message::Close` constructor now
+            projects directly together with text, binary, ping, pong, receive,
+            and orderly end handling. Protocol selection and close policy remain
+            Terrane code rather than a shared helper.
 
         - type: rule
           id: rule.internals.adapters.declines-remain-honest
@@ -222,24 +221,16 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
+            - projected-pdf-html-bytes
+            - projected-websocket-protocol
           markdown: |-
-            Declare `terrane-integration-adapters` as an ordinary Rust dependency,
-            select only the feature families the application uses, and declare
-            every build or runtime effect required by those dependencies. Keep the
-            upstream dependency direct when the application uses its projected
-            types or when an enabled namespace overlay targets that package.
-
-            A server using the current Axum and SQLite bridges has the following
-            shape; versions and effects must match the application's resolved
-            dependency graph and capability profile:
+            Declare `terrane-integration-adapters` only for an operation that
+            remains in its registry, select only the required feature, and
+            declare every build or runtime effect required by the resolved graph.
+            PDF and Axum applications now use their upstream projected packages
+            directly; the remaining SQLite bridge has this shape:
 
             ```toml
-            [rust-dependencies.axum]
-            version = "=0.8.9"
-            features = ["ws"]
-            effects = ["build", "networking"]
-
             [rust-dependencies.sqlx-sqlite]
             version = "=0.8.6"
             features = ["bundled"]
@@ -247,11 +238,11 @@ documentation:
 
             [rust-dependencies.terrane-integration-adapters]
             version = "=0.1.0"
-            features = ["axum-08", "sqlx-sqlite"]
-            effects = ["build", "filesystem", "networking", "threads"]
+            features = ["sqlx-sqlite"]
+            effects = ["build", "filesystem"]
             ```
 
-            The adapter package's metadata may present its operations beneath the
+            The adapter package's metadata presents `query_bytes` beneath the
             direct upstream namespace. This changes the Terrane import path only:
             diagnostics, generated Rust, dependency provenance, and ownership
             continue to name the adapter package as the operation's implementation
@@ -563,7 +554,8 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
+            - projected-pdf-html-bytes
+            - projected-websocket-protocol
           markdown: |-
             SQLx query construction, byte binding, execution, fetch-all,
             fetch-one, connection lifecycle, and destination-selected row access
@@ -578,19 +570,16 @@ documentation:
             every non-`Clone` row returned by fetch-all. S1 owns that consuming
             collection/stream iteration gap.
 
-            The `axum-08` feature currently bridges Axum's closed response and
-            retained upgrade-callback boundary plus the `axum::serve`
-            `IntoFuture` boundary. Tokio listener binding, payload-bearing
-            WebSocket message construction and inspection, nested receive
-            outcomes, and WebSocket send/receive calls project directly.
-            Protocol filtering and control-message policy remain Terrane code.
+            Axum's canonical closed response alias, retained upgrade callback,
+            `axum::serve` `IntoFuture` conversion, listener binding, payload
+            message construction/inspection, and WebSocket send/receive calls now
+            project directly. Protocol filtering, health responses, control
+            messages, and bounded shutdown remain Terrane code.
 
-            The `docs-rendering` feature currently bridges PDF operations whose
-            broader projected member graph or generic path input is not yet usable.
-            Markdown options construction and HTML rendering now project directly;
-            the feature retains only the HTML-to-PDF-bytes operation. Document
-            structure, validation, templates, and output policy remain application
-            code.
+            PDF construction from HTML and serialization to bytes also project
+            directly. The docs converter owns document structure, validation,
+            templates, output destination, and display policy. The former
+            `docs-rendering` and `axum-08` adapter features have been deleted.
 
             The registry keeps limitations as separate records even when one
             feature supplies several related operations. It also records Godot API

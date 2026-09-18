@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d9b8790681450e0557b6c14a178f7fa16a2de1fa10b33e85bc6785f6d9878fc3
+  input-sha256: 0fd83a2a6dc6e11ea98e842602021454fbddfe6c45d76d81031d005ac1ebe83f
 format: 1
 generated: true
 symbols:
@@ -512,10 +512,6 @@ symbols:
   record: internals.integration-adapters
   section: current-gap-groups
   declaration: axum-08
-- name: axum-08
-  record: tool.packages.rust-dependencies
-  section: integration-adapters
-  declaration: axum-08
 - name: axum::serve
   record: internals.integration-adapters
   section: current-gap-groups
@@ -967,6 +963,10 @@ symbols:
 - name: Clone
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
+  declaration: Clone
+- name: Clone
+  record: tool.packages.rust-dependencies
+  section: integration-adapters
   declaration: Clone
 - name: close
   record: book.namespaces-imports-and-packages
@@ -4536,6 +4536,14 @@ symbols:
   record: internals.integration-adapters
   section: current-gap-groups
   declaration: query_bytes
+- name: query_bytes
+  record: internals.integration-adapters
+  section: using-an-adapter
+  declaration: query_bytes
+- name: query_bytes
+  record: tool.packages.rust-dependencies
+  section: integration-adapters
+  declaration: query_bytes
 - name: query_scalar
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -5336,10 +5344,6 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sinks
   declaration: split
-- name: SqliteConnection
-  record: tool.packages.rust-dependencies
-  section: integration-adapters
-  declaration: SqliteConnection
 - name: sqlx-sqlite
   record: internals.integration-adapters
   section: current-gap-groups
