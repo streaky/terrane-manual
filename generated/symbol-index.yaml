@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6d5123c59a2232c56c9ad82f3d2e3b300c84a87623734d77b4b8eb1e1834ab0a
+  input-sha256: d9b8790681450e0557b6c14a178f7fa16a2de1fa10b33e85bc6785f6d9878fc3
 format: 1
 generated: true
 symbols:
@@ -4532,6 +4532,10 @@ symbols:
   record: internals.integration-adapters
   section: current-gap-groups
   declaration: Query
+- name: query_bytes
+  record: internals.integration-adapters
+  section: current-gap-groups
+  declaration: query_bytes
 - name: query_scalar
   record: book.namespaces-imports-and-packages
   section: dependencies

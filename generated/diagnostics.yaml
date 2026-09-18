@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: af1fccc90f0e742630def12adbb4bfb1b3ccb069079bc8692667b12f0ebd9c2f
+  input-sha256: 3aefe989a1070fdc381dd0f7fcd44791672de7406696cc0d3bd96760f78c4572
 format: 1
 generated: true
 diagnostics:
@@ -1604,7 +1604,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1262
+    line: 1267
 - code: T0074
   messages:
   - '`task-scope` requires a `/core/time` deadline'
@@ -1638,9 +1638,9 @@ diagnostics:
   - task `{}` must be awaited or joined before its scope ends
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1354
+    line: 1359
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1368
+    line: 1373
 - code: T0077
   messages: []
   sources:
@@ -1657,31 +1657,31 @@ diagnostics:
   - projected callback requires a transferable callable
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1657
+    line: 1662
 - code: T0082
   messages:
   - retained callback cannot borrow an object receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1663
+    line: 1668
 - code: T0083
   messages:
   - retained callback cannot capture a borrowed value
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1673
+    line: 1678
 - code: T0084
   messages:
   - projected callback requires transferable captured values
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1683
+    line: 1688
 - code: T0086
   messages:
   - one-shot projected callback was already consumed
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1698
+    line: 1703
 - code: T0087
   messages:
   - iteration step has no member `{member_name}`
@@ -1770,7 +1770,7 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1420
+    line: 1425
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 358
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1795,7 +1795,7 @@ diagnostics:
   - conversion callback must return `{destination}`, found `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1772
+    line: 1777
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 343
 - code: T0107
@@ -1856,7 +1856,7 @@ diagnostics:
   - channel pair `{}` endpoint `{}` was already moved
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1726
+    line: 1731
 - code: T0111
   messages:
   - typed shared cells are unavailable; keep mutable state in one owner task and communicate through bounded
@@ -1869,7 +1869,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1902
+    line: 1907
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
