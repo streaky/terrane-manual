@@ -35,7 +35,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             A maintained integration adapter supplements a directly projected
             upstream dependency; it does not replace that dependency with a
@@ -54,7 +53,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Start with the direct `/deps/<package>` surface. Import the upstream
             type or operation and compile the smallest call that the application
@@ -93,7 +91,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             A projection gap exists when the exact resolved Rust operation is
             usable with a concrete Rust call, but Terrane cannot discover,
@@ -128,7 +125,6 @@ documentation:
             - projected-foreign-trait-method-collision
             - projected-sqlx-connection-lifecycle
             - projected-sqlx-row-destination
-            - projected-axum-boundaries
           markdown: |-
             Trait-provided operations belong to the projected concrete owner, not
             to a free-floating copy of the Rust trait. Import a unique operation
@@ -198,13 +194,20 @@ documentation:
             and orderly end handling. Protocol selection and close policy remain
             Terrane code rather than a shared helper.
 
+            A concrete non-async result implementing canonical
+            `core::future::into_future::IntoFuture` projects as a task. Concrete
+            owner arguments close its associated output, ordinary result failures
+            remain dependency failures. Constructing the Terrane task is inert;
+            its first poll evaluates the Rust call and converts exactly once
+            before polling through the async boundary. Similarly named traits and
+            unresolved output shapes do not qualify.
+
         - type: rule
           id: rule.internals.adapters.declines-remain-honest
           level: must
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Unsupported, ambiguous, and unproven operations remain explicit
             declines. An adapter must not make an open generic value appear
@@ -259,7 +262,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Reusable bridges maintained and released by the Terrane project ship
             from the single publishable `terrane-integration-adapters` package.
@@ -406,7 +408,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Reduce the missing surface before writing Rust. Record the exact
             upstream declaration, resolved package and feature set, concrete
@@ -444,7 +445,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Generic projection, semantic analysis, and lowering never consult the
             adapter registry or dispatch on dependency names. A compiler fix that
@@ -463,7 +463,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             `terrane_integration_adapters::registry` is the single accounting
             source for ecosystem gaps shipped by the Terrane project and for
@@ -485,12 +484,19 @@ documentation:
             require unique IDs and tracking keys and complete package/feature
             information for shipped entries.
 
+            The current generic unbridged record
+            `projection/mutually-referential-namespace-sources` covers demanded
+            method signatures whose generated projected namespaces import one
+            another. Unused methods remain outside the source graph, and member
+            demand is owner-specific rather than name-based. Selecting the real
+            cycle declines until projected declarations no longer require an
+            acyclic generated-source order.
+
         - type: description
           id: description.internals.adapters.registry-fields
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Choose an ID for one independently removable gap and a tracking key
             for the general compiler capability, not for an application task.
@@ -520,7 +526,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Verify three distinct boundaries:
 
@@ -596,7 +601,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             When an expected operation is missing, confirm the direct dependency,
             exact version, enabled features, target, and required build
@@ -635,7 +639,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Record a stable gap before or with its bridge. Implement the eventual
             capability in generic projection, semantics, or lowering and prove it
@@ -680,7 +683,6 @@ provenance:
       section: "24.7"
   conformance:
     - integration-adapter-sqlx-sqlite
-    - projected-axum-boundaries
     - authored-rust-module
   compiler: null
 

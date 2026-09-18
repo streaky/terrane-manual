@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0fd83a2a6dc6e11ea98e842602021454fbddfe6c45d76d81031d005ac1ebe83f
+  input-sha256: 1daf42c58b0694ea9f82b9bfb5f9134728d9df12884ecac0011282c891b27329
 format: 1
 generated: true
 symbols:
@@ -1302,6 +1302,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: copy-sign
+- name: core::future::into_future::IntoFuture
+  record: internals.integration-adapters
+  section: recognizing-a-gap
+  declaration: core::future::into_future::IntoFuture
 - name: cosine
   record: lang.numerics.floating-point
   section: operations
@@ -4488,6 +4492,10 @@ symbols:
   record: internals.projection.resolution
   section: public-paths
   declaration: project_rustdoc
+- name: projection/mutually-referential-namespace-sources
+  record: internals.integration-adapters
+  section: registry
+  declaration: projection/mutually-referential-namespace-sources
 - name: projection_history_keeps_content_origin_across_cache_hits
   record: internals.projection.resolution
   section: history

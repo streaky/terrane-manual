@@ -36,7 +36,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Overlay declarations come only from
             `package.metadata.terrane.namespace-overlays` on a directly declared
@@ -59,7 +58,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             The projector selects public items from the provider module and
             presents them beneath the target's existing `/deps/<crate>` namespace.
@@ -82,7 +80,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Reject an overlay whose provider or target is not direct, whose target
             is the provider itself, whose feature is disabled, whose module path
@@ -104,7 +101,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             Normalized overlay declarations participate in exact projection cache
             identity. Changing the provider, target, module, or selected feature
@@ -133,7 +129,6 @@ provenance:
       section: "23.8"
   conformance:
     - integration-adapter-sqlx-sqlite
-    - projected-axum-boundaries
   compiler: null
 
 implementation:

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0fd83a2a6dc6e11ea98e842602021454fbddfe6c45d76d81031d005ac1ebe83f
+  input-sha256: 1daf42c58b0694ea9f82b9bfb5f9134728d9df12884ecac0011282c891b27329
 format: 1
 generated: true
 records:
@@ -1064,7 +1064,6 @@ records:
       section: '23.8'
     conformance:
     - integration-adapter-sqlx-sqlite
-    - projected-axum-boundaries
     compiler: null
   sections:
   - declaration-discovery
@@ -1090,7 +1089,6 @@ records:
       section: '24.7'
     conformance:
     - integration-adapter-sqlx-sqlite
-    - projected-axum-boundaries
     - authored-rust-module
     compiler: null
   sections:

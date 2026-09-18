@@ -519,7 +519,6 @@ documentation:
           since: null
           evidence:
             - integration-adapter-sqlx-sqlite
-            - projected-axum-boundaries
           markdown: |-
             A maintained integration adapter supplements an upstream projected
             dependency; it does not replace that dependency with a second API.
