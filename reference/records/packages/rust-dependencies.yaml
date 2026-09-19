@@ -551,13 +551,13 @@ documentation:
               key, dependency and supported version, precise limitation, package
               feature, and objective generic removal criterion.
 
-            The `sqlx-sqlite` feature retains only `query_bytes`, which consumes
-            non-`Clone` rows from a collected list until S1 adds consuming
-            collection or stream iteration. Query construction, binding,
-            execution, fetching, row access, errors, and connection lifecycle are
-            direct. PDF construction/serialization and Axum response, callback,
-            WebSocket, listener, and server-await shapes are also direct. Do not
-            create one adapter crate per application or dependency.
+            The `sqlx-sqlite` feature supplies narrow operations for the remaining
+            SQLx shapes: a bounded owned byte-row cursor over the borrowed
+            `BoxStream`, and concrete pool construction, execution, and close calls
+            where generic pool aliases do not select a projectable call. Query
+            policy, SQL, statement binding, cursor lifecycle, and domain types stay
+            in Terrane. Do not create one adapter crate per application or
+            dependency.
 
             The adapter-owned registry and independent removal lifecycle are
             maintenance contracts, not runtime dispatch. See

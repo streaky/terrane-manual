@@ -562,18 +562,19 @@ documentation:
             - projected-pdf-html-bytes
             - projected-websocket-protocol
           markdown: |-
-            SQLx query construction, byte binding, execution, fetch-all,
-            fetch-one, connection lifecycle, and destination-selected row access
-            now use direct projected operations; the former execution helpers
-            and their adapter-specific error wrapper have been removed.
-            Lifetime-bearing `Query` values remain expression-local:
-            their database and argument state is carried only to a terminal call.
-            Per-call native proof selects the concrete executor representation,
-            including mutable borrowing, and the exact emitted Rust call validates
-            that choice. The sole remaining `sqlx-sqlite` operation is
-            `query_bytes`, because Terrane persistent lists cannot yet consume
-            every non-`Clone` row returned by fetch-all. S1 owns that consuming
-            collection/stream iteration gap.
+            SQLx query construction, byte binding, fetch-one, row access, and
+            connection policy remain Terrane source over direct projected types.
+            Lifetime-bearing `Query` values remain expression-local: their
+            database and argument state is carried only to a terminal call.
+            Per-call native proof selects the concrete executor representation.
+
+            SQLx's borrowed `BoxStream` does not yet match the concrete owned
+            `next`/`close` producer admitted by async-sequence projection, and
+            generic pool aliases do not yet select every concrete pool call.
+            The `sqlx-sqlite` overlay therefore supplies a bounded owned byte-row
+            cursor plus narrow pool construction, execution, and close operations.
+            Application query policy, SQL, binding, cursor lifecycle, and domain
+            types remain Terrane code.
 
             Axum's canonical closed response alias, retained upgrade callback,
             `axum::serve` `IntoFuture` conversion, listener binding, payload
