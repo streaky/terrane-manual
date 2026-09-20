@@ -17,6 +17,42 @@ navigation:
       - source: records/language/types/references.yaml
       - source: records/language/types/authority-in-practice.yaml
       - source: records/language/collections.yaml
+      - source: records/language/build/conditional-selection.yaml
+      - source: records/language/classes/inheritance.yaml
+      - source: records/language/classes/interfaces.yaml
+      - source: records/language/classes/lifecycle.yaml
+      - source: records/language/classes/methods.yaml
+      - source: records/language/classes/traits.yaml
+      - source: records/language/control-flow/branching-and-loops.yaml
+      - source: records/language/declarations/bindings.yaml
+      - source: records/language/declarations/globals.yaml
+      - source: records/language/declarations/modifiers.yaml
+      - source: records/language/errors/contracts.yaml
+      - source: records/language/errors/handling.yaml
+      - source: records/language/expressions/operators.yaml
+      - source: records/language/lexical-structure/literals.yaml
+      - source: records/language/lexical-structure/source-layout.yaml
+      - source: records/language/namespaces/declarations.yaml
+      - source: records/language/namespaces/imports.yaml
+      - source: records/language/namespaces/name-resolution.yaml
+      - source: records/language/namespaces/prelude.yaml
+      - source: records/language/namespaces/scopes.yaml
+      - source: records/language/numerics/arithmetic-policies.yaml
+      - source: records/language/numerics/arithmetic.yaml
+      - source: records/language/numerics/constants.yaml
+      - source: records/language/numerics/integers.yaml
+      - source: records/language/ownership/movement.yaml
+      - source: records/language/ownership/value-semantics.yaml
+      - source: records/language/text/bytes.yaml
+      - source: records/language/text/display.yaml
+      - source: records/language/text/encodings.yaml
+      - source: records/language/text/search.yaml
+      - source: records/language/text/transformation.yaml
+      - source: records/language/text/unicode.yaml
+      - source: records/language/types/reflection.yaml
+      - source: records/language/types/relations.yaml
+      - source: records/language/types/scalars.yaml
+      - source: records/language/types/unions.yaml
   - group: Standard library
     children:
       - source: records/standard-library/collections.yaml
@@ -29,6 +65,14 @@ navigation:
       - source: records/standard-library/paths.yaml
       - source: records/standard-library/text-bytes-and-codecs.yaml
       - source: records/standard-library/collection-and-string-idioms.yaml
+      - source: records/standard-library/codecs.yaml
+      - source: records/standard-library/compression.yaml
+      - source: records/standard-library/cryptography.yaml
+      - source: records/standard-library/process.yaml
+      - source: records/standard-library/randomness.yaml
+      - source: records/standard-library/streams.yaml
+      - source: records/standard-library/urls.yaml
+      - source: records/standard-library/uuid.yaml
   - group: Packages
     children:
       - source: records/packages/package-manifest.yaml
@@ -36,6 +80,9 @@ navigation:
       - source: records/packages/command-line.yaml
       - source: records/packages/testing.yaml
       - source: records/packages/error-boundaries.yaml
+      - source: records/packages/native-interop.yaml
+      - source: records/packages/rust-interop.yaml
+      - source: records/packages/terrane-packages.yaml
   - group: Tooling
     children:
       - source: records/tooling/source-intelligence.yaml
@@ -43,6 +90,8 @@ navigation:
       - source: records/tooling/profiling.yaml
       - source: records/tooling/diagnostics.yaml
       - source: records/tooling/current-limitations.yaml
+      - source: records/tooling/editor-support.yaml
+      - source: records/tooling/formatting.yaml
   - group: Application development
     children:
       - source: records/manual/application-development-map.yaml
@@ -61,3 +110,5 @@ navigation:
       - source: records/internals/semantic-return-validation.yaml
       - source: records/internals/collection-lifetime.yaml
       - source: records/internals/proof-guided-lowering.yaml
+      - source: records/internals/diagnostics/source-projection.yaml
+      - source: records/internals/lowering/rust-output.yaml

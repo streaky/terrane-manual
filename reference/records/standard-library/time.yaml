@@ -151,7 +151,14 @@ documentation:
             it later in a `select` alongside a ticker wait, network operation,
             or other asynchronous task:
 
-            ```terrane
+        - type: example
+          id: legacy-fence-001
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             budget = clock::sleep; (duration::seconds; 30)
             heartbeats ticker = clock::interval; (duration::seconds; 1)
 
@@ -162,13 +169,16 @@ documentation:
                     print; 'budget expired'
 
             heartbeats.destruct;
-            ```
+          response: null
+          diagnostic: null
+          markdown: null
 
+        - type: markdown
+          markdown: |-
             The call that creates `budget` fixes the deadline before selection.
             After one case wins, selection cancels and drains the losing wait.
             That cleanup removes the losing timer or ticker waiter, but it does
             not consume the ticker itself; its owner must still destruct it.
-
 relationships:
   see-also:
     - lang.functions.asynchronous

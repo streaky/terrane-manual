@@ -17,9 +17,8 @@ documentation:
   title: Dependency projection resolution
   title-style: text
   summary: >-
-    Describes the exact identities, ordered resolution sources, artifact
-    validation, and durable history used to turn locked Rust dependencies into
-    one reusable compiler projection.
+    Describes the exact identities, ordered resolution sources, artifact validation, and durable history used to turn locked
+    Rust dependencies into one reusable compiler projection.
   tags:
     - compiler-internals
     - dependencies
@@ -39,28 +38,26 @@ documentation:
             - rust-dependency-deferred-surface
             - rust-dependency-reqwest
           markdown: |-
-            A projection cache identity covers the package manifest, resolved
-            Cargo lock, complete dependency inputs, effective compilation
-            target, stable build toolchain, nightly rustdoc toolchain, rustdoc
-            JSON format, projection schema, and containment tier. Every field is
-            length-delimited before entering the SHA-256 digest so different
-            input boundaries cannot produce the same encoded sequence.
+            A projection cache identity covers the package manifest, resolved Cargo lock,
+            complete dependency inputs, effective compilation target, stable build
+            toolchain, nightly rustdoc toolchain, rustdoc JSON format, projection schema,
+            and containment tier. Every field is length-delimited before entering the
+            SHA-256 digest so different input boundaries cannot produce the same encoded
+            sequence.
 
-            The effective target is selected from `CARGO_BUILD_TARGET`, then
-            Cargo's `build.target`, then the pinned stable compiler's host. A
-            change to any identity input selects a different cache record rather
-            than reusing and conditionally repairing an older projection.
+            The effective target is selected from `CARGO_BUILD_TARGET`, then Cargo's
+            `build.target`, then the pinned stable compiler's host. A change to any identity
+            input selects a different cache record rather than reusing and conditionally
+            repairing an older projection.
 
-            Identity construction lives in
-            `crates/terrane-compiler/src/projection.rs` under `cache_identity`
-            and `selected_target`. The identity is deliberately environment-
-            specific when the resolved Cargo lock, effective target, toolchain,
-            or containment tier differs; it is not part of the reviewed semantic
-            surface fixture. `target_identity_reads_effective_cargo_configuration`
-            covers target-sensitive construction, while
-            `projection_history_migrates_provenance_and_detects_replay_drift`
-            proves that one exact identity cannot admit two content hashes.
-
+            Identity construction lives in `crates/terrane-compiler/src/projection.rs` under
+            `cache_identity` and `selected_target`. The identity is deliberately
+            environment- specific when the resolved Cargo lock, effective target, toolchain,
+            or containment tier differs; it is not part of the reviewed semantic surface
+            fixture. `target_identity_reads_effective_cargo_configuration` covers
+            target-sensitive construction, while
+            `projection_history_migrates_provenance_and_detects_replay_drift` proves that
+            one exact identity cannot admit two content hashes.
     - id: resolution
       title: Ordered resolution transaction
       blocks:
@@ -72,28 +69,26 @@ documentation:
             - rust-dependency-deferred-surface
             - rust-dependency-reqwest
           markdown: |-
-            Projection resolution is one transaction owned by `resolve`. It
-            checks the exact project-local cache first, records bundled
-            distribution as explicitly skipped while no release channel exists,
-            attempts a configured published artifact, and otherwise generates
-            rustdoc locally with the pinned nightly toolchain. Every attempted
-            source records a status and reason, and the final projection records
+            Projection resolution is one transaction owned by `resolve`. It checks the exact
+            project-local cache first, records bundled distribution as explicitly skipped
+            while no release channel exists, attempts a configured published artifact, and
+            otherwise generates rustdoc locally with the pinned nightly toolchain. Every
+            attempted source records a status and reason, and the final projection records
             its resolution outcome.
 
-            A published artifact is admitted only when its envelope format,
-            cache identity, target, stable and rustdoc toolchains, rustdoc
-            format, projection schema, and payload identity match. Dependency
-            names, packages, exact versions, and effects are checked separately
-            from feature/default-feature metadata and each dependency's target
-            condition. The SHA-256 content hash must agree with both the
+            A published artifact is admitted only when its envelope format, cache identity,
+            target, stable and rustdoc toolchains, rustdoc format, projection schema, and
+            payload identity match. Dependency names, packages, exact versions, and effects
+            are checked separately from feature/default-feature metadata and each
+            dependency's target condition. The SHA-256 content hash must agree with both the
             envelope and the projection payload.
 
-            Missing or rejected published artifacts fall back to local rustdoc;
-            validation never weakens a mismatch into a nearby reusable result.
-            A verified published result is written into the same exact local
-            cache used by later offline resolution. The focused unit test
-            `remote_artifact_requires_exact_projection_inputs` exercises the
-            artifact boundary and its distinct mismatch causes.
+            Missing or rejected published artifacts fall back to local rustdoc; validation
+            never weakens a mismatch into a nearby reusable result. A verified published
+            result is written into the same exact local cache used by later offline
+            resolution. The focused unit test
+            `remote_artifact_requires_exact_projection_inputs` exercises the artifact
+            boundary and its distinct mismatch causes.
     - id: public-paths
       title: Canonical public paths
       blocks:
@@ -104,28 +99,25 @@ documentation:
           evidence:
             - namespace-qualified-projected-object-identity
           markdown: |-
-            Projection schema 25 resolves every public item through a
-            substantive reachable Rust path before considering paths beneath a
-            `prelude` module, then uses shortest depth and lexical ordering as
-            tie-breakers. That selected path supplies both the callable Rust
-            path and the Terrane namespace and object identity; the item's
-            deeper defining-module or convenience-prelude path cannot override
-            a canonical public re-export.
+            Projection schema 25 resolves every public item through a substantive reachable
+            Rust path before considering paths beneath a `prelude` module, then uses
+            shortest depth and lexical ordering as tie-breakers. That selected path supplies
+            both the callable Rust path and the Terrane namespace and object identity; the
+            item's deeper defining-module or convenience-prelude path cannot override a
+            canonical public re-export.
 
-            `record_public_module_items` discovers public definitions, named
-            re-exports, and glob re-exports once per rustdoc document. The
-            resulting map is reused for cross-dependency aliases and item
-            projection. `project_rustdoc` replaces rustdoc's defining paths
-            with those canonical paths before creating projected items, so
-            compiler lookup, generated Rust, editor tooling, and durable
-            projection history expose one matching surface. Associated
-            functions are recorded on their owning foreign type and emitted as
-            Terrane static members rather than duplicate namespace functions.
-            A single admitted concrete generic instantiation keeps the readable
-            type name; only multiple admitted instantiations require canonical
-            hash suffixes. Projection history records instance members as
-            `Type.member` and static members as `Type::member`, so method-level
-            surface loss is visible across dependency upgrades.
+            `record_public_module_items` discovers public definitions, named re-exports, and
+            glob re-exports once per rustdoc document. The resulting map is reused for
+            cross-dependency aliases and item projection. `project_rustdoc` replaces
+            rustdoc's defining paths with those canonical paths before creating projected
+            items, so compiler lookup, generated Rust, editor tooling, and durable
+            projection history expose one matching surface. Associated functions are
+            recorded on their owning foreign type and emitted as Terrane static members
+            rather than duplicate namespace functions. A single admitted concrete generic
+            instantiation keeps the readable type name; only multiple admitted
+            instantiations require canonical hash suffixes. Projection history records
+            instance members as `Type.member` and static members as `Type::member`, so
+            method-level surface loss is visible across dependency upgrades.
     - id: callbacks
       title: Concrete callback projection
       blocks:
@@ -137,20 +129,17 @@ documentation:
             - rust-dependency-callbacks
             - projected-callback-open-bound
           markdown: |-
-            Projection schema 17 represents a concrete Rust callback with its
-            monomorphic inputs and output, `Fn`/`FnMut`/`FnOnce` multiplicity,
-            synchronous or future-returning shape, retention, and `Send`/`Sync`
-            bounds. The rendered dependency declaration uses the same Terrane
-            function type shown by editor hover and signature help.
+            Projection schema 17 represents a concrete Rust callback with its monomorphic
+            inputs and output, `Fn`/`FnMut`/`FnOnce` multiplicity, synchronous or
+            future-returning shape, retention, and `Send`/`Sync` bounds. The rendered
+            dependency declaration uses the same Terrane function type shown by editor hover
+            and signature help.
 
-            The lowering boundary constructs the exact Rust closure and
-            converts callback inputs and results at both free-function and
-            projected-method calls. `FnMut` records Rust invocation multiplicity
-            but adds no mutable Terrane capture cell. Open generic,
-            higher-ranked, and lifetime-dependent callable shapes are declined;
-            the compiler does not erase them into a universal callback value.
-
-
+            The lowering boundary constructs the exact Rust closure and converts callback
+            inputs and results at both free-function and projected-method calls. `FnMut`
+            records Rust invocation multiplicity but adds no mutable Terrane capture cell.
+            Open generic, higher-ranked, and lifetime-dependent callable shapes are
+            declined; the compiler does not erase them into a universal callback value.
     - id: destination-results
       title: Destination-result proof
       blocks:
@@ -165,27 +154,25 @@ documentation:
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
           markdown: |-
-            Projection schema 25 retains one result-only Rust generic parameter,
-            its recursive result template, and the complete rendered bounds,
-            including higher-ranked lifetimes and associated constraints.
-            Semantic analysis gathers the exact Rust representation selected by
-            each written Terrane destination and batches those questions through
-            the projection oracle against the resolved dependency workspace.
-            Higher-ranked and nested bound paths are rewritten at every Rust
-            path-root occurrence when a dependency uses a manifest alias.
-            A public bound owner from a transitive crates.io package is pinned at
-            its lock-resolved version and added as a featureless, default-disabled
-            edge to probe and generated manifests. Existing transitive edges keep
-            the resolved feature set, so the injected edge cannot widen it;
-            ambiguous or non-registry owners decline explicitly.
+            Projection schema 25 retains one result-only Rust generic parameter, its
+            recursive result template, and the complete rendered bounds, including
+            higher-ranked lifetimes and associated constraints. Semantic analysis gathers
+            the exact Rust representation selected by each written Terrane destination and
+            batches those questions through the projection oracle against the resolved
+            dependency workspace. Higher-ranked and nested bound paths are rewritten at
+            every Rust path-root occurrence when a dependency uses a manifest alias. A
+            public bound owner from a transitive crates.io package is pinned at its
+            lock-resolved version and added as a featureless, default-disabled edge to probe
+            and generated manifests. Existing transitive edges keep the resolved feature
+            set, so the injected edge cannot widen it; ambiguous or non-registry owners
+            decline explicitly.
 
-            Projection-history format 3 records those exact bound-owner edges.
-            Their deliberate manifest rewrite resolves offline without Cargo's
-            `--locked` flag; integrity comes from the pre-injection manifest and
-            lock in the projection identity plus the content-hashed exact edge
-            list. Lowering names the concrete type argument and applies the
-            existing recursive result conversion without a boxed universal value.
-
+            Projection-history format 3 records those exact bound-owner edges. Their
+            deliberate manifest rewrite resolves offline without Cargo's `--locked` flag;
+            integrity comes from the pre-injection manifest and lock in the projection
+            identity plus the content-hashed exact edge list. Lowering names the concrete
+            type argument and applies the existing recursive result conversion without a
+            boxed universal value.
     - id: interface-impls
       title: Projected interface implementation proof
       blocks:
@@ -203,30 +190,25 @@ documentation:
             - projected-interface-provided-override-borrowed
             - projected-interface-provided-override-result
           markdown: |-
-            Projection schema 39 records eligible Rust traits as nominal
-            interfaces with canonical identity, receiver mode, required/provided
-            membership, signatures, documentation, thread obligations, and
-            foreign-type cloneability.
-            Semantic conformance uses that descriptor metadata directly, while
-            lowering emits one readable foreign trait implementation per adopted
-            class-interface pair.
+            Projection schema 39 records eligible Rust traits as nominal interfaces with
+            canonical identity, receiver mode, required/provided membership, signatures,
+            documentation, thread obligations, and foreign-type cloneability. Semantic
+            conformance uses that descriptor metadata directly, while lowering emits one
+            readable foreign trait implementation per adopted class-interface pair.
 
-            The projection oracle accepts impl-shaped questions in addition to
-            bound and call questions. Each complete implementation witness is
-            compiled against the exact resolved dependency workspace and cached
-            by its full source shape. A candidate interface enters the admitted
-            artifact only after that witness succeeds; one failed witness declines
-            only that interface and cannot block unrelated proven interfaces.
-            Unsupported public traits and members remain in the dependency
-            artifact with stable tooling-visible decline reasons.
+            The projection oracle accepts impl-shaped questions in addition to bound and
+            call questions. Each complete implementation witness is compiled against the
+            exact resolved dependency workspace and cached by its full source shape. A
+            candidate interface enters the admitted artifact only after that witness
+            succeeds; one failed witness declines only that interface and cannot block
+            unrelated proven interfaces. Unsupported public traits and members remain in the
+            dependency artifact with stable tooling-visible decline reasons.
 
-            Trait admission accepts only plain `self`, `&self`, and `&mut self`
-            receivers. Required borrowed parameters and required `Result`
-            methods decline; equivalent provided methods remain callable through
-            Rust defaults but cannot be overridden by Terrane classes. Thread
-            obligations are retained in the artifact for later class-field
-            enforcement.
-
+            Trait admission accepts only plain `self`, `&self`, and `&mut self` receivers.
+            Required borrowed parameters and required `Result` methods decline; equivalent
+            provided methods remain callable through Rust defaults but cannot be overridden
+            by Terrane classes. Thread obligations are retained in the artifact for later
+            class-field enforcement.
     - id: async-sequences
       title: Async-sequence recognition and lowering
       blocks:
@@ -239,17 +221,16 @@ documentation:
             - projected-async-sequence-borrowed-item
             - projected-async-sequence-open-item
           markdown: |-
-            Projection schema 19 recognizes a concrete owned producer only
-            when an async borrowed `next` returns `Result<Option<Item>, E>` and
-            the type also supplies a consuming `close`. Its transferable step
-            metadata preserves the concrete item type while lowering converts
-            Rust `Some` and `None` into explicit item and end states.
+            Projection schema 19 recognizes a concrete owned producer only when an async
+            borrowed `next` returns `Result<Option<Item>, E>` and the type also supplies a
+            consuming `close`. Its transferable step metadata preserves the concrete item
+            type while lowering converts Rust `Some` and `None` into explicit item and end
+            states.
 
-            The generated native future is constructed before the async
-            containment wrapper. The operation must be awaited directly, which
-            keeps the mutable receiver borrow local to one suspension rather
-            than storing it in a task. Borrowed results and open associated item
-            types are declined before lowering.
+            The generated native future is constructed before the async containment wrapper.
+            The operation must be awaited directly, which keeps the mutable receiver borrow
+            local to one suspension rather than storing it in a task. Borrowed results and
+            open associated item types are declined before lowering.
     - id: async-sinks
       title: Async-sink recognition and lowering
       blocks:
@@ -261,18 +242,16 @@ documentation:
             - rust-dependency-async-sinks
             - projected-async-sink-suspended-borrow
           markdown: |-
-            Projection schema 19 recognizes an asynchronous borrowed
-            `send(Item)` returning `Result<bool, E>`. Lowering converts the
-            boolean into the compiler-owned `async-sink-outcome` with distinct
-            accepted and remote-closed state while retaining Rust failure,
-            cancellation, and deadline boundaries.
+            Projection schema 19 recognizes an asynchronous borrowed `send(Item)` returning
+            `Result<bool, E>`. Lowering converts the boolean into the compiler-owned
+            `async-sink-outcome` with distinct accepted and remote-closed state while
+            retaining Rust failure, cancellation, and deadline boundaries.
 
-            The native future is constructed before containment and the call
-            must be awaited directly, so the mutable receiver borrow spans one
-            suspension. Any asynchronous or consuming projected receiver makes
-            its opaque foreign type resource-owning; consuming `close` and
-            `split` therefore participate in source ownership diagnostics.
-
+            The native future is constructed before containment and the call must be awaited
+            directly, so the mutable receiver borrow spans one suspension. Any asynchronous
+            or consuming projected receiver makes its opaque foreign type resource-owning;
+            consuming `close` and `split` therefore participate in source ownership
+            diagnostics.
     - id: chain-only
       title: Chain-only projection and containment
       blocks:
@@ -287,17 +266,16 @@ documentation:
             - projected-chain-capture
             - projected-chain-suspension
           markdown: |-
-            Projection schema 20 marks chain roots, continuing members, and
-            owned terminals explicitly. Semantic validation permits an
-            intermediate only as the receiver subtree of another chain member
-            in the same nested expression and emits one source diagnostic for
-            every escape form.
+            Projection schema 20 marks chain roots, continuing members, and owned terminals
+            explicitly. Semantic validation permits an intermediate only as the receiver
+            subtree of another chain member in the same nested expression and emits one
+            source diagnostic for every escape form.
 
-            Lowering emits root and continuation calls without independent
-            wrappers. The terminal applies argument conversion, panic and error
-            containment, asynchronous awaiting, and result conversion to the
-            complete Rust expression. Projection details shown by editor
-            tooling identify the chain-only, non-escaping constraint.
+            Lowering emits root and continuation calls without independent wrappers. The
+            terminal applies argument conversion, panic and error containment, asynchronous
+            awaiting, and result conversion to the complete Rust expression. Projection
+            details shown by editor tooling identify the chain-only, non-escaping
+            constraint.
     - id: history
       title: Durable origin and replay history
       blocks:
@@ -308,27 +286,25 @@ documentation:
           evidence:
             - rust-dependency-deferred-surface
           markdown: |-
-            `terrane-projection.lock` is durable project history rather than a
-            cache index. History format 3 records projected dependency members,
-            removed members, injected exact bound-owner dependencies, content
-            origin, rustdoc format, projection schema, cache identity, verified
-            content hash, and the resolution events that produced that content.
+            `terrane-projection.lock` is durable project history rather than a cache index.
+            History format 3 records projected dependency members, removed members, injected
+            exact bound-owner dependencies, content origin, rustdoc format, projection
+            schema, cache identity, verified content hash, and the resolution events that
+            produced that content.
 
-            An exact-cache hit for unchanged content preserves the original
-            local or published content-origin history instead of rewriting it as
-            cache provenance. If the same format-3 identity, dependency surface,
-            and bound-owner edge list later produce a different content hash,
-            projection fails with a replay-mismatch diagnostic. Version changes
-            retain removed member identities so a later missing import can be
-            distinguished from a member that never existed.
+            An exact-cache hit for unchanged content preserves the original local or
+            published content-origin history instead of rewriting it as cache provenance. If
+            the same format-3 identity, dependency surface, and bound-owner edge list later
+            produce a different content hash, projection fails with a replay-mismatch
+            diagnostic. Version changes retain removed member identities so a later missing
+            import can be distinguished from a member that never existed.
 
-            Removed-member history participates in every projected lookup tier:
-            top-level names use their namespace entry, static members use
-            `Type::member`, and instance receivers use `Type.member`. Declared
-            members resolve first; only an absent declared member consults
-            matching removal history and emits S2031 with the recorded version
-            transition. A member absent from both the declaration and history
-            remains the ordinary unknown-member diagnostic.
+            Removed-member history participates in every projected lookup tier: top-level
+            names use their namespace entry, static members use `Type::member`, and instance
+            receivers use `Type.member`. Declared members resolve first; only an absent
+            declared member consults matching removal history and emits S2031 with the
+            recorded version transition. A member absent from both the declaration and
+            history remains the ordinary unknown-member diagnostic.
 
             History migration, origin preservation, and replay detection live in
             `apply_projection_history`; focused unit coverage includes

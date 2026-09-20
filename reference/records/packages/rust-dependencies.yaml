@@ -17,10 +17,8 @@ documentation:
   title: Projected Rust dependencies
   title-style: text
   summary: >-
-    Declares exact Rust crate dependencies, imports their admitted API through
-    /deps namespaces, and explains projection identity, collection crossings,
-    transitive owners, temporary adapter layering, caching, and explicit
-    declines.
+    Declares exact Rust crate dependencies, imports their admitted API through /deps namespaces, and explains projection identity,
+    collection crossings, transitive owners, temporary adapter layering, caching, and explicit declines.
   tags:
     - packages
     - dependencies
@@ -33,12 +31,10 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            A projected Rust crate is declared in `package.toml`. The dependency
-            key is its Terrane alias; `package` names the crates.io package when
-            the alias differs. Versions and feature sets are part of projection
-            identity, so applications should state the exact contract they have
-            reviewed.
-
+            A projected Rust crate is declared in `package.toml`. The dependency key is its
+            Terrane alias; `package` names the crates.io package when the alias differs.
+            Versions and feature sets are part of projection identity, so applications
+            should state the exact contract they have reviewed.
         - type: example
           id: projected-rust-manifest
           title: Declare an exact dependency surface
@@ -62,24 +58,22 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            1. Add one exact `[rust-dependencies.<alias>]` entry to
-               `package.toml`; select only reviewed features and declare every
-               required effect.
-            2. Run `terrane check <package>` (or another ordinary package command).
-               A cache miss invokes projection with the pinned rustdoc toolchain.
+            1. Add one exact `[rust-dependencies.<alias>]` entry to `package.toml`; select
+               only reviewed features and declare every required effect.
+            2. Run `terrane check <package>` (or another ordinary package command). A cache
+               miss invokes projection with the pinned rustdoc toolchain.
             3. Import admitted names explicitly from `/deps/<alias>/...`.
-            4. Inspect `terrane-projection.lock` as the reviewable inventory for
-               the exact resolved package, feature, target, admitted member, and
-               declined-member surface.
-            5. Call a member only after distinguishing its projection state in
-               that inventory.
-            6. Catch `dependency-error` where a projected Rust `Result` or
-               dependency panic crosses into application policy.
-            7. If a required operation is declined, determine whether the missing
-               shape belongs in generic projection or in the central temporary
-               integration-adapter package. Record an objective generic removal
-               criterion before shipping a bridge.
-
+            4. Inspect `terrane-projection.lock` as the reviewable inventory for the exact
+               resolved package, feature, target, admitted member, and declined-member
+               surface.
+            5. Call a member only after distinguishing its projection state in that
+               inventory.
+            6. Catch `dependency-error` where a projected Rust `Result` or dependency panic
+               crosses into application policy.
+            7. If a required operation is declined, determine whether the missing shape
+               belongs in generic projection or in the central temporary integration-adapter
+               package. Record an objective generic removal criterion before shipping a
+               bridge.
         - type: table
           id: projection-member-states
           title: Dependency member states
@@ -118,13 +112,12 @@ documentation:
           id: projection-lock-review
           style: information
           markdown: |-
-            `terrane-projection.lock` is derived but reviewable package evidence.
-            Commit it with the application when reproducible dependency review is
-            required. A changed dependency version, feature set, target, rustdoc
-            toolchain, projection schema, or admitted/declined inventory deserves
-            review even when authored Terrane source is unchanged. Never edit the
-            lock to manufacture availability; regenerate it through the compiler.
-
+            `terrane-projection.lock` is derived but reviewable package evidence. Commit it
+            with the application when reproducible dependency review is required. A changed
+            dependency version, feature set, target, rustdoc toolchain, projection schema,
+            or admitted/declined inventory deserves review even when authored Terrane source
+            is unchanged. Never edit the lock to manufacture availability; regenerate it
+            through the compiler.
     - id: imports
       title: Importing admitted members
       blocks:
@@ -135,40 +128,34 @@ documentation:
           evidence:
             - rust-dependency-deferred-surface
           markdown: |-
-            Declaring a crate does not flood a source namespace. Import an
-            admitted member explicitly from `/deps/<alias>/...`. Projection
-            prefers a substantive public path over one beneath a `prelude`
-            module, then chooses the shortest path and lexical order at equal
-            depth. Re-exports of one item are therefore one type while
-            unrelated same-named items remain distinct.
+            Declaring a crate does not flood a source namespace. Import an admitted member
+            explicitly from `/deps/<alias>/...`. Projection prefers a substantive public
+            path over one beneath a `prelude` module, then chooses the shortest path and
+            lexical order at equal depth. Re-exports of one item are therefore one type
+            while unrelated same-named items remain distinct.
 
-            Rust associated functions remain static members of their projected
-            class and use `Class::function`; they are not imported as
-            independent namespace functions.
+            Rust associated functions remain static members of their projected class and use
+            `Class::function`; they are not imported as independent namespace functions.
 
-            A generic declaration with one admitted concrete instantiation
-            keeps its readable Rust type name. Hash-suffixed names are reserved
-            for multiple admitted instantiations whose canonical Rust
-            identities must remain distinct.
-
+            A generic declaration with one admitted concrete instantiation keeps its
+            readable Rust type name. Hash-suffixed names are reserved for multiple admitted
+            instantiations whose canonical Rust identities must remain distinct.
     - id: crossed-types
       title: Values crossing the generated shim
       blocks:
         - type: markdown
           markdown: |-
-            `Option<T>` crosses as `T|none`. Rust sequences, ordered and
-            unordered maps, sets, and homogeneous tuples cross recursively as
-            the matching Terrane collections when every component is
-            representable. Map keys and set items must be Terrane scalars;
-            optionals, collections, tuples, and foreign objects are rejected in
-            those positions. Shims reuse the vector backing for identity
-            element conversions and move uniquely owned tuple elements rather
-            than cloning them. Shared tuple storage fails at the dependency
-            boundary instead of panicking. `Vec<u8>` remains `bytes`.
+            `Option<T>` crosses as `T|none`. Rust sequences, ordered and unordered maps,
+            sets, and homogeneous tuples cross recursively as the matching Terrane
+            collections when every component is representable. Map keys and set items must
+            be Terrane scalars; optionals, collections, tuples, and foreign objects are
+            rejected in those positions. Shims reuse the vector backing for identity element
+            conversions and move uniquely owned tuple elements rather than cloning them.
+            Shared tuple storage fails at the dependency boundary instead of panicking.
+            `Vec<u8>` remains `bytes`.
 
-            Heterogeneous tuples and aggregates containing an unsupported
-            component are declined rather than partially reinterpreted.
-
+            Heterogeneous tuples and aggregates containing an unsupported component are
+            declined rather than partially reinterpreted.
     - id: transitive-owners
       title: Types owned by another crate
       blocks:
@@ -179,16 +166,14 @@ documentation:
           evidence:
             - transitive-type-owner-must-be-declared-at-one-version
           markdown: |-
-            A member whose signature exposes a type owned by an undeclared
-            transitive crate is unavailable. The diagnostic names the owner and
-            its lock-resolved version. Declare that crate directly with a
-            unifying version to make its canonical identity and members
-            reachable. Merely receiving the type through another dependency
-            does not declare its owner. If the crossed owner resolves to
-            multiple versions, projection validation fails after Cargo lock
-            resolution and before semantic import resolution or Rust lowering,
-            and reports every conflicting version.
-
+            A member whose signature exposes a type owned by an undeclared transitive crate
+            is unavailable. The diagnostic names the owner and its lock-resolved version.
+            Declare that crate directly with a unifying version to make its canonical
+            identity and members reachable. Merely receiving the type through another
+            dependency does not declare its owner. If the crossed owner resolves to multiple
+            versions, projection validation fails after Cargo lock resolution and before
+            semantic import resolution or Rust lowering, and reports every conflicting
+            version.
     - id: async-members
       title: Awaiting asynchronous members
       blocks:
@@ -201,26 +186,23 @@ documentation:
             - rust-dependency-callbacks
             - sync-main-later-async
           markdown: |-
-            A projected Rust `async fn` is an asynchronous Terrane callable.
-            Calling it constructs a linear task, and `await` consumes that task
-            inside an async callable. Argument and result conversion, returned
-            Rust errors, receiver ownership, and dependency panic handling use
-            the same boundary contract as synchronous projected members.
+            A projected Rust `async fn` is an asynchronous Terrane callable. Calling it
+            constructs a linear task, and `await` consumes that task inside an async
+            callable. Argument and result conversion, returned Rust errors, receiver
+            ownership, and dependency panic handling use the same boundary contract as
+            synchronous projected members.
 
-            Projected asynchronous interface methods require `Send` and an
-            asynchronous package entry. Terrane-driven calls run within that
-            generated runtime. A Rust caller that obtains a projected method
-            future must poll it on a thread entered into the same runtime;
-            polling from a bare Rust thread is outside the projected contract.
-            When Rust owns such a method future, the adapter owns a separable
-            receiver value. Dropping that future requests Terrane cancellation,
-            lets nested `finally` cleanup finish, and releases the receiver
-            only after cleanup. Mutable receiver state is copied back only on
-            successful completion. Resource-owning classes therefore require
-            a consuming receiver. Executor shutdown drains detached cleanup
-            before releasing the runtime. An unrelated async function in a
+            Projected asynchronous interface methods require `Send` and an asynchronous
+            package entry. Terrane-driven calls run within that generated runtime. A Rust
+            caller that obtains a projected method future must poll it on a thread entered
+            into the same runtime; polling from a bare Rust thread is outside the projected
+            contract. When Rust owns such a method future, the adapter owns a separable
+            receiver value. Dropping that future requests Terrane cancellation, lets nested
+            `finally` cleanup finish, and releases the receiver only after cleanup. Mutable
+            receiver state is copied back only on successful completion. Resource-owning
+            classes therefore require a consuming receiver. Executor shutdown drains
+            detached cleanup before releasing the runtime. An unrelated async function in a
             sync-main package retains the smaller non-Tokio runtime.
-
     - id: associated-interfaces
       title: Closing associated interface types
       blocks:
@@ -235,38 +217,32 @@ documentation:
             - projected-associated-bound
             - projected-unprojectable-supertrait
           markdown: |-
-            A projected Rust trait may expose exactly one non-generic associated
-            type. Terrane closes it explicitly with `Interface of ConcreteType`
-            in `implements` clauses and value annotations. The application is
-            part of nominal identity; the compiler substitutes it through
-            inherited methods and reflection, validates the retained Rust
-            bounds, and emits the corresponding Rust associated type.
+            A projected Rust trait may expose exactly one non-generic associated type.
+            Terrane closes it explicitly with `Interface of ConcreteType` in `implements`
+            clauses and value annotations. The application is part of nominal identity; the
+            compiler substitutes it through inherited methods and reflection, validates the
+            retained Rust bounds, and emits the corresponding Rust associated type.
 
-            `ConcreteType` is currently limited to a closed
-            boundary-representable scalar, aggregate, or projected foreign
-            type. A Terrane source class cannot fill the slot until source
-            objects have an explicit Rust boundary conversion contract.
+            `ConcreteType` is currently limited to a closed boundary-representable scalar,
+            aggregate, or projected foreign type. A Terrane source class cannot fill the
+            slot until source objects have an explicit Rust boundary conversion contract.
 
-            Every non-marker supertrait must project independently. The complete
-            chain contributes inherited requirements and receives one generated
-            Rust implementation per distinct trait, including diamond
-            closures. Applied identities resolve recursively inside aggregate
-            annotations, subject to each aggregate's ordinary element constraints.
-            `(Interface of ConcreteType)|none` groups the completed application
-            when it is optional; optionality admits any otherwise valid declared
-            value type, including aggregates. A source subclass inherits its
-            base classes' complete projected-interface set at generic calls and
-            generated Rust implementations. An applied subinterface value may
-            cross an ancestor's owning erased boundary when the inherited
-            associated binding and auto-trait obligations agree. Open
-            applications are rejected recursively inside aggregate and callable
-            annotations. Final oracle
-            admission also removes generic functions whose projected interface
-            bound was declined. Bare or inferred applications, source-class
-            arguments, multiple or generic associated slots, failed bounds,
-            unprojectable supertraits, and incoherent erased bindings are
+            Every non-marker supertrait must project independently. The complete chain
+            contributes inherited requirements and receives one generated Rust
+            implementation per distinct trait, including diamond closures. Applied
+            identities resolve recursively inside aggregate annotations, subject to each
+            aggregate's ordinary element constraints. `(Interface of ConcreteType)|none`
+            groups the completed application when it is optional; optionality admits any
+            otherwise valid declared value type, including aggregates. A source subclass
+            inherits its base classes' complete projected-interface set at generic calls and
+            generated Rust implementations. An applied subinterface value may cross an
+            ancestor's owning erased boundary when the inherited associated binding and
+            auto-trait obligations agree. Open applications are rejected recursively inside
+            aggregate and callable annotations. Final oracle admission also removes generic
+            functions whose projected interface bound was declined. Bare or inferred
+            applications, source-class arguments, multiple or generic associated slots,
+            failed bounds, unprojectable supertraits, and incoherent erased bindings are
             rejected before lowering.
-
     - id: callbacks
       title: Passing Terrane callables to Rust
       blocks:
@@ -280,23 +256,21 @@ documentation:
             - projected-callback-nontransferable-capture
             - projected-callback-throwable
           markdown: |-
-            A concrete monomorphic Rust `Fn`, `FnMut`, or `FnOnce` bound
-            projects as a shared, mutable, or consuming Terrane function
-            contract respectively at either a free-function or method call. A
-            callback whose result is a bounded future adds the orthogonal
-            `async` contract. The generated boundary closure converts each
+            A concrete monomorphic Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a
+            shared, mutable, or consuming Terrane function contract respectively at either a
+            free-function or method call. A callback whose result is a bounded future adds
+            the orthogonal `async` contract. The generated boundary closure converts each
             argument and result without introducing a foreign callback runtime.
 
-            Mutable callbacks retain repeatable owned state, and separating the
-            Terrane callable copies its current environment instead of aliasing
-            it. A consuming callback transfers that environment into one
-            one-shot Rust closure. Rust `'static`, `Send`, and `Sync`
-            requirements remain independent ownership requirements in Terrane.
-            A retained callback cannot capture a borrowed reference or object
-            receiver. A transferable callback cannot capture a local-only value,
-            and an escaping throwable is rejected when the Rust callback result
-            has no matching failure representation. Open generic, higher-ranked,
-            and lifetime-dependent callback shapes remain unavailable.
+            Mutable callbacks retain repeatable owned state, and separating the Terrane
+            callable copies its current environment instead of aliasing it. A consuming
+            callback transfers that environment into one one-shot Rust closure. Rust
+            `'static`, `Send`, and `Sync` requirements remain independent ownership
+            requirements in Terrane. A retained callback cannot capture a borrowed reference
+            or object receiver. A transferable callback cannot capture a local-only value,
+            and an escaping throwable is rejected when the Rust callback result has no
+            matching failure representation. Open generic, higher-ranked, and
+            lifetime-dependent callback shapes remain unavailable.
     - id: foreign-value-ownership
       title: Foreign fields and value ownership
       blocks:
@@ -309,16 +283,14 @@ documentation:
             - projected-interface-send-field
             - projected-interface-sync-field
           markdown: |-
-            Projection records whether an owned foreign Rust type implements
-            `Clone`, `Send`, and `Sync`; the latter two are independently proven
-            against the resolved crate by the projection oracle. When a source
-            class stores a non-`Clone` foreign value in a field, that class
-            becomes resource-owning transitively. Assignment transfers the
-            enclosing class value; generated Rust never derives `Clone` across
-            a field whose foreign type does not support it. Projected interface
-            and retained-bound checks recursively follow nested source fields
-            and these closed foreign auto-trait facts.
-
+            Projection records whether an owned foreign Rust type implements `Clone`,
+            `Send`, and `Sync`; the latter two are independently proven against the resolved
+            crate by the projection oracle. When a source class stores a non-`Clone` foreign
+            value in a field, that class becomes resource-owning transitively. Assignment
+            transfers the enclosing class value; generated Rust never derives `Clone` across
+            a field whose foreign type does not support it. Projected interface and
+            retained-bound checks recursively follow nested source fields and these closed
+            foreign auto-trait facts.
     - id: interfaces
       title: Implementing projected Rust traits
       blocks:
@@ -343,48 +315,42 @@ documentation:
             - projected-canonical-drop-import
             - projected-boxed-erased-auto-trait
           markdown: |-
-            An eligible fixed-signature Rust trait projects as a nominal Terrane
-            interface. Plain Rust `&self`, `&mut self`, and `self` receivers
-            become shared, mutable, and consuming requirements; wrapped
-            receivers such as `Arc<Self>`, `Box<Self>`, and `Pin<&mut Self>`
-            remain unavailable. Required methods demand matching class methods.
-            Provided methods remain callable Rust defaults. Terrane may override
-            them only when their foreign signatures use owned, non-`Result`
-            parameters and results. A local class adopts the projected identity
-            with ordinary `implements`, and lowering emits the corresponding
-            foreign Rust implementation.
+            An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
+            Plain Rust `&self`, `&mut self`, and `self` receivers become shared, mutable,
+            and consuming requirements; wrapped receivers such as `Arc<Self>`, `Box<Self>`,
+            and `Pin<&mut Self>` remain unavailable. Required methods demand matching class
+            methods. Provided methods remain callable Rust defaults. Terrane may override
+            them only when their foreign signatures use owned, non-`Result` parameters and
+            results. A local class adopts the projected identity with ordinary `implements`,
+            and lowering emits the corresponding foreign Rust implementation.
 
-            Owned concrete generic and `impl Trait` inputs retain their Rust
-            lifetime, `Send`, and `Sync` bounds and specialize from the written
-            class argument. Only an owning `Box<dyn Interface + Send/Sync>`
-            parameter projects. Every object auto-trait is retained; the
-            dependency shim boxes a conforming concrete class or the exact
-            generated Terrane interface wrapper. Bare or borrowed trait
-            objects, non-interface `Box<T>`, multiple principal traits, boxed
-            trait-object results, and wrappers lacking requested auto traits
-            decline before lowering.
+            Owned concrete generic and `impl Trait` inputs retain their Rust lifetime,
+            `Send`, and `Sync` bounds and specialize from the written class argument. Only
+            an owning `Box<dyn Interface + Send/Sync>` parameter projects. Every object
+            auto-trait is retained; the dependency shim boxes a conforming concrete class or
+            the exact generated Terrane interface wrapper. Bare or borrowed trait objects,
+            non-interface `Box<T>`, multiple principal traits, boxed trait-object results,
+            and wrappers lacking requested auto traits decline before lowering.
 
-            `Send` and `Sync` are proven independently for each closed foreign
-            type. Interface and retained-bound checks recursively traverse the
-            complete effective local-class field graph. Canonical Rust `Drop`
-            is not directly imported as a source interface, including through
-            a public reexport. The declined item points to `consuming destruct`.
-            When an otherwise projectable trait requires canonical `Drop`, its
-            Terrane implementor must provide that destructor; lowering reuses
+            `Send` and `Sync` are proven independently for each closed foreign type.
+            Interface and retained-bound checks recursively traverse the complete effective
+            local-class field graph. Canonical Rust `Drop` is not directly imported as a
+            source interface, including through a public reexport. The declined item points
+            to `consuming destruct`. When an otherwise projectable trait requires canonical
+            `Drop`, its Terrane implementor must provide that destructor; lowering reuses
             the class's single lineage-aware `Drop` implementation.
 
-            Interface-typed arguments still cannot select an ordinary source
-            generic bound. Required borrowed parameters, required `Result`
-            methods, static requirements, generic methods, unresolved
-            associated types, higher-ranked lifetimes, other owning containers,
-            and unprojectable members decline with stable projection reasons.
-            Projected error metadata contributes ordinary throwable
-            compatibility and protocol eligibility.
+            Interface-typed arguments still cannot select an ordinary source generic bound.
+            Required borrowed parameters, required `Result` methods, static requirements,
+            generic methods, unresolved associated types, higher-ranked lifetimes, other
+            owning containers, and unprojectable members decline with stable projection
+            reasons. Projected error metadata contributes ordinary throwable compatibility
+            and protocol eligibility.
 
-            Rust traits and Terrane traits only share a word. Rust traits are
-            named conformance contracts, so their projection target is a Terrane
-            interface. Terrane traits compose source fields and methods through
-            `uses`; they do not represent foreign implementations.
+            Rust traits and Terrane traits only share a word. Rust traits are named
+            conformance contracts, so their projection target is a Terrane interface.
+            Terrane traits compose source fields and methods through `uses`; they do not
+            represent foreign implementations.
     - id: async-sequences
       title: Consuming projected asynchronous sequences
       blocks:
@@ -399,19 +365,17 @@ documentation:
             - projected-async-sequence-double-owner
             - projected-async-sequence-unconsumed-task
           markdown: |-
-            A concrete owned Rust producer with an asynchronous borrowed `next`
-            returning `Result<Option<Item>, E>` and a consuming `close`
-            projects as a resource-owning linear endpoint. Awaiting `next`
-            returns `async-iteration-step of Item`: `item`, `end`, and `value`
-            distinguish an item from exhaustion. A Rust error enters the
-            `dependency-error` path, while cancellation remains the enclosing
-            task outcome.
+            A concrete owned Rust producer with an asynchronous borrowed `next` returning
+            `Result<Option<Item>, E>` and a consuming `close` projects as a resource-owning
+            linear endpoint. Awaiting `next` returns `async-iteration-step of Item`: `item`,
+            `end`, and `value` distinguish an item from exhaustion. A Rust error enters the
+            `dependency-error` path, while cancellation remains the enclosing task outcome.
 
-            Each borrowed operation must be awaited directly and reborrows the
-            producer for one suspension. `close` consumes the producer, so
-            later use is a source ownership error. Dropping an endpoint releases
-            its Rust value but does not promise a graceful protocol close.
-            Borrowed items and open associated item types remain unavailable.
+            Each borrowed operation must be awaited directly and reborrows the producer for
+            one suspension. `close` consumes the producer, so later use is a source
+            ownership error. Dropping an endpoint releases its Rust value but does not
+            promise a graceful protocol close. Borrowed items and open associated item types
+            remain unavailable.
     - id: async-sinks
       title: Sending through projected asynchronous sinks
       blocks:
@@ -426,20 +390,17 @@ documentation:
             - projected-async-sink-double-owner
             - projected-async-sink-suspended-borrow
           markdown: |-
-            A concrete owned Rust endpoint with an asynchronous borrowed
-            `send(Item)` returning `Result<bool, E>` projects as a
-            resource-owning linear sink. Awaiting `send` returns
-            `async-sink-outcome`: `accepted` reports successful acceptance and
-            `closed` reports remote closure. Dependency failure, task
-            cancellation, and deadline expiry remain separate outcomes.
+            A concrete owned Rust endpoint with an asynchronous borrowed `send(Item)`
+            returning `Result<bool, E>` projects as a resource-owning linear sink. Awaiting
+            `send` returns `async-sink-outcome`: `accepted` reports successful acceptance
+            and `closed` reports remote closure. Dependency failure, task cancellation, and
+            deadline expiry remain separate outcomes.
 
-            A borrowed send must be awaited directly so its mutable borrow spans
-            one suspension. `flush` preserves its projected failure contract,
-            while `close` consumes the endpoint and performs graceful protocol
-            close. A consuming `split` transfers the whole duplex object into
-            independently owned halves. Drop releases an endpoint but does not
-            claim graceful close.
-
+            A borrowed send must be awaited directly so its mutable borrow spans one
+            suspension. `flush` preserves its projected failure contract, while `close`
+            consumes the endpoint and performs graceful protocol close. A consuming `split`
+            transfers the whole duplex object into independently owned halves. Drop releases
+            an endpoint but does not claim graceful close.
     - id: chain-only-values
       title: Completing non-escaping dependency chains
       blocks:
@@ -454,20 +415,18 @@ documentation:
             - projected-chain-capture
             - projected-chain-suspension
           markdown: |-
-            A projected root may return a chain-only intermediate when its
-            receiver methods can continue that same concrete chain or terminate
-            in an owned projected value. The intermediate may retain a borrow
-            from a named input that outlives the expression. It must remain
-            inside one nested expression as the receiver of the next member.
+            A projected root may return a chain-only intermediate when its receiver methods
+            can continue that same concrete chain or terminate in an owned projected value.
+            The intermediate may retain a borrow from a named input that outlives the
+            expression. It must remain inside one nested expression as the receiver of the
+            next member.
 
-            A chain-only value cannot be bound, returned, captured, passed to
-            Terrane code, or held across `await`. Complete the chain at once.
-            The generated Rust keeps the intermediate inside one expression and
-            applies conversion, dependency failure, panic, and asynchronous
-            boundaries at the terminal operation. A concrete adapter may run an
-            open generic API internally; that does not make the open generic
+            A chain-only value cannot be bound, returned, captured, passed to Terrane code,
+            or held across `await`. Complete the chain at once. The generated Rust keeps the
+            intermediate inside one expression and applies conversion, dependency failure,
+            panic, and asynchronous boundaries at the terminal operation. A concrete adapter
+            may run an open generic API internally; that does not make the open generic
             directly projectable.
-
         - type: rule
           id: rule.dependencies.destination-directed-results
           level: must
@@ -483,33 +442,30 @@ documentation:
             - projected-result-borrowed
             - projected-result-source-object
           markdown: |-
-            A projected dependency function or method may leave one result-only
-            Rust type parameter for the caller. Terrane selects that parameter
-            from exactly one written binding, argument, class-field, or return
-            destination. The projection oracle must prove every rendered Rust
-            bound for the exact concrete representation; `no`, `unknown`,
-            absent, incompatible, or conflicting destinations are compile-time
-            failures. Higher-ranked lifetimes and associated constraints remain
-            part of the proof rather than being approximated from rustdoc
-            implementation lists. Higher-ranked and nested bound paths use the
-            dependency's manifest alias at every Rust path-root occurrence.
+            A projected dependency function or method may leave one result-only Rust type
+            parameter for the caller. Terrane selects that parameter from exactly one
+            written binding, argument, class-field, or return destination. The projection
+            oracle must prove every rendered Rust bound for the exact concrete
+            representation; `no`, `unknown`, absent, incompatible, or conflicting
+            destinations are compile-time failures. Higher-ranked lifetimes and associated
+            constraints remain part of the proof rather than being approximated from rustdoc
+            implementation lists. Higher-ranked and nested bound paths use the dependency's
+            manifest alias at every Rust path-root occurrence.
 
-            When rustdoc names a public bound through a transitive crates.io
-            package, that owner is pinned at its lock-resolved version, recorded
-            in projection-history format 3, and added to the generated manifest
-            with no explicit or default features. Existing transitive edges keep
-            the resolved feature set, so this direct edge makes the bound
-            nameable without widening it; ambiguous or non-registry owners
-            decline.
+            When rustdoc names a public bound through a transitive crates.io package, that
+            owner is pinned at its lock-resolved version, recorded in projection-history
+            format 3, and added to the generated manifest with no explicit or default
+            features. Existing transitive edges keep the resolved feature set, so this
+            direct edge makes the bound nameable without widening it; ambiguous or
+            non-registry owners decline.
 
-            Closed scalar, string, bytes, optional, sequence, mapping, set,
-            homogeneous tuple, and projected foreign-object shapes recurse
-            through the result template. Source-declared object destinations
-            remain unavailable because dependencies have no authored conversion
-            contract for their generated Rust representation. Borrowed results
-            are declined; accepted values cross the boundary owned. Calls name
-            the selected Rust type explicitly in generated Rust. Terrane does
-            not expose Rust angle-bracket generic arguments in source.
+            Closed scalar, string, bytes, optional, sequence, mapping, set, homogeneous
+            tuple, and projected foreign-object shapes recurse through the result template.
+            Source-declared object destinations remain unavailable because dependencies have
+            no authored conversion contract for their generated Rust representation.
+            Borrowed results are declined; accepted values cross the boundary owned. Calls
+            name the selected Rust type explicitly in generated Rust. Terrane does not
+            expose Rust angle-bracket generic arguments in source.
     - id: integration-adapters
       title: Layering temporary integration adapters
       blocks:
@@ -520,23 +476,22 @@ documentation:
           evidence:
             - integration-adapter-sqlx-sqlite
           markdown: |-
-            A maintained integration adapter supplements an upstream projected
-            dependency; it does not replace that dependency with a second API.
-            The application declares both packages. Adapter signatures preserve
-            representable upstream identities rather than wrapping them.
+            A maintained integration adapter supplements an upstream projected dependency;
+            it does not replace that dependency with a second API. The application declares
+            both packages. Adapter signatures preserve representable upstream identities
+            rather than wrapping them.
 
-            A directly declared provider may attach one feature-gated module
-            beneath another directly declared dependency with
-            `package.metadata.terrane.namespace-overlays`. Terrane then presents
-            the provider's items in the target `/deps/<crate>` namespace while
-            retaining every item's actual Rust path and dependency provenance.
-            Imports therefore combine upstream and temporary operations without
+            A directly declared provider may attach one feature-gated module beneath another
+            directly declared dependency with `package.metadata.terrane.namespace-overlays`.
+            Terrane then presents the provider's items in the target `/deps/<crate>`
+            namespace while retaining every item's actual Rust path and dependency
+            provenance. Imports therefore combine upstream and temporary operations without
             exposing the adapter package path.
 
-            The named provider feature must be enabled. Undeclared, self,
-            ambiguous, empty, overlapping, and colliding overlays are projection
-            errors; an adapter cannot silently shadow an upstream item. Overlay
-            declarations participate in projection cache identity.
+            The named provider feature must be enabled. Undeclared, self, ambiguous, empty,
+            overlapping, and colliding overlays are projection errors; an adapter cannot
+            silently shadow an upstream item. Overlay declarations participate in projection
+            cache identity.
 
             Application code follows a direct-first policy:
 
@@ -545,25 +500,22 @@ documentation:
             - bridge only the concrete operation shape projection still declines;
             - keep every temporary bridge in the central, feature-gated
               `terrane-integration-adapters` package;
-            - keep routing, schemas, policy, workflows, and domain types in
-              Terrane rather than an application-shaped Rust facade; and
-            - give every bridge a registry entry naming its stable ID, tracking
-              key, dependency and supported version, precise limitation, package
-              feature, and objective generic removal criterion.
+            - keep routing, schemas, policy, workflows, and domain types in Terrane rather
+              than an application-shaped Rust facade; and
+            - give every bridge a registry entry naming its stable ID, tracking key,
+              dependency and supported version, precise limitation, package feature, and
+              objective generic removal criterion.
 
-            The `sqlx-sqlite` feature retains only `query_bytes`, which consumes
-            non-`Clone` rows from a collected list until S1 adds consuming
-            collection or stream iteration. Query construction, binding,
-            execution, fetching, row access, errors, and connection lifecycle are
-            direct. PDF construction/serialization and Axum response, callback,
-            WebSocket, listener, and server-await shapes are also direct. Do not
-            create one adapter crate per application or dependency.
+            The `sqlx-sqlite` feature retains only `query_bytes`, which consumes non-`Clone`
+            rows from a collected list until S1 adds consuming collection or stream
+            iteration. Query construction, binding, execution, fetching, row access, errors,
+            and connection lifecycle are direct. PDF construction/serialization and Axum
+            response, callback, WebSocket, listener, and server-await shapes are also
+            direct. Do not create one adapter crate per application or dependency.
 
-            The adapter-owned registry and independent removal lifecycle are
-            maintenance contracts, not runtime dispatch. See
-            `internals.integration-adapters` and
+            The adapter-owned registry and independent removal lifecycle are maintenance
+            contracts, not runtime dispatch. See `internals.integration-adapters` and
             `internals.projection.namespace-overlays` for their exact contracts.
-
         - type: example
           id: example.dependencies.adapter-namespace-overlay
           status: accepted
@@ -620,28 +572,76 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Terrane first checks its exact project-local projection cache. A
-            configured trusted HTTPS artifact may satisfy a miss only when its
-            dependency, feature, target, build-toolchain, rustdoc-toolchain,
-            rustdoc-format, projection-schema, and SHA-256 content identity all
-            match. Otherwise Terrane generates rustdoc locally with its pinned
-            nightly toolchain. Every cache, published, bundled, and local
-            attempt records its outcome and fallback reason. A verified
-            published projection enters the local cache for offline reuse.
-            Bundled artifacts are explicitly deferred until Terrane has a
-            release artifact channel rather than being silently attempted.
+            Terrane first checks its exact project-local projection cache. A configured
+            trusted HTTPS artifact may satisfy a miss only when its dependency, feature,
+            target, build-toolchain, rustdoc-toolchain, rustdoc-format, projection-schema,
+            and SHA-256 content identity all match. Otherwise Terrane generates rustdoc
+            locally with its pinned nightly toolchain. Every cache, published, bundled, and
+            local attempt records its outcome and fallback reason. A verified published
+            projection enters the local cache for offline reuse. Bundled artifacts are
+            explicitly deferred until Terrane has a release artifact channel rather than
+            being silently attempted.
 
-            Injecting an exact bound-owner edge deliberately rewrites only the
-            generated projection manifest, so its offline fetch cannot use
-            Cargo's `--locked` mode. The pre-injection manifest and lock already
-            participate in projection identity, and the injected edge list is
-            exact, content-hashed, and reviewable in `terrane-projection.lock`;
-            these invariants replace Cargo lock enforcement for that step.
+            Injecting an exact bound-owner edge deliberately rewrites only the generated
+            projection manifest, so its offline fetch cannot use Cargo's `--locked` mode.
+            The pre-injection manifest and lock already participate in projection identity,
+            and the injected edge list is exact, content-hashed, and reviewable in
+            `terrane-projection.lock`; these invariants replace Cargo lock enforcement for
+            that step.
 
-            Unsupported members remain explicit declines in the transferable
-            projection artifact. The compiler does not replace one Rust API
-            shape with a nearby Terrane operation or silently admit unknown
-            metadata.
+            Unsupported members remain explicit declines in the transferable projection
+            artifact. The compiler does not replace one Rust API shape with a nearby Terrane
+            operation or silently admit unknown metadata.
+    - id: async-projected-calls
+      title: "Projected Rust Async Calls"
+      blocks:
+        - type: markdown
+          markdown: |-
+            A projected Rust asynchronous call produces a Terrane task without eagerly
+            constructing or running the dependency future. On the task’s first poll, the
+            Rust call is evaluated once and its result is converted once before ordinary
+            asynchronous polling continues. This keeps construction inside the task’s
+            execution context.
+
+            The same inert task-construction rule applies when a concrete non-async Rust
+            return type implements the exact canonical
+            `core::future::into_future::IntoFuture` contract. Owner arguments must close the
+            associated `Output` type before call specialization. The first poll evaluates
+            the Rust call once and performs the `IntoFuture` conversion once; subsequent
+            work follows ordinary polling. A similarly named trait does not qualify.
+            Unresolved, borrowed, lifetime-escaping, or unrepresentable outputs are
+            declined.
+
+            Result conversion follows the ordinary projected boundary rules. Supported owned
+            values and aggregate shapes are converted recursively. A projected `Result<T,E>`
+            preserves typed success and failure behavior: an admitted `E` is catchable by
+            its projected object identity, not by display text. `Option<Result<T,E>>` and
+            `Result<Option<T>,E>` both have the Terrane shape `T|none throws E`, but their
+            distinct Rust wrapper order is retained so absence, success, and failure remain
+            distinct. A non-standard error type that cannot be projected causes the call to
+            be declined rather than converted to text or an optional sentinel.
+
+            Panic handling follows the selected profile. Under an unwinding profile,
+            projected crossings use panic containment. Receiver-free crossings use Rust’s
+            `UnwindSafe` proof, while receiver crossings use the receiver-specific
+            logical-invariant unwind assertion. Under an abort profile, unwind conversion is
+            omitted and generated Cargo configuration uses abort semantics. Deferring future
+            construction until first poll does not change these result or panic boundaries.
+    - id: async-projected-endpoints
+      title: "Projected Async Sequences and Sinks"
+      blocks:
+        - type: markdown
+          markdown: |-
+            Projected asynchronous methods require a `Send` interface and an asynchronous
+            main context. Resource-owning classes require consuming receivers. Receiver
+            forms such as `Arc<Self>`, `Box<Self>`, `Pin<&mut Self>`, and other wrapped
+            receivers are declined rather than treated as plain shared, mutable, or
+            consuming receivers.
+
+            Cancellation preserves receiver cleanup. Dropping a projected Rust future
+            detaches the cancellation cleanup associated with that future. Nested `finally`
+            cleanup completes before a consuming receiver is released, and executor shutdown
+            drains outstanding cleanup.
   see-also:
     - lang.functions.declarations
     - internals.projection.namespace-overlays
@@ -650,6 +650,10 @@ provenance:
   specification:
     - document: language-spec
       section: "23.8"
+    - document: language-scoreboard
+      section: "async-projected-calls"
+    - document: language-scoreboard
+      section: "async-projected-endpoints"
   conformance:
     - rust-dependency-deferred-surface
     - transitive-type-owner-must-be-declared-at-one-version

@@ -17,8 +17,8 @@ documentation:
   title: Built-in collections
   title-style: text
   summary: >-
-    Defines the built-in list, map, set, tuple, range, entry, and deterministic
-    unordered collection types together with their current operations.
+    Defines the built-in list, map, set, tuple, range, entry, and deterministic unordered collection types together with their
+    current operations.
   tags:
     - standard-library
     - collections
@@ -45,11 +45,10 @@ documentation:
             - tuple-type-boundaries
             - collection-identity-lifetime
           markdown: |-
-            Terrane distinguishes collections by value shape, ordering contract,
-            and permitted mutation. Choosing `unordered-map` or `unordered-set`
-            changes the visible type and ordering guarantee; it is not a hidden
-            implementation option on `map` or `set`.
-
+            Terrane distinguishes collections by value shape, ordering contract, and
+            permitted mutation. Choosing `unordered-map` or `unordered-set` changes the
+            visible type and ordering guarantee; it is not a hidden implementation option on
+            `map` or `set`.
         - type: table
           id: collection-kind-comparison
           title: Built-in collection types
@@ -103,13 +102,11 @@ documentation:
 
         - type: markdown
           markdown: |-
-            `iterator of Item` and `iteration-step of Item` are linear traversal
-            protocol values, not stored collections. `bytes` is a distinct
-            immutable byte-sequence value: it exposes `.length`, integer and
-            range indexing, and `uint8` iteration, but it is not `list of
-            uint8`. Strings are text values with explicit byte, scalar, and
-            grapheme views rather than general collections.
-
+            `iterator of Item` and `iteration-step of Item` are linear traversal protocol
+            values, not stored collections. `bytes` is a distinct immutable byte-sequence
+            value: it exposes `.length`, integer and range indexing, and `uint8` iteration,
+            but it is not `list of uint8`. Strings are text values with explicit byte,
+            scalar, and grapheme views rather than general collections.
     - id: construction-and-types
       title: Construction and applied types
       blocks:
@@ -124,26 +121,23 @@ documentation:
             - nested-collection-contextual-typing
             - tuple-type-boundaries
           markdown: |-
-            Import collection constructors from `/core/collections`. Ordinary
-            invocation constructs values: `list; a, b`, `map; first=1`,
-            `set; a, b`, `tuple; a, b`, and `entry; key, value`. A map whose
-            keys are not construction-argument names accepts `entry` values.
-            Duplicate set items retain one value at their first insertion
-            position.
+            Import collection constructors from `/core/collections`. Ordinary invocation
+            constructs values: `list; a, b`, `map; first=1`, `set; a, b`, `tuple; a, b`, and
+            `entry; key, value`. A map whose keys are not construction-argument names
+            accepts `entry` values. Duplicate set items retain one value at their first
+            insertion position.
 
-            Declared collection types use recursive constructor application:
-            `list of Item`, `map of Key, Value`, `set of Item`, `tuple of Item`,
+            Declared collection types use recursive constructor application: `list of Item`,
+            `map of Key, Value`, `set of Item`, `tuple of Item`,
             `unordered-map of Key, Value`, `unordered-set of Item`, and
-            `entry of Key, Value`. Map, set, and entry keys must be immutable
-            scalar values. A bare constructor such as `list` is a value
-            constructor, not a complete type.
+            `entry of Key, Value`. Map, set, and entry keys must be immutable scalar values.
+            A bare constructor such as `list` is a value constructor, not a complete type.
 
-            Empty lists, maps, sets, unordered maps, and unordered sets have a
-            canonical default when their destination supplies the applied type.
-            Tuples have no canonical field default. A heterogeneous collection
-            literal requires an explicit finite-union destination; construction
-            never widens elements to an untyped dynamic value.
-
+            Empty lists, maps, sets, unordered maps, and unordered sets have a canonical
+            default when their destination supplies the applied type. Tuples have no
+            canonical field default. A heterogeneous collection literal requires an explicit
+            finite-union destination; construction never widens elements to an untyped
+            dynamic value.
     - id: lookup
       title: Lookup and checked absence
       blocks:
@@ -155,21 +149,17 @@ documentation:
             - collection-lookup-errors
             - checked-map-int-refinement
           markdown: |-
-            `items[index]` and `items.get.checked; index` read lists and tuples.
-            Default indexing throws `index-error` when the integer is negative,
-            unrepresentable, or outside the collection. The checked form
-            returns `Item|none`.
+            `items[index]` and `items.get.checked; index` read lists and tuples. Default
+            indexing throws `index-error` when the integer is negative, unrepresentable, or
+            outside the collection. The checked form returns `Item|none`.
 
-            `mapping[key]` and `mapping.get.checked; key` read maps and
-            unordered maps. Default lookup throws `missing-key`; the checked
-            form returns `Value|none`. Absence is always requested through the
-            `checked` child: the default operation never silently returns
-            `none`.
+            `mapping[key]` and `mapping.get.checked; key` read maps and unordered maps.
+            Default lookup throws `missing-key`; the checked form returns `Value|none`.
+            Absence is always requested through the `checked` child: the default operation
+            never silently returns `none`.
 
-            Index assignment and `.set` mutate their receiver and perform
-            copy-on-write separation when another logical collection value
-            retains the previous contents.
-
+            Index assignment and `.set` mutate their receiver and perform copy-on-write
+            separation when another logical collection value retains the previous contents.
     - id: lists-and-tuples
       title: Lists and tuples
       blocks:
@@ -185,21 +175,19 @@ documentation:
             - tuple-append-fixed
             - stable-list-sorting
           markdown: |-
-            Lists expose `.length`, integer indexing, `.get.checked`,
-            `.append; value`, `.set; index, value`, `.remove; index`, `.clear;`,
-            `.sort;`, and `.sort.descending;`. Append, set, clear, and both sort
-            forms mutate and return the resulting list. Remove transfers and
-            returns the removed item; an invalid index throws `index-error`.
-            Sorting is stable and admits only integer, floating, and string
-            item descriptors; it rejects optional, union, boolean, object,
+            Lists expose `.length`, integer indexing, `.get.checked`, `.append; value`,
+            `.set; index, value`, `.remove; index`, `.clear;`, `.sort;`, and
+            `.sort.descending;`. Append, set, clear, and both sort forms mutate and return
+            the resulting list. Remove transfers and returns the removed item; an invalid
+            index throws `index-error`. Sorting is stable and admits only integer, floating,
+            and string item descriptors; it rejects optional, union, boolean, object,
             collection, reference, resource, and comparator-callback forms.
 
-            Tuples expose `.length`, integer indexing, and `.get.checked`.
-            They are homogeneous and fixed-length after construction, so they
-            have no append, set, remove, or clear operation. Runtime length is
-            not part of `tuple of Item`; tuples of different lengths cross the
-            same typed boundary when their item type agrees.
-
+            Tuples expose `.length`, integer indexing, and `.get.checked`. They are
+            homogeneous and fixed-length after construction, so they have no append, set,
+            remove, or clear operation. Runtime length is not part of `tuple of Item`;
+            tuples of different lengths cross the same typed boundary when their item type
+            agrees.
     - id: maps-and-entries
       title: Maps and entries
       blocks:
@@ -213,21 +201,17 @@ documentation:
             - map-entry-destructuring
             - map-key-removal
           markdown: |-
-            Maps and unordered maps expose `.length`, key lookup,
-            `.get.checked`, `.set; key, value`, `.remove; key`,
-            `.remove.checked; key`, `.keys;`, `.values;`, and `.entries;`.
-            Default removal transfers and returns the stored value or throws
-            `missing-key`; checked removal returns `Value|none`. A miss leaves
-            storage unmodified. Set returns the resulting map. Keys, values,
-            and entries return typed lists in the map's iteration order. An
-            entry exposes cloned `.key` and `.value` properties.
+            Maps and unordered maps expose `.length`, key lookup, `.get.checked`,
+            `.set; key, value`, `.remove; key`, `.remove.checked; key`, `.keys;`,
+            `.values;`, and `.entries;`. Default removal transfers and returns the stored
+            value or throws `missing-key`; checked removal returns `Value|none`. A miss
+            leaves storage unmodified. Set returns the resulting map. Keys, values, and
+            entries return typed lists in the map's iteration order. An entry exposes cloned
+            `.key` and `.value` properties.
 
-            Iterating a map yields `entry of Key, Value`. A `for` loop may bind
-            that entry as one value or destructure it directly as `for key,
-            value in mapping`. The loop bindings are logical values; changing
-            them does not mutate the map.
-
-
+            Iterating a map yields `entry of Key, Value`. A `for` loop may bind that entry
+            as one value or destructure it directly as `for key, value in mapping`. The loop
+            bindings are logical values; changing them does not mutate the map.
     - id: sets
       title: Sets
       blocks:
@@ -238,17 +222,14 @@ documentation:
           evidence:
             - collections-value-semantics
           markdown: |-
-            Sets and unordered sets expose `.length`, `.contains; value`,
-            `.add; value`, and `.remove; value`. Contains and remove return
-            `bool`; add returns the resulting set. Adding an existing value
-            leaves membership unchanged.
-
+            Sets and unordered sets expose `.length`, `.contains; value`, `.add; value`, and
+            `.remove; value`. Contains and remove return `bool`; add returns the resulting
+            set. Adding an existing value leaves membership unchanged.
         - type: note
           id: note.collections.set-clear-boundary
           style: warning
           markdown: |-
             The current set and unordered-set surface has no clear operation.
-
     - id: ranges
       title: Ranges
       blocks:
@@ -260,11 +241,10 @@ documentation:
             - collections-value-semantics
           markdown: |-
             `range; start, end, step?` constructs a half-open integer range;
-            `range.through; start, end, step?` includes the authored end. Step
-            defaults to `1` and must not be zero. A step directed away from the
-            end yields an empty range rather than an error or unbounded
-            iteration. Iteration visits indices in authored order.
-
+            `range.through; start, end, step?` includes the authored end. Step defaults to
+            `1` and must not be zero. A step directed away from the end yields an empty
+            range rather than an error or unbounded iteration. Iteration visits indices in
+            authored order.
     - id: ordering-iteration-and-lifetime
       title: Ordering, iteration, and lifetime
       blocks:
@@ -282,45 +262,39 @@ documentation:
             - discarded-temporary-list-append
             - discarded-temporary-list-sort
           markdown: |-
-            Lists and tuples iterate in value order; maps and sets iterate in
-            insertion order. Removing an ordered-map key preserves the relative
-            order of every remaining entry, and reinserting it places it at the
-            end. Unordered maps and sets do not promise insertion order, but
-            identical operation sequences are reproducible. New items append to
-            the current traversal sequence, while removal may fill the removed
-            position with the prior final item. Their order may therefore depend
-            on prior removals and insertions, so content-equal values reached
-            through different histories need not traverse identically.
-            Milestone 29.0 intentionally replaced the earlier stable-hash
-            traversal with this append/swap-fill behavior so insertion and
-            removal are both expected amortized constant time. Code must not
-            depend on unordered output produced by an older compiler.
+            Lists and tuples iterate in value order; maps and sets iterate in insertion
+            order. Removing an ordered-map key preserves the relative order of every
+            remaining entry, and reinserting it places it at the end. Unordered maps and
+            sets do not promise insertion order, but identical operation sequences are
+            reproducible. New items append to the current traversal sequence, while removal
+            may fill the removed position with the prior final item. Their order may
+            therefore depend on prior removals and insertions, so content-equal values
+            reached through different histories need not traverse identically. Milestone
+            29.0 intentionally replaced the earlier stable-hash traversal with this
+            append/swap-fill behavior so insertion and removal are both expected amortized
+            constant time. Code must not depend on unordered output produced by an older
+            compiler.
 
-            List sorting is stable. Strings compare lexicographically by Unicode
-            scalar sequence, and integers by mathematical value. Floating
-            infinities retain numeric order, signed zeros compare equal, and all
-            NaNs form one stable final bucket in both directions. Descending sort
-            compares directly rather than reversing ascending output.
+            List sorting is stable. Strings compare lexicographically by Unicode scalar
+            sequence, and integers by mathematical value. Floating infinities retain numeric
+            order, signed zeros compare equal, and all NaNs form one stable final bucket in
+            both directions. Descending sort compares directly rather than reversing
+            ascending output.
 
-            `for` takes a value snapshot of a built-in collection. Mutating or
-            replacing the source binding during the loop does not change the
-            remaining traversal. The iterator is a linear state machine and is
-            consumed when transferred into `for`.
+            `for` takes a value snapshot of a built-in collection. Mutating or replacing the
+            source binding during the loop does not change the remaining traversal. The
+            iterator is a linear state machine and is consumed when transferred into `for`.
 
-            A statement-form mutable collection call requires a retained binding
-            receiver. An `entry.value` or indexed element is a snapshot value:
-            mutating it and discarding the result is rejected because no
-            observable destination exists. Terrane does not implicitly write
-            the value back; consume and store the result explicitly, for example
-            `nested.set; index, (nested[index].append; value)`.
+            A statement-form mutable collection call requires a retained binding receiver.
+            An `entry.value` or indexed element is a snapshot value: mutating it and
+            discarding the result is rejected because no observable destination exists.
+            Terrane does not implicitly write the value back; consume and store the result
+            explicitly, for example `nested.set; index, (nested[index].append; value)`.
 
-            Collections are identity-less values even when copy-on-write
-            storage is shared. Replacement, removal, clear, and destruction
-            have observable release ordering for contained values. See the
-            collection language-contract and lowering pages for iterator
-            protocol and detailed lifetime rules.
-
-
+            Collections are identity-less values even when copy-on-write storage is shared.
+            Replacement, removal, clear, and destruction have observable release ordering
+            for contained values. See the collection language-contract and lowering pages
+            for iterator protocol and detailed lifetime rules.
 relationships:
   see-also:
     - lang.collections.protocols

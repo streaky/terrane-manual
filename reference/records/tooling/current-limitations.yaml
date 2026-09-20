@@ -17,8 +17,7 @@ documentation:
   title: Current implementation limitations
   title-style: text
   summary: >-
-    Separates temporary compiler limitations and safe workarounds from intended
-    Terrane language semantics.
+    Separates temporary compiler limitations and safe workarounds from intended Terrane language semantics.
   tags: [tooling, compiler, limitations, status, workarounds]
   sections:
     - id: interpretation
@@ -30,12 +29,10 @@ documentation:
           since: null
           evidence: []
           markdown: |-
-            A limitation records behavior of the named compiler versions, not a
-            language rule. Normative language and standard-library pages describe
-            intended behavior. Use a workaround only when its semantic-effect field
-            is acceptable, and remove it when the objective removal condition is met.
-
-
+            A limitation records behavior of the named compiler versions, not a language
+            rule. Normative language and standard-library pages describe intended behavior.
+            Use a workaround only when its semantic-effect field is acceptable, and remove
+            it when the objective removal condition is met.
     - id: projection-namespace-cycles
       title: LIM-PROJ-NAMESPACE-CYCLES
       blocks:
@@ -56,7 +53,9 @@ documentation:
             - field: Observable failure
               value: Projection rejects cyclic generated namespaces before a usable member can be imported.
             - field: Intended behavior
-              value: Member-demand projection admits an acyclic reachable operation without importing an unrelated cyclic graph.
+              value:
+                Member-demand projection admits an acyclic reachable operation without importing an unrelated cyclic
+                graph.
             - field: Safe workaround
               value: Use a registered narrow adapter operation for the concrete input and output shape.
             - field: Removal target
@@ -110,7 +109,9 @@ documentation:
             - field: Affected versions
               value: Terrane compiler 0.1.x
             - field: Observable failure
-              value: After testing an unchanged package, a later run can select the test harness and report an unknown test case.
+              value:
+                After testing an unchanged package, a later run can select the test harness and report an unknown test
+                case.
             - field: Intended behavior
               value: Artifact mode participates in cache identity so test registries and ordinary executables cannot collide.
             - field: Safe workaround
@@ -138,7 +139,9 @@ documentation:
             - field: Affected versions
               value: Terrane compiler 0.1.x
             - field: Observable failure
-              value: A method that mutates a collection-valued field may require explicit mutable receiver authority rather than inferring it from the statement-form member call.
+              value:
+                A method that mutates a collection-valued field may require explicit mutable receiver authority rather
+                than inferring it from the statement-form member call.
             - field: Intended behavior
               value: Receiver authority is inferred consistently from observable field mutation and checked against the declaration.
             - field: Safe workaround

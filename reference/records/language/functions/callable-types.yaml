@@ -45,19 +45,29 @@ documentation:
             asynchronous callable adds `async` after that invocation prefix.
             Every form accepts a postfix throwable upper bound:
 
-            ```terrane
+        - type: example
+          id: legacy-fence-001
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             function from int to string
             mutable async function from int to string throws coercion-error
             consuming function to connection
-            ```
+          response: null
+          diagnostic: null
+          markdown: null
 
+        - type: markdown
+          markdown: |-
             `throws` requires one object type conforming to `throwable`. Callable
             results associate right, and a postfix clause binds to the callable
             introduced by the nearest `function`. Thus
             `function from A to function from B to R throws Inner throws Outer`
             constrains the result callable with `Inner` and the outer callable
             with `Outer`.
-
     - id: invocation-modes
       title: Invocation authority and compatibility
       blocks:

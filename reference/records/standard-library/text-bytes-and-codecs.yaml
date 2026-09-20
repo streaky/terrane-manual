@@ -17,8 +17,8 @@ documentation:
   title: Text, bytes, and codecs
   title-style: text
   summary: >-
-    Distinguishes Unicode text from immutable bytes and documents total encoding,
-    checked decoding, octet construction, and hexadecimal and Base64 codecs.
+    Distinguishes Unicode text from immutable bytes and documents total encoding, checked decoding, octet construction, and
+    hexadecimal and Base64 codecs.
   tags: [standard-library, strings, bytes, encodings, codecs]
   sections:
     - id: text-and-bytes
@@ -26,30 +26,41 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `string` is Unicode text. `bytes` is an immutable sequence of octets;
-            indexing and iteration produce `uint8`, and `.length` reports octets.
-            A byte literal uses `b'...'`. Text and bytes never convert implicitly.
-            `.concat` preserves the receiver type and accepts values of that same
-            type.
-
-            ```terrane
+            `string` is Unicode text. `bytes` is an immutable sequence of octets; indexing
+            and iteration produce `uint8`, and `.length` reports octets. A byte literal uses
+            `b'...'`. Text and bytes never convert implicitly. `.concat` preserves the
+            receiver type and accepts values of that same type.
+        - type: example
+          id: legacy-fence-001
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             text string = 'Terrane'
             data bytes = b'Terrane'
             empty bytes = b''
             combined bytes = data.concat; b' docs'
-            ```
-
+          response: null
+          diagnostic: null
+          markdown: null
     - id: encodings
       title: Encoding and decoding
       blocks:
         - type: markdown
           markdown: |-
-            `/core/encodings` provides `utf8`, `utf16-le`, `utf16-be`,
-            `utf32-le`, and `utf32-be`. Encoding is total and returns owned bytes.
-            Decoding validates the complete input and throws `decode-error`; it
-            never substitutes replacement text.
-
-            ```terrane
+            `/core/encodings` provides `utf8`, `utf16-le`, `utf16-be`, `utf32-le`, and
+            `utf32-be`. Encoding is total and returns owned bytes. Decoding validates the
+            complete input and throws `decode-error`; it never substitutes replacement text.
+        - type: example
+          id: legacy-fence-002
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             from /core/encodings import utf8
             from /core/errors import decode-error
 
@@ -58,8 +69,9 @@ documentation:
               text string = data.decode; utf8
             catch decode-error as failure
               print; failure.message
-            ```
-
+          response: null
+          diagnostic: null
+          markdown: null
         - type: table
           id: encoding-synopsis
           title: Encoding operations
@@ -129,31 +141,38 @@ documentation:
 
         - type: markdown
           markdown: |-
-            `join` belongs to the separator: `', '.join; 'a', 'b'` returns
-            `a, b`. `concat` inserts nothing. Prefix and suffix checks are the
-            `start` and `end` children of `contains`, not separate names.
-
+            `join` belongs to the separator: `', '.join; 'a', 'b'` returns `a, b`. `concat`
+            inserts nothing. Prefix and suffix checks are the `start` and `end` children of
+            `contains`, not separate names.
     - id: octets-and-codecs
       title: Octets, hexadecimal, and Base64
       blocks:
         - type: markdown
           markdown: |-
             The compiler-backed codec declarations are:
-
-            ```terrane
+        - type: example
+          id: legacy-fence-003
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             function bytes-from-octets bytes; octets (list of uint8)
             function encode-hex string; data bytes
             function decode-hex decode-result; text string
             function encode-base64 string; data bytes, url-safe bool, padded bool
             function decode-base64 decode-result; text string, url-safe bool, padded bool
-            ```
+          response: null
+          diagnostic: null
+          markdown: null
 
-            `bytes-from-octets` copies the selected `uint8` values into an immutable
-            byte sequence. Decoder functions return `decode-result`; inspect
-            `failed`, `message`, and `value`. Hex and Base64 syntax failures are
-            result-object failures, unlike character-encoding failures from
-            `bytes.decode`, which throw `decode-error`.
-
+        - type: markdown
+          markdown: |-
+            `bytes-from-octets` copies the selected `uint8` values into an immutable byte
+            sequence. Decoder functions return `decode-result`; inspect `failed`, `message`,
+            and `value`. Hex and Base64 syntax failures are result-object failures, unlike
+            character-encoding failures from `bytes.decode`, which throw `decode-error`.
         - type: example
           id: bytes-from-octets-example
           title: Construct and encode bytes
@@ -176,8 +195,8 @@ documentation:
           response: null
           diagnostic: null
           markdown: >-
-            The explicit list destination supplies element type evidence before
-            the first append.
+            The explicit list destination supplies element type evidence before the first
+            append.
   see-also:
     - std.filesystem
     - std.collections

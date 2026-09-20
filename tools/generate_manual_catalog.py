@@ -6,11 +6,14 @@ from __future__ import annotations
 import argparse
 import hashlib
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any, Iterable
 
 import yaml
+from format_manual_content import format_yaml_documents, reflow_markdown_scalars
+
 
 CODE_RE = re.compile(r'\b([LSTW][0-9]{4})\b')
 DECLARATION_RE = re.compile(
@@ -19,6 +22,7 @@ DECLARATION_RE = re.compile(
 FENCE_RE = re.compile(r"```terrane\n(.*?)\n```", re.DOTALL)
 INLINE_CODE_RE = re.compile(r"`([^`\n]+)`")
 REFERENCE_RE = re.compile(r"\[\[([^\]#]+)(?:#[^\]]+)?\]\]")
+
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -31,6 +35,29 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 def dump_yaml(value: Any) -> str:
     return yaml.safe_dump(value, sort_keys=False, allow_unicode=True, width=100)
+
+
+def formatting_paths(root: Path) -> list[Path]:
+    paths = set(root.glob("*/manual.yaml"))
+    for manifest_path in sorted(paths):
+        manifest = load_yaml(manifest_path)
+        for group in manifest.get("navigation", []):
+            for child in group.get("children", []):
+                source = child.get("source")
+                if source and str(source).endswith((".yaml", ".yml")):
+                    record_path = manifest_path.parent / source
+                    if not record_path.exists():
+                        raise ValueError(f"{manifest_path}: missing record {source}")
+                    paths.add(record_path)
+    return sorted(paths)
+
+
+
+
+def restore_files(snapshots: dict[Path, bytes]) -> None:
+    for path, content in snapshots.items():
+        if path.read_bytes() != content:
+            path.write_bytes(content)
 
 
 def manifest_records(root: Path) -> list[dict[str, Any]]:
@@ -149,6 +176,17 @@ def record_synopsis(record: dict[str, Any], compiler_root: Path | None) -> list[
     return declarations
 
 
+def section_outline(section_values: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [
+        {
+            "id": section.get("id"),
+            "title": section.get("title"),
+            "sections": section_outline(section.get("sections", []) or []),
+        }
+        for section in section_values
+    ]
+
+
 def catalog(entries: list[dict[str, Any]], compiler_root: Path | None) -> dict[str, Any]:
     records = []
     for entry in entries:
@@ -159,6 +197,7 @@ def catalog(entries: list[dict[str, Any]], compiler_root: Path | None) -> dict[s
             {
                 "id": record.get("id"),
                 "title": documentation.get("title"),
+                "summary": documentation.get("summary"),
                 "kind": record.get("kind"),
                 "manual": entry["manual"],
                 "group": entry["group"],
@@ -172,11 +211,11 @@ def catalog(entries: list[dict[str, Any]], compiler_root: Path | None) -> dict[s
                     "conformance": provenance.get("conformance", []),
                     "compiler": provenance.get("compiler"),
                 },
-                "sections": [section.get("id") for section in sections(record)],
+                "sections": section_outline(documentation.get("sections", []) or []),
                 "declaration-synopsis": record_synopsis(record, compiler_root),
             }
         )
-    return {"format": 1, "generated": True, "records": records}
+    return {"format": 2, "generated": True, "records": records}
 
 
 def symbol_index(entries: list[dict[str, Any]], compiler_root: Path | None) -> dict[str, Any]:
@@ -319,21 +358,45 @@ def outputs(root: Path, compiler_root: Path | None) -> dict[Path, str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--check", action="store_true", help="fail if generated output is stale")
+    parser.add_argument(
+        "--check",
+        action="store_true",
+        help="format YAML, then fail if generated output is stale",
+    )
     parser.add_argument("--compiler-root", type=Path, default=Path(".."))
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
     compiler_root = args.compiler_root.resolve() if args.compiler_root else None
-    generated = outputs(root, compiler_root)
-    stale = []
-    for path, content in generated.items():
-        if args.check:
-            if not path.exists() or path.read_text(encoding="utf-8") != content:
-                stale.append(path.relative_to(root).as_posix())
-        else:
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(content, encoding="utf-8")
+    paths = formatting_paths(root)
+    snapshots = {path: path.read_bytes() for path in paths}
+    try:
+        format_yaml_documents(paths)
+        reflow_markdown_scalars(paths)
+        format_yaml_documents(paths)
+        generated = outputs(root, compiler_root)
+        stale = []
+        for path, content in generated.items():
+            if args.check:
+                if not path.exists() or path.read_text(encoding="utf-8") != content:
+                    stale.append(path.relative_to(root).as_posix())
+            else:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(content, encoding="utf-8")
+    except subprocess.CalledProcessError as error:
+        restore_files(snapshots)
+        restored = " and restored YAML inputs" if snapshots else ""
+        print(
+            f"manual formatting or generation failed{restored}: "
+            f"command exited with status {error.returncode}",
+            file=sys.stderr,
+        )
+        return 1
+    except Exception as error:
+        restore_files(snapshots)
+        restored = " and restored YAML inputs" if snapshots else ""
+        print(f"manual formatting or generation failed{restored}: {error}", file=sys.stderr)
+        return 1
     if stale:
         print("stale generated manual artifacts: " + ", ".join(stale), file=sys.stderr)
         return 1

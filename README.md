@@ -39,18 +39,36 @@ Authored documentation remains reviewable and versionable here. Build inputs suc
 compiler snapshots are supplied by the documentation pipeline, while generated lookup
 artifacts record the exact source digest used for a refresh.
 
-## Validate and refresh generated indexes
+## Format, validate, and refresh manual YAML
+
+Install the pinned formatter release once:
+
+```sh
+npm install --global --prefix ~/.local prettier@3.9.8
+```
 
 From this repository inside a Terrane checkout:
 
 ```sh
+# Format manifest-derived YAML, validate records, and refresh generated files.
 python tools/generate_manual_catalog.py
+
+# Format manifest-derived YAML, then fail if generated files need refreshing.
 python tools/generate_manual_catalog.py --check
 ```
 
+Prettier formats the YAML envelope at an 80-character print width, then reflows
+prose-only `markdown` literal scalars at the same width. Typed preformatted material
+is preserved; code and other preformatted content belong in `example` or `grammar`
+fields. Both commands snapshot every manifest-derived YAML input, format it, and
+restore it if formatting exposes a record-validation or generation failure. `--check`
+retains successful formatting changes and then reports stale generated artifacts.
+
 The generator validates stable record and section IDs, verifies marked compiler-backed
 synopses against compiler-owned declarations, and refreshes all files under
-`generated/`. Pass `--compiler-root PATH` when the compiler checkout is not the parent
-directory.
+`generated/`. The format-2 catalog is the compact discovery view: it carries each
+page's authored summary and recursive ID-and-title section outline without duplicating
+that metadata in `manual.yaml`. Pass `--compiler-root PATH` when the compiler checkout
+is not the parent directory.
 
 The Terrane documentation pipeline validates and renders the complete manual IR.

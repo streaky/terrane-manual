@@ -17,8 +17,8 @@ documentation:
   title: Semantic return validation
   title-style: text
   summary: >-
-    Explains how concrete function and method returns are checked before Rust
-    lowering and how one conservative static-member post-condition is proved.
+    Explains how concrete function and method returns are checked before Rust lowering and how one conservative static-member
+    post-condition is proved.
   tags:
     - compiler-internals
     - semantics
@@ -36,13 +36,11 @@ documentation:
             - ordinary-method-wrong-return
             - method-fallthrough
           markdown: |-
-            Every concrete top-level function and class method body enters the
-            same control-flow validator. Each reachable `return` is checked
-            against the semantic result type before lowering; incompatible
-            values receive T0015 at the source return rather than reaching
-            rustc. Empty projected or declaration-only bodies remain outside
-            concrete-body validation.
-
+            Every concrete top-level function and class method body enters the same
+            control-flow validator. Each reachable `return` is checked against the semantic
+            result type before lowering; incompatible values receive T0015 at the source
+            return rather than reaching rustc. Empty projected or declaration-only bodies
+            remain outside concrete-body validation.
     - id: initialized-static-optional
       title: Initialized static optional
       blocks:
@@ -54,16 +52,13 @@ documentation:
             - optional-member-post-if-return
             - static-class-singleton
           markdown: |-
-            Return validation proves an exact static `T|none` member present
-            only when a preceding sibling `if member == none` or
-            `if none == member` has no `else`, directly assigns exactly one
-            compatible `T` value to that same textual target, has no other
-            target write, and no intervening sibling rewrites it before the
-            return. This return-only postcondition is deliberately not general
-            in-block member-expression narrowing and never applies to instance
-            members; unsupported shapes retain their optional type and are
-            rejected at the source boundary.
-
+            Return validation proves an exact static `T|none` member present only when a
+            preceding sibling `if member == none` or `if none == member` has no `else`,
+            directly assigns exactly one compatible `T` value to that same textual target,
+            has no other target write, and no intervening sibling rewrites it before the
+            return. This return-only postcondition is deliberately not general in-block
+            member-expression narrowing and never applies to instance members; unsupported
+            shapes retain their optional type and are rejected at the source boundary.
 relationships:
   see-also:
     - lang.functions.declarations

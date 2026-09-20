@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2a2afa60b5ea660f6fa91b290f637cd7698d0e8d51eccd23d328ef97860582eb
+  input-sha256: 1bcd905534e388ac06e9a1f3164f2381b03163cfea85aa233526b7eeb0dc8b32
 format: 1
 generated: true
 symbols:
@@ -8,17 +8,45 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
   declaration: /
+- name: /
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: /
+- name: /
+  record: lang.namespaces.imports
+  section: imports
+  declaration: /
+- name: /
+  record: std.paths
+  section: paths
+  declaration: /
 - name: //
   record: book.values-and-names
   section: comments-and-readable-layout
+  declaration: //
+- name: //
+  record: lang.lexical-structure.literals
+  section: comments-literals
   declaration: //
 - name: /core
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: /core
 - name: /core
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: /core
+- name: /core
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: /core
+- name: /core
   record: lang.types.descriptors
   section: identity
+  declaration: /core
+- name: /core
+  record: tool.packages.rust-interop
+  section: inline-rust
   declaration: /core
 - name: /core/collections
   record: book.decisions-and-repetition
@@ -52,6 +80,10 @@ symbols:
   record: std.concurrency.shared-state
   section: ''
   declaration: /core/concurrency
+- name: /core/concurrency
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/concurrency
 - name: /core/encodings
   record: std.text-bytes-codecs
   section: encodings
@@ -59,6 +91,10 @@ symbols:
 - name: /core/errors
   record: book.errors
   section: designing-useful-error-values
+  declaration: /core/errors
+- name: /core/errors
+  record: lang.errors.handling
+  section: structured-errors
   declaration: /core/errors
 - name: /core/filesystem
   record: std.filesystem
@@ -70,11 +106,23 @@ symbols:
   declaration: /core/filesystem
 - name: /core/filesystem
   record: std.filesystem
+  section: filesystem
+  declaration: /core/filesystem
+- name: /core/filesystem
+  record: std.filesystem
   section: whole-file-synopsis
+  declaration: /core/filesystem
+- name: /core/filesystem
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: /core/filesystem
 - name: /core/filesystem/paths
   record: std.paths
   section: ''
+  declaration: /core/filesystem/paths
+- name: /core/filesystem/paths
+  record: std.paths
+  section: paths
   declaration: /core/filesystem/paths
 - name: /core/logging
   record: book.async
@@ -104,6 +152,38 @@ symbols:
   record: std.networking.operations
   section: ''
   declaration: /core/networking
+- name: /core/networking
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/networking
+- name: /core/networking/tls
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/networking/tls
+- name: /core/process
+  record: std.process
+  section: process
+  declaration: /core/process
+- name: /core/process
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/process
+- name: /core/random
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/random
+- name: /core/random/uuid
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/random/uuid
+- name: /core/streams
+  record: std.streams
+  section: byte-text-streams
+  declaration: /core/streams
+- name: /core/streams
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: /core/streams
 - name: /core/testing
   record: book.testing-and-debugging
   section: chapter-summary
@@ -148,13 +228,57 @@ symbols:
   record: std.networking.operations
   section: cancellation
   declaration: /core/time
+- name: /core/types
+  record: lang.namespaces.imports
+  section: imports
+  declaration: /core/types
+- name: /core/types
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: /core/types
+- name: /core/types
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: /core/types
+- name: /core/types
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: /core/types
+- name: /core/types
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: /core/types
+- name: /core/types
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: /core/types
+- name: /core/types
+  record: lang.types.relations
+  section: type-tests
+  declaration: /core/types
 - name: /core/types::int
   record: book.terrane-shaped-programs
   section: pass-values-unless-identity-matters
   declaration: /core/types::int
+- name: /core/types::int8
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: /core/types::int8
 - name: /deps
   record: book.namespaces-imports-and-packages
   section: dependencies
+  declaration: /deps
+- name: /deps
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: /deps
+- name: /deps
+  record: tool.editor-support
+  section: editor-support
+  declaration: /deps
+- name: /deps
+  record: tool.packages.rust-interop
+  section: inline-rust
   declaration: /deps
 - name: /deps/bytes
   record: book.namespaces-imports-and-packages
@@ -172,10 +296,14 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: imports
   declaration: /work-report/reporting::print-report
-- name: absolute
-  record: book.functions
-  section: parameters-and-results
-  declaration: function absolute int; value int
+- name: a
+  record: lang.types.relations
+  section: type-tests
+  declaration: a
+- name: abort
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: abort
 - name: absolute
   record: lang.numerics.floating-point
   section: operations
@@ -199,31 +327,11 @@ symbols:
 - name: accepted-count
   record: book.complete-program
   section: dividing-the-program-into-functions
-  declaration: function accepted-count int; entries map of string, int
-- name: accepted-count
-  record: book.complete-program
-  section: dividing-the-program-into-functions
   declaration: accepted-count
-- name: accepted-count
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
-  declaration: function accepted-count int; entries map of string, int
-- name: accepted-count
-  record: book.complete-program
-  section: validating-values
-  declaration: function accepted-count int; entries map of string, int
-- name: accepted-total
-  record: book.complete-program
-  section: dividing-the-program-into-functions
-  declaration: function accepted-total int; entries map of string, int
 - name: accepted-total
   record: book.complete-program
   section: dividing-the-program-into-functions
   declaration: accepted-total
-- name: accepted-total
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
-  declaration: function accepted-total int; entries map of string, int
 - name: active
   record: book.identity-and-movement
   section: transferring-a-value-with-move
@@ -239,23 +347,15 @@ symbols:
 - name: add
   record: book.functions
   section: parameters-and-results
-  declaration: function add int; left int, right int
-- name: add
-  record: book.functions
-  section: parameters-and-results
   declaration: add
 - name: add
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function add; item plan-item
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: add
 - name: add
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function add; item task-view
-- name: add
-  record: book.types
-  section: type-inference
-  declaration: function add; item task-view
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: add
 - name: advance-time
   record: book.testing-and-debugging
   section: chapter-summary
@@ -276,10 +376,14 @@ symbols:
   record: book.types
   section: refinement-after-a-check
   declaration: and
-- name: announce
-  record: book.functions
-  section: defining-and-calling-a-function
-  declaration: function announce
+- name: and
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: and
+- name: and
+  record: lang.types.unions
+  section: unions
+  declaration: and
 - name: answer
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -293,16 +397,16 @@ symbols:
   section: exercises
   declaration: app/main.trn
 - name: append
-  record: book.classes-interfaces-and-traits
-  section: designing-an-object-that-earns-its-existence
-  declaration: function append; value string
-- name: append
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
   declaration: append
 - name: append
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
+  declaration: append
+- name: append
+  record: lang.text.search
+  section: string-search
   declaration: append
 - name: application-artifact
   record: book.testing-and-debugging
@@ -319,15 +423,7 @@ symbols:
 - name: apply
   record: book.functions
   section: passing-functions-as-values
-  declaration: function apply int; operation function from int to int, value int
-- name: apply
-  record: book.functions
-  section: passing-functions-as-values
   declaration: apply
-- name: apply
-  record: book.functions
-  section: project-turn-the-number-classifier-into-functions
-  declaration: function apply int; operation function from int to int, value int
 - name: apply
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
@@ -364,10 +460,6 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: arc-tangent-two
-- name: area
-  record: book.functions
-  section: local-scope
-  declaration: function area int; width int, height int
 - name: arithmetic-overflow
   record: book.errors
   section: designing-useful-error-values
@@ -375,6 +467,10 @@ symbols:
 - name: artifact
   record: tool.packages.package-manifest
   section: fields
+  declaration: artifact
+- name: artifact
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: artifact
 - name: as
   record: book.errors
@@ -387,6 +483,10 @@ symbols:
 - name: as
   record: internals.integration-adapters
   section: recognizing-a-gap
+  declaration: as
+- name: as
+  record: lang.namespaces.scopes
+  section: scopes
   declaration: as
 - name: assert
   record: book.testing-and-debugging
@@ -403,6 +503,14 @@ symbols:
 - name: async
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
+  declaration: async
+- name: async
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: async
+- name: async
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
   declaration: async
 - name: async
   record: lang.functions.declarations
@@ -432,6 +540,10 @@ symbols:
   record: book.functions
   section: required-optional-and-named-arguments
   declaration: attempts
+- name: aux
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: aux
 - name: available
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -439,6 +551,10 @@ symbols:
 - name: available
   record: std.concurrency.channels
   section: operations
+  declaration: available
+- name: available
+  record: std.process
+  section: process
   declaration: available
 - name: average
   record: book.complete-program
@@ -516,6 +632,10 @@ symbols:
   record: internals.integration-adapters
   section: current-gap-groups
   declaration: axum::serve
+- name: b
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: b
 - name: base64
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -557,8 +677,24 @@ symbols:
   section: function-types
   declaration: bool
 - name: bool
+  record: lang.classes.fields
+  section: classes
+  declaration: bool
+- name: bool
   record: lang.classes.protocols
   section: truth
+  declaration: bool
+- name: bool
+  record: lang.classes.traits
+  section: traits
+  declaration: bool
+- name: bool
+  record: lang.text.search
+  section: string-search
+  declaration: bool
+- name: bool
+  record: lang.types.scalars
+  section: scalar-types
   declaration: bool
 - name: bool
   record: std.collections
@@ -601,6 +737,10 @@ symbols:
   section: what-we-learned
   declaration: break
 - name: break
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: break
+- name: break
   record: lang.functions.asynchronous
   section: selection
   declaration: break
@@ -633,6 +773,10 @@ symbols:
   section: application-owned-adapters
   declaration: build
 - name: build
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: build
+- name: build
   record: tool.packages.command-line
   section: generated-package-state
   declaration: build
@@ -644,6 +788,14 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: build.target
+- name: byte-reader
+  record: std.streams
+  section: byte-text-streams
+  declaration: byte-reader
+- name: byte-writer
+  record: std.streams
+  section: byte-text-streams
+  declaration: byte-writer
 - name: bytes
   record: book.classes-interfaces-and-traits
   section: defining-a-class
@@ -657,8 +809,40 @@ symbols:
   section: bytes-unicode-scalars-and-grapheme-clusters
   declaration: bytes
 - name: bytes
+  record: lang.classes.fields
+  section: classes
+  declaration: bytes
+- name: bytes
+  record: lang.classes.traits
+  section: traits
+  declaration: bytes
+- name: bytes
   record: lang.collections.protocols
   section: byte-indexing
+  declaration: bytes
+- name: bytes
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: bytes
+- name: bytes
+  record: lang.text.bytes
+  section: bytes
+  declaration: bytes
+- name: bytes
+  record: lang.text.display
+  section: scalar-display
+  declaration: bytes
+- name: bytes
+  record: lang.text.encodings
+  section: encodings
+  declaration: bytes
+- name: bytes
+  record: lang.text.unicode
+  section: unicode-views
+  declaration: bytes
+- name: bytes
+  record: lang.types.scalars
+  section: scalar-types
   declaration: bytes
 - name: bytes
   record: std.collections
@@ -683,10 +867,6 @@ symbols:
 - name: bytes-from-octets
   record: std.text-bytes-codecs
   section: octets-and-codecs
-  declaration: function bytes-from-octets bytes; octets (list of uint8)
-- name: bytes-from-octets
-  record: std.text-bytes-codecs
-  section: octets-and-codecs
   declaration: bytes-from-octets
 - name: bytes.decode
   record: std.text-bytes-codecs
@@ -696,6 +876,10 @@ symbols:
   record: std.text-bytes-codecs
   section: octets-and-codecs
   declaration: bytes.decode
+- name: c
+  record: lang.types.relations
+  section: type-tests
+  declaration: c
 - name: cache_identity
   record: internals.projection.resolution
   section: identity
@@ -720,6 +904,10 @@ symbols:
   record: lang.functions.asynchronous
   section: cancellation
   declaration: cancelled
+- name: capabilities
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: capabilities
 - name: capacity
   record: std.concurrency.channels
   section: construction
@@ -728,6 +916,14 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: CARGO_BUILD_TARGET
+- name: case-fold
+  record: lang.text.search
+  section: string-search
+  declaration: case-fold
+- name: case-fold
+  record: lang.text.transformation
+  section: string-transform
+  declaration: case-fold
 - name: catch
   record: book.errors
   section: handling-errors-with-try-and-catch
@@ -739,6 +935,10 @@ symbols:
 - name: catch
   record: book.errors
   section: what-we-learned
+  declaration: catch
+- name: catch
+  record: lang.errors.handling
+  section: structured-errors
   declaration: catch
 - name: categorized
   record: book.classes-interfaces-and-traits
@@ -771,6 +971,10 @@ symbols:
 - name: cause
   record: book.errors
   section: what-we-learned
+  declaration: cause
+- name: cause
+  record: lang.errors.handling
+  section: structured-errors
   declaration: cause
 - name: cdylib
   record: internals.build.toolchain-profiles
@@ -836,10 +1040,6 @@ symbols:
   record: std.concurrency.shared-state
   section: owner-task
   declaration: channel-sender
-- name: chapter-task
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: class chapter-task implements plan-item
 - name: chapter.render
   record: book.classes-interfaces-and-traits
   section: typed-fields-and-ordinary-methods
@@ -848,10 +1048,6 @@ symbols:
   record: book.decisions-and-repetition
   section: iterating-with-for
   declaration: character
-- name: check
-  record: book.complete-program
-  section: checking-and-testing-behavior
-  declaration: function check; description string, actual bool, expected bool
 - name: check
   record: book.first-taste
   section: running-a-source-file
@@ -877,21 +1073,45 @@ symbols:
   section: from-terrane-source-to-an-executable
   declaration: check
 - name: check
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: check
+- name: check
   record: tool.packages.command-line
   section: generated-package-state
   declaration: check
-- name: check-entry
-  record: book.complete-program
-  section: keeping-decisions-separate-from-presentation
-  declaration: function check-entry; name string, units int
 - name: checked
   record: book.types
   section: coercion
   declaration: checked
 - name: checked
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: checked
+- name: checked
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: checked
+- name: checked
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: checked
+- name: checked
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: checked
+- name: checked
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: checked
+- name: checked
   record: std.collections
   section: lookup
   declaration: checked
+- name: checked-coerce
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: checked-coerce
 - name: child
   record: book.async
   section: joining-tasks-and-observing-outcomes
@@ -923,27 +1143,11 @@ symbols:
 - name: classify
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
-  declaration: function classify string; number int, detailed bool = true
-- name: classify
-  record: book.functions
-  section: project-turn-the-number-classifier-into-functions
   declaration: classify
-- name: classify
-  record: book.functions
-  section: returning-early
-  declaration: function classify string; number int
-- name: classify
-  record: book.functions
-  section: small-functions-that-compose
-  declaration: function classify string; number int, detailed bool = true
 - name: classify
   record: book.functions
   section: small-functions-that-compose
   declaration: classify
-- name: classify
-  record: book.functions
-  section: terrane-style-express-contracts-not-ceremony
-  declaration: function classify string; number int, detailed bool = true
 - name: clear
   record: internals.collections.lifetime
   section: mutation-release-points
@@ -1020,6 +1224,18 @@ symbols:
   record: internals.semantics.conversion-lowering
   section: resolution
   declaration: coerce
+- name: coerce
+  record: lang.numerics.conversion
+  section: numeric-arrival
+  declaration: coerce
+- name: coerce
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: coerce
+- name: coerce
+  record: lang.numerics.floating-point
+  section: floating-types
+  declaration: coerce
 - name: coerce.checked
   record: book.types
   section: coercion
@@ -1031,6 +1247,10 @@ symbols:
 - name: coerce.checked
   record: lang.numerics.conversion
   section: declared-family
+  declaration: coerce.checked
+- name: coerce.checked
+  record: lang.numerics.conversion
+  section: numeric-arrival
   declaration: coerce.checked
 - name: coerce.saturate
   record: lang.numerics.conversion
@@ -1048,10 +1268,26 @@ symbols:
   record: book.types
   section: coercion
   declaration: coercion-error
+- name: coercion-error
+  record: lang.numerics.conversion
+  section: numeric-arrival
+  declaration: coercion-error
+- name: coercion-error
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: coercion-error
 - name: collect
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers
   declaration: collect
+- name: com1
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: com1
+- name: com9
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: com9
 - name: complete
   record: book.testing-and-debugging
   section: begin-with-one-observable-behavior
@@ -1096,6 +1332,10 @@ symbols:
   record: std.filesystem
   section: whole-file-synopsis
   declaration: completed
+- name: con
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: con
 - name: concat
   record: book.values-and-names
   section: everything-is-an-object-semantically
@@ -1113,6 +1353,14 @@ symbols:
   section: project-calculate-a-small-purchase
   declaration: concat
 - name: concat
+  record: lang.text.display
+  section: scalar-display
+  declaration: concat
+- name: concat
+  record: lang.text.transformation
+  section: string-transform
+  declaration: concat
+- name: concat
   record: std.text-bytes-codecs
   section: string-operations
   declaration: concat
@@ -1120,18 +1368,26 @@ symbols:
   record: tool.packages.rust-dependencies
   section: associated-interfaces
   declaration: ConcreteType
-- name: connection-options
-  record: book.classes-interfaces-and-traits
-  section: defining-a-class
-  declaration: class connection-options
 - name: console-sink
   record: std.logging
   section: construction
   declaration: console-sink
-- name: construct
-  record: book.classes-interfaces-and-traits
-  section: cleanup-with-destruct
-  declaration: function construct; name string
+- name: const
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: const
+- name: constant
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: constant
+- name: constant
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: constant
+- name: constant
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: constant
 - name: construct
   record: book.classes-interfaces-and-traits
   section: cleanup-with-destruct
@@ -1139,19 +1395,7 @@ symbols:
 - name: construct
   record: book.classes-interfaces-and-traits
   section: initialization-with-construct
-  declaration: function construct; title string
-- name: construct
-  record: book.classes-interfaces-and-traits
-  section: initialization-with-construct
-  declaration: function construct; title string, category string = 'general'
-- name: construct
-  record: book.classes-interfaces-and-traits
-  section: initialization-with-construct
   declaration: construct
-- name: construct
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
-  declaration: function construct; title string, category string = 'general'
 - name: construct
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
@@ -1162,25 +1406,16 @@ symbols:
   declaration: construct
 - name: construct
   record: book.errors
-  section: improving-the-reporting-tool-s-failures
-  declaration: function construct; entry-name string, units int
-- name: construct
-  record: book.errors
-  section: throwing-an-error
-  declaration: function construct; entry-name string, units int
-- name: construct
-  record: book.errors
   section: throwing-an-error
   declaration: construct
 - name: construct
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function construct; title string, estimate int
+  record: lang.classes.fields
+  section: classes
+  declaration: construct
 - name: construct
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function construct; title string, category string = 'general', estimate int8|none = none,
-    priority int8 = 0
+  record: lang.classes.lifecycle
+  section: lifecycle
+  declaration: construct
 - name: construct
   record: lang.functions.declarations
   section: declaration
@@ -1235,6 +1470,10 @@ symbols:
   section: use-iteration-rather-than-managing-indexes
   declaration: contains
 - name: contains
+  record: lang.text.search
+  section: string-search
+  declaration: contains
+- name: contains
   record: std.text-bytes-codecs
   section: string-operations
   declaration: contains
@@ -1269,6 +1508,10 @@ symbols:
 - name: continue
   record: book.values-and-names
   section: what-we-learned
+  declaration: continue
+- name: continue
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
   declaration: continue
 - name: continue
   record: lang.functions.asynchronous
@@ -1306,14 +1549,14 @@ symbols:
   record: internals.integration-adapters
   section: recognizing-a-gap
   declaration: core::future::into_future::IntoFuture
+- name: core::future::into_future::IntoFuture
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: core::future::into_future::IntoFuture
 - name: cosine
   record: lang.numerics.floating-point
   section: operations
   declaration: cosine
-- name: count
-  record: book.classes-interfaces-and-traits
-  section: encapsulation-and-visibility
-  declaration: function count int
 - name: count
   record: book.testing-and-debugging
   section: profile-the-optimized-application
@@ -1322,22 +1565,14 @@ symbols:
   record: book.types
   section: type-inference
   declaration: count
-- name: count-items
-  record: book.identity-and-movement
-  section: sharing-identity-explicitly-with-ref
-  declaration: function count-items int; items ref list of int
+- name: count-1
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: count-1
 - name: countdown
   record: book.decisions-and-repetition
   section: repeating-with-while
   declaration: countdown
-- name: counter
-  record: book.classes-interfaces-and-traits
-  section: defining-a-class
-  declaration: class counter
-- name: counter
-  record: book.identity-and-movement
-  section: ordinary-assignment-first
-  declaration: class counter
 - name: counts
   record: book.text-and-collections
   section: exercises
@@ -1442,17 +1677,25 @@ symbols:
   record: std.text-bytes-codecs
   section: compiler-synopsis
   declaration: function decode-base64 decode-result; text string, url-safe bool, padded bool
-- name: decode-base64
-  record: std.text-bytes-codecs
-  section: octets-and-codecs
-  declaration: function decode-base64 decode-result; text string, url-safe bool, padded bool
 - name: decode-error
   record: book.errors
   section: designing-useful-error-values
   declaration: decode-error
 - name: decode-error
+  record: lang.text.bytes
+  section: bytes
+  declaration: decode-error
+- name: decode-error
+  record: lang.text.encodings
+  section: encodings
+  declaration: decode-error
+- name: decode-error
   record: std.filesystem
   section: whole-file-synopsis
+  declaration: decode-error
+- name: decode-error
+  record: std.streams
+  section: byte-text-streams
   declaration: decode-error
 - name: decode-error
   record: std.text-bytes-codecs
@@ -1465,10 +1708,6 @@ symbols:
 - name: decode-hex
   record: std.text-bytes-codecs
   section: compiler-synopsis
-  declaration: function decode-hex decode-result; text string
-- name: decode-hex
-  record: std.text-bytes-codecs
-  section: octets-and-codecs
   declaration: function decode-hex decode-result; text string
 - name: decode-result
   record: std.text-bytes-codecs
@@ -1490,10 +1729,26 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: decompose
+- name: DEDENT
+  record: lang.lexical-structure.source-layout
+  section: utf8-layout
+  declaration: DEDENT
+- name: default
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: default
+- name: default
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: default
 - name: default-logger
   record: std.logging
   section: construction
   declaration: default-logger
+- name: defaulted
+  record: lang.classes.fields
+  section: classes
+  declaration: defaulted
 - name: defaulted
   record: lang.classes.fields
   section: declaration
@@ -1502,6 +1757,10 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: definition
+- name: deflate-raw
+  record: std.compression
+  section: compression
+  declaration: deflate-raw
 - name: deny
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
@@ -1591,8 +1850,16 @@ symbols:
   section: what-we-learned
   declaration: destruct
 - name: destruct
+  record: lang.classes.lifecycle
+  section: lifecycle
+  declaration: destruct
+- name: destruct
   record: lang.functions.declarations
   section: declaration
+  declaration: destruct
+- name: destruct
+  record: lang.ownership.movement
+  section: move-semantics
   declaration: destruct
 - name: dev
   record: internals.build.toolchain-profiles
@@ -1626,9 +1893,41 @@ symbols:
   record: lang.lexical-structure.keywords
   section: naming-guidance
   declaration: display-label
+- name: div-rem
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: div-rem
+- name: div-rem
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: div-rem
+- name: divide
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: divide
+- name: divide
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: divide
 - name: division-by-zero
   record: book.errors
   section: designing-useful-error-values
+  declaration: division-by-zero
+- name: division-by-zero
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: division-by-zero
+- name: division-by-zero
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: division-by-zero
+- name: division-by-zero
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: division-by-zero
+- name: division-by-zero
+  record: lang.numerics.integers
+  section: fixed-integers
   declaration: division-by-zero
 - name: do
   record: lang.lexical-structure.keywords
@@ -1654,14 +1953,6 @@ symbols:
   record: std.logging
   section: events
   declaration: document-value
-- name: double
-  record: book.functions
-  section: passing-functions-as-values
-  declaration: function double int; value int
-- name: double
-  record: book.functions
-  section: project-turn-the-number-classifier-into-functions
-  declaration: function double int; value int
 - name: double
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
@@ -1718,6 +2009,10 @@ symbols:
   record: book.async
   section: deadlines
   declaration: duration
+- name: dynamic-library
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: dynamic-library
 - name: e
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
@@ -1725,6 +2020,10 @@ symbols:
 - name: E
   record: internals.integration-adapters
   section: recognizing-a-gap
+  declaration: E
+- name: E
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
   declaration: E
 - name: effects
   record: tool.packages.package-manifest
@@ -1755,8 +2054,16 @@ symbols:
   section: initialized-static-optional
   declaration: else
 - name: else
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: else
+- name: else
   record: lang.functions.declarations
   section: declaration
+  declaration: else
+- name: else
+  record: lang.types.unions
+  section: unions
   declaration: else
 - name: emit
   record: internals.observability.runtime
@@ -1778,17 +2085,9 @@ symbols:
   record: std.text-bytes-codecs
   section: compiler-synopsis
   declaration: function encode-base64 string; data bytes, url-safe bool, padded bool
-- name: encode-base64
-  record: std.text-bytes-codecs
-  section: octets-and-codecs
-  declaration: function encode-base64 string; data bytes, url-safe bool, padded bool
 - name: encode-hex
   record: std.text-bytes-codecs
   section: compiler-synopsis
-  declaration: function encode-hex string; data bytes
-- name: encode-hex
-  record: std.text-bytes-codecs
-  section: octets-and-codecs
   declaration: function encode-hex string; data bytes
 - name: end
   record: book.terrane-shaped-programs
@@ -1803,6 +2102,10 @@ symbols:
   section: whole-file-synopsis
   declaration: end
 - name: end
+  record: std.streams
+  section: byte-text-streams
+  declaration: end
+- name: end
   record: std.text-bytes-codecs
   section: string-operations
   declaration: end
@@ -1813,6 +2116,10 @@ symbols:
 - name: end-to-end
   record: book.testing-and-debugging
   section: run-the-suite-at-the-right-scale
+  declaration: end-to-end
+- name: end-to-end
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: end-to-end
 - name: entries
   record: book.complete-program
@@ -1825,6 +2132,10 @@ symbols:
 - name: entropy
   record: tool.packages.package-manifest
   section: capabilities-and-effects
+  declaration: entropy
+- name: entropy
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: entropy
 - name: entry
   record: std.collections
@@ -1866,10 +2177,6 @@ symbols:
   record: std.logging
   section: events
   declaration: error
-- name: error-then-return
-  record: book.errors
-  section: replacing-and-preserving-errors
-  declaration: function error-then-return int
 - name: errors
   record: book.namespaces-imports-and-packages
   section: from-one-file-to-a-project
@@ -1878,38 +2185,22 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
   declaration: errors/
-- name: escaping
-  record: book.identity-and-movement
-  section: lifetimes-without-annotation-clutter
-  declaration: function escaping ref list of int
+- name: escaping-throwables
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: escaping-throwables
 - name: estimate
   record: book.types
   section: refinement-after-a-check
   declaration: estimate
-- name: estimate-units
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function estimate-units int
-- name: estimate-units
-  record: book.terrane-shaped-programs
-  section: use-types-to-state-real-contracts
-  declaration: function estimate-units int; title string
-- name: estimate-units
-  record: book.terrane-shaped-programs
-  section: use-types-to-state-real-contracts
-  declaration: function estimate-units int
-- name: estimate-units
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function estimate-units int8|none
-- name: estimate-units
-  record: book.types
-  section: union-types-and-optional-values
-  declaration: function estimate-units int|none
 - name: everyday-expressions.trn
   record: book.values-and-names
   section: project-calculate-a-small-purchase
   declaration: everyday-expressions.trn
+- name: executable
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: executable
 - name: executor
   record: tool.packages.package-manifest
   section: fields
@@ -1918,14 +2209,18 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: class existence-result
+- name: exit
+  record: std.process
+  section: process
+  declaration: exit
+- name: exit-status
+  record: std.process
+  section: process
+  declaration: exit-status
 - name: expired-snapshot
   record: tool.source-intelligence
   section: snapshots
   declaration: expired-snapshot
-- name: explanation
-  record: book.functions
-  section: returning-early
-  declaration: function explanation string
 - name: exponential
   record: lang.numerics.floating-point
   section: operations
@@ -1934,6 +2229,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: exponential-minus-one
+- name: external-name
+  record: lang.classes.fields
+  section: classes
+  declaration: external-name
 - name: external-name
   record: lang.classes.fields
   section: declaration
@@ -1969,6 +2268,14 @@ symbols:
 - name: failed
   record: std.networking.operations
   section: operations
+  declaration: failed
+- name: failed
+  record: std.process
+  section: process
+  declaration: failed
+- name: failed
+  record: std.streams
+  section: byte-text-streams
   declaration: failed
 - name: failed
   record: std.text-bytes-codecs
@@ -2008,7 +2315,43 @@ symbols:
   declaration: 'false'
 - name: 'false'
   record: lang.classes.fields
+  section: classes
+  declaration: 'false'
+- name: 'false'
+  record: lang.classes.fields
   section: initialization
+  declaration: 'false'
+- name: 'false'
+  record: lang.classes.traits
+  section: traits
+  declaration: 'false'
+- name: 'false'
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: 'false'
+- name: 'false'
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: 'false'
+- name: 'false'
+  record: lang.text.display
+  section: scalar-display
+  declaration: 'false'
+- name: 'false'
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: 'false'
+- name: 'false'
+  record: lang.types.relations
+  section: type-tests
+  declaration: 'false'
+- name: 'false'
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: 'false'
+- name: 'false'
+  record: std.filesystem
+  section: filesystem
   declaration: 'false'
 - name: 'false'
   record: std.logging
@@ -2032,35 +2375,59 @@ symbols:
   declaration: field
 - name: field-count
   record: lang.classes.fields
+  section: classes
+  declaration: field-count
+- name: field-count
+  record: lang.classes.fields
   section: reflection
   declaration: field-count
+- name: field-defaulted
+  record: lang.classes.fields
+  section: classes
+  declaration: field-defaulted
 - name: field-defaulted
   record: lang.classes.fields
   section: reflection
   declaration: field-defaulted
 - name: field-external-names
   record: lang.classes.fields
+  section: classes
+  declaration: field-external-names
+- name: field-external-names
+  record: lang.classes.fields
   section: reflection
   declaration: field-external-names
+- name: field-names
+  record: lang.classes.fields
+  section: classes
+  declaration: field-names
 - name: field-names
   record: lang.classes.fields
   section: reflection
   declaration: field-names
 - name: field-optional
   record: lang.classes.fields
+  section: classes
+  declaration: field-optional
+- name: field-optional
+  record: lang.classes.fields
   section: reflection
   declaration: field-optional
+- name: field-secret
+  record: lang.classes.fields
+  section: classes
+  declaration: field-secret
 - name: field-secret
   record: lang.classes.fields
   section: reflection
   declaration: field-secret
 - name: file-close
   record: std.filesystem
-  section: compiler-synopsis
-  declaration: function file-close filesystem-operation-result; capability filesystem, file file-handle
+  section: authority
+  declaration: file-close
 - name: file-close
   record: std.filesystem
-  section: handles
+  section: compiler-synopsis
   declaration: function file-close filesystem-operation-result; capability filesystem, file file-handle
 - name: file-data
   record: std.filesystem
@@ -2074,10 +2441,6 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: function file-flush filesystem-operation-result; capability filesystem, file ref file-handle
-- name: file-flush
-  record: std.filesystem
-  section: handles
-  declaration: function file-flush filesystem-operation-result; capability filesystem, file ref file-handle
 - name: file-handle
   record: std.filesystem
   section: compiler-synopsis
@@ -2090,10 +2453,6 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: function file-read file-data; capability filesystem, file ref file-handle, limit int
-- name: file-read
-  record: std.filesystem
-  section: handles
-  declaration: function file-read file-data; capability filesystem, file ref file-handle, limit int
 - name: file-read.end
   record: std.filesystem
   section: handles
@@ -2102,26 +2461,13 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: function file-sync-all filesystem-operation-result; capability filesystem, file ref file-handle
-- name: file-sync-all
-  record: std.filesystem
-  section: handles
-  declaration: function file-sync-all filesystem-operation-result; capability filesystem, file ref file-handle
 - name: file-sync-data
   record: std.filesystem
   section: compiler-synopsis
   declaration: function file-sync-data filesystem-operation-result; capability filesystem, file ref file-handle
-- name: file-sync-data
-  record: std.filesystem
-  section: handles
-  declaration: function file-sync-data filesystem-operation-result; capability filesystem, file ref file-handle
 - name: file-write
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function file-write file-data; capability filesystem, file ref file-handle, data bytes,
-    offset int = 0
-- name: file-write
-  record: std.filesystem
-  section: handles
   declaration: function file-write file-data; capability filesystem, file ref file-handle, data bytes,
     offset int = 0
 - name: file-write.completed
@@ -2140,13 +2486,25 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: filesystem
+- name: filesystem
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: filesystem
 - name: filesystem-canonical
   record: std.filesystem
   section: compiler-synopsis
   declaration: function filesystem-canonical path-result; capability filesystem, target path
 - name: filesystem-canonical
+  record: std.filesystem
+  section: filesystem
+  declaration: filesystem-canonical
+- name: filesystem-canonical
   record: std.paths
   section: behavior
+  declaration: filesystem-canonical
+- name: filesystem-canonical
+  record: std.paths
+  section: paths
   declaration: filesystem-canonical
 - name: filesystem-capability
   record: std.filesystem
@@ -2158,8 +2516,8 @@ symbols:
   declaration: function filesystem-capability filesystem
 - name: filesystem-capability
   record: std.filesystem
-  section: whole-file-synopsis
-  declaration: function filesystem-capability filesystem
+  section: filesystem
+  declaration: filesystem-capability
 - name: filesystem-exists
   record: std.filesystem
   section: compiler-synopsis
@@ -2188,10 +2546,6 @@ symbols:
 - name: filesystem-read-bounded
   record: std.filesystem
   section: whole-file-synopsis
-  declaration: function filesystem-read-bounded file-data; capability filesystem, target path, limit int
-- name: filesystem-read-bounded
-  record: std.filesystem
-  section: whole-file-synopsis
   declaration: filesystem-read-bounded
 - name: filesystem-read-link
   record: std.filesystem
@@ -2201,13 +2555,17 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: function filesystem-realpath path-result; capability filesystem, target path
+- name: filesystem-realpath
+  record: std.filesystem
+  section: filesystem
+  declaration: filesystem-realpath
+- name: filesystem-realpath
+  record: std.paths
+  section: paths
+  declaration: filesystem-realpath
 - name: filesystem-remove
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target path
-- name: filesystem-remove
-  record: std.filesystem
-  section: whole-file-synopsis
   declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target path
 - name: filesystem-remove
   record: std.filesystem
@@ -2221,11 +2579,6 @@ symbols:
 - name: filesystem-rename
   record: std.filesystem
   section: whole-file-synopsis
-  declaration: function filesystem-rename filesystem-operation-result; capability filesystem, source path,
-    destination path
-- name: filesystem-rename
-  record: std.filesystem
-  section: whole-file-synopsis
   declaration: filesystem-rename
 - name: filesystem-symlink-metadata
   record: std.filesystem
@@ -2234,11 +2587,6 @@ symbols:
 - name: filesystem-write-atomic
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function filesystem-write-atomic filesystem-operation-result; capability filesystem, target
-    path, data bytes
-- name: filesystem-write-atomic
-  record: std.filesystem
-  section: whole-file-synopsis
   declaration: function filesystem-write-atomic filesystem-operation-result; capability filesystem, target
     path, data bytes
 - name: filesystem-write-atomic
@@ -2294,6 +2642,14 @@ symbols:
   section: cancellation
   declaration: finally
 - name: finally
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: finally
+- name: finally
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: finally
+- name: finally
   record: lang.functions.asynchronous
   section: cancellation
   declaration: finally
@@ -2305,10 +2661,26 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-members
   declaration: finally
+- name: finally
+  record: tool.packages.rust-dependencies
+  section: async-projected-endpoints
+  declaration: finally
+- name: find
+  record: lang.text.search
+  section: string-search
+  declaration: find
 - name: find
   record: tool.source-intelligence
   section: queries
   declaration: find
+- name: find.all
+  record: lang.text.search
+  section: string-search
+  declaration: find.all
+- name: find.count
+  record: lang.text.search
+  section: string-search
+  declaration: find.count
 - name: finished
   record: book.values-and-names
   section: giving-a-value-a-name
@@ -2325,26 +2697,130 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
   declaration: first.completed
+- name: fixed-integer
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: fixed-integer
+- name: fixed-integer
+  record: lang.types.relations
+  section: type-tests
+  declaration: fixed-integer
+- name: 'flag:'
+  record: std.process
+  section: process
+  declaration: 'flag:'
+- name: float
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: float
+- name: float
+  record: lang.numerics.constants
+  section: constant-arithmetic
+  declaration: float
+- name: float
+  record: lang.numerics.floating-point
+  section: floating-types
+  declaration: float
 - name: float
   record: lang.numerics.floating-point
   section: values
   declaration: float
+- name: float
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: float
+- name: float
+  record: lang.types.reflection
+  section: descriptor-reflection
+  declaration: float
+- name: float
+  record: lang.types.relations
+  section: type-tests
+  declaration: float
+- name: float
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: float
+- name: float32
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: float32
+- name: float32
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: float32
 - name: float32
   record: lang.numerics.floating-point
   section: descriptors
   declaration: float32
 - name: float32
   record: lang.numerics.floating-point
+  section: floating-types
+  declaration: float32
+- name: float32
+  record: lang.numerics.floating-point
   section: values
   declaration: float32
+- name: float32
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: float32
+- name: float32
+  record: lang.types.relations
+  section: type-tests
+  declaration: float32
+- name: float32
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: float32
+- name: float64
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: float64
+- name: float64
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: float64
 - name: float64
   record: lang.numerics.floating-point
   section: descriptors
   declaration: float64
 - name: float64
   record: lang.numerics.floating-point
+  section: floating-types
+  declaration: float64
+- name: float64
+  record: lang.numerics.floating-point
   section: values
   declaration: float64
+- name: float64
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: float64
+- name: float64
+  record: lang.types.reflection
+  section: descriptor-reflection
+  declaration: float64
+- name: float64
+  record: lang.types.relations
+  section: type-tests
+  declaration: float64
+- name: float64
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: float64
+- name: floating
+  record: lang.numerics.floating-point
+  section: floating-types
+  declaration: floating
+- name: floating
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: floating
+- name: floating
+  record: lang.types.relations
+  section: type-tests
+  declaration: floating
 - name: floor
   record: lang.numerics.conversion
   section: declared-family
@@ -2352,6 +2828,14 @@ symbols:
 - name: flush
   record: book.namespaces-imports-and-packages
   section: dependencies
+  declaration: flush
+- name: flush
+  record: std.filesystem
+  section: filesystem
+  declaration: flush
+- name: flush
+  record: std.streams
+  section: byte-text-streams
   declaration: flush
 - name: flush
   record: tool.packages.rust-dependencies
@@ -2393,6 +2877,14 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: FnOnce
+- name: foo/bar
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: foo/bar
+- name: foo/bar/dave
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: foo/bar/dave
 - name: for
   record: book.decisions-and-repetition
   section: choosing-the-clearest-loop
@@ -2442,6 +2934,14 @@ symbols:
   section: source-iteration
   declaration: for
 - name: for
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: for
+- name: for
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: for
+- name: for
   record: lang.types.authority-in-practice
   section: fields-and-collections
   declaration: for
@@ -2481,18 +2981,6 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: frames
-- name: from
-  record: book.functions
-  section: passing-functions-as-values
-  declaration: function from int to int
-- name: from
-  record: book.types
-  section: function-types
-  declaration: function from int8 to bool
-- name: from
-  record: book.types
-  section: function-types
-  declaration: function from int, int to bool
 - name: function
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -2508,6 +2996,10 @@ symbols:
 - name: function
   record: lang.classes.protocols
   section: invocation-authority
+  declaration: function
+- name: function
+  record: lang.errors.contracts
+  section: throwable-inference
   declaration: function
 - name: function
   record: lang.functions.declarations
@@ -2565,18 +3057,42 @@ symbols:
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
   declaration: git
+- name: git
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: git
+- name: global
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: global
+- name: global
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: global
+- name: global
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: global
+- name: global
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: global
 - name: global-condition
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function global-condition int8; input int8
+- name: goto
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: goto
 - name: graphemes
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
   declaration: graphemes
-- name: greet
-  record: book.functions
-  section: defining-and-calling-a-function
-  declaration: function greet; name string
+- name: gzip
+  record: std.compression
+  section: compression
+  declaration: gzip
 - name: hash
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
@@ -2617,10 +3133,10 @@ symbols:
   record: std.text-bytes-codecs
   section: compiler-synopsis
   declaration: class hex-codec
-- name: high-priority
-  record: book.types
-  section: annotations-where-they-communicate-intent
-  declaration: function high-priority bool; priority int8
+- name: HH
+  record: lang.text.encodings
+  section: encodings
+  declaration: HH
 - name: high-priority
   record: book.types
   section: compile-time-guarantees
@@ -2629,14 +3145,6 @@ symbols:
   record: book.types
   section: exercises
   declaration: high-priority
-- name: high-priority
-  record: book.types
-  section: function-types
-  declaration: function high-priority bool; priority int8
-- name: high-priority
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function high-priority bool; priority int8
 - name: high-priority
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
@@ -2649,9 +3157,17 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: hypotenuse
+- name: i128
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: i128
 - name: i64
   record: book.native-program
   section: reading-generated-rust
+  declaration: i64
+- name: i64
+  record: lang.types.scalars
+  section: scalar-types
   declaration: i64
 - name: if
   record: book.classes-interfaces-and-traits
@@ -2685,13 +3201,29 @@ symbols:
   record: lang.classes.protocols
   section: truth
   declaration: if
+- name: if
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: if
+- name: if
+  record: lang.types.unions
+  section: unions
+  declaration: if
 - name: implementations
   record: tool.source-intelligence
   section: queries
   declaration: implementations
 - name: implements
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: implements
+- name: implements
   record: lang.classes.protocols
   section: roles
+  declaration: implements
+- name: implements
+  record: lang.classes.traits
+  section: traits
   declaration: implements
 - name: implements
   record: tool.packages.rust-dependencies
@@ -2701,10 +3233,14 @@ symbols:
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: implements
-- name: increment
-  record: book.identity-and-movement
-  section: ordinary-assignment-first
-  declaration: function increment
+- name: import
+  record: lang.namespaces.imports
+  section: imports
+  declaration: import
+- name: INDENT
+  record: lang.lexical-structure.source-layout
+  section: utf8-layout
+  declaration: INDENT
 - name: index-error
   record: book.errors
   section: designing-useful-error-values
@@ -2712,6 +3248,14 @@ symbols:
 - name: index-error
   record: lang.collections.protocols
   section: byte-indexing
+  declaration: index-error
+- name: index-error
+  record: lang.text.bytes
+  section: bytes
+  declaration: index-error
+- name: index-error
+  record: lang.text.encodings
+  section: encodings
   declaration: index-error
 - name: index-error
   record: std.collections
@@ -2725,6 +3269,14 @@ symbols:
   record: internals.collections.lifetime
   section: mutation-release-points
   declaration: IndexMap::shift_remove
+- name: inf
+  record: lang.numerics.floating-point
+  section: floating-types
+  declaration: inf
+- name: inf
+  record: lang.text.display
+  section: scalar-display
+  declaration: inf
 - name: infinite
   record: lang.numerics.floating-point
   section: values
@@ -2740,6 +3292,14 @@ symbols:
 - name: inherently-identity-bearing
   record: lang.collections.protocols
   section: lifetime-and-identity
+  declaration: inherently-identity-bearing
+- name: inherently-identity-bearing
+  record: lang.types.reflection
+  section: descriptor-reflection
+  declaration: inherently-identity-bearing
+- name: inherently-identity-bearing
+  record: lang.types.relations
+  section: type-tests
   declaration: inherently-identity-bearing
 - name: inherently_identity_bearing
   record: internals.collections.lifetime
@@ -2757,6 +3317,10 @@ symbols:
   record: tool.debugging
   section: lifecycle
   declaration: initialized
+- name: Inner
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: Inner
 - name: input
   record: book.native-program
   section: reading-generated-rust
@@ -2769,10 +3333,6 @@ symbols:
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
   declaration: input-priority
-- name: inspect
-  record: book.terrane-shaped-programs
-  section: pass-values-unless-identity-matters
-  declaration: function inspect int; values ref list of int
 - name: install-dependency-bridge
   record: internals.observability.runtime
   section: dependency-bridge
@@ -2792,6 +3352,10 @@ symbols:
 - name: instance
   record: book.errors
   section: throwing-an-error
+  declaration: instance
+- name: instance
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: instance
 - name: instance
   record: lang.lexical-structure.keywords
@@ -2853,6 +3417,50 @@ symbols:
   record: book.values-and-names
   section: what-we-learned
   declaration: int
+- name: int
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: int
+- name: int
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: int
+- name: int
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: int
+- name: int
+  record: lang.numerics.constants
+  section: constant-arithmetic
+  declaration: int
+- name: int
+  record: lang.numerics.conversion
+  section: numeric-arrival
+  declaration: int
+- name: int
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: int
+- name: int
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: int
+- name: int
+  record: lang.text.search
+  section: string-search
+  declaration: int
+- name: int
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: int
+- name: int
+  record: lang.types.relations
+  section: type-tests
+  declaration: int
+- name: int
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: int
 - name: int-mutex
   record: std.concurrency.shared-state
   section: unavailable-cells
@@ -2861,9 +3469,33 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: int-read-write-lock
+- name: int128
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: int128
+- name: int128
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: int128
+- name: int16
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: int16
+- name: int16
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: int16
 - name: int32
   record: lang.numerics.floating-point
   section: operations
+  declaration: int32
+- name: int32
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: int32
+- name: int32
+  record: lang.types.scalars
+  section: scalar-types
   declaration: int32
 - name: int64
   record: book.native-program
@@ -2876,6 +3508,14 @@ symbols:
 - name: int64
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
+  declaration: int64
+- name: int64
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: int64
+- name: int64
+  record: lang.types.scalars
+  section: scalar-types
   declaration: int64
 - name: int8
   record: book.types
@@ -2893,6 +3533,30 @@ symbols:
   record: book.types
   section: type-inference
   declaration: int8
+- name: int8
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: int8
+- name: int8
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: int8
+- name: int8
+  record: lang.types.relations
+  section: type-tests
+  declaration: int8
+- name: int8
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: int8
+- name: integer
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: integer
+- name: integer
+  record: lang.types.relations
+  section: type-tests
+  declaration: integer
 - name: integer-conversion-overflow
   record: book.errors
   section: designing-useful-error-values
@@ -2905,6 +3569,14 @@ symbols:
   record: lang.numerics.conversion
   section: destinations
   declaration: integer-conversion-overflow
+- name: integer-conversion-overflow
+  record: lang.numerics.conversion
+  section: numeric-arrival
+  declaration: integer-conversion-overflow
+- name: integer-conversion-overflow
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: integer-conversion-overflow
 - name: integer-power
   record: lang.numerics.floating-point
   section: operations
@@ -2912,6 +3584,10 @@ symbols:
 - name: integration
   record: book.testing-and-debugging
   section: run-the-suite-at-the-right-scale
+  declaration: integration
+- name: integration
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: integration
 - name: interface
   record: lang.lexical-structure.keywords
@@ -2941,6 +3617,10 @@ symbols:
   record: internals.integration-adapters
   section: recognizing-a-gap
   declaration: IntoFuture
+- name: IntoFuture
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: IntoFuture
 - name: invalid
   record: tool.source-intelligence
   section: queries
@@ -2967,14 +3647,6 @@ symbols:
   declaration: invalid-report-entry
 - name: invalid-report-entry
   record: book.errors
-  section: improving-the-reporting-tool-s-failures
-  declaration: class invalid-report-entry implements throwable
-- name: invalid-report-entry
-  record: book.errors
-  section: throwing-an-error
-  declaration: class invalid-report-entry implements throwable
-- name: invalid-report-entry
-  record: book.errors
   section: throwing-an-error
   declaration: invalid-report-entry
 - name: invalid-report-entry
@@ -2997,6 +3669,22 @@ symbols:
   record: lang.collections.protocols
   section: lifetime-and-identity
   declaration: is
+- name: is
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: is
+- name: is
+  record: lang.types.relations
+  section: type-tests
+  declaration: is
+- name: is
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: is
+- name: is-text
+  record: std.process
+  section: process
+  declaration: is-text
 - name: item
   record: book.values-and-names
   section: exercises
@@ -3054,6 +3742,14 @@ symbols:
   section: structured-concurrency
   declaration: join
 - name: join
+  record: lang.text.display
+  section: scalar-display
+  declaration: join
+- name: join
+  record: lang.text.transformation
+  section: string-transform
+  declaration: join
+- name: join
   record: std.text-bytes-codecs
   section: string-operations
   declaration: join
@@ -3069,10 +3765,6 @@ symbols:
   record: std.paths
   section: examples
   declaration: join-path
-- name: join-path
-  record: std.paths
-  section: synopsis
-  declaration: function join-path path; base path, child path
 - name: known
   record: tool.source-intelligence
   section: queries
@@ -3081,6 +3773,10 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: L
+- name: label
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: label
 - name: label
   record: lang.lexical-structure.keywords
   section: label-example
@@ -3097,6 +3793,10 @@ symbols:
   record: book.identity-and-movement
   section: independent-logical-values
   declaration: left
+- name: legacy
+  record: std.cryptography
+  section: legacy-digests
+  declaration: legacy
 - name: length
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -3121,6 +3821,30 @@ symbols:
   record: lang.collections.protocols
   section: compiler-produced-read-only-lists
   declaration: length
+- name: length
+  record: lang.text.bytes
+  section: bytes
+  declaration: length
+- name: length
+  record: lang.text.encodings
+  section: encodings
+  declaration: length
+- name: length
+  record: lang.text.transformation
+  section: string-transform
+  declaration: length
+- name: length
+  record: lang.text.unicode
+  section: unicode-views
+  declaration: length
+- name: length
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: length
+- name: library
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: library
 - name: linear
   record: lang.lexical-structure.keywords
   section: structural-words
@@ -3136,6 +3860,18 @@ symbols:
 - name: list
   record: book.types
   section: generic-types
+  declaration: list
+- name: list
+  record: lang.classes.fields
+  section: classes
+  declaration: list
+- name: list
+  record: lang.classes.traits
+  section: traits
+  declaration: list
+- name: list
+  record: lang.namespaces.prelude
+  section: prelude
   declaration: list
 - name: list
   record: std.collections
@@ -3213,6 +3949,18 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: logging
+- name: lower
+  record: lang.text.transformation
+  section: string-transform
+  declaration: lower
+- name: lpt1
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: lpt1
+- name: lpt9
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: lpt9
 - name: macro
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
@@ -3240,10 +3988,6 @@ symbols:
 - name: main
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
-  declaration: function main
-- name: main
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
   declaration: main
 - name: main
   record: book.complete-program
@@ -3252,27 +3996,11 @@ symbols:
 - name: main
   record: book.complete-program
   section: project-a-small-in-memory-reporting-tool
-  declaration: function main
-- name: main
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
   declaration: main
-- name: main
-  record: book.decisions-and-repetition
-  section: choosing-with-if-and-else
-  declaration: function main
-- name: main
-  record: book.decisions-and-repetition
-  section: project-classify-a-range-of-numbers
-  declaration: function main
 - name: main
   record: book.errors
   section: exercises
   declaration: main
-- name: main
-  record: book.errors
-  section: improving-the-reporting-tool-s-failures
-  declaration: function main
 - name: main
   record: book.errors
   section: improving-the-reporting-tool-s-failures
@@ -3281,18 +4009,6 @@ symbols:
   record: book.errors
   section: letting-an-error-travel-to-the-right-layer
   declaration: main
-- name: main
-  record: book.first-taste
-  section: a-slightly-more-useful-program
-  declaration: function main
-- name: main
-  record: book.first-taste
-  section: reading-a-compiler-diagnostic
-  declaration: function main
-- name: main
-  record: book.first-taste
-  section: the-edit-check-and-run-cycle
-  declaration: function main
 - name: main
   record: book.first-taste
   section: the-edit-check-and-run-cycle
@@ -3304,27 +4020,11 @@ symbols:
 - name: main
   record: book.first-taste
   section: your-first-program
-  declaration: function main
-- name: main
-  record: book.first-taste
-  section: your-first-program
   declaration: main
-- name: main
-  record: book.functions
-  section: local-scope
-  declaration: function main
-- name: main
-  record: book.functions
-  section: project-turn-the-number-classifier-into-functions
-  declaration: function main
 - name: main
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
   declaration: main
-- name: main
-  record: book.identity-and-movement
-  section: project-observing-a-work-list
-  declaration: function main
 - name: main
   record: book.namespaces-imports-and-packages
   section: building-and-running-a-package
@@ -3335,44 +4035,12 @@ symbols:
   declaration: main
 - name: main
   record: book.namespaces-imports-and-packages
-  section: imports
-  declaration: function main
-- name: main
-  record: book.namespaces-imports-and-packages
-  section: namespaces-and-paths
-  declaration: function main
-- name: main
-  record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
   declaration: main
-- name: main
-  record: book.native-program
-  section: from-terrane-source-to-an-executable
-  declaration: function main
 - name: main
   record: book.native-program
   section: what-optimization-may-erase
   declaration: main
-- name: main
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function main
-- name: main
-  record: book.testing-and-debugging
-  section: debug-from-the-terrane-boundary-inward
-  declaration: function main
-- name: main
-  record: book.text-and-collections
-  section: project-word-frequency
-  declaration: function main
-- name: main
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function main
-- name: main
-  record: book.values-and-names
-  section: project-calculate-a-small-purchase
-  declaration: function main
 - name: main
   record: internals.execution.runtime-selection
   section: generated-support
@@ -3392,6 +4060,10 @@ symbols:
 - name: main
   record: tool.packages.package-manifest
   section: namespaces-and-artifacts
+  declaration: main
+- name: main
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: main
 - name: make-event
   record: book.async
@@ -3418,6 +4090,18 @@ symbols:
   section: imports
   declaration: map
 - name: map
+  record: lang.classes.fields
+  section: classes
+  declaration: map
+- name: map
+  record: lang.classes.traits
+  section: traits
+  declaration: map
+- name: map
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: map
+- name: map
   record: std.collections
   section: collection-kinds
   declaration: map
@@ -3429,22 +4113,22 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
   declaration: mark-complete
-- name: mark-complete
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function mark-complete
-- name: mark-complete
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function mark-complete
-- name: marker
-  record: book.classes-interfaces-and-traits
-  section: defining-a-class
-  declaration: class marker
+- name: match
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: match
+- name: match
+  record: lang.text.search
+  section: string-search
+  declaration: match
 - name: match-rule
   record: lang.lexical-structure.keywords
   section: naming-guidance
   declaration: match-rule
+- name: matches
+  record: lang.text.search
+  section: string-search
+  declaration: matches
 - name: maximum
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -3482,12 +4166,20 @@ symbols:
   section: recognizing-a-gap
   declaration: message
 - name: message
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: message
+- name: message
   record: std.filesystem
   section: whole-file-synopsis
   declaration: message
 - name: message
   record: std.networking.operations
   section: operations
+  declaration: message
+- name: message
+  record: std.process
+  section: process
   declaration: message
 - name: message
   record: std.text-bytes-codecs
@@ -3566,6 +4258,14 @@ symbols:
   section: structured-concurrency
   declaration: move
 - name: move
+  record: lang.ownership.movement
+  section: move-semantics
+  declaration: move
+- name: move
+  record: lang.ownership.value-semantics
+  section: value-copy-semantics
+  declaration: move
+- name: move
   record: lang.types.authority-in-practice
   section: repeated-use
   declaration: move
@@ -3577,6 +4277,14 @@ symbols:
   record: tool.packages.testing
   section: framework
   declaration: ms
+- name: multiply
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: multiply
+- name: multiply
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: multiply
 - name: multiply-add
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -3601,6 +4309,10 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: mutex
+- name: N
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: N
 - name: name
   record: book.functions
   section: defining-and-calling-a-function
@@ -3612,6 +4324,10 @@ symbols:
 - name: name
   record: book.values-and-names
   section: nested-calls-and-parentheses
+  declaration: name
+- name: name
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: name
 - name: named-logger
   record: std.logging
@@ -3629,6 +4345,18 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: namespaces.<namespace>
+- name: nan
+  record: lang.numerics.floating-point
+  section: floating-types
+  declaration: nan
+- name: nan
+  record: lang.text.display
+  section: scalar-display
+  declaration: nan
+- name: NaN
+  record: lang.text.display
+  section: scalar-display
+  declaration: NaN
 - name: native
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -3661,6 +4389,10 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: native-raw
+- name: native-string
+  record: std.process
+  section: process
+  declaration: native-string
 - name: native-text
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -3673,6 +4405,30 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: natural-log-one-plus
+- name: negate
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: negate
+- name: negate
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: negate
+- name: negative-shift-count
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: negative-shift-count
+- name: negative-shift-count
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: negative-shift-count
+- name: negative-shift-count
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: negative-shift-count
+- name: negative-shift-count
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: negative-shift-count
 - name: negative-sign
   record: lang.numerics.floating-point
   section: values
@@ -3689,14 +4445,18 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: networking
+- name: networking
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: networking
+- name: NEWLINE
+  record: lang.lexical-structure.source-layout
+  section: utf8-layout
+  declaration: NEWLINE
 - name: next
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: next
-- name: next
-  record: book.terrane-shaped-programs
-  section: use-iteration-rather-than-managing-indexes
-  declaration: function next iteration-step of row
 - name: next
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
@@ -3803,15 +4563,55 @@ symbols:
   declaration: None
 - name: none
   record: lang.classes.fields
+  section: classes
+  declaration: none
+- name: none
+  record: lang.classes.fields
   section: initialization
+  declaration: none
+- name: none
+  record: lang.classes.traits
+  section: traits
   declaration: none
 - name: none
   record: lang.collections.protocols
   section: source-iteration
   declaration: none
 - name: none
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: none
+- name: none
+  record: lang.lexical-structure.literals
+  section: comments-literals
+  declaration: none
+- name: none
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: none
+- name: none
+  record: lang.numerics.conversion
+  section: numeric-arrival
+  declaration: none
+- name: none
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: none
+- name: none
+  record: lang.text.display
+  section: scalar-display
+  declaration: none
+- name: none
   record: lang.types.optional-refinement
   section: overview
+  declaration: none
+- name: none
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: none
+- name: none
+  record: lang.types.unions
+  section: unions
   declaration: none
 - name: none
   record: std.collections
@@ -3837,10 +4637,22 @@ symbols:
   record: std.paths
   section: compiler-synopsis
   declaration: function normalise-path path; subject path
-- name: normalise-path
-  record: std.paths
-  section: synopsis
-  declaration: function normalise-path path; subject path
+- name: normalise.nfc
+  record: lang.text.transformation
+  section: string-transform
+  declaration: normalise.nfc
+- name: normalise.nfd
+  record: lang.text.transformation
+  section: string-transform
+  declaration: normalise.nfd
+- name: normalise.nfkc
+  record: lang.text.transformation
+  section: string-transform
+  declaration: normalise.nfkc
+- name: normalise.nfkd
+  record: lang.text.transformation
+  section: string-transform
+  declaration: normalise.nfkd
 - name: not
   record: book.decisions-and-repetition
   section: combining-conditions
@@ -3861,6 +4673,14 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: exercises
   declaration: note
+- name: nothrow
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: nothrow
+- name: nul
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: nul
 - name: number
   record: book.decisions-and-repetition
   section: break-and-continue
@@ -3868,6 +4688,18 @@ symbols:
 - name: number
   record: book.decisions-and-repetition
   section: loop-local-names
+  declaration: number
+- name: number
+  record: lang.numerics.floating-point
+  section: floating-types
+  declaration: number
+- name: number
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: number
+- name: number
+  record: lang.types.relations
+  section: type-tests
   declaration: number
 - name: number-classifier-functions.trn
   record: book.functions
@@ -3877,6 +4709,10 @@ symbols:
   record: book.decisions-and-repetition
   section: project-classify-a-range-of-numbers
   declaration: number-classifier.trn
+- name: object
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: object
 - name: observe-prefix
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -3906,11 +4742,6 @@ symbols:
   section: compiler-synopsis
   declaration: function open-file file-handle; capability filesystem, target path, readable bool, writable
     bool, create bool = false, truncate bool = false
-- name: open-file
-  record: std.filesystem
-  section: handles
-  declaration: function open-file file-handle; capability filesystem, target path, readable bool, writable
-    bool, create bool = false, truncate bool = false
 - name: open-file-beneath
   record: std.filesystem
   section: compiler-synopsis
@@ -3930,6 +4761,10 @@ symbols:
   declaration: operation-error
 - name: optional
   record: lang.classes.fields
+  section: classes
+  declaration: optional
+- name: optional
+  record: lang.classes.fields
   section: declaration
   declaration: optional
 - name: options.generated
@@ -3947,6 +4782,14 @@ symbols:
 - name: or
   record: book.types
   section: refinement-after-a-check
+  declaration: or
+- name: or
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: or
+- name: or
+  record: lang.types.unions
+  section: unions
   declaration: or
 - name: ordinary-view
   record: book.classes-interfaces-and-traits
@@ -3972,6 +4815,26 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: outcome.closed
+- name: Outer
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: Outer
+- name: Output
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: Output
+- name: overflowed
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: overflowed
+- name: overflowing
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: overflowing
+- name: overflowing
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: overflowing
 - name: override
   record: book.values-and-names
   section: giving-a-value-a-name
@@ -4003,6 +4866,10 @@ symbols:
 - name: package
   record: tool.packages.rust-dependencies
   section: manifest
+  declaration: package
+- name: package
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: package
 - name: package.metadata.terrane.namespace-overlays
   record: internals.projection.namespace-overlays
@@ -4041,6 +4908,10 @@ symbols:
   section: application-owned-adapters
   declaration: package.toml
 - name: package.toml
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: package.toml
+- name: package.toml
   record: tool.packages.command-line
   section: package-management
   declaration: package.toml
@@ -4064,6 +4935,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: package.toml
+- name: package.toml
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: package.toml
 - name: packing-list.trn
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -4072,6 +4947,10 @@ symbols:
   record: book.first-taste
   section: exercises
   declaration: packing-list.trn
+- name: panic
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: panic
 - name: Parallel
   record: internals.execution.runtime-selection
   section: strategy
@@ -4079,19 +4958,15 @@ symbols:
 - name: parity
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
-  declaration: function parity string; number int
-- name: parity
-  record: book.functions
-  section: project-turn-the-number-classifier-into-functions
   declaration: parity
 - name: parity
   record: book.functions
   section: small-functions-that-compose
-  declaration: function parity string; number int
-- name: parity
-  record: book.functions
-  section: small-functions-that-compose
   declaration: parity
+- name: parse
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: parse
 - name: parse-json
   record: app.error-boundaries
   section: documents
@@ -4117,9 +4992,9 @@ symbols:
   section: from-one-file-to-a-project
   declaration: part-two.trn
 - name: pass
-  record: book.identity-and-movement
-  section: sharing-identity-explicitly-with-ref
-  declaration: function pass ref int; value ref int
+  record: lang.lexical-structure.source-layout
+  section: utf8-layout
+  declaration: pass
 - name: PATH
   record: book.first-taste
   section: installing-the-toolchain
@@ -4138,8 +5013,8 @@ symbols:
   declaration: class path
 - name: path
   record: std.paths
-  section: synopsis
-  declaration: class path
+  section: paths
+  declaration: path
 - name: path
   record: tool.packages.command-line
   section: package-management
@@ -4151,6 +5026,10 @@ symbols:
 - name: path
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
+  declaration: path
+- name: path
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: path
 - name: PATH
   record: tool.source-intelligence
@@ -4164,10 +5043,6 @@ symbols:
   record: std.paths
   section: compiler-synopsis
   declaration: function path-components list of string; subject path
-- name: path-components
-  record: std.paths
-  section: synopsis
-  declaration: function path-components list of string; subject path
 - name: path-extension
   record: std.paths
   section: behavior
@@ -4175,10 +5050,6 @@ symbols:
 - name: path-extension
   record: std.paths
   section: compiler-synopsis
-  declaration: function path-extension string; subject path
-- name: path-extension
-  record: std.paths
-  section: synopsis
   declaration: function path-extension string; subject path
 - name: path-is-absolute
   record: std.paths
@@ -4188,10 +5059,6 @@ symbols:
   record: std.paths
   section: compiler-synopsis
   declaration: function path-is-absolute bool; subject path
-- name: path-is-absolute
-  record: std.paths
-  section: synopsis
-  declaration: function path-is-absolute bool; subject path
 - name: path-name
   record: std.paths
   section: behavior
@@ -4200,10 +5067,6 @@ symbols:
   record: std.paths
   section: compiler-synopsis
   declaration: function path-name string; subject path
-- name: path-name
-  record: std.paths
-  section: synopsis
-  declaration: function path-name string; subject path
 - name: path-parent
   record: std.paths
   section: behavior
@@ -4211,10 +5074,6 @@ symbols:
 - name: path-parent
   record: std.paths
   section: compiler-synopsis
-  declaration: function path-parent path; subject path
-- name: path-parent
-  record: std.paths
-  section: synopsis
   declaration: function path-parent path; subject path
 - name: path-result
   record: std.filesystem
@@ -4227,10 +5086,6 @@ symbols:
 - name: path-stem
   record: std.paths
   section: compiler-synopsis
-  declaration: function path-stem string; subject path
-- name: path-stem
-  record: std.paths
-  section: synopsis
   declaration: function path-stem string; subject path
 - name: perf
   record: book.testing-and-debugging
@@ -4269,6 +5124,10 @@ symbols:
   section: public-paths
   declaration: prelude
 - name: prelude
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: prelude
+- name: prelude
   record: tool.packages.package-manifest
   section: fields
   declaration: prelude
@@ -4279,6 +5138,10 @@ symbols:
 - name: prelude
   record: tool.packages.rust-dependencies
   section: imports
+  declaration: prelude
+- name: prelude
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: prelude
 - name: prepared
   record: lang.functions.declarations
@@ -4348,18 +5211,14 @@ symbols:
   record: book.values-and-names
   section: project-calculate-a-small-purchase
   declaration: print
+- name: print
+  record: lang.text.display
+  section: scalar-display
+  declaration: print
 - name: print-entry
   record: book.complete-program
   section: keeping-decisions-separate-from-presentation
   declaration: print-entry
-- name: print-entry
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
-  declaration: function print-entry; name string, units int
-- name: print-entry
-  record: book.complete-program
-  section: reporting-useful-output
-  declaration: function print-entry; name string, units int
 - name: print-report
   record: book.complete-program
   section: exercises
@@ -4375,15 +5234,7 @@ symbols:
 - name: print-report
   record: book.complete-program
   section: project-a-small-in-memory-reporting-tool
-  declaration: function print-report; title string, target int, entries map of string, int
-- name: print-report
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
   declaration: print-report
-- name: print-report
-  record: book.complete-program
-  section: reporting-useful-output
-  declaration: function print-report; title string, target int, entries map of string, int
 - name: print-report
   record: book.complete-program
   section: reporting-useful-output
@@ -4399,15 +5250,7 @@ symbols:
 - name: print-report
   record: book.errors
   section: improving-the-reporting-tool-s-failures
-  declaration: function print-report; title string, target int, entries map of string, int
-- name: print-report
-  record: book.errors
-  section: improving-the-reporting-tool-s-failures
   declaration: print-report
-- name: print-report
-  record: book.errors
-  section: letting-an-error-travel-to-the-right-layer
-  declaration: function print-report; title string, target int, entries map of string, int
 - name: print-report
   record: book.errors
   section: letting-an-error-travel-to-the-right-layer
@@ -4419,23 +5262,11 @@ symbols:
 - name: print-report
   record: book.namespaces-imports-and-packages
   section: visibility
-  declaration: function print-report; title string, target int, entries map of string, int
-- name: print-report
-  record: book.namespaces-imports-and-packages
-  section: visibility
   declaration: print-report
 - name: priority
   record: book.types
   section: function-types
   declaration: priority
-- name: priority-label
-  record: book.types
-  section: coercion
-  declaration: function priority-label string; value int
-- name: priority-value
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function priority-value int8
 - name: pritn
   record: book.first-taste
   section: reading-a-compiler-diagnostic
@@ -4456,9 +5287,25 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: visibility
   declaration: private
+- name: private
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: private
+- name: private
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: private
+- name: prn
+  record: lang.namespaces.declarations
+  section: namespace-paths
+  declaration: prn
 - name: process
   record: tool.packages.package-manifest
   section: capabilities-and-effects
+  declaration: process
+- name: process
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: process
 - name: process-fixture
   record: book.testing-and-debugging
@@ -4472,6 +5319,14 @@ symbols:
   record: tool.packages.testing
   section: execution
   declaration: process-fixture
+- name: process-host-name
+  record: std.process
+  section: process
+  declaration: process-host-name
+- name: process-host-name-result
+  record: std.process
+  section: process
+  declaration: process-host-name-result
 - name: process-result
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -4507,23 +5362,11 @@ symbols:
 - name: progress-label
   record: book.complete-program
   section: dividing-the-program-into-functions
-  declaration: function progress-label string; total int, target int
-- name: progress-label
-  record: book.complete-program
-  section: dividing-the-program-into-functions
   declaration: progress-label
 - name: progress-label
   record: book.complete-program
   section: project-a-small-in-memory-reporting-tool
-  declaration: function progress-label string; total int, target int
-- name: progress-label
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
   declaration: progress-label
-- name: progress-label
-  record: book.errors
-  section: improving-the-reporting-tool-s-failures
-  declaration: function progress-label string; total int, target int
 - name: progress-label
   record: book.namespaces-imports-and-packages
   section: exercises
@@ -4564,6 +5407,14 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: visibility
   declaration: protected
+- name: protected
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: protected
+- name: protected
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: protected
 - name: public
   record: book.classes-interfaces-and-traits
   section: encapsulation-and-visibility
@@ -4572,6 +5423,26 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: visibility
   declaration: public
+- name: public
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: public
+- name: public
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: public
+- name: public
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: public
+- name: public
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: public
+- name: q
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: q
 - name: quantity
   record: book.values-and-names
   section: exercises
@@ -4608,6 +5479,10 @@ symbols:
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
   declaration: quit
+- name: r
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: r
 - name: range
   record: book.decisions-and-repetition
   section: exercises
@@ -4616,10 +5491,22 @@ symbols:
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
   declaration: range
+- name: range
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: range
 - name: Rc
   record: book.identity-and-movement
   section: shared-references-and-ownership
   declaration: Rc
+- name: read-async
+  record: std.streams
+  section: byte-text-streams
+  declaration: read-async
+- name: read-exact
+  record: std.streams
+  section: byte-text-streams
+  declaration: read-exact
 - name: read-write-lock
   record: book.async
   section: sharing-mutable-state-by-giving-it-one-owner
@@ -4685,6 +5572,18 @@ symbols:
   section: representation-identity
   declaration: ref
 - name: ref
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: ref
+- name: ref
+  record: lang.ownership.movement
+  section: move-semantics
+  declaration: ref
+- name: ref
+  record: lang.ownership.value-semantics
+  section: value-copy-semantics
+  declaration: ref
+- name: ref
   record: lang.types.authority-in-practice
   section: repeated-use
   declaration: ref
@@ -4732,6 +5631,14 @@ symbols:
   record: std.concurrency.channels
   section: overflow
   declaration: rejected-value
+- name: remainder
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: remainder
+- name: remainder
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: remainder
 - name: remaining
   record: book.values-and-names
   section: changing-a-binding
@@ -4747,23 +5654,11 @@ symbols:
 - name: render
   record: book.classes-interfaces-and-traits
   section: describing-shared-behavior-with-an-interface
-  declaration: function render string
-- name: render
-  record: book.classes-interfaces-and-traits
-  section: describing-shared-behavior-with-an-interface
   declaration: render
-- name: render
-  record: book.classes-interfaces-and-traits
-  section: encapsulation-and-visibility
-  declaration: function render string
 - name: render
   record: book.classes-interfaces-and-traits
   section: exercises
   declaration: render
-- name: render
-  record: book.classes-interfaces-and-traits
-  section: extending-one-base-class
-  declaration: function render string
 - name: render
   record: book.classes-interfaces-and-traits
   section: extending-one-base-class
@@ -4775,27 +5670,7 @@ symbols:
 - name: render
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
-  declaration: function render string
-- name: render
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
   declaration: render
-- name: render
-  record: book.classes-interfaces-and-traits
-  section: reusing-fields-and-methods-with-traits
-  declaration: function render string
-- name: render
-  record: book.classes-interfaces-and-traits
-  section: typed-fields-and-ordinary-methods
-  declaration: function render string
-- name: render
-  record: book.errors
-  section: improving-the-reporting-tool-s-failures
-  declaration: function render string
-- name: render
-  record: book.errors
-  section: throwing-an-error
-  declaration: function render string
 - name: render
   record: book.errors
   section: throwing-an-error
@@ -4805,57 +5680,25 @@ symbols:
   section: what-we-learned
   declaration: render
 - name: render
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function render string
-- name: render
-  record: book.terrane-shaped-programs
-  section: use-types-to-state-real-contracts
-  declaration: function render string
-- name: render
   record: book.types
   section: compile-time-guarantees
   declaration: render
 - name: render
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function render string
-- name: render
-  record: lang.types.authority-in-practice
-  section: fields-and-collections
-  declaration: function render string; formatter ref document-formatter
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: render
 - name: render-category
   record: book.classes-interfaces-and-traits
   section: exercises
   declaration: render-category
 - name: render-category
   record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
-  declaration: function render-category string
-- name: render-category
-  record: book.classes-interfaces-and-traits
-  section: reusing-fields-and-methods-with-traits
-  declaration: function render-category string
-- name: render-category
-  record: book.classes-interfaces-and-traits
   section: reusing-fields-and-methods-with-traits
   declaration: render-category
-- name: render-category
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function render-category string
-- name: report
-  record: app.collection-string-idioms
-  section: typed-empty-values
-  declaration: class report
-- name: report
-  record: book.functions
-  section: required-optional-and-named-arguments
-  declaration: function report; name string, passed bool
-- name: report
-  record: book.functions
-  section: required-optional-and-named-arguments
-  declaration: function report; name string, passed bool, attempts int = 1
+- name: replace
+  record: lang.text.transformation
+  section: string-transform
+  declaration: replace
 - name: report.trn
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
@@ -4882,16 +5725,8 @@ symbols:
   declaration: require-entry
 - name: require-entry
   record: book.errors
-  section: improving-the-reporting-tool-s-failures
-  declaration: function require-entry throws invalid-report-entry; entry-name string, units int
-- name: require-entry
-  record: book.errors
   section: letting-an-error-travel-to-the-right-layer
   declaration: require-entry
-- name: require-entry
-  record: book.errors
-  section: throwing-an-error
-  declaration: function require-entry throws invalid-report-entry; entry-name string, units int
 - name: require-entry
   record: book.errors
   section: throwing-an-error
@@ -4921,6 +5756,10 @@ symbols:
   section: interface-impls
   declaration: Result
 - name: Result
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: Result
+- name: Result
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: Result
@@ -4928,6 +5767,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: Result
+- name: resume
+  record: std.streams
+  section: byte-text-streams
+  declaration: resume
 - name: return
   record: book.errors
   section: cleaning-up-with-finally
@@ -4949,6 +5792,10 @@ symbols:
   section: concrete-return-contracts
   declaration: return
 - name: return
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: return
+- name: return
   record: lang.functions.asynchronous
   section: selection
   declaration: return
@@ -4957,13 +5804,13 @@ symbols:
   section: returns
   declaration: return
 - name: return
+  record: lang.lexical-structure.literals
+  section: comments-literals
+  declaration: return
+- name: return
   record: lang.lexical-structure.text-blocks
   section: placement
   declaration: return
-- name: return-then-error
-  record: book.errors
-  section: replacing-and-preserving-errors
-  declaration: function return-then-error int throws invalid-report-entry
 - name: returned
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -5005,13 +5852,13 @@ symbols:
   section: native-artifact-kind
   declaration: run
 - name: run
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: run
+- name: run
   record: tool.packages.command-line
   section: generated-package-state
   declaration: run
-- name: run-checks
-  record: book.complete-program
-  section: checking-and-testing-behavior
-  declaration: function run-checks
 - name: run-process
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -5043,6 +5890,10 @@ symbols:
 - name: rust
   record: internals.integration-adapters
   section: application-owned-adapters
+  declaration: rust
+- name: rust
+  record: tool.packages.rust-interop
+  section: inline-rust
   declaration: rust
 - name: rust-dependencies.<alias>.default-features
   record: tool.packages.package-manifest
@@ -5104,18 +5955,110 @@ symbols:
   record: tool.packages.testing
   section: framework
   declaration: s
+- name: S1017
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: S1017
 - name: S1095
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: S1095
+- name: S2005
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2005
+- name: S2009
+  record: lang.namespaces.imports
+  section: imports
+  declaration: S2009
+- name: S2009
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2009
+- name: S2010
+  record: lang.namespaces.imports
+  section: imports
+  declaration: S2010
+- name: S2010
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2010
+- name: S2011
+  record: lang.namespaces.imports
+  section: imports
+  declaration: S2011
+- name: S2011
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: S2011
+- name: S2011
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2011
+- name: S2012
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2012
 - name: S2013
   record: book.first-taste
   section: reading-a-compiler-diagnostic
   declaration: S2013
+- name: S2013
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2013
+- name: S2022
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2022
+- name: S2023
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2023
+- name: S2024
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2024
+- name: S2025
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2025
+- name: S2026
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2026
+- name: S2032
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: S2032
+- name: S2033
+  record: lang.namespaces.imports
+  section: imports
+  declaration: S2033
+- name: S9004
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: S9004
 - name: S9005
   record: internals.semantics.reference-provenance
   section: lowering
   declaration: S9005
+- name: saturate
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: saturate
+- name: saturate
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: saturate
+- name: saturate
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: saturate
+- name: saturating-coerce
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: saturating-coerce
 - name: scalars
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
@@ -5140,6 +6083,10 @@ symbols:
   record: book.values-and-names
   section: changing-a-binding
   declaration: score
+- name: Sec-WebSocket-Accept
+  record: std.cryptography
+  section: legacy-digests
+  declaration: Sec-WebSocket-Accept
 - name: second
   record: book.text-and-collections
   section: why-terrane-values-without-accidental-aliasing
@@ -5148,6 +6095,10 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
   declaration: second.completed
+- name: secret
+  record: lang.classes.fields
+  section: classes
+  declaration: secret
 - name: secret
   record: lang.classes.fields
   section: declaration
@@ -5160,6 +6111,10 @@ symbols:
   record: std.logging
   section: events
   declaration: secret-field
+- name: secure-random
+  record: std.randomness
+  section: randomness
+  declaration: secure-random
 - name: select
   record: book.async
   section: chapter-summary
@@ -5189,6 +6144,22 @@ symbols:
   section: interface-impls
   declaration: self
 - name: self
+  record: lang.classes.fields
+  section: classes
+  declaration: self
+- name: self
+  record: lang.classes.inheritance
+  section: inheritance
+  declaration: self
+- name: self
+  record: lang.classes.lifecycle
+  section: lifecycle
+  declaration: self
+- name: self
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: self
+- name: self
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: self
@@ -5213,8 +6184,16 @@ symbols:
   section: transferability
   declaration: Send
 - name: Send
+  record: tool.editor-support
+  section: editor-support
+  declaration: Send
+- name: Send
   record: tool.packages.rust-dependencies
   section: async-members
+  declaration: Send
+- name: Send
+  record: tool.packages.rust-dependencies
+  section: async-projected-endpoints
   declaration: Send
 - name: send
   record: tool.packages.rust-dependencies
@@ -5249,9 +6228,21 @@ symbols:
   section: creating-and-updating-maps
   declaration: set
 - name: set
+  record: lang.classes.fields
+  section: classes
+  declaration: set
+- name: set
+  record: lang.classes.traits
+  section: traits
+  declaration: set
+- name: set
   record: std.collections
   section: collection-kinds
   declaration: set
+- name: shared
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: shared
 - name: shared-cell
   record: book.async
   section: sharing-mutable-state-by-giving-it-one-owner
@@ -5268,30 +6259,26 @@ symbols:
   record: book.identity-and-movement
   section: project-observing-a-work-list
   declaration: shared-values
-- name: show
-  record: book.classes-interfaces-and-traits
-  section: describing-shared-behavior-with-an-interface
-  declaration: function show; item task-view
-- name: show
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
-  declaration: function show
-- name: show
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function show
-- name: show-category
-  record: book.classes-interfaces-and-traits
-  section: reusing-fields-and-methods-with-traits
-  declaration: 'function show-category; item categorized    # not a trait type boundary'
+- name: shift-left
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: shift-left
+- name: shift-left
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: shift-left
+- name: shift-right
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: shift-right
+- name: shift-right
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: shift-right
 - name: show-estimates
   record: book.types
   section: exercises
   declaration: show-estimates
-- name: show-estimates
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function show-estimates
 - name: show-estimates
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
@@ -5303,15 +6290,7 @@ symbols:
 - name: show-matching
   record: book.types
   section: function-types
-  declaration: function show-matching; predicate function from int8 to bool
-- name: show-matching
-  record: book.types
-  section: function-types
   declaration: show-matching
-- name: show-matching
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: function show-matching; predicate function from int8 to bool
 - name: show-matching
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
@@ -5324,10 +6303,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: imports
   declaration: show-report
-- name: show-total
-  record: book.functions
-  section: parameters-and-results
-  declaration: function show-total; total int
+- name: signed-fixed-integer
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: signed-fixed-integer
 - name: sine
   record: lang.numerics.floating-point
   section: operations
@@ -5389,6 +6368,10 @@ symbols:
   section: async-sinks
   declaration: split
 - name: split
+  record: lang.text.transformation
+  section: string-transform
+  declaration: split
+- name: split
   record: tool.packages.rust-dependencies
   section: async-sinks
   declaration: split
@@ -5420,18 +6403,26 @@ symbols:
   record: tool.packages.package-manifest
   section: namespaces-and-artifacts
   declaration: src/lib.rs
+- name: src/main.rs
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: src/main.rs
+- name: src/main.support.rs
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: src/main.support.rs
 - name: start
   record: std.text-bytes-codecs
   section: string-operations
   declaration: start
-- name: status
-  record: book.classes-interfaces-and-traits
-  section: designing-an-object-that-earns-its-existence
-  declaration: function status string
-- name: status
-  record: book.functions
-  section: returning-early
-  declaration: function status string
+- name: static
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: static
+- name: static
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: static
 - name: step
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -5459,23 +6450,11 @@ symbols:
 - name: strict-total
   record: book.errors
   section: improving-the-reporting-tool-s-failures
-  declaration: function strict-total int throws invalid-report-entry; entries map of string, int
-- name: strict-total
-  record: book.errors
-  section: improving-the-reporting-tool-s-failures
   declaration: strict-total
 - name: strict-total
   record: book.errors
   section: letting-an-error-travel-to-the-right-layer
-  declaration: function strict-total int throws invalid-report-entry; entries map of string, int
-- name: strict-total
-  record: book.errors
-  section: letting-an-error-travel-to-the-right-layer
   declaration: strict-total
-- name: strict-total
-  record: book.errors
-  section: terrane-style-make-failure-boundaries-as-clear-as-success-boundaries
-  declaration: function strict-total int throws invalid-report-entry; entries map of string, int
 - name: strict-total
   record: book.namespaces-imports-and-packages
   section: exercises
@@ -5509,6 +6488,46 @@ symbols:
   section: exercises
   declaration: string
 - name: string
+  record: lang.classes.fields
+  section: classes
+  declaration: string
+- name: string
+  record: lang.classes.traits
+  section: traits
+  declaration: string
+- name: string
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: string
+- name: string
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: string
+- name: string
+  record: lang.text.bytes
+  section: bytes
+  declaration: string
+- name: string
+  record: lang.text.display
+  section: scalar-display
+  declaration: string
+- name: string
+  record: lang.text.encodings
+  section: encodings
+  declaration: string
+- name: string
+  record: lang.text.search
+  section: string-search
+  declaration: string
+- name: string
+  record: lang.text.unicode
+  section: unicode-views
+  declaration: string
+- name: string
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: string
+- name: string
   record: std.text-bytes-codecs
   section: text-and-bytes
   declaration: string
@@ -5528,10 +6547,14 @@ symbols:
   record: lang.numerics.floating-point
   section: values
   declaration: subnormal
-- name: sum-to
-  record: book.testing-and-debugging
-  section: debug-from-the-terrane-boundary-inward
-  declaration: function sum-to int64; limit int64
+- name: subtract
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: subtract
+- name: subtract
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: subtract
 - name: summarize
   record: book.testing-and-debugging
   section: choose-the-test-boundary-deliberately
@@ -5557,6 +6580,10 @@ symbols:
   section: callbacks
   declaration: Sync
 - name: Sync
+  record: tool.editor-support
+  section: editor-support
+  declaration: Sync
+- name: Sync
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: Sync
@@ -5568,6 +6595,22 @@ symbols:
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: Sync
+- name: sync-all
+  record: std.filesystem
+  section: filesystem
+  declaration: sync-all
+- name: sync-all
+  record: std.streams
+  section: byte-text-streams
+  declaration: sync-all
+- name: sync-data
+  record: std.filesystem
+  section: filesystem
+  declaration: sync-data
+- name: sync-data
+  record: std.streams
+  section: byte-text-streams
+  declaration: sync-data
 - name: syntax
   record: tool.source-intelligence
   section: queries
@@ -5578,11 +6621,35 @@ symbols:
   declaration: T
 - name: T
   record: lang.classes.fields
+  section: classes
+  declaration: T
+- name: T
+  record: lang.classes.fields
   section: initialization
+  declaration: T
+- name: T
+  record: lang.classes.traits
+  section: traits
+  declaration: T
+- name: T
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: T
+- name: T
+  record: lang.errors.contracts
+  section: throwable-inference
   declaration: T
 - name: T
   record: lang.functions.declarations
   section: declaration
+  declaration: T
+- name: T
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: T
+- name: T
+  record: lang.ownership.value-semantics
+  section: value-copy-semantics
   declaration: T
 - name: T
   record: lang.types.optional-refinement
@@ -5597,9 +6664,17 @@ symbols:
   section: overview
   declaration: T
 - name: T
+  record: lang.types.unions
+  section: unions
+  declaration: T
+- name: T
   record: tool.diagnostics
   section: families
   declaration: T
+- name: T0003
+  record: lang.numerics.constants
+  section: constant-arithmetic
+  declaration: T0003
 - name: T0031
   record: book.types
   section: refinement-after-a-check
@@ -5639,23 +6714,7 @@ symbols:
 - name: task
   record: book.classes-interfaces-and-traits
   section: defining-a-class
-  declaration: class task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: defining-a-class
   declaration: task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: describing-shared-behavior-with-an-interface
-  declaration: class task implements task-view
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: designing-an-object-that-earns-its-existence
-  declaration: class task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: encapsulation-and-visibility
-  declaration: class task
 - name: task
   record: book.classes-interfaces-and-traits
   section: exercises
@@ -5663,19 +6722,7 @@ symbols:
 - name: task
   record: book.classes-interfaces-and-traits
   section: extending-one-base-class
-  declaration: class task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: extending-one-base-class
   declaration: task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: initialization-with-construct
-  declaration: class task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: objects-as-behavior
-  declaration: class task
 - name: task
   record: book.classes-interfaces-and-traits
   section: objects-as-behavior
@@ -5683,23 +6730,11 @@ symbols:
 - name: task
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
-  declaration: class task implements task-view uses categorized
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
   declaration: task
 - name: task
   record: book.classes-interfaces-and-traits
   section: reusing-fields-and-methods-with-traits
-  declaration: class task uses categorized
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: reusing-fields-and-methods-with-traits
   declaration: task
-- name: task
-  record: book.classes-interfaces-and-traits
-  section: typed-fields-and-ordinary-methods
-  declaration: class task
 - name: task
   record: book.classes-interfaces-and-traits
   section: under-the-surface-the-object-model-is-a-semantic-abstraction
@@ -5711,15 +6746,7 @@ symbols:
 - name: task
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
-  declaration: class task implements task-view uses categorized
-- name: task
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
   declaration: task
-- name: task-list
-  record: book.classes-interfaces-and-traits
-  section: encapsulation-and-visibility
-  declaration: class task-list
 - name: task-list
   record: book.classes-interfaces-and-traits
   section: exercises
@@ -5727,15 +6754,7 @@ symbols:
 - name: task-list
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
-  declaration: class task-list
-- name: task-list
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
   declaration: task-list
-- name: task-list
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
-  declaration: class task-list
 - name: task-list
   record: book.types
   section: type-inference
@@ -5876,6 +6895,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: mutable-async-callables
   declaration: TerraneAsyncMutableState::with_receiver
+- name: TerraneSite
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: TerraneSite
 - name: test
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
@@ -5928,6 +6951,26 @@ symbols:
   record: tool.packages.testing
   section: discovery
   declaration: tests/unit
+- name: text-range
+  record: lang.text.search
+  section: string-search
+  declaration: text-range
+- name: text-range
+  record: lang.text.unicode
+  section: unicode-views
+  declaration: text-range
+- name: text-reader
+  record: std.streams
+  section: byte-text-streams
+  declaration: text-reader
+- name: text-writer
+  record: std.streams
+  section: byte-text-streams
+  declaration: text-writer
+- name: text-writer.line
+  record: std.streams
+  section: byte-text-streams
+  declaration: text-writer.line
 - name: text.concat
   record: std.text-bytes-codecs
   section: string-operations
@@ -5969,6 +7012,18 @@ symbols:
   section: what-we-learned
   declaration: this
 - name: this
+  record: lang.classes.fields
+  section: classes
+  declaration: this
+- name: this
+  record: lang.classes.inheritance
+  section: inheritance
+  declaration: this
+- name: this
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: this
+- name: this
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: this
@@ -5992,6 +7047,10 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: threads
+- name: threads
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: threads
 - name: throw
   record: book.errors
   section: replacing-and-preserving-errors
@@ -6009,8 +7068,16 @@ symbols:
   section: give-errors-an-appropriate-owner
   declaration: throw
 - name: throw
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: throw
+- name: throw
   record: lang.functions.asynchronous
   section: selection
+  declaration: throw
+- name: throw
+  record: lang.lexical-structure.literals
+  section: comments-literals
   declaration: throw
 - name: throwable
   record: book.errors
@@ -6029,9 +7096,17 @@ symbols:
   section: dependencies
   declaration: throwable
 - name: throwable
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: throwable
+- name: throwable
   record: lang.types.optional-refinement
   section: bind-expression-once
   declaration: throwable
+- name: throwable-contract
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: throwable-contract
 - name: throws
   record: book.errors
   section: letting-an-error-travel-to-the-right-layer
@@ -6045,8 +7120,24 @@ symbols:
   section: what-we-learned
   declaration: throws
 - name: throws
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: throws
+- name: throws
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: throws
+- name: throws
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: throws
+- name: throws
   record: lang.functions.declarations
   section: declaration
+  declaration: throws
+- name: throws
+  record: tool.packages.native-interop
+  section: system-c-interop
   declaration: throws
 - name: title
   record: book.classes-interfaces-and-traits
@@ -6056,13 +7147,13 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: extending-one-base-class
   declaration: title
-- name: titles
-  record: book.classes-interfaces-and-traits
-  section: designing-an-object-that-earns-its-existence
-  declaration: class titles
 - name: tls
   record: tool.packages.package-manifest
   section: capabilities-and-effects
+  declaration: tls
+- name: tls
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: tls
 - name: to
   record: book.types
@@ -6096,18 +7187,6 @@ symbols:
   record: book.first-taste
   section: exercises
   declaration: total-bottles
-- name: total-estimate
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: function total-estimate int
-- name: total-length
-  record: app.collection-string-idioms
-  section: iteration
-  declaration: function total-length int; values ref list of string
-- name: trace-scope
-  record: book.classes-interfaces-and-traits
-  section: cleanup-with-destruct
-  declaration: class trace-scope
 - name: tracing
   record: internals.observability.runtime
   section: dependency-bridge
@@ -6168,6 +7247,10 @@ symbols:
   record: book.values-and-names
   section: why-terrane-why-calls-use-semicolon
   declaration: trim
+- name: trim
+  record: lang.text.transformation
+  section: string-transform
+  declaration: trim
 - name: 'true'
   record: book.async
   section: task-scopes
@@ -6180,6 +7263,34 @@ symbols:
   record: book.values-and-names
   section: what-we-learned
   declaration: 'true'
+- name: 'true'
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: 'true'
+- name: 'true'
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: 'true'
+- name: 'true'
+  record: lang.text.display
+  section: scalar-display
+  declaration: 'true'
+- name: 'true'
+  record: lang.text.search
+  section: string-search
+  declaration: 'true'
+- name: 'true'
+  record: lang.types.relations
+  section: type-tests
+  declaration: 'true'
+- name: 'true'
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: 'true'
+- name: 'true'
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: 'true'
 - name: truncate
   record: lang.numerics.conversion
   section: declared-family
@@ -6187,6 +7298,10 @@ symbols:
 - name: truth
   record: lang.classes.protocols
   section: truth
+  declaration: truth
+- name: truth
+  record: lang.types.reflection
+  section: descriptor-reflection
   declaration: truth
 - name: try
   record: app.collection-string-idioms
@@ -6216,10 +7331,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: try
-- name: twice
-  record: book.native-program
-  section: from-terrane-source-to-an-executable
-  declaration: function twice int64; value int64
+- name: try
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: try
 - name: twice
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
@@ -6239,6 +7354,10 @@ symbols:
 - name: type
   record: lang.collections.protocols
   section: lifetime-and-identity
+  declaration: type
+- name: type
+  record: lang.types.reflection
+  section: descriptor-reflection
   declaration: type
 - name: Type.member
   record: internals.projection.resolution
@@ -6268,6 +7387,38 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: typeof
+- name: uint128
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: uint128
+- name: uint128
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: uint128
+- name: uint16
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: uint16
+- name: uint16
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: uint16
+- name: uint32
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: uint32
+- name: uint32
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: uint32
+- name: uint64
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: uint64
+- name: uint64
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: uint64
 - name: uint8
   record: app.collection-string-idioms
   section: bytes
@@ -6275,6 +7426,22 @@ symbols:
 - name: uint8
   record: lang.collections.protocols
   section: byte-indexing
+  declaration: uint8
+- name: uint8
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: uint8
+- name: uint8
+  record: lang.text.bytes
+  section: bytes
+  declaration: uint8
+- name: uint8
+  record: lang.text.encodings
+  section: encodings
+  declaration: uint8
+- name: uint8
+  record: lang.types.scalars
+  section: scalar-types
   declaration: uint8
 - name: uint8
   record: std.collections
@@ -6296,6 +7463,10 @@ symbols:
   record: book.testing-and-debugging
   section: run-the-suite-at-the-right-scale
   declaration: unit
+- name: unit
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: unit
 - name: unit-price
   record: book.values-and-names
   section: exercises
@@ -6313,9 +7484,25 @@ symbols:
   section: sharing-identity-explicitly-with-ref
   declaration: unordered-map
 - name: unordered-map
+  record: lang.classes.fields
+  section: classes
+  declaration: unordered-map
+- name: unordered-map
+  record: lang.classes.traits
+  section: traits
+  declaration: unordered-map
+- name: unordered-map
   record: std.collections
   section: collection-kinds
   declaration: unordered-map
+- name: unordered-set
+  record: lang.classes.fields
+  section: classes
+  declaration: unordered-set
+- name: unordered-set
+  record: lang.classes.traits
+  section: traits
+  declaration: unordered-set
 - name: unordered-set
   record: std.collections
   section: collection-kinds
@@ -6324,6 +7511,18 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: unresolved
+- name: unsafe
+  record: std.cryptography
+  section: legacy-digests
+  declaration: unsafe
+- name: unsafe
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: unsafe
+- name: unsigned-fixed-integer
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: unsigned-fixed-integer
 - name: unsized
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
@@ -6332,10 +7531,26 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: unsupported
+- name: unwind
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: unwind
+- name: UnwindSafe
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: UnwindSafe
+- name: upper
+  record: lang.text.transformation
+  section: string-transform
+  declaration: upper
 - name: upper-names
   record: book.text-and-collections
   section: iterating-over-lists
   declaration: upper-names
+- name: upper.words
+  record: lang.text.transformation
+  section: string-transform
+  declaration: upper.words
 - name: Upstream public member
   record: tool.packages.rust-dependencies
   section: workflow
@@ -6347,23 +7562,11 @@ symbols:
 - name: urgent-task
   record: book.classes-interfaces-and-traits
   section: extending-one-base-class
-  declaration: class urgent-task extends task
-- name: urgent-task
-  record: book.classes-interfaces-and-traits
-  section: extending-one-base-class
   declaration: urgent-task
 - name: urgent-task
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
-  declaration: class urgent-task extends task
-- name: urgent-task
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
   declaration: urgent-task
-- name: urgent-task
-  record: book.classes-interfaces-and-traits
-  section: reusing-fields-and-methods-with-traits
-  declaration: class urgent-task extends task implements task-view uses categorized
 - name: urgent-task
   record: book.classes-interfaces-and-traits
   section: under-the-surface-the-object-model-is-a-semantic-abstraction
@@ -6371,14 +7574,18 @@ symbols:
 - name: urgent-task
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
-  declaration: class urgent-task extends task
-- name: urgent-task
-  record: book.types
-  section: project-strengthen-the-task-list-program-with-types
   declaration: urgent-task
+- name: url
+  record: std.urls
+  section: urls
+  declaration: url
 - name: use
   record: book.namespaces-imports-and-packages
   section: dependencies
+  declaration: use
+- name: use
+  record: lang.namespaces.imports
+  section: imports
   declaration: use
 - name: use-state
   record: book.async
@@ -6389,29 +7596,81 @@ symbols:
   section: reusing-fields-and-methods-with-traits
   declaration: uses
 - name: uses
+  record: lang.classes.inheritance
+  section: inheritance
+  declaration: uses
+- name: uses
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: uses
+- name: uses
   record: lang.classes.protocols
   section: roles
+  declaration: uses
+- name: uses
+  record: lang.classes.traits
+  section: traits
   declaration: uses
 - name: uses
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: uses
 - name: utf16-be
+  record: lang.text.bytes
+  section: bytes
+  declaration: utf16-be
+- name: utf16-be
+  record: lang.text.encodings
+  section: encodings
+  declaration: utf16-be
+- name: utf16-be
   record: std.text-bytes-codecs
   section: encodings
   declaration: utf16-be
+- name: utf16-le
+  record: lang.text.bytes
+  section: bytes
+  declaration: utf16-le
+- name: utf16-le
+  record: lang.text.encodings
+  section: encodings
+  declaration: utf16-le
 - name: utf16-le
   record: std.text-bytes-codecs
   section: encodings
   declaration: utf16-le
 - name: utf32-be
+  record: lang.text.bytes
+  section: bytes
+  declaration: utf32-be
+- name: utf32-be
+  record: lang.text.encodings
+  section: encodings
+  declaration: utf32-be
+- name: utf32-be
   record: std.text-bytes-codecs
   section: encodings
   declaration: utf32-be
 - name: utf32-le
+  record: lang.text.bytes
+  section: bytes
+  declaration: utf32-le
+- name: utf32-le
+  record: lang.text.encodings
+  section: encodings
+  declaration: utf32-le
+- name: utf32-le
   record: std.text-bytes-codecs
   section: encodings
   declaration: utf32-le
+- name: utf8
+  record: lang.text.bytes
+  section: bytes
+  declaration: utf8
+- name: utf8
+  record: lang.text.encodings
+  section: encodings
+  declaration: utf8
 - name: utf8
   record: std.text-bytes-codecs
   section: encodings
@@ -6419,15 +7678,7 @@ symbols:
 - name: valid-entry
   record: book.complete-program
   section: dividing-the-program-into-functions
-  declaration: function valid-entry bool; name string, units int
-- name: valid-entry
-  record: book.complete-program
-  section: dividing-the-program-into-functions
   declaration: valid-entry
-- name: valid-entry
-  record: book.complete-program
-  section: project-a-small-in-memory-reporting-tool
-  declaration: function valid-entry bool; name string, units int
 - name: validate-document
   record: std.documents.typed-decoding
   section: diagnostics
@@ -6469,6 +7720,14 @@ symbols:
   section: exercises
   declaration: value
 - name: value
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: value
+- name: value
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: value
+- name: value
   record: std.concurrency.channels
   section: operations
   declaration: value
@@ -6480,10 +7739,26 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sequences
   declaration: value
+- name: value.coerce.default
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: value.coerce.default
+- name: value.name
+  record: lang.classes.inheritance
+  section: inheritance
+  declaration: value.name
+- name: value.name
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: value.name
 - name: value.type.inherently-identity-bearing
   record: book.terrane-shaped-programs
   section: pass-values-unless-identity-matters
   declaration: value.type.inherently-identity-bearing
+- name: 'value:'
+  record: std.process
+  section: process
+  declaration: 'value:'
 - name: values
   record: book.identity-and-movement
   section: shared-references-and-ownership
@@ -6516,10 +7791,38 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: virtual
+- name: void
+  record: lang.types.scalars
+  section: scalar-types
+  declaration: void
 - name: W
   record: tool.diagnostics
   section: families
   declaration: W
+- name: W4003
+  record: lang.types.descriptors
+  section: type-descriptors
+  declaration: W4003
+- name: W4003
+  record: lang.types.unions
+  section: unions
+  declaration: W4003
+- name: W4004
+  record: lang.namespaces.imports
+  section: imports
+  declaration: W4004
+- name: W4004
+  record: lang.namespaces.name-resolution
+  section: single-name-lookup
+  declaration: W4004
+- name: W4004
+  record: lang.namespaces.prelude
+  section: prelude
+  declaration: W4004
+- name: W4004
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: W4004
 - name: W4005
   record: lang.functions.declarations
   section: unreferenced
@@ -6564,10 +7867,26 @@ symbols:
   record: lang.classes.protocols
   section: truth
   declaration: while
+- name: while
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: while
+- name: widget
+  record: lang.types.relations
+  section: type-tests
+  declaration: widget
 - name: width
   record: book.functions
   section: local-scope
   declaration: width
+- name: with
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: with
+- name: with
+  record: lang.declarations.modifiers
+  section: decorative-modifiers
+  declaration: with
 - name: with-field
   record: std.logging
   section: events
@@ -6636,27 +7955,75 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
   declaration: work-report/reporting/format
+- name: wrap
+  record: lang.numerics.arithmetic
+  section: integer-operators
+  declaration: wrap
+- name: wrap
+  record: lang.numerics.arithmetic-policies
+  section: bounded-arithmetic
+  declaration: wrap
+- name: wrap
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: wrap
+- name: wrap
+  record: lang.numerics.integers
+  section: exact-int
+  declaration: wrap
+- name: wrap
+  record: lang.numerics.integers
+  section: fixed-integers
+  declaration: wrap
+- name: wrapping-coerce
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: wrapping-coerce
+- name: write-all
+  record: std.streams
+  section: byte-text-streams
+  declaration: write-all
+- name: write-async
+  record: std.streams
+  section: byte-text-streams
+  declaration: write-async
 - name: writing-plan
   record: book.terrane-shaped-programs
   section: exercises
   declaration: writing-plan
-- name: writing-plan
-  record: book.terrane-shaped-programs
-  section: refactoring-the-book-s-project-as-a-whole
-  declaration: class writing-plan
 - name: x
   record: book.introduction
   section: examples
+  declaration: x
+- name: x
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: x
+- name: x
+  record: lang.namespaces.imports
+  section: imports
+  declaration: x
+- name: x
+  record: lang.types.relations
+  section: type-tests
   declaration: x
 - name: y
   record: book.introduction
   section: examples
   declaration: y
-- name: zero
-  record: book.functions
-  section: small-functions-that-compose
-  declaration: function zero int
+- name: y
+  record: lang.namespaces.imports
+  section: imports
+  declaration: y
 - name: zero
   record: lang.numerics.floating-point
   section: values
   declaration: zero
+- name: zlib
+  record: std.compression
+  section: compression
+  declaration: zlib
+- name: zstd
+  record: std.compression
+  section: compression
+  declaration: zstd

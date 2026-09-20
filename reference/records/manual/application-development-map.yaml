@@ -17,8 +17,8 @@ documentation:
   title: Application development map
   title-style: text
   summary: >-
-    Routes experienced developers to the authoritative reference for building,
-    testing, integrating, running, debugging, and profiling a normal application.
+    Routes experienced developers to the authoritative reference for building, testing, integrating, running, debugging, and
+    profiling a normal application.
   tags: [manual, applications, navigation, packages]
   sections:
     - id: start
@@ -69,14 +69,13 @@ documentation:
         - type: markdown
           markdown: |-
             Before crossing a host or dependency boundary, review
-            [[lang.types.authority-in-practice]] and
-            [[app.collection-string-idioms]]. They provide the declaration and
-            call forms most likely to otherwise send an application author into
-            compiler source or conformance fixtures.
+            [[lang.types.authority-in-practice]] and [[app.collection-string-idioms]]. They
+            provide the declaration and call forms most likely to otherwise send an
+            application author into compiler source or conformance fixtures.
 
-            For exact compiler availability rather than intended language
-            semantics, use [[tool.current-limitations]] and the generated symbol
-            catalog linked from the repository entry point.
+            For exact compiler availability rather than intended language semantics, use
+            [[tool.current-limitations]] and the generated symbol catalog linked from the
+            repository entry point.
   see-also:
     - tool.packages.package-manifest
     - lang.types.authority-in-practice
