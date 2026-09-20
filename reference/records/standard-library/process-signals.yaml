@@ -37,11 +37,10 @@ documentation:
             - process-signals-delivery
           markdown: |-
             `process-signals` accepts a non-empty set containing
-            `process-signal::interrupt`, `::terminate`, `::hangup`, and/or
-            `::quit`, then returns a linear single-consumer subscription.
-            `next` asynchronously returns one selected event and `close`
-            consumes the subscription. Importing the package requires the
-            narrow `process-signals` capability.
+            `process-signal::interrupt`, `::terminate`, `::hangup`, and/or `::quit`, then
+            returns a linear single-consumer subscription. `next` asynchronously returns one
+            selected event and `close` consumes the subscription. Importing the package
+            requires the narrow `process-signals` capability.
     - id: delivery
       title: Delivery and lifecycle
       blocks:
@@ -52,18 +51,15 @@ documentation:
           evidence:
             - process-signals-delivery
           markdown: |-
-            An event contains its signal kind, exact coalesced count,
-            deterministic sequence, monotonic `observed-at` timestamp, and
-            overflow status. Each subscription retains at most one pending
-            event per signal kind. Cancelling a pending `next` does not consume
-            a retained event.
+            An event contains its signal kind, exact coalesced count, deterministic
+            sequence, monotonic `observed-at` timestamp, and overflow status. Each
+            subscription retains at most one pending event per signal kind. Cancelling a
+            pending `next` does not consume a retained event.
 
-            The host handler performs only signal-safe counting and wakeup.
-            Closing the last interested subscription restores the exact prior
-            host disposition for that signal kind and joins the broker worker.
-            Receiving a signal never implicitly cancels a task scope or exits
-            the process.
-
+            The host handler performs only signal-safe counting and wakeup. Closing the last
+            interested subscription restores the exact prior host disposition for that
+            signal kind and joins the broker worker. Receiving a signal never implicitly
+            cancels a task scope or exits the process.
 relationships:
   see-also:
     - lang.functions.asynchronous

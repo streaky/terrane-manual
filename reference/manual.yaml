@@ -7,6 +7,7 @@ navigation:
       - source: records/language/lexical-structure/keywords.yaml
       - source: records/language/lexical-structure/text-blocks.yaml
       - source: records/language/functions/declarations.yaml
+      - source: records/language/functions/callable-types.yaml
       - source: records/language/numerics/conversion.yaml
       - source: records/language/numerics/floating-point.yaml
       - source: records/language/classes/fields.yaml
@@ -69,6 +70,8 @@ navigation:
       - source: records/standard-library/compression.yaml
       - source: records/standard-library/cryptography.yaml
       - source: records/standard-library/process.yaml
+      - source: records/standard-library/process-signals.yaml
+      - source: records/standard-library/time.yaml
       - source: records/standard-library/randomness.yaml
       - source: records/standard-library/streams.yaml
       - source: records/standard-library/urls.yaml

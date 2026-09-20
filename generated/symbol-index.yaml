@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1bcd905534e388ac06e9a1f3164f2381b03163cfea85aa233526b7eeb0dc8b32
+  input-sha256: 1257314b99b621527096cd10716006d48f72c3ff9cf625c7bae04edc5d005e26
 format: 1
 generated: true
 symbols:
@@ -168,6 +168,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/process
+- name: /core/process-signals
+  record: std.process-signals
+  section: ''
+  declaration: /core/process-signals
 - name: /core/random
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -227,6 +231,10 @@ symbols:
 - name: /core/time
   record: std.networking.operations
   section: cancellation
+  declaration: /core/time
+- name: /core/time
+  record: std.time
+  section: ''
   declaration: /core/time
 - name: /core/types
   record: lang.namespaces.imports
@@ -355,6 +363,10 @@ symbols:
 - name: add
   record: lang.numerics.arithmetic-policies
   section: bounded-arithmetic
+  declaration: add
+- name: add
+  record: std.time
+  section: values
   declaration: add
 - name: advance-time
   record: book.testing-and-debugging
@@ -513,6 +525,14 @@ symbols:
   section: decorative-modifiers
   declaration: async
 - name: async
+  record: lang.functions.callable-types
+  section: invocation-modes
+  declaration: async
+- name: async
+  record: lang.functions.callable-types
+  section: syntax
+  declaration: async
+- name: async
   record: lang.functions.declarations
   section: declaration
   declaration: async
@@ -615,6 +635,10 @@ symbols:
 - name: await
   record: std.networking.operations
   section: operations
+  declaration: await
+- name: await
+  record: std.time
+  section: deadlines
   declaration: await
 - name: await
   record: tool.packages.rust-dependencies
@@ -747,6 +771,10 @@ symbols:
 - name: budget
   record: book.values-and-names
   section: exercises
+  declaration: budget
+- name: budget
+  record: std.time
+  section: coordination
   declaration: budget
 - name: build
   record: book.first-taste
@@ -1156,6 +1184,14 @@ symbols:
   record: book.async
   section: deadlines
   declaration: clock::deadline
+- name: clock::monotonic
+  record: std.time
+  section: values
+  declaration: clock::monotonic
+- name: clock::wall
+  record: std.time
+  section: values
+  declaration: clock::wall
 - name: clocks
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -1187,6 +1223,10 @@ symbols:
 - name: close
   record: std.concurrency.channels
   section: lifecycle
+  declaration: close
+- name: close
+  record: std.process-signals
+  section: subscriptions
   declaration: close
 - name: close
   record: tool.packages.rust-dependencies
@@ -1461,6 +1501,10 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: consume-events
+- name: consuming
+  record: lang.functions.callable-types
+  section: syntax
+  declaration: consuming
 - name: consuming function close
   record: lang.types.authority-in-practice
   section: declaration-table
@@ -1517,6 +1561,10 @@ symbols:
   record: lang.functions.asynchronous
   section: selection
   declaration: continue
+- name: contracts
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: contracts
 - name: converter
   record: lang.numerics.conversion
   section: callback
@@ -1564,6 +1612,10 @@ symbols:
 - name: count
   record: book.types
   section: type-inference
+  declaration: count
+- name: count
+  record: std.time
+  section: tickers
   declaration: count
 - name: count-1
   record: lang.expressions.operators
@@ -1861,6 +1913,10 @@ symbols:
   record: lang.ownership.movement
   section: move-semantics
   declaration: destruct
+- name: destruct
+  record: std.time
+  section: tickers
+  declaration: destruct
 - name: dev
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
@@ -2009,6 +2065,18 @@ symbols:
   record: book.async
   section: deadlines
   declaration: duration
+- name: duration
+  record: std.time
+  section: values
+  declaration: duration
+- name: duration-until
+  record: std.time
+  section: values
+  declaration: duration-until
+- name: duration::seconds
+  record: std.time
+  section: values
+  declaration: duration::seconds
 - name: dynamic-library
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -2189,6 +2257,10 @@ symbols:
   record: lang.errors.contracts
   section: throwable-inference
   declaration: escaping-throwables
+- name: escaping-throwables
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: escaping-throwables
 - name: estimate
   record: book.types
   section: refinement-after-a-check
@@ -2197,6 +2269,10 @@ symbols:
   record: book.values-and-names
   section: project-calculate-a-small-purchase
   declaration: everyday-expressions.trn
+- name: exact-invocation-mode
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: exact-invocation-mode
 - name: executable
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -2217,10 +2293,18 @@ symbols:
   record: std.process
   section: process
   declaration: exit-status
+- name: expired
+  record: std.time
+  section: deadlines
+  declaration: expired
 - name: expired-snapshot
   record: tool.source-intelligence
   section: snapshots
   declaration: expired-snapshot
+- name: expires-at
+  record: std.time
+  section: deadlines
+  declaration: expires-at
 - name: exponential
   record: lang.numerics.floating-point
   section: operations
@@ -3002,6 +3086,14 @@ symbols:
   section: throwable-inference
   declaration: function
 - name: function
+  record: lang.functions.callable-types
+  section: invocation-modes
+  declaration: function
+- name: function
+  record: lang.functions.callable-types
+  section: syntax
+  declaration: function
+- name: function
   record: lang.functions.declarations
   section: declaration
   declaration: function
@@ -3321,6 +3413,10 @@ symbols:
   record: lang.errors.contracts
   section: throwable-inference
   declaration: Inner
+- name: Inner
+  record: lang.functions.callable-types
+  section: syntax
+  declaration: Inner
 - name: input
   record: book.native-program
   section: reading-generated-rust
@@ -3365,6 +3461,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: overview
   declaration: instance
+- name: instant
+  record: std.time
+  section: values
+  declaration: instant
 - name: int
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -3625,6 +3725,14 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: invalid
+- name: invalid-duration
+  record: std.time
+  section: tickers
+  declaration: invalid-duration
+- name: invalid-duration
+  record: std.time
+  section: values
+  declaration: invalid-duration
 - name: invalid-name
   record: tool.source-intelligence
   section: edits
@@ -3657,6 +3765,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: Inventory member
+- name: invocation-mode
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: invocation-mode
 - name: is
   record: book.terrane-shaped-programs
   section: pass-values-unless-identity-matters
@@ -4213,6 +4325,10 @@ symbols:
   record: std.collections
   section: maps-and-entries
   declaration: missing-key
+- name: monotonic-instant
+  record: std.time
+  section: values
+  declaration: monotonic-instant
 - name: move
   record: book.classes-interfaces-and-traits
   section: cleanup-with-destruct
@@ -4285,6 +4401,10 @@ symbols:
   record: lang.numerics.arithmetic-policies
   section: bounded-arithmetic
   declaration: multiply
+- name: multiply
+  record: std.time
+  section: values
+  declaration: multiply
 - name: multiply-add
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -4296,6 +4416,10 @@ symbols:
 - name: mutable
   record: book.classes-interfaces-and-traits
   section: cleanup-with-destruct
+  declaration: mutable
+- name: mutable
+  record: lang.functions.callable-types
+  section: syntax
   declaration: mutable
 - name: mutable function append
   record: lang.types.authority-in-practice
@@ -4357,6 +4481,10 @@ symbols:
   record: lang.text.display
   section: scalar-display
   declaration: NaN
+- name: nanoseconds
+  record: std.time
+  section: values
+  declaration: nanoseconds
 - name: native
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -4472,6 +4600,18 @@ symbols:
 - name: next
   record: lang.collections.protocols
   section: source-iteration
+  declaration: next
+- name: next
+  record: std.process-signals
+  section: delivery
+  declaration: next
+- name: next
+  record: std.process-signals
+  section: subscriptions
+  declaration: next
+- name: next
+  record: std.time
+  section: tickers
   declaration: next
 - name: next
   record: tool.debugging
@@ -4622,6 +4762,14 @@ symbols:
   section: cancellation
   declaration: none
 - name: none
+  record: std.time
+  section: deadlines
+  declaration: none
+- name: none
+  record: std.time
+  section: values
+  declaration: none
+- name: none
   record: tool.packages.testing
   section: discovery
   declaration: none
@@ -4717,6 +4865,14 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function observe-prefix int64; value int64
+- name: observed
+  record: std.time
+  section: tickers
+  declaration: observed
+- name: observed-at
+  record: std.process-signals
+  section: delivery
+  declaration: observed-at
 - name: observer
   record: book.identity-and-movement
   section: project-observing-a-work-list
@@ -4818,6 +4974,10 @@ symbols:
 - name: Outer
   record: lang.errors.contracts
   section: throwable-inference
+  declaration: Outer
+- name: Outer
+  record: lang.functions.callable-types
+  section: syntax
   declaration: Outer
 - name: Output
   record: tool.packages.rust-dependencies
@@ -5331,6 +5491,14 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: process-result
+- name: process-signal::interrupt
+  record: std.process-signals
+  section: subscriptions
+  declaration: process-signal::interrupt
+- name: process-signals
+  record: std.process-signals
+  section: subscriptions
+  declaration: process-signals
 - name: process-signals
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -5642,6 +5810,10 @@ symbols:
 - name: remaining
   record: book.values-and-names
   section: changing-a-binding
+  declaration: remaining
+- name: remaining
+  record: std.time
+  section: deadlines
   declaration: remaining
 - name: remote_artifact_requires_exact_projection_inputs
   record: internals.projection.resolution
@@ -6067,6 +6239,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: scale-binary
+- name: scheduled
+  record: std.time
+  section: tickers
+  declaration: scheduled
 - name: schema_version
   record: tool.source-intelligence
   section: protocol
@@ -6095,6 +6271,10 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
   declaration: second.completed
+- name: seconds
+  record: std.time
+  section: values
+  declaration: seconds
 - name: secret
   record: lang.classes.fields
   section: classes
@@ -6130,6 +6310,14 @@ symbols:
 - name: select
   record: lang.functions.asynchronous
   section: selection
+  declaration: select
+- name: select
+  record: std.time
+  section: coordination
+  declaration: select
+- name: select
+  record: std.time
+  section: deadlines
   declaration: select
 - name: selected_target
   record: internals.projection.resolution
@@ -6555,6 +6743,10 @@ symbols:
   record: lang.numerics.arithmetic-policies
   section: bounded-arithmetic
   declaration: subtract
+- name: subtract.checked
+  record: std.time
+  section: values
+  declaration: subtract.checked
 - name: summarize
   record: book.testing-and-debugging
   section: choose-the-test-boundary-deliberately
@@ -7100,12 +7292,20 @@ symbols:
   section: structured-errors
   declaration: throwable
 - name: throwable
+  record: lang.functions.callable-types
+  section: syntax
+  declaration: throwable
+- name: throwable
   record: lang.types.optional-refinement
   section: bind-expression-once
   declaration: throwable
 - name: throwable-contract
   record: lang.errors.contracts
   section: throwable-inference
+  declaration: throwable-contract
+- name: throwable-contract
+  record: lang.functions.callable-types
+  section: exact-metadata
   declaration: throwable-contract
 - name: throws
   record: book.errors
@@ -7132,6 +7332,18 @@ symbols:
   section: throwable-inference
   declaration: throws
 - name: throws
+  record: lang.functions.callable-types
+  section: compatibility
+  declaration: throws
+- name: throws
+  record: lang.functions.callable-types
+  section: invocation-modes
+  declaration: throws
+- name: throws
+  record: lang.functions.callable-types
+  section: syntax
+  declaration: throws
+- name: throws
   record: lang.functions.declarations
   section: declaration
   declaration: throws
@@ -7139,6 +7351,10 @@ symbols:
   record: tool.packages.native-interop
   section: system-c-interop
   declaration: throws
+- name: tick
+  record: std.time
+  section: tickers
+  declaration: tick
 - name: title
   record: book.classes-interfaces-and-traits
   section: defining-a-class
@@ -7187,6 +7403,10 @@ symbols:
   record: book.first-taste
   section: exercises
   declaration: total-bottles
+- name: total-nanoseconds
+  record: std.time
+  section: values
+  declaration: total-nanoseconds
 - name: tracing
   record: internals.observability.runtime
   section: dependency-bridge
