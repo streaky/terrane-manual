@@ -80,27 +80,31 @@ documentation:
             Missing generic, callback, ownership, failure, or lifetime facts still produce a
             targeted projection decline rather than a Godot-specific compiler exception.
         - type: example
-          id: example.rust-packages.godot.class-import
+          id: example.rust-packages.godot.class-method
           status: accepted
-          caption: Name a generated engine class in a Terrane contract
+          caption: Call a generated engine class method
           source:
             language: terrane
             text: |-
               namespace godot-class-contract
 
               from /deps/godot/classes import Node2D
+              from /deps/godot/builtin import Vector2
 
-              function accepts-node; node Node2D
+              function node-position Vector2; node ref Node2D
+                  return node.get_position;
     - id: gdextension-boundary
       title: "GDExtension boundary"
       blocks:
         - type: markdown
           markdown: |-
             GDExtension class registration still uses Rust attribute and derive macros, and
-            Godot invokes lifecycle callbacks through Rust traits. Keep that host-mandated
-            ceremony in one maintained Rust module. Simulation, policy, and projected Godot
-            value construction remain Terrane code; the module registers the extension,
-            forwards lifecycle events, and hands projected values to Godot drawing calls.
+            Godot invokes lifecycle callbacks through Rust traits. Projected foreign
+            resources cannot yet be stored in Terrane collections, and explicit lossy
+            `float64`-to-`float32` narrowing is planned in compiler milestone 30.5. Keep
+            that host-mandated ceremony, the three boundary casts, and final drawing calls
+            in one maintained Rust module. Simulation scheduling, render preparation, and
+            projected Godot value construction remain Terrane code.
 
             Build the Terrane package as a dynamic library, then install the generated
             library where the `.gdextension` descriptor expects it. The repository's
@@ -116,8 +120,11 @@ documentation:
             resolved-graph surveys for `godot` and `godot-core`, the focused generated API
             acceptance fixture, and compilation of `projects/godot-test`. The dedicated
             `godot-generated-api-runtime` profile adds extension installation and a headless
-            run with the pinned `4.7.2.stable.arch_linux.ed1daf0bf` engine. Ordinary compile
-            evidence never reports runtime success when that exact engine is absent.
+            run on the pinned `4.7.2.stable` release line; build metadata suffixes may vary.
+            Ordinary compile evidence never reports runtime success when that release line
+            is absent. Godot can exit successfully after extension-load or script failures,
+            so the profile also treats the runner's stable `ERROR:` and `SCRIPT ERROR:`
+            diagnostics as runtime failure evidence.
   see-also:
     - tool.packages.rust-dependencies
     - internals.projection-resolution

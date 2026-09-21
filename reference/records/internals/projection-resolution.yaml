@@ -106,27 +106,35 @@ documentation:
             item's deeper defining-module or convenience-prelude path cannot override a
             canonical public re-export.
 
-            `record_public_module_items` discovers public definitions, named re-exports, and
-            glob re-exports once per rustdoc document. The resulting map is reused for
-            cross-dependency aliases and item projection. `project_rustdoc` replaces
-            rustdoc's defining paths with those canonical paths before creating projected
-            items, so compiler lookup, generated Rust, editor tooling, and durable
-            projection history expose one matching surface. Associated functions are
-            recorded on their owning foreign type and emitted as Terrane static members
-            rather than duplicate namespace functions. A single admitted concrete generic
-            instantiation keeps the readable type name; only multiple admitted
-            instantiations require canonical hash suffixes. Projection history records
-            instance members as `Type.member` and static members as `Type::member`, so
-            method-level surface loss is visible across dependency upgrades.
+            `public_surface` discovers public definitions, named re-exports, glob
+            re-exports, and external owner prefixes in one traversal per rustdoc document.
+            Local named-module re-exports recurse under the public alias. The resulting
+            public-path map is reused for item projection, while external owner evidence is
+            retained separately so a facade alias cannot leak into an unrelated dependency.
+            `project_rustdoc` replaces rustdoc's defining paths with the applicable declared
+            owner or facade-fragment paths before creating projected items, so compiler
+            lookup, generated Rust, editor tooling, and durable projection history expose
+            one matching surface. Associated functions are recorded on their owning foreign
+            type and emitted as Terrane static members rather than duplicate namespace
+            functions. A single admitted concrete generic instantiation keeps the readable
+            type name; only multiple admitted instantiations require canonical hash
+            suffixes. Projection history records instance members as `Type.member` and
+            static members as `Type::member`, so method-level surface loss is visible across
+            dependency upgrades.
 
-            Projection schema 63 also follows public bindings whose concrete definition is
-            owned by another package in the resolved Cargo graph. External module and glob
-            re-exports preserve every public prefix long enough to expand the owner's items;
-            the final path preference is applied only after that expansion. Supplemental
-            owner rustdoc retains documentation-hidden generated definitions, but those
-            definitions are candidates only when reached through a verified public binding.
-            Emitted Rust continues to name the declared facade package, and an ambiguous or
-            unavailable concrete owner is declined rather than guessed.
+            Projection schema 63 also follows source-demanded public bindings whose concrete
+            definition is owned by another package in the resolved Cargo graph. External
+            module and glob re-exports preserve every public prefix long enough to expand
+            the owner's items; the final path preference is applied only after that
+            expansion. Supplemental owner rustdoc retains documentation-hidden generated
+            definitions, but those definitions become candidates only when an explicit
+            `/deps` import demands the facade binding. Owner documents are generated and
+            parsed at most once per projection run. Declared dependency paths may rewrite a
+            signature to another declared owner, while facade aliases are scoped to their
+            provider fragment. Unmapped private owner paths remain owner-rooted and are
+            declined by ordinary reachability checks; builtin, ambiguous, or unavailable
+            owners are skipped or declined rather than guessed. Emitted Rust continues to
+            name the declared facade.
     - id: callbacks
       title: Concrete callback projection
       blocks:

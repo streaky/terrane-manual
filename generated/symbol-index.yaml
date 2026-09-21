@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4ab4ffc54b8cef2987a02dd88fcd3cf7a7f9bcf0814661e1351884783ffdbe92
+  input-sha256: 0be6d1a63aa1987696982f0107fa548fba38943e4d05bdfd52e9a8dcdb5f0f04
 format: 1
 generated: true
 symbols:
@@ -279,6 +279,10 @@ symbols:
 - name: /deps
   record: internals.lowering.rust-output
   section: rust-lowering
+  declaration: /deps
+- name: /deps
+  record: internals.projection.resolution
+  section: public-paths
   declaration: /deps
 - name: /deps
   record: tool.editor-support
@@ -2245,6 +2249,10 @@ symbols:
   record: std.logging
   section: events
   declaration: error
+- name: 'ERROR:'
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: 'ERROR:'
 - name: errors
   record: book.namespaces-imports-and-packages
   section: from-one-file-to-a-project
@@ -2857,6 +2865,10 @@ symbols:
   record: lang.types.scalars
   section: scalar-types
   declaration: float32
+- name: float32
+  record: tool.rust-package-integrations.godot
+  section: gdextension-boundary
+  declaration: float32
 - name: float64
   record: lang.namespaces.name-resolution
   section: single-name-lookup
@@ -2892,6 +2904,10 @@ symbols:
 - name: float64
   record: lang.types.scalars
   section: scalar-types
+  declaration: float64
+- name: float64
+  record: tool.rust-package-integrations.godot
+  section: gdextension-boundary
   declaration: float64
 - name: floating
   record: lang.numerics.floating-point
@@ -5643,6 +5659,10 @@ symbols:
   record: internals.projection.resolution
   section: resolved-graph-survey
   declaration: public-bindings-with-hidden-definitions
+- name: public_surface
+  record: internals.projection.resolution
+  section: public-paths
+  declaration: public_surface
 - name: q
   record: lang.numerics.arithmetic
   section: integer-operators
@@ -5727,10 +5747,6 @@ symbols:
   record: std.concurrency.channels
   section: construction
   declaration: receiver
-- name: record_public_module_items
-  record: internals.projection.resolution
-  section: public-paths
-  declaration: record_public_module_items
 - name: ref
   record: book.identity-and-movement
   section: copy-on-write-behavior-in-practice
