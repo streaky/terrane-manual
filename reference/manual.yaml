@@ -18,7 +18,6 @@ navigation:
       - source: records/language/types/references.yaml
       - source: records/language/types/authority-in-practice.yaml
       - source: records/language/collections.yaml
-      - source: records/language/build/conditional-selection.yaml
       - source: records/language/classes/inheritance.yaml
       - source: records/language/classes/interfaces.yaml
       - source: records/language/classes/lifecycle.yaml
@@ -27,7 +26,6 @@ navigation:
       - source: records/language/control-flow/branching-and-loops.yaml
       - source: records/language/declarations/bindings.yaml
       - source: records/language/declarations/globals.yaml
-      - source: records/language/declarations/modifiers.yaml
       - source: records/language/errors/contracts.yaml
       - source: records/language/errors/handling.yaml
       - source: records/language/expressions/operators.yaml
@@ -115,3 +113,7 @@ navigation:
       - source: records/internals/proof-guided-lowering.yaml
       - source: records/internals/diagnostics/source-projection.yaml
       - source: records/internals/lowering/rust-output.yaml
+      - group: Future designs
+        children:
+          - source: records/internals/future/build-selection.yaml
+          - source: records/internals/future/decorative-modifiers.yaml

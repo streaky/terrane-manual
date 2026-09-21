@@ -49,8 +49,8 @@ documentation:
             secondary detail; these failures are not presented merely as raw Rust panics or
             backtraces.
 
-            When reporting a compiler defect, Terrane preserves the generated project and
-            reports its reproduction path.
+            When reporting a compiler defect, Terrane preserves the generated project under
+            `.trn/build` subject to bounded eviction.
   see-also: []
 
 provenance:

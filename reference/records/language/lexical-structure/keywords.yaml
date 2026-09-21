@@ -37,8 +37,8 @@ documentation:
 
             There are therefore two lists to consult:
 
-            1. `instance`, `self`, and `this` are reserved declaration names. They cannot
-               name a binding, parameter, function, class, interface, or trait.
+            1. `function`, `instance`, `self`, and `this` are reserved declaration names.
+               They cannot name a binding, parameter, function, class, interface, or trait.
             2. Structural words have grammatical meaning in particular positions. They must
                not be used where that meaning prevents the name from being declared or
                selected as an ordinary object.
@@ -58,7 +58,7 @@ documentation:
             - contextual-class-name-binding
             - contextual-this-binding
           markdown: |-
-            The names `instance`, `self`, and `this` must not be declared.
+            The names `function`, `instance`, `self`, and `this` must not be declared.
         - type: table
           id: reserved-name-roles
           title: Reserved name roles
@@ -71,6 +71,8 @@ documentation:
               title: Language role
               cell: text
           rows:
+            - name: function
+              role: Begins a function declaration.
             - name: instance
               role: Begins explicit construction of a class instance.
             - name: self
@@ -188,6 +190,7 @@ documentation:
                 - while
                 - for
                 - in
+                - select
                 - return
                 - break
                 - continue

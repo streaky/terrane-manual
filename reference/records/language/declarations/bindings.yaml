@@ -114,35 +114,6 @@ documentation:
             Untyped assignment to an existing enclosing name updates that binding rather
             than declaring a new one. A `for` target is visible only in the loop body.
 
-            Package-supplied decorative modifiers use a leading `with` clause and remain
-            distinct from compiler-owned structural qualifiers:
-        - type: example
-          id: legacy-fence-003
-          title: null
-          language: terrane
-          mode: illustrative
-          target: null
-          timeout-ms: null
-          source: |2
-            with per-cpu, aligned global counts unsigned-long = 0
-            with per-cpu, (aligned; 64) global x int = 0
-          response: null
-          diagnostic: null
-          markdown: null
-
-        - type: markdown
-          markdown: |-
-            Modifiers are resolved in ordinary lexical scope and applied from left to right.
-            A comma indicates that another modifier follows; the declaration begins after
-            the first modifier element not followed by a comma. A modifier taking arguments
-            uses a parenthesized call such as `(aligned; 64)`. The clause does not use
-            wrapping parentheses, and a trailing comma is an error.
-
-            The `with` clause precedes structural keywords and may decorate any declaration,
-            including an untyped local binding. It cannot substitute for compiler-owned
-            structural words such as `global`, `constant`, visibility qualifiers, `static`,
-            `async`, or `throws`.
-
             Source-declared type parameters are unsupported. Angle-bracket generic intent
             produces `S1092 unsupported angle generic`; use the canonical constructor form,
             such as `list of string`, where applicable.

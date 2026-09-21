@@ -687,6 +687,4 @@ implementation:
     - crates/terrane-integration-adapters/src/lib.rs
     - crates/terrane-integration-adapters/src/registry.rs
     - crates/terrane-integration-adapters/src/sqlx_sqlite.rs
-    - crates/terrane-integration-adapters/src/axum_08.rs
-    - crates/terrane-integration-adapters/src/docs_rendering.rs
     - crates/terrane-compiler/src/package.rs

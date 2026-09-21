@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1257314b99b621527096cd10716006d48f72c3ff9cf625c7bae04edc5d005e26
+  input-sha256: e8653929294d8cca88166e8adde6c0faa3b9ce1d9a962ed7df9f2663d325ee20
 format: 1
 generated: true
 symbols:
@@ -515,14 +515,6 @@ symbols:
 - name: async
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
-  declaration: async
-- name: async
-  record: lang.declarations.bindings
-  section: declarations
-  declaration: async
-- name: async
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
   declaration: async
 - name: async
   record: lang.functions.callable-types
@@ -1423,10 +1415,6 @@ symbols:
 - name: constant
   record: lang.declarations.bindings
   section: declarations
-  declaration: constant
-- name: constant
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
   declaration: constant
 - name: construct
   record: book.classes-interfaces-and-traits
@@ -3099,6 +3087,10 @@ symbols:
   declaration: function
 - name: function
   record: lang.lexical-structure.keywords
+  section: always-reserved
+  declaration: function
+- name: function
+  record: lang.lexical-structure.keywords
   section: overview
   declaration: function
 - name: function
@@ -3156,10 +3148,6 @@ symbols:
 - name: global
   record: lang.declarations.bindings
   section: declarations
-  declaration: global
-- name: global
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
   declaration: global
 - name: global
   record: lang.namespaces.name-resolution
@@ -5451,10 +5439,6 @@ symbols:
   record: lang.declarations.bindings
   section: declarations
   declaration: private
-- name: private
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
-  declaration: private
 - name: prn
   record: lang.namespaces.declarations
   section: namespace-paths
@@ -5579,10 +5563,6 @@ symbols:
   record: lang.declarations.bindings
   section: declarations
   declaration: protected
-- name: protected
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
-  declaration: protected
 - name: public
   record: book.classes-interfaces-and-traits
   section: encapsulation-and-visibility
@@ -5594,10 +5574,6 @@ symbols:
 - name: public
   record: lang.declarations.bindings
   section: declarations
-  declaration: public
-- name: public
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
   declaration: public
 - name: public
   record: lang.namespaces.name-resolution
@@ -6603,14 +6579,6 @@ symbols:
   record: std.text-bytes-codecs
   section: string-operations
   declaration: start
-- name: static
-  record: lang.declarations.bindings
-  section: declarations
-  declaration: static
-- name: static
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
-  declaration: static
 - name: step
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -7318,14 +7286,6 @@ symbols:
 - name: throws
   record: book.errors
   section: what-we-learned
-  declaration: throws
-- name: throws
-  record: lang.declarations.bindings
-  section: declarations
-  declaration: throws
-- name: throws
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
   declaration: throws
 - name: throws
   record: lang.errors.contracts
@@ -8099,14 +8059,6 @@ symbols:
   record: book.functions
   section: local-scope
   declaration: width
-- name: with
-  record: lang.declarations.bindings
-  section: declarations
-  declaration: with
-- name: with
-  record: lang.declarations.modifiers
-  section: decorative-modifiers
-  declaration: with
 - name: with-field
   record: std.logging
   section: events

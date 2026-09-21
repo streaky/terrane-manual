@@ -56,11 +56,11 @@ documentation:
         Filtering happens before corpus staging, so only matching manifests are compiled and executed while the harness retains
         its shared generated-Cargo target. An empty match fails rather than reporting a vacuous pass. The preparation pool
         defaults to available parallelism capped at eight workers; set `TERRANE_CONFORMANCE_JOBS=1..8` to lower the bound
-        for a constrained machine or a focused diagnostic run. #magic___^_^___line Do not invoke `terrane run` directly inside
+        for a constrained machine or a focused diagnostic run. Do not invoke `terrane run` directly inside
         a tracked conformance case directory for focused checking. The ordinary CLI correctly creates its project-local `.trn/cache/target`,
         but doing that across many fixtures duplicates the same dependency graph under every case. CLI integration tests that
         exercise this project-local behavior stage the source in a temporary directory; the tracked corpus must remain free
-        of `.trn` build caches. #magic___^_^___line The generated conformance workspace defines line-table-only `dev` and
+        of `.trn` build caches. The generated conformance workspace defines line-table-only `dev` and
         `test` profiles with incremental compilation enabled. Its shared Cargo target therefore retains reusable dependencies
         and binaries without a full local-variable debug-information copy for every generated case.
     - title: Reviewed lowering artifacts
@@ -70,7 +70,7 @@ documentation:
         names selected compiler `src/runtime` files in concatenation order, and the vendored-support manifest names exact
         support-crate identifiers referenced by the standalone program. Runtime implementations remain in the standalone Rust
         used by `terrane rust`, canonical Rust validation, generated-crate compilation, and execution; they are never copied
-        into `lower.rs`. #magic___^_^___line Set `TERRANE_UPDATE_GOLDENS` together with `TERRANE_CONFORMANCE_FILTER` for a
+        into `lower.rs`. Set `TERRANE_UPDATE_GOLDENS` together with `TERRANE_CONFORMANCE_FILTER` for a
         focused regeneration. A corpus-wide regeneration requires the explicit value `TERRANE_UPDATE_GOLDENS=all`. The driver
         reports only files whose contents changed. `docs/summarize-golden-churn.py <git range>` emits YAML containing each
         distinct changed-line hunk once, its affected paths, and its file count.
