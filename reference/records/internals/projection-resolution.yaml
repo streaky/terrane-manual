@@ -291,11 +291,13 @@ documentation:
             the portable semantic report.
 
             Public-path discovery is reported separately from canonical declaration
-            signatures and discovery failures. A reexport whose declaration belongs to
-            another crate names that closure owner instead of appearing to be malformed
-            Rustdoc. Optional bound, call, and implementation questions are compiled against
-            the same resolved graph and recorded as compile-only probe outcomes; surveying
-            never executes package code.
+            signatures and discovery failures. Rustdoc generation retains hidden definitions
+            so an item publicly reexported from a hidden module still contributes its full
+            signature; the declaration's public and canonical paths remain separate. A
+            reexport whose declaration belongs to another crate names that closure owner
+            instead of appearing to be malformed Rustdoc. Optional bound, call, and
+            implementation questions are compiled against the same resolved graph and
+            recorded as compile-only probe outcomes; surveying never executes package code.
 
             Versioned profiles in the native survey corpus materialize their declared Cargo
             inputs before invoking the survey and choose an enforced or explicitly
