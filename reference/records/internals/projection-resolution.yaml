@@ -293,9 +293,11 @@ documentation:
             Compiler projection and surveys share the pinned format-57 JSON arguments and
             public-path index. Projection requests public Rustdoc only. The survey
             additionally retains hidden definitions so an item publicly reexported from a
-            hidden module still contributes its full signature. The shared index excludes
-            hidden bindings and stripped module surfaces; a declaration recovered from
-            expanded hidden definitions is marked `definition_hidden` under the report's
+            hidden module still contributes its full signature. The index excludes direct
+            `#[doc(hidden)]` bindings. An ordinary private module that Rustdoc marks
+            `is_stripped` remains a valid implementation owner for visible glob reexports
+            and does not trigger `definition_hidden`; only a declaration or canonical
+            ancestor carrying `#[doc(hidden)]` does. Reports identify this as the
             `public-bindings-with-hidden-definitions` policy. Public and canonical paths
             remain separate. A reexport whose declaration belongs to another crate names
             that closure owner instead of appearing to be malformed Rustdoc. Optional bound,
