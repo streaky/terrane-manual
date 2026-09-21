@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 76e9eb5f8273b09b0f020a11b2915a09ae46c9d60ad39c518a698704db0b9331
+  input-sha256: 4262d1490048f2083a1ef6b8c885315ca14b4ba0558c6a70e561be41881b156e
 format: 1
 generated: true
 symbols:
@@ -1797,6 +1797,10 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: definition
+- name: definition_hidden
+  record: internals.projection.resolution
+  section: resolved-graph-survey
+  declaration: definition_hidden
 - name: deflate-raw
   record: std.compression
   section: compression
@@ -5583,6 +5587,10 @@ symbols:
   record: lang.namespaces.scopes
   section: scopes
   declaration: public
+- name: public-bindings-with-hidden-definitions
+  record: internals.projection.resolution
+  section: resolved-graph-survey
+  declaration: public-bindings-with-hidden-definitions
 - name: q
   record: lang.numerics.arithmetic
   section: integer-operators

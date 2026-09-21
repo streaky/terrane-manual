@@ -290,14 +290,18 @@ documentation:
             containment tier. Host-specific absolute paths and probe timings are not part of
             the portable semantic report.
 
-            Public-path discovery is reported separately from canonical declaration
-            signatures and discovery failures. Rustdoc generation retains hidden definitions
-            so an item publicly reexported from a hidden module still contributes its full
-            signature; the declaration's public and canonical paths remain separate. A
-            reexport whose declaration belongs to another crate names that closure owner
-            instead of appearing to be malformed Rustdoc. Optional bound, call, and
-            implementation questions are compiled against the same resolved graph and
-            recorded as compile-only probe outcomes; surveying never executes package code.
+            Compiler projection and surveys share the pinned format-57 JSON arguments and
+            public-path index. Projection requests public Rustdoc only. The survey
+            additionally retains hidden definitions so an item publicly reexported from a
+            hidden module still contributes its full signature. The shared index excludes
+            hidden bindings and stripped module surfaces; a declaration recovered from
+            expanded hidden definitions is marked `definition_hidden` under the report's
+            `public-bindings-with-hidden-definitions` policy. Public and canonical paths
+            remain separate. A reexport whose declaration belongs to another crate names
+            that closure owner instead of appearing to be malformed Rustdoc. Optional bound,
+            call, and implementation questions are compiled against the same resolved graph
+            and recorded as compile-only probe outcomes; surveying never executes package
+            code.
 
             Versioned profiles in the native survey corpus materialize their declared Cargo
             inputs before invoking the survey and choose an enforced or explicitly
