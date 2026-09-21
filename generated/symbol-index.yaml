@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 93965d8447075fe82c7350923be6c85c19449ba1d6825693bd21dbc836d61cc4
+  input-sha256: 4ab4ffc54b8cef2987a02dd88fcd3cf7a7f9bcf0814661e1351884783ffdbe92
 format: 1
 generated: true
 symbols:
@@ -296,6 +296,14 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: /deps/codec
+- name: /deps/godot/builtin
+  record: tool.rust-package-integrations.godot
+  section: dependency-and-imports
+  declaration: /deps/godot/builtin
+- name: /deps/godot/classes
+  record: tool.rust-package-integrations.godot
+  section: dependency-and-imports
+  declaration: /deps/godot/classes
 - name: /work-report/errors
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -3165,6 +3173,38 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function global-condition int8; input int8
+- name: godot
+  record: tool.rust-package-integrations.godot
+  section: dependency-and-imports
+  declaration: godot
+- name: godot
+  record: tool.rust-package-integrations.godot
+  section: generated-api
+  declaration: godot
+- name: godot
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: godot
+- name: godot-core
+  record: tool.rust-package-integrations.godot
+  section: dependency-and-imports
+  declaration: godot-core
+- name: godot-core
+  record: tool.rust-package-integrations.godot
+  section: generated-api
+  declaration: godot-core
+- name: godot-core
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: godot-core
+- name: godot-generated-api-compile
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: godot-generated-api-compile
+- name: godot-generated-api-runtime
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: godot-generated-api-runtime
 - name: goto
   record: lang.control-flow.branching-and-loops
   section: if-while-for
@@ -5551,6 +5591,14 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: projection_history_migrates_provenance_and_detects_replay_drift
+- name: projects/godot-test
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: projects/godot-test
+- name: projects/godot-test/build-extension.sh
+  record: tool.rust-package-integrations.godot
+  section: gdextension-boundary
+  declaration: projects/godot-test/build-extension.sh
 - name: propose-edits
   record: tool.source-intelligence
   section: edits

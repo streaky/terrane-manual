@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 93965d8447075fe82c7350923be6c85c19449ba1d6825693bd21dbc836d61cc4
+  input-sha256: 4ab4ffc54b8cef2987a02dd88fcd3cf7a7f9bcf0814661e1351884783ffdbe92
 format: 2
 generated: true
 records:
@@ -2249,6 +2249,42 @@ records:
     title: Package Manifests and Source Units
     sections: []
   declaration-synopsis: []
+- id: tool.rust-package-integrations.godot
+  title: Godot
+  summary: Use the Rust godot package from Terrane, including generated builtin and class APIs, application
+    compilation, and the remaining GDExtension registration boundary.
+  kind: topic
+  manual: reference
+  group: Rust package integrations
+  position: 77
+  source: reference/records/rust-package-integrations/godot.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: adapt-crate
+      section: M7
+    conformance:
+    - godot-generated-api-projection
+    - projected-macro-reexport
+    compiler:
+    - crates/terrane-compiler/src/projection.rs
+    - crates/terrane-rust-analysis/src/lib.rs
+  sections:
+  - id: dependency-and-imports
+    title: Dependency and imports
+    sections: []
+  - id: generated-api
+    title: Generated and reexported API
+    sections: []
+  - id: gdextension-boundary
+    title: GDExtension boundary
+    sections: []
+  - id: verification
+    title: Verification profile
+    sections: []
+  declaration-synopsis: []
 - id: tool.source-intelligence
   title: Compiler-backed source intelligence
   summary: Exposes Terrane's recovered syntax, canonical semantic identities, generated source associations,
@@ -2257,7 +2293,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 77
+  position: 78
   source: reference/records/tooling/source-intelligence.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2295,7 +2331,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 78
+  position: 79
   source: reference/records/tooling/debugging.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2330,7 +2366,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 79
+  position: 80
   source: reference/records/tooling/profiling.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2362,7 +2398,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 80
+  position: 81
   source: reference/records/tooling/diagnostics.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2389,7 +2425,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 81
+  position: 82
   source: reference/records/tooling/current-limitations.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2422,7 +2458,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 82
+  position: 83
   source: reference/records/tooling/editor-support.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2445,7 +2481,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 83
+  position: 84
   source: reference/records/tooling/formatting.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2468,7 +2504,7 @@ records:
   kind: topic
   manual: reference
   group: Application development
-  position: 84
+  position: 85
   source: reference/records/manual/application-development-map.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2492,7 +2528,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 85
+  position: 86
   source: reference/records/internals/execution-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2545,7 +2581,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 86
+  position: 87
   source: reference/records/internals/conversion-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2571,7 +2607,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 87
+  position: 88
   source: reference/records/internals/descriptor-contracts.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2609,7 +2645,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 88
+  position: 89
   source: reference/records/internals/reference-provenance.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2643,7 +2679,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 89
+  position: 90
   source: reference/records/internals/conformance-timing.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2682,7 +2718,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 90
+  position: 91
   source: reference/records/internals/projection-resolution.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2740,7 +2776,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 91
+  position: 92
   source: reference/records/internals/projection-namespace-overlays.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2773,7 +2809,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 92
+  position: 93
   source: reference/records/internals/integration-adapters.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2827,7 +2863,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 93
+  position: 94
   source: reference/records/internals/observability-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2854,7 +2890,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 94
+  position: 95
   source: reference/records/internals/build-toolchain-profiles.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2887,7 +2923,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 95
+  position: 96
   source: reference/records/internals/semantic-return-validation.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2911,7 +2947,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 96
+  position: 97
   source: reference/records/internals/collection-lifetime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2941,7 +2977,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 97
+  position: 98
   source: reference/records/internals/proof-guided-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2995,7 +3031,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 98
+  position: 99
   source: reference/records/internals/diagnostics/source-projection.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3018,7 +3054,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 99
+  position: 100
   source: reference/records/internals/lowering/rust-output.yaml
   lifecycle-status: current
   documentation-status: complete

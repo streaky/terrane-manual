@@ -118,6 +118,15 @@ documentation:
             instantiations require canonical hash suffixes. Projection history records
             instance members as `Type.member` and static members as `Type::member`, so
             method-level surface loss is visible across dependency upgrades.
+
+            Projection schema 63 also follows public bindings whose concrete definition is
+            owned by another package in the resolved Cargo graph. External module and glob
+            re-exports preserve every public prefix long enough to expand the owner's items;
+            the final path preference is applied only after that expansion. Supplemental
+            owner rustdoc retains documentation-hidden generated definitions, but those
+            definitions are candidates only when reached through a verified public binding.
+            Emitted Rust continues to name the declared facade package, and an ambiguous or
+            unavailable concrete owner is declined rather than guessed.
     - id: callbacks
       title: Concrete callback projection
       blocks:

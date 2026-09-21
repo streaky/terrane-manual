@@ -84,6 +84,9 @@ navigation:
       - source: records/packages/native-interop.yaml
       - source: records/packages/rust-interop.yaml
       - source: records/packages/terrane-packages.yaml
+  - group: Rust package integrations
+    children:
+      - source: records/rust-package-integrations/godot.yaml
   - group: Tooling
     children:
       - source: records/tooling/source-intelligence.yaml
