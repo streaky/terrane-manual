@@ -299,14 +299,17 @@ documentation:
 
             Versioned profiles in the native survey corpus materialize their declared Cargo
             inputs before invoking the survey and choose an enforced or explicitly
-            unavailable containment tier. The external profile runner combines those native
-            facts with a typed result for the exact named public conformance fixture:
-            accepted runtime applications, expected declines, failed applications, and
-            unavailable dedicated environments remain distinct. Successful Rust discovery or
-            a native probe does not imply Terrane admission, generated-application
-            compilation does not imply runtime success, and an unavailable runtime lane is
-            never reported as a pass. Generated and re-exported Godot discovery therefore
-            retains separate compile and dedicated-runtime classifications until its
+            unavailable containment tier. Enforced profiles require Linux bubblewrap and
+            never silently downgrade to uncontained execution. The external profile runner
+            combines native facts with a typed result for the exact named public conformance
+            fixture: accepted runtime applications, expected declines, failed applications,
+            and unavailable dedicated environments remain distinct. A missing dedicated
+            runtime environment skips only that fixture; runnable offline package surveys
+            are still retained. Successful Rust discovery or a native probe does not imply
+            Terrane admission, generated-application compilation does not imply runtime
+            success, and an unavailable runtime lane is never reported as a pass. The Godot
+            profiles survey both the facade crate and its core reexport owner while
+            retaining separate compile and dedicated-runtime classifications until the
             projection milestone supplies both forms of product evidence.
     - id: history
       title: Durable origin and replay history
