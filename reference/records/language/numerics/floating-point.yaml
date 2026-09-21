@@ -17,8 +17,8 @@ documentation:
   title: Floating-point values and foundational mathematics
   title-style: text
   summary: >-
-    Defines binary32 and binary64 values, their foundational scalar methods,
-    IEEE classification and boundary utilities, decomposition, scaling, and descriptor constants.
+    Defines binary32 and binary64 values, their foundational scalar methods, IEEE classification and boundary utilities, decomposition,
+    scaling, and descriptor constants.
   tags:
     - numerics
     - floating-point
@@ -47,7 +47,8 @@ documentation:
             `binary-exponential`, `exponential-minus-one`, `natural-log`,
             `natural-log-one-plus`, `binary-log`, `decimal-log`, and `logarithm`.
             Trigonometric methods are `sine`, `cosine`, `sine-cosine`, `tangent`,
-            `arc-sine`, `arc-cosine`, `arc-tangent`, and `arc-tangent-two`; angles are radians.
+            `arc-sine`, `arc-cosine`, `arc-tangent`, and `arc-tangent-two`; angles are
+            radians.
 
             Scalar utilities are `absolute`, `copy-sign`, `minimum`, `maximum`, `clamp`,
             `fractional-part`, and `multiply-add`. `next-up` and `next-down` traverse one
@@ -59,19 +60,21 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Floating domain and range conditions do not throw. Operations return the specified
-            NaN, infinity, signed zero, normal, or subnormal result. `hypotenuse` lets infinity
-            win over NaN. `minimum` and `maximum` prefer a number over one NaN and order negative
-            zero below positive zero. `clamp` retains a receiver NaN and returns canonical NaN
-            for a NaN bound or reversed bounds. `copy-sign`, adjacent-value traversal, and
-            decomposition retain the input bits required by their definitions.
+            Floating domain and range conditions do not throw. Operations return the
+            specified NaN, infinity, signed zero, normal, or subnormal result. `hypotenuse`
+            lets infinity win over NaN. `minimum` and `maximum` prefer a number over one NaN
+            and order negative zero below positive zero. `clamp` retains a receiver NaN and
+            returns canonical NaN for a NaN bound or reversed bounds. `copy-sign`,
+            adjacent-value traversal, and decomposition retain the input bits required by
+            their definitions.
 
             `fractional-part` returns NaN for NaN or either infinity.
 
             Classification and bit utilities are exact. Binary scaling has one ties-to-even
-            rounding and `multiply-add` is fused. Elementary and transcendental methods use the
-            target primitive's documented result; cross-target bit identity and a portable ULP
-            bound are not promised. No foundational method introduces a scientific dependency.
+            rounding and `multiply-add` is fused. Elementary and transcendental methods use
+            the target primitive's documented result; cross-target bit identity and a
+            portable ULP bound are not promised. No foundational method introduces a
+            scientific dependency.
     - id: descriptors
       title: Descriptor constants
       blocks:
@@ -79,8 +82,8 @@ documentation:
           markdown: |-
             `float32` and `float64` expose `.radix`, `.significand-digits`, `.epsilon`,
             `.minimum-positive-normal`, `.minimum-positive-subnormal`, `.minimum`, and
-            `.maximum`. Radix is 2; significand precision is 24 digits for `float32` and
-            53 digits for `float64`.
+            `.maximum`. Radix is 2; significand precision is 24 digits for `float32` and 53
+            digits for `float64`.
     - id: decomposition-example
       title: Decompose and reconstruct a value
       blocks:
@@ -110,6 +113,51 @@ documentation:
               12
           diagnostic: null
           markdown: null
+    - id: floating-types
+      title: "`float32` and `float64`"
+      blocks:
+        - type: markdown
+          markdown: |-
+            Terrane provides the IEEE-width floating types `float32` and `float64`. The
+            spelling `float` denotes the same canonical type descriptor as `float64`; it is
+            not a third floating type. Consequently, `.type`, `is a`, reflection, descriptor
+            identity, and diagnostics use `float64` as the canonical identity. Import
+            aliases likewise change only the name visible in a scope, not descriptor
+            identity.
+
+            The two spellings express different intent. `float` means the language’s default
+            floating precision, while `float64` explicitly pins binary64 for uses such as
+            wire formats, foreign interfaces, binary layouts, or code used alongside
+            `float32`. In this language version, the default is binary64. The default can be
+            repointed only at a language-version boundary, never according to target or
+            build profile.
+
+            Both widths preserve IEEE value categories: finite values, signed zero, signed
+            infinity, and NaN. Written floating-to-floating coercion preserves signed zero
+            and signed infinity, and preserves the NaN category. Conversion from `float32`
+            to `float64` is exact. Written conversion from `float64` to `float32` uses IEEE
+            round-to-nearest, ties-to-even for finite values. A finite value outside the
+            destination range causes conversion failure rather than producing infinity.
+
+            Implicit numeric arrival is stricter than written coercion. Floating narrowing
+            admits exact finite values, signed zero, and signed infinity with sign
+            preserved. It rejects a finite value that would require rounding and rejects
+            every NaN.
+
+            Canonical floating-point display is locale-independent. Finite values use the
+            shortest round-trippable spelling. Negative zero remains distinguishable.
+            Non-finite values use the exact spellings `inf`, `-inf`, and `nan`, rather than
+            platform-specific capitalization or formatting.
+
+            Floating types implement the `floating` and `number` category contracts. These
+            abstract descriptors are interface/category contracts, not storage supertypes.
+            Arithmetic does not implicitly mix integer and floating values. Numeric values
+            can reach declared numeric destinations under the exact-arrival rules, or use an
+            explicitly selected written conversion where a pair is declared.
+
+            No floating-to-integer `coerce` pair is declared. Use `round;`, `floor;`,
+            `ceiling;`, or `truncate;` to select an integer value before any subsequent
+            destination conversion.
   see-also:
     - lang.numerics.conversion
 
@@ -117,6 +165,8 @@ provenance:
   specification:
     - document: language-spec
       section: "11.3"
+    - document: language-scoreboard
+      section: "floating-types"
   conformance:
     - foundational-float-math
     - complete-float-surface

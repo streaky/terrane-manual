@@ -72,9 +72,9 @@ navigation:
           - section: everything-is-an-object-semantically
             title: Everything is an object—semantically
           - section: why-terrane-why-calls-use-semicolon
-            title: 'Why Terrane: why calls use `;`'
+            title: "Why Terrane: why calls use `;`"
           - section: project-calculate-a-small-purchase
-            title: 'Project: calculate a small purchase'
+            title: "Project: calculate a small purchase"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -93,13 +93,13 @@ navigation:
           - section: ranges-and-ordinary-iteration
             title: Ranges and ordinary iteration
           - section: break-and-continue
-            title: '`break` and `continue`'
+            title: "`break` and `continue`"
           - section: loop-local-names
             title: Loop-local names
           - section: choosing-the-clearest-loop
             title: Choosing the clearest loop
           - section: project-classify-a-range-of-numbers
-            title: 'Project: classify a range of numbers'
+            title: "Project: classify a range of numbers"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -122,9 +122,9 @@ navigation:
           - section: small-functions-that-compose
             title: Small functions that compose
           - section: project-turn-the-number-classifier-into-functions
-            title: 'Project: turn the number classifier into functions'
+            title: "Project: turn the number classifier into functions"
           - section: terrane-style-express-contracts-not-ceremony
-            title: 'Terrane style: express contracts, not ceremony'
+            title: "Terrane style: express contracts, not ceremony"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -151,11 +151,11 @@ navigation:
           - section: assignment-and-copy-on-write-value-behavior
             title: Assignment and copy-on-write value behavior
           - section: why-terrane-values-without-accidental-aliasing
-            title: 'Why Terrane: values without accidental aliasing'
+            title: "Why Terrane: values without accidental aliasing"
           - section: project-word-frequency
-            title: 'Project: word frequency'
+            title: "Project: word frequency"
           - section: terrane-style-make-data-shape-visible
-            title: 'Terrane style: make data shape visible'
+            title: "Terrane style: make data shape visible"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -180,9 +180,9 @@ navigation:
           - section: growing-the-program-without-losing-its-shape
             title: Growing the program without losing its shape
           - section: project-a-small-in-memory-reporting-tool
-            title: 'Project: a small in-memory reporting tool'
+            title: "Project: a small in-memory reporting tool"
           - section: terrane-style-let-the-program-read-like-its-decisions
-            title: 'Terrane style: let the program read like its decisions'
+            title: "Terrane style: let the program read like its decisions"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -209,7 +209,7 @@ navigation:
           - section: improving-the-reporting-tool-s-failures
             title: Improving the reporting tool's failures
           - section: terrane-style-make-failure-boundaries-as-clear-as-success-boundaries
-            title: 'Terrane style: make failure boundaries as clear as success boundaries'
+            title: "Terrane style: make failure boundaries as clear as success boundaries"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -234,9 +234,9 @@ navigation:
           - section: building-and-running-a-package
             title: Building and running a package
           - section: project-split-the-reporting-tool-across-files
-            title: 'Project: split the reporting tool across files'
+            title: "Project: split the reporting tool across files"
           - section: terrane-style-let-namespace-boundaries-follow-responsibility
-            title: 'Terrane style: let namespace boundaries follow responsibility'
+            title: "Terrane style: let namespace boundaries follow responsibility"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -267,9 +267,9 @@ navigation:
           - section: designing-an-object-that-earns-its-existence
             title: Designing an object that earns its existence
           - section: project-model-a-small-task-list
-            title: 'Project: model a small task list'
+            title: "Project: model a small task list"
           - section: under-the-surface-the-object-model-is-a-semantic-abstraction
-            title: 'Under the surface: the object model is a semantic abstraction'
+            title: "Under the surface: the object model is a semantic abstraction"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -294,9 +294,9 @@ navigation:
           - section: compile-time-guarantees
             title: Compile-time guarantees
           - section: project-strengthen-the-task-list-program-with-types
-            title: 'Project: strengthen the task-list program with types'
+            title: "Project: strengthen the task-list program with types"
           - section: terrane-style-state-contracts-not-compiler-trivia
-            title: 'Terrane style: state contracts, not compiler trivia'
+            title: "Terrane style: state contracts, not compiler trivia"
           - section: exercises
             title: Exercises
           - section: what-we-learned
@@ -325,9 +325,9 @@ navigation:
           - section: common-designs-that-do-not-need-references
             title: Common designs that do not need references
           - section: project-observing-a-work-list
-            title: 'Project: observing a work list'
+            title: "Project: observing a work list"
           - section: terrane-style-make-identity-part-of-the-model-only-when-it-matters
-            title: 'Terrane style: make identity part of the model only when it matters'
+            title: "Terrane style: make identity part of the model only when it matters"
           - section: exercises
             title: Exercises
           - section: chapter-summary
@@ -352,7 +352,7 @@ navigation:
           - section: deadlines
             title: Deadlines
           - section: project-coordinating-a-heartbeat-with-an-overall-time-budget
-            title: 'Project: coordinating a heartbeat with an overall time budget'
+            title: "Project: coordinating a heartbeat with an overall time budget"
           - section: sharing-mutable-state-by-giving-it-one-owner
             title: Sharing mutable state by giving it one owner
           - section: carrying-log-events-through-typed-channels
@@ -360,11 +360,11 @@ navigation:
           - section: threaded-and-cooperative-executor-profiles
             title: Threaded and cooperative executor profiles
           - section: project-processing-several-values-concurrently
-            title: 'Project: processing several values concurrently'
+            title: "Project: processing several values concurrently"
           - section: terrane-style-keep-concurrency-within-a-scope
-            title: 'Terrane style: keep concurrency within a scope'
+            title: "Terrane style: keep concurrency within a scope"
           - section: why-terrane-async-is-structured
-            title: 'Why Terrane: async is structured'
+            title: "Why Terrane: async is structured"
           - section: exercises
             title: Exercises
           - section: chapter-summary
@@ -445,7 +445,7 @@ navigation:
           - section: profile-the-optimized-application
             title: Profile the optimized application
           - section: complete-project-testing-a-writing-plan
-            title: 'Complete project: testing a writing plan'
+            title: "Complete project: testing a writing plan"
           - section: exercises
             title: Exercises
           - section: chapter-summary
@@ -501,7 +501,7 @@ navigation:
             - section: standard-facilities-as-they-become-available
               title: Standard facilities as they become available
             - section: going-lower-rust-abi-types-and-foreign-boundaries
-              title: 'Going lower: Rust, ABI types, and foreign boundaries'
+              title: "Going lower: Rust, ABI types, and foreign boundaries"
             - section: specialized-and-deferred-territory
               title: Specialized and deferred territory
             - section: contributing-packages
@@ -532,13 +532,13 @@ navigation:
           title: The Commands Used in This Book
           contents:
             - section: terrane-check
-              title: '`terrane check`'
+              title: "`terrane check`"
             - section: terrane-rust
-              title: '`terrane rust`'
+              title: "`terrane rust`"
             - section: terrane-build
-              title: '`terrane build`'
+              title: "`terrane build`"
             - section: terrane-run
-              title: '`terrane run`'
+              title: "`terrane run`"
             - section: package-manifests-and-use-declarations
               title: Package manifests and `use` declarations
       - number: C
@@ -600,4 +600,6 @@ navigation:
             - section: raw-addresses-and-abi-level-facilities
               title: Raw addresses and ABI-level facilities
             - section: deliberately-deferred-features-generators-labels-and-goto-hot-code-replacement-no-std-embedded-firmware-and-kernel-targets
-              title: 'Deliberately deferred features: generators, labels and `goto`, hot-code replacement, `no_std`, embedded, firmware, and kernel targets'
+              title:
+                "Deliberately deferred features: generators, labels and `goto`, hot-code replacement, `no_std`, embedded,
+                firmware, and kernel targets"

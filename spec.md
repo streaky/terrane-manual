@@ -9,12 +9,13 @@ The intended documentation set combines four forms:
 - an internals reference, where durable compiler, lowering, runtime, generated-code, projection, tooling, cache, artifact, diagnostic, and host-ABI contracts can be located without treating their implementation as an importable Terrane surface;
 - a tutorial book, where concepts are introduced in an authored learning order and structured examples, exercises, figures, callouts, and cross-references are rendered as a continuous narrative.
 
-This format is a manual representation and publication system. It is not an independent language-design authority. Until the project explicitly changes that relationship:
+This format is the canonical authoring and publication system for the current Terrane manual. Authority remains explicit:
 
-- `docs/language-spec-and-compiler-architecture-draft.md` remains authoritative for the settled language design;
+- authored records under `manual/reference/` define the current documented language, standard-library, package, tooling, and compiler-internals contracts;
 - executable conformance cases define what the current compiler supports;
 - the compiler-emitted reference surface describes facts present in a particular compiler build;
-- lifecycle and explanatory text remain explicit authored decisions.
+- lifecycle and explanatory text remain explicit authored decisions;
+- `docs/language-spec-and-compiler-architecture-draft.md` is a legacy design inventory, not an authority when it conflicts with the manual, conformance evidence, or implemented behavior.
 
 ## 1. Central model
 
@@ -729,16 +730,28 @@ Blocks are tagged unions. Fields not allowed for the selected `type` are errors.
 
 ### 11.4 Markdown blocks
 
-A Markdown block is:
+A Markdown block contains explanatory prose:
 
 ```yaml
 - type: markdown
   markdown: |-
-    Ordinary **Markdown** is allowed here, including lists, inline code, and
-    fenced code blocks.
+    Ordinary **Markdown** is allowed here, including lists, quotations, inline
+    code, and links.
 ```
 
-Markdown uses CommonMark 0.31.2 plus strikethrough. Raw HTML, Markdown headings, Markdown image syntax, and Markdown table syntax are errors inside a Markdown block; authored hierarchy, images, and tabular data use `sections`, `image` blocks, and `table` blocks. Internal references use the syntax in §12. External links use ordinary Markdown links.
+Markdown uses CommonMark 0.31.2 plus strikethrough. Raw HTML, Markdown headings,
+Markdown image syntax, Markdown table syntax, fenced code blocks, and indented
+code blocks are errors inside a newly authored Markdown block. Authored hierarchy,
+images, tabular data, grammar, and preformatted source use `sections`, `image`,
+`table`, `grammar`, and `example` blocks respectively. Use an `example` with
+`mode: illustrative` when source or plain preformatted text needs no runner; its
+language, source, files, response, and stable block ID remain available to every
+renderer.
+
+There is no generic code block in format version 1: a snippet that cannot accurately
+be a `grammar` or illustrative `example` requires an explicit format extension,
+never a Markdown fence. Internal references use the syntax in §12. External links
+use ordinary Markdown links.
 
 ### 11.5 Tables
 
@@ -1452,6 +1465,49 @@ Rules:
 - Navigation order does not imply namespace, ownership, inheritance, or lifecycle.
 - Previous/next links follow the current publication's expanded published navigation order.
 - Duplicate global IDs across YAML records, transitional Markdown sources, planned entries, or the transitive publication import graph are errors.
+
+### 16.1 Generated catalog
+
+`generated/catalog.yaml` is a deterministic discovery view over every published YAML record. It is derived from the publication manifests and records; authors never maintain catalog descriptions or outlines separately.
+
+Catalog format 2 includes the record's authored summary and an ID-and-title projection of its complete section tree:
+
+```yaml
+format: 2
+generated: true
+records:
+  - id: lang.functions.declarations
+    title: Function declarations and references
+    summary: >-
+      Defines top-level functions and distinguishes declaring a function
+      from invoking it.
+    kind: topic
+    manual: reference
+    group: Language
+    position: 3
+    source: reference/records/language/functions/declarations.yaml
+    sections:
+      - id: declaration
+        title: Declaring a function
+        sections: []
+      - id: returns
+        title: Returning a value
+        sections: []
+```
+
+`summary` is copied from `documentation.summary`. `sections` preserves authored order and recursively contains only each section's stable `id`, authored `title`, and child `sections`; blocks and prose remain in the source record. The catalog also carries lifecycle, documentation status, surface, provenance, and generated declaration synopsis fields used by lookup tooling.
+
+The catalog is a disposable lookup artifact, not another authoring source. Its generation metadata identifies the generator and exact input digest. Regeneration must produce byte-identical output for byte-identical manifests and records, and validation fails when the checked-in artifact is stale.
+
+### 16.2 YAML formatting
+
+Every published YAML manifest and record is formatted by Prettier v3.9.8. The generator first runs Prettier's YAML parser with an 80-character print width, which normalizes YAML syntax, folded values, indentation, quoting, and line endings.
+
+Prettier deliberately treats YAML literal scalars as opaque. The generator therefore separately runs Prettier's Markdown parser over each authored `markdown` literal scalar, with Markdown `print-width` 80 and `prose-wrap` `always`, then runs the YAML parser again to stabilize the enclosing YAML. This reflows document prose while preserving fenced source blocks exactly; a deliberately long source line inside a fenced example or one unbreakable inline literal is exempt from the prose width target.
+
+`python tools/generate_manual_catalog.py` runs this formatter pipeline over all manifest-derived YAML inputs before validating records and refreshing generated artifacts. This is transactional: it snapshots the authored YAML first and restores every input unchanged if formatting exposes a parse or generator validation failure. A formatting failure therefore never leaves a partially formatted invalid manual.
+
+`python tools/generate_manual_catalog.py --check` formats the same manifest-derived inputs before checking generated artifacts. It leaves successful formatting changes in place, then fails when those changes make a generated artifact stale; rerun the normal command to refresh it. Generated files are not formatter inputs.
 
 ## 17. Compiler snapshot
 

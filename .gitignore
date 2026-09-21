@@ -6,3 +6,7 @@ scratch.md
 tutorial-book/notes.md
 
 design/
+
+# Python bytecode
+*.pyc
+__pycache__/

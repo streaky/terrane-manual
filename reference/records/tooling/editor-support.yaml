@@ -1,0 +1,69 @@
+format: 1
+id: tool.editor-support
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: "Language server and editor integration"
+  title-style: text
+  summary: >-
+    Completion, signature help, hover, definitions, projection declines, semantic highlighting, and diagnostics reuse compiler
+    data.
+  tags:
+    - "interop"
+    - "editor-support"
+  sections:
+    - id: editor-support
+      title: "Language Server and Editor Integration"
+      blocks:
+        - type: markdown
+          markdown: |-
+            Terrane editor support is provided through the language server. Completion,
+            signature help, hover, go-to-definition, semantic highlighting, and diagnostics
+            reuse compiler data rather than relying on a separate editor-only language
+            model.
+
+            For manifest-declared Rust dependencies, completion, signature help, and hover
+            use the same lock-resolved projection as compilation. The projection is derived
+            from the resolved package, selected features, target, and rustdoc data. It
+            represents projected functions, inherent methods, receiver ownership, static
+            associated members, receiver-first trait namespaces, enums, aliases, primitives,
+            and opaque foreign values. Dependency information can show an item's verbatim
+            Rust path. If an item is not projected, the language server can show the
+            recorded reason for declining it instead of presenting it as usable Terrane API.
+
+            Dependency information in the editor is advisory; Cargo and rustc remain
+            authoritative about whether the resolved Rust package compiles. Compiler
+            diagnostics report dependency-boundary problems in Terrane terms. These include
+            relevant move and drop errors, `Send` and `Sync` requirements at task
+            boundaries, and escaping borrows. If a crossed member is missing, the error is
+            reported at its Terrane import or use site rather than only against generated
+            Rust.
+
+            Semantic highlighting, definition navigation, and editor diagnostics use
+            compiler-derived source information. The diagnostics displayed by the editor are
+            therefore the compiler's diagnostics.
+
+            Dependency-import lookup has one advisory limitation. If the same local name is
+            imported from two `/deps` namespaces in one file, hover and signature help use
+            the first matching import line and can consequently show the wrong dependency
+            namespace. Completion does not use this first-match lookup, and compilation is
+            unaffected.
+  see-also: []
+
+provenance:
+  specification:
+    - document: language-scoreboard
+      section: "editor-support"
+  conformance: null
+  compiler: null

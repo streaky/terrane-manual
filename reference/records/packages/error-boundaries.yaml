@@ -17,8 +17,8 @@ documentation:
   title: Error handling at application boundaries
   title-style: text
   summary: >-
-    Compares result-object and throwable failures at file, codec, document,
-    projected-dependency, validation, and command-line boundaries.
+    Compares result-object and throwable failures at file, codec, document, projected-dependency, validation, and command-line
+    boundaries.
   tags: [applications, errors, filesystem, documents, dependencies]
   sections:
     - id: choose-a-boundary
@@ -61,12 +61,10 @@ documentation:
           since: null
           evidence: []
           markdown: |-
-            Preserve typed low-level failure inside the layer that can act on it.
-            Translate it once at the application boundary into a message naming the
-            attempted operation and subject. Do not discard a filesystem path,
-            parser location, dependency cause, or validation field while adding
-            context.
-
+            Preserve typed low-level failure inside the layer that can act on it. Translate
+            it once at the application boundary into a message naming the attempted
+            operation and subject. Do not discard a filesystem path, parser location,
+            dependency cause, or validation field while adding context.
     - id: filesystem-and-utf8
       title: Filesystem and UTF-8 failure
       blocks:
@@ -116,30 +114,43 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `parse-yaml` and `parse-json` return `document-result`; they do not
-            throw for malformed input. Check `failed` before reading the document
-            value. Typed decoding additionally returns deterministic diagnostics
-            with path, expected type, actual kind, reason, message, call source,
-            and field source. Keep those details for developer-facing reports and
-            summarize them only at the final user-facing boundary.
-
-            ```terrane
+            `parse-yaml` and `parse-json` return `document-result`; they do not throw for
+            malformed input. Check `failed` before reading the document value. Typed
+            decoding additionally returns deterministic diagnostics with path, expected
+            type, actual kind, reason, message, call source, and field source. Keep those
+            details for developer-facing reports and summarize them only at the final
+            user-facing boundary.
+        - type: example
+          id: legacy-fence-001
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             parsed = parse-yaml; source, (default-yaml-options;)
             if parsed.failed
               result.message = 'configuration parse failed: '.concat; parsed.message
               return result
-            ```
-
+          response: null
+          diagnostic: null
+          markdown: null
     - id: projected-dependencies
       title: Projected dependency failure
       blocks:
         - type: markdown
           markdown: |-
-            A projected Rust `Result` error and a contained dependency panic enter
-            the `dependency-error` path. Catch it around the smallest call chain
-            that has enough context to classify the failed operation.
-
-            ```terrane
+            A projected Rust `Result` error and a contained dependency panic enter the
+            `dependency-error` path. Catch it around the smallest call chain that has enough
+            context to classify the failed operation.
+        - type: example
+          id: legacy-fence-002
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
             from /core/errors import dependency-error
 
             try
@@ -147,25 +158,28 @@ documentation:
             catch dependency-error as failure
               result.failed = true
               result.message = 'render dependency failed: '.concat; failure.message
-            ```
+          response: null
+          diagnostic: null
+          markdown: null
 
-            Do not treat a member declined during projection as a runtime error;
-            that is a compile-time availability or implementation-limitation issue.
-
+        - type: markdown
+          markdown: |-
+            Do not treat a member declined during projection as a runtime error; that is a
+            compile-time availability or implementation-limitation issue.
     - id: validation-and-exit
       title: Validation and command-line exit status
       blocks:
         - type: markdown
           markdown: |-
-            Domain validation is usually clearer as an application result object
-            carrying `failed`, a stable application reason, and a reader-facing
-            message. The top-level orchestrator decides whether to continue,
-            render diagnostics, or fail the command.
+            Domain validation is usually clearer as an application result object carrying
+            `failed`, a stable application reason, and a reader-facing message. The
+            top-level orchestrator decides whether to continue, render diagnostics, or fail
+            the command.
 
-            `fail; message` terminates the command-line program through Terrane's
-            structured error path and produces a nonzero process status. Use it in
-            `main` only after lower layers have returned or contextualized their
-            typed failures; do not print an error and then return success.
+            `fail; message` terminates the command-line program through Terrane's structured
+            error path and produces a nonzero process status. Use it in `main` only after
+            lower layers have returned or contextualized their typed failures; do not print
+            an error and then return success.
   see-also:
     - std.filesystem
     - std.text-bytes-codecs

@@ -17,8 +17,8 @@ documentation:
   title: Diagnostic catalog
   title-style: text
   summary: >-
-    Explains diagnostic families, classification, and correction, with a
-    generated compiler-backed code inventory for exact lookup.
+    Explains diagnostic families, classification, and correction, with a generated compiler-backed code inventory for exact
+    lookup.
   tags: [tooling, diagnostics, errors, limitations, search]
   sections:
     - id: generated-index
@@ -26,19 +26,17 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `generated/diagnostics.yaml` is the machine-readable index of every
-            stable diagnostic code found in the compiler sources. Each entry
-            records the code, emitted message templates, and compiler source
-            locations. `tools/generate_manual_catalog.py --check` verifies that it
-            matches the selected compiler checkout.
+            `generated/diagnostics.yaml` is the machine-readable index of every stable
+            diagnostic code found in the compiler sources. Each entry records the code,
+            emitted message templates, and compiler source locations.
+            `tools/generate_manual_catalog.py --check` verifies that it matches the selected
+            compiler checkout.
 
-            The generated inventory answers whether a code exists and where its
-            invariant is enforced. Authored sections on this page add rejected and
-            corrected examples and classify a diagnostic as settled semantics or a
-            temporary implementation limitation. If a generated entry has no
-            authored guide yet, treat its message and source location as lookup
-            data—not as a new language rule.
-
+            The generated inventory answers whether a code exists and where its invariant is
+            enforced. Authored sections on this page add rejected and corrected examples and
+            classify a diagnostic as settled semantics or a temporary implementation
+            limitation. If a generated entry has no authored guide yet, treat its message
+            and source location as lookup data—not as a new language rule.
     - id: families
       title: Diagnostic families
       blocks:
@@ -86,7 +84,9 @@ documentation:
               cell: markdown
           rows:
             - field: Invariant
-              value: A static member must exist on the selected class and, for projected Rust, must have an admitted representation and contract.
+              value:
+                A static member must exist on the selected class and, for projected Rust, must have an admitted representation
+                and contract.
             - field: Classification
               value: Source or temporary implementation error, depending on the declined member reason.
             - field: Related references
@@ -127,10 +127,10 @@ documentation:
           response: null
           diagnostic: null
           markdown: |-
-            The projected Rust enum exposes its public unit and supported
-            single-payload variants on the projected owner. A named, multi-field,
-            borrowed, open-generic, or unrepresentable variant remains an explicit
-            declined member rather than silently acquiring lossy adaptation.
+            The projected Rust enum exposes its public unit and supported single-payload
+            variants on the projected owner. A named, multi-field, borrowed, open-generic,
+            or unrepresentable variant remains an explicit declined member rather than
+            silently acquiring lossy adaptation.
   see-also:
     - tool.current-limitations
     - tool.packages.rust-dependencies
