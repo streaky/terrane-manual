@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0be6d1a63aa1987696982f0107fa548fba38943e4d05bdfd52e9a8dcdb5f0f04
+  input-sha256: a1f7935d97cafde374e0f0ac8a6212f967c8002bfcf52317e34f2e597ac1f6ec
 format: 1
 generated: true
 symbols:
@@ -5083,6 +5083,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: package
+- name: package-lock.toml
+  record: internals.projection.resolution
+  section: public-paths
+  declaration: package-lock.toml
 - name: package.metadata.terrane.namespace-overlays
   record: internals.projection.namespace-overlays
   section: declaration-discovery
@@ -5118,6 +5122,10 @@ symbols:
 - name: package.toml
   record: internals.integration-adapters
   section: application-owned-adapters
+  declaration: package.toml
+- name: package.toml
+  record: internals.projection.resolution
+  section: public-paths
   declaration: package.toml
 - name: package.toml
   record: lang.namespaces.prelude

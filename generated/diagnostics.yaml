@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2df5f5d3188f4500bbe03e8f42435d80281bb08f2cc3d80b71702cd5300461a9
+  input-sha256: 675500af37c881c45c7acf9e8059732c653d6314165775089fced33c899a26e6
 format: 1
 generated: true
 diagnostics:
@@ -686,7 +686,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 366
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 612
+    line: 631
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
@@ -771,20 +771,20 @@ diagnostics:
   - Rust dependency `{dependency}` is not declared in `package.toml`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 752
+    line: 771
 - code: S2028
   messages:
   - <terrane>/projected/{}.trn
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 322
+    line: 326
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 530
+    line: 537
 - code: S2029
   messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 809
+    line: 828
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -794,7 +794,7 @@ diagnostics:
   - Rust dependency member `{}.{member_name}` was projected by version {} but is absent from version {}
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 776
+    line: 795
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1240
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -804,7 +804,7 @@ diagnostics:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 682
+    line: 701
 - code: S2033
   messages:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
@@ -838,22 +838,22 @@ diagnostics:
   - test-only namespace `{}` is unavailable to production sources
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 669
+    line: 688
 - code: S2054
   messages:
   - integration test cannot declare production namespace `{}`
   - end-to-end test must drive the application artifact instead of importing `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 640
+    line: 659
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 728
+    line: 747
 - code: S2055
   messages:
   - production source cannot import test-only namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 715
+    line: 734
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
@@ -861,9 +861,9 @@ diagnostics:
     `two::Generic<B>`'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 275
+    line: 279
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 761
+    line: 780
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 55
 - code: S9004
@@ -1175,25 +1175,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 938
+    line: 957
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 981
+    line: 1000
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1032
+    line: 1051
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1004
+    line: 1023
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1041
+    line: 1060
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1787,7 +1787,7 @@ diagnostics:
   - conversion callback must accept exactly one `{source_type}` parameter
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 479
+    line: 483
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1250
   - path: crates/terrane-compiler/src/semantics/numeric.rs

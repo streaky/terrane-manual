@@ -135,6 +135,16 @@ documentation:
             declined by ordinary reachability checks; builtin, ambiguous, or unavailable
             owners are skipped or declined rather than guessed. Emitted Rust continues to
             name the declared facade.
+
+            Source demand is part of projection identity and durable lock contents. Adding,
+            removing, or renaming a `/deps` import can intentionally change the lock even
+            when `package.toml` and `package-lock.toml` are unchanged. The compiler and
+            language server derive the same demand set from current authored source; editor
+            requests overlay the unsaved document before resolving. Supplemental owner
+            rustdoc is cached independently by exact owner package, crate, hidden-item mode,
+            target, containment, pinned toolchain, and rustdoc format so distinct
+            source-demand projections can reuse the expensive owner document without sharing
+            facade aliases.
     - id: callbacks
       title: Concrete callback projection
       blocks:
