@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e8653929294d8cca88166e8adde6c0faa3b9ce1d9a962ed7df9f2663d325ee20
+  input-sha256: a9ba13cd80529ff569136a5d0ec172b67558a6c25eb0c69153f3a509db63f536
 format: 2
 generated: true
 records:
@@ -2724,6 +2724,9 @@ records:
     sections: []
   - id: chain-only
     title: Chain-only projection and containment
+    sections: []
+  - id: resolved-graph-survey
+    title: Resolved-graph survey evidence
     sections: []
   - id: history
     title: Durable origin and replay history

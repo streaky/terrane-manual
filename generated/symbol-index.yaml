@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e8653929294d8cca88166e8adde6c0faa3b9ce1d9a962ed7df9f2663d325ee20
+  input-sha256: a9ba13cd80529ff569136a5d0ec172b67558a6c25eb0c69153f3a509db63f536
 format: 1
 generated: true
 symbols:
@@ -7035,6 +7035,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: terrane-projection.lock
+- name: terrane-rust-survey
+  record: internals.projection.resolution
+  section: resolved-graph-survey
+  declaration: terrane-rust-survey
 - name: terrane/fidelity
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward

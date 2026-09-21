@@ -276,6 +276,33 @@ documentation:
             awaiting, and result conversion to the complete Rust expression. Projection
             details shown by editor tooling identify the chain-only, non-escaping
             constraint.
+    - id: resolved-graph-survey
+      title: Resolved-graph survey evidence
+      blocks:
+        - type: markdown
+          markdown: |-
+            `terrane-rust-survey` is a compiler-independent consumer of the shared native
+            analysis crate. It resolves an offline, frozen, target-filtered Cargo graph and
+            reports only the selected package's dependency closure. The report preserves
+            exact package versions and resolved features, registry checksums or path-package
+            manifest fingerprints, normalized manifest identities, the stable build and
+            pinned rustdoc toolchains, the rustdoc format, and the declared containment
+            tier. Host-specific absolute paths are not part of the portable report.
+
+            Public-path discovery is reported separately from canonical declaration
+            signatures and discovery failures. Optional bound, call, and implementation
+            questions are compiled against the same resolved graph and recorded as
+            compile-only probe outcomes; surveying never executes package code.
+
+            Versioned profiles in the native survey corpus materialize their declared Cargo
+            inputs before invoking the survey. The external profile runner combines those
+            native facts with the exact named public conformance fixture result. These
+            evidence layers remain distinct: successful Rust discovery or a native probe
+            does not imply Terrane admission, generated-application compilation does not
+            imply runtime success, and an environment-unavailable runtime lane is not
+            reported as a pass. Generated and re-exported Godot discovery therefore retains
+            separate compile and dedicated-runtime classifications until its projection
+            milestone supplies both forms of product evidence.
     - id: history
       title: Durable origin and replay history
       blocks:
