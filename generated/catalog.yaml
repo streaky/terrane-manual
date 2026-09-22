@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c27273da30344a35e95124fb34e212fa92775a37041316922b02006a4514fe4f
+  input-sha256: b312f797f9aa096d05a62ddde0f81c99364f4b00b0fe2f41e67048d48177da79
 format: 2
 generated: true
 records:
@@ -2064,8 +2064,8 @@ records:
   - id: chain-only-values
     title: Completing non-escaping dependency chains
     sections: []
-  - id: integration-adapters
-    title: Layering temporary integration adapters
+  - id: integration-boundaries
+    title: Direct-first integration boundaries
     sections: []
   - id: resolution
     title: Projection resolution and cache behavior
@@ -2786,7 +2786,7 @@ records:
     - document: language-spec
       section: '23.8'
     conformance:
-    - integration-adapter-sqlx-sqlite
+    - projection-namespace-overlays
     compiler: null
   sections:
   - id: declaration-discovery
@@ -2802,15 +2802,15 @@ records:
     title: Cache identity and genericity
     sections: []
   declaration-synopsis: []
-- id: internals.integration-adapters
-  title: Rust integration adapters
-  summary: Explains how to use, diagnose, author, register, verify, and retire temporary bridges for Rust
-    dependency operations that Terrane cannot project directly.
+- id: internals.integration-boundaries
+  title: Application-owned integration boundaries
+  summary: Explains the direct-first dependency policy, package-local authored Rust modules, namespace
+    overlays, gap tracking, verification, and removal after the shared adapter crate's retirement.
   kind: topic
   manual: reference
   group: Compiler internals
   position: 93
-  source: reference/records/internals/integration-adapters.yaml
+  source: reference/records/internals/integration-boundaries.yaml
   lifecycle-status: current
   documentation-status: complete
   surface: null
@@ -2821,39 +2821,31 @@ records:
     - document: language-spec
       section: '24.7'
     conformance:
-    - integration-adapter-sqlx-sqlite
     - authored-rust-module
+    - projected-sqlx-query-chain
+    - projected-pdf-html-bytes
+    - projected-websocket-protocol
+    - projected-demanded-member-cycle
+    - godot-generated-api-projection
     compiler: null
   sections:
-  - id: purpose
-    title: When an adapter is appropriate
+  - id: direct-first
+    title: Start with projected dependencies
     sections: []
-  - id: recognizing-a-gap
-    title: Recognizing a projection gap
+  - id: local-module
+    title: Use a package-local module for an irreducible boundary
     sections: []
-  - id: using-an-adapter
-    title: Declaring and using an adapter
+  - id: overlays
+    title: Namespace overlays remain generic metadata
     sections: []
-  - id: application-owned-adapters
-    title: Writing an adapter in an application
-    sections: []
-  - id: authoring
-    title: Authoring a reusable adapter operation
-    sections: []
-  - id: registry
-    title: Registering the gap
+  - id: tracking
+    title: Track unresolved capabilities outside a registry crate
     sections: []
   - id: verification
-    title: Verifying the bridge
+    title: Verify the real boundary
     sections: []
-  - id: current-gap-groups
-    title: Current adapter gap groups
-    sections: []
-  - id: troubleshooting
-    title: Troubleshooting and escalation
-    sections: []
-  - id: retirement
-    title: Independent removal lifecycle
+  - id: removal
+    title: Remove local boundaries cleanly
     sections: []
   declaration-synopsis: []
 - id: internals.observability.runtime

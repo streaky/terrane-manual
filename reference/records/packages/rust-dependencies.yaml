@@ -466,86 +466,72 @@ documentation:
             Borrowed results are declined; accepted values cross the boundary owned. Calls
             name the selected Rust type explicitly in generated Rust. Terrane does not
             expose Rust angle-bracket generic arguments in source.
-    - id: integration-adapters
-      title: Layering temporary integration adapters
+    - id: integration-boundaries
+      title: Direct-first integration boundaries
       blocks:
         - type: rule
-          id: rule.dependencies.integration-adapter-layering
+          id: rule.dependencies.direct-first-boundaries
           level: must
           since: null
           evidence:
-            - integration-adapter-sqlx-sqlite
+            - projected-sqlx-query-chain
+            - projected-pdf-html-bytes
+            - projected-websocket-protocol
           markdown: |-
-            A maintained integration adapter supplements an upstream projected dependency;
-            it does not replace that dependency with a second API. The application declares
-            both packages. Adapter signatures preserve representable upstream identities
-            rather than wrapping them.
+            Use projected upstream operations directly and preserve their canonical owners.
+            Keep routing, schemas, policy, workflows, and domain types in Terrane rather
+            than hiding them in an application-shaped Rust facade. The former shared
+            `terrane-integration-adapters` crate and its registry have been deleted; do not
+            recreate them or retain compatibility helpers for operations that project
+            directly.
 
-            A directly declared provider may attach one feature-gated module beneath another
-            directly declared dependency with `package.metadata.terrane.namespace-overlays`.
-            Terrane then presents the provider's items in the target `/deps/<crate>`
-            namespace while retaining every item's actual Rust path and dependency
-            provenance. Imports therefore combine upstream and temporary operations without
-            exposing the adapter package path.
+            SQLx query construction, binding, execution, fetching, row access, typed errors,
+            and connection lifecycle are direct. PDF construction and serialization, plus
+            the evidenced Axum response, callback, WebSocket, listener, and server-await
+            shapes, are direct as well. Consuming every non-`Clone` item from a persistent
+            foreign collection remains separately tracked by the stream/iterator design
+            rather than hidden behind a conversion helper.
 
-            The named provider feature must be enabled. Undeclared, self, ambiguous, empty,
-            overlapping, and colliding overlays are projection errors; an adapter cannot
-            silently shadow an upstream item. Overlay declarations participate in projection
-            cache identity.
+            When one irreducible host or projection boundary remains, declare the exact
+            dependency graph and add the narrowest package-local maintained module through
+            `[rust-modules]`. Put its raw call behind a typed Terrane function, preserve
+            upstream ownership and failure semantics, and record its removal condition with
+            the application.
 
-            Application code follows a direct-first policy:
-
-            - use directly projected upstream APIs whenever possible;
-            - preserve each projectable upstream type and operation identity;
-            - bridge only the concrete operation shape projection still declines;
-            - keep every temporary bridge in the central, feature-gated
-              `terrane-integration-adapters` package;
-            - keep routing, schemas, policy, workflows, and domain types in Terrane rather
-              than an application-shaped Rust facade; and
-            - give every bridge a registry entry naming its stable ID, tracking key,
-              dependency and supported version, precise limitation, package feature, and
-              objective generic removal criterion.
-
-            The `sqlx-sqlite` feature retains only `query_bytes`, which consumes non-`Clone`
-            rows from a collected list until S1 adds consuming collection or stream
-            iteration. Query construction, binding, execution, fetching, row access, errors,
-            and connection lifecycle are direct. PDF construction/serialization and Axum
-            response, callback, WebSocket, listener, and server-await shapes are also
-            direct. Do not create one adapter crate per application or dependency.
-
-            The adapter-owned registry and independent removal lifecycle are maintenance
-            contracts, not runtime dispatch. See `internals.integration-adapters` and
-            `internals.projection.namespace-overlays` for their exact contracts.
+            `package.metadata.terrane.namespace-overlays` remains generic provider metadata.
+            An enabled directly declared provider may attach one module beneath another
+            directly declared dependency while every item retains its actual Rust path and
+            provenance. Undeclared, self, ambiguous, empty, overlapping, and colliding
+            overlays are errors.
         - type: example
-          id: example.dependencies.adapter-namespace-overlay
+          id: example.dependencies.direct-sqlx
           status: accepted
-          caption: Attach an enabled adapter module to its upstream namespace
-          source:
-            language: toml
-            text: |-
-              [[package.metadata.terrane.namespace-overlays]]
-              module = "sqlx_sqlite"
-              target-package = "sqlx-sqlite"
-              feature = "sqlx-sqlite"
-
-        - type: example
-          id: example.dependencies.layered-sqlx-adapter
-          status: accepted
-          caption: Import upstream and temporary SQLx operations together
+          caption: Use SQLx operations from their projected owners
           source:
             language: terrane
             text: |-
-              namespace reference-examples/layered-sqlx-adapter
+              namespace reference-examples/direct-sqlx
 
-              from /deps/sqlx-sqlite import SqliteConnectOptions, SqliteConnection, query_bytes
+              from /deps/sqlx-core/query import query
+              from /deps/sqlx-sqlite import SqliteConnectOptions
               from /deps/sqlx-sqlite/sqliteconnectoptions import connect
               from /deps/sqlx-sqlite/sqliteconnection import close
               async function main;
                   options = (SqliteConnectOptions::new).filename; 'application.db'
-                  database SqliteConnection = await connect; options
-                  rows list of bytes = await query_bytes; database, 'SELECT body FROM events', 'body'
+                  database = await connect; options
+                  await (query; 'CREATE TABLE events (body BLOB)').execute; ref database
                   await (close; move database)
-
+        - type: example
+          id: example.dependencies.generic-namespace-overlay
+          status: accepted
+          caption: Declare generic provider metadata when a reusable provider needs an overlay
+          source:
+            language: toml
+            text: |-
+              [[package.metadata.terrane.namespace-overlays]]
+              module = "data_engine"
+              target-package = "data-engine"
+              feature = "data-engine"
         - type: example
           id: example.dependencies.direct-axum-server
           status: accepted
@@ -645,7 +631,7 @@ documentation:
   see-also:
     - lang.functions.declarations
     - internals.projection.namespace-overlays
-    - internals.integration-adapters
+    - internals.integration-boundaries
 provenance:
   specification:
     - document: language-spec

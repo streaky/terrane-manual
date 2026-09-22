@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c27273da30344a35e95124fb34e212fa92775a37041316922b02006a4514fe4f
+  input-sha256: b312f797f9aa096d05a62ddde0f81c99364f4b00b0fe2f41e67048d48177da79
 format: 1
 generated: true
 symbols:
@@ -505,10 +505,6 @@ symbols:
   section: what-we-learned
   declaration: as
 - name: as
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: as
-- name: as
   record: lang.namespaces.scopes
   section: scopes
   declaration: as
@@ -652,14 +648,6 @@ symbols:
   record: tool.packages.rust-dependencies
   section: chain-only-values
   declaration: await
-- name: axum-08
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: axum-08
-- name: axum::serve
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: axum::serve
 - name: b
   record: lang.numerics.arithmetic
   section: integer-operators
@@ -799,10 +787,6 @@ symbols:
 - name: build
   record: internals.build.toolchain-profiles
   section: native-artifact-kind
-  declaration: build
-- name: build
-  record: internals.integration-adapters
-  section: application-owned-adapters
   declaration: build
 - name: build
   record: internals.lowering.rust-output
@@ -1201,8 +1185,8 @@ symbols:
   section: capabilities-and-effects
   declaration: clocks
 - name: Clone
-  record: internals.integration-adapters
-  section: current-gap-groups
+  record: internals.integration-boundaries
+  section: tracking
   declaration: Clone
 - name: Clone
   record: tool.packages.rust-dependencies
@@ -1210,7 +1194,7 @@ symbols:
   declaration: Clone
 - name: Clone
   record: tool.packages.rust-dependencies
-  section: integration-adapters
+  section: integration-boundaries
   declaration: Clone
 - name: close
   record: book.namespaces-imports-and-packages
@@ -1324,6 +1308,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers
   declaration: collect
+- name: collections/consume-non-clone-foreign-items
+  record: internals.integration-boundaries
+  section: tracking
+  declaration: collections/consume-non-clone-foreign-items
 - name: com1
   record: lang.namespaces.declarations
   section: namespace-paths
@@ -1594,10 +1582,6 @@ symbols:
   section: operations
   declaration: copy-sign
 - name: core::future::into_future::IntoFuture
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: core::future::into_future::IntoFuture
-- name: core::future::into_future::IntoFuture
   record: tool.packages.rust-dependencies
   section: async-projected-calls
   declaration: core::future::into_future::IntoFuture
@@ -1826,8 +1810,8 @@ symbols:
   section: native-artifact-kind
   declaration: deny
 - name: deny
-  record: internals.integration-adapters
-  section: application-owned-adapters
+  record: internals.integration-boundaries
+  section: local-module
   declaration: deny
 - name: dependency
   record: internals.observability.runtime
@@ -1993,10 +1977,6 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: do
-- name: docs-rendering
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: docs-rendering
 - name: document-decodable
   record: std.documents.typed-decoding
   section: opt-in
@@ -2089,10 +2069,6 @@ symbols:
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
   declaration: e
-- name: E
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: E
 - name: E
   record: tool.packages.rust-dependencies
   section: async-projected-calls
@@ -3054,8 +3030,8 @@ symbols:
   section: ordering-iteration-and-lifetime
   declaration: for
 - name: forbid
-  record: internals.integration-adapters
-  section: application-owned-adapters
+  record: internals.integration-boundaries
+  section: local-module
   declaration: forbid
 - name: format/text.trn
   record: book.namespaces-imports-and-packages
@@ -3741,30 +3717,6 @@ symbols:
   record: lang.lexical-structure.keywords
   section: structural-words
   declaration: interface
-- name: internals.integration-adapters
-  record: tool.packages.rust-dependencies
-  section: integration-adapters
-  declaration: internals.integration-adapters
-- name: internals.projection.namespace-overlays
-  record: tool.packages.rust-dependencies
-  section: integration-adapters
-  declaration: internals.projection.namespace-overlays
-- name: IntoFuture
-  record: internals.integration-adapters
-  section: authoring
-  declaration: IntoFuture
-- name: IntoFuture
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: IntoFuture
-- name: IntoFuture
-  record: internals.integration-adapters
-  section: purpose
-  declaration: IntoFuture
-- name: IntoFuture
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: IntoFuture
 - name: IntoFuture
   record: tool.packages.rust-dependencies
   section: async-projected-calls
@@ -4326,10 +4278,6 @@ symbols:
   section: giving-a-value-a-name
   declaration: message
 - name: message
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: message
-- name: message
   record: lang.errors.handling
   section: structured-errors
   declaration: message
@@ -4349,10 +4297,6 @@ symbols:
   record: std.text-bytes-codecs
   section: octets-and-codecs
   declaration: message
-- name: Message::Close
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: Message::Close
 - name: minimum
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -4549,6 +4493,10 @@ symbols:
   record: tool.debugging
   section: provenance
   declaration: native
+- name: native-interop/rust-proc-macro-extension-entry
+  record: internals.integration-boundaries
+  section: tracking
+  declaration: native-interop/rust-proc-macro-extension-entry
 - name: native-path
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
@@ -4744,10 +4692,6 @@ symbols:
 - name: none
   record: book.types
   section: union-types-and-optional-values
-  declaration: none
-- name: none
-  record: internals.integration-adapters
-  section: recognizing-a-gap
   declaration: none
 - name: None
   record: internals.projection.resolution
@@ -5088,12 +5032,16 @@ symbols:
   section: public-paths
   declaration: package-lock.toml
 - name: package.metadata.terrane.namespace-overlays
+  record: internals.integration-boundaries
+  section: overlays
+  declaration: package.metadata.terrane.namespace-overlays
+- name: package.metadata.terrane.namespace-overlays
   record: internals.projection.namespace-overlays
   section: declaration-discovery
   declaration: package.metadata.terrane.namespace-overlays
 - name: package.metadata.terrane.namespace-overlays
   record: tool.packages.rust-dependencies
-  section: integration-adapters
+  section: integration-boundaries
   declaration: package.metadata.terrane.namespace-overlays
 - name: package.toml
   record: book.async
@@ -5118,10 +5066,6 @@ symbols:
 - name: package.toml
   record: book.namespaces-imports-and-packages
   section: the-package-manifest
-  declaration: package.toml
-- name: package.toml
-  record: internals.integration-adapters
-  section: application-owned-adapters
   declaration: package.toml
 - name: package.toml
   record: internals.projection.resolution
@@ -5599,9 +5543,13 @@ symbols:
   record: internals.projection.resolution
   section: public-paths
   declaration: project_rustdoc
+- name: projection/godot-generated-reexport-surface
+  record: internals.integration-boundaries
+  section: tracking
+  declaration: projection/godot-generated-reexport-surface
 - name: projection/mutually-referential-namespace-sources
-  record: internals.integration-adapters
-  section: registry
+  record: internals.integration-boundaries
+  section: tracking
   declaration: projection/mutually-referential-namespace-sources
 - name: projection_history_keeps_content_origin_across_cache_hits
   record: internals.projection.resolution
@@ -5679,22 +5627,6 @@ symbols:
   record: book.values-and-names
   section: exercises
   declaration: quantity
-- name: Query
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: Query
-- name: query_bytes
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: query_bytes
-- name: query_bytes
-  record: internals.integration-adapters
-  section: using-an-adapter
-  declaration: query_bytes
-- name: query_bytes
-  record: tool.packages.rust-dependencies
-  section: integration-adapters
-  declaration: query_bytes
 - name: query_scalar
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -6120,8 +6052,8 @@ symbols:
   section: from-terrane-source-to-an-executable
   declaration: rust
 - name: rust
-  record: internals.integration-adapters
-  section: application-owned-adapters
+  record: internals.integration-boundaries
+  section: local-module
   declaration: rust
 - name: rust
   record: tool.packages.rust-interop
@@ -6174,10 +6106,6 @@ symbols:
 - name: rustc
   record: book.native-program
   section: source-locations-and-diagnostics-across-lowering
-  declaration: rustc
-- name: rustc
-  record: internals.integration-adapters
-  section: recognizing-a-gap
   declaration: rustc
 - name: S
   record: tool.diagnostics
@@ -6383,10 +6311,6 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: selected_target
-- name: Self
-  record: internals.integration-adapters
-  section: purpose
-  declaration: Self
 - name: self
   record: internals.projection.resolution
   section: interface-impls
@@ -6623,14 +6547,6 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sinks
   declaration: split
-- name: sqlx-sqlite
-  record: internals.integration-adapters
-  section: current-gap-groups
-  declaration: sqlx-sqlite
-- name: sqlx-sqlite
-  record: tool.packages.rust-dependencies
-  section: integration-adapters
-  declaration: sqlx-sqlite
 - name: sqlx::Query
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -7088,16 +7004,12 @@ symbols:
   section: fields
   declaration: terrane-dependencies.<name>.tag
 - name: terrane-integration-adapters
-  record: internals.integration-adapters
-  section: application-owned-adapters
-  declaration: terrane-integration-adapters
-- name: terrane-integration-adapters
-  record: internals.integration-adapters
-  section: using-an-adapter
+  record: internals.integration-boundaries
+  section: direct-first
   declaration: terrane-integration-adapters
 - name: terrane-integration-adapters
   record: tool.packages.rust-dependencies
-  section: integration-adapters
+  section: integration-boundaries
   declaration: terrane-integration-adapters
 - name: terrane-profile-cpu-v1
   record: tool.profiling
@@ -7135,10 +7047,6 @@ symbols:
   record: tool.source-intelligence
   section: language-server
   declaration: terrane/generatedRust
-- name: terrane_integration_adapters::registry
-  record: internals.integration-adapters
-  section: registry
-  declaration: terrane_integration_adapters::registry
 - name: TerraneAsyncMutableState::with_receiver
   record: internals.execution.runtime-selection
   section: mutable-async-callables
@@ -8039,10 +7947,6 @@ symbols:
   record: book.identity-and-movement
   section: when-a-value-is-no-longer-available
   declaration: values
-- name: variant-name
-  record: internals.integration-adapters
-  section: recognizing-a-gap
-  declaration: variant-name
 - name: Vec
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers

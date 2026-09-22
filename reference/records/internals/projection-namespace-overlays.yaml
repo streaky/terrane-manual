@@ -34,7 +34,7 @@ documentation:
           level: must
           since: null
           evidence:
-            - integration-adapter-sqlx-sqlite
+            - projection-namespace-overlays
           markdown: |-
             Overlay declarations come only from
             `package.metadata.terrane.namespace-overlays` on a directly declared Rust
@@ -55,7 +55,7 @@ documentation:
           level: must
           since: null
           evidence:
-            - integration-adapter-sqlx-sqlite
+            - projection-namespace-overlays
           markdown: |-
             The projector selects public items from the provider module and presents them
             beneath the target's existing `/deps/<crate>` namespace. Only Terrane name
@@ -76,7 +76,7 @@ documentation:
           level: must
           since: null
           evidence:
-            - integration-adapter-sqlx-sqlite
+            - projection-namespace-overlays
           markdown: |-
             Reject an overlay whose provider or target is not direct, whose target is the
             provider itself, whose feature is disabled, whose module path is empty or
@@ -95,7 +95,7 @@ documentation:
           level: must
           since: null
           evidence:
-            - integration-adapter-sqlx-sqlite
+            - projection-namespace-overlays
           markdown: |-
             Normalized overlay declarations participate in exact projection cache identity.
             Changing the provider, target, module, or selected feature selects a different
@@ -104,13 +104,13 @@ documentation:
             paths.
 
             Overlay handling is generic Cargo-metadata and namespace-composition machinery.
-            Projection, semantics, and lowering never dispatch on an adapter registry,
-            dependency name, framework, or application. A package such as Axum or SQLx
+            Projection, semantics, and lowering never dispatch on a dependency name,
+            framework, application, or retired adapter registry. An ecosystem package
             receives no compiler-specific branch by participating in an overlay.
 relationships:
   see-also:
     - internals.projection.resolution
-    - internals.integration-adapters
+    - internals.integration-boundaries
     - tool.packages.rust-dependencies
   supersedes: []
   superseded-by: []
@@ -121,7 +121,7 @@ provenance:
     - document: language-spec
       section: "23.8"
   conformance:
-    - integration-adapter-sqlx-sqlite
+    - projection-namespace-overlays
   compiler: null
 
 implementation:
