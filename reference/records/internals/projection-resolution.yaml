@@ -145,9 +145,10 @@ documentation:
             target, containment, pinned toolchain, and rustdoc format so distinct
             source-demand projections can reuse the expensive owner document without sharing
             facade aliases. Owner documents and ordinary projection records are pruned as
-            independently bounded cache families. A successfully parsed owner-cache hit is
-            marked recently used before pruning, preventing demand sets larger than the
-            bound from repeatedly regenerating the same owner. Unrelated
+            independent cache families: ordinary projections retain four records, while
+            exact package/version-deduplicated owner documents retain sixteen. A
+            successfully parsed owner-cache hit is marked recently used before pruning, and
+            a five-owner resolve therefore remains warm across runs. Unrelated
             dependency-workspace files are never cache-pruning candidates.
     - id: callbacks
       title: Concrete callback projection
