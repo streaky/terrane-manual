@@ -90,7 +90,7 @@ documentation:
             - field: Classification
               value: Source or temporary implementation error, depending on the declined member reason.
             - field: Related references
-              value: "[[tool.packages.rust-dependencies#integration-adapters]]"
+              value: "[[tool.packages.rust-dependencies#integration-boundaries]]"
 
         - type: example
           id: t0105-rejected

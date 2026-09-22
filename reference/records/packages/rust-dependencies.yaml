@@ -282,6 +282,8 @@ documentation:
             - rust-dependency-nonclone-field
             - projected-interface-send-field
             - projected-interface-sync-field
+            - consume-nonclone-foreign-list-iteration
+            - index-nonclone-foreign-list-item
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
@@ -291,6 +293,13 @@ documentation:
             a field whose foreign type does not support it. Projected interface and
             retained-bound checks recursively follow nested source fields and these closed
             foreign auto-trait facts.
+
+            Persistent lists currently expose elements by value. Iteration or indexing that
+            would copy an item containing a non-`Clone` projected foreign value is rejected
+            before lowering with `T0135` and the tracking key
+            `collections/consume-non-clone-foreign-items`. S1 closes that limitation only
+            when consuming collection or stream iteration can transfer each item without
+            cloning.
     - id: interfaces
       title: Implementing projected Rust traits
       blocks:

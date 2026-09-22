@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b312f797f9aa096d05a62ddde0f81c99364f4b00b0fe2f41e67048d48177da79
+  input-sha256: f5676f472b3e09858bb64b0ac26d0d696694390028ec07952914aa76fc00afb5
 format: 1
 generated: true
 symbols:
@@ -1311,6 +1311,10 @@ symbols:
 - name: collections/consume-non-clone-foreign-items
   record: internals.integration-boundaries
   section: tracking
+  declaration: collections/consume-non-clone-foreign-items
+- name: collections/consume-non-clone-foreign-items
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
   declaration: collections/consume-non-clone-foreign-items
 - name: com1
   record: lang.namespaces.declarations
@@ -6847,6 +6851,10 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: T0111
+- name: T0135
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
+  declaration: T0135
 - name: tag
   record: tool.packages.command-line
   section: package-management
