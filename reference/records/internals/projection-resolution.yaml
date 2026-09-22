@@ -144,7 +144,9 @@ documentation:
             rustdoc is cached independently by exact owner package, crate, hidden-item mode,
             target, containment, pinned toolchain, and rustdoc format so distinct
             source-demand projections can reuse the expensive owner document without sharing
-            facade aliases.
+            facade aliases. Owner documents and ordinary projection records are pruned as
+            independently bounded cache families; unrelated dependency-workspace files are
+            never cache-pruning candidates.
     - id: callbacks
       title: Concrete callback projection
       blocks:
