@@ -39,6 +39,20 @@ documentation:
             compose across the class’s single-inheritance chain, including `construct` and
             `destruct` behavior for inherited state.
 
+            Declare a destructor as `function destruct`; it is always consuming.
+            Writing `consuming` is accepted as an explicit equivalent. `mutable`,
+            `shared`, `static`, and `async` are invalid destructor qualifiers and
+            produce a compiler error. A destructor may await required finalization
+            without itself being declared as an ordinary async callable. Destruction
+            completes only after each such await completes; it is never deferred as
+            background cleanup. The compiler runs that finalization on a dedicated
+            runtime so synchronous destruction sites retain their immediate lifecycle
+            guarantee. Awaited destructors currently require the threaded executor;
+            the cooperative executor rejects them with a source diagnostic because it
+            permits non-transferable values. A destructor cannot report a normal failure
+            result, so resource APIs should also expose an explicit async close operation
+            when callers need to observe close failures.
+
             Each independently owned value has its own lifecycle lineage. Copying creates a
             fresh lineage, so the copy and original have independent lifecycles. Moving a
             value preserves its existing lineage rather than creating another one.
