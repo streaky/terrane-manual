@@ -36,16 +36,19 @@ documentation:
           markdown: |-
             `terrane profile record --cpu [--memory-timeline] [--embed-sources] [--retain-arguments] [-o|--output FILE] <file-or-manifest> [-- arguments]`
             builds the exact workload with the named `terrane-profile-cpu-v1` profile and
-            records the launched process tree.
+            records CPU samples for the launched process tree.
+
+            `terrane profile record --allocations [--memory-timeline] [--embed-sources] [--retain-arguments] [-o|--output FILE] <file-or-manifest> [-- arguments]`
+            uses Heaptrack to interpose allocation/free operations and records normalized
+            capture-local identities, sizes, collector timestamps, trace identities, matched
+            frees, traffic, retained-at-exit, and peak-live accounting.
 
             `terrane profile record --memory-timeline [--embed-sources] [--retain-arguments] [-o|--output FILE] <file-or-manifest> [-- arguments]`
-            records bounded process RSS observations. `--cpu --memory-timeline` records CPU
-            samples as the primary evidence and attaches the timeline as auxiliary context;
-            the two units remain separate and are never combined into one cost total. The
-            default output is `profile.trnprof`. The workload keeps inherited standard
-            input, output, and error. Its exit code remains the command exit code. Interrupt
-            and termination signals are forwarded to the CPU collector process group; usable
-            partial evidence is finalized before exit.
+            records bounded process RSS observations. `--memory-timeline` may accompany
+            `--cpu` or `--allocations`; the selected primary evidence keeps its own unit and
+            the timeline remains auxiliary. CPU and allocation evidence cannot be primary in
+            one capture. The default output is `profile.trnprof`. Standard streams and
+            workload exit status remain observable.
 
             `terrane profile show FILE [--focus SOURCE:LINE] [--generated] [--native] [--format text|json] [--limit COUNT] [--source-root PATH] [--build-root PATH]`
             re-runs attribution from the captured evidence. The default text view reports
@@ -60,13 +63,15 @@ documentation:
           id: note.profiling.platform
           style: warning
           markdown: |-
-            CPU capture supports Linux x86-64 with the host `perf` tool and permission to
-            collect user-space `cpu-clock` samples. Process-memory timelines use Linux
-            procfs and report unavailable fields rather than substituting a nearby counter.
-            Unsupported hosts, targets, missing tools, permission failures, collector
-            failures, and unusable captures fail explicitly. A `.trnprof` file is compiler
-            data and may contain source paths, symbol names, timing, and workload structure;
-            treat it as diagnostic material rather than an anonymous report.
+            CPU capture supports Linux x86-64 with host `perf` permission. Allocation
+            capture requires Heaptrack and zstd; Heaptrack interposes allocation functions,
+            so this is an instrumented optimized run rather than production-identical
+            execution. Process-memory timelines use Linux procfs and report unavailable
+            fields rather than substituting a nearby counter. Unsupported hosts, targets,
+            missing tools, permission failures, collector failures, and unusable captures
+            fail explicitly. A `.trnprof` file can contain source paths, symbols, allocation
+            stacks, timings, and workload structure; treat it as diagnostic material rather
+            than an anonymous report.
     - id: optimized-build
       title: Optimized exact-build evidence
       blocks:
@@ -86,17 +91,18 @@ documentation:
             named profile properties, package inputs, executable hash, generated/source
             maps, loaded module identities, and source/build relocation roots.
 
-            The schema `1.2` evidence unit is CPU sample count for CPU captures and bytes
-            for a process-memory timeline. A timeline records the collector interval, missed
-            intervals, timestamped RSS and available procfs counters; unavailable PSS,
-            fault, or accounting fields remain explicit. Normalized CPU frames name a
-            captured module plus load-relative offset and may carry symbol, generated
-            location, and inline evidence. Collector identity and raw configuration,
-            frequency and period, included processes and threads, elapsed and active
-            intervals, process exit or signal state, and captured, lost-event,
-            dropped-sample, and dropped-frame counts remain explicit. Collector loss and
-            locally dropped samples or frames are reported and never redistributed into
-            source totals.
+            Schema `1.2` uses CPU sample count for CPU captures and bytes plus independent
+            event counts for allocation or process-memory evidence. Allocation events
+            preserve a capture-local identity, size, collector timestamp and trace identity,
+            with explicit unavailable alignment/process/thread fields and a matched free
+            timestamp. Complete captures reconcile allocated bytes into freed and
+            retained-at-exit bytes; unmatched, truncated, or inconsistent transitions mark
+            the evidence partial. Heaptrack folded stacks retain distinct allocation-count,
+            retained-byte, and peak-live-byte widths. A process timeline records its
+            interval, missed intervals, timestamped RSS, and available procfs counters;
+            unavailable PSS, fault, or accounting fields stay absent. Collector identity,
+            raw configuration, elapsed interval, process exit state, and capture loss remain
+            explicit.
     - id: attribution
       title: Source attribution and accounting
       blocks:
@@ -140,13 +146,14 @@ documentation:
           id: note.profiling.deferred
           style: information
           markdown: |-
-            Allocation/event profiling, live-set and retained-graph analysis, thresholds,
-            comparison commands, continuous-service capture, remote collectors, and
-            non-Linux backends are future work. Process-memory timelines are intentionally
-            separate from allocation ownership: RSS/PSS observations do not identify
-            allocation sites or prove retained heap. The typed artifact envelope admits
-            later evidence kinds without weakening the CPU sample-count or process-memory
-            byte contracts.
+            Allocation retention means allocations still live at normal exit; it is not
+            garbage-collector reachability and is not automatically a leak claim. Heaptrack
+            interposition changes workload overhead and allocator call paths. Process-memory
+            timelines remain separate from allocation ownership: RSS observations include
+            code, mappings, arenas, fragmentation, stacks, and collector overhead and do not
+            identify allocation sites. Garbage-collector reachability, heap dumps,
+            memory-access attribution, continuous-service capture, remote collectors, and
+            non-Linux backends remain future work.
   see-also:
     - tool.debugging
     - tool.source-intelligence
