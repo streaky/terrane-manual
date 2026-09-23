@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d470e6dbf05b77ba7385bc9f6cd919bb940c5d8fa4af5bcb7c04e976bed83300
+  input-sha256: 700a5fb1d1b4d5336e43d734c82fdeb528d373afffc442f21a47941fded1041d
 format: 1
 generated: true
 diagnostics:
@@ -723,7 +723,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1728
+    line: 1726
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 407
 - code: S2022
@@ -747,10 +747,10 @@ diagnostics:
     line: 1692
 - code: S2024
   messages:
-  - namespace binding initialization has a dependency cycle
+  - binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1766
+    line: 1764
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -943,11 +943,11 @@ diagnostics:
   - constant `{value}` is outside the range of `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 835
+    line: 836
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 883
+    line: 884
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 1030
+    line: 1031
 - code: T0004
   messages:
   - function requires a name
@@ -1026,11 +1026,11 @@ diagnostics:
   - invalid constant arithmetic
   sources:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 668
+    line: 669
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 932
+    line: 933
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 946
+    line: 947
 - code: T0012
   messages:
   - callable expects {expected} arguments, found {}
@@ -1258,7 +1258,7 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1301
+    line: 1311
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 456
 - code: T0028
@@ -1337,7 +1337,7 @@ diagnostics:
   - '`is none` is invalid; type membership is written `is a none`'
   sources:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 548
+    line: 549
 - code: T0039
   messages:
   - '`{}::{}` is a property and cannot be invoked'
@@ -1549,7 +1549,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1238
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 3644
+    line: 3651
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
