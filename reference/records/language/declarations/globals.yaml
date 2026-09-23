@@ -28,11 +28,13 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Program globals form an explicit initialization dependency graph. Dependencies
-            between global initializers determine the required initialization relationships.
+            Program globals form an explicit initialization dependency graph. A global
+            initializer depends on every program-global binding it reads directly or through
+            a called function.
 
-            A dependency cycle in this graph is invalid and is diagnosed during compilation.
-            Cyclic globals are not assigned an arbitrary initialization order.
+            A dependency cycle in this graph is invalid and is diagnosed during compilation
+            before lowering. Cyclic globals are not assigned an arbitrary initialization
+            order.
 
             Initialization ordering does not by itself make mutable global state safe to
             share. A mutable global used across threads must satisfy the shared-thread-safe
@@ -44,5 +46,9 @@ provenance:
   specification:
     - document: language-scoreboard
       section: "global-initialization"
-  conformance: null
-  compiler: null
+  conformance:
+    - global-initialization-direct-cycle
+    - global-initialization-mediated-cycle
+    - global-initialization-function-read
+  compiler:
+    - crates/terrane-compiler/src/semantics/ownership.rs

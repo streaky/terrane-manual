@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7f82147338056635661d806fa0003e84e5dcb083b356cb61d3d203e03952aae4
+  input-sha256: 91893c7e686225ac64c79f3b27ee3e23abf401d002f8229499c090e811d49e95
 format: 2
 generated: true
 records:
@@ -711,8 +711,12 @@ records:
     specification:
     - document: language-scoreboard
       section: global-initialization
-    conformance: null
-    compiler: null
+    conformance:
+    - global-initialization-direct-cycle
+    - global-initialization-mediated-cycle
+    - global-initialization-function-read
+    compiler:
+    - crates/terrane-compiler/src/semantics/ownership.rs
   sections:
   - id: global-initialization
     title: Program-Global Initialization
