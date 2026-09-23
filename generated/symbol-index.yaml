@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dd710505c56898bb9c4f6f3d1d58b731015fe3d2af6ac30ff416af19bcda1ca1
+  input-sha256: c380994d406176ee9de074f3184fe63f3f955cbd2f6f977538ca85fd3a4ad0d4
 format: 1
 generated: true
 symbols:
@@ -1632,10 +1632,6 @@ symbols:
 - name: cpu-clock
   record: book.testing-and-debugging
   section: profile-the-optimized-application
-  declaration: cpu-clock
-- name: cpu-clock
-  record: tool.profiling
-  section: commands
   declaration: cpu-clock
 - name: crates/terrane-compiler/src/execution.rs
   record: internals.execution.runtime-selection

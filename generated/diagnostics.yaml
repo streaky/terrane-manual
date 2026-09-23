@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 700a5fb1d1b4d5336e43d734c82fdeb528d373afffc442f21a47941fded1041d
+  input-sha256: 6d9b16ffa7fbabe8d84e9d21f75488ad4df4bc1220a8a10023d1dc43528546a5
 format: 1
 generated: true
 diagnostics:
@@ -723,7 +723,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1726
+    line: 1733
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 407
 - code: S2022
@@ -742,15 +742,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1629
+    line: 1636
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1692
+    line: 1699
 - code: S2024
   messages:
-  - binding initialization has a dependency cycle
+  - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1764
+    line: 1771
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -899,7 +899,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3483
+    line: 3487
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -953,7 +953,7 @@ diagnostics:
   - function requires a name
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 357
+    line: 367
 - code: T0005
   messages:
   - a variadic parameter cannot declare a default
@@ -961,19 +961,19 @@ diagnostics:
   - required parameters must precede optional parameters
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 405
-  - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 413
+    line: 415
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 423
+  - path: crates/terrane-compiler/src/semantics/contracts.rs
+    line: 433
 - code: T0006
   messages:
   - parameter default has no value
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 433
+    line: 443
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 445
+    line: 455
 - code: T0007
   messages:
   - ");\n    std::process::exit(1);\n}\n"
@@ -1604,7 +1604,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3501
+    line: 3505
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1670,7 +1670,7 @@ diagnostics:
   - program entrypoint `main` cannot declare parameters
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 464
+    line: 474
 - code: T0081
   messages:
   - projected callback requires a transferable callable
@@ -1962,17 +1962,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2643
+    line: 2647
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2667
+    line: 2671
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2675
+    line: 2679
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2652
+    line: 2656
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -1981,19 +1981,19 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2244
+    line: 2248
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2343
+    line: 2347
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2355
+    line: 2359
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2363
+    line: 2367
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1792
+    line: 1796
 - code: T0121
   messages:
   - immediate projected generic bounds require a concrete source class argument
@@ -2073,9 +2073,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1020
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1896
+    line: 1900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1916
+    line: 1920
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 209
 - code: T0128
@@ -2091,11 +2091,11 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2457
+    line: 2461
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2474
+    line: 2478
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2485
+    line: 2489
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
@@ -2152,7 +2152,7 @@ diagnostics:
   - '`destruct` is implicitly consuming and cannot declare `{qualifier_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 503
+    line: 513
 - code: T0137
   messages:
   - awaited destructors require the threaded executor
