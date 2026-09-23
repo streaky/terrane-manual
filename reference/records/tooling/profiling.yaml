@@ -14,11 +14,10 @@ lifecycle:
 
 documentation:
   status: complete
-  title: Native CPU profiling
+  title: Native CPU and process-memory profiling
   title-style: text
   summary: >-
-    Records optimized Linux CPU samples into a versioned exact-build artifact and presents source-first cost accounting with
-    generated and native evidence available.
+    Records optimized Linux CPU samples and bounded process-memory timelines into versioned exact-build artifacts, with source-first CPU cost accounting and native evidence available.
   tags:
     - tooling
     - profiling
@@ -35,13 +34,18 @@ documentation:
           since: null
           evidence: []
           markdown: |-
-            `terrane profile record --cpu [--embed-sources] [--retain-arguments] [-o|--output FILE] <file-or-manifest> [-- arguments]`
+            `terrane profile record --cpu [--memory-timeline] [--embed-sources] [--retain-arguments] [-o|--output FILE] <file-or-manifest> [-- arguments]`
             builds the exact workload with the named `terrane-profile-cpu-v1` profile and
-            records the launched process tree. The default output is `profile.trnprof`. The
-            workload keeps inherited standard input, output, and error. Its exit code
-            remains the command exit code. Interrupt and termination signals are forwarded
-            to the collector process group; usable partial evidence is finalized before
-            exit.
+            records the launched process tree.
+
+            `terrane profile record --memory-timeline [--embed-sources] [--retain-arguments] [-o|--output FILE] <file-or-manifest> [-- arguments]`
+            records bounded process RSS observations. `--cpu --memory-timeline` records CPU
+            samples as the primary evidence and attaches the timeline as auxiliary context;
+            the two units remain separate and are never combined into one cost total. The
+            default output is `profile.trnprof`. The workload keeps inherited standard
+            input, output, and error. Its exit code remains the command exit code. Interrupt
+            and termination signals are forwarded to the CPU collector process group; usable
+            partial evidence is finalized before exit.
 
             `terrane profile show FILE [--focus SOURCE:LINE] [--generated] [--native] [--format text|json] [--limit COUNT] [--source-root PATH] [--build-root PATH]`
             re-runs attribution from the captured evidence. The default text view reports
@@ -56,12 +60,13 @@ documentation:
           id: note.profiling.platform
           style: warning
           markdown: |-
-            CPU capture currently supports Linux x86-64 with the host `perf` tool and
-            permission to collect user-space `cpu-clock` samples. Unsupported hosts,
-            targets, missing tools, permission failures, collector failures, and unusable
-            captures fail explicitly. A `.trnprof` file is compiler data and may contain
-            source paths, symbol names, timing, and workload structure; treat it as
-            diagnostic material rather than an anonymous report.
+            CPU capture supports Linux x86-64 with the host `perf` tool and permission to
+            collect user-space `cpu-clock` samples. Process-memory timelines use Linux
+            procfs and report unavailable fields rather than substituting a nearby counter.
+            Unsupported hosts, targets, missing tools, permission failures, collector
+            failures, and unusable captures fail explicitly. A `.trnprof` file is compiler
+            data and may contain source paths, symbol names, timing, and workload structure;
+            treat it as diagnostic material rather than an anonymous report.
     - id: optimized-build
       title: Optimized exact-build evidence
       blocks:
@@ -81,7 +86,10 @@ documentation:
             named profile properties, package inputs, executable hash, generated/source
             maps, loaded module identities, and source/build relocation roots.
 
-            The schema `1.1` evidence unit is CPU sample count. Normalized frames name a
+            The schema `1.2` evidence unit is CPU sample count for CPU captures and bytes
+            for a process-memory timeline. A timeline records the collector interval, missed
+            intervals, timestamped RSS and available procfs counters; unavailable PSS,
+            fault, or accounting fields remain explicit. Normalized CPU frames name a
             captured module plus load-relative offset and may carry symbol, generated
             location, and inline evidence. Collector identity and raw configuration,
             frequency and period, included processes and threads, elapsed and active
@@ -132,11 +140,13 @@ documentation:
           id: note.profiling.deferred
           style: information
           markdown: |-
-            Allocation/event profiling, live-set and retained-graph analysis, process memory
-            timelines, thresholds, comparison commands, continuous-service capture, remote
-            collectors, and non-Linux backends are future work. The typed artifact envelope
-            is designed to admit later evidence kinds without weakening the CPU sample-count
-            contract, but the current CLI does not advertise those modes.
+            Allocation/event profiling, live-set and retained-graph analysis, thresholds,
+            comparison commands, continuous-service capture, remote collectors, and
+            non-Linux backends are future work. Process-memory timelines are intentionally
+            separate from allocation ownership: RSS/PSS observations do not identify
+            allocation sites or prove retained heap. The typed artifact envelope admits
+            later evidence kinds without weakening the CPU sample-count or process-memory
+            byte contracts.
   see-also:
     - tool.debugging
     - tool.source-intelligence

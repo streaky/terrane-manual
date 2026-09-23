@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dd710505c56898bb9c4f6f3d1d58b731015fe3d2af6ac30ff416af19bcda1ca1
+  input-sha256: a1885344d01320a751683e96019df90d5ce2b61ce12223d4bdf007aa514221e6
 format: 2
 generated: true
 records:
@@ -2369,9 +2369,9 @@ records:
     sections: []
   declaration-synopsis: []
 - id: tool.profiling
-  title: Native CPU profiling
-  summary: Records optimized Linux CPU samples into a versioned exact-build artifact and presents source-first
-    cost accounting with generated and native evidence available.
+  title: Native CPU and process-memory profiling
+  summary: Records optimized Linux CPU samples and bounded process-memory timelines into versioned exact-build
+    artifacts, with source-first CPU cost accounting and native evidence available.
   kind: topic
   manual: reference
   group: Tooling
