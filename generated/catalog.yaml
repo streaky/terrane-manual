@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 91893c7e686225ac64c79f3b27ee3e23abf401d002f8229499c090e811d49e95
+  input-sha256: dd710505c56898bb9c4f6f3d1d58b731015fe3d2af6ac30ff416af19bcda1ca1
 format: 2
 generated: true
 records:
@@ -738,8 +738,11 @@ records:
     specification:
     - document: language-scoreboard
       section: throwable-inference
-    conformance: null
-    compiler: null
+    conformance:
+    - finally-error-replacement
+    - finally-throwable-replacement
+    compiler:
+    - crates/terrane-compiler/src/semantics/contracts.rs
   sections:
   - id: throwable-inference
     title: Exact Throwable Inference

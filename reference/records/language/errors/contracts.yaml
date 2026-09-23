@@ -37,8 +37,10 @@ documentation:
 
             A catch removes the failures it handles from the escaping set, while failures
             produced by the handler remain relevant. Inference also accounts for `finally`:
-            when an explicit return or throw in `finally` replaces a pending outcome, that
-            replacement determines what can escape on the affected path.
+            when the final block cannot fall through because it explicitly returns or
+            throws, it replaces the pending outcome and only its own escaping throwables
+            remain on that path. A final block that can fall through retains the pending
+            outcome.
 
             A callable declaration may include an optional postfix upper bound:
         - type: example
@@ -112,5 +114,8 @@ provenance:
   specification:
     - document: language-scoreboard
       section: "throwable-inference"
-  conformance: null
-  compiler: null
+  conformance:
+    - finally-error-replacement
+    - finally-throwable-replacement
+  compiler:
+    - crates/terrane-compiler/src/semantics/contracts.rs
