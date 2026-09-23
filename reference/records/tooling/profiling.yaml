@@ -50,15 +50,16 @@ documentation:
             one capture. The default output is `profile.trnprof`. Standard streams and
             workload exit status remain observable.
 
-            `terrane profile show FILE [--focus SOURCE:LINE] [--generated] [--native] [--format text|json] [--limit COUNT] [--source-root PATH] [--build-root PATH]`
-            re-runs attribution from the captured evidence. The default text view reports
+            `terrane profile show FILE [--focus SOURCE:LINE] [--generated] [--native] [--format text|json] [--limit COUNT] [--compare BASELINE] [--max-allocated-bytes N] [--max-retained-bytes N] [--source-root PATH] [--build-root PATH]`
+            re-runs attribution from captured evidence. The default text view reports
             capture conditions, complete accounting, hottest source groups, a source-first
-            call tree, and folded flame-graph stacks. JSON is a bounded machine-readable
-            view. `--generated` and `--native` expose the lower-level constituents of each
-            source cost group. `--limit` bounds each expansion; rows retain pre-limit totals
-            in JSON and text reports print omitted counts so clipping is never silent.
-            Explicit roots relocate copied-but-identical source and build trees; they never
-            change identity.
+            call tree, and folded stacks. JSON is bounded and machine-readable.
+            `--generated` and `--native` expose lower-level constituents. `--limit` bounds
+            each expansion while preserving pre-limit totals. For allocation evidence,
+            `--compare` reports aggregate count, traffic, retention, and peak-live deltas
+            that do not depend on inlining; allocated/retained byte thresholds render the
+            report and return status 1 when exceeded. Explicit roots relocate
+            copied-but-identical source and build trees; they never change identity.
         - type: note
           id: note.profiling.platform
           style: warning
