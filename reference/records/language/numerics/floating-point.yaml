@@ -139,10 +139,13 @@ documentation:
             round-to-nearest, ties-to-even for finite values. A finite value outside the
             destination range causes conversion failure rather than producing infinity.
 
-            Implicit numeric arrival is stricter than written coercion. Floating narrowing
-            admits exact finite values, signed zero, and signed infinity with sign
-            preserved. It rejects a finite value that would require rounding and rejects
-            every NaN.
+            `float64.coerce.lossy; float32` selects the infallible IEEE narrowing policy. It
+            uses the same round-to-nearest, ties-to-even rule; finite overflow produces
+            signed infinity, and normal values may become subnormal or signed zero on
+            underflow. It preserves signed zero, signed infinity, and the NaN category, but
+            source NaN payload preservation is not part of Terrane's portable contract. The
+            policy is unavailable for exact widening, integer conversion, and every other
+            source/destination pair.
 
             Canonical floating-point display is locale-independent. Finite values use the
             shortest round-trippable spelling. Negative zero remains distinguishable.

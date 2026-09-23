@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f5676f472b3e09858bb64b0ac26d0d696694390028ec07952914aa76fc00afb5
+  input-sha256: 7f82147338056635661d806fa0003e84e5dcb083b356cb61d3d203e03952aae4
 format: 2
 generated: true
 records:
@@ -183,6 +183,8 @@ records:
     - coercion-callback-source
     - coercion-callback-result
     - coercion-callback-ambiguous
+    - lossy-float-narrowing
+    - lossy-float-widening
     compiler: null
   sections:
   - id: destinations

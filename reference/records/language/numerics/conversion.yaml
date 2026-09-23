@@ -41,10 +41,11 @@ documentation:
           markdown: |-
             `value.coerce; Destination` selects the compiler-declared throwing conversion.
             `coerce.checked` returns `Destination|none`; `coerce.wrap` and `coerce.saturate`
-            exist only for supported fixed-width integer pairs. Written integer-to-float
-            coercion permits IEEE round-to-nearest, ties-to-even. No floating-to-integer
-            pair is declared: choose `round`, `floor`, `ceiling`, or `truncate` before the
-            integer destination.
+            exist only for supported fixed-width integer pairs.
+            `float64.coerce.lossy; float32` is the sole lossy pair: it is an infallible IEEE
+            narrowing operation. Written integer-to-float coercion permits IEEE
+            round-to-nearest, ties-to-even. No floating-to-integer pair is declared: choose
+            `round`, `floor`, `ceiling`, or `truncate` before the integer destination.
         - type: rule
           id: rule.conversion.family-not-storable
           level: must
@@ -155,8 +156,10 @@ documentation:
             round-to-nearest, ties-to-even, so an inexact finite result can be valid. For
             floating-to-floating written coercion, narrowing uses the same rounding rule;
             finite-range failure throws `coercion-error`, while `coerce.checked` returns
-            `none`. Signed infinities and the NaN category are preserved rather than treated
-            as finite overflow.
+            `none`. `float64.coerce.lossy; float32` instead completes without failure:
+            finite overflow becomes signed infinity and underflow can become signed zero.
+            Signed zero and infinity, plus the NaN category, are preserved; NaN payload
+            preservation is not portable.
 
             No floating-to-integer `coerce` pair exists. Use `round;`, `floor;`, `ceiling;`,
             or `truncate;` to produce an integer first, after which ordinary destination
@@ -184,6 +187,7 @@ documentation:
           source: |2
             value.coerce; Destination
             value.coerce.checked; Destination
+            value.coerce.lossy; Destination
             value.coerce.wrap; Destination
             value.coerce.saturate; Destination
             value.coerce; Destination, converter
@@ -195,11 +199,13 @@ documentation:
           markdown: |-
             The bare form uses the throwing default policy. `checked` returns
             `Destination|none`; conversion failure produces `none`, not a substitute value.
-            `wrap` and `saturate` exist only for supported fixed-width destinations.
-            Availability is resolved statically from the complete source-type,
-            destination-type, and policy combination. An undeclared source/destination pair
-            is absent rather than becoming a runtime conversion failure, and an unsupported
-            policy/type combination is rejected at its source location.
+            `lossy` is declared only from `float64` to `float32`: it is infallible IEEE
+            round-to-nearest, ties-to-even narrowing. `wrap` and `saturate` exist only for
+            supported fixed-width destinations. Availability is resolved statically from the
+            complete source-type, destination-type, and policy combination. An undeclared
+            source/destination pair is absent rather than becoming a runtime conversion
+            failure, and an unsupported policy/type combination is rejected at its source
+            location.
 
             The flat spellings `checked-coerce`, `wrapping-coerce`, and `saturating-coerce`
             are invalid. A child named `default` exists in descriptor metadata for
@@ -224,10 +230,16 @@ documentation:
             same rounding rule. Floating-to-floating coercion preserves signed zero, signed
             infinity, and the NaN category. If a finite value is outside the destination
             range, the default form throws `coercion-error` and `checked` returns `none`;
-            overflow never produces infinity. By contrast, implicit floating narrowing
-            admits exact finite values, signed zero, and signed infinity with sign
-            preserved, but rejects rounded finite values and every NaN with
-            `integer-conversion-overflow`.
+            overflow never produces infinity.
+
+            `value.coerce.lossy; float32` is declared only for a `float64` receiver. It
+            makes the alternate, total policy explicit: one IEEE round-to-nearest,
+            ties-to-even narrowing; normal values may become subnormal or signed zero on
+            underflow, and finite overflow produces signed infinity. The result preserves
+            signed zero, signed infinity, and the NaN category, but portable Terrane does
+            not promise a NaN payload. Implicit floating narrowing admits exact finite
+            values, signed zero, and signed infinity with sign preserved, but rejects
+            rounded finite values and every NaN with `integer-conversion-overflow`.
 
             No floating-to-integer `coerce` pair exists. Selecting an integer from a
             floating value requires an explicit rounding operation: `round;` uses
@@ -308,4 +320,6 @@ provenance:
     - coercion-callback-source
     - coercion-callback-result
     - coercion-callback-ambiguous
+    - lossy-float-narrowing
+    - lossy-float-widening
   compiler: null
