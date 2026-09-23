@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f5676f472b3e09858bb64b0ac26d0d696694390028ec07952914aa76fc00afb5
+  input-sha256: 7f82147338056635661d806fa0003e84e5dcb083b356cb61d3d203e03952aae4
 format: 1
 generated: true
 symbols:
@@ -523,6 +523,10 @@ symbols:
 - name: async
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
+  declaration: async
+- name: async
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: async
 - name: async
   record: lang.functions.callable-types
@@ -1493,6 +1497,10 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: consume-events
+- name: consuming
+  record: lang.classes.lifecycle
+  section: lifecycle
+  declaration: consuming
 - name: consuming
   record: lang.functions.callable-types
   section: syntax
@@ -4069,6 +4077,10 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: logging
+- name: lossy
+  record: lang.numerics.conversion
+  section: numeric-coercion
+  declaration: lossy
 - name: lower
   record: lang.text.transformation
   section: string-transform
@@ -4416,6 +4428,10 @@ symbols:
 - name: mutable
   record: book.classes-interfaces-and-traits
   section: cleanup-with-destruct
+  declaration: mutable
+- name: mutable
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: mutable
 - name: mutable
   record: lang.functions.callable-types
@@ -6416,6 +6432,10 @@ symbols:
   section: collection-kinds
   declaration: set
 - name: shared
+  record: lang.classes.lifecycle
+  section: lifecycle
+  declaration: shared
+- name: shared
   record: lang.expressions.operators
   section: operators-precedence
   declaration: shared
@@ -6583,6 +6603,10 @@ symbols:
   record: std.text-bytes-codecs
   section: string-operations
   declaration: start
+- name: static
+  record: lang.classes.lifecycle
+  section: lifecycle
+  declaration: static
 - name: step
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward

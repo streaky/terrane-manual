@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5a00636dd459e34245494841448c4ff71a0fe72a4e0e17d8d2f755e4eb99939d
+  input-sha256: d470e6dbf05b77ba7385bc9f6cd919bb940c5d8fa4af5bcb7c04e976bed83300
 format: 1
 generated: true
 diagnostics:
@@ -899,7 +899,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3475
+    line: 3483
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -943,11 +943,11 @@ diagnostics:
   - constant `{value}` is outside the range of `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 823
+    line: 835
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 871
+    line: 883
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 1018
+    line: 1030
 - code: T0004
   messages:
   - function requires a name
@@ -1026,11 +1026,11 @@ diagnostics:
   - invalid constant arithmetic
   sources:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 656
+    line: 668
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 920
+    line: 932
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 934
+    line: 946
 - code: T0012
   messages:
   - callable expects {expected} arguments, found {}
@@ -1191,25 +1191,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 971
+    line: 987
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1014
+    line: 1030
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1065
+    line: 1081
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1037
+    line: 1053
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1074
+    line: 1090
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1258,7 +1258,7 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1269
+    line: 1301
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 456
 - code: T0028
@@ -1337,7 +1337,7 @@ diagnostics:
   - '`is none` is invalid; type membership is written `is a none`'
   sources:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
-    line: 536
+    line: 548
 - code: T0039
   messages:
   - '`{}::{}` is a property and cannot be invoked'
@@ -1604,7 +1604,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3493
+    line: 3501
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1962,17 +1962,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2635
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2659
+    line: 2643
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2667
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2675
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2644
+    line: 2652
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -1981,19 +1981,19 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2236
+    line: 2244
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2335
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2347
+    line: 2343
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2355
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2363
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1784
+    line: 1792
 - code: T0121
   messages:
   - immediate projected generic bounds require a concrete source class argument
@@ -2073,9 +2073,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1020
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1888
+    line: 1896
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1908
+    line: 1916
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 209
 - code: T0128
@@ -2091,11 +2091,11 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2449
+    line: 2457
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2466
+    line: 2474
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2477
+    line: 2485
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
@@ -2147,6 +2147,18 @@ diagnostics:
     line: 310
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 187
+- code: T0136
+  messages:
+  - '`destruct` is implicitly consuming and cannot declare `{qualifier_name}`'
+  sources:
+  - path: crates/terrane-compiler/src/semantics/contracts.rs
+    line: 503
+- code: T0137
+  messages:
+  - awaited destructors require the threaded executor
+  sources:
+  - path: crates/terrane-compiler/src/semantics/analysis.rs
+    line: 907
 - code: W4001
   messages:
   - ");\n            !dependency_warning && !library_export_warning\n        })\n        .collect();\n\
