@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c380994d406176ee9de074f3184fe63f3f955cbd2f6f977538ca85fd3a4ad0d4
+  input-sha256: 163aada34a94e18ffa40d4872b336ec61f2a325f020f93cc510137b8ea999238
 format: 2
 generated: true
 records:
@@ -2772,6 +2772,9 @@ records:
     sections: []
   - id: resolved-graph-survey
     title: Resolved-graph survey evidence
+    sections: []
+  - id: projection-gap-census
+    title: Compiler-backed projection gap census
     sections: []
   - id: history
     title: Durable origin and replay history

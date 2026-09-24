@@ -61,19 +61,25 @@ documentation:
             1. Add one exact `[rust-dependencies.<alias>]` entry to `package.toml`; select
                only reviewed features and declare every required effect.
             2. Run `terrane check <package>` (or another ordinary package command). A cache
-               miss invokes projection with the pinned rustdoc toolchain.
-            3. Import admitted names explicitly from `/deps/<alias>/...`.
-            4. Inspect `terrane-projection.lock` as the reviewable inventory for the exact
-               resolved package, feature, target, admitted member, and declined-member
-               surface.
-            5. Call a member only after distinguishing its projection state in that
-               inventory.
-            6. Catch `dependency-error` where a projected Rust `Result` or dependency panic
+               miss resolves the complete Cargo dependency closure, writes
+               `terrane-dependencies.lock`, and invokes complete projection with the pinned
+               rustdoc toolchain.
+            3. Review `terrane-projection.generated.trn` beside `package.toml`. It places
+               unavailable declarations demanded by current source first, followed by a
+               separator and the unused unavailable inventory, then the complete generated
+               Terrane declarations. Every unavailable entry includes its native path,
+               projection gap, and current source demand.
+            4. Import admitted names explicitly from `/deps/<alias>/...`.
+            5. Review `terrane-dependencies.lock` for the exact complete resolved package
+               graph and `terrane-projection.lock` for reproducible admitted and declined
+               history.
+            6. Calling a currently unavailable declaration fails at the demanding source
+               location and links to the generated inventory. Undemanded gaps do not fail
+               the build.
+            7. Catch `dependency-error` where a projected Rust `Result` or dependency panic
                crosses into application policy.
-            7. If a required operation is declined, determine whether the missing shape
-               belongs in generic projection or in the central temporary integration-adapter
-               package. Record an objective generic removal criterion before shipping a
-               bridge.
+            8. Use a demanded gap's generated contract and caller list as the basis for a
+               generic compiler issue or an explicitly temporary integration adapter.
         - type: table
           id: projection-member-states
           title: Dependency member states
@@ -101,9 +107,12 @@ documentation:
             - state: Destination-directed
               meaning: One result-only Rust type parameter is selected from a written Terrane destination.
               action: Supply exactly one compatible typed destination.
-            - state: Declined
-              meaning: Projection retained an explicit reason instead of approximating the Rust contract.
-              action: Treat it as unavailable and review the reason.
+            - state: Unavailable and unused
+              meaning: Projection retained an explicit native path and gap, but current source does not demand it.
+              action: No build action is required; retain it as projection evidence.
+            - state: Unavailable and demanded
+              meaning: Reachable application source imports or invokes a declaration whose contract is not yet registered.
+              action: Follow its generated caller and gap report; the demanding build fails.
             - state: Adapter-only
               meaning: A central feature-gated bridge exposes only the currently unprojectable operation.
               action: Declare both packages and preserve upstream identities.
@@ -112,12 +121,23 @@ documentation:
           id: projection-lock-review
           style: information
           markdown: |-
-            `terrane-projection.lock` is derived but reviewable package evidence. Commit it
-            with the application when reproducible dependency review is required. A changed
+            `terrane-dependencies.lock` is the derived Cargo-compatible lock for the
+            complete resolved Rust graph, including recursive packages, exact versions,
+            sources and checksums. Commit it with the application; the compiler seeds
+            subsequent resolution from it and regenerates it only through ordinary package
+            commands.
+
+            `terrane-projection.lock` is separate derived package evidence for reproducible
+            projected API history. Commit it when projection review is required. The ignored
+            `terrane-projection.generated.trn` is the current human-readable complete
+            projection inventory: ordinary commands deterministically refresh its
+            required-first unavailable declarations, separated unused declarations,
+            projected Terrane declarations, and application demand sites. A changed
             dependency version, feature set, target, rustdoc toolchain, projection schema,
-            or admitted/declined inventory deserves review even when authored Terrane source
-            is unchanged. Never edit the lock to manufacture availability; regenerate it
-            through the compiler.
+            generated private owner edge, or admitted/declined inventory deserves review
+            even when authored Terrane source is unchanged. Never edit locks or the
+            generated inventory to manufacture availability; regenerate them through the
+            compiler.
     - id: imports
       title: Importing admitted members
       blocks:
@@ -164,16 +184,20 @@ documentation:
           level: must
           since: null
           evidence:
-            - transitive-type-owner-must-be-declared-at-one-version
+            - transitive-type-owner-uses-unique-locked-recursive-package
           markdown: |-
-            A member whose signature exposes a type owned by an undeclared transitive crate
-            is unavailable. The diagnostic names the owner and its lock-resolved version.
-            Declare that crate directly with a unifying version to make its canonical
-            identity and members reachable. Merely receiving the type through another
-            dependency does not declare its owner. If the crossed owner resolves to multiple
-            versions, projection validation fails after Cargo lock resolution and before
-            semantic import resolution or Rust lowering, and reports every conflicting
-            version.
+            A member exposed through a directly declared package may name a type or trait
+            owned by one unique package in the locked recursive closure. The compiler adds
+            an exact private generated Cargo edge for that owner, preserving the already
+            resolved version and feature graph, while the operation remains available only
+            through the declared package's `/deps/<alias>` facade. Recursive packages never
+            become Terrane import roots implicitly.
+
+            If a crate root resolves to multiple package versions, or its source cannot be
+            represented by a generated private edge, the operation remains unavailable and
+            the diagnostic reports the owner and every conflicting lock version. Declaring a
+            deliberate unifying dependency remains the explicit way to select shared
+            identity across package facades.
     - id: async-members
       title: Awaiting asynchronous members
       blocks:
@@ -577,12 +601,13 @@ documentation:
             explicitly deferred until Terrane has a release artifact channel rather than
             being silently attempted.
 
-            Injecting an exact bound-owner edge deliberately rewrites only the generated
-            projection manifest, so its offline fetch cannot use Cargo's `--locked` mode.
-            The pre-injection manifest and lock already participate in projection identity,
-            and the injected edge list is exact, content-hashed, and reviewable in
-            `terrane-projection.lock`; these invariants replace Cargo lock enforcement for
-            that step.
+            Injecting exact recursive-owner and bound-owner edges deliberately rewrites only
+            the generated Cargo manifest. `terrane-dependencies.lock` preserves the complete
+            pre-existing resolved graph; the generated edges use exact versions with no
+            default-feature or feature widening. The private edge list is content-hashed and
+            reviewable in `terrane-projection.lock`. These invariants permit Cargo's offline
+            post-resolution manifest rewrite without exposing recursive packages as source
+            imports.
 
             Unsupported members remain explicit declines in the transferable projection
             artifact. The compiler does not replace one Rust API shape with a nearby Terrane

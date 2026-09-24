@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c380994d406176ee9de074f3184fe63f3f955cbd2f6f977538ca85fd3a4ad0d4
+  input-sha256: 163aada34a94e18ffa40d4872b336ec61f2a325f020f93cc510137b8ea999238
 format: 1
 generated: true
 symbols:
@@ -1593,6 +1593,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: copy-sign
+- name: core
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: core
 - name: core::future::into_future::IntoFuture
   record: tool.packages.rust-dependencies
   section: async-projected-calls
@@ -1705,10 +1709,6 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: decimal-log
-- name: Declined
-  record: tool.packages.rust-dependencies
-  section: workflow
-  declaration: Declined
 - name: decode
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -2081,6 +2081,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-projected-calls
   declaration: E
+- name: editors/vscode/server/
+  record: tool.editor-support
+  section: editor-support
+  declaration: editors/vscode/server/
 - name: effects
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -5085,6 +5089,10 @@ symbols:
   declaration: package.toml
 - name: package.toml
   record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: package.toml
+- name: package.toml
+  record: internals.projection.resolution
   section: public-paths
   declaration: package.toml
 - name: package.toml
@@ -6103,6 +6111,10 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: rust-modules.<module>
+- name: rust-src
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: rust-src
 - name: rust-toolchain
   record: tool.packages.package-manifest
   section: fields
@@ -6411,6 +6423,14 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: serializable
+- name: server/terrane-language-server
+  record: tool.editor-support
+  section: editor-support
+  declaration: server/terrane-language-server
+- name: server/terrane-language-server.exe
+  record: tool.editor-support
+  section: editor-support
+  declaration: server/terrane-language-server.exe
 - name: set
   record: book.text-and-collections
   section: creating-and-updating-maps
@@ -6603,6 +6623,10 @@ symbols:
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: static
+- name: std
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: std
 - name: step
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -6895,6 +6919,10 @@ symbols:
   record: book.first-taste
   section: installing-the-toolchain
   declaration: target/release
+- name: target/release/terrane-language-server
+  record: tool.editor-support
+  section: editor-support
+  declaration: target/release/terrane-language-server
 - name: target_identity_reads_effective_cargo_configuration
   record: internals.projection.resolution
   section: identity
@@ -7031,6 +7059,22 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: terrane-dependencies.<name>.tag
+- name: terrane-dependencies.lock
+  record: internals.projection.resolution
+  section: history
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
+  record: internals.projection.resolution
+  section: identity
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
+  record: tool.packages.rust-dependencies
+  section: resolution
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: terrane-dependencies.lock
 - name: terrane-integration-adapters
   record: internals.integration-boundaries
   section: direct-first
@@ -7039,6 +7083,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: integration-boundaries
   declaration: terrane-integration-adapters
+- name: terrane-language-server
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane-language-server
 - name: terrane-profile-cpu-v1
   record: tool.profiling
   section: commands
@@ -7047,6 +7095,18 @@ symbols:
   record: tool.profiling
   section: optimized-build
   declaration: terrane-profile-cpu-v1
+- name: terrane-projection.generated.trn
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: terrane-projection.generated.trn
+- name: terrane-projection.generated.trn
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane-projection.generated.trn
+- name: terrane-projection.generated.trn
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: terrane-projection.generated.trn
 - name: terrane-projection.lock
   record: internals.projection.resolution
   section: history
@@ -7063,6 +7123,10 @@ symbols:
   record: internals.projection.resolution
   section: resolved-graph-survey
   declaration: terrane-rust-survey
+- name: terrane.server.path
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.server.path
 - name: terrane/fidelity
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -7659,6 +7723,14 @@ symbols:
   record: std.text-bytes-codecs
   section: text-and-bytes
   declaration: uint8
+- name: Unavailable and demanded
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: Unavailable and demanded
+- name: Unavailable and unused
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: Unavailable and unused
 - name: unique-words
   record: book.text-and-collections
   section: project-word-frequency

@@ -33,6 +33,37 @@ documentation:
             reuse compiler data rather than relying on a separate editor-only language
             model.
 
+            The VS Code extension starts one `terrane-language-server` child process. By
+            default it resolves that executable inside the installed extension at
+            `server/terrane-language-server` (`server/terrane-language-server.exe` on
+            Windows). The executable is bundled into the extension rather than discovered
+            from the repository build directory, so rebuilding
+            `target/release/terrane-language-server` alone does not update an installed
+            extension or an already-running server process.
+
+            The extension's `npm run package-server` command builds the
+            `terrane-language-server` package in release mode and copies that executable
+            into `editors/vscode/server/`, preserving executable permissions on Unix. This
+            repository-local copy is the staging input for extension packaging. Installing
+            the resulting VSIX creates another independent copy below the active VS Code
+            extension directory. Consequently, changing the staged repository copy does not
+            mutate an extension that is already installed; package and reinstall the VSIX to
+            update that installation.
+
+            For compiler development, the `terrane.server.path` VS Code setting may name an
+            absolute language-server executable and takes precedence over the bundled copy.
+            This makes it possible to exercise `target/release/terrane-language-server`
+            without repackaging the extension. Whether using the override or replacing an
+            installed extension, reload the VS Code window after changing the selected
+            executable. Existing language-server child processes continue running the binary
+            image with which they were started.
+
+            When diagnosing an apparently stale language-server result, first identify which
+            executable the extension selected. Distinguish the Cargo build output, the
+            repository-staged extension binary, and the binary copied into the installed
+            extension. Comparing their hashes is a direct way to establish whether VS Code
+            is executing the build under investigation.
+
             For manifest-declared Rust dependencies, completion, signature help, and hover
             use the same lock-resolved projection as compilation. The projection is derived
             from the resolved package, selected features, target, and rustdoc data. It
@@ -53,6 +84,11 @@ documentation:
             Semantic highlighting, definition navigation, and editor diagnostics use
             compiler-derived source information. The diagnostics displayed by the editor are
             therefore the compiler's diagnostics.
+
+            The compiler-owned `terrane-projection.generated.trn` inventory is not an
+            authored namespace source. When it is opened for inspection, the language server
+            suppresses the otherwise applicable missing-namespace diagnostic; ordinary
+            namespace-less Terrane files continue to receive that diagnostic.
 
             Dependency-import lookup has one advisory limitation. If the same local name is
             imported from two `/deps` namespaces in one file, hover and signature help use
