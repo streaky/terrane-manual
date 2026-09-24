@@ -381,11 +381,18 @@ documentation:
             imports. The file places unavailable native declarations demanded by current
             source first, followed by a separator and the unused unavailable inventory, then
             every admitted generated Terrane declaration. Each unavailable declaration
-            retains its canonical path and exact decline reason. Current source imports and
-            projected member calls annotate unavailable entries with file, line, and column
-            demand sites. An unavailable but undemanded entry is inventory evidence only;
-            semantic analysis fails at a source location only when that application demands
-            the entry. Rebuilding deterministically replaces demand annotations instead of
+            retains its canonical path and exact decline reason. For demanded functions
+            whose native shape can be recovered, the report also emits a deterministic
+            partial contract: the full function shape, generic constraints, callback-bearing
+            parameter contracts, and required callback method signatures. Demanded
+            module/function name collisions are disambiguated by a namespace-container
+            partial contract rather than pretending that the module is callable. These
+            contracts preserve discovered structure but do not make unavailable declarations
+            callable or weaken their diagnostics. Current source imports and projected
+            member calls annotate unavailable entries with file, line, and column demand
+            sites. An unavailable but undemanded entry is inventory evidence only; semantic
+            analysis fails at a source location only when that application demands the
+            entry. Rebuilding deterministically replaces demand annotations instead of
             retaining historical callers.
 
             The separate projection-census runner reads a versioned declarative package list

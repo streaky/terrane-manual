@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 213679e6fa5faeeb84b224a493f23604b4ad855f02a08eddf1609b6aae49d6e1
+  input-sha256: 1e71439437a94846f307ec855291864d076904c6aceb5421db35cacf09aaec4d
 format: 1
 generated: true
 diagnostics:
@@ -702,9 +702,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 156
+    line: 158
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 174
+    line: 176
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -791,7 +791,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 969
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 138
+    line: 140
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -872,7 +872,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 917
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 56
+    line: 57
 - code: S9004
   messages:
   - 'generated Rust `{}` cannot be checked for canonical formatting: {error}'
