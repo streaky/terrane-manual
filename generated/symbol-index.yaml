@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8e1195a908ec492035e048eaac36b6697f508aa5f2abe50c124acbf85e9d1ece
+  input-sha256: d48378050be9c515ee179026506472461d7d5f90da2279eb386d0213dcc758b6
 format: 1
 generated: true
 symbols:
@@ -448,6 +448,10 @@ symbols:
   record: tool.packages.testing
   section: execution
   declaration: application-artifact
+- name: Application-of-Program-State-Message-Theme
+  record: tool.packages.rust-dependencies
+  section: imports
+  declaration: Application-of-Program-State-Message-Theme
 - name: apply
   record: book.functions
   section: exercises
@@ -5727,6 +5731,10 @@ symbols:
   record: lang.namespaces.prelude
   section: prelude
   declaration: range
+- name: RangeInclusive-of-iced-Degrees
+  record: tool.packages.rust-dependencies
+  section: imports
+  declaration: RangeInclusive-of-iced-Degrees
 - name: Rc
   record: book.identity-and-movement
   section: shared-references-and-ownership

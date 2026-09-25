@@ -173,8 +173,12 @@ documentation:
             `Class::function`; they are not imported as independent namespace functions.
 
             A generic declaration with one admitted concrete instantiation keeps its
-            readable Rust type name. Hash-suffixed names are reserved for multiple admitted
-            instantiations whose canonical Rust identities must remain distinct.
+            readable Rust type name. When a closed generic appears only through another
+            projected declaration, its source name describes the canonical arguments, for
+            example `RangeInclusive-of-iced-Degrees`. Opaque bound identities remain concise
+            by retaining the trait and associated value names, such as
+            `Application-of-Program-State-Message-Theme`. Digests are reserved for
+            identities that have no complete, unambiguous source description.
     - id: crossed-types
       title: Values crossing the generated shim
       blocks:
