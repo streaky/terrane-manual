@@ -78,8 +78,8 @@ documentation:
                declarations; projected `Result` errors retain an explicit
                `throws dependency-error` contract. Admitted classes include every
                already-projectable method, associated constant, and enum constructor.
-               Associated constants appear as `static constant` members and are selected
-               with `Type::CONSTANT`; constants without an exactly translatable Terrane
+               Associated constants appear as `constant` members and are selected with
+               `Type::CONSTANT`; constants without an exactly translatable Terrane
                initializer still lower directly to their canonical Rust path. Unsupported
                public members remain inert comments inside their owning class with exact gap
                evidence. Recoverable but unavailable nominal types appear as class/interface
