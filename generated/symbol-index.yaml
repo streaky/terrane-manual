@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2aa5738dd8c9608a1d3a0817886b4c62611f219b9fab63d21c114803d6ccfa49
+  input-sha256: 5131c4b38cf9e7235af53e8b831e95bbf916ae49d3d77cb26aedde8153631a13
 format: 1
 generated: true
 symbols:
@@ -2957,6 +2957,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: Fn
+- name: Fn
+  record: tool.packages.rust-dependencies
+  section: interfaces
+  declaration: Fn
 - name: FnMut
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -2969,6 +2973,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: FnMut
+- name: FnMut
+  record: tool.packages.rust-dependencies
+  section: interfaces
+  declaration: FnMut
 - name: FnOnce
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -2980,6 +2988,10 @@ symbols:
 - name: FnOnce
   record: tool.packages.rust-dependencies
   section: callbacks
+  declaration: FnOnce
+- name: FnOnce
+  record: tool.packages.rust-dependencies
+  section: interfaces
   declaration: FnOnce
 - name: foo/bar
   record: lang.namespaces.declarations

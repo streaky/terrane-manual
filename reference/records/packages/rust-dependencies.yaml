@@ -384,6 +384,8 @@ documentation:
             - projected-boxed-trait-result
             - projected-canonical-drop-import
             - projected-boxed-erased-auto-trait
+            - projected-deferred-callback-template
+            - projected-deferred-callback-template-reject
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
             Plain Rust `&self`, `&mut self`, and `self` receivers become shared, mutable,
@@ -404,6 +406,16 @@ documentation:
             Consequently contracts such as `impl Into<Radius>`, `impl Borrow<T>`, and
             combined `Clone + Send + TryInto<T>` bounds reuse one mechanism and preserve
             every native implementation accepted by Rust.
+
+            A direct `Fn`, `FnMut`, or `FnOnce` callback whose input or exact result
+            mentions open function generics projects as a deferred callback template. Its
+            nested generic positions remain symbolic until call analysis jointly binds them
+            from the written callable, ordinary arguments, and destination. Only then does
+            callable validation and native adapter lowering run. Conflicting callback and
+            destination evidence is rejected before Rust generation. Parameterized callback-
+            adapter traits remain native templates rather than misleading parameterless
+            Terrane interfaces. Their blanket-implementation-local result conversions and
+            higher-ranked lifetime binders remain separate capability boundaries.
 
             Only an owning `Box<dyn Interface + Send/Sync>` parameter projects as erased
             interface storage. Every object auto-trait is retained; the dependency shim
