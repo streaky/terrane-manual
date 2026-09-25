@@ -450,16 +450,22 @@ documentation:
             Terrane interfaces. For each such input, projection inspects blanket
             implementations whose `Self` is constrained by exactly one parenthesized
             `Fn`/`FnMut`/`FnOnce` bound, substitutes the adapter trait arguments, and
-            retains every implementation-local result bound. One unique recipe becomes a
-            deferred callback template; zero recipes preserve the ordinary native
-            obligation, while multiple distinct recipes decline as ambiguous. Call analysis
-            jointly infers callback parameters and result, proves the complete substituted
-            result-bound conjunction, and lowering passes a fresh concrete Rust closure
-            rather than Terrane's reusable `Arc<dyn Fn...>` representation. Failed or
-            unknown proof is rejected before Rust generation. Higher-ranked recipe binders
-            are retained through the same metadata and proof path; writing a Terrane
-            function whose result itself carries the bound lifetime remains a separate
-            source-type boundary.
+            retains every implementation-local result bound. Callable parameters that remain
+            open after adapter substitution are not viable recipes; this can distinguish a
+            concrete zero-argument recipe from extractor-arity blanket implementations. A
+            callable recipe whose `FnOnce` implementation also requires `Clone` projects a
+            reusable Terrane function because every independently cloned native handler must
+            remain callable. If the callable returns a generic native `Future`, projection
+            follows its exact `Output` equality and exposes an async Terrane result instead
+            of the future object. One unique recipe becomes a deferred callback template;
+            zero recipes preserve the ordinary native obligation, while multiple distinct
+            recipes decline as ambiguous. Call analysis jointly infers callback parameters
+            and result, proves the complete substituted result-bound conjunction, and
+            lowering passes a fresh concrete Rust closure rather than Terrane's reusable
+            `Arc<dyn Fn...>` representation. Failed or unknown proof is rejected before Rust
+            generation. Higher-ranked recipe binders are retained through the same metadata
+            and proof path; writing a Terrane function whose result itself carries the bound
+            lifetime remains a separate source-type boundary.
 
             Rust modules are structural namespaces, not projected value declarations or
             unavailable API members. A module and a public value may therefore share one
@@ -467,8 +473,9 @@ documentation:
             selects the value declaration. Producer-specific opaque owner identities include
             their retained bounds, and import closure follows that exact identity rather
             than choosing another same-base native owner by traversal order. Public type
-            aliases are expanded before projected output wrappers such as `Result<(), E>`
-            are classified.
+            aliases and omitted default generic arguments are expanded before projected
+            output wrappers such as `Result<(), E>` are classified. Static value paths for
+            instantiated native owners use Rust turbofish syntax.
 
             A producer-selected return-position `impl Trait` remains an owned opaque native
             witness. Projection retains its complete canonical bounds and associated-type

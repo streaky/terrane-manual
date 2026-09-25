@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d48378050be9c515ee179026506472461d7d5f90da2279eb386d0213dcc758b6
+  input-sha256: edc66cb7cecf18c9b1fce555489213e9bf67ae907025246c3802c4cbfe77d4f3
 format: 1
 generated: true
 symbols:
@@ -1211,6 +1211,10 @@ symbols:
 - name: Clone
   record: tool.packages.rust-dependencies
   section: integration-boundaries
+  declaration: Clone
+- name: Clone
+  record: tool.packages.rust-dependencies
+  section: interfaces
   declaration: Clone
 - name: close
   record: book.namespaces-imports-and-packages
@@ -3153,6 +3157,10 @@ symbols:
   record: lang.types.authority-in-practice
   section: declaration-table
   declaration: function retain none; value shared ref some-type
+- name: Future
+  record: tool.packages.rust-dependencies
+  section: interfaces
+  declaration: Future
 - name: gen
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
@@ -5042,6 +5050,10 @@ symbols:
 - name: Output
   record: tool.packages.rust-dependencies
   section: async-projected-calls
+  declaration: Output
+- name: Output
+  record: tool.packages.rust-dependencies
+  section: interfaces
   declaration: Output
 - name: overflowed
   record: lang.numerics.arithmetic-policies
