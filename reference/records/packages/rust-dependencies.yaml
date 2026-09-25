@@ -67,17 +67,20 @@ documentation:
             3. Review `terrane-projection.generated.trn` beside `package.toml`. It places
                unavailable declarations demanded by current source and the required-admitted
                index first, active one-namespace Terrane source second, and the unreachable
-               unavailable inventory last. Closed numeric specializations and canonical
-               public re-exports of one native type constructor share one public class name
+               unavailable inventory last. Native identity and Terrane naming are separate:
+               canonical public re-exports and repeated observations of one exact Rust type
+               share one readable class name. A unique closed generic uses its constructor
+               name; actual collisions first gain deterministic path-derived qualifiers and
+               use a short digest only if those still collide. Closed numeric
+               specializations of one native constructor likewise share one public class
                while exact native arguments remain compiler-owned for member selection and
-               lowering. Other generic shapes retain distinct internal names. Universal
-               panic translation is implicit and omitted from generated declarations;
-               projected `Result` errors retain an explicit `throws dependency-error`
-               contract. Admitted classes include every already-projectable method and enum
-               constructor. Unsupported public members remain inert comments inside their
-               owning class with exact gap evidence. Recoverable but unavailable nominal
-               types appear as class/interface skeletons with explicit residual obligations
-               and remain unavailable for lowering.
+               lowering. Universal panic translation is implicit and omitted from generated
+               declarations; projected `Result` errors retain an explicit
+               `throws dependency-error` contract. Admitted classes include every
+               already-projectable method and enum constructor. Unsupported public members
+               remain inert comments inside their owning class with exact gap evidence.
+               Recoverable but unavailable nominal types appear as class/interface skeletons
+               with explicit residual obligations and remain unavailable for lowering.
             4. Import admitted names explicitly from `/deps/<alias>/...`.
             5. Review `terrane-dependencies.lock` for the exact complete resolved package
                graph and `terrane-projection.lock` for reproducible admitted and declined
