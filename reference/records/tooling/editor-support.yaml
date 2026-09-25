@@ -87,10 +87,12 @@ documentation:
 
             The compiler-owned `terrane-projection.generated.trn` is a generated report and
             multi-unit source container, not one authored namespace source.
-            `Generated source unit` markers delimit ordinary one-namespace Terrane units;
-            when the physical container is opened for inspection, the language server
-            suppresses the otherwise applicable whole-file namespace diagnostic. Ordinary
-            namespace-less or multi-namespace authored files continue to receive their
+            `Generated source unit` markers delimit ordinary one-namespace Terrane units.
+            When the physical container is opened for inspection, the language server
+            suppresses both whole-file namespace-count and duplicate-namespace diagnostics
+            caused solely by viewing those virtual units as one document. Package analysis
+            separately syntax-validates each generated unit. Ordinary namespace-less,
+            duplicate-namespace, or multi-namespace authored files continue to receive their
             diagnostics.
 
             Dependency-import lookup has one advisory limitation. If the same local name is

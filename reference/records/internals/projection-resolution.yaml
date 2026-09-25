@@ -378,21 +378,21 @@ documentation:
             Ordinary package analysis also writes an ignored
             `terrane-projection.generated.trn` beside `package.toml`. Projection remains
             complete over the discovered surface rather than being restricted to current
-            imports. The file begins with report metadata: demanded unavailable
-            declarations, a required-admitted index, and the unreachable unavailable
-            inventory. It then contains active compiler-owned Terrane source introduced by
-            deterministic `Generated source unit` markers. Each marker starts an ordinary
-            one-namespace virtual source unit, so a single physical artifact may contain
-            `/deps/iced`, `/deps/iced/application`, and other namespaces without weakening
-            the authored-source `S2002` rule. Package analysis splits and syntax-validates
-            every unit before replacing the artifact; namespace dependency cycles do not
-            prevent independent unit generation. Admitted nominal classes are emitted as
-            active declarations. When Rustdoc provides the nominal shape of a demanded
-            unavailable struct, enum, type alias, or trait, projection also emits an active
-            class or interface skeleton under its public `/deps/<package>` namespace. Native
-            generic and lifetime parameters that Terrane cannot yet express are retained as
-            residual obligations in adjacent comments, and such a skeleton is not registered
-            for lowering or treated as projection success.
+            imports. The file orders demanded unavailable declarations and a
+            required-admitted index first, active compiler-owned Terrane source second, and
+            the unreachable unavailable inventory last. Deterministic
+            `Generated source unit` markers introduce the active source. Each marker starts
+            an ordinary one-namespace virtual source unit, so a single physical artifact may
+            contain `/deps/iced`, `/deps/iced/application`, and other namespaces without
+            weakening the authored-source `S2002` rule. Package analysis splits and
+            syntax-validates every unit before replacing the artifact; namespace dependency
+            cycles do not prevent independent unit generation. Admitted nominal classes are
+            emitted as active declarations. When Rustdoc provides the nominal shape of a
+            demanded unavailable struct, enum, type alias, or trait, projection also emits
+            an active class or interface skeleton under its public `/deps/<package>`
+            namespace. Native generic and lifetime parameters that Terrane cannot yet
+            express are retained as residual obligations in adjacent comments, and such a
+            skeleton is not registered for lowering or treated as projection success.
 
             Each unavailable declaration retains its canonical path and exact decline
             reason. Demanded functions whose native shape can be recovered retain a
