@@ -85,10 +85,13 @@ documentation:
             compiler-derived source information. The diagnostics displayed by the editor are
             therefore the compiler's diagnostics.
 
-            The compiler-owned `terrane-projection.generated.trn` inventory is not an
-            authored namespace source. When it is opened for inspection, the language server
-            suppresses the otherwise applicable missing-namespace diagnostic; ordinary
-            namespace-less Terrane files continue to receive that diagnostic.
+            The compiler-owned `terrane-projection.generated.trn` is a generated report and
+            multi-unit source container, not one authored namespace source.
+            `Generated source unit` markers delimit ordinary one-namespace Terrane units;
+            when the physical container is opened for inspection, the language server
+            suppresses the otherwise applicable whole-file namespace diagnostic. Ordinary
+            namespace-less or multi-namespace authored files continue to receive their
+            diagnostics.
 
             Dependency-import lookup has one advisory limitation. If the same local name is
             imported from two `/deps` namespaces in one file, hover and signature help use

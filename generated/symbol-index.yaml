@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a1bcf13ba976cd80d3019b1acd599bb8d1698d4aad3a49eea7449eebcb3e30a2
+  input-sha256: 2e044599523858e3f6adb86ac381743dd0c8c6e78fea812fb6460d5beef29662
 format: 1
 generated: true
 symbols:
@@ -308,6 +308,14 @@ symbols:
   record: tool.rust-package-integrations.godot
   section: dependency-and-imports
   declaration: /deps/godot/classes
+- name: /deps/iced
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: /deps/iced
+- name: /deps/iced/application
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: /deps/iced/application
 - name: /work-report/errors
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -6151,6 +6159,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: S1095
+- name: S2002
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: S2002
 - name: S2005
   record: lang.namespaces.scopes
   section: scopes

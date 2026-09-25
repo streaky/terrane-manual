@@ -378,28 +378,38 @@ documentation:
             Ordinary package analysis also writes an ignored
             `terrane-projection.generated.trn` beside `package.toml`. Projection remains
             complete over the discovered surface rather than being restricted to current
-            imports. The file places unavailable native declarations demanded by current
-            source first, followed by a separator and the unused unavailable inventory, then
-            every admitted generated Terrane declaration. Each unavailable declaration
-            retains its canonical path and exact decline reason. For demanded functions
-            whose native shape can be recovered, the report also emits a deterministic
-            partial contract: the full function shape, generic constraints, callback-bearing
-            parameter contracts, and required callback method signatures. Demanded
-            module/function name collisions are disambiguated by a namespace-container
-            partial contract rather than pretending that the module is callable. These
-            contracts preserve discovered structure but do not make unavailable declarations
-            callable or weaken their diagnostics. Requirement propagation follows every
-            native declaration referenced by a required partial contract to a fixed point,
-            using Rustdoc item identity before mapping back to public aliases. Referenced
-            unavailable declarations move into the required section and identify the
-            requiring contract; referenced admitted declarations appear in a separate
-            required-admitted index before the complete generated source. Cycles terminate
-            by stable native identity. Current source imports and projected member calls
-            annotate unavailable entries with file, line, and column demand sites. An
-            unavailable but unreachable entry is inventory evidence only; semantic analysis
-            fails at a source location only when that application demands the entry.
-            Rebuilding deterministically replaces demand annotations instead of retaining
-            historical callers.
+            imports. The file begins with report metadata: demanded unavailable
+            declarations, a required-admitted index, and the unreachable unavailable
+            inventory. It then contains active compiler-owned Terrane source introduced by
+            deterministic `Generated source unit` markers. Each marker starts an ordinary
+            one-namespace virtual source unit, so a single physical artifact may contain
+            `/deps/iced`, `/deps/iced/application`, and other namespaces without weakening
+            the authored-source `S2002` rule. Package analysis splits and syntax-validates
+            every unit before replacing the artifact; namespace dependency cycles do not
+            prevent independent unit generation. Admitted nominal classes are emitted as
+            active declarations. When Rustdoc provides the nominal shape of a demanded
+            unavailable struct, enum, type alias, or trait, projection also emits an active
+            class or interface skeleton under its public `/deps/<package>` namespace. Native
+            generic and lifetime parameters that Terrane cannot yet express are retained as
+            residual obligations in adjacent comments, and such a skeleton is not registered
+            for lowering or treated as projection success.
+
+            Each unavailable declaration retains its canonical path and exact decline
+            reason. Demanded functions whose native shape can be recovered retain a
+            deterministic partial contract: the full function shape, generic constraints,
+            callback-bearing parameter contracts, and required callback method signatures.
+            Demanded module/function name collisions retain a namespace-container contract
+            rather than pretending that the module is callable. Requirement propagation
+            follows every native declaration referenced by a required partial contract to a
+            fixed point, using Rustdoc item identity before mapping back to public aliases.
+            Referenced unavailable declarations move into the required section and identify
+            the requiring contract; referenced admitted declarations appear in the
+            required-admitted index. Cycles terminate by stable native identity. Current
+            source imports and projected member calls annotate unavailable entries with
+            file, line, and column demand sites. An unavailable but unreachable entry
+            remains inventory evidence only; semantic analysis fails at a source location
+            only when that application demands the entry. Rebuilding deterministically
+            replaces demand annotations.
 
             The separate projection-census runner reads a versioned declarative package list
             and preserves each package's priority, target, feature configuration, deadline,
