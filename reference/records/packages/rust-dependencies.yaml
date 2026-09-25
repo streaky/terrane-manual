@@ -323,15 +323,35 @@ documentation:
             - projected-interface-sync-field
             - consume-nonclone-foreign-list-iteration
             - index-nonclone-foreign-list-item
+            - projected-owned-borrowed-struct
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
-            crate by the projection oracle. When a source class stores a non-`Clone` foreign
-            value in a field, that class becomes resource-owning transitively. Assignment
-            transfers the enclosing class value; generated Rust never derives `Clone` across
-            a field whose foreign type does not support it. Projected interface and
-            retained-bound checks recursively follow nested source fields and these closed
-            foreign auto-trait facts.
+            crate by the projection oracle. A Rust struct whose complete public field set
+            has owned Terrane representations projects those fields as ordinary class
+            fields. Construction lowers directly to the native Rust struct when its native
+            fields are owned.
+
+            A lifetime-parameterized Rust struct is admitted only when every public field
+            has a complete owned conversion recipe and the struct is neither non-exhaustive
+            nor partially hidden. Borrowed strings, optional borrowed strings, borrowed
+            slices, and optional borrowed slices are stored as owned Terrane strings and
+            lists. Immediately around a shared-borrowed or consuming native call, the
+            generated shim reconstructs the exact Rust struct and borrows from that owned
+            storage. The Terrane class itself is not call-scoped and exposes no Rust
+            lifetime. Mutable borrowed inputs and borrowed results remain unavailable
+            because their ownership cannot be represented by this adapter.
+
+            Private-field, hidden-field, non-exhaustive, tuple, or incompletely convertible
+            structs retain opaque foreign projection when they have no lifetime parameters;
+            an equivalent lifetime-bearing struct is declined rather than guessed.
+
+            When a source class stores a non-`Clone` foreign Rust value in a field, that
+            class becomes resource-owning transitively. Assignment transfers the enclosing
+            class value; generated Rust never derives `Clone` across a field whose foreign
+            type does not support it. Projected interface and retained-bound checks
+            recursively follow nested source fields and these closed foreign auto-trait
+            facts.
 
             Persistent lists currently expose elements by value. Iteration or indexing that
             would copy an item containing a non-`Clone` projected foreign value is rejected

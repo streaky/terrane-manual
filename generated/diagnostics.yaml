@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b59d9880586cd5eb972cecc15a7ec2fbe1c6ad5dcc735563d05511d42c7d238e
+  input-sha256: 44860ee0de9461451d34fbfc917b9520aadd580bc670f73b89fe4acdd298ada5
 format: 1
 generated: true
 diagnostics:
@@ -699,9 +699,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 159
+    line: 162
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 177
+    line: 180
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -794,7 +794,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1043
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 141
+    line: 144
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -875,7 +875,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 991
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 58
+    line: 61
 - code: S9004
   messages:
   - 'generated Rust `{}` cannot be checked for canonical formatting: {error}'
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3589
+    line: 3597
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1534,17 +1534,17 @@ diagnostics:
   - class field `{}` requires `{}`, found `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1371
+    line: 1379
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1381
+    line: 1389
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1393
+    line: 1401
 - code: T0061
   messages:
   - class field `{}` contributed to `{}` has no canonical default and requires an initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1430
+    line: 1438
 - code: T0062
   messages:
   - class `{}` must provide a `message string` field to implement `throwable`
@@ -1614,7 +1614,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3607
+    line: 3615
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1972,17 +1972,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2749
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2773
+    line: 2757
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2781
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2789
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2758
+    line: 2766
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -1991,19 +1991,19 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2350
+    line: 2358
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2449
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2461
+    line: 2457
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2469
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2477
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1809
+    line: 1817
 - code: T0121
   messages:
   - immediate projected generic bounds require a concrete source class argument
@@ -2083,9 +2083,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1020
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1913
+    line: 1921
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1933
+    line: 1941
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 209
 - code: T0128
@@ -2101,11 +2101,11 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2563
+    line: 2571
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2580
+    line: 2588
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2591
+    line: 2599
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
