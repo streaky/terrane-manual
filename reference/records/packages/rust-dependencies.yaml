@@ -310,6 +310,33 @@ documentation:
             and an escaping throwable is rejected when the Rust callback result has no
             matching failure representation. Open generic, higher-ranked, and
             lifetime-dependent callback shapes remain unavailable.
+    - id: payload-enums
+      title: Payload enum variants
+      blocks:
+        - type: rule
+          id: rule.dependencies.payload-enums
+          level: must
+          since: null
+          evidence:
+            - projected-payload-enum
+            - projected-unrepresentable-enum-payload
+          markdown: |-
+            A public Rust enum projects as one nominal Terrane class. Public unit variants
+            become zero-argument type functions. A representable single-field tuple variant
+            becomes a one-argument type function taking that field directly.
+
+            A representable named-field or multi-field tuple variant receives a separate
+            owned payload class. Named fields retain their Rust names after ordinary Terrane
+            identifier normalization. Tuple positions use `item-n0`, `item-n1`, and so on.
+            The enum type function accepts one instance of that payload class. Its consuming
+            `into-<Variant>` method returns the same payload class or `none`; lowering moves
+            every field through an exact Rust variant construction or pattern match without
+            cloning. `variant-name` continues to return the exact Rust variant name.
+
+            Every field must have a complete owned Terrane representation. Stripped or
+            otherwise unrepresentable fields leave only that variant unavailable; projection
+            does not invent storage, borrowing, or conversion. Non-exhaustive enum
+            inspection continues to return `unknown` for undisclosed variants.
     - id: foreign-value-ownership
       title: Foreign fields and value ownership
       blocks:

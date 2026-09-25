@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 59620cbbfe3aeac5a39845cd3000f30d239f7dd305449d3d4d5ca9c8ec095e07
+  input-sha256: 8e1195a908ec492035e048eaac36b6697f508aa5f2abe50c124acbf85e9d1ece
 format: 1
 generated: true
 symbols:
@@ -3861,6 +3861,14 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sequences
   declaration: item
+- name: item-n0
+  record: tool.packages.rust-dependencies
+  section: payload-enums
+  declaration: item-n0
+- name: item-n1
+  record: tool.packages.rust-dependencies
+  section: payload-enums
+  declaration: item-n1
 - name: items
   record: book.classes-interfaces-and-traits
   section: encapsulation-and-visibility
@@ -4812,6 +4820,10 @@ symbols:
 - name: none
   record: std.time
   section: values
+  declaration: none
+- name: none
+  record: tool.packages.rust-dependencies
+  section: payload-enums
   declaration: none
 - name: none
   record: tool.packages.testing
@@ -7807,6 +7819,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: chain-only-values
   declaration: unknown
+- name: unknown
+  record: tool.packages.rust-dependencies
+  section: payload-enums
+  declaration: unknown
 - name: unordered-map
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -8099,6 +8115,10 @@ symbols:
   record: book.identity-and-movement
   section: when-a-value-is-no-longer-available
   declaration: values
+- name: variant-name
+  record: tool.packages.rust-dependencies
+  section: payload-enums
+  declaration: variant-name
 - name: Vec
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers

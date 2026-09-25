@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 59620cbbfe3aeac5a39845cd3000f30d239f7dd305449d3d4d5ca9c8ec095e07
+  input-sha256: 8e1195a908ec492035e048eaac36b6697f508aa5f2abe50c124acbf85e9d1ece
 format: 2
 generated: true
 records:
@@ -2057,6 +2057,9 @@ records:
     sections: []
   - id: callbacks
     title: Passing Terrane callables to Rust
+    sections: []
+  - id: payload-enums
+    title: Payload enum variants
     sections: []
   - id: foreign-value-ownership
     title: Foreign fields and value ownership

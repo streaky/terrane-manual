@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7e8e8491ce1fc63e9338aede2f3e6135b6df25773ad82af754fd104700e0eab6
+  input-sha256: 0f845082b5ff82386f66b82a4cad33d78276015de2736131271a80470930adca
 format: 1
 generated: true
 diagnostics:
@@ -699,9 +699,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 162
+    line: 163
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 180
+    line: 181
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -794,7 +794,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1043
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 144
+    line: 145
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -875,7 +875,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 991
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 61
+    line: 62
 - code: S9004
   messages:
   - 'generated Rust `{}` cannot be checked for canonical formatting: {error}'
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3625
+    line: 3633
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1614,7 +1614,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3643
+    line: 3651
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1972,17 +1972,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2756
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2780
+    line: 2764
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2788
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2796
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2765
+    line: 2773
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -2101,11 +2101,11 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2570
+    line: 2578
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2587
+    line: 2595
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2598
+    line: 2606
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
