@@ -387,6 +387,7 @@ documentation:
             - projected-deferred-callback-template
             - projected-deferred-callback-template-reject
             - projected-owned-opaque-result
+            - projected-namespace-value-collision
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
             Plain Rust `&self`, `&mut self`, and `self` receivers become shared, mutable,
@@ -417,6 +418,15 @@ documentation:
             adapter traits remain native templates rather than misleading parameterless
             Terrane interfaces. Their blanket-implementation-local result conversions and
             higher-ranked lifetime binders remain separate capability boundaries.
+
+            Rust modules are structural namespaces, not projected value declarations or
+            unavailable API members. A module and a public value may therefore share one
+            Rust path segment: namespace traversal selects the module while a Terrane import
+            selects the value declaration. Producer-specific opaque owner identities include
+            their retained bounds, and import closure follows that exact identity rather
+            than choosing another same-base native owner by traversal order. Public type
+            aliases are expanded before projected output wrappers such as `Result<(), E>`
+            are classified.
 
             A producer-selected return-position `impl Trait` remains an owned opaque native
             witness. Projection retains its complete canonical bounds and associated-type
