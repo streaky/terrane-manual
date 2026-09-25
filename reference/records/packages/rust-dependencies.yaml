@@ -386,6 +386,7 @@ documentation:
             - projected-boxed-erased-auto-trait
             - projected-deferred-callback-template
             - projected-deferred-callback-template-reject
+            - projected-owned-opaque-result
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
             Plain Rust `&self`, `&mut self`, and `self` receivers become shared, mutable,
@@ -416,6 +417,15 @@ documentation:
             adapter traits remain native templates rather than misleading parameterless
             Terrane interfaces. Their blanket-implementation-local result conversions and
             higher-ranked lifetime binders remain separate capability boundaries.
+
+            A producer-selected return-position `impl Trait` remains an owned opaque native
+            witness. Projection retains its complete canonical bounds and associated-type
+            equalities recursively inside the named outer result. Terrane may use that value
+            only in one expression-local chain whose terminal operation closes the native
+            type; lowering emits the producer and member calls directly so Rust infers the
+            hidden concrete type. Terrane never fabricates `_` aliases or explicit native
+            signatures for the witness, and the intermediate cannot be bound, returned,
+            captured, collected, or suspended.
 
             Only an owning `Box<dyn Interface + Send/Sync>` parameter projects as erased
             interface storage. Every object auto-trait is retained; the dependency shim
