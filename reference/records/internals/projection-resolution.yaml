@@ -386,22 +386,29 @@ documentation:
             contain `/deps/iced`, `/deps/iced/application`, and other namespaces without
             weakening the authored-source `S2002` rule. Package analysis splits and
             syntax-validates every unit before replacing the artifact; namespace dependency
-            cycles do not prevent independent unit generation. Admitted nominal classes emit
-            every already-projectable instance method, static method, and enum constructor
-            whose rendered declaration is syntax-valid Terrane source, independently of
-            current imports. Projection parses each candidate declaration before admitting
-            it to the generated unit. Admitted members whose rendered declaration is not yet
-            syntax-valid remain adjacent inert comments with the exact parser rejection.
-            Public native members that remain unavailable are likewise retained immediately
-            inside the owning class as inert comments with their native path, recoverable
-            signature, and exact projection gap; the complete unavailable records still
-            appear in the report section. This preserves class structure without making an
-            omitted or declined member callable. When Rustdoc provides the nominal shape of
-            a demanded unavailable struct, enum, type alias, or trait, projection also emits
-            an active class or interface skeleton under its public `/deps/<package>`
-            namespace. Native generic and lifetime parameters that Terrane cannot yet
-            express are retained as residual obligations in adjacent comments, and such a
-            skeleton is not registered for lowering or treated as projection success.
+            cycles do not prevent independent unit generation. Closed numeric
+            specializations of one Rust type constructor share one public Terrane nominal
+            declaration: for example, `Point<f32>` and `Point<u32>` both appear as `Point`.
+            Other native generic shapes retain distinct internal names until the same
+            correlation can be proven. Exact native type arguments remain compiler-owned
+            semantic metadata, select only methods admitted for that specialization, and
+            lower to the corresponding generic Rust type. Admitted nominal classes emit the
+            union of already-projectable instance methods, static methods, and enum
+            constructors whose rendered declarations are syntax-valid Terrane source,
+            independently of current imports. Projection parses each candidate declaration
+            before admitting it to the generated unit. Admitted members whose rendered
+            declaration is not yet syntax-valid remain adjacent inert comments with the
+            exact parser rejection. Public native members that remain unavailable are
+            likewise retained immediately inside the owning class as inert comments with
+            their native path, recoverable signature, and exact projection gap; the complete
+            unavailable records still appear in the report section. This preserves class
+            structure without making an omitted or declined member callable. When Rustdoc
+            provides the nominal shape of a demanded unavailable struct, enum, type alias,
+            or trait, projection also emits an active class or interface skeleton under its
+            public `/deps/<package>` namespace. Native generic and lifetime parameters that
+            Terrane cannot yet express are retained as residual obligations in adjacent
+            comments, and such a skeleton is not registered for lowering or treated as
+            projection success.
 
             Each unavailable declaration retains its canonical path and exact decline
             reason. Demanded functions whose native shape can be recovered retain a
