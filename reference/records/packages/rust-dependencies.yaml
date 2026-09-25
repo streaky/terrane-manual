@@ -370,6 +370,8 @@ documentation:
             - rust-dependency-callbacks
             - projected-generic-interface-argument
             - projected-generic-non-immediate-bound
+            - projected-native-input-bound
+            - projected-native-input-bound-reject
             - projected-interface-send-field
             - projected-interface-sync-field
             - projected-retained-bound
@@ -392,13 +394,23 @@ documentation:
             results. A local class adopts the projected identity with ordinary `implements`,
             and lowering emits the corresponding foreign Rust implementation.
 
-            Owned concrete generic and `impl Trait` inputs retain their Rust lifetime,
-            `Send`, and `Sync` bounds and specialize from the written class argument. Only
-            an owning `Box<dyn Interface + Send/Sync>` parameter projects. Every object
-            auto-trait is retained; the dependency shim boxes a conforming concrete class or
-            the exact generated Terrane interface wrapper. Bare or borrowed trait objects,
-            non-interface `Box<T>`, multiple principal traits, boxed trait-object results,
-            and wrappers lacking requested auto traits decline before lowering.
+            Owned concrete generic inputs and value-style `impl Trait` inputs with
+            representable bounds remain caller-selected. Projection records each canonical
+            Rust bound instead of choosing one implementation or requiring the bound trait
+            to become a Terrane interface. At a call, Terrane infers the exact concrete
+            argument representation, substitutes it through every retained bound, and asks
+            the projection oracle to prove the complete conjunction. A successful proof
+            lowers one direct Rust call; a failed or unknown proof rejects that call.
+            Consequently contracts such as `impl Into<Radius>`, `impl Borrow<T>`, and
+            combined `Clone + Send + TryInto<T>` bounds reuse one mechanism and preserve
+            every native implementation accepted by Rust.
+
+            Only an owning `Box<dyn Interface + Send/Sync>` parameter projects as erased
+            interface storage. Every object auto-trait is retained; the dependency shim
+            boxes a conforming concrete class or the exact generated Terrane interface
+            wrapper. Bare or borrowed trait objects, non-interface `Box<T>`, multiple
+            principal traits, boxed trait-object results, and wrappers lacking requested
+            auto traits decline before lowering.
 
             `Send` and `Sync` are proven independently for each closed foreign type.
             Interface and retained-bound checks recursively traverse the complete effective
