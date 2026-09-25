@@ -67,9 +67,11 @@ documentation:
             3. Review `terrane-projection.generated.trn` beside `package.toml`. It places
                unavailable declarations demanded by current source and the required-admitted
                index first, active one-namespace Terrane source second, and the unreachable
-               unavailable inventory last. Recoverable but unavailable nominal types appear
-               as class/interface skeletons with explicit residual obligations and remain
-               unavailable for lowering.
+               unavailable inventory last. Admitted classes include every
+               already-projectable method and enum constructor. Unsupported public members
+               remain inert comments inside their owning class with exact gap evidence.
+               Recoverable but unavailable nominal types appear as class/interface skeletons
+               with explicit residual obligations and remain unavailable for lowering.
             4. Import admitted names explicitly from `/deps/<alias>/...`.
             5. Review `terrane-dependencies.lock` for the exact complete resolved package
                graph and `terrane-projection.lock` for reproducible admitted and declined
