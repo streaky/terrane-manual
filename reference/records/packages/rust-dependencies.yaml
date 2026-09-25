@@ -387,6 +387,8 @@ documentation:
             - projected-deferred-callback-template
             - projected-deferred-callback-template-reject
             - projected-owned-opaque-result
+            - projected-callable-blanket-recipe
+            - projected-callable-blanket-recipe-bound
             - projected-namespace-value-collision
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
@@ -412,12 +414,21 @@ documentation:
             A direct `Fn`, `FnMut`, or `FnOnce` callback whose input or exact result
             mentions open function generics projects as a deferred callback template. Its
             nested generic positions remain symbolic until call analysis jointly binds them
-            from the written callable, ordinary arguments, and destination. Only then does
-            callable validation and native adapter lowering run. Conflicting callback and
-            destination evidence is rejected before Rust generation. Parameterized callback-
-            adapter traits remain native templates rather than misleading parameterless
-            Terrane interfaces. Their blanket-implementation-local result conversions and
-            higher-ranked lifetime binders remain separate capability boundaries.
+            from the written callable, ordinary arguments, and destination. Parameterized
+            native callback-adapter traits remain native templates rather than misleading
+            Terrane interfaces. For each such input, projection inspects blanket
+            implementations whose `Self` is constrained by exactly one parenthesized
+            `Fn`/`FnMut`/`FnOnce` bound, substitutes the adapter trait arguments, and
+            retains every implementation-local result bound. One unique recipe becomes a
+            deferred callback template; zero recipes preserve the ordinary native
+            obligation, while multiple distinct recipes decline as ambiguous. Call analysis
+            jointly infers callback parameters and result, proves the complete substituted
+            result-bound conjunction, and lowering passes a fresh concrete Rust closure
+            rather than Terrane's reusable `Arc<dyn Fn...>` representation. Failed or
+            unknown proof is rejected before Rust generation. Higher-ranked recipe binders
+            are retained through the same metadata and proof path; writing a Terrane
+            function whose result itself carries the bound lifetime remains a separate
+            source-type boundary.
 
             Rust modules are structural namespaces, not projected value declarations or
             unavailable API members. A module and a public value may therefore share one
