@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0c2d026abb80d542d697945200b409cc01ba96809be79ec262cde623d7938c79
+  input-sha256: f1e6b707c2d2c59c8799e942bb6b6687be25624b8c5f4334315f434444f6cac7
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3806
+    line: 3929
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -933,7 +933,7 @@ diagnostics:
   - numeric destination is ambiguous between {}
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 632
+    line: 649
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 128
   - path: crates/terrane-compiler/src/semantics/collections.rs
@@ -1062,23 +1062,23 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 208
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 902
+    line: 919
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 913
+    line: 930
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 926
+    line: 943
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 940
+    line: 957
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 999
+    line: 1016
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1023
+    line: 1040
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1037
+    line: 1054
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1051
+    line: 1068
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1061
+    line: 1078
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1348
 - code: T0013
@@ -1157,7 +1157,7 @@ diagnostics:
   - iteration item of type `{other}` does not support {}-target destructuring
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 273
+    line: 290
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 225
   - path: crates/terrane-compiler/src/semantics/model.rs
@@ -1195,7 +1195,7 @@ diagnostics:
   - '`.coerce` and its policy members are not storable values before bound methods exist'
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 559
+    line: 576
   - path: crates/terrane-compiler/src/semantics/descriptors.rs
     line: 706
 - code: T0020
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3824
+    line: 3947
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1900,7 +1900,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1908
+    line: 1932
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2934
+    line: 3057
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2958
+    line: 3081
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2966
+    line: 3089
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2943
+    line: 3066
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -2016,17 +2016,17 @@ diagnostics:
   - interface-typed values cannot select a projected source generic bound
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 359
+    line: 376
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 373
+    line: 390
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 417
+    line: 434
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 443
+    line: 460
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 451
+    line: 468
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 465
+    line: 482
 - code: T0122
   messages:
   - class `{}` cannot implement `{}` because field `{}` does not satisfy the projected {requirement} obligation
@@ -2062,9 +2062,9 @@ diagnostics:
     obligation
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 482
+    line: 499
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 527
+    line: 544
 - code: T0127
   messages:
   - a projected interface application requires exactly one closed type
@@ -2098,6 +2098,7 @@ diagnostics:
     line: 396
 - code: T0129
   messages:
+  - projected generic `{generic}` is inferred as incompatible native argument types
   - 'projected generic `{generic}` is inferred as incompatible callback types: expected `{expected}`,
     actual `{actual}`'
   - 'projected callback cannot use `{actual}`: {reason}'
@@ -2107,15 +2108,17 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2698
+    line: 2761
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2710
+    line: 2804
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2730
+    line: 2816
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2747
+    line: 2836
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2758
+    line: 2856
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2867
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'

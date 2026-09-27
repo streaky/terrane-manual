@@ -306,15 +306,19 @@ documentation:
             - projected-chain-return
             - projected-chain-capture
             - projected-chain-suspension
+            - projected-owned-opaque-result
           markdown: |-
-            Projection schema 20 marks chain roots, continuing members, and owned terminals
+            Projection metadata marks chain roots, continuing members, and owned terminals
             explicitly. Semantic validation permits an intermediate only as the receiver
-            subtree of another chain member in the same nested expression and emits one
-            source diagnostic for every escape form.
+            subtree of another chain member or as an argument subtree consumed by another
+            projected operation in the same nested expression. Generic inference recursively
+            correlates the producer's exact projected native result with the consumer's
+            parameter shape and accepts retained producer bounds as proof only when they
+            match the consumer obligation. Every escape form receives one source diagnostic.
 
-            Lowering emits root and continuation calls without independent wrappers. The
-            terminal applies argument conversion, panic and error containment, asynchronous
-            awaiting, and result conversion to the complete Rust expression. Projection
+            Lowering emits the complete producer-to-consumer expression without naming or
+            storing the native intermediate. The terminal applies argument conversion, panic
+            and error containment, asynchronous awaiting, and result conversion. Projection
             details shown by editor tooling identify the chain-only, non-escaping
             constraint.
     - id: resolved-graph-survey

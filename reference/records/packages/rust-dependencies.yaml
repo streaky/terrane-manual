@@ -488,11 +488,18 @@ documentation:
             A producer-selected return-position `impl Trait` remains an owned opaque native
             witness. Projection retains its complete canonical bounds and associated-type
             equalities recursively inside the named outer result. Terrane may use that value
-            only in one expression-local chain whose terminal operation closes the native
-            type; lowering emits the producer and member calls directly so Rust infers the
-            hidden concrete type. Terrane never fabricates `_` aliases or explicit native
-            signatures for the witness, and the intermediate cannot be bound, returned,
-            captured, collected, or suspended.
+            only in one expression-local chain. A continuing receiver operation or another
+            projected operation may consume the intermediate directly; the compiler
+            recursively correlates the producer's native result with the consumer's generic
+            parameter and preserves exact ownership. Lowering emits the complete expression
+            so Rust infers the hidden concrete type. Terrane never fabricates `_` aliases or
+            explicit native signatures for the witness, and the intermediate cannot be
+            bound, returned, captured, collected, or suspended.
+
+            This expression-local composition does not make a lifetime-dependent callback
+            result source-presentable. Framework callbacks whose native result borrows from
+            the invocation remain unavailable until their complete non-escaping result graph
+            can be proven.
 
             Only an owning `Box<dyn Interface + Send/Sync>` parameter projects as erased
             interface storage. Every object auto-trait is retained; the dependency shim
@@ -583,19 +590,21 @@ documentation:
             - projected-chain-return
             - projected-chain-capture
             - projected-chain-suspension
+            - projected-owned-opaque-result
           markdown: |-
-            A projected root may return a chain-only intermediate when its receiver methods
-            can continue that same concrete chain or terminate in an owned projected value.
-            The intermediate may retain a borrow from a named input that outlives the
-            expression. It must remain inside one nested expression as the receiver of the
-            next member.
+            A projected root may return a chain-only intermediate when a receiver member or
+            another projected operation can consume that same concrete value in one nested
+            expression. The intermediate may retain a borrow from a named input that
+            outlives the expression. Generic consumer parameters are inferred from the
+            producer's exact projected result, including nested native arguments and
+            retained opaque bounds.
 
             A chain-only value cannot be bound, returned, captured, passed to Terrane code,
-            or held across `await`. Complete the chain at once. The generated Rust keeps the
-            intermediate inside one expression and applies conversion, dependency failure,
-            panic, and asynchronous boundaries at the terminal operation. A concrete adapter
-            may run an open generic API internally; that does not make the open generic
-            directly projectable.
+            or held across `await`. Complete the composition at once. Generated Rust keeps
+            the intermediate inside one expression and applies conversion, dependency
+            failure, panic, and asynchronous boundaries at the terminal operation. A
+            concrete adapter may run an open generic API internally; that does not make the
+            open generic directly projectable.
         - type: rule
           id: rule.dependencies.destination-directed-results
           level: must
