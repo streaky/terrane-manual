@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8aa0d34bf5eb72553216394b0acd044f36d0be88d7254574942fdfa6b4442a37
+  input-sha256: 0c2d026abb80d542d697945200b409cc01ba96809be79ec262cde623d7938c79
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3715
+    line: 3806
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3733
+    line: 3824
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2846
+    line: 2934
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2870
+    line: 2958
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2878
+    line: 2966
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2855
+    line: 2943
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -2098,6 +2098,8 @@ diagnostics:
     line: 396
 - code: T0129
   messages:
+  - 'projected generic `{generic}` is inferred as incompatible callback types: expected `{expected}`,
+    actual `{actual}`'
   - 'projected callback cannot use `{actual}`: {reason}'
   - 'projected generic `{generic}` is inferred as incompatible argument types: expected `{expected}`,
     actual `{actual}`'
@@ -2105,13 +2107,15 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2629
+    line: 2698
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2648
+    line: 2710
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2665
+    line: 2730
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2676
+    line: 2747
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2758
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'

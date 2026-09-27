@@ -160,18 +160,27 @@ documentation:
           evidence:
             - rust-dependency-callbacks
             - projected-callback-open-bound
+            - projected-generic-call-mismatch
           markdown: |-
-            Projection schema 17 represents a concrete Rust callback with its monomorphic
-            inputs and output, `Fn`/`FnMut`/`FnOnce` multiplicity, synchronous or
-            future-returning shape, retention, and `Send`/`Sync` bounds. The rendered
-            dependency declaration uses the same Terrane function type shown by editor hover
-            and signature help.
+            Projection metadata represents a concrete Rust callback with its monomorphic or
+            correlated generic inputs and output, `Fn`/`FnMut`/`FnOnce` multiplicity,
+            synchronous or future-returning shape, retention, and `Send`/`Sync` bounds. The
+            rendered dependency declaration uses the same Terrane function type shown by
+            editor hover and checked by semantics.
+
+            Projection may retain open callback input and result generics when a blanket
+            implementation proves their relationship. Compatible blanket implementations
+            that differ only in destination-selected callback parameters become one deferred
+            callable contract; the call-site function shape selects the concrete parameters.
+            Semantics jointly unifies every callback argument before lowering and rejects
+            incompatible correlations as a Terrane diagnostic rather than a Rust backend
+            failure.
 
             The lowering boundary constructs the exact Rust closure and converts callback
             inputs and results at both free-function and projected-method calls. `FnMut`
             records Rust invocation multiplicity but adds no mutable Terrane capture cell.
-            Open generic, higher-ranked, and lifetime-dependent callable shapes are
-            declined; the compiler does not erase them into a universal callback value.
+            Higher-ranked and lifetime-dependent callable shapes remain unavailable when
+            their complete non-escaping representation cannot be proven.
     - id: destination-results
       title: Destination-result proof
       blocks:

@@ -298,12 +298,20 @@ documentation:
             - projected-callback-borrowed-capture
             - projected-callback-nontransferable-capture
             - projected-callback-throwable
+            - projected-generic-call-mismatch
           markdown: |-
-            A concrete monomorphic Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a
-            shared, mutable, or consuming Terrane function contract respectively at either a
-            free-function or method call. A callback whose result is a bounded future adds
-            the orthogonal `async` contract. The generated boundary closure converts each
-            argument and result without introducing a foreign callback runtime.
+            A concrete Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a shared, mutable,
+            or consuming Terrane function contract respectively at either a free-function or
+            method call. A callback whose result is a bounded future adds the orthogonal
+            `async` contract. The generated boundary closure converts each argument and
+            result without introducing a foreign callback runtime.
+
+            Rustdoc blanket implementations may prove callback contracts whose parameter and
+            result types contain correlated generics. Terrane jointly infers those generics
+            from every callback argument at the call. When compatible native implementations
+            differ only in callback parameter shape, the supplied Terrane function selects
+            the concrete shape. Conflicting callback signatures are rejected before Rust
+            lowering.
 
             Mutable callbacks retain repeatable owned state, and separating the Terrane
             callable copies its current environment instead of aliasing it. A consuming
@@ -312,8 +320,8 @@ documentation:
             requirements in Terrane. A retained callback cannot capture a borrowed reference
             or object receiver. A transferable callback cannot capture a local-only value,
             and an escaping throwable is rejected when the Rust callback result has no
-            matching failure representation. Open generic, higher-ranked, and
-            lifetime-dependent callback shapes remain unavailable.
+            matching failure representation. Higher-ranked and lifetime-dependent callback
+            shapes remain unavailable without a complete non-escaping representation.
     - id: payload-enums
       title: Payload enum variants
       blocks:
