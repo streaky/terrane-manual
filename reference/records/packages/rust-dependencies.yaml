@@ -121,8 +121,8 @@ documentation:
               meaning: Terrane can type-check and lower the recorded shape as written.
               action: Import and call it directly.
             - state: Destination-directed
-              meaning: One result-only Rust type parameter is selected from a written Terrane destination.
-              action: Supply exactly one compatible typed destination.
+              meaning: A correlated set of result-only Rust type parameters is selected jointly from one written Terrane destination.
+              action: Supply one compatible typed destination for the complete result template.
             - state: Unavailable and unused
               meaning: Projection retained an explicit native path and gap, but current source does not demand it.
               action: No build action is required; retain it as projection evidence.
@@ -449,11 +449,14 @@ documentation:
             Rust bound instead of choosing one implementation or requiring the bound trait
             to become a Terrane interface. At a call, Terrane infers the exact concrete
             argument representation, substitutes it through every retained bound, and asks
-            the projection oracle to prove the complete conjunction. A successful proof
-            lowers one direct Rust call; a failed or unknown proof rejects that call.
-            Consequently contracts such as `impl Into<Radius>`, `impl Borrow<T>`, and
-            combined `Clone + Send + TryInto<T>` bounds reuse one mechanism and preserve
-            every native implementation accepted by Rust.
+            the projection oracle to prove the complete conjunction. Result-only generic
+            families retain all correlated parameters; one structural match against the
+            written destination selects their complete substitution set, including repeated
+            occurrences, before any bound is proved. A successful proof lowers one direct
+            Rust call; a failed or unknown proof rejects that call. Consequently contracts
+            such as `impl Into<Radius>`, `impl Borrow<T>`, and combined
+            `Clone + Send + TryInto<T>` bounds reuse one mechanism and preserve every native
+            implementation accepted by Rust.
 
             A direct `Fn`, `FnMut`, or `FnOnce` callback whose input or exact result
             mentions open function generics projects as a deferred callback template. Its
@@ -621,6 +624,7 @@ documentation:
           since: null
           evidence:
             - projected-destination-results
+            - projected-correlated-destination-results
             - projected-serde-json-result
             - projected-result-without-destination
             - projected-result-conflicting-destinations
@@ -630,10 +634,12 @@ documentation:
             - projected-result-borrowed
             - projected-result-source-object
           markdown: |-
-            A projected dependency function or method may leave one result-only Rust type
-            parameter for the caller. Terrane selects that parameter from exactly one
-            written binding, argument, class-field, or return destination. The projection
-            oracle must prove every rendered Rust bound for the exact concrete
+            A projected dependency function or method may leave a correlated set of
+            result-only Rust type parameters for the caller. Terrane structurally matches
+            their complete result template against exactly one written binding, argument,
+            class-field, or return destination, requires repeated occurrences to agree, and
+            substitutes the jointly selected parameters before proving bounds. The
+            projection oracle must prove every rendered Rust bound for each exact concrete
             representation; `no`, `unknown`, absent, incompatible, or conflicting
             destinations are compile-time failures. Higher-ranked lifetimes and associated
             constraints remain part of the proof rather than being approximated from rustdoc

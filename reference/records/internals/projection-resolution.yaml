@@ -99,7 +99,7 @@ documentation:
           evidence:
             - namespace-qualified-projected-object-identity
           markdown: |-
-            Projection schema 25 resolves every public item through a substantive reachable
+            Projection schema 156 resolves every public item through a substantive reachable
             Rust path before considering paths beneath a `prelude` module, then uses
             shortest depth and lexical ordering as tie-breakers. That selected path supplies
             both the callable Rust path and the Terrane namespace and object identity; the
@@ -193,19 +193,22 @@ documentation:
           since: null
           evidence:
             - projected-destination-results
+            - projected-correlated-destination-results
             - projected-serde-json-result
             - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
           markdown: |-
-            Projection schema 25 retains one result-only Rust generic parameter, its
-            recursive result template, and the complete rendered bounds, including
-            higher-ranked lifetimes and associated constraints. Semantic analysis gathers
-            the exact Rust representation selected by each written Terrane destination and
-            batches those questions through the projection oracle against the resolved
-            dependency workspace. Higher-ranked and nested bound paths are rewritten at
-            every Rust path-root occurrence when a dependency uses a manifest alias. A
-            public bound owner from a transitive crates.io package is pinned at its
+            Projection schema 156 retains every correlated result-only Rust generic
+            parameter, their one recursive result template, and each parameter's complete
+            rendered bounds, including higher-ranked lifetimes and associated constraints.
+            Semantic analysis structurally matches that template against each written
+            Terrane destination once, requires repeated occurrences to agree, and applies
+            the jointly selected substitution set before constructing or proving bounds. It
+            batches those exact Rust questions through the projection oracle against the
+            resolved dependency workspace. Higher-ranked and nested bound paths are
+            rewritten at every Rust path-root occurrence when a dependency uses a manifest
+            alias. A public bound owner from a transitive crates.io package is pinned at its
             lock-resolved version and added as a featureless, default-disabled edge to probe
             and generated manifests. Existing transitive edges keep the resolved feature
             set, so the injected edge cannot widen it; ambiguous or non-registry owners
@@ -214,9 +217,10 @@ documentation:
             Projection-history format 3 records those exact bound-owner edges. Their
             deliberate manifest rewrite resolves offline without Cargo's `--locked` flag;
             integrity comes from the pre-injection manifest and lock in the projection
-            identity plus the content-hashed exact edge list. Lowering names the concrete
-            type argument and applies the existing recursive result conversion without a
-            boxed universal value.
+            identity plus the content-hashed exact edge list. Generated wrappers declare and
+            pass every destination-selected generic in native parameter order. Lowering
+            applies the complete concrete substitution and the existing recursive result
+            conversion without a boxed universal value.
     - id: interface-impls
       title: Projected interface implementation proof
       blocks:
