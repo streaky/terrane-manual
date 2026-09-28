@@ -491,15 +491,20 @@ documentation:
             instantiated native owners use Rust turbofish syntax.
 
             A producer-selected return-position `impl Trait` remains an owned opaque native
-            witness. Projection retains its complete canonical bounds and associated-type
-            equalities recursively inside the named outer result. Terrane may use that value
-            only in one expression-local chain. A continuing receiver operation or another
-            projected operation may consume the intermediate directly; the compiler
-            recursively correlates the producer's native result with the consumer's generic
-            parameter and preserves exact ownership. Lowering emits the complete expression
-            so Rust infers the hidden concrete type. Terrane never fabricates `_` aliases or
-            explicit native signatures for the witness, and the intermediate cannot be
-            bound, returned, captured, collected, or suspended.
+            witness. Projection retains every canonical bound and associated-type equality
+            it can represent recursively; an unrepresentable internal bound does not become
+            a fabricated Terrane interface. A named outer result is not required when the
+            bare opaque result immediately enters another projected operation. Terrane may
+            use the value only in one expression-local chain. A continuing receiver
+            operation or another projected operation may consume the intermediate directly;
+            the compiler recursively correlates the producer's native result with the
+            consumer's generic parameter and preserves exact ownership. Destination-selected
+            existential parameters remain inside that complete expression and are proven by
+            the generated native composition rather than an invalid standalone type probe.
+            Lowering emits the complete expression so Rust infers the hidden concrete type.
+            Terrane never fabricates `_` aliases or explicit native signatures for the
+            witness, and the intermediate cannot be bound, returned, captured, collected, or
+            suspended.
 
             This expression-local composition does not make a lifetime-dependent callback
             result source-presentable. Framework callbacks whose native result borrows from

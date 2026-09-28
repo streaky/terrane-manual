@@ -316,14 +316,21 @@ documentation:
             subtree of another chain member or as an argument subtree consumed by another
             projected operation in the same nested expression. Generic inference recursively
             correlates the producer's exact projected native result with the consumer's
-            parameter shape and accepts retained producer bounds as proof only when they
-            match the consumer obligation. Every escape form receives one source diagnostic.
+            parameter shape. If a producer's hidden concrete type still contains existential
+            generic variables chosen by the destination operation, semantic validation
+            retains that exact nested origin and defers the inseparable native obligation to
+            the complete generated expression instead of trying to name those variables in
+            an independent type probe. Retained producer bounds count as independent proof
+            only when they exactly match the consumer obligation. Every escape form receives
+            one source diagnostic.
 
-            Lowering emits the complete producer-to-consumer expression without naming or
-            storing the native intermediate. The terminal applies argument conversion, panic
-            and error containment, asynchronous awaiting, and result conversion. Projection
-            details shown by editor tooling identify the chain-only, non-escaping
-            constraint.
+            Lowering emits the complete producer-to-consumer expression once, without naming
+            or storing the native intermediate. Rust therefore jointly selects hidden
+            closure, extractor-tuple, service, renderer, and similar existential parameters
+            from the producer call and destination obligation. The terminal applies argument
+            conversion, panic and error containment, asynchronous awaiting, and result
+            conversion. Projection details shown by editor tooling identify the chain-only,
+            non-escaping constraint.
     - id: resolved-graph-survey
       title: Resolved-graph survey evidence
       blocks:

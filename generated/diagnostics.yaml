@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 84df47c24d4de276ac7d0b5248624bba73a47d7096b26304f2a557e08a419496
+  input-sha256: f277b1777dfc930d3bd87244adb27da24ba9a57952ff6e223fc817769d163aa4
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3981
+    line: 4081
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3999
+    line: 4099
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3082
+    line: 3174
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3106
+    line: 3198
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3114
+    line: 3206
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3091
+    line: 3183
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -1993,13 +1993,13 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2358
+    line: 2415
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2457
+    line: 2514
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2469
+    line: 2526
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2477
+    line: 2534
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
@@ -2108,17 +2108,17 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2786
+    line: 2864
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2829
+    line: 2907
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2841
+    line: 2919
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2861
+    line: 2939
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2881
+    line: 2959
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2892
+    line: 2970
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
