@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b8361262c44fe5a2f02f3b6c9f0c38680f7b5f11f73fdf6bbf171da4027e9fa1
+  input-sha256: 46490c24e511c69b1a896fcc944dae141fdd027789c6fc070aedf1d9e751eeaa
 format: 1
 generated: true
 symbols:
@@ -5820,6 +5820,10 @@ symbols:
   section: representation-identity
   declaration: ref
 - name: ref
+  record: internals.projection.resolution
+  section: callbacks
+  declaration: ref
+- name: ref
   record: lang.declarations.bindings
   section: declarations
   declaration: ref
@@ -5838,6 +5842,10 @@ symbols:
 - name: ref
   record: lang.types.references
   section: lowering
+  declaration: ref
+- name: ref
+  record: tool.packages.rust-dependencies
+  section: callbacks
   declaration: ref
 - name: ReferenceProvenance
   record: internals.semantics.reference-provenance

@@ -177,10 +177,13 @@ documentation:
             failure.
 
             The lowering boundary constructs the exact Rust closure and converts callback
-            inputs and results at both free-function and projected-method calls. `FnMut`
-            records Rust invocation multiplicity but adds no mutable Terrane capture cell.
-            Higher-ranked and lifetime-dependent callable shapes remain unavailable when
-            their complete non-escaping representation cannot be proven.
+            inputs and results at both free-function and projected-method calls. Exact
+            native callback parameter spellings retain higher-ranked borrows through
+            specialization; a source `ref` parameter is recorded separately and receives a
+            temporary converted Terrane value for that invocation. `FnMut` records Rust
+            invocation multiplicity but adds no mutable Terrane capture cell.
+            Lifetime-dependent callback result graphs remain unavailable when their complete
+            non-escaping representation cannot be proven.
     - id: destination-results
       title: Destination-result proof
       blocks:

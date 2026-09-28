@@ -320,8 +320,13 @@ documentation:
             requirements in Terrane. A retained callback cannot capture a borrowed reference
             or object receiver. A transferable callback cannot capture a local-only value,
             and an escaping throwable is rejected when the Rust callback result has no
-            matching failure representation. Higher-ranked and lifetime-dependent callback
-            shapes remain unavailable without a complete non-escaping representation.
+            matching failure representation.
+
+            Higher-ranked callback input borrows are retained as exact native parameter
+            types. A Terrane callback may declare the corresponding parameter by `ref`; the
+            generated adapter converts the native input for that invocation and lends the
+            converted value only for the source call. Lifetime-dependent callback results
+            remain unavailable without a complete non-escaping representation.
     - id: payload-enums
       title: Payload enum variants
       blocks:

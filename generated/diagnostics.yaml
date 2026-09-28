@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f1e6b707c2d2c59c8799e942bb6b6687be25624b8c5f4334315f434444f6cac7
+  input-sha256: 84df47c24d4de276ac7d0b5248624bba73a47d7096b26304f2a557e08a419496
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 900
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3929
+    line: 3981
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3947
+    line: 3999
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3057
+    line: 3082
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3081
+    line: 3106
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3089
+    line: 3114
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3066
+    line: 3091
 - code: T0119
   messages:
   - 'projected result proof could not run: {}'
@@ -2108,17 +2108,17 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2761
+    line: 2786
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2804
+    line: 2829
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2816
+    line: 2841
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2836
+    line: 2861
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2856
+    line: 2881
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2867
+    line: 2892
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
