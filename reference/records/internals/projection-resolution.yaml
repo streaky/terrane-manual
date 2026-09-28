@@ -99,7 +99,7 @@ documentation:
           evidence:
             - namespace-qualified-projected-object-identity
           markdown: |-
-            Projection schema 156 resolves every public item through a substantive reachable
+            Projection schema 157 resolves every public item through a substantive reachable
             Rust path before considering paths beneath a `prelude` module, then uses
             shortest depth and lexical ordering as tie-breakers. That selected path supplies
             both the callable Rust path and the Terrane namespace and object identity; the
@@ -199,7 +199,7 @@ documentation:
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
           markdown: |-
-            Projection schema 156 retains every correlated result-only Rust generic
+            Projection schema 157 retains every correlated result-only Rust generic
             parameter, their one recursive result template, and each parameter's complete
             rendered bounds, including higher-ranked lifetimes and associated constraints.
             Semantic analysis structurally matches that template against each written

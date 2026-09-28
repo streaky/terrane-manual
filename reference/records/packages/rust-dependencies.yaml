@@ -299,6 +299,8 @@ documentation:
             - projected-callback-nontransferable-capture
             - projected-callback-throwable
             - projected-generic-call-mismatch
+            - projected-invocation-scoped-callback
+            - projected-invocation-scoped-nominal-escape
           markdown: |-
             A concrete Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a shared, mutable,
             or consuming Terrane function contract respectively at either a free-function or
@@ -325,8 +327,15 @@ documentation:
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A Terrane callback may declare the corresponding parameter by `ref`; the
             generated adapter converts the native input for that invocation and lends the
-            converted value only for the source call. Lifetime-dependent callback results
-            remain unavailable without a complete non-escaping representation.
+            converted value only for the source call. When a selected blanket callback
+            recipe leaves its callback result generic under a higher-ranked
+            `Into<Scoped<'a, ...>>` obligation, Terrane keeps the callback result as an
+            ordinary owned source value, proves that complete higher-ranked conversion for
+            every invocation lifetime, and lets the native blanket implementation construct
+            and export the scoped terminal. The scoped nominal itself never enters the
+            Terrane value model and therefore cannot be bound, stored, returned, captured,
+            collected, or suspended. A direct source function whose declared result itself
+            carries the native lifetime remains unavailable.
     - id: payload-enums
       title: Payload enum variants
       blocks:
@@ -479,9 +488,12 @@ documentation:
             and result, proves the complete substituted result-bound conjunction, and
             lowering passes a fresh concrete Rust closure rather than Terrane's reusable
             `Arc<dyn Fn...>` representation. Failed or unknown proof is rejected before Rust
-            generation. Higher-ranked recipe binders are retained through the same metadata
-            and proof path; writing a Terrane function whose result itself carries the bound
-            lifetime remains a separate source-type boundary.
+            generation. Higher-ranked recipe binders and every correlated result parameter
+            are retained through the same metadata and proof path. All Rust paths inside
+            those bounds are rewritten from the owning package root to its declared manifest
+            alias before oracle compilation, just like parameter and result paths. This
+            supports invocation-scoped native terminals without introducing a source-visible
+            lifetime or scoped storage representation.
 
             Rust modules are structural namespaces, not projected value declarations or
             unavailable API members. A module and a public value may therefore share one
