@@ -301,6 +301,7 @@ documentation:
             - projected-generic-call-mismatch
             - projected-invocation-scoped-callback
             - projected-invocation-scoped-nominal-escape
+            - projected-invocation-scoped-incompatible-graph
           markdown: |-
             A concrete Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a shared, mutable,
             or consuming Terrane function contract respectively at either a free-function or
@@ -334,8 +335,12 @@ documentation:
             every invocation lifetime, and lets the native blanket implementation construct
             and export the scoped terminal. The scoped nominal itself never enters the
             Terrane value model and therefore cannot be bound, stored, returned, captured,
-            collected, or suspended. A direct source function whose declared result itself
-            carries the native lifetime remains unavailable.
+            collected, or suspended. Nested projected constructors, control-flow
+            convergence, helper calls, and child aggregates compose as an ordinary owned
+            Terrane operation graph before that one terminal conversion. Existing
+            source-order, exact-once, collection ownership, move, and borrow rules govern
+            the graph. A direct source function whose declared result itself carries the
+            native lifetime remains unavailable.
     - id: payload-enums
       title: Payload enum variants
       blocks:
@@ -493,7 +498,14 @@ documentation:
             those bounds are rewritten from the owning package root to its declared manifest
             alias before oracle compilation, just like parameter and result paths. This
             supports invocation-scoped native terminals without introducing a source-visible
-            lifetime or scoped storage representation.
+            lifetime or scoped storage representation. The callback's owned result graph may
+            contain nested projected calls, branches, and ordinary owned child collections;
+            every producer and conversion remains statically specialized and emitted once in
+            source order. Every branch must converge to the one owned callback result type,
+            and the complete higher-ranked terminal conversion is proved for that type
+            before lowering. An incompatible graph is rejected with the failed substituted
+            bound, while a lifetime-bearing native producer remains unavailable outside the
+            recipe.
 
             Rust modules are structural namespaces, not projected value declarations or
             unavailable API members. A module and a public value may therefore share one
