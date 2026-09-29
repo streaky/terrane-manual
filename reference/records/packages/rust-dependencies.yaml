@@ -332,9 +332,10 @@ documentation:
             recipe requires an exact lifetime-dependent callback result, projection retains
             the producer's native lifetime relationship as an invocation-scoped semantic
             value. The selected callback use is its terminal authority: lowering specializes
-            a statically typed adapter for that invocation lifetime and performs the
-            external native conversion there. Terrane source writes neither a lifetime nor
-            the terminal conversion.
+            a statically typed adapter for that invocation lifetime, applies correlated
+            generic defaults declared by the selected native terminal alias in original Rust
+            parameter order, and performs the external native conversion there. Terrane
+            source writes neither a lifetime nor the terminal conversion.
 
             Invocation-scoped values may be bound locally, passed through projected
             constructors and ordinary Terrane helpers, selected by branches, and collected

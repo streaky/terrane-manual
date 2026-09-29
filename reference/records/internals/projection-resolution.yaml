@@ -184,18 +184,21 @@ documentation:
             temporary converted Terrane value for that invocation. `FnMut` records Rust
             invocation multiplicity but adds no mutable Terrane capture cell.
 
-            Projection schema 160 retains lifetime-bearing producer results, projected
-            inputs, and nested sequence elements as recursive invocation-scoped templates
-            when a proven external conversion authorizes the selected higher-ranked
-            terminal. Semantics assigns one scoped-function region to the graph, permits
-            region-local bindings and aggregates, applies ordinary move checking, and
-            rejects storage, escape, capture, suspension, region mixing, or incompatible
-            convergence. Lowering specializes one statically typed adapter at the projected
-            call, preserving the invocation lifetime, exact native locals and collections,
-            correlated arguments, captures, and terminal conversion without copied bodies,
-            erased storage, implicit cloning, or `'static` promotion. The existing
-            owned-result blanket recipe remains preferred when its source result has no
-            lifetime-bearing intermediate.
+            Projection schema 176 retains lifetime-bearing producer results, projected
+            inputs, nested sequence elements, selected terminal-alias defaults, and original
+            native generic argument order as recursive invocation-scoped metadata when a
+            proven external conversion authorizes the selected higher-ranked terminal.
+            Semantics assigns one scoped-function region to the graph, permits region-local
+            bindings and aggregates, applies ordinary move checking, and rejects storage,
+            escape, capture, suspension, region mixing, or incompatible convergence.
+            Lowering specializes one statically typed adapter at the projected call,
+            preserving the invocation lifetime, exact native locals and collections,
+            correlated arguments, captures, terminal defaults, and one terminal conversion
+            without copied bodies, erased storage, implicit cloning, or `'static` promotion.
+            Defaulted native arguments are selected from the resolved terminal alias and
+            emitted in native declaration order; they are never guessed from a package or
+            operation name. The existing owned-result blanket recipe remains preferred when
+            its source result has no lifetime-bearing intermediate.
     - id: destination-results
       title: Destination-result proof
       blocks:

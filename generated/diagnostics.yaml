@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 402933f11487828faac9031e31ed8ecb7d655f526746670d8b9ee53639467e62
+  input-sha256: 77b442ef5a8855a127e2eedad1369166e08514745d966235cf9424fec315bee3
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 903
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4239
+    line: 4452
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1080,7 +1080,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1106
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1367
+    line: 1376
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1142,7 +1142,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 1160
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1370
+    line: 1379
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4257
+    line: 4470
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3286
+    line: 3463
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3315
+    line: 3492
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3325
+    line: 3502
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3295
+    line: 3472
 - code: T0119
   messages:
   - invocation-scoped native value cannot escape into ordinary storage
@@ -2117,17 +2117,17 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2932
+    line: 3006
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2975
+    line: 3054
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2987
+    line: 3085
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3007
+    line: 3138
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3027
+    line: 3158
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3038
+    line: 3169
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
