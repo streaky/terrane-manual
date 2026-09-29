@@ -50,12 +50,13 @@ documentation:
             input selects a different cache record rather than reusing and conditionally
             repairing an older projection.
 
-            Identity construction lives in `crates/terrane-compiler/src/projection.rs` under
-            `cache_identity` and `selected_target`. The identity is deliberately
-            environment- specific when the resolved Cargo lock, effective target, toolchain,
-            or containment tier differs; it is not part of the reviewed semantic surface
-            fixture. `target_identity_reads_effective_cargo_configuration` covers
-            target-sensitive construction, while
+            Identity construction lives in
+            `crates/terrane-compiler/src/rust_interop/projection.rs` under `cache_identity`
+            and `selected_target`. The identity is deliberately environment-specific when
+            the resolved Cargo lock, effective target, toolchain, or containment tier
+            differs; it is not part of the reviewed semantic surface fixture.
+            `target_identity_reads_effective_cargo_configuration` covers target-sensitive
+            construction, while
             `projection_history_migrates_provenance_and_detects_replay_drift` proves that
             one exact identity cannot admit two content hashes.
     - id: resolution
@@ -527,6 +528,40 @@ documentation:
             `apply_projection_history`; focused unit coverage includes
             `projection_history_keeps_content_origin_across_cache_hits` and
             `projection_history_migrates_provenance_and_detects_replay_drift`.
+    - id: subsystem-ownership
+      title: Rust-interop subsystem ownership
+      blocks:
+        - type: rule
+          id: rule.internals.projection.rust-interop-has-one-discoverable-owner
+          level: must
+          since: null
+          evidence:
+            - projected-correlated-destination-results
+            - projected-invocation-scoped-callback
+            - rust-dependency-chain-only
+          markdown: |-
+            `terrane_compiler::rust_interop` is the discoverable compiler owner of Rustdoc
+            and canonical-path ingestion, projected metadata, correlated native
+            substitutions, callback recipes, projection census reporting, and projected
+            dependency wrapper planning. Shared Rustdoc indexing, exact oracle questions and
+            evidence, and Cargo toolchain process policy are consumed directly from
+            `terrane-rust-analysis` rather than duplicated behind compiler compatibility
+            facades. The subsystem module documentation records the phase map, ownership
+            boundaries, supported value lifetimes, terminal paths, and their conformance
+            evidence.
+
+            General Terrane parsing, value and ownership semantics, control-flow analysis,
+            diagnostics, and generic Rust emission remain compiler-wide responsibilities.
+            They consume canonical projected metadata or validated semantic plans rather
+            than defining parallel Rust-interop representations. The projected dependency
+            lowering planner is physically owned by the subsystem but mounted privately
+            beneath the lowering module so it can share emitter internals without exposing
+            those internals across compiler phases.
+
+            New Rust-interop behavior belongs in this subsystem. Existing adjacent
+            responsibilities discovered while changing it must be moved here or retain a
+            documented language-wide ownership reason and a narrow interface. Compatibility
+            aliases and forwarding facades are not a substitute for migrating callers.
   see-also:
     - tool.packages.rust-dependencies
     - internals.projection.namespace-overlays
@@ -541,4 +576,9 @@ provenance:
     - removed-rust-dependency-member
     - removed-rust-dependency-instance-member
     - rust-dependency-reqwest
-  compiler: null
+  compiler:
+    - crates/terrane-compiler/src/rust_interop/mod.rs
+    - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/census.rs
+    - crates/terrane-compiler/src/rust_interop/lowering.rs
+    - crates/terrane-rust-analysis/src/lib.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3e33c8a9b6f2ec002ad8a493c9a86577931edc590db591f3d3bbe24ac2b5b78e
+  input-sha256: 53acdab2dfa7574b9b970beccce225b585ed703255ce3e9dbe7215cd4699faab
 format: 1
 generated: true
 symbols:
@@ -1677,14 +1677,14 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: crates/terrane-compiler/src/lowering/emitter/statements.rs
-- name: crates/terrane-compiler/src/projection.rs
-  record: internals.projection.resolution
-  section: identity
-  declaration: crates/terrane-compiler/src/projection.rs
 - name: crates/terrane-compiler/src/runtime/async_native.rs
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: crates/terrane-compiler/src/runtime/async_native.rs
+- name: crates/terrane-compiler/src/rust_interop/projection.rs
+  record: internals.projection.resolution
+  section: identity
+  declaration: crates/terrane-compiler/src/rust_interop/projection.rs
 - name: crates/terrane-compiler/src/semantics/bindings.rs
   record: internals.execution.runtime-selection
   section: requirements
@@ -7203,6 +7203,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: terrane-projection.lock
+- name: terrane-rust-analysis
+  record: internals.projection.resolution
+  section: subsystem-ownership
+  declaration: terrane-rust-analysis
 - name: terrane-rust-survey
   record: internals.projection.resolution
   section: resolved-graph-survey
@@ -7223,6 +7227,10 @@ symbols:
   record: tool.source-intelligence
   section: language-server
   declaration: terrane/generatedRust
+- name: terrane_compiler::rust_interop
+  record: internals.projection.resolution
+  section: subsystem-ownership
+  declaration: terrane_compiler::rust_interop
 - name: TerraneAsyncMutableState::with_receiver
   record: internals.execution.runtime-selection
   section: mutable-async-callables

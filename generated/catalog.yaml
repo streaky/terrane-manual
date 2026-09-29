@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3e33c8a9b6f2ec002ad8a493c9a86577931edc590db591f3d3bbe24ac2b5b78e
+  input-sha256: 53acdab2dfa7574b9b970beccce225b585ed703255ce3e9dbe7215cd4699faab
 format: 2
 generated: true
 records:
@@ -2281,7 +2281,7 @@ records:
     - godot-generated-api-projection
     - projected-macro-reexport
     compiler:
-    - crates/terrane-compiler/src/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection.rs
     - crates/terrane-rust-analysis/src/lib.rs
   sections:
   - id: dependency-and-imports
@@ -2744,7 +2744,12 @@ records:
     - removed-rust-dependency-member
     - removed-rust-dependency-instance-member
     - rust-dependency-reqwest
-    compiler: null
+    compiler:
+    - crates/terrane-compiler/src/rust_interop/mod.rs
+    - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/census.rs
+    - crates/terrane-compiler/src/rust_interop/lowering.rs
+    - crates/terrane-rust-analysis/src/lib.rs
   sections:
   - id: identity
     title: Exact cache identity
@@ -2781,6 +2786,9 @@ records:
     sections: []
   - id: history
     title: Durable origin and replay history
+    sections: []
+  - id: subsystem-ownership
+    title: Rust-interop subsystem ownership
     sections: []
   declaration-synopsis: []
 - id: internals.projection.namespace-overlays

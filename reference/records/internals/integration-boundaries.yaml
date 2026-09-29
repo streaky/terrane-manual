@@ -231,4 +231,4 @@ provenance:
 implementation:
   compiler:
     - crates/terrane-compiler/src/package.rs
-    - crates/terrane-compiler/src/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection.rs
