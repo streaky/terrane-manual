@@ -177,14 +177,22 @@ documentation:
             incompatible correlations as a Terrane diagnostic rather than a Rust backend
             failure.
 
-            The lowering boundary constructs the exact Rust closure and converts callback
-            inputs and results at both free-function and projected-method calls. Exact
-            native callback parameter spellings retain higher-ranked borrows through
+            The lowering boundary constructs the exact Rust callback adapter and converts
+            inputs and results at free-function and projected-method calls. Exact native
+            callback parameter spellings retain higher-ranked borrows through
             specialization; a source `ref` parameter is recorded separately and receives a
             temporary converted Terrane value for that invocation. `FnMut` records Rust
             invocation multiplicity but adds no mutable Terrane capture cell.
-            Lifetime-dependent callback result graphs remain unavailable when their complete
-            non-escaping representation cannot be proven.
+
+            Projection schema 159 also retains lifetime-bearing producer results as
+            recursive invocation-scoped templates. They are admitted only when a selected
+            higher-ranked callback recipe supplies the exact native result and external
+            terminal conversion. Semantics carries that distinct value category through
+            return checking and rejects ordinary storage. Lowering specializes one
+            statically typed adapter at the projected call, preserving the invocation
+            lifetime, correlated native arguments, captures, and terminal conversion without
+            erased storage or `'static` promotion. The existing owned-result blanket recipe
+            remains preferred when its source result has no lifetime-bearing intermediate.
     - id: destination-results
       title: Destination-result proof
       blocks:

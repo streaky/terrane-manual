@@ -328,19 +328,27 @@ documentation:
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A Terrane callback may declare the corresponding parameter by `ref`; the
             generated adapter converts the native input for that invocation and lends the
-            converted value only for the source call. When a selected blanket callback
-            recipe leaves its callback result generic under a higher-ranked
-            `Into<Scoped<'a, ...>>` obligation, Terrane keeps the callback result as an
-            ordinary owned source value, proves that complete higher-ranked conversion for
-            every invocation lifetime, and lets the native blanket implementation construct
-            and export the scoped terminal. The scoped nominal itself never enters the
-            Terrane value model and therefore cannot be bound, stored, returned, captured,
-            collected, or suspended. Nested projected constructors, control-flow
-            convergence, helper calls, and child aggregates compose as an ordinary owned
-            Terrane operation graph before that one terminal conversion. Existing
-            source-order, exact-once, collection ownership, move, and borrow rules govern
-            the graph. A direct source function whose declared result itself carries the
-            native lifetime remains unavailable.
+            converted value only for the source call. When a selected higher-ranked blanket
+            recipe requires an exact lifetime-dependent callback result, projection retains
+            the producer's native lifetime relationship as an invocation-scoped semantic
+            value. The selected callback use is its terminal authority: lowering specializes
+            a statically typed adapter for that invocation lifetime and performs the
+            external native conversion there. Terrane source writes neither a lifetime nor
+            the terminal conversion.
+
+            Such an invocation-scoped value may be constructed and returned only through its
+            selected callback terminal. Ordinary binding or storage is rejected before Rust
+            lowering. Owned captures and source control flow remain available when the
+            specialized native signature proves them, without erased result storage,
+            representation-only allocation, forced cloning, or `'static` promotion.
+
+            A simpler blanket recipe whose Terrane callback result is owned keeps the
+            preferred owned-result path: Terrane proves
+            `for<'a> OwnedResult: Into<Scoped<'a, ...>>`, and the native blanket
+            implementation performs the terminal conversion. Nested projected constructors,
+            helper calls, branches, and owned child aggregates then remain an ordinary
+            Terrane operation graph. A lifetime-bearing intermediate may not enter that
+            owned path accidentally.
     - id: payload-enums
       title: Payload enum variants
       blocks:

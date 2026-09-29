@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5f0df82099da65dc690fbd74b76c61122388c4f17cfa58fa9cb04e05d73f1835
+  input-sha256: b5edd9f7daf3b93af1c39ffef45e47fb83ab4e536a2e621e034772dfd0597550
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 903
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4163
+    line: 4223
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -921,11 +921,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 578
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 663
+    line: 673
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 808
+    line: 818
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 824
+    line: 834
 - code: T0002
   messages:
   - '{label} value'
@@ -943,9 +943,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 299
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 882
+    line: 892
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 888
+    line: 898
 - code: T0003
   messages:
   - constant `{text}` is not an exact `{destination}` value
@@ -1062,25 +1062,25 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 208
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 924
-  - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 935
+    line: 937
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 948
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 962
+    line: 961
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1021
+    line: 975
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1045
+    line: 1034
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1059
+    line: 1058
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1073
+    line: 1072
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1083
+    line: 1096
+  - path: crates/terrane-compiler/src/semantics/calls.rs
+    line: 1106
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1348
+    line: 1366
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1142,7 +1142,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 1160
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1351
+    line: 1369
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4181
+    line: 4241
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1900,7 +1900,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1943
+    line: 1957
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -1974,32 +1974,35 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3229
+    line: 3270
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3258
+    line: 3299
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3268
+    line: 3309
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3238
+    line: 3279
 - code: T0119
   messages:
+  - invocation-scoped native value cannot escape into ordinary storage
   - 'projected result proof could not run: {}'
   - '{subject} could not be proven against `{}`: {}'
   - '{subject} does not satisfy `{}`'
   - projection oracle returned no answer for {subject} against `{}`
   sources:
+  - path: crates/terrane-compiler/src/semantics/bindings.rs
+    line: 1942
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2420
+    line: 2443
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2519
+    line: 2542
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2533
+    line: 2556
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2541
+    line: 2564
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
@@ -2108,17 +2111,17 @@ diagnostics:
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2875
+    line: 2916
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2918
+    line: 2959
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2930
+    line: 2971
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2950
+    line: 2991
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2970
+    line: 3011
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2981
+    line: 3022
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
