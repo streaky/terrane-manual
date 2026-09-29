@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 62cfb24f31a84a24fe1d0ab4bd84464de946cf69d6af4243f991cee47ddad962
+  input-sha256: 5f0df82099da65dc690fbd74b76c61122388c4f17cfa58fa9cb04e05d73f1835
 format: 1
 generated: true
 diagnostics:
@@ -668,20 +668,20 @@ diagnostics:
   - package has no `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 390
+    line: 391
 - code: S2016
   messages:
   - package has more than one `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 409
+    line: 410
 - code: S2017
   messages:
   - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 366
+    line: 367
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 837
 - code: S2018
@@ -833,14 +833,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 623
+    line: 638
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 579
+    line: 594
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 278
 - code: S2053
@@ -882,17 +882,17 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 796
+    line: 815
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 824
+    line: 843
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 908
+    line: 927
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 295
+    line: 296
 - code: T0001
   messages:
   - interface `{}` implemented by `{}` does not resolve
@@ -2095,7 +2095,7 @@ diagnostics:
   - mutating collection method `.{member}` cannot discard a temporary receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 396
+    line: 402
 - code: T0129
   messages:
   - projected generic `{generic}` is inferred as incompatible native argument types
@@ -2184,25 +2184,22 @@ diagnostics:
     line: 1124
 - code: W4001
   messages:
-  - ");\n            !dependency_warning && !library_export_warning\n        })\n        .collect();\n\
-    \    let rust_ir = crate::lowering::lower(&semantic, options.debug_build.enabled())\n        .map_err(|failure|\
-    \ lowering_failure(&semantic, failure))?;\n    let rendered_rust = rust_ir.rendered();\n    let mut\
-    \ standalone_file = rendered_rust.standalone_file("
+  - <stdout>
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 451
+    line: 466
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 283
+    line: 289
 - code: W4002
   messages:
   - initial value assigned to `{}` is never read
   - value assigned to `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 286
+    line: 292
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 291
+    line: 297
 - code: W4003
   messages:
   - union arm `{text}` duplicates an earlier arm
@@ -2220,16 +2217,16 @@ diagnostics:
     line: 519
 - code: W4005
   messages:
-  - <stdout>
   - function `{}` is never referenced
+  - main.trn
   sources:
-  - path: crates/terrane-compiler/src/compiler.rs
-    line: 451
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 198
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 202
 - code: W4006
   messages:
   - binding `{}` is marked intentionally unused but is read
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 252
+    line: 258

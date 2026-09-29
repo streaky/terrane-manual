@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 53acdab2dfa7574b9b970beccce225b585ed703255ce3e9dbe7215cd4699faab
+  input-sha256: 54c4d21830cafe9a630ff38a19b47f9012447a8521297cf0be7d05039528dda3
 format: 2
 generated: true
 records:
@@ -78,8 +78,8 @@ records:
   declaration-synopsis: []
 - id: lang.functions.declarations
   title: Function declarations and references
-  summary: Defines top-level functions, distinguishes declaring a function from invoking it, and records
-    W4005 for an authored function with no reference.
+  summary: Defines top-level functions, distinguishes declaring a function from invoking it, and documents
+    the optional W4005 unreferenced-function lint.
   kind: topic
   manual: reference
   group: Language

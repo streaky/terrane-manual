@@ -17,8 +17,8 @@ documentation:
   title: Function declarations and references
   title-style: text
   summary: >-
-    Defines top-level functions, distinguishes declaring a function from invoking it, and records W4005 for an authored function
-    with no reference.
+    Defines top-level functions, distinguishes declaring a function from invoking it, and documents the optional W4005
+    unreferenced-function lint.
   tags:
     - functions
     - declarations
@@ -117,18 +117,20 @@ documentation:
           evidence:
             - unused-top-level-function
           markdown: |-
-            An authored top-level function other than `main` that has no resolved reference
-            anywhere in the program reports warning `W4005`. The declaration name itself is
-            not a reference. Calling, passing, or otherwise selecting the function by its
-            resolved identity counts as a reference; recursive self-reference may
-            conservatively count as use.
+            Authored top-level functions other than `main` may intentionally exist without a
+            reference in the current package: public package surface, callback registration,
+            staged development, and downstream use are all ordinary reasons. Normal
+            compilation therefore remains silent for an unreferenced function.
 
-            `W4005` is non-blocking. Generated Rust suppresses only the matching dead-code
-            warning so an unused Terrane function remains a source-oriented warning rather
-            than a backend compilation failure.
+            Pass `--lint-unused-functions` to request warning `W4005` for each authored
+            top-level function with no resolved reference anywhere in the program. The
+            declaration name itself is not a reference. Calling, passing, or otherwise
+            selecting the function by its resolved identity counts as a reference; recursive
+            self-reference may conservatively count as use. This opt-in lint is
+            non-blocking.
         - type: example
           id: unused-top-level-function
-          title: Keep an unreferenced function as warning-only
+          title: Opt in to the unreferenced-function lint
           language: terrane
           mode: check
           target: null
@@ -143,9 +145,9 @@ documentation:
               print; 'ready now'
           diagnostic: null
           markdown: >-
-            This source checks successfully and reports `W4005` on `prepared`. Remove the
-            declaration if it is obsolete, or retain it while its first caller is being
-            connected.
+            This source checks silently by default. `terrane check --lint-unused-functions`
+            reports `W4005` on `prepared`; this is an explicit inventory aid rather than a
+            normal compilation warning.
     - id: parameters-and-arguments
       title: "Parameters and Arguments"
       blocks:
