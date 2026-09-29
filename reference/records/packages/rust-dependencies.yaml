@@ -336,11 +336,19 @@ documentation:
             external native conversion there. Terrane source writes neither a lifetime nor
             the terminal conversion.
 
-            Such an invocation-scoped value may be constructed and returned only through its
-            selected callback terminal. Ordinary binding or storage is rejected before Rust
-            lowering. Owned captures and source control flow remain available when the
-            specialized native signature proves them, without erased result storage,
-            representation-only allocation, forced cloning, or `'static` promotion.
+            Invocation-scoped values may be bound locally, passed through projected
+            constructors and ordinary Terrane helpers, selected by branches, and collected
+            into scoped child lists while the complete graph remains inside one callback
+            invocation region. Native inputs and nested sequence elements retain the exact
+            lifetime relationship of the projected operation. Existing source-order,
+            exact-once, move, and borrow rules apply; invocation-scoped values are move-only
+            and are never implicitly cloned.
+
+            Ordinary storage, return through an unauthorized terminal, region mixing,
+            escaping aggregates, capture by another callable, and suspension are rejected
+            before Rust lowering. The specialized helper reuses the analyzed function body
+            and exact native local types without erased result storage, representation-only
+            allocation, forced cloning, dynamic dispatch, or `'static` promotion.
 
             A simpler blanket recipe whose Terrane callback result is owned keeps the
             preferred owned-result path: Terrane proves

@@ -184,15 +184,18 @@ documentation:
             temporary converted Terrane value for that invocation. `FnMut` records Rust
             invocation multiplicity but adds no mutable Terrane capture cell.
 
-            Projection schema 159 also retains lifetime-bearing producer results as
-            recursive invocation-scoped templates. They are admitted only when a selected
-            higher-ranked callback recipe supplies the exact native result and external
-            terminal conversion. Semantics carries that distinct value category through
-            return checking and rejects ordinary storage. Lowering specializes one
-            statically typed adapter at the projected call, preserving the invocation
-            lifetime, correlated native arguments, captures, and terminal conversion without
-            erased storage or `'static` promotion. The existing owned-result blanket recipe
-            remains preferred when its source result has no lifetime-bearing intermediate.
+            Projection schema 160 retains lifetime-bearing producer results, projected
+            inputs, and nested sequence elements as recursive invocation-scoped templates
+            when a proven external conversion authorizes the selected higher-ranked
+            terminal. Semantics assigns one scoped-function region to the graph, permits
+            region-local bindings and aggregates, applies ordinary move checking, and
+            rejects storage, escape, capture, suspension, region mixing, or incompatible
+            convergence. Lowering specializes one statically typed adapter at the projected
+            call, preserving the invocation lifetime, exact native locals and collections,
+            correlated arguments, captures, and terminal conversion without copied bodies,
+            erased storage, implicit cloning, or `'static` promotion. The existing
+            owned-result blanket recipe remains preferred when its source result has no
+            lifetime-bearing intermediate.
     - id: destination-results
       title: Destination-result proof
       blocks:
