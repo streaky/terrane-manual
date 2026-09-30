@@ -305,6 +305,10 @@ documentation:
             - projected-invocation-scoped-local-borrow
             - projected-invocation-scoped-bound-local-borrow
             - projected-invocation-scoped-bound-wrapper
+            - projected-invocation-scoped-bound-lender
+            - projected-invocation-scoped-direct-lender
+            - projected-invocation-scoped-reassignment
+            - projected-invocation-scoped-owned-blanket-bound
             - projected-invocation-scoped-mixed-list
             - projected-invocation-scoped-source-parameter
             - projected-invocation-scoped-restrictive-trait
@@ -354,22 +358,28 @@ documentation:
             one function to have the same native producer type. Nested scoped functions may
             use distinct producer types when each function converges independently. The
             source spelling `host-invocation-scoped-native` requests this compiler-managed,
-            non-storable native value category. Invocation-scoped values of that type may be
-            bound locally, passed through projected constructors and ordinary Terrane
-            helpers, selected by branches, called recursively, and collected into a
-            homogeneous scoped child list while the graph remains inside one callback
-            invocation. Native inputs and nested sequence elements retain the projected
-            lifetime relationship. The enclosing scoped-function span is the stable region
-            identity; because such values cannot escape or cross invocations, each dynamic
-            invocation is checked under that static identity.
+            non-storable native value category. The source declaration remains an explicit
+            unresolved semantic template until callback specialization selects a concrete
+            producer; Rust `_` inference syntax is emitted only at the corresponding native
+            inference site. Invocation-scoped values of that type may be bound locally,
+            passed through projected constructors and ordinary Terrane helpers, selected by
+            branches, called recursively, and collected into a homogeneous scoped child list
+            while the graph remains inside one callback invocation. Native inputs and nested
+            sequence elements retain the projected lifetime relationship. The enclosing
+            scoped-function span is the stable region identity; because such values cannot
+            escape or cross invocations, each dynamic invocation is checked under that
+            static identity.
 
-            A lifetime-bearing producer may borrow the callback's lender parameter, but may
-            not borrow an ordinary callback-local value. Ordinary storage, unresolved source
-            parameter types, mixed native list elements, unauthorized return, aggregate
-            escape, capture, suspension, and region mixing are rejected. Exact higher-ranked
-            anonymous callbacks and callbacks whose returns require conversion from several
-            distinct producer types remain unavailable rather than acquiring an inferred ABI
-            or fabricated native trait implementation.
+            A lifetime-bearing producer may borrow the callback's lender parameter,
+            including through a named scoped helper, but may not borrow an ordinary
+            callback-local value directly or through that helper. Reassigning a scoped
+            binding to a different native producer family is rejected at the assignment.
+            Ordinary storage, unresolved source parameter types, mixed native list elements,
+            unauthorized return, aggregate escape, capture, suspension, and region mixing
+            are rejected. Exact higher-ranked anonymous callbacks and callbacks whose
+            returns require conversion from several distinct producer types remain
+            unavailable rather than acquiring an inferred ABI or fabricated native trait
+            implementation.
 
             A simpler blanket recipe whose Terrane callback result is owned keeps the
             preferred owned-result path: Terrane proves
