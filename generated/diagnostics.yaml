@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 77b442ef5a8855a127e2eedad1369166e08514745d966235cf9424fec315bee3
+  input-sha256: e314b72f847dd9d1b8471bcbfc0a11658ebbbceb22dbd2278038b3172f2f3c0a
 format: 1
 generated: true
 diagnostics:
@@ -808,7 +808,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1256
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 471
+    line: 490
 - code: S2032
   messages:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 903
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4452
+    line: 4689
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -935,9 +935,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 654
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 128
+    line: 147
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 226
+    line: 245
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 174
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1080,7 +1080,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1106
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1376
+    line: 1382
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1089,19 +1089,19 @@ diagnostics:
   - '`.{member_name}` requires a floating receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 348
+    line: 367
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1125
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1142
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 600
+    line: 619
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 644
+    line: 669
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 674
+    line: 699
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 707
+    line: 732
 - code: T0014
   messages:
   - '`{keyword}` is only valid inside a loop'
@@ -1142,7 +1142,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 1160
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1379
+    line: 1385
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1230,11 +1230,11 @@ diagnostics:
   - '`.{}` requires exactly {expected} argument{}'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 684
+    line: 709
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 817
+    line: 842
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 973
+    line: 998
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 50
 - code: T0024
@@ -1244,26 +1244,26 @@ diagnostics:
   - '`.parse` requires a string receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 993
-  - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1008
-  - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 1018
+  - path: crates/terrane-compiler/src/semantics/member_inference.rs
+    line: 1033
+  - path: crates/terrane-compiler/src/semantics/member_inference.rs
+    line: 1043
 - code: T0025
   messages:
   - '`.parse` requires a statically resolvable function name'
   - '`{callback_name}` does not resolve to a parse callback'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1027
+    line: 1052
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1037
+    line: 1062
 - code: T0026
   messages:
   - parse callback `{callback_name}` must take one `string` value and declare a scalar return
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1048
+    line: 1073
 - code: T0027
   messages:
   - '`{actual}` may escape `{}` but does not satisfy its `throws {bound}` contract'
@@ -1301,29 +1301,29 @@ diagnostics:
   - '`{receiver_type}` has no member `.{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 374
+    line: 393
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 582
+    line: 601
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 609
+    line: 634
 - code: T0032
   messages:
   - '`.{family}` is not available on this receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 777
+    line: 802
 - code: T0033
   messages:
   - '`.{family}` received an incompatible argument'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 832
+    line: 857
 - code: T0034
   messages:
   - '`.{family}.{child}` is not available'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 789
+    line: 814
 - code: T0035
   messages:
   - '`print` requires a text-displayable scalar value, found {}'
@@ -1373,13 +1373,13 @@ diagnostics:
   - an empty iterator requires an explicit item type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 740
-  - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 751
-  - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 760
+    line: 759
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 770
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 779
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 789
 - code: T0042
   messages:
   - collection items require a statically known value type
@@ -1390,11 +1390,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 13
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 35
+    line: 54
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 647
+    line: 666
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 658
+    line: 677
 - code: T0043
   messages:
   - an empty `{collection}` requires an explicit item type
@@ -1402,9 +1402,9 @@ diagnostics:
   - '/core/collections::'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 45
+    line: 64
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 669
+    line: 688
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 236
 - code: T0044
@@ -1414,11 +1414,11 @@ diagnostics:
   - entry keys must be immutable scalar values
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 590
+    line: 609
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 602
+    line: 621
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 623
+    line: 642
 - code: T0045
   messages:
   - '`entry` requires exactly a key and value'
@@ -1430,23 +1430,23 @@ diagnostics:
   - '`iteration-step` requires exactly one item'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 154
+    line: 173
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 210
+    line: 229
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 340
+    line: 359
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 383
+    line: 402
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 444
+    line: 463
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 460
+    line: 479
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 496
+    line: 515
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 613
+    line: 632
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 685
+    line: 704
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 226
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1464,7 +1464,7 @@ diagnostics:
   - indexed assignment is not supported for `{other}`
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 480
+    line: 499
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 107
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1513,7 +1513,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 284
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 487
+    line: 506
 - code: T0058
   messages:
   - '`{name}` was already moved and is unavailable until rebound'
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4470
+    line: 4707
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1900,7 +1900,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2058
+    line: 2062
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3463
+    line: 3700
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3492
+    line: 3729
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3502
+    line: 3739
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3472
+    line: 3709
 - code: T0119
   messages:
   - invocation-scoped native value cannot escape into ordinary storage
@@ -1996,19 +1996,19 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1990
+    line: 1994
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2011
+    line: 2015
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2027
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2459
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2558
+    line: 2031
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2572
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2580
+    line: 2671
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2685
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 2693
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
@@ -2113,21 +2113,21 @@ diagnostics:
   - 'projected callback cannot use `{actual}`: {reason}'
   - 'projected generic `{generic}` is inferred as incompatible argument types: expected `{expected}`,
     actual `{actual}`'
-  - projected generic `{}` cannot be inferred from this call
   - 'projected generic `{}` cannot use `{actual}`: {reason}'
+  - projected generic `{}` cannot be inferred from this call
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3006
+    line: 3173
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3054
+    line: 3221
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3085
+    line: 3252
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3138
+    line: 3305
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3158
+    line: 3325
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3169
+    line: 3355
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'

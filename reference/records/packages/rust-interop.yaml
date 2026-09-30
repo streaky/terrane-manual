@@ -37,6 +37,12 @@ documentation:
             not bypass Terrane's definite-assignment, cleanup, lifetime, capability,
             ownership, or effect rules.
 
+            An inline Rust boundary observes a Terrane `ref` binding as the existing native
+            borrow. Lowering does not clone the referent into the boundary: a native result
+            may therefore retain the admitted relationship to that lender, subject to the
+            surrounding Terrane lifetime and escape checks. Owned, reusable inputs retain
+            their ordinary value-separation behavior.
+
             Packages can also include maintained Rust source files declared in the manifest.
             A Rust module declaration maps a module name to an authored `.rs` file:
         - type: example
