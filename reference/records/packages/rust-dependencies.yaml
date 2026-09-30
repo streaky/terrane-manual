@@ -303,9 +303,11 @@ documentation:
             - projected-invocation-scoped-nominal-escape
             - projected-invocation-scoped-incompatible-graph
             - projected-invocation-scoped-local-borrow
+            - projected-invocation-scoped-bound-local-borrow
             - projected-invocation-scoped-mixed-list
             - projected-invocation-scoped-source-parameter
             - projected-invocation-scoped-restrictive-trait
+            - projected-invocation-scoped-multi-method-trait
             - projected-invocation-scoped-anonymous-callback
             - projected-invocation-scoped-capturing-callback
           markdown: |-
@@ -333,22 +335,26 @@ documentation:
 
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A named Terrane function may declare the corresponding parameter by `ref`
-            and may return one exact lifetime-dependent native producer type. The compiler
-            passes that named function directly to the proven native callback blanket, so
-            the native implementation—not a compiler-forged trait implementation—owns the
-            terminal conversion.
+            and may return one exact lifetime-dependent native producer type. Semantic
+            analysis resolves the reachable scoped-function graph, records its converged
+            native value type against every participating function's source identity, and
+            attaches that typed plan to the analyzed unit. Lowering consumes that plan
+            directly rather than walking return syntax or re-inferring producer types. The
+            compiler passes the named function directly to the proven native callback
+            blanket, so the native implementation—not a compiler-forged trait
+            implementation—owns the terminal conversion.
 
             Exact invocation-scoped callbacks currently require every explicit return to
             have the same native producer type. The source spelling
             `host-invocation-scoped-native` requests this compiler-managed, non-storable
             native value category. Invocation-scoped values of that type may be bound
             locally, passed through projected constructors and ordinary Terrane helpers,
-            selected by branches, and collected into a homogeneous scoped child list while
-            the graph remains inside one callback invocation. Native inputs and nested
-            sequence elements retain the projected lifetime relationship. The enclosing
-            scoped-function span is the stable region identity; because such values cannot
-            escape or cross invocations, each dynamic invocation is checked under that
-            static identity.
+            selected by branches, called recursively, and collected into a homogeneous
+            scoped child list while the graph remains inside one callback invocation. Native
+            inputs and nested sequence elements retain the projected lifetime relationship.
+            The enclosing scoped-function span is the stable region identity; because such
+            values cannot escape or cross invocations, each dynamic invocation is checked
+            under that static identity.
 
             A lifetime-bearing producer may borrow the callback's lender parameter, but may
             not borrow an ordinary callback-local value. Ordinary storage, unresolved source
