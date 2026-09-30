@@ -304,6 +304,7 @@ documentation:
             - projected-invocation-scoped-incompatible-graph
             - projected-invocation-scoped-local-borrow
             - projected-invocation-scoped-bound-local-borrow
+            - projected-invocation-scoped-bound-wrapper
             - projected-invocation-scoped-mixed-list
             - projected-invocation-scoped-source-parameter
             - projected-invocation-scoped-restrictive-trait
@@ -336,14 +337,18 @@ documentation:
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A named Terrane function may declare the corresponding parameter by `ref`
             and may return one exact lifetime-dependent native producer type. Semantic
-            analysis resolves direct returns and return-forwarding edges per scoped
-            function, converges recursive components without merging a nested callee's
-            producer into its caller, records each function's resulting native value type
-            against its source identity, and attaches that typed plan to the analyzed unit.
-            Lowering consumes that plan directly rather than walking return syntax or
-            re-inferring producer types. The compiler passes the named function directly to
-            the proven native callback blanket, so the native implementation—not a
-            compiler-forged trait implementation—owns the terminal conversion.
+            analysis resolves direct returns, local-binding aliases, and return-forwarding
+            edges per scoped function, converges recursive components without merging a
+            nested callee's producer into its caller, records each function's resulting
+            native value type against its source identity, and attaches that typed plan to
+            the analyzed unit. Authored calls consume that plan during semantic type
+            inference and rebind the producer to the caller invocation region. Projected
+            consumers compare those concrete producer families before lowering, including
+            values passed through local bindings and helper calls. Lowering consumes the
+            same plan directly rather than walking return syntax or re-inferring producer
+            types. The compiler passes the named function directly to the proven native
+            callback blanket, so the native implementation—not a compiler-forged trait
+            implementation—owns the terminal conversion.
 
             Exact invocation-scoped callbacks currently require every explicit return from
             one function to have the same native producer type. Nested scoped functions may
