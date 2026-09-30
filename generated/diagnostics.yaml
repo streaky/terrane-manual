@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e314b72f847dd9d1b8471bcbfc0a11658ebbbceb22dbd2278038b3172f2f3c0a
+  input-sha256: 1da7280a5d35b9f22ba46a930dc331852d314fa0beef7517342f0e165c013f03
 format: 1
 generated: true
 diagnostics:
@@ -833,14 +833,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 638
+    line: 634
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 594
+    line: 590
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 278
 - code: S2053
@@ -882,11 +882,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 815
+    line: 811
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 843
+    line: 839
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 927
+    line: 923
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 903
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4689
+    line: 4816
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4707
+    line: 4834
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1900,7 +1900,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2062
+    line: 2226
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -1974,19 +1974,22 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3700
+    line: 3827
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3729
+    line: 3856
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3739
+    line: 3866
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3709
+    line: 3836
 - code: T0119
   messages:
+  - parameter `{}` cannot use unresolved `invocation-scoped-native` as a source type
+  - invocation-scoped native result cannot borrow local value `{name}`
+  - invocation-scoped list `{receiver_name}` cannot mix native element types
   - invocation-scoped native value cannot escape into ordinary storage
   - invocation-scoped native value `{capture}` cannot be captured outside its invocation region
   - invocation-scoped native value `{}` cannot remain live across suspension
@@ -1996,11 +1999,17 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1994
+    line: 2029
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2015
+    line: 2078
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2031
+    line: 2123
+  - path: crates/terrane-compiler/src/semantics/bindings.rs
+    line: 2158
+  - path: crates/terrane-compiler/src/semantics/bindings.rs
+    line: 2179
+  - path: crates/terrane-compiler/src/semantics/bindings.rs
+    line: 2195
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2572
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2108,6 +2117,9 @@ diagnostics:
 - code: T0129
   messages:
   - projected generic `{generic}` is inferred as incompatible native argument types
+  - projected callback returns do not converge on one native type
+  - 'projected callback has an incompatible native producer type: expected `{expected_name}`, actual `{actual_name}`'
+  - 'projected callback has an incompatible native producer type: {reason}'
   - 'projected generic `{generic}` is inferred as incompatible callback types: expected `{expected}`,
     actual `{actual}`'
   - 'projected callback cannot use `{actual}`: {reason}'
@@ -2117,17 +2129,23 @@ diagnostics:
   - projected generic `{}` cannot be inferred from this call
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3173
+    line: 3244
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3221
+    line: 3291
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3252
+    line: 3312
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3305
+    line: 3329
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3325
+    line: 3348
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3355
+    line: 3379
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 3432
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 3452
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 3482
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
@@ -2193,11 +2211,14 @@ diagnostics:
     line: 1124
 - code: W4001
   messages:
-  - <stdout>
+  - ");\n            !dependency_warning && !library_export_warning\n        })\n        .collect();\n\
+    \    let rust_ir = crate::lowering::lower(&semantic, options.debug_build.enabled())\n        .map_err(|failure|\
+    \ lowering_failure(&semantic, failure))?;\n    let rendered_rust = rust_ir.rendered();\n    let mut\
+    \ standalone_file = rendered_rust.standalone_file("
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 466
+    line: 462
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 289
 - code: W4002
@@ -2226,9 +2247,12 @@ diagnostics:
     line: 519
 - code: W4005
   messages:
+  - <stdout>
   - function `{}` is never referenced
   - main.trn
   sources:
+  - path: crates/terrane-compiler/src/compiler.rs
+    line: 462
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 198
   - path: crates/terrane-compiler/src/semantics/tests.rs

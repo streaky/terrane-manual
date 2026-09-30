@@ -100,7 +100,7 @@ documentation:
           evidence:
             - namespace-qualified-projected-object-identity
           markdown: |-
-            Projection schema 157 resolves every public item through a substantive reachable
+            Projection metadata resolves every public item through a substantive reachable
             Rust path before considering paths beneath a `prelude` module, then uses
             shortest depth and lexical ordering as tie-breakers. That selected path supplies
             both the callable Rust path and the Terrane namespace and object identity; the
@@ -184,21 +184,20 @@ documentation:
             temporary converted Terrane value for that invocation. `FnMut` records Rust
             invocation multiplicity but adds no mutable Terrane capture cell.
 
-            Projection schema 176 retains lifetime-bearing producer results, projected
-            inputs, nested sequence elements, selected terminal-alias defaults, and original
-            native generic argument order as recursive invocation-scoped metadata when a
-            proven external conversion authorizes the selected higher-ranked terminal.
-            Semantics assigns one scoped-function region to the graph, permits region-local
-            bindings and aggregates, applies ordinary move checking, and rejects storage,
-            escape, capture, suspension, region mixing, or incompatible convergence.
-            Lowering specializes one statically typed adapter at the projected call,
-            preserving the invocation lifetime, exact native locals and collections,
-            correlated arguments, captures, terminal defaults, and one terminal conversion
-            without copied bodies, erased storage, implicit cloning, or `'static` promotion.
-            Defaulted native arguments are selected from the resolved terminal alias and
-            emitted in native declaration order; they are never guessed from a package or
-            operation name. The existing owned-result blanket recipe remains preferred when
-            its source result has no lifetime-bearing intermediate.
+            Projection metadata retains lifetime-bearing producer results, projected inputs,
+            nested sequence elements, selected terminal-alias defaults, and original native
+            generic argument order recursively when a proven external conversion authorizes
+            the selected higher-ranked terminal. Current exact-result semantics assign the
+            scoped function's identity to a same-producer-type graph, permit same-type
+            region-local bindings and homogeneous aggregates, apply ordinary move checking,
+            and reject local lenders, unresolved source parameter types, mixed list
+            elements, storage, escape, capture, suspension, or incompatible convergence.
+            Lowering passes a supported named exact-result callback directly to the proven
+            native blanket and therefore preserves the callback's invocation lifetime and
+            native producer type without copied bodies, erased storage, a fabricated native
+            trait implementation, or `'static` promotion. Defaulted native arguments are
+            selected from the resolved terminal alias and emitted in native declaration
+            order; they are never guessed from a package or operation name.
     - id: destination-results
       title: Destination-result proof
       blocks:
@@ -214,12 +213,12 @@ documentation:
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
           markdown: |-
-            Projection schema 157 retains every correlated result-only Rust generic
-            parameter, their one recursive result template, and each parameter's complete
-            rendered bounds, including higher-ranked lifetimes and associated constraints.
-            Semantic analysis structurally matches that template against each written
-            Terrane destination once, requires repeated occurrences to agree, and applies
-            the jointly selected substitution set before constructing or proving bounds. It
+            Projection metadata retains every correlated result-only Rust generic parameter,
+            their one recursive result template, and each parameter's complete rendered
+            bounds, including higher-ranked lifetimes and associated constraints. Semantic
+            analysis structurally matches that template against each written Terrane
+            destination once, requires repeated occurrences to agree, and applies the
+            jointly selected substitution set before constructing or proving bounds. It
             batches those exact Rust questions through the projection oracle against the
             resolved dependency workspace. Higher-ranked and nested bound paths are
             rewritten at every Rust path-root occurrence when a dependency uses a manifest

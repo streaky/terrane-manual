@@ -302,6 +302,10 @@ documentation:
             - projected-invocation-scoped-callback
             - projected-invocation-scoped-nominal-escape
             - projected-invocation-scoped-incompatible-graph
+            - projected-invocation-scoped-local-borrow
+            - projected-invocation-scoped-mixed-list
+            - projected-invocation-scoped-source-parameter
+            - projected-invocation-scoped-restrictive-trait
           markdown: |-
             A concrete Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a shared, mutable,
             or consuming Terrane function contract respectively at either a free-function or
@@ -326,30 +330,26 @@ documentation:
             matching failure representation.
 
             Higher-ranked callback input borrows are retained as exact native parameter
-            types. A Terrane callback may declare the corresponding parameter by `ref`; the
-            generated adapter converts the native input for that invocation and lends the
-            converted value only for the source call. When a selected higher-ranked blanket
-            recipe requires an exact lifetime-dependent callback result, projection retains
-            the producer's native lifetime relationship as an invocation-scoped semantic
-            value. The selected callback use is its terminal authority: lowering specializes
-            a statically typed adapter for that invocation lifetime, applies correlated
-            generic defaults declared by the selected native terminal alias in original Rust
-            parameter order, and performs the external native conversion there. Terrane
-            source writes neither a lifetime nor the terminal conversion.
+            types. A named Terrane function may declare the corresponding parameter by `ref`
+            and may return one exact lifetime-dependent native producer type. The compiler
+            passes that named function directly to the proven native callback blanket, so
+            the native implementation—not a compiler-forged trait implementation—owns the
+            terminal conversion.
 
-            Invocation-scoped values may be bound locally, passed through projected
-            constructors and ordinary Terrane helpers, selected by branches, and collected
-            into scoped child lists while the complete graph remains inside one callback
-            invocation region. Native inputs and nested sequence elements retain the exact
-            lifetime relationship of the projected operation. Existing source-order,
-            exact-once, move, and borrow rules apply; invocation-scoped values are move-only
-            and are never implicitly cloned.
+            Exact invocation-scoped callbacks currently require every explicit return to
+            have the same native producer type. Invocation-scoped values of that type may be
+            bound locally, passed through projected constructors and ordinary Terrane
+            helpers, selected by branches, and collected into a homogeneous scoped child
+            list while the graph remains inside one callback invocation. Native inputs and
+            nested sequence elements retain the projected lifetime relationship.
 
-            Ordinary storage, return through an unauthorized terminal, region mixing,
-            escaping aggregates, capture by another callable, and suspension are rejected
-            before Rust lowering. The specialized helper reuses the analyzed function body
-            and exact native local types without erased result storage, representation-only
-            allocation, forced cloning, dynamic dispatch, or `'static` promotion.
+            A lifetime-bearing producer may borrow the callback's lender parameter, but may
+            not borrow an ordinary callback-local value. Ordinary storage, unresolved source
+            parameter types, mixed native list elements, unauthorized return, aggregate
+            escape, capture, suspension, and region mixing are rejected. Exact higher-ranked
+            anonymous callbacks and callbacks whose returns require conversion from several
+            distinct producer types remain unavailable rather than acquiring an inferred ABI
+            or fabricated native trait implementation.
 
             A simpler blanket recipe whose Terrane callback result is owned keeps the
             preferred owned-result path: Terrane proves
