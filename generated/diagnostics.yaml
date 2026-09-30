@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1da7280a5d35b9f22ba46a930dc331852d314fa0beef7517342f0e165c013f03
+  input-sha256: 2f6f61bd3e0930b0af32e7409ef667978ca2dc74ac65199d456d0d3932e39031
 format: 1
 generated: true
 diagnostics:
@@ -882,11 +882,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 811
+    line: 807
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 839
+    line: 835
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 923
+    line: 919
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 903
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4816
+    line: 4832
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1616,7 +1616,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4834
+    line: 4850
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1900,7 +1900,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2226
+    line: 2258
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -1974,17 +1974,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3827
+    line: 3843
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3856
+    line: 3872
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3866
+    line: 3882
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3836
+    line: 3852
 - code: T0119
   messages:
   - parameter `{}` cannot use unresolved `invocation-scoped-native` as a source type
@@ -1999,17 +1999,17 @@ diagnostics:
   - projection oracle returned no answer for {subject} against `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2029
+    line: 2086
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2078
+    line: 2110
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2123
+    line: 2155
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2158
+    line: 2190
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2179
+    line: 2211
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2195
+    line: 2227
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2572
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2117,6 +2117,7 @@ diagnostics:
 - code: T0129
   messages:
   - projected generic `{generic}` is inferred as incompatible native argument types
+  - anonymous callbacks are not yet supported for exact invocation-scoped results
   - projected callback returns do not converge on one native type
   - 'projected callback has an incompatible native producer type: expected `{expected_name}`, actual `{actual_name}`'
   - 'projected callback has an incompatible native producer type: {reason}'
@@ -2129,23 +2130,25 @@ diagnostics:
   - projected generic `{}` cannot be inferred from this call
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3244
+    line: 3252
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3291
+    line: 3296
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3312
+    line: 3307
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3329
+    line: 3328
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3348
+    line: 3345
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3379
+    line: 3364
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3432
+    line: 3395
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3452
+    line: 3448
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3482
+    line: 3468
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 3498
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'

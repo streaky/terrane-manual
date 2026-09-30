@@ -306,6 +306,8 @@ documentation:
             - projected-invocation-scoped-mixed-list
             - projected-invocation-scoped-source-parameter
             - projected-invocation-scoped-restrictive-trait
+            - projected-invocation-scoped-anonymous-callback
+            - projected-invocation-scoped-capturing-callback
           markdown: |-
             A concrete Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a shared, mutable,
             or consuming Terrane function contract respectively at either a free-function or
@@ -337,11 +339,16 @@ documentation:
             terminal conversion.
 
             Exact invocation-scoped callbacks currently require every explicit return to
-            have the same native producer type. Invocation-scoped values of that type may be
-            bound locally, passed through projected constructors and ordinary Terrane
-            helpers, selected by branches, and collected into a homogeneous scoped child
-            list while the graph remains inside one callback invocation. Native inputs and
-            nested sequence elements retain the projected lifetime relationship.
+            have the same native producer type. The source spelling
+            `host-invocation-scoped-native` requests this compiler-managed, non-storable
+            native value category. Invocation-scoped values of that type may be bound
+            locally, passed through projected constructors and ordinary Terrane helpers,
+            selected by branches, and collected into a homogeneous scoped child list while
+            the graph remains inside one callback invocation. Native inputs and nested
+            sequence elements retain the projected lifetime relationship. The enclosing
+            scoped-function span is the stable region identity; because such values cannot
+            escape or cross invocations, each dynamic invocation is checked under that
+            static identity.
 
             A lifetime-bearing producer may borrow the callback's lender parameter, but may
             not borrow an ordinary callback-local value. Ordinary storage, unresolved source

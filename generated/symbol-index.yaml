@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 334245781f4083996199d1b7493ba341d0aada706282029ddfca6d91ac3d1abf
+  input-sha256: e6dec81a5a0168c8e57077283df89f815ba8705ece7245f4db94c03ef6e12f1d
 format: 1
 generated: true
 symbols:
@@ -3317,6 +3317,10 @@ symbols:
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
   declaration: high-priority
+- name: host-invocation-scoped-native
+  record: tool.packages.rust-dependencies
+  section: callbacks
+  declaration: host-invocation-scoped-native
 - name: hypotenuse
   record: lang.numerics.floating-point
   section: ieee-boundaries
