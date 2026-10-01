@@ -85,10 +85,11 @@ documentation:
             maintained authored Rust module supplies the host entrypoint and may call
             ordinary lowered Terrane functions within the generated crate.
 
-            Generated-only packages continue to forbid unsafe Rust. When a package
-            deliberately includes maintained authored Rust modules, the crate lint becomes
-            `deny` instead. A reviewed module may then explicitly allow the narrow unsafe
-            ABI boundary it owns without weakening compiler-generated modules.
+            Generated Rust enables no warning globally. Compiler-owned declarations and
+            implementations admit `unsafe_code` only where an explicit Terrane or projected
+            Rust unsafe contract requires an unsafe function, method, trait, implementation,
+            or call expression. Ordinary generated paths still deny unsafe code. Authored
+            modules may likewise opt into only the narrow unsafe boundary they own.
     - id: workspace-artifact-size
       title: Workspace artifact size
       blocks:

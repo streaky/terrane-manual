@@ -110,10 +110,12 @@ documentation:
             never add cloning, boxing, serialization, detached work, or dynamic dispatch
             merely to make the boundary compile.
 
-            Safe `rust` remains the default. An unavoidable unsafe host or ABI boundary
-            belongs in the maintained module with its invariant documented. Authored modules
-            change the generated crate's unsafe lint from `forbid` to `deny` only so that
-            the reviewed module can opt into its narrow boundary.
+            Safe `rust` remains the default. The compiler emits narrowly scoped
+            `allow(unsafe_code)` attributes only for typed Terrane declarations or projected
+            Rust contracts explicitly marked unsafe. Native invariants that cannot be
+            expressed by those declarations belong in a maintained module or intentional
+            `unsafe rust` boundary with the invariant documented; no package-wide unsafe
+            allowance is added.
     - id: overlays
       title: Namespace overlays remain generic metadata
       blocks:

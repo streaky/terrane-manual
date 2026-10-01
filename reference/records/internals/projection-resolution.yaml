@@ -592,6 +592,7 @@ provenance:
   compiler:
     - crates/terrane-compiler/src/rust_interop/mod.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection/callable.rs
     - crates/terrane-compiler/src/rust_interop/census.rs
     - crates/terrane-compiler/src/rust_interop/lowering.rs
     - crates/terrane-rust-analysis/src/lib.rs

@@ -62,6 +62,12 @@ documentation:
             not an unchecked block; each unsafe operation within it still requires an
             explicit unsafe invocation.
 
+            Unsafe declarations are currently direct-call contracts, not first-class
+            callable values. A bare reference to an unsafe-only function is rejected because
+            a function value has no retained safety marker or invocation syntax. When safe
+            and unsafe overloads coexist, a bare reference selects only the safe
+            declaration.
+
             One conservative post-condition is recognized only for an exact static `T|none`
             member returned from a concrete function or method declared as `T`. A preceding
             sibling `if member == none` or `if none == member` must have no `else`, contain
