@@ -313,6 +313,8 @@ documentation:
             - projected-invocation-scoped-source-parameter
             - projected-invocation-scoped-restrictive-trait
             - projected-unsafe-rust-contracts
+            - projected-invocation-scoped-multi-method-trait
+            - projected-invocation-scoped-supertrait-guard
             - projected-invocation-scoped-auto-trait-guard
             - projected-invocation-scoped-anonymous-callback
             - projected-invocation-scoped-capturing-callback
