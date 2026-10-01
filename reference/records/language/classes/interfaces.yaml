@@ -37,6 +37,20 @@ documentation:
             implementations through `uses`, but is not itself a type or a subtyping
             relation.
 
+            A declared interface may be prefixed with `unsafe` when implementing that
+            interface asserts a contract beyond Terrane's static model. Safety is part of
+            nominal interface identity: safe and unsafe same-name interfaces may coexist,
+            and `implements Interface` versus `implements unsafe Interface` selects exactly
+            one safety class. Conformance never falls back to the opposite class.
+
+            Interface safety and method-call safety are independent. Either kind of
+            interface may contain safe and unsafe methods. Calling a method requires
+            `unsafe` only when that method declaration is unsafe; implementing an unsafe
+            interface requires `implements unsafe Interface` even when all of its methods
+            are safe. Thus declaration syntax preserves both Rust's unsafe-trait obligation
+            and each method's own caller obligation without turning an interface into a
+            general unchecked region.
+
             Interface conformance and calls through interface-typed values are checked
             statically against the declared interface contract. The interface is the
             dispatch boundary: calls are lowered as interface dispatch rather than as

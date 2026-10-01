@@ -48,6 +48,20 @@ documentation:
             lifecycle contract explicit even though generated Rust cleanup may receive a
             mutable borrow.
 
+            Safety is an exact declaration and invocation contract. Prefix a declaration
+            with `unsafe function` when callers must uphold a native or authored obligation
+            that Terrane cannot prove. Invoke that declaration with `unsafe` immediately
+            before the call expression. Safe and unsafe declarations with the same name and
+            otherwise identical signatures may coexist: an ordinary call selects only the
+            safe declaration, and an unsafe call selects only the unsafe declaration. There
+            is no fallback between the two safety classes.
+
+            An unsafe invocation relaxes only the selected operation's external safety
+            obligation. Normal Terrane ownership, lifetime, cleanup, capability, effect,
+            definite-assignment, and type checks remain active. An unsafe function body is
+            not an unchecked block; each unsafe operation within it still requires an
+            explicit unsafe invocation.
+
             One conservative post-condition is recognized only for an exact static `T|none`
             member returned from a concrete function or method declared as `T`. A preceding
             sibling `if member == none` or `if none == member` must have no `else`, contain

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1908999196c9acf4faf4794eda60dd5f85f330cc4f58f4758723baa5cb28d90a
+  input-sha256: a95235c343dd69433be325f39c41b20beb55096abae2356623b48fcb767999bd
 format: 1
 generated: true
 symbols:
@@ -7899,6 +7899,14 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: unresolved
+- name: unsafe
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: unsafe
+- name: unsafe
+  record: lang.functions.declarations
+  section: declaration
+  declaration: unsafe
 - name: unsafe
   record: std.cryptography
   section: legacy-digests
