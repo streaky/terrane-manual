@@ -313,6 +313,9 @@ documentation:
             - projected-invocation-scoped-source-parameter
             - projected-invocation-scoped-restrictive-trait
             - projected-invocation-scoped-multi-method-trait
+            - projected-invocation-scoped-supertrait-guard
+            - projected-invocation-scoped-unsafe-trait-guard
+            - projected-invocation-scoped-auto-trait-guard
             - projected-invocation-scoped-anonymous-callback
             - projected-invocation-scoped-capturing-callback
           markdown: |-
@@ -328,6 +331,13 @@ documentation:
             differ only in callback parameter shape, the supplied Terrane function selects
             the concrete shape. Conflicting callback signatures are rejected before Rust
             lowering.
+
+            A custom higher-ranked callable blanket recipe is admitted only when its trait
+            is safe, non-auto, has no supertraits, and declares exactly one required method.
+            Unsafe traits, auto-trait or other supertrait requirements, and multi-method
+            protocols decline at projection with the unsupported trait shape named in the
+            source diagnostic; the compiler never silently treats those obligations as an
+            ordinary function contract.
 
             Mutable callbacks retain repeatable owned state, and separating the Terrane
             callable copies its current environment instead of aliasing it. A consuming

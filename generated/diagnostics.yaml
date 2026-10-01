@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ed797b98940ae9f7256119e07faa23f3c3acbfc7bb2cea22308da6744d4622de
+  input-sha256: 758cb82e76e251c234675520c62b16ad21b614771dcb033ffbb89f2b104bf9eb
 format: 1
 generated: true
 diagnostics:
@@ -909,7 +909,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 903
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5119
+    line: 5118
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 390
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1625,7 +1625,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5137
+    line: 5136
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -1983,17 +1983,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4098
+    line: 4097
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4127
+    line: 4126
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4137
+    line: 4136
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4107
+    line: 4106
 - code: T0119
   messages:
   - parameter `{}` cannot use unresolved `host-invocation-scoped-native` as a source type
@@ -2028,7 +2028,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2708
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4165
+    line: 4164
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
@@ -2141,25 +2141,25 @@ diagnostics:
   - projected generic `{}` cannot be inferred from this call
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3501
+    line: 3500
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3546
+    line: 3545
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3557
+    line: 3556
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3584
+    line: 3583
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3601
+    line: 3600
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3620
+    line: 3619
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3651
+    line: 3650
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3704
+    line: 3703
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3724
+    line: 3723
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3754
+    line: 3753
 - code: T0130
   messages:
   - '`select` is valid only inside an async callable'
