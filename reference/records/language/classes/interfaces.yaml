@@ -60,8 +60,10 @@ documentation:
             the compiler instead proves `Send` and `Sync` from the class's complete
             effective instance-field set and rejects conformance at the declaration of the
             field that cannot satisfy an obligation, including when that declaration is in
-            another source file. Projected Rust interfaces retain the dependency trait's
-            separately proven `Send` and `Sync` capabilities instead.
+            another source file. The same declaration-site diagnostic applies when a class
+            inherits a field that violates a projected Rust interface's required `Send` or
+            `Sync` capability. Projected Rust interfaces retain the dependency trait's
+            separately proven capabilities.
 
             Interface conformance and calls through interface-typed values are checked
             statically against the declared interface contract. The interface is the
