@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8d3103ab5521956c0232fbabb3f94d8eb52529172f4f9eed5d77dcfb6ed2f0e6
+  input-sha256: bed7eba4316c90cca779acd79a7673e6ba20e347817bc2f69c02d493e852c471
 format: 1
 generated: true
 diagnostics:
@@ -811,7 +811,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1278
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 532
+    line: 552
 - code: S2032
   messages:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
@@ -1098,13 +1098,13 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1150
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 661
+    line: 681
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 711
+    line: 731
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 741
+    line: 761
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 774
+    line: 794
 - code: T0014
   messages:
   - '`{keyword}` is only valid inside a loop'
@@ -1242,11 +1242,11 @@ diagnostics:
   - '`.{}` requires exactly {expected} argument{}'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 751
+    line: 771
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 884
+    line: 904
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1040
+    line: 1060
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 50
 - code: T0024
@@ -1256,26 +1256,26 @@ diagnostics:
   - '`.parse` requires a string receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1060
+    line: 1080
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1075
+    line: 1095
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1085
+    line: 1105
 - code: T0025
   messages:
   - '`.parse` requires a statically resolvable function name'
   - '`{callback_name}` does not resolve to a parse callback'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1094
+    line: 1114
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1104
+    line: 1124
 - code: T0026
   messages:
   - parse callback `{callback_name}` must take one `string` value and declare a scalar return
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1115
+    line: 1135
 - code: T0027
   messages:
   - '`{actual}` may escape `{}` but does not satisfy its `throws {bound}` contract'
@@ -1315,27 +1315,27 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 393
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 643
+    line: 663
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 676
+    line: 696
 - code: T0032
   messages:
   - '`.{family}` is not available on this receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 844
+    line: 864
 - code: T0033
   messages:
   - '`.{family}` received an incompatible argument'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 899
+    line: 919
 - code: T0034
   messages:
   - '`.{family}.{child}` is not available'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 856
+    line: 876
 - code: T0035
   messages:
   - '`print` requires a text-displayable scalar value, found {}'
@@ -1523,9 +1523,9 @@ diagnostics:
   - '`{}` has no instance member `{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 306
+    line: 323
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 548
+    line: 568
 - code: T0058
   messages:
   - '`{name}` was already moved and is unavailable until rebound'
@@ -1634,7 +1634,7 @@ diagnostics:
   - descriptor has no retained member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 241
+    line: 258
 - code: T0072
   messages:
   - member `{}` is read-only and cannot be assigned
@@ -1674,7 +1674,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1074
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 477
+    line: 494
 - code: T0076
   messages:
   - task must be awaited, joined, or bound for later consumption
@@ -1731,21 +1731,21 @@ diagnostics:
   - async iteration step has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 398
+    line: 415
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 410
+    line: 427
 - code: T0088
   messages:
   - async sink outcome has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 421
+    line: 438
 - code: T0097
   messages:
   - '`{result}` has no member `{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 462
+    line: 479
 - code: T0098
   messages:
   - a resource-owning class cannot extend or use a copyable object contract
@@ -1871,15 +1871,15 @@ diagnostics:
   - channel receive outcome has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 318
+    line: 335
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 339
+    line: 356
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 360
+    line: 377
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 374
+    line: 391
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 386
+    line: 403
 - code: T0109
   messages:
   - '`channel-sender.send` requires one item'
@@ -1967,9 +1967,9 @@ diagnostics:
   - document diagnostic has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 256
+    line: 273
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 268
+    line: 285
 - code: T0116
   messages:
   - structured log emission requires logger, level, message, and fields
@@ -2175,7 +2175,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 272
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 515
+    line: 535
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 203
   - path: crates/terrane-compiler/src/semantics/types.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 554f5ae8f15ff9a9f15e9af65193498835049fc2302498384ab1cb56e6ecd22a
+  input-sha256: a078c73d630f3f6fb268e0ec673e298758f1ffe7e7a760ea4521c793a8c2d493
 format: 1
 generated: true
 symbols:
@@ -6460,6 +6460,10 @@ symbols:
   section: callbacks
   declaration: Send
 - name: Send
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: Send
+- name: Send
   record: lang.functions.asynchronous
   section: transferability
   declaration: Send
@@ -6866,6 +6870,10 @@ symbols:
 - name: Sync
   record: internals.projection.resolution
   section: callbacks
+  declaration: Sync
+- name: Sync
+  record: lang.classes.interfaces
+  section: interfaces
   declaration: Sync
 - name: Sync
   record: tool.editor-support

@@ -56,6 +56,15 @@ documentation:
             safe declaration, and an unsafe call selects only the unsafe declaration. There
             is no fallback between the two safety classes.
 
+            Requiring both forms is intentional: they record acknowledgements by different
+            parties. The declaration records that the API author exposes an operation whose
+            external obligation is not statically proven; the invocation records that this
+            caller deliberately accepts that declared obligation. Invocation syntax cannot
+            assign an unsafe interpretation to a safe declaration, and an unsafe declaration
+            cannot be called as though its obligation were absent. Neither side can supply
+            or infer the other side's acknowledgement, so `unsafe` is part of the API
+            contract rather than a caller-controlled escape hatch.
+
             An unsafe invocation relaxes only the selected operation's external safety
             obligation. Normal Terrane ownership, lifetime, cleanup, capability, effect,
             definite-assignment, and type checks remain active. An unsafe function body is
