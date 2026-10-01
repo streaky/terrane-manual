@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0e2a1d41a1d1d0860da3520638af6a4845ac44752404ab8bb2fea723b7a6ee5c
+  input-sha256: da4b27a5e20d48af385c7b1c35dd041620a7dfcf4cffae29d006f6967bdae138
 format: 2
 generated: true
 records:
@@ -2752,6 +2752,7 @@ records:
     - crates/terrane-compiler/src/rust_interop/projection/data.rs
     - crates/terrane-compiler/src/rust_interop/projection/enum_payload.rs
     - crates/terrane-compiler/src/rust_interop/projection/rustdoc_support.rs
+    - crates/terrane-compiler/src/rust_interop/projection/source_rendering.rs
     - crates/terrane-compiler/src/rust_interop/projection/type_rendering.rs
     - crates/terrane-compiler/src/rust_interop/census.rs
     - crates/terrane-compiler/src/rust_interop/lowering.rs
