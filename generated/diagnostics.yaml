@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f79afafa4a5c9cae347c51e37ba370831d68c391f104407a1ad845cbf0ac567c
+  input-sha256: 4164f48b166b219f6e1c474223f0d1f130ae543a52da51a214798ec327e0c5d8
 format: 1
 generated: true
 diagnostics:
@@ -1207,9 +1207,9 @@ diagnostics:
   - 'incompatible argument types: expected `{}`, found `{}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2221
+    line: 2217
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2385
+    line: 2381
 - code: T0020
   messages:
   - bare `throw` is only valid inside a catch clause
@@ -1647,7 +1647,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1267
+    line: 1263
 - code: T0074
   messages:
   - '`task-scope` requires a `/core/time` deadline'
@@ -1681,9 +1681,9 @@ diagnostics:
   - task `{}` must be awaited or joined before its scope ends
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1359
+    line: 1355
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1373
+    line: 1369
 - code: T0077
   messages: []
   sources:
@@ -1700,31 +1700,31 @@ diagnostics:
   - projected callback requires a transferable callable
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1662
+    line: 1658
 - code: T0082
   messages:
   - retained callback cannot borrow an object receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1668
+    line: 1664
 - code: T0083
   messages:
   - retained callback cannot capture a borrowed value
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1678
+    line: 1674
 - code: T0084
   messages:
   - projected callback requires transferable captured values
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1688
+    line: 1684
 - code: T0086
   messages:
   - one-shot projected callback was already consumed
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1703
+    line: 1699
 - code: T0087
   messages:
   - iteration step has no member `{member_name}`
@@ -1813,7 +1813,7 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1425
+    line: 1421
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 376
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1838,7 +1838,7 @@ diagnostics:
   - conversion callback must return `{destination}`, found `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1780
+    line: 1776
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 343
 - code: T0107
@@ -1899,7 +1899,7 @@ diagnostics:
   - channel pair `{}` endpoint `{}` was already moved
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 1731
+    line: 1727
 - code: T0111
   messages:
   - typed shared cells are unavailable; keep mutable state in one owner task and communicate through bounded
@@ -1912,7 +1912,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2355
+    line: 2351
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -2011,17 +2011,17 @@ diagnostics:
   - projected result specialization did not resolve every correlated parameter
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2118
+    line: 2114
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2141
+    line: 2137
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2188
+    line: 2184
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2257
+    line: 2253
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2278
+    line: 2274
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 2294
+    line: 2290
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2759
   - path: crates/terrane-compiler/src/semantics/objects.rs

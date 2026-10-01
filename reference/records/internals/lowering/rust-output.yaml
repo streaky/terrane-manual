@@ -42,8 +42,9 @@ documentation:
             generated module-association comments.
 
             Safety does not rename ordinary methods: a safe method always retains its
-            canonical generated Rust name. An unsafe method uses a deterministic `_unsafe`
-            suffix. This local mapping prevents an unrelated unsafe declaration from
+            canonical generated Rust name. An unsafe method uses a reserved deterministic
+            encoding of its complete source name that cannot collide with any safe generated
+            method name. This local mapping prevents an unrelated unsafe declaration from
             changing runtime, generated, or projected implementations of a fixed-name safe
             protocol method such as `render`, `log`, or `construct`.
 
