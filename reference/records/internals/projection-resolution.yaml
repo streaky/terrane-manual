@@ -228,7 +228,7 @@ documentation:
             set, so the injected edge cannot widen it; ambiguous or non-registry owners
             decline explicitly.
 
-            Projection-history format 3 records those exact bound-owner edges. Their
+            Projection-history format 4 records those exact bound-owner edges. Their
             deliberate manifest rewrite resolves offline without Cargo's `--locked` flag;
             integrity comes from the pre-injection manifest and lock in the projection
             identity plus the content-hashed exact edge list. Generated wrappers declare and
@@ -518,14 +518,14 @@ documentation:
             source import root.
 
             `terrane-projection.lock` is durable API-surface history rather than a
-            dependency graph or cache index. History format 3 records projected dependency
-            members, removed members, injected exact private owner dependencies, content
-            origin, rustdoc format, projection schema, cache identity, verified content
-            hash, and the resolution events that produced that content.
+            dependency graph or cache index. History format 4 groups projected member names
+            by namespace and records removed members, injected exact private owner
+            dependencies, content origin, rustdoc format, projection schema, cache identity,
+            verified content hash, and the resolution events that produced that content.
 
             An exact-cache hit for unchanged content preserves the original local or
             published content-origin history instead of rewriting it as cache provenance. If
-            the same format-3 identity, dependency surface, and private owner edge list
+            the same format-4 identity, dependency surface, and private owner edge list
             later produce a different content hash, projection fails with a replay-mismatch
             diagnostic. Version changes retain removed member identities so a later missing
             import can be distinguished from a member that never existed.

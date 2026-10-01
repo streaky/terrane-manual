@@ -719,7 +719,7 @@ documentation:
 
             When rustdoc names a public bound through a transitive crates.io package, that
             owner is pinned at its lock-resolved version, recorded in projection-history
-            format 3, and added to the generated manifest with no explicit or default
+            format 4, and added to the generated manifest with no explicit or default
             features. Existing transitive edges keep the resolved feature set, so this
             direct edge makes the bound nameable without widening it; ambiguous or
             non-registry owners decline.
