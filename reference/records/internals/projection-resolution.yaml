@@ -593,6 +593,7 @@ provenance:
     - crates/terrane-compiler/src/rust_interop/mod.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
     - crates/terrane-compiler/src/rust_interop/projection/callable.rs
+    - crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs
     - crates/terrane-compiler/src/rust_interop/projection/data.rs
     - crates/terrane-compiler/src/rust_interop/projection/enum_payload.rs
     - crates/terrane-compiler/src/rust_interop/census.rs

@@ -41,6 +41,12 @@ documentation:
             identities. Lowered output retains source and namespace associations, including
             generated module-association comments.
 
+            Safety does not rename ordinary methods: a safe method always retains its
+            canonical generated Rust name. An unsafe method uses a deterministic `_unsafe`
+            suffix. This local mapping prevents an unrelated unsafe declaration from
+            changing runtime, generated, or projected implementations of a fixed-name safe
+            protocol method such as `render`, `log`, or `construct`.
+
             `terrane rust` streams a complete standalone Rust translation unit by default.
             With `--output` or `-o`, it writes a split artifact. For a requested entrypoint
             named `<entrypoint-stem>.rs`, Terrane also emits `<entrypoint-stem>.support.rs`

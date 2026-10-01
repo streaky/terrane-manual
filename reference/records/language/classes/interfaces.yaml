@@ -52,10 +52,11 @@ documentation:
             general unchecked region.
 
             Authored interface values are safe to capture in ordinary shared function
-            values: their dispatch protocols require thread-safe transfer and sharing, and
-            every implementing class must satisfy those requirements. Projected Rust
-            interfaces retain the dependency trait's separately proven `Send` and `Sync`
-            capabilities instead.
+            values: their dispatch protocols require thread-safe transfer and sharing. The
+            compiler proves those requirements from every implementing class's complete
+            effective instance-field set and rejects conformance at the field that cannot
+            satisfy `Send` or `Sync`. Projected Rust interfaces retain the dependency
+            trait's separately proven `Send` and `Sync` capabilities instead.
 
             Interface conformance and calls through interface-typed values are checked
             statically against the declared interface contract. The interface is the

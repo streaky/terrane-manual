@@ -39,6 +39,12 @@ documentation:
             compose across the class’s single-inheritance chain, including `construct` and
             `destruct` behavior for inherited state.
 
+            Construction has no independent unsafe call syntax: `instance` is the complete
+            source-level construction operation. A class therefore cannot declare
+            `unsafe function construct`; initialization that requires a caller-visible
+            external obligation must use an explicitly named unsafe factory operation
+            instead.
+
             Declare a destructor as `function destruct`; it is always consuming. Writing
             `consuming` is accepted as an explicit equivalent. `mutable`, `shared`,
             `static`, and `async` are invalid destructor qualifiers and produce a compiler

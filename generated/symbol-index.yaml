@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a078c73d630f3f6fb268e0ec673e298758f1ffe7e7a760ea4521c793a8c2d493
+  input-sha256: dbda8d43fe960cd2a6e7ae0c10bd7fa957fead90bc2550139b70c164d07aa30a
 format: 1
 generated: true
 symbols:
@@ -1467,6 +1467,10 @@ symbols:
 - name: construct
   record: book.errors
   section: throwing-an-error
+  declaration: construct
+- name: construct
+  record: internals.lowering.rust-output
+  section: rust-lowering
   declaration: construct
 - name: construct
   record: lang.classes.fields
@@ -4074,6 +4078,10 @@ symbols:
   section: queries
   declaration: locate
 - name: log
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: log
+- name: log
   record: internals.observability.runtime
   section: dependency-bridge
   declaration: log
@@ -5938,6 +5946,10 @@ symbols:
 - name: render
   record: book.types
   section: compile-time-guarantees
+  declaration: render
+- name: render
+  record: internals.lowering.rust-output
+  section: rust-lowering
   declaration: render
 - name: render
   record: lang.errors.handling
