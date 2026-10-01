@@ -597,6 +597,7 @@ provenance:
     - crates/terrane-compiler/src/rust_interop/projection/data.rs
     - crates/terrane-compiler/src/rust_interop/projection/enum_payload.rs
     - crates/terrane-compiler/src/rust_interop/projection/rustdoc_support.rs
+    - crates/terrane-compiler/src/rust_interop/projection/type_rendering.rs
     - crates/terrane-compiler/src/rust_interop/census.rs
     - crates/terrane-compiler/src/rust_interop/lowering.rs
     - crates/terrane-rust-analysis/src/lib.rs
