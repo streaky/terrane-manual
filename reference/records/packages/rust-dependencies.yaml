@@ -212,6 +212,13 @@ documentation:
             through the declared package's `/deps/<alias>` facade. Recursive packages never
             become Terrane import roots implicitly.
 
+            A demanded public `core` type exposed by that facade is resolved from the pinned
+            toolchain's `rust-src` instead of Cargo. Its constructors, constants, enum
+            operations, and methods use the same projection machinery as package-owned
+            declarations. Canonical `core` and public `std` identities are unified, while
+            the type remains importable only through the declared package facade; Terrane
+            does not gain an implicit `/deps/core` or `/deps/std` root.
+
             If a crate root resolves to multiple package versions, or its source cannot be
             represented by a generated private edge, the operation remains unavailable and
             the diagnostic reports the owner and every conflicting lock version. Declaring a

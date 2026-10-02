@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: da4b27a5e20d48af385c7b1c35dd041620a7dfcf4cffae29d006f6967bdae138
+  input-sha256: 2946845393c56257251c298057b3787ac822f1047872b54edcc7a0b923120dd4
 format: 1
 generated: true
 symbols:
@@ -300,6 +300,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: /deps/codec
+- name: /deps/core
+  record: tool.packages.rust-dependencies
+  section: transitive-owners
+  declaration: /deps/core
 - name: /deps/godot/builtin
   record: tool.rust-package-integrations.godot
   section: dependency-and-imports
@@ -316,6 +320,10 @@ symbols:
   record: internals.projection.resolution
   section: projection-gap-census
   declaration: /deps/iced/application
+- name: /deps/std
+  record: tool.packages.rust-dependencies
+  section: transitive-owners
+  declaration: /deps/std
 - name: /work-report/errors
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -1624,6 +1632,10 @@ symbols:
 - name: core
   record: internals.projection.resolution
   section: projection-gap-census
+  declaration: core
+- name: core
+  record: tool.packages.rust-dependencies
+  section: transitive-owners
   declaration: core
 - name: core::future::into_future::IntoFuture
   record: tool.packages.rust-dependencies
@@ -6199,6 +6211,10 @@ symbols:
   record: internals.projection.resolution
   section: projection-gap-census
   declaration: rust-src
+- name: rust-src
+  record: tool.packages.rust-dependencies
+  section: transitive-owners
+  declaration: rust-src
 - name: rust-toolchain
   record: tool.packages.package-manifest
   section: fields
@@ -6722,6 +6738,10 @@ symbols:
 - name: std
   record: internals.projection.resolution
   section: projection-gap-census
+  declaration: std
+- name: std
+  record: tool.packages.rust-dependencies
+  section: transitive-owners
   declaration: std
 - name: step
   record: book.testing-and-debugging

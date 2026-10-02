@@ -406,15 +406,20 @@ documentation:
             declaration belongs to an external crate, the command surveys the one exact
             matching package in the resolved closure and assesses its recovered signature
             through the original facade path. External enum variants use their surveyed
-            parent declaration. `core` definitions come from the pinned toolchain's
-            `rust-src`; `std` paths retain pinned Rustdoc identity and item-kind evidence
-            when a standalone definition is unavailable. None of these evidence paths makes
-            a transitive or sysroot owner directly importable. Absent owners, ambiguous
-            versions, failed owner surveys, namespace-only reexports, and declarations still
-            absent after every evidence path remain distinct evidence. Static declarations
-            are classified as projectable, deferred-contextual, unsupported-capability,
-            namespace-path, or missing-metadata; the command does not infer package
-            usability from successful discovery or import.
+            parent declaration. Demanded `core` definitions come from the pinned toolchain's
+            `rust-src` and enter ordinary package projection through the same declaration,
+            method, constant, enum, naming, and reachability machinery as package-owned
+            declarations. Their canonical native identities remain `core` or public `std`
+            paths while their Terrane declarations remain available only through the
+            explicitly declared facade that exposed them. `std`-only paths retain pinned
+            Rustdoc identity and item-kind evidence when a standalone definition is
+            unavailable. None of these evidence paths makes a transitive or sysroot owner a
+            new import root. Absent owners, ambiguous versions, failed owner surveys,
+            namespace-only reexports, and declarations still absent after every evidence
+            path remain distinct evidence. Static declarations are classified as
+            projectable, deferred-contextual, unsupported-capability, namespace-path, or
+            missing-metadata; the command does not infer package usability from successful
+            discovery or import.
 
             Ordinary package analysis also writes an ignored
             `terrane-projection.generated.trn` beside `package.toml`. Projection remains
