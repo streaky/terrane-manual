@@ -237,6 +237,13 @@ documentation:
             available for Rust's joint inference. No lifetime-bearing graph is admitted
             without successful backend validation.
 
+            The destination-constrained macro proof is authoritative, including generic
+            expansions that require that context. Only failed result proofs trigger a
+            detached expansion proof for diagnostic classification. Argument and
+            token-pattern failures identify the source invocation; destination-result
+            failures identify the incompatible result contract. Diagnostic messages do not
+            expose generated probe identifiers or forward internal Rust compiler renderings.
+
             Lowering emits the native macro invocation in the complete expression and closes
             its contextual result through ordinary Into conversion, including a
             lifetime-coupled callback's exact Element destination. Concrete annotations

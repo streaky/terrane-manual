@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3ed0d5d83e8c73c3c3c7d3b1bc0117e5d707f4c73cc1b9ab0624fc6a0635b570
+  input-sha256: 1fd2fc34ec986c6442aa334d91e33dc5e898572bcebb00517fde44ce093da3cf
 format: 1
 generated: true
 diagnostics:
@@ -984,7 +984,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2513
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6432
+    line: 6471
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 466
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1727,7 +1727,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6450
+    line: 6489
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -2085,17 +2085,17 @@ diagnostics:
   - projected result template `{}` cannot produce the required destination `{destination}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5150
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5179
-  - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 5189
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 5218
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 5228
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5159
+    line: 5198
 - code: T0119
   messages:
   - parameter `{}` cannot use unresolved `host-invocation-scoped-native` as a source type
@@ -2143,21 +2143,23 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3249
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3297
+    line: 3300
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3326
+    line: 3332
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3417
+    line: 3367
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3430
+    line: 3456
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3438
+    line: 3469
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4333
+    line: 3477
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4342
+    line: 4372
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5217
+    line: 4381
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 5256
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
@@ -2278,27 +2280,27 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2810
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4478
+    line: 4517
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4523
+    line: 4562
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4534
+    line: 4573
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4561
+    line: 4600
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4578
+    line: 4617
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4597
+    line: 4636
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4628
+    line: 4667
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4681
+    line: 4720
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4707
+    line: 4746
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4740
+    line: 4779
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4891
+    line: 4930
 - code: T0130
   messages:
   - unsafe function `{name}` cannot be used as a function value; invoke it directly with `unsafe`

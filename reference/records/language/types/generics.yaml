@@ -135,6 +135,11 @@ documentation:
             conflicting arguments to an interface or union, inspect later statements, or
             choose a type from runtime contents.
 
+            An explicitly chosen type argument remains a constraint: a mismatching argument
+            is reported against that chosen parameter, not described as conflicting inferred
+            selections. Calls with inconsistent inferred arguments retain the invariant-type
+            conflict diagnostic.
+
             Absence alone provides no inner type. An empty `slot of string` can be selected
             by a written destination or an explicit construction designator, but an
             unconstrained empty slot is rejected. First-class generic function values must
