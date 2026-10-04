@@ -766,6 +766,12 @@ documentation:
             diagnostic. Version changes retain removed member identities so a later missing
             import can be distinguished from a member that never existed.
 
+            Before serializing, the shared writer compares the complete parsed history
+            contract with the prospective history. Equality leaves the existing file
+            untouched, preserving key order, whitespace, and trailing newline spelling
+            without another parse or serialization. Semantic changes and migrations still
+            persist normally; replay checks run before this equality decision.
+
             Removed-member history participates in every projected lookup tier: top-level
             names use their namespace entry, static members use `Type::member`, and instance
             receivers use `Type.member`. Declared members resolve first; only an absent

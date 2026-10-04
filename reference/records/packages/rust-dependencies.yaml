@@ -160,7 +160,10 @@ documentation:
             reinsert cache_identity, content_hash, projection_schema, or resolution. Stable
             source and rustdoc-format fields do not opt a reviewed history into cache
             provenance. Newly created ordinary locks and legacy migrations retain normal
-            cache provenance.
+            cache provenance. If the parsed history contract is unchanged, CLI and
+            language-server resolution leave the existing bytes untouched, including key
+            order, whitespace, and newline spelling. Changes to history fields and legacy
+            migrations still write an updated lock.
     - id: imports
       title: Importing admitted members
       blocks:
