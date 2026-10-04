@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5e285e91ef13ca17ae8146bb97dc8f963f5e1b11312639d59f573a78200a3994
+  input-sha256: 7fd6f01e6af3a72bf00dfb0648bb972957678f1799dead85b2e63f4f0a3cfe16
 format: 1
 generated: true
 symbols:
@@ -4501,6 +4501,10 @@ symbols:
   record: lang.types.references
   section: forms
   declaration: move
+- name: move
+  record: lang.types.unions
+  section: enums
+  declaration: move
 - name: ms
   record: tool.packages.testing
   section: framework
@@ -5051,6 +5055,10 @@ symbols:
   record: book.errors
   section: designing-useful-error-values
   declaration: operation-error
+- name: Option
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: Option
 - name: optional
   record: lang.classes.fields
   section: classes
@@ -7074,6 +7082,10 @@ symbols:
 - name: T
   record: lang.ownership.value-semantics
   section: value-copy-semantics
+  declaration: T
+- name: T
+  record: lang.types.generics
+  section: authored-bounds
   declaration: T
 - name: T
   record: lang.types.optional-refinement

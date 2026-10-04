@@ -187,6 +187,13 @@ documentation:
             parameters transfer, unused owners clean up, and shared receivers do not permit
             moving out payloads. No hidden Clone bound or placeholder value is introduced.
 
+            Every recursive cycle must retain a finite set of concrete applications.
+            Semantic analysis rejects an expanding binder substitution, such as a call cycle
+            that replaces `T` with a container of `T`, before Rust lowering. This proof
+            includes direct and mutual function calls, explicit and result-selected
+            applications, and generic method-owner selections. Ordinary recursion that
+            retains the same application remains valid.
+
             Generic interfaces can retain an output relationship before any output exists:
             `interface source of (T)` can declare `mutable function next T|none;`, and a
             class explicitly implements a closed `source of string`. Native

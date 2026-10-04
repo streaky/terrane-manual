@@ -349,19 +349,28 @@ documentation:
             unapplied projected interface can accept an associated application while its
             native operation's associated constraints remain enforced.
 
-            Required authored fields use non-allocating initialization slots until
-            successful construction; incomplete objects do not run the successful object's
-            destructor. Projected native fields retain native storage and construction
-            recipes instead. Cached construction types may specialize only the same nominal
-            owner selected in the current lowering context. An inherited static body that
-            constructs self must retain the derived owner, not the original body's cached
-            base owner.
+            Required authored fields use non-allocating `Option` initialization slots;
+            incomplete objects do not run the successful object's destructor. The current
+            single storage representation retains those slots after construction, so field
+            access checks initialization and a non-niche payload can enlarge the layout.
+            Eliding completed-object checks safely requires a separate construction-stage
+            representation and transition into plain initialized fields, not unchecked
+            access to storage that may still be absent on a failing construction path.
+            Projected native fields retain native storage and construction recipes instead.
+            Cached construction types may specialize only the same nominal owner selected in
+            the current lowering context. An inherited static body that constructs self must
+            retain the derived owner, not the original body's cached base owner.
 
             Runtime dependency features and crate spelling are separate obligations. When
             the resolved Tokio package is available under a Cargo alias, shared Rust IR
             binds that exact alias to the runtime's crate name for both applications and
             tests. It must not add a separately pinned Tokio package or rely on feature
-            merging to make an undeclared crate name resolve.
+            merging to make an undeclared crate name resolve. Shared Rust IR records
+            blocking-task and synchronization demand explicitly, independently of an
+            asynchronous entrypoint. Stream, filesystem, and networking fragments can
+            require blocking-task support in an otherwise synchronous application. Cargo
+            features and alias binding consume those facts, not scans of generated Rust
+            source.
 
             Constructible generic native records retain one canonical constructor template,
             ordered public fields, and native bounds. Ordinary constructor payloads select
@@ -381,6 +390,15 @@ documentation:
             facade namespace must not be paired with another alias's owner name. Method
             lookup canonicalizes both item paths and native receiver-owner paths; public
             facade spellings and provider-internal paths can denote the same type.
+
+            Native reference metadata retains its inner projected type, mutability, and
+            lifetime as separate fields. Recursive traversal, owner lookup, alias rewriting,
+            and substitution preserve that structure. Rust syntax trees distinguish bare
+            generic binders from qualified names; a qualified identifier cannot be
+            substituted merely because its final segment has the same spelling as a binder.
+            Borrowed-option callbacks specialize their shared or mutable native payload
+            contract from the selected receiver, including the corresponding native callable
+            bound.
 
             Bootstrap binding inference preserves unresolved generic scalar placeholders
             until constructor result selection and binding reconstruction can validate the
@@ -408,7 +426,12 @@ documentation:
             defining trait's declared dependency document, not only the nominal owner's
             implementation list. Canonical owner identities include projected reexport
             facades; candidates enter the existing collision and qualified-call machinery.
-            Alias expansion binds written arguments first and omitted arguments through
+            Blanket, synthetic, and negative implementations are outside this discovery
+            pass's candidate set. Blanket operations admitted by other proven recipes retain
+            those recipes' inventory; the pass does not enumerate every omitted blanket
+            method as an owner failure. Explicit admitted candidates that cannot resolve an
+            owner or project a method retain stable declines rather than disappearing. Alias
+            expansion binds written arguments first and omitted arguments through
             declaration defaults. Associated-constant result owners propagate subsequent
             member demand, and constant native paths follow dependency-root alias rewriting.
     - id: interface-impls
