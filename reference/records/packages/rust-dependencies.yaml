@@ -153,6 +153,14 @@ documentation:
             private owner edge, or admitted/declined inventory deserves review even when
             authored Terrane source is unchanged. Never edit locks or the generated
             inventory to manufacture availability; regenerate them through the compiler.
+
+            An existing format-4 reviewed projection history without machine-local cache
+            fields keeps that format during CLI and language-server resolution. Semantic
+            inventory updates and removed-member history still persist; resolution must not
+            reinsert cache_identity, content_hash, projection_schema, or resolution. Stable
+            source and rustdoc-format fields do not opt a reviewed history into cache
+            provenance. Newly created ordinary locks and legacy migrations retain normal
+            cache provenance.
     - id: imports
       title: Importing admitted members
       blocks:
@@ -346,6 +354,20 @@ documentation:
             the expression through binding, return, storage, capture, or suspension.
             Constructed borrowed views use the separate lifetime-coupled callback contract,
             not ordinary storage.
+
+            A callback may mutate its borrowed parameter only when the selected native
+            callback supplies a mutable reference. Passing it through a shared map or
+            and_then edge is a source error (T0139), not a deferred Rust backend failure.
+            Read-only callbacks remain valid on either receiver. Ordinary source helpers
+            infer mutable native reference inputs only when their bodies require mutation,
+            including transitive calls through imported helpers and callable aliases. The
+            same inferred requirement governs callback checking and ordinary argument
+            reborrowing; a helper cannot hide mutation from a shared callback boundary.
+
+            Native operations with direct static reference parameters are unavailable,
+            including aliases of those reference types. A Terrane string literal still
+            crosses the ordinary owned-string ABI and does not establish static native
+            storage. Prefer an admitted parser such as from_str over from_static.
         - type: example
           id: example.dependencies.borrowed-interior-snapshot
           language: terrane

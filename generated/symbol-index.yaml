@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4aba14bd1347ab1456cb6cd87ac32271ed318ee13badffe62d6c9a31325f22bd
+  input-sha256: 450e924928ca524ce7557609a22d66216096032cd9a9a36117f57757f68c3d02
 format: 1
 generated: true
 symbols:
@@ -5926,6 +5926,10 @@ symbols:
 - name: ref
   record: lang.ownership.value-semantics
   section: value-copy-semantics
+  declaration: ref
+- name: ref
+  record: lang.types.authority-in-practice
+  section: declaration-table
   declaration: ref
 - name: ref
   record: lang.types.authority-in-practice

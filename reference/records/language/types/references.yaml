@@ -25,10 +25,10 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `ref T` is a non-owning identity observer and does not extend the lender's
-            lifetime. `shared ref T` is an explicit shared owner. `move` transfers an owned
-            value. Assignment and calls do not silently convert among these contracts, and a
-            `ref T` cannot be promoted to `shared ref T`.
+            `ref T` is a non-owning reference to an identity and does not extend the
+            lender's lifetime. `shared ref T` is an explicit shared owner. `move` transfers
+            an owned value. Assignment and calls do not silently convert among these
+            contracts, and a `ref T` cannot be promoted to `shared ref T`.
     - id: provenance
       title: Whole-path provenance
       blocks:
@@ -70,6 +70,13 @@ documentation:
             element types, while admitting acyclic shared fields. Later unproved native
             shared cycles are not traced and must be broken explicitly; ordinary `ref`
             back-edges are not ownership edges.
+
+            A projected native reference parameter uses shared access for observation.
+            Mutating native operations, including operations reached through source helper
+            calls, infer a mutable native borrow and require matching caller access. This
+            inference does not copy the referent, transfer ownership, or grant mutation
+            through a shared native input. Authored-class receiver authority remains
+            explicit.
   see-also: []
 
 provenance:

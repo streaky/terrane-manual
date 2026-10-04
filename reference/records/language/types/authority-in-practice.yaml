@@ -53,7 +53,16 @@ documentation:
             - intent: Implement a borrowed interface method
               declaration: function inspect none; value ref some-type
               call: implementation receives ref
-
+        - type: markdown
+          markdown: |-
+            `ref` specifies a non-owning borrow, not an unconditional mutable Rust
+            reference. For projected native values, the compiler infers the required native
+            access from the function body and transitively through source helpers:
+            observation uses a shared borrow, while native mutation requires a mutable
+            borrow from the caller. A shared native callback input cannot satisfy that
+            requirement, even when the mutation occurs inside an imported helper or through
+            a callable alias. This does not relax authored-class receiver authority;
+            authored mutation still requires the appropriate mutable function contract.
     - id: interfaces
       title: Interfaces and receiver authority
       blocks:

@@ -277,6 +277,10 @@ documentation:
             - projected-borrowed-interior-graphs
             - projected-borrowed-interior-binding
             - projected-borrowed-interior-return
+            - projected-borrowed-option-shared-mutation
+            - projected-borrowed-option-shared-direct-mutation
+            - projected-borrowed-option-shared-chaining-mutation
+            - projected-borrowed-option-mutable-mutation
           markdown: |-
             Shared and mutable native interior receivers remain exact Rust borrows inside
             one nested operation graph. Canonical projected owner identity permits method
@@ -291,6 +295,20 @@ documentation:
             through callbacks imported from another source unit: absent edges remain absent,
             mutation updates the original, read-only observation preserves it, and an
             explicit cloned snapshot remains independent of subsequent mutation.
+
+            Callback validation uses the selected operation's concrete parameter metadata,
+            not its unspecialized declaration. A source callback that mutates a borrowed
+            parameter is rejected with T0139 when the native callback supplies a shared
+            reference. This applies to map and and_then; a mutable receiver permits the same
+            mutation. Mutation analysis follows the defining source function and resolves
+            imported helpers and callable aliases to canonical function spans. Parameter
+            write requirements reach a finite fixed point across source-call chains and
+            cycles before binding mutability and callback checks are finalized. Ordinary
+            native reference parameter signatures and argument reborrows use that same
+            inferred requirement: shared for observation, mutable when the referent is
+            mutated. Cached imported signatures cannot override the defining contract. Local
+            callable aliases retain the defining function's inferred native borrowing ABI
+            rather than imposing a shared-reference callable annotation.
 
             Lowering evaluates each root once and preserves mutable access to the original
             interior. Owned results and completed side effects may leave the expression; a
@@ -406,6 +424,12 @@ documentation:
             Borrowed-option callbacks specialize their shared or mutable native payload
             contract from the selected receiver, including the corresponding native callable
             bound.
+
+            Direct native reference parameters requiring a static lifetime, including
+            reference type aliases and receivers, are declined before source admission.
+            Ordinary Terrane strings cannot guarantee static storage, even when the written
+            argument is a literal: the owned-string support ABI must not promise a lifetime
+            it cannot preserve. Use an admitted ordinary borrowed-input operation instead.
 
             Bootstrap binding inference preserves unresolved generic scalar placeholders
             until constructor result selection and binding reconstruction can validate the
