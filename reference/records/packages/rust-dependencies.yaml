@@ -195,6 +195,15 @@ documentation:
 
             Heterogeneous tuples and aggregates containing an unsupported component are
             declined rather than partially reinterpreted.
+
+            Public native record construction preserves field positions when optional
+            arguments are omitted. Supplying a later field does not fill an earlier omitted
+            field, and an explicit zero remains present. Native field identity also remains
+            stable when a constructor parameter needs a keyword-safe Terrane spelling.
+
+            Constructible generic records select their native representation through
+            ordinary payload constructors. The language model, examples, and selection
+            restrictions are documented in [[lang.types.generics#constructors]].
     - id: transitive-owners
       title: Types owned by another crate
       blocks:
@@ -256,43 +265,93 @@ documentation:
     - id: associated-interfaces
       title: Closing associated interface types
       blocks:
+        - type: markdown
+          markdown: |-
+            Supported associated interfaces use explicit applied identities. See
+            [[lang.types.generics#associated-interfaces]] for their source contracts,
+            supported arguments, inherited requirements, and rejection rules.
+    - id: expression-macros
+      title: Native expression macros
+      blocks:
         - type: rule
-          id: rule.dependencies.associated-interface
+          id: rule.dependencies.expression-macros
           level: must
           since: null
           evidence:
-            - rust-dependency-associated-interface
-            - rust-dependency-supertrait-interface
-            - projected-associated-bare
-            - projected-associated-bound
-            - projected-unprojectable-supertrait
+            - projected-expression-macros
+            - projected-macro-argument-mismatch
+            - projected-macro-result-mismatch
+            - projected-macro-token-mismatch
+            - projected-macro-callable-value
+            - projected-macro-reference-conversion
+            - projected-iced-expression-macros
+            - projected-iced-scoped-macro-token-mismatch
           markdown: |-
-            A projected Rust trait may expose exactly one non-generic associated type.
-            Terrane closes it explicitly with `Interface of ConcreteType` in `implements`
-            clauses and value annotations. The application is part of nominal identity; the
-            compiler substitutes it through inherited methods and reflection, validates the
-            retained Rust bounds, and emits the corresponding Rust associated type.
+            Public native macros project into a separate macros namespace beneath their
+            public package or module namespace. This keeps a macro distinct from a Rust
+            function or module with the same name. Import the macro and invoke it with
+            ordinary positional expression-call syntax; the compiler emits a native
+            comma-delimited macro invocation rather than a forwarding function.
 
-            `ConcreteType` is currently limited to a closed boundary-representable scalar,
-            aggregate, or projected foreign type. A Terrane source class cannot fill the
-            slot until source objects have an explicit Rust boundary conversion contract.
+            A written result annotation or an enclosing function return contract selects the
+            concrete result type, including ordinary Into conversion to that destination.
+            Source literals retain native literal tokens, and nested macro invocations
+            compose inside the same native expression. Lifetime-coupled callbacks may
+            construct and recursively combine widgets that borrow their invocation's state;
+            their exact native callback result supplies the destination. Rust validates the
+            complete graph against the pinned dependency without copying borrowed state or
+            detaching its lifetime-dependent producers. Independently closed invocation
+            failures report T0119; failures that require checking a complete scoped callback
+            report S9003 with the native backend diagnostic. A macro nested in an inferred
+            native generic input remains a raw macro expression; the enclosing native
+            operation supplies its constraint during joint backend checking, rather than
+            exposing a compiler-generated generic parameter as a type.
 
-            Every non-marker supertrait must project independently. The complete chain
-            contributes inherited requirements and receives one generated Rust
-            implementation per distinct trait, including diamond closures. Applied
-            identities resolve recursively inside aggregate annotations, subject to each
-            aggregate's ordinary element constraints. `(Interface of ConcreteType)|none`
-            groups the completed application when it is optional; optionality admits any
-            otherwise valid declared value type, including aggregates. A source subclass
-            inherits its base classes' complete projected-interface set at generic calls and
-            generated Rust implementations. An applied subinterface value may cross an
-            ancestor's owning erased boundary when the inherited associated binding and
-            auto-trait obligations agree. Open applications are rejected recursively inside
-            aggregate and callable annotations. Final oracle admission also removes generic
-            functions whose projected interface bound was declined. Bare or inferred
-            applications, source-class arguments, multiple or generic associated slots,
-            failed bounds, unprojectable supertraits, and incoherent erased bindings are
-            rejected before lowering.
+            Rust performs matching and expansion. Terrane neither interprets macro_rules nor
+            infers a universal callable signature from a macro declaration. Arguments remain
+            expressions: expansion may repeat, ignore, or conditionally evaluate them. Named
+            arguments, arbitrary token-tree syntax, and declaration-generating invocations
+            are not this expression-call interface. Macros that generate ordinary public
+            declarations continue through normal Rustdoc projection.
+        - type: example
+          id: example.dependencies.expression-macro
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /deps/witness/macros import sum, message
+            total int = sum; 1, 2, 3
+            text string = message; 'total={}', total
+    - id: borrowed-interiors
+      title: Borrowing through native containers
+      blocks:
+        - type: rule
+          id: rule.dependencies.borrowed-interiors
+          level: must
+          since: null
+          evidence:
+            - projected-borrowed-interior-graphs
+            - projected-borrowed-interior-binding
+            - projected-borrowed-interior-return
+          markdown: |-
+            A nested projected expression can traverse shared or mutable native interiors
+            without copying the container or exposing a storable source reference. Methods,
+            public fields, and projected consumers use the canonical native owner at every
+            edge. Generic optional lookups can select their concrete type from a named
+            borrowed-input callback or a written owned destination.
+
+            Shared and mutable native optional borrows support map and and_then to produce
+            owned results, and cloned to request an explicit owned snapshot. Invalid
+            fallible native text extraction uses its projected throwable identity; package
+            policy can catch it and return none. Borrowed interiors themselves cannot leave
+            the expression through binding, return, storage, capture, or suspension.
+            Constructed borrowed views use the separate lifetime-coupled callback contract,
+            not ordinary storage.
+        - type: example
+          id: example.dependencies.borrowed-interior-snapshot
+          language: terrane
+          mode: illustrative
+          source: |-
+            selected Entry|none = ((request.extensions;).get;).cloned;
     - id: callbacks
       title: Passing Terrane callables to Rust
       blocks:
@@ -307,6 +366,9 @@ documentation:
             - projected-callback-throwable
             - projected-generic-call-mismatch
             - projected-invocation-scoped-callback
+            - projected-borrowed-interior-graphs
+            - projected-borrowed-interior-binding
+            - projected-borrowed-interior-return
             - projected-invocation-scoped-nominal-escape
             - projected-invocation-scoped-incompatible-graph
             - projected-invocation-scoped-local-borrow
@@ -371,6 +433,17 @@ documentation:
             types. The compiler passes the named function directly to the proven native
             callback blanket, so the native implementation—not a compiler-forged trait
             implementation—owns the terminal conversion.
+
+            A projected native function may combine several retained callbacks whose input
+            and result types share open native generics, including boot, mutable update,
+            title, and higher-ranked view callbacks for one application state. Projection
+            preserves each callback's original Rust generic parameter and complete bound.
+            Lowering leaves callback generic arguments at Rust inference sites and passes an
+            exact invocation-scoped named function directly when its native parameter and
+            producer types already match. Generated package-facade wrappers remain generic
+            over such callbacks rather than erasing a lifetime-dependent result behind a
+            trait object. These rules preserve the relationship between a view input borrow
+            and its returned native value across the complete callback set.
 
             Exact invocation-scoped callbacks currently require every explicit return from
             one function to have the same native producer type. Nested scoped functions may
@@ -513,6 +586,8 @@ documentation:
             - projected-callable-blanket-recipe
             - projected-callable-blanket-recipe-bound
             - projected-namespace-value-collision
+            - projected-concrete-trait-operations
+            - projected-foreign-owner-trait-operation
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
             Plain Rust `&self`, `&mut self`, and `self` receivers become shared, mutable,
@@ -523,19 +598,11 @@ documentation:
             results. A local class adopts the projected identity with ordinary `implements`,
             and lowering emits the corresponding foreign Rust implementation.
 
-            Owned concrete generic inputs and value-style `impl Trait` inputs with
-            representable bounds remain caller-selected. Projection records each canonical
-            Rust bound instead of choosing one implementation or requiring the bound trait
-            to become a Terrane interface. At a call, Terrane infers the exact concrete
-            argument representation, substitutes it through every retained bound, and asks
-            the projection oracle to prove the complete conjunction. Result-only generic
-            families retain all correlated parameters; one structural match against the
-            written destination selects their complete substitution set, including repeated
-            occurrences, before any bound is proved. A successful proof lowers one direct
-            Rust call; a failed or unknown proof rejects that call. Consequently contracts
-            such as `impl Into<Radius>`, `impl Borrow<T>`, and combined
-            `Clone + Send + TryInto<T>` bounds reuse one mechanism and preserve every native
-            implementation accepted by Rust.
+            Concrete native arguments and written result destinations select supported
+            generic operations without requiring every bound trait to become an interface.
+            See [[lang.types.generics#inputs]] and [[lang.types.generics#destinations]] for
+            selection rules and examples. Exact native operation paths and cross-crate
+            implementation discovery are described in [[internals.projection.resolution]].
 
             A direct `Fn`, `FnMut`, or `FnOnce` callback whose input or exact result
             mentions open function generics projects as a deferred callback template. Its
@@ -707,33 +774,12 @@ documentation:
             failure, panic, and asynchronous boundaries at the terminal operation. A
             concrete adapter may run an open generic API internally; that does not make the
             open generic directly projectable.
-        - type: rule
-          id: rule.dependencies.destination-directed-results
-          level: must
-          since: null
-          evidence:
-            - projected-destination-results
-            - projected-correlated-destination-results
-            - projected-serde-json-result
-            - projected-result-without-destination
-            - projected-result-conflicting-destinations
-            - projected-result-incompatible-template
-            - projected-result-unsatisfied-bound
-            - projected-result-unknown-bound
-            - projected-result-borrowed
-            - projected-result-source-object
+        - type: markdown
           markdown: |-
-            A projected dependency function or method may leave a correlated set of
-            result-only Rust type parameters for the caller. Terrane structurally matches
-            their complete result template against exactly one written binding, argument,
-            class-field, or return destination, requires repeated occurrences to agree, and
-            substitutes the jointly selected parameters before proving bounds. The
-            projection oracle must prove every rendered Rust bound for each exact concrete
-            representation; `no`, `unknown`, absent, incompatible, or conflicting
-            destinations are compile-time failures. Higher-ranked lifetimes and associated
-            constraints remain part of the proof rather than being approximated from rustdoc
-            implementation lists. Higher-ranked and nested bound paths use the dependency's
-            manifest alias at every Rust path-root occurrence.
+            A written destination may close a projected result-only generic family; it does
+            not make a chain-only intermediate storable. See
+            [[lang.types.generics#destinations]] for the complete destination-selection
+            contract and examples.
 
             When rustdoc names a public bound through a transitive crates.io package, that
             owner is pinned at its lock-resolved version, recorded in projection-history
@@ -741,14 +787,6 @@ documentation:
             features. Existing transitive edges keep the resolved feature set, so this
             direct edge makes the bound nameable without widening it; ambiguous or
             non-registry owners decline.
-
-            Closed scalar, string, bytes, optional, sequence, mapping, set, homogeneous
-            tuple, and projected foreign-object shapes recurse through the result template.
-            Source-declared object destinations remain unavailable because dependencies have
-            no authored conversion contract for their generated Rust representation.
-            Borrowed results are declined; accepted values cross the boundary owned. Calls
-            name the selected Rust type explicitly in generated Rust. Terrane does not
-            expose Rust angle-bracket generic arguments in source.
     - id: integration-boundaries
       title: Direct-first integration boundaries
       blocks:
@@ -913,6 +951,7 @@ documentation:
             cleanup completes before a consuming receiver is released, and executor shutdown
             drains outstanding cleanup.
   see-also:
+    - lang.types.generics
     - lang.functions.declarations
     - internals.projection.namespace-overlays
     - internals.integration-boundaries

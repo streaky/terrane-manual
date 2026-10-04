@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2946845393c56257251c298057b3787ac822f1047872b54edcc7a0b923120dd4
+  input-sha256: cf3f44dd2f55733e62005e3e9e486b6ac61286bea3db729b3229610e418f7487
 format: 1
 generated: true
 symbols:
@@ -1429,7 +1429,7 @@ symbols:
   section: string-operations
   declaration: concat
 - name: ConcreteType
-  record: tool.packages.rust-dependencies
+  record: lang.types.generics
   section: associated-interfaces
   declaration: ConcreteType
 - name: console-sink
@@ -1629,6 +1629,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: copy-sign
+- name: core
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: core
 - name: core
   record: internals.projection.resolution
   section: projection-gap-census
@@ -2241,6 +2245,14 @@ symbols:
   record: std.collections
   section: ordering-iteration-and-lifetime
   declaration: entry.value
+- name: Envelope
+  record: lang.types.generics
+  section: constructors
+  declaration: Envelope
+- name: Envelope
+  record: lang.types.generics
+  section: limits
+  declaration: Envelope
 - name: environment-pair
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -2878,6 +2890,10 @@ symbols:
   section: type-descriptors
   declaration: float32
 - name: float32
+  record: lang.types.generics
+  section: inputs
+  declaration: float32
+- name: float32
   record: lang.types.relations
   section: type-tests
   declaration: float32
@@ -3097,6 +3113,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: fractional-part
+- name: Frame
+  record: lang.types.generics
+  section: constructors
+  declaration: Frame
 - name: frames
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -3402,7 +3422,7 @@ symbols:
   section: traits
   declaration: implements
 - name: implements
-  record: tool.packages.rust-dependencies
+  record: lang.types.generics
   section: associated-interfaces
   declaration: implements
 - name: implements
@@ -3760,6 +3780,10 @@ symbols:
 - name: integer-conversion-overflow
   record: lang.numerics.conversion
   section: numeric-coercion
+  declaration: integer-conversion-overflow
+- name: integer-conversion-overflow
+  record: lang.types.generics
+  section: constructors
   declaration: integer-conversion-overflow
 - name: integer-power
   record: lang.numerics.floating-point
@@ -4710,8 +4734,8 @@ symbols:
   section: operations
   declaration: next-up
 - name: 'no'
-  record: tool.packages.rust-dependencies
-  section: chain-only-values
+  record: lang.types.generics
+  section: destinations
   declaration: 'no'
 - name: none
   record: book.async
@@ -4777,6 +4801,10 @@ symbols:
   record: internals.projection.resolution
   section: async-sequences
   declaration: None
+- name: none
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: none
 - name: none
   record: lang.classes.fields
   section: classes
@@ -4968,6 +4996,10 @@ symbols:
 - name: of
   record: book.types
   section: generic-types
+  declaration: of
+- name: of
+  record: internals.projection.resolution
+  section: destination-results
   declaration: of
 - name: offset
   record: book.namespaces-imports-and-packages
@@ -5639,6 +5671,10 @@ symbols:
   record: internals.projection.resolution
   section: public-paths
   declaration: project_rustdoc
+- name: projected-destination-results
+  record: lang.types.generics
+  section: destinations
+  declaration: projected-destination-results
 - name: projection/godot-generated-reexport-surface
   record: internals.integration-boundaries
   section: tracking
@@ -5743,6 +5779,10 @@ symbols:
   record: lang.numerics.arithmetic
   section: integer-operators
   declaration: r
+- name: Radius
+  record: lang.types.generics
+  section: inputs
+  declaration: Radius
 - name: range
   record: book.decisions-and-repetition
   section: exercises
@@ -6443,6 +6483,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: selected_target
+- name: Self
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: Self
 - name: self
   record: internals.projection.resolution
   section: interface-impls
@@ -6651,6 +6695,10 @@ symbols:
   record: book.identity-and-movement
   section: project-observing-a-work-list
   declaration: snapshot
+- name: SocketAddr
+  record: lang.types.generics
+  section: constructors
+  declaration: SocketAddr
 - name: Some
   record: internals.projection.resolution
   section: async-sequences
@@ -6735,6 +6783,10 @@ symbols:
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: static
+- name: std
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: std
 - name: std
   record: internals.projection.resolution
   section: projection-gap-census
@@ -7307,6 +7359,10 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: testing.unit
+- name: tests/conformance/run/projected-constructor-selected-native
+  record: lang.types.generics
+  section: constructors
+  declaration: tests/conformance/run/projected-constructor-selected-native
 - name: tests/end-to-end
   record: tool.packages.testing
   section: discovery
@@ -7888,8 +7944,8 @@ symbols:
   section: throwing-an-error
   declaration: units
 - name: unknown
-  record: tool.packages.rust-dependencies
-  section: chain-only-values
+  record: lang.types.generics
+  section: destinations
   declaration: unknown
 - name: unknown
   record: tool.packages.rust-dependencies

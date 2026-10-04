@@ -38,10 +38,12 @@ documentation:
             parameter, and an ordered path of field, element, and call-result projections.
             Parentheses, binding, calls, returned references, captures, and borrowed
             iteration preserve or narrow that path; they never widen its lifetime. A
-            reference-returning function is accepted only when return flow selects exactly
-            one reference parameter, including through another call. Parameter count never
-            chooses the lender, and a by-value parameter or local value cannot lend a
-            returned reference.
+            function returning non-owning `ref T` is accepted only when return flow selects
+            exactly one reference parameter, including through another call. Parameter count
+            never chooses the lender, and a by-value parameter or local value cannot lend a
+            returned ordinary reference. Returning an explicit `shared ref T` transfers or
+            copies shared ownership instead; it does not require an external reference
+            lender.
     - id: lifetime
       title: Lifetime-ending operations
       blocks:

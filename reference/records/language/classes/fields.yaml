@@ -36,9 +36,11 @@ documentation:
             - implicit-class-field-defaults
             - trait-field-defaults
             - cross-unit-inherited-initializer
-            - nondefaultable-class-field
-            - nondefaultable-trait-field
-            - nondefaultable-tuple-field
+            - authored-generic-contracts
+            - authored-generic-partial-construction
+            - authored-required-missing-branch
+            - authored-required-double-write
+            - authored-required-move-out
           markdown: |-
             A typed class or trait field may omit its initializer when its declared type has
             a canonical default. Boolean fields receive `false`, numeric fields receive
@@ -47,11 +49,25 @@ documentation:
             collections.
 
             Plain `none`, tuples, source objects, references, callables, resources, and
-            other runtime contracts are nondefaultable. Every effective class field must
-            have a canonical or explicit default. A trait may provide an initializer, or the
-            using class may override the field with one. Inherited initializers retain their
-            declaring source and object context. Omission never infers a type, invokes an
-            arbitrary constructor, or puts hidden `none` into `T`.
+            unconstrained type parameters do not acquire a canonical default. A field
+            without a canonical or explicit default is a required-construction field. The
+            constructor must initialize each such effective field exactly once on every
+            successful exit, before reading it or exposing the incomplete receiver. A move
+            out cannot leave a required slot empty at successful completion.
+
+            These initialization slots belong to authored source objects. A projected native
+            class retains its admitted native storage and constructor recipe; ordinary class
+            syntax in its generated declaration does not introduce optional storage or a
+            source constructor body for its native fields.
+
+            Conditional, loop, exception, and finally paths participate in that proof.
+            Failure cleans up the fields already initialized, exactly once, without running
+            the incomplete object's user destructor. Internal initialization storage is not
+            an observable optional type and never fabricates a `T`.
+
+            A trait may provide an initializer, or the using class may override its field.
+            Inherited initializers retain their declaring source and object context.
+            Omission never infers a type or invokes an arbitrary constructor.
     - id: declaration
       title: Declaring field metadata
       blocks:

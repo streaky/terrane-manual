@@ -20,6 +20,7 @@ navigation:
       - source: records/language/collections.yaml
       - source: records/language/classes/inheritance.yaml
       - source: records/language/classes/interfaces.yaml
+      - source: records/language/types/generics.yaml
       - source: records/language/classes/lifecycle.yaml
       - source: records/language/classes/methods.yaml
       - source: records/language/classes/traits.yaml

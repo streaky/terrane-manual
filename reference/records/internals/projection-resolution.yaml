@@ -195,9 +195,103 @@ documentation:
             Lowering passes a supported named exact-result callback directly to the proven
             native blanket and therefore preserves the callback's invocation lifetime and
             native producer type without copied bodies, erased storage, a fabricated native
-            trait implementation, or `'static` promotion. Defaulted native arguments are
-            selected from the resolved terminal alias and emitted in native declaration
-            order; they are never guessed from a package or operation name.
+            trait implementation, or `'static` promotion. When one native function combines
+            several callbacks over shared generic state, callback parameters retain their
+            original Rust generic identities, generated facade wrappers remain generic, and
+            call-site callback arguments are left to exact Rust inference rather than
+            emitted as unresolved named types. Defaulted native arguments are selected from
+            the resolved terminal alias and emitted in native declaration order; they are
+            never guessed from a package or operation name.
+    - id: expression-macros
+      title: Compiler-checked native expression macros
+      blocks:
+        - type: rule
+          id: rule.projection.expression-macros
+          level: must
+          since: null
+          evidence:
+            - projected-expression-macros
+            - projected-macro-argument-mismatch
+            - projected-macro-result-mismatch
+            - projected-macro-token-mismatch
+            - projected-macro-callable-value
+            - projected-macro-reference-conversion
+            - projected-macro-supplemental-owner-leak
+            - projected-iced-expression-macros
+            - projected-iced-scoped-macro-token-mismatch
+          markdown: |-
+            ProjectedKind::Macro retains a native macro identity separately from ordinary
+            functions. Its generated variadic callable surface describes expression argument
+            positions, not a Rust function signature. Public re-export paths remain
+            selectable beneath the corresponding macros namespace. Re-export discovery
+            traverses the declared crate document, not supplemental owner documents:
+            supplemental owners do not implicitly export their unrelated macros through the
+            declared facade.
+
+            Semantics selects a concrete native result from the source destination and
+            preserves literal tokens and nested native operations. Independently closed
+            invocations submit their native boundary types through the shared pinned Rust
+            oracle. Lifetime-coupled callbacks retain the complete producer/macro graph for
+            final native checking instead: detached higher-ranked assertions would quantify
+            unrelated lifetimes, and partially selected renderer generics must remain
+            available for Rust's joint inference. No lifetime-bearing graph is admitted
+            without successful backend validation.
+
+            Lowering emits the native macro invocation in the complete expression and closes
+            its contextual result through ordinary Into conversion, including a
+            lifetime-coupled callback's exact Element destination. Concrete annotations
+            erase probe-local lifetime names to inferred lifetimes, never to static storage.
+            It must not pre-evaluate arguments into temporaries, replace the invocation with
+            a helper function, parse macro matchers, or erase native result identity. Macro
+            operations are invocation-only, not first-class function values. Explicit
+            reference arguments require identity-preserving native representation;
+            conversion through a copied temporary must not replace a native loan.
+            Conformance observes repeated and conditional argument evaluation, heterogeneous
+            and variadic inputs, zero-argument matching, nested calls, public re-exports,
+            same-name function coexistence, and mutation of the original native object
+            through a reference. Real pinned Iced conformance additionally observes nested
+            text, row, and column macros, ordinary borrowed text inputs, recursive borrowed
+            iteration over native sequence fields with identity-preserving elements,
+            widget-tree topology, and zero native-state traversal clones. The CLI package
+            regression suite verifies that malformed scoped macro tokens fail in the
+            complete callback's native backend validation. A scoped callback's consumer
+            selects its native destination even when an ordinary widget builder produces a
+            different type that closes through Into. Unselected native generic arguments
+            remain inferred within the complete graph rather than becoming undeclared Rust
+            type names in local annotations.
+    - id: borrowed-interior-graphs
+      title: Expression-scoped borrowed interior graphs
+      blocks:
+        - type: rule
+          id: rule.projection.borrowed-interior-graphs
+          level: must
+          since: null
+          evidence:
+            - projected-borrowed-interior-graphs
+            - projected-borrowed-interior-binding
+            - projected-borrowed-interior-return
+          markdown: |-
+            Shared and mutable native interior receivers remain exact Rust borrows inside
+            one nested operation graph. Canonical projected owner identity permits method
+            and field lookup through each borrowed edge; generic selection propagates from
+            callback inputs and owned destinations through the graph. Native optional
+            borrows support cloned, map, and and_then terminals. Cloned explicitly creates
+            an owned snapshot; traversal itself never clones the native root or referent.
+            Mutable optional referents preserve their native callback input mutability.
+            Source callbacks that mutate a native referent use the exact mutable borrow ABI,
+            while read-only callbacks can observe that same referent without copying. The
+            tracked borrowed-interior conformance case exercises real HTTP header values
+            through callbacks imported from another source unit: absent edges remain absent,
+            mutation updates the original, read-only observation preserves it, and an
+            explicit cloned snapshot remains independent of subsequent mutation.
+
+            Lowering evaluates each root once and preserves mutable access to the original
+            interior. Owned results and completed side effects may leave the expression; a
+            borrowed interior cannot be bound, returned, captured, stored, or retained
+            across suspension. This is not a general source-visible reference facility. A
+            constructed lifetime-bearing view may instead use the established exact
+            invocation-scoped callback result contract, whose lender lifetime remains
+            enforced by the native higher-ranked boundary.
     - id: destination-results
       title: Destination-result proof
       blocks:
@@ -212,6 +306,16 @@ documentation:
             - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
             - projected-result-unknown-bound
+            - projected-constructor-selected-native
+            - projected-constructor-selected-bound
+            - projected-constructor-selected-conflicting-payload
+            - projected-constructor-selected-optional
+            - projected-constructor-selected-private
+            - projected-constructor-selected-non-exhaustive
+            - projected-constructor-selected-wrong-native
+            - projected-constructor-selected-wrong-field-write
+            - projected-constructor-selected-nonscalar-operation
+            - projected-constructor-selected-collection-parameters
           markdown: |-
             Projection metadata retains every correlated result-only Rust generic parameter,
             their one recursive result template, and each parameter's complete rendered
@@ -235,6 +339,78 @@ documentation:
             pass every destination-selected generic in native parameter order. Lowering
             applies the complete concrete substitution and the existing recursive result
             conversion without a boxed universal value.
+
+            Authored generic binders are lexical semantic contracts with invariant closed
+            language arguments. Shared callable selection supplies substituted parameters,
+            results, bounds, and effects to validation, lowering, and language tooling.
+            Lowering emits Rust type parameters and ordinary Rust specialization, not a
+            dynamic generic-value runtime or an additional object box. Legacy native
+            associated-slot applications remain distinct from ordered authored arguments: an
+            unapplied projected interface can accept an associated application while its
+            native operation's associated constraints remain enforced.
+
+            Required authored fields use non-allocating initialization slots until
+            successful construction; incomplete objects do not run the successful object's
+            destructor. Projected native fields retain native storage and construction
+            recipes instead. Cached construction types may specialize only the same nominal
+            owner selected in the current lowering context. An inherited static body that
+            constructs self must retain the derived owner, not the original body's cached
+            base owner.
+
+            Runtime dependency features and crate spelling are separate obligations. When
+            the resolved Tokio package is available under a Cargo alias, shared Rust IR
+            binds that exact alias to the runtime's crate name for both applications and
+            tests. It must not add a separately pinned Tokio package or rely on feature
+            merging to make an undeclared crate name resolve.
+
+            Constructible generic native records retain one canonical constructor template,
+            ordered public fields, and native bounds. Ordinary constructor payloads select
+            its concrete representation through the existing generic substitution and oracle
+            machinery. The semantic object identity retains both its ordinary source class
+            and concrete native arguments; concrete aliases normalize to that same identity.
+            Field and method inference, destination compatibility, lowering, and language
+            tooling consume this shared selection. Supplemental facade aliases rewrite
+            native payload paths structurally while preserving type arguments. Canonical
+            native function parameters and results supply concrete selections even when
+            their generated signatures use the same bare source class name. Constructor
+            arguments cross the native ABI exactly once. Copyable field snapshots borrow
+            their native storage and convert into the source representation without
+            partially moving the parent or allocating a redundant intermediate native
+            vector. Borrowed scoped families retain the selected owner's namespace and name
+            together, preferring the projected nominal name among canonical-path matches. A
+            facade namespace must not be paired with another alias's owner name. Method
+            lookup canonicalizes both item paths and native receiver-owner paths; public
+            facade spellings and provider-internal paths can denote the same type.
+
+            Bootstrap binding inference preserves unresolved generic scalar placeholders
+            until constructor result selection and binding reconstruction can validate the
+            concrete operands. Native field reads apply the ordinary recursive result ABI
+            conversion, and writes apply argument conversion with source failure translation
+            and exact escaping conversion errors. Fresh converted field values are not
+            cloned a second time. Private and non-exhaustive record construction remains
+            unavailable; absent or conflicting selecting payloads fail before Rust lowering.
+            Generated function headers group applied parameter types so their `of` argument
+            lists cannot consume the following parameter. Keep this grouping contextual: a
+            parenthesized type after a bare class-field name is parsed as a call, not a
+            field declaration.
+
+            Concrete trait operations retain an explicit qualified native path in projection
+            metadata. Projection binds blanket `Self` generics to the concrete owner,
+            preserves unresolved implementation generics in the rendered trait path, and
+            canonicalizes private `core` or `std` trait spellings to public Rust paths.
+            Generated Terrane instance-operation declarations render destination-selected
+            generic results as semantic placeholders rather than `none`. Lowering
+            substitutes generics inside the qualified trait path, emits remaining method
+            generics only as method arguments, and passes an instance receiver explicitly
+            for qualified trait calls.
+
+            Explicit non-blanket foreign-owner implementations are collected from the
+            defining trait's declared dependency document, not only the nominal owner's
+            implementation list. Canonical owner identities include projected reexport
+            facades; candidates enter the existing collision and qualified-call machinery.
+            Alias expansion binds written arguments first and omitted arguments through
+            declaration defaults. Associated-constant result owners propagate subsequent
+            member demand, and constant native paths follow dependency-root alias rewriting.
     - id: interface-impls
       title: Projected interface implementation proof
       blocks:
@@ -267,10 +443,11 @@ documentation:
             dependency artifact with stable tooling-visible decline reasons.
 
             Trait admission accepts only plain `self`, `&self`, and `&mut self` receivers.
-            Required borrowed parameters and required `Result` methods decline; equivalent
-            provided methods remain callable through Rust defaults but cannot be overridden
-            by Terrane classes. Thread obligations are retained in the artifact for later
-            class-field enforcement.
+            Required borrowed parameters, borrowed results, and required `Result` methods
+            decline: an owned source result cannot implement a native return loan. Admitted
+            provided methods retain their native defaults and cannot be overridden when
+            their parameter or result borrowing requires that default implementation. Thread
+            obligations remain available for class-field enforcement.
     - id: async-sequences
       title: Async-sequence recognition and lowering
       blocks:

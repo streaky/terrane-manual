@@ -33,6 +33,42 @@ documentation:
             rule. Normative language and standard-library pages describe intended behavior.
             Use a workaround only when its semantic-effect field is acceptable, and remove
             it when the objective removal condition is met.
+    - id: projected-tuple-payload-inference
+      title: LIM-PROJ-TUPLE-PAYLOAD-INFERENCE
+      blocks:
+        - type: table
+          id: limitation-projected-tuple-payload-inference
+          title: Chained inference through a selected native tuple payload
+          show-header: true
+          columns:
+            - id: field
+              title: Field
+              cell: text
+            - id: value
+              title: Value
+              cell: markdown
+          rows:
+            - field: Affected versions
+              value: Terrane compiler 0.1.x
+            - field: Observable failure
+              value: >-
+                After constructing Axum `ConnectInfo` with a `SocketAddr`,
+                `peer.n0.ip` reports T0031 because the intermediate is inferred as
+                projected generic `T`.
+            - field: Intended behavior
+              value: >-
+                The selected constructor payload contract remains available through
+                tuple member access and subsequent member calls.
+            - field: Safe workaround
+              value: >-
+                Read `payload SocketAddr = peer.n0`, then call address operations on
+                `payload`. See [[lang.types.generics#constructors]].
+            - field: Removal target
+              value: >-
+                Direct chained payload inference selects the retained `SocketAddr`
+                and accepts its operations without a written intermediate destination.
+            - field: Changes semantics
+              value: No; the annotation names the already selected native payload type.
     - id: projection-namespace-cycles
       title: LIM-PROJ-NAMESPACE-CYCLES
       blocks:

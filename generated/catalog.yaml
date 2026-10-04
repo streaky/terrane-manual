@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2946845393c56257251c298057b3787ac822f1047872b54edcc7a0b923120dd4
+  input-sha256: cf3f44dd2f55733e62005e3e9e486b6ac61286bea3db729b3229610e418f7487
 format: 2
 generated: true
 records:
@@ -580,6 +580,71 @@ records:
     title: Nominal Interfaces and Typed Dispatch
     sections: []
   declaration-synopsis: []
+- id: lang.types.generics
+  title: Generics and native type relationships
+  summary: Describes authored generic classes, functions, interfaces, and enums, their invariant applications,
+    inference, bounds, and ownership, together with the precise native relationships retained by projected
+    Rust operations.
+  kind: topic
+  manual: reference
+  group: Language
+  position: 17
+  source: reference/records/language/types/generics.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification: []
+    conformance:
+    - projected-constructor-selected-native
+    - projected-constructor-selected-collection-parameters
+    - projected-constructor-selected-conflicting-payload
+    - projected-constructor-selected-optional
+    - projected-constructor-selected-bound
+    - projected-constructor-selected-private
+    - projected-constructor-selected-non-exhaustive
+    - projected-constructor-selected-wrong-native
+    - projected-constructor-selected-wrong-field-write
+    - projected-native-input-bound
+    - projected-destination-results
+    - projected-correlated-destination-results
+    - rust-dependency-associated-interface
+    compiler: null
+  sections:
+  - id: purpose
+    title: Type relationships, not just reusable code
+    sections: []
+  - id: source-model
+    title: Choose the smallest useful source contract
+    sections: []
+  - id: authored-declarations
+    title: Declaring and applying type parameters
+    sections: []
+  - id: authored-selection
+    title: Selecting one consistent application
+    sections: []
+  - id: authored-bounds
+    title: Bounds, generic bodies, and ownership
+    sections: []
+  - id: native-identity
+    title: One source class, precise native representations
+    sections: []
+  - id: constructors
+    title: Constructor payloads select native record types
+    sections: []
+  - id: inputs
+    title: Operation arguments select concrete native inputs
+    sections: []
+  - id: destinations
+    title: A written destination selects result-only parameters
+    sections: []
+  - id: associated-interfaces
+    title: Associated interface types remain explicit contracts
+    sections: []
+  - id: limits
+    title: What selection does not authorize
+    sections: []
+  declaration-synopsis: []
 - id: lang.classes.lifecycle
   title: Construct destruct and value lineage
   summary: Construction and destruction methods compose across inheritance. Copies create fresh lifecycle
@@ -587,7 +652,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 17
+  position: 18
   source: reference/records/language/classes/lifecycle.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -610,7 +675,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 18
+  position: 19
   source: reference/records/language/classes/methods.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -633,7 +698,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 19
+  position: 20
   source: reference/records/language/classes/traits.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -656,7 +721,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 20
+  position: 21
   source: reference/records/language/control-flow/branching-and-loops.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -679,7 +744,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 21
+  position: 22
   source: reference/records/language/declarations/bindings.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -702,7 +767,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 22
+  position: 23
   source: reference/records/language/declarations/globals.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -729,7 +794,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 23
+  position: 24
   source: reference/records/language/errors/contracts.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -755,7 +820,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 24
+  position: 25
   source: reference/records/language/errors/handling.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -778,7 +843,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 25
+  position: 26
   source: reference/records/language/expressions/operators.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -801,7 +866,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 26
+  position: 27
   source: reference/records/language/lexical-structure/literals.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -824,7 +889,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 27
+  position: 28
   source: reference/records/language/lexical-structure/source-layout.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -847,7 +912,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 28
+  position: 29
   source: reference/records/language/namespaces/declarations.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -870,7 +935,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 29
+  position: 30
   source: reference/records/language/namespaces/imports.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -893,7 +958,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 30
+  position: 31
   source: reference/records/language/namespaces/name-resolution.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -916,7 +981,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 31
+  position: 32
   source: reference/records/language/namespaces/prelude.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -939,7 +1004,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 32
+  position: 33
   source: reference/records/language/namespaces/scopes.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -962,7 +1027,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 33
+  position: 34
   source: reference/records/language/numerics/arithmetic-policies.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -985,7 +1050,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 34
+  position: 35
   source: reference/records/language/numerics/arithmetic.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1008,7 +1073,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 35
+  position: 36
   source: reference/records/language/numerics/constants.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1031,7 +1096,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 36
+  position: 37
   source: reference/records/language/numerics/integers.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1059,7 +1124,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 37
+  position: 38
   source: reference/records/language/ownership/movement.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1082,7 +1147,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 38
+  position: 39
   source: reference/records/language/ownership/value-semantics.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1105,7 +1170,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 39
+  position: 40
   source: reference/records/language/text/bytes.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1128,7 +1193,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 40
+  position: 41
   source: reference/records/language/text/display.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1151,7 +1216,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 41
+  position: 42
   source: reference/records/language/text/encodings.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1174,7 +1239,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 42
+  position: 43
   source: reference/records/language/text/search.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1197,7 +1262,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 43
+  position: 44
   source: reference/records/language/text/transformation.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1220,7 +1285,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 44
+  position: 45
   source: reference/records/language/text/unicode.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1248,7 +1313,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 45
+  position: 46
   source: reference/records/language/types/reflection.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1271,7 +1336,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 46
+  position: 47
   source: reference/records/language/types/relations.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1294,7 +1359,7 @@ records:
   kind: topic
   manual: reference
   group: Language
-  position: 47
+  position: 48
   source: reference/records/language/types/scalars.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1311,13 +1376,14 @@ records:
     sections: []
   declaration-synopsis: []
 - id: lang.types.unions
-  title: Finite union types
-  summary: Finite union alternatives preserve their declared identities. Selection prefers an exact arm;
-    a constant admitted by more than one arm is rejected.
+  title: Enums and finite union types
+  summary: Closed enums preserve variant identity and active payloads with exhaustive borrowed or consuming
+    matches. Finite unions preserve existing type identities and prefer exact arms; a constant admitted
+    by more than one arm is rejected.
   kind: topic
   manual: reference
   group: Language
-  position: 48
+  position: 49
   source: reference/records/language/types/unions.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1332,6 +1398,12 @@ records:
   - id: unions
     title: Finite Union Types
     sections: []
+  - id: enums
+    title: Closed named alternatives
+    sections: []
+  - id: native-enums
+    title: Projected enum construction and inspection
+    sections: []
   declaration-synopsis: []
 - id: std.collections
   title: Built-in collections
@@ -1340,7 +1412,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 49
+  position: 50
   source: reference/records/standard-library/collections.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1382,7 +1454,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 50
+  position: 51
   source: reference/records/standard-library/networking.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1409,7 +1481,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 51
+  position: 52
   source: reference/records/standard-library/channels.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1439,7 +1511,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 52
+  position: 53
   source: reference/records/standard-library/shared-state.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1463,7 +1535,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 53
+  position: 54
   source: reference/records/standard-library/documents.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1490,7 +1562,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 54
+  position: 55
   source: reference/records/standard-library/logging.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1523,7 +1595,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 55
+  position: 56
   source: reference/records/standard-library/filesystem.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1600,7 +1672,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 56
+  position: 57
   source: reference/records/standard-library/paths.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1644,7 +1716,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 57
+  position: 58
   source: reference/records/standard-library/text-bytes-and-codecs.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1693,7 +1765,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 58
+  position: 59
   source: reference/records/standard-library/collection-and-string-idioms.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1728,7 +1800,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 59
+  position: 60
   source: reference/records/standard-library/codecs.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1751,7 +1823,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 60
+  position: 61
   source: reference/records/standard-library/compression.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1774,7 +1846,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 61
+  position: 62
   source: reference/records/standard-library/cryptography.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1802,7 +1874,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 62
+  position: 63
   source: reference/records/standard-library/process.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1824,7 +1896,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 63
+  position: 64
   source: reference/records/standard-library/process-signals.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1848,7 +1920,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 64
+  position: 65
   source: reference/records/standard-library/time.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1878,7 +1950,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 65
+  position: 66
   source: reference/records/standard-library/randomness.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1901,7 +1973,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 66
+  position: 67
   source: reference/records/standard-library/streams.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1924,7 +1996,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 67
+  position: 68
   source: reference/records/standard-library/urls.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1947,7 +2019,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 68
+  position: 69
   source: reference/records/standard-library/uuid.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -1970,7 +2042,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 69
+  position: 70
   source: reference/records/packages/package-manifest.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2010,7 +2082,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 70
+  position: 71
   source: reference/records/packages/rust-dependencies.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2055,6 +2127,12 @@ records:
   - id: associated-interfaces
     title: Closing associated interface types
     sections: []
+  - id: expression-macros
+    title: Native expression macros
+    sections: []
+  - id: borrowed-interiors
+    title: Borrowing through native containers
+    sections: []
   - id: callbacks
     title: Passing Terrane callables to Rust
     sections: []
@@ -2096,7 +2174,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 71
+  position: 72
   source: reference/records/packages/command-line.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2134,7 +2212,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 72
+  position: 73
   source: reference/records/packages/testing.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2163,7 +2241,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 73
+  position: 74
   source: reference/records/packages/error-boundaries.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2199,7 +2277,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 74
+  position: 75
   source: reference/records/packages/native-interop.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2222,7 +2300,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 75
+  position: 76
   source: reference/records/packages/rust-interop.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2245,7 +2323,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 76
+  position: 77
   source: reference/records/packages/terrane-packages.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2268,7 +2346,7 @@ records:
   kind: topic
   manual: reference
   group: Rust package integrations
-  position: 77
+  position: 78
   source: reference/records/rust-package-integrations/godot.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2305,7 +2383,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 78
+  position: 79
   source: reference/records/tooling/source-intelligence.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2343,7 +2421,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 79
+  position: 80
   source: reference/records/tooling/debugging.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2378,7 +2456,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 80
+  position: 81
   source: reference/records/tooling/profiling.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2410,7 +2488,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 81
+  position: 82
   source: reference/records/tooling/diagnostics.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2437,7 +2515,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 82
+  position: 83
   source: reference/records/tooling/current-limitations.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2449,6 +2527,9 @@ records:
   sections:
   - id: interpretation
     title: How to read this page
+    sections: []
+  - id: projected-tuple-payload-inference
+    title: LIM-PROJ-TUPLE-PAYLOAD-INFERENCE
     sections: []
   - id: projection-namespace-cycles
     title: LIM-PROJ-NAMESPACE-CYCLES
@@ -2470,7 +2551,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 83
+  position: 84
   source: reference/records/tooling/editor-support.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2493,7 +2574,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 84
+  position: 85
   source: reference/records/tooling/formatting.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2516,7 +2597,7 @@ records:
   kind: topic
   manual: reference
   group: Application development
-  position: 85
+  position: 86
   source: reference/records/manual/application-development-map.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2540,7 +2621,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 86
+  position: 87
   source: reference/records/internals/execution-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2593,7 +2674,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 87
+  position: 88
   source: reference/records/internals/conversion-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2619,7 +2700,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 88
+  position: 89
   source: reference/records/internals/descriptor-contracts.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2657,7 +2738,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 89
+  position: 90
   source: reference/records/internals/reference-provenance.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2691,7 +2772,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 90
+  position: 91
   source: reference/records/internals/conformance-timing.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2730,7 +2811,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 91
+  position: 92
   source: reference/records/internals/projection-resolution.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2770,6 +2851,12 @@ records:
   - id: callbacks
     title: Concrete callback projection
     sections: []
+  - id: expression-macros
+    title: Compiler-checked native expression macros
+    sections: []
+  - id: borrowed-interior-graphs
+    title: Expression-scoped borrowed interior graphs
+    sections: []
   - id: destination-results
     title: Destination-result proof
     sections: []
@@ -2806,7 +2893,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 92
+  position: 93
   source: reference/records/internals/projection-namespace-overlays.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2839,7 +2926,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 93
+  position: 94
   source: reference/records/internals/integration-boundaries.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2885,7 +2972,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 94
+  position: 95
   source: reference/records/internals/observability-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2912,7 +2999,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 95
+  position: 96
   source: reference/records/internals/build-toolchain-profiles.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2945,7 +3032,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 96
+  position: 97
   source: reference/records/internals/semantic-return-validation.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2969,7 +3056,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 97
+  position: 98
   source: reference/records/internals/collection-lifetime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2999,7 +3086,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 98
+  position: 99
   source: reference/records/internals/proof-guided-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3053,7 +3140,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 99
+  position: 100
   source: reference/records/internals/diagnostics/source-projection.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3076,7 +3163,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 100
+  position: 101
   source: reference/records/internals/lowering/rust-output.yaml
   lifecycle-status: current
   documentation-status: complete

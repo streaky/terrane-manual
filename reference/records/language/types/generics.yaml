@@ -1,0 +1,483 @@
+format: 1
+id: lang.types.generics
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Generics and native type relationships
+  title-style: text
+  summary: >-
+    Describes authored generic classes, functions, interfaces, and enums, their invariant
+    applications, inference, bounds, and ownership, together with the precise native
+    relationships retained by projected Rust operations.
+  tags:
+    - types
+    - generics
+    - objects
+    - rust-interop
+  sections:
+    - id: purpose
+      title: Type relationships, not just reusable code
+      blocks:
+        - type: markdown
+          markdown: |-
+            Generics let one declaration describe a family of typed operations or values.
+            Their useful promise is often a relationship: a container holds a particular
+            kind of value, an operation returns the same kind it receives, or a consumer
+            accepts only values satisfying a particular contract. Reusing an implementation
+            is only part of that promise.
+
+            Generics are not inherently incompatible with object-oriented languages, and
+            interfaces do not replace every relationship they express. Accepting any value
+            through an interface is different from preserving the exact type of a supplied
+            payload. Erasing that distinction can admit incompatible uses or lose useful
+            information about a result.
+
+            Terrane's design goal is a smaller source object model, not weaker type
+            checking. Reusable behavior and data relationships should be expressed through
+            useful source contracts without making parameterized classes the default
+            abstraction. When Rust interop requires an exact native instantiation, the
+            compiler must preserve it even when Terrane does not spell it as a type
+            argument.
+    - id: source-model
+      title: Choose the smallest useful source contract
+      blocks:
+        - type: markdown
+          markdown: |-
+            An ordinary class names a domain object; its constructor supplies values and its
+            members describe what the object contains and does. Composition keeps those
+            objects explicit instead of introducing a family of classes merely to reuse
+            storage or implementation.
+
+            A nominal interface expresses shared behavior across implementations. A trait
+            contributes reusable source fields and methods, but is not a type or a subtyping
+            relationship. Use these contracts for those purposes rather than treating either
+            as an untyped substitute for a generic payload relationship. See
+            [[lang.classes.protocols]] and [[lang.classes.interfaces]].
+
+            Use a generic declaration when its contract must preserve a relationship that
+            ordinary composition or an interface would erase. Classes, functions,
+            interfaces, and enums can declare lexical type parameters. Typed collections and
+            projected associated interfaces retain their existing application contracts;
+            source parameters and native associated slots are not interchangeable
+            implementation mechanisms.
+
+            The distinction is between information the programmer needs to express and
+            representation machinery the compiler can derive. A constructor value may supply
+            both a payload and enough information to select its native type. A service
+            configured to produce a type later is different: it has no such payload yet, so
+            payload-constructor selection alone cannot choose its configuration.
+    - id: authored-declarations
+      title: Declaring and applying type parameters
+      blocks:
+        - type: markdown
+          markdown: |-
+            Bind names immediately after a declaration name with `of (T)` or `of (T, U)`.
+            Binder parentheses are required. Parameters are lexical type names, not runtime
+            values or namespaces. Their scope includes fields, signatures, and bodies.
+            Methods inherit their class parameters and may introduce additional parameters
+            without shadowing an enclosing name.
+
+            An application supplies one argument with `of int`, or several with
+            `of (int, string)`. Parenthesize an applied construction designator:
+            `instance (envelope of int); 41`. A function application remains an ordinary
+            callee: `(identity of int); 41`.
+        - type: example
+          id: authored-generic-container
+          title: A payload relationship declared once
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            class envelope of (T)
+                payload T
+                function construct; payload T
+                    this.payload = payload
+
+            function identity of (T) T; value T
+                return value
+
+            function main;
+                number-envelope = instance envelope; 41
+                text-envelope envelope of string = instance envelope; 'hello'
+                number int = number-envelope.payload
+                explicit = (identity of int); number
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            An applied nominal identity consists of its declaring namespace/name and ordered
+            type arguments. Aliases retain that identity. Applications are invariant:
+            `envelope of Address` does not become `envelope of describable` because Address
+            implements describable. An open generic declaration is not a storable value
+            type.
+
+            Generic fields without a default use the required-construction rules in
+            [[lang.classes.fields#initialization]], not an observable optional placeholder.
+    - id: authored-selection
+      title: Selecting one consistent application
+      blocks:
+        - type: markdown
+          markdown: |-
+            Selection combines an explicit application, ordinary arguments, written callable
+            contracts, and the immediate written destination or return contract. Repeated
+            occurrences of a parameter must select one compatible type. Numeric literals use
+            ordinary destination-directed arrival. Inference does not silently widen
+            conflicting arguments to an interface or union, inspect later statements, or
+            choose a type from runtime contents.
+
+            Absence alone provides no inner type. An empty `slot of string` can be selected
+            by a written destination or an explicit construction designator, but an
+            unconstrained empty slot is rejected. First-class generic function values must
+            be closed applications; a written callable destination may infer the application
+            when it is unique.
+        - type: example
+          id: authored-generic-callable
+          title: Correlated arguments and callable results
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            function choose of (T) T; first T, second T, use-first bool
+                if use-first
+                    return first
+                return second
+
+            function apply of (T, U) U; value T, transform function from T to U
+                return transform; value
+
+            function identity of (T) T; value T
+                return value
+
+            function main;
+                keep-int function from int to int = identity of int
+                number int = keep-int; 44
+                chosen int = choose; 11, 23, false
+          response: null
+          diagnostic: null
+          markdown: null
+    - id: authored-bounds
+      title: Bounds, generic bodies, and ownership
+      blocks:
+        - type: markdown
+          markdown: |-
+            A binder may require one nominal interface with `T implements describable`. The
+            body is checked against that bound, and every application proves conformance.
+            Same-shaped classes do not acquire nominal conformance, and primitives do not
+            automatically implement an authored interface.
+
+            An unconstrained parameter grants no arbitrary methods, arithmetic, equality,
+            default construction, or copying. A convenient concrete caller cannot rescue an
+            invalid generic body. Callable authority, asynchronous status, throwable
+            contracts, and reference provenance retain their ordinary rules.
+
+            Closed applications preserve transitive resource classification. A container
+            with a resource payload owns that resource; a copyable application does not
+            become resource-owning merely because another application is. By-value resource
+            parameters transfer, unused owners clean up, and shared receivers do not permit
+            moving out payloads. No hidden Clone bound or placeholder value is introduced.
+
+            Generic interfaces can retain an output relationship before any output exists:
+            `interface source of (T)` can declare `mutable function next T|none;`, and a
+            class explicitly implements a closed `source of string`. Native
+            associated-interface application remains a distinct mapping, described below.
+    - id: native-identity
+      title: One source class, precise native representations
+      blocks:
+        - type: markdown
+          markdown: |-
+            Projection maps a native API into Terrane contracts; it does not require the
+            Terrane object model to mirror Rust's. A constructible native record can retain
+            an ordinary source class name while its constructor payload selects an exact
+            native instantiation. Passing that object back to Rust uses the native value,
+            not an extra package-authored wrapper object.
+
+            Hiding the generic spelling does not erase the selected representation. Two
+            objects can share a visible source class while having different native payload
+            types. Semantic analysis retains that distinction through bindings, members,
+            operation results, and native consumers. An incompatible consumer must fail
+            against the source contract rather than accidentally reaching a Rust generic
+            mismatch. Constructor signature help and inferred-value hover consume the same
+            payload and selection metadata as semantic analysis.
+
+            Native identity is independent of a Cargo alias or public reexport spelling.
+            Equivalent facades denote the same native type; neither facade naming nor
+            lowering may silently change its selected arguments. Compiler implementation
+            details belong in [[internals.projection.resolution]].
+    - id: constructors
+      title: Constructor payloads select native record types
+      blocks:
+        - type: markdown
+          markdown: |-
+            A constructible projected generic record retains its constructor template,
+            ordered public fields, and native bounds. Ordinary constructor payloads select
+            its concrete representation. Named fields and public tuple-record positions use
+            ordinary Terrane construction; no Rust angle brackets or generated
+            specialization name are required.
+
+            The following excerpts use the projected witness package from
+            `tests/conformance/run/projected-constructor-selected-native`. Its native
+            `Envelope` stores one payload, while `Frame` is a public tuple record. The
+            address and text constructions select different native instantiations while
+            retaining the source class `Envelope`.
+        - type: example
+          id: payload-selection
+          title: Named and positional native payloads
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /deps/witness import Address, Envelope, Frame, address_port, text_length, frame_port
+
+            address = instance Address; port = 8080
+            envelope Envelope = instance Envelope; payload = address
+            print; (address_port; envelope)
+            print; envelope.payload.port
+            envelope.payload = instance Address; port = 8081
+            print; (address_port; envelope)
+
+            text = instance Envelope; payload = 'hello'
+            print; (text_length; text)
+            frame = instance Frame; address
+            print; (frame_port; frame)
+        - type: markdown
+          markdown: |-
+            The address envelope carries native `Envelope<Address>`; the text envelope
+            carries native `Envelope<String>`. Reading the first payload exposes the
+            projected address operations, not an untyped value. Writes preserve its selected
+            payload contract. Native consumers receive the matching instantiation, and
+            native method results preserve the same selection. Field conversions still use
+            Terrane scalar and collection representations; a write outside a native
+            integer's range raises `integer-conversion-overflow`.
+
+            Axum's public tuple record provides a real ecosystem example. With a projected
+            socket-address value already available, construction is an ordinary positional
+            payload call:
+        - type: example
+          id: connection-info
+          title: Construct connection metadata from an address
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /deps/axum/extract import ConnectInfo
+
+            peer = instance ConnectInfo; address
+            payload SocketAddr = peer.n0
+            port = payload.port;
+        - type: markdown
+          markdown: |-
+            A `SocketAddr` payload selects native `ConnectInfo<SocketAddr>`. This constructs
+            connection metadata containing an address; it does not configure which metadata
+            a server will produce for future connections. Declare and import the actual
+            projected address provider as described in [[tool.packages.rust-dependencies]].
+
+            Use the written payload destination before chaining its address operations here.
+            This works around [[tool.current-limitations#projected-tuple-payload-inference]]
+            without changing the selected native representation.
+    - id: inputs
+      title: Operation arguments select concrete native inputs
+      blocks:
+        - type: markdown
+          markdown: |-
+            Owned concrete generic inputs and value-style Rust `impl Trait` inputs with
+            representable bounds remain caller-selected. Projection records the canonical
+            bounds rather than choosing one implementation or requiring every bound trait to
+            become a Terrane interface. At a call, Terrane infers the exact argument
+            representation, substitutes it through every retained bound, and requires the
+            projection oracle to prove the complete conjunction. Failed or unknown proof
+            rejects the call.
+
+            The native-input conformance witness accepts both a projected `Radius` object
+            and a `float32` through its native conversion bound. Both are ordinary calls:
+        - type: example
+          id: input-selection
+          title: Different inputs satisfying one native bound
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /deps/terrane-native-bound-witness import Border, Radius, make_border
+
+            initial Border = make_border;
+            radius Radius = instance Radius; value = 4.0
+            first Border = initial.rounded; radius
+            eight float32 = 8.0
+            second Border = first.rounded; eight
+        - type: markdown
+          markdown: |-
+            Concrete trait operations use the same selection machinery even when the full
+            trait cannot project as a Terrane interface. Implementation and method
+            parameters, associated types, and exact native obligations are retained. Native
+            operations from an explicit implementation in another declared dependency can
+            attach to the same projected owner. A bound is not satisfied merely because
+            source member names resemble the Rust trait.
+
+            Callbacks can also carry correlated input and result types. Their written
+            callable contract participates in joint selection; callback adaptation and
+            lifetime restrictions remain documented in
+            [[tool.packages.rust-dependencies#callbacks]].
+    - id: destinations
+      title: A written destination selects result-only parameters
+      blocks:
+        - type: rule
+          id: rule.dependencies.destination-directed-results
+          level: must
+          since: null
+          evidence:
+            - projected-destination-results
+            - projected-correlated-destination-results
+            - projected-serde-json-result
+            - projected-result-without-destination
+            - projected-result-conflicting-destinations
+            - projected-result-incompatible-template
+            - projected-result-unsatisfied-bound
+            - projected-result-unknown-bound
+            - projected-result-borrowed
+            - projected-result-source-object
+          markdown: |-
+            A projected dependency function or method may leave a correlated set of
+            result-only Rust type parameters for the caller. Terrane structurally matches
+            their complete result template against exactly one written binding, argument,
+            class-field, or return destination, requires repeated occurrences to agree, and
+            substitutes the jointly selected parameters before proving bounds. The
+            projection oracle must prove every rendered Rust bound for each exact concrete
+            representation; `no`, `unknown`, absent, incompatible, or conflicting
+            destinations are compile-time failures. Higher-ranked lifetimes and associated
+            constraints remain part of the proof rather than being approximated from rustdoc
+            implementation lists. Higher-ranked and nested bound paths use the dependency's
+            manifest alias at every Rust path-root occurrence.
+
+            Closed scalar, string, bytes, optional, sequence, mapping, set, homogeneous
+            tuple, and projected foreign-object shapes recurse through the result template.
+            Source-declared object destinations remain unavailable because dependencies have
+            no authored conversion contract for their generated Rust representation.
+            Borrowed results are declined; accepted values cross the boundary owned. Calls
+            name the selected Rust type explicitly in generated Rust. Terrane does not
+            expose Rust angle-bracket generic arguments in source.
+        - type: example
+          id: result-selection
+          title: Select a native result through a binding or return contract
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /deps/factory import default_value, sample_value
+
+            function make-number int64;
+                return default_value;
+
+            optional int64|none = sample_value;
+            data bytes = sample_value;
+            values list of int64 = sample_value;
+        - type: markdown
+          markdown: |-
+            These excerpts use `projected-destination-results`: the written destinations
+            supply information the arguments cannot. This is selection, not an unchecked
+            cast and not a request to guess a type from later usage. A closed alias's
+            omitted Rust type arguments use its declared defaults before selection; a
+            defaulted concrete type must not become an unresolved method parameter.
+
+            Some projected builders and borrowed operations retain open relationships only
+            inside a complete nested expression. That does not make the intermediate a
+            storable generic object. Their escape and lifetime rules are described in
+            [[tool.packages.rust-dependencies#chain-only-values]] and
+            [[tool.packages.rust-dependencies#borrowed-interiors]].
+    - id: associated-interfaces
+      title: Associated interface types remain explicit contracts
+      blocks:
+        - type: rule
+          id: rule.dependencies.associated-interface
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-associated-interface
+            - rust-dependency-supertrait-interface
+            - projected-associated-bare
+            - projected-associated-bound
+            - projected-unprojectable-supertrait
+          markdown: |-
+            A projected Rust trait may expose exactly one non-generic associated type.
+            Terrane closes it explicitly with `Interface of ConcreteType` in `implements`
+            clauses and value annotations. The application is part of nominal identity; the
+            compiler substitutes it through inherited methods and reflection, validates the
+            retained Rust bounds, and emits the corresponding Rust associated type.
+
+            `ConcreteType` is currently limited to a closed boundary-representable scalar,
+            aggregate, or projected foreign type. A Terrane source class cannot fill the
+            slot until source objects have an explicit Rust boundary conversion contract.
+
+            Every non-marker supertrait must project independently. The complete chain
+            contributes inherited requirements and receives one generated Rust
+            implementation per distinct trait, including diamond closures. Applied
+            identities resolve recursively inside aggregate annotations, subject to each
+            aggregate's ordinary element constraints. `(Interface of ConcreteType)|none`
+            groups the completed application when it is optional; optionality admits any
+            otherwise valid declared value type, including aggregates. A source subclass
+            inherits its base classes' complete projected-interface set at generic calls and
+            generated Rust implementations. An applied subinterface value may cross an
+            ancestor's owning erased boundary when the inherited associated binding and
+            auto-trait obligations agree. Open applications are rejected recursively inside
+            aggregate and callable annotations. Final oracle admission also removes generic
+            functions whose projected interface bound was declined. Bare or inferred
+            applications, source-class arguments, multiple or generic associated slots,
+            failed bounds, unprojectable supertraits, and incoherent erased bindings are
+            rejected before lowering.
+        - type: markdown
+          markdown: |-
+            This explicit application is useful source information, not Rust turbofish
+            syntax. It names a relationship in the interface contract rather than supplying
+            the payload of an object constructor. Constructor selection, generic operation
+            selection, and associated-interface application are distinct mechanisms.
+    - id: limits
+      title: What selection does not authorize
+      blocks:
+        - type: markdown
+          markdown: |-
+            Constructor payloads must agree on repeated native parameters and satisfy the
+            recorded native bounds. An absent optional payload cannot by itself select its
+            inner type. Knowing field types does not authorize constructing private fields
+            or a non-exhaustive native record; a valid public construction recipe is
+            required.
+
+            An address envelope cannot be passed to a native consumer requiring a text
+            envelope merely because both use the source class `Envelope`. Likewise, a write
+            cannot change the selected payload type of an existing object. These errors are
+            checked as source-contract incompatibilities before Rust lowering.
+
+            Projection is demand-driven and admission is specific to the recorded API shape.
+            None of these mechanisms promises arbitrary generic Rust declarations, arbitrary
+            source-object conversions, or borrowed values that escape their proven lifetime.
+            Use the generated declaration and its gap report rather than manufacturing a
+            specialization name or adding a forwarding helper to hide an unsupported
+            contract. See [[tool.packages.rust-dependencies]] for the declaration and
+            inspection workflow.
+  see-also:
+    - lang.classes.protocols
+    - lang.classes.interfaces
+    - lang.collections.protocols
+    - tool.packages.rust-dependencies
+    - internals.projection.resolution
+provenance:
+  specification: []
+  conformance:
+    - projected-constructor-selected-native
+    - projected-constructor-selected-collection-parameters
+    - projected-constructor-selected-conflicting-payload
+    - projected-constructor-selected-optional
+    - projected-constructor-selected-bound
+    - projected-constructor-selected-private
+    - projected-constructor-selected-non-exhaustive
+    - projected-constructor-selected-wrong-native
+    - projected-constructor-selected-wrong-field-write
+    - projected-native-input-bound
+    - projected-destination-results
+    - projected-correlated-destination-results
+    - rust-dependency-associated-interface
+  compiler: null

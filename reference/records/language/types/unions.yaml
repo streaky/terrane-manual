@@ -14,11 +14,12 @@ lifecycle:
 
 documentation:
   status: complete
-  title: "Finite union types"
+  title: "Enums and finite union types"
   title-style: text
   summary: >-
-    Finite union alternatives preserve their declared identities. Selection prefers an exact arm; a constant admitted by more
-    than one arm is rejected.
+    Closed enums preserve variant identity and active payloads with exhaustive borrowed or
+    consuming matches. Finite unions preserve existing type identities and prefer exact
+    arms; a constant admitted by more than one arm is rejected.
   tags:
     - "types"
     - "unions"
@@ -85,7 +86,87 @@ documentation:
             intervenes before the return. If any condition is not met, the returned
             expression remains `T|none`. This rule does not apply to instance members or
             other member expressions.
-  see-also: []
+    - id: enums
+      title: Closed named alternatives
+      blocks:
+        - type: markdown
+          markdown: |-
+            An enum declares one closed nominal family of alternatives. Each value has
+            exactly one variant and only that variant's payload. Variant names belong to the
+            enum, and payload fields are constructor parameters rather than mutable instance
+            members. Enums may use the lexical type parameters described in
+            [[lang.types.generics#authored-declarations]].
+        - type: example
+          id: enum-state-construction
+          title: Constructing and inspecting a state
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            enum operation-state of (T)
+                pending
+                running; progress float
+                completed; result T
+                failed; error string
+
+            function main;
+                state operation-state of int = instance operation-state::completed; result = 42
+                match ref state
+                    case operation-state::pending
+                        return
+                    case operation-state::running; progress
+                        return
+                    case operation-state::completed; result
+                        return
+                    case operation-state::failed; error
+                        return
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            Source variant construction names every payload field. Arguments are evaluated
+            once in written order, then assembled in declaration order. Omitted, duplicate,
+            unknown, or incompatible payload fields are rejected. A payload can select a
+            generic application; a payloadless variant needs enough information from an
+            explicit application or immediate written destination.
+
+            A match must cover every alternative exactly once or end with `case else`.
+            Unknown or duplicate variants and branches after a catch-all are rejected.
+            Optional enums also require `case none`. A projected non-exhaustive native enum
+            requires a catch-all even when all currently recorded variants are listed.
+            Coverage comes from the semantic variant inventory, not runtime probing.
+
+            `match ref state` borrows the active payload. `match move state` consumes the
+            enum and transfers bound payloads; unmatched owned payloads clean up. A by-value
+            match without move is available only for a copyable application. Resource
+            classification includes every variant's closed payload types, even when the
+            value currently holds a payloadless variant. A borrow cannot escape its owner
+            through a branch binding.
+
+            Enums and finite unions are different source contracts: enum variants are
+            explicitly named alternatives within one nominal family, while a finite union
+            combines existing types. Use an ordinary interface for open-ended
+            interchangeable implementations. An enum is not a bag of optional fields, an
+            integer constant namespace, or an implicitly open interface hierarchy.
+    - id: native-enums
+      title: Projected enum construction and inspection
+      blocks:
+        - type: markdown
+          markdown: |-
+            Admitted native enums use their recorded canonical variants and payload fields.
+            Public tuple variants retain positional construction; public struct variants use
+            named payload construction. Native ABI conversion and concrete generic selection
+            retain the same mapping used by ordinary projected operations. Private,
+            stripped, unsupported, and non-exhaustive construction boundaries remain
+            authoritative; knowing a nominal type or tag does not authorize an unavailable
+            construction recipe. See [[tool.packages.rust-dependencies]] for demand-driven
+            admission and gap reports.
+  see-also:
+    - lang.types.generics
+    - lang.ownership.movement
+    - tool.packages.rust-dependencies
 
 provenance:
   specification:
