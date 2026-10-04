@@ -196,6 +196,24 @@ documentation:
             reference, a task handle, and an ordinary value may all be assigned with similar
             punctuation while carrying different ownership consequences.
 
+            The type relationships introduced in Chapter 10 belong to this same model. A
+            generic function's selected arguments determine its parameter and result
+            contracts. An enum match records the selected variant, payload bindings,
+            coverage, and whether inspection borrows or consumes the value.
+
+            A projected record adds a native representation relationship. For example,
+            supplying a socket address to an admitted connection-info constructor selects a
+            native connection-info value containing that address type. The constructor and
+            member contracts remain ordinary Terrane operations; semantic analysis retains
+            the exact representation for native consumers. This constructs a value now, not
+            a service configured to produce connection metadata later.
+
+            Lowering and language-server tooling consume these shared selections. A member
+            lookup should therefore retain the payload's useful type, and an incompatible
+            use should be explained at the Terrane source—not discovered only when Rust
+            compilation fails. See [[lang.types.generics#constructors]] for the complete
+            projected construction contract.
+
             This is why compiler errors should usually speak in Terrane terms. If an
             ownership check proves that a binding is unavailable after a move, the useful
             explanation names the moved binding and the consuming source operation—not an

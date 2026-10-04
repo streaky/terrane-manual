@@ -678,6 +678,17 @@ documentation:
             The same `with_capacity` function is not also exposed as an independent
             `/deps/bytes` member.
 
+            An admitted public native record may also have an ordinary `instance`
+            constructor. Its payload values can select a concrete native representation; the
+            compiler retains that selection when you read members or pass the value back to
+            the dependency. This does not grant access to private fields or bypass a
+            factory's invariants. Chapter 10 introduces source type relationships, and
+            [[lang.types.generics#constructors]] explains their projected counterpart.
+
+            Projected enums retain their named alternatives and admitted payloads, rather
+            than becoming interchangeable strings or integers. Chapter 10 introduces
+            construction and matching; the same model applies to admitted native enums.
+
             Projection crosses `Option<T>` and representable Rust sequences, maps, sets, and
             homogeneous tuples into matching Terrane values. Map keys and set items must be
             scalars rather than optionals, collections, tuples, or foreign objects. Required

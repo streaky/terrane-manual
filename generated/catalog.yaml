@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: cf3f44dd2f55733e62005e3e9e486b6ac61286bea3db729b3229610e418f7487
+  input-sha256: 5e285e91ef13ca17ae8146bb97dc8f963f5e1b11312639d59f573a78200a3994
 format: 2
 generated: true
 records:
@@ -4022,13 +4022,9 @@ records:
   declaration-synopsis: []
 - id: book.types
   title: Types Without Ceremony
-  summary: 'The task-list model already contains types. `task`, `urgent-task`, and `task-list` are concrete
-    classes. `task-view` is
-
-    a shared behavior boundary. Fields such as `title string` and `completed bool` state what each instance
-    may contain. The
-
-    compiler also inferred types for local names such as `chapter`, `review`, and `tasks`.'
+  summary: Inference and annotations make type contracts clear; authored generics preserve relationships
+    between payloads, inputs, and results. Closed enums name finite alternatives and make their payload
+    handling explicit.
   kind: chapter
   manual: tutorial
   group: Chapters
@@ -4047,6 +4043,12 @@ records:
     sections: []
   - id: annotations-where-they-communicate-intent
     title: Annotations where they communicate intent
+    sections: []
+  - id: authored-generics
+    title: Reuse a relationship with authored generics
+    sections: []
+  - id: closed-enums
+    title: Name finite alternatives with enums
     sections: []
   - id: union-types-and-optional-values
     title: Union types and optional values

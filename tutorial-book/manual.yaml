@@ -281,6 +281,10 @@ navigation:
             title: Type inference
           - section: annotations-where-they-communicate-intent
             title: Annotations where they communicate intent
+          - section: authored-generics
+            title: Reuse a relationship with authored generics
+          - section: closed-enums
+            title: Name finite alternatives with enums
           - section: union-types-and-optional-values
             title: Union types and optional values
           - section: refinement-after-a-check

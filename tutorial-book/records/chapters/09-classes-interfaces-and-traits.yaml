@@ -200,8 +200,11 @@ documentation:
         - type: markdown
           markdown: |-
             A field whose type has no canonical default, such as another source-declared
-            class, still requires an initializer. The compiler therefore never leaves a
-            constructed instance with unspecified bits.
+            class, is required unless its declaration supplies an initializer. A constructor
+            may instead initialize that required field. The earlier rule is not that every
+            such field needs a declaration initializer; it is that a successful construction
+            must initialize each required field exactly once before reading it or exposing
+            the incomplete receiver.
 
             A class may have an empty body when its name alone is useful:
         - type: example
@@ -273,7 +276,55 @@ documentation:
             struct, a stack value, an enum alternative, or something more specialized.
             Source code receives the same class behavior whichever representation is chosen.
 
-            Every construction starts with independent instance state:
+            Here a `parcel` contains a source-declared `label`, which has no canonical
+            default. Its constructor fills that required slot before the parcel is returned:
+        - type: example
+          id: required-field-construction
+          title: null
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |2
+            from /core/output import print
+
+            class label
+              text string = ''
+
+            class parcel
+              contents label
+
+              function construct; contents label
+                this.contents = contents
+
+            function main;
+              tag label = instance label;
+              tag.text = 'sealed'
+              item parcel = instance parcel; tag
+              print; item.contents.text
+          response: |-
+            sealed
+          diagnostic: null
+          markdown: null
+
+        - type: markdown
+          markdown: |-
+            The assignment occurs once, before the constructed value can be observed. If
+            construction takes a failing path before that assignment, cleanup is limited to
+            fields already initialized: the incomplete object does not run its successful
+            object's destructor. Internal initialization storage is not an observable
+            optional field, and does not create a hidden `none`.
+
+            Projected native classes are different: they keep their admitted native storage
+            and constructor recipe. Ordinary class syntax in a generated declaration does
+            not turn native fields into source-required slots or provide a source
+            `construct` body for them.
+
+            Running the complete example prints `sealed`.
+
+            For defaultable fields, a declaration initializer is still useful when a value
+            other than the canonical default is wanted. Every construction starts with
+            independent instance state:
         - type: example
           id: legacy-fence-009
           title: null
@@ -1352,11 +1403,11 @@ documentation:
           markdown: |-
             Trait fields follow the same default rules as class fields. A defaultable field
             may omit its initializer and contributes that canonical value to every using
-            class. A nondefaultable field must be initialized by the trait or overridden
-            with an initializer in the using class; the compiler validates the complete
-            inherited field set before construction. An initializer inherited from a trait
-            or base class is still evaluated in the source and object context where it was
-            declared.
+            class. A nondefaultable field may receive a trait initializer or an overriding
+            initializer in the using class. Otherwise it remains a required field that the
+            class's construction must initialize under the same exactly-once rules. An
+            initializer inherited from a trait or base class is still evaluated in the
+            source and object context where it was declared.
 
             A trait is implementation reuse, not a type relationship. This is invalid as a
             promise that a parameter accepts every class using `categorized`:

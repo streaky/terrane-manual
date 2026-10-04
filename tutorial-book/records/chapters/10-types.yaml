@@ -13,19 +13,18 @@ documentation:
   status: complete
   title: Types Without Ceremony
   title-style: text
-  summary: |-
-    The task-list model already contains types. `task`, `urgent-task`, and `task-list` are concrete classes. `task-view` is
-    a shared behavior boundary. Fields such as `title string` and `completed bool` state what each instance may contain. The
-    compiler also inferred types for local names such as `chapter`, `review`, and `tasks`.
+  summary: >-
+    Inference and annotations make type contracts clear; authored generics preserve relationships between payloads, inputs,
+    and results. Closed enums name finite alternatives and make their payload handling explicit.
   tags: []
   blocks:
     - type: markdown
       markdown: |-
         This chapter is not where an untyped language suddenly becomes typed. Terrane
         values have had types from the first string and integer in Chapter 1. We will
-        instead learn when inference says enough, when an annotation improves a
-        contract, and how unions, optional values, coercion, refinement, generic type
-        constructors, and function types let larger programs remain precise.
+        learn when inference says enough, when an annotation improves a contract, and
+        how generics, enums, unions, optional values, coercion, refinement, and function
+        types keep larger programs precise.
 
         The aim is captured by the chapter title: use types to express real guarantees
         without turning obvious local values into declaration ceremony.
@@ -269,6 +268,149 @@ documentation:
 
             That rule is guidance, not a syntactic restriction. Explicit annotations remain
             legal wherever a source contract benefits from them.
+      sections: []
+    - id: authored-generics
+      title: Reuse a relationship with authored generics
+      blocks:
+        - type: markdown
+          markdown: |-
+            Generic declarations preserve relationships such as “this container stores this
+            kind of value” or “this function returns the type it receives.” Declare lexical
+            type parameters after `of` with required parentheses, as in `of (T)`. Apply one
+            argument with `of int`, or several with `of (int, string)`.
+        - type: example
+          id: tutorial-generic-envelope
+          title: One container, two concrete payloads
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            from /core/output import print
+
+            class envelope of (T)
+                payload T
+                function construct; payload T
+                    this.payload = payload
+
+            function identity of (T) T; value T
+                return value
+
+            function main;
+                number-envelope = instance envelope; 41
+                text-envelope envelope of string = instance envelope; 'hello'
+                print; number-envelope.payload
+                print; text-envelope.payload
+                print; ((identity of int); 42)
+          response: |-
+            41
+            hello
+            42
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            The first constructor infers `envelope of int`; the annotation explicitly
+            selects `envelope of string`. `(identity of int)` explicitly applies the
+            function. Arguments and an immediate written destination can also select a
+            unique application. Applications are invariant: implementing an interface does
+            not turn `envelope of Address` into `envelope of describable`; an empty slot
+            still needs a destination or explicit application.
+        - type: example
+          id: tutorial-generic-bounds
+          title: Preserve a concrete type under an interface bound
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            from /core/output import print
+
+            interface describable
+                function describe string;
+
+            class note implements describable
+                text string = ''
+                function construct; text string
+                    this.text = text
+                function describe string;
+                    return this.text
+
+            function preserve of (T implements describable) T; value T
+                return value
+
+            function main;
+                kept = preserve; (instance note; 'hello')
+                print; (kept.describe;)
+          response: |-
+            hello
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            The bound lets the body rely on `describe` while `preserve` returns the same
+            concrete `T`. Same-shaped methods do not substitute for nominal interface
+            conformance. An unconstrained parameter grants no arbitrary methods, copying,
+            arithmetic, or default construction. A generic interface can preserve an output
+            type too, for example `source of (T)` returning `T|none`. A closed application
+            keeps ordinary ownership: resource payloads are not silently copied, and shared
+            receivers cannot move their payload out.
+      sections: []
+    - id: closed-enums
+      title: Name finite alternatives with enums
+      blocks:
+        - type: markdown
+          markdown: |-
+            An enum names a closed set of alternatives, each with its own payload. Name the
+            payload when constructing a variant; use `match ref` to inspect it without
+            transferring it.
+        - type: example
+          id: tutorial-enum-borrowed-match
+          title: Construct and inspect a state
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            from /core/output import print
+
+            enum operation-state of (T)
+                pending
+                running; progress int
+                completed; result T
+                failed; error string
+
+            function report string; state operation-state of string
+                match ref state
+                    case operation-state::pending
+                        return 'pending'
+                    case operation-state::running; progress
+                        print; progress
+                        return 'running'
+                    case operation-state::completed; result
+                        return result
+                    case operation-state::failed; error
+                        return error
+
+            function main;
+                running operation-state of string = instance operation-state::running; progress = 7
+                completed = instance operation-state::completed; result = 'done'
+                print; (report; running)
+                print; (report; completed)
+          response: |-
+            7
+            running
+            done
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            Every variant must appear once or be covered by a final `case else`. Borrowed
+            bindings cannot outlive their owner. `match move state` consumes an enum and
+            transfers bound payloads; unmatched owned payloads are cleaned up. This differs
+            from a finite union of existing types and from an open interface. Projected
+            native records and enums are a separate constructor surface; see Chapter 8 for
+            dependency-provided payloads.
       sections: []
     - id: union-types-and-optional-values
       title: Union types and optional values
@@ -651,16 +793,11 @@ documentation:
             Read from the outside inward: a map whose keys are strings and whose values are
             lists of task views.
 
-            Version one does not support source-declared type parameters. You cannot yet
-            define a reusable source function such as an invented `function first of T`. Use
-            concrete types, unions, interfaces, or generated concrete declarations. This is
-            a deliberate boundary, not an invitation to simulate generics with an erased
-            universal value.
-
-            Existing generic constructs remain powerful because the compiler knows their
-            complete type arguments. It can reject appending a string to
-            `list of task-view`, check every operation against the element contract, and
-            lower concrete representations without universal boxing.
+            Existing collection constructors remain useful because their concrete type
+            arguments are known. They reject values that do not satisfy the element contract
+            and lower concrete representations without universal boxing. Authored parameters
+            express additional relationships when concrete constructors alone would lose
+            them.
 
             Type-constructor punctuation can become dense in a parameter list. Prefer one
             clear parameter per line for complicated signatures, and give important
@@ -1053,6 +1190,16 @@ documentation:
             7. Change `high-priority` so it returns `string`, then try to pass it to
                `show-matching`. Use the diagnostic to identify the incompatible part of the
                function type.
+
+            8. Define `identity of (T) T`, call it once by inference and once as
+               `(identity of int)`, and compare the two applications.
+
+            9. Add `preserve of (T implements describable) T`. Try a class without the
+               interface and explain why matching method names do not satisfy a nominal
+               bound.
+
+            10. Define a generic enum, construct payload variants, and write an exhaustive
+                borrowed match. Then consume a resource-bearing value using `match move`.
       sections: []
     - id: what-we-learned
       title: What we learned
@@ -1073,10 +1220,10 @@ documentation:
             Different policies such as wrapping, saturation, rounding, and exact arrival
             remain distinct because they produce different values and failures.
 
-            Generic type constructors such as `list of T` and `map of K, V` preserve element
-            contracts without universal boxing. Version one provides these concrete
-            constructors but does not permit source-declared type parameters. Function types
-            describe callable inputs, results, and compatible failure boundaries.
+            Authored generics preserve payload, input, and result relationships; concrete
+            applications retain invariant identity and ordinary resource ownership. Generic
+            bounds grant only promised interface behavior. Function types describe callable
+            inputs, results, and compatible failure boundaries.
 
             The strengthened task-list program combines inference and explicit contracts
             rather than choosing one exclusively. Its types expose optional estimates,

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: cf3f44dd2f55733e62005e3e9e486b6ac61286bea3db729b3229610e418f7487
+  input-sha256: 5e285e91ef13ca17ae8146bb97dc8f963f5e1b11312639d59f573a78200a3994
 format: 1
 generated: true
 symbols:
@@ -1462,6 +1462,10 @@ symbols:
   declaration: construct
 - name: construct
   record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: construct
+- name: construct
+  record: book.classes-interfaces-and-traits
   section: initialization-with-construct
   declaration: construct
 - name: construct
@@ -1897,6 +1901,10 @@ symbols:
   record: internals.observability.runtime
   section: dependency-bridge
   declaration: dependency_subscriber
+- name: describe
+  record: book.types
+  section: authored-generics
+  declaration: describe
 - name: descriptor_protocol_method
   record: internals.semantics.descriptor-contracts
   section: protocols
@@ -3554,6 +3562,10 @@ symbols:
   section: throwing-an-error
   declaration: instance
 - name: instance
+  record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: instance
+- name: instance
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: instance
@@ -3981,6 +3993,10 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: L
+- name: label
+  record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: label
 - name: label
   record: lang.control-flow.branching-and-loops
   section: if-while-for
@@ -4743,6 +4759,10 @@ symbols:
   declaration: none
 - name: none
   record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: none
+- name: none
+  record: book.classes-interfaces-and-traits
   section: defining-a-class
   declaration: none
 - name: none
@@ -4995,6 +5015,10 @@ symbols:
   declaration: observer
 - name: of
   record: book.types
+  section: authored-generics
+  declaration: of
+- name: of
+  record: book.types
   section: generic-types
   declaration: of
 - name: of
@@ -5243,6 +5267,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: strategy
   declaration: Parallel
+- name: parcel
+  record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: parcel
 - name: parity
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
@@ -5439,6 +5467,10 @@ symbols:
   record: lang.functions.declarations
   section: unreferenced
   declaration: prepared
+- name: preserve
+  record: book.types
+  section: authored-generics
+  declaration: preserve
 - name: print
   record: book.async
   section: task-scopes
@@ -6419,6 +6451,10 @@ symbols:
   record: book.values-and-names
   section: changing-a-binding
   declaration: score
+- name: sealed
+  record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: sealed
 - name: Sec-WebSocket-Accept
   record: std.cryptography
   section: legacy-digests
@@ -6995,6 +7031,14 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: syntax
+- name: T
+  record: book.identity-and-movement
+  section: when-a-value-is-no-longer-available
+  declaration: T
+- name: T
+  record: book.types
+  section: authored-generics
+  declaration: T
 - name: T
   record: internals.semantics.return-validation
   section: initialized-static-optional

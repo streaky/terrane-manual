@@ -606,6 +606,17 @@ documentation:
             accounted for. The lowered Rust still moves its task value, but that
             representation detail does not require source-level ceremony.
 
+            Type parameters do not erase ownership. The generic containers and enums from
+            Chapter 10 retain the ownership obligations of their payloads: wrapping a
+            resource does not make it independently copyable. A reusable body cannot assume
+            that an unconstrained `T` can be duplicated.
+
+            Matching an enum through `ref` inspects its active payload without transferring
+            ownership. A consuming match transfers that payload out of the enum; subsequent
+            uses must respect the consumed value. Choose between those forms according to
+            whether the operation needs to observe the alternative or take responsibility
+            for what it contains.
+
             Treat a move diagnostic as information about the program's ownership story.
             Usually one of three intentions needs to be made clear:
 
