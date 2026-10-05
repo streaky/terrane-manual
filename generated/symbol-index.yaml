@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8bfb6a92a55ae52b5f9127630024ac10045941200d4afa70fd520ada57f6b0b0
+  input-sha256: f26e44b17505443d3976fdca4e14854cb9632c5550f809f9c0a58a69f9e70175
 format: 1
 generated: true
 symbols:
@@ -5127,6 +5127,10 @@ symbols:
   record: lang.types.unions
   section: unions
   declaration: or
+- name: oracle.json
+  record: tool.packages.rust-dependencies
+  section: resolution
+  declaration: oracle.json
 - name: ordinary-view
   record: book.classes-interfaces-and-traits
   section: extending-one-base-class

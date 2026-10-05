@@ -97,36 +97,6 @@ documentation:
             - field: Changes semantics
               value: No, but it exposes an implementation detail in the application manifest.
 
-    - id: test-executable-cache-identity
-      title: LIM-CACHE-TEST-EXECUTABLE-IDENTITY
-      blocks:
-        - type: table
-          id: limitation-test-executable-cache
-          title: Test and executable cache identity
-          show-header: true
-          columns:
-            - id: field
-              title: Field
-              cell: text
-            - id: value
-              title: Value
-              cell: markdown
-          rows:
-            - field: Affected versions
-              value: Terrane compiler 0.1.x
-            - field: Observable failure
-              value:
-                After testing an unchanged package, a later run can select the test harness and report an unknown test
-                case.
-            - field: Intended behavior
-              value: Artifact mode participates in cache identity so test registries and ordinary executables cannot collide.
-            - field: Safe workaround
-              value: Remove only that package's generated `.trn/build` directory before the executable run.
-            - field: Removal target
-              value: Compiler plan package artifact cache identity.
-            - field: Changes semantics
-              value: No; it discards derived build state.
-
     - id: field-mutation-inference
       title: LIM-OWNERSHIP-FIELD-MUTATION-INFERENCE
       blocks:

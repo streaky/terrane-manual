@@ -46,9 +46,16 @@ documentation:
             same encoded sequence.
 
             The effective target is selected from `CARGO_BUILD_TARGET`, then Cargo's
-            `build.target`, then the pinned stable compiler's host. A change to any identity
-            input selects a different cache record rather than reusing and conditionally
-            repairing an older projection.
+            `build.target`, then the pinned stable compiler's host. The project-local cache
+            uses the stable filename `.trn/dependencies/projection.json`. Its embedded
+            identity must match current inputs; a mismatch regenerates the projection and
+            atomically replaces the file rather than creating another hash-named record.
+            Matching records still require a valid content hash.
+
+            Native bound, call, and implementation probe reports share
+            `.trn/dependencies/oracle.json`. Its identity-scoped batch maps preserve useful
+            answers for different question batches; changing the identity discards the old
+            reports. Writes replace the complete file atomically.
 
             Identity construction lives in
             `crates/terrane-compiler/src/rust_interop/projection.rs` under `cache_identity`
@@ -145,12 +152,12 @@ documentation:
             rustdoc is cached independently by exact owner package, crate, hidden-item mode,
             target, containment, pinned toolchain, and rustdoc format so distinct
             source-demand projections can reuse the expensive owner document without sharing
-            facade aliases. Owner documents and ordinary projection records are pruned as
-            independent cache families: ordinary projections retain four records, while
-            exact package/version-deduplicated owner documents retain sixteen. A
-            successfully parsed owner-cache hit is marked recently used before pruning, and
-            a five-owner resolve therefore remains warm across runs. Unrelated
-            dependency-workspace files are never cache-pruning candidates.
+            facade aliases. Each distinct owner crate has one stable record under
+            `.trn/dependencies/owner-rustdoc/<crate-name>.json`. Package/version, target,
+            containment, hidden-item mode, toolchain, and format contribute to the identity
+            stored inside that record. Mismatches regenerate and atomically replace it;
+            distinct owners do not evict each other. Legacy hash-named projection and owner
+            records are removed without touching unrelated dependency-workspace files.
     - id: callbacks
       title: Concrete callback projection
       blocks:

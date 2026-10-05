@@ -928,6 +928,13 @@ documentation:
             explicitly deferred until Terrane has a release artifact channel rather than
             being silently attempted.
 
+            Project-local generated cache paths describe roles rather than source revisions:
+            `.trn/dependencies/projection.json` holds the current projection, and
+            `oracle.json` holds identity-scoped native proof batches. Cache fingerprints are
+            stored inside those files; changed inputs regenerate and atomically replace
+            them. Supplemental owner documents use one stable
+            `owner-rustdoc/<crate-name>.json` record per distinct owner crate.
+
             Injecting exact recursive-owner and bound-owner edges deliberately rewrites only
             the generated Cargo manifest. `terrane-dependencies.lock` preserves the complete
             pre-existing resolved graph; the generated edges use exact versions with no

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8bfb6a92a55ae52b5f9127630024ac10045941200d4afa70fd520ada57f6b0b0
+  input-sha256: f26e44b17505443d3976fdca4e14854cb9632c5550f809f9c0a58a69f9e70175
 format: 2
 generated: true
 records:
@@ -2536,9 +2536,6 @@ records:
     sections: []
   - id: implicit-support-dependencies
     title: LIM-CORE-IMPLICIT-SUPPORT-DEPENDENCY
-    sections: []
-  - id: test-executable-cache-identity
-    title: LIM-CACHE-TEST-EXECUTABLE-IDENTITY
     sections: []
   - id: field-mutation-inference
     title: LIM-OWNERSHIP-FIELD-MUTATION-INFERENCE

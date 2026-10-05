@@ -50,7 +50,8 @@ documentation:
             backtraces.
 
             When reporting a compiler defect, Terrane preserves the generated project under
-            `.trn/build` subject to bounded eviction.
+            `.trn/build` in the stable directory for its application or test-tier role.
+            Later compilation of that role updates the generated project in place.
   see-also: []
 
 provenance:
