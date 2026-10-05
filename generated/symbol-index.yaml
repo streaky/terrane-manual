@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6ecdfe9981061e7768288ed031043f86a7e2e1deae9cd2bde6f8396aea717704
+  input-sha256: 0131ec8a4de09f935094f5736cb14835afe1126c8bc590004732a0ff4ee58a6d
 format: 1
 generated: true
 symbols:
@@ -7467,6 +7467,18 @@ symbols:
   record: internals.projection.resolution
   section: subsystem-ownership
   declaration: terrane_compiler::rust_interop
+- name: terrane_program
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: terrane_program
+- name: terrane_program_application
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: terrane_program_application
+- name: terrane_program_test_unit
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: terrane_program_test_unit
 - name: TerraneAsyncMutableState::with_receiver
   record: internals.execution.runtime-selection
   section: mutable-async-callables
