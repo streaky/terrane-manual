@@ -297,15 +297,17 @@ documentation:
             explicit cloned snapshot remains independent of subsequent mutation.
 
             Callback validation uses the selected operation's concrete parameter metadata,
-            not its unspecialized declaration. A source callback that mutates a borrowed
-            parameter is rejected with T0139 when the native callback supplies a shared
-            reference. This applies to map and and_then; a mutable receiver permits the same
-            mutation. Mutation analysis follows the defining source function and resolves
-            imported helpers and callable aliases to canonical function spans. Parameter
-            write requirements reach a finite fixed point across source-call chains and
-            cycles before binding mutability and callback checks are finalized. Ordinary
-            native reference parameter signatures and argument reborrows use that same
-            inferred requirement: shared for observation, mutable when the referent is
+            not its unspecialized declaration. Specializing source callable arguments
+            preserves the native callback's reference shape and borrow authority while
+            retaining the source callable's invocation mode. A source callback that mutates
+            a borrowed parameter is rejected with T0139 when the native callback supplies a
+            shared reference. This applies to map and and_then; a mutable receiver permits
+            the same mutation. Mutation analysis follows the defining source function and
+            resolves imported helpers and callable aliases to canonical function spans.
+            Parameter write requirements reach a finite fixed point across source-call
+            chains and cycles before binding mutability and callback checks are finalized.
+            Ordinary native reference parameter signatures and argument reborrows use that
+            same inferred requirement: shared for observation, mutable when the referent is
             mutated. Cached imported signatures cannot override the defining contract. Local
             callable aliases retain the defining function's inferred native borrowing ABI
             rather than imposing a shared-reference callable annotation.
@@ -327,6 +329,7 @@ documentation:
           evidence:
             - projected-destination-results
             - projected-correlated-destination-results
+            - projected-native-callable-specialization
             - projected-serde-json-result
             - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
@@ -365,6 +368,16 @@ documentation:
             applies the complete concrete substitution and the existing recursive result
             conversion without a boxed universal value.
 
+            Explicit native result arguments and written destinations agree when their
+            concrete Rust representations agree, including `int` and `int64` selecting
+            native `i64`. A selected native method merges its exact owner arguments with
+            callable substitutions for parameters, results, bounds, and direct native paths.
+            Owner and qualified-path binders are instantiated independently of the method
+            turbofish, whose arguments retain the native method's binder order. Selected
+            type graphs retain generic nominal root imports independently of support-wrapper
+            emission; concrete applications belong at use sites, not in binder-free root
+            aliases.
+
             Authored generic binders are lexical semantic contracts with invariant closed
             language arguments. Shared callable selection supplies substituted parameters,
             results, bounds, and effects to validation, lowering, and language tooling.
@@ -402,19 +415,40 @@ documentation:
             its concrete representation through the existing generic substitution and oracle
             machinery. The semantic object identity retains both its ordinary source class
             and concrete native arguments; concrete aliases normalize to that same identity.
-            Field and method inference, destination compatibility, lowering, and language
-            tooling consume this shared selection. Supplemental facade aliases rewrite
-            native payload paths structurally while preserving type arguments. Canonical
-            native function parameters and results supply concrete selections even when
-            their generated signatures use the same bare source class name. Constructor
-            arguments cross the native ABI exactly once. Copyable field snapshots borrow
-            their native storage and convert into the source representation without
+            Public opaque generic nominals retain the same ordered binder/default/bound
+            metadata without acquiring a field constructor. Written type and callable
+            selections use that metadata through recursive signatures, factory results, and
+            borrowed operation graphs. Native capability queries prove the exact closed
+            representation, rather than copying optimistic generic-declaration flags.
+            Standard-library types reachable from a declared provider's public signatures
+            load their defining Rustdoc surface into that provider namespace while
+            preserving canonical native ownership. Field and method inference, destination
+            compatibility, lowering, and language tooling consume this shared selection.
+            Supplemental facade aliases rewrite native payload paths structurally while
+            preserving type arguments. Canonical native function parameters and results
+            supply concrete selections even when their generated signatures use the same
+            bare source class name. Constructor arguments cross the native ABI exactly once.
+            Nongeneric projected object and enum contracts keep their source representation,
+            rather than acquiring opaque native selections. Public aliases normalize to the
+            canonical source declaration owner so constructor results and written types
+            agree without changing their payload ABI. Projected interfaces preserve their
+            single associated application slot, including bindings carried by native
+            parameter metadata and nested projected payloads. Copyable field snapshots
+            borrow their native storage and convert into the source representation without
             partially moving the parent or allocating a redundant intermediate native
             vector. Borrowed scoped families retain the selected owner's namespace and name
-            together, preferring the projected nominal name among canonical-path matches. A
+            together. Owner selection prefers the exact advertised Rust path before
+            canonical-equivalent public observations, then the projected nominal name. A
             facade namespace must not be paired with another alias's owner name. Method
             lookup canonicalizes both item paths and native receiver-owner paths; public
-            facade spellings and provider-internal paths can denote the same type.
+            facade spellings and provider-internal paths can denote the same type. Real
+            public reexports take precedence over signature-derived synthetic names, and
+            distinct demanded public spellings remain addressable even when they share a
+            native owner. Native callable owner and path metadata, alias targets, and alias
+            defaults undergo the same Cargo dependency-root rewriting as parameters,
+            results, and bounds. Native nominal type arguments and defaults preserve exact
+            scalar representations: a native `u8` selection remains `uint8`, independently
+            of an ordinary value parameter's adaptive `int` ABI.
 
             Native reference metadata retains its inner projected type, mutability, and
             lifetime as separate fields. Recursive traversal, owner lookup, alias rewriting,
@@ -430,6 +464,11 @@ documentation:
             Ordinary Terrane strings cannot guarantee static storage, even when the written
             argument is a literal: the owned-string support ABI must not promise a lifetime
             it cannot preserve. Use an admitted ordinary borrowed-input operation instead.
+
+            Borrowed native string and byte inputs do not necessarily imply a borrowed
+            generated wrapper signature. Direct native calls may borrow source storage
+            without a copy; an owned support-wrapper input follows ordinary value-reuse
+            analysis and preserves any source value read again, including in a catch path.
 
             Bootstrap binding inference preserves unresolved generic scalar placeholders
             until constructor result selection and binding reconstruction can validate the

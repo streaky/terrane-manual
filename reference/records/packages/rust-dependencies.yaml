@@ -82,10 +82,16 @@ documentation:
                `Type::CONSTANT`; constants without an exactly translatable Terrane
                initializer still lower directly to their canonical Rust path. Unsupported
                public members remain inert comments inside their owning class with exact gap
-               evidence. Recoverable but unavailable nominal types appear as class/interface
-               skeletons with explicit residual obligations and remain unavailable for
-               lowering.
-            4. Import admitted names explicitly from `/deps/<alias>/...`.
+               evidence. A public opaque nominal can be named and selected without admitting
+               a source constructor; unavailable operations retain their own residual
+               obligations. Other unavailable nominal shapes remain explicit skeletons.
+            4. Import admitted names explicitly from `/deps/<alias>/...`. Public native
+               signature types owned by Rust's standard library are projected through their
+               declared provider namespace. For example, an `ipnet` signature can expose
+               `IpAddr`, and a Tokio networking signature can expose `SocketAddr` under
+               `/deps/<alias>/net`. This retains the canonical standard-library native
+               identity; it neither requires a maintained re-export crate nor grants
+               visibility into arbitrary undeclared dependencies.
             5. Review `terrane-dependencies.lock` for the exact complete resolved package
                graph and `terrane-projection.lock` for reproducible admitted and declined
                history.
@@ -837,6 +843,14 @@ documentation:
             shapes, are direct as well. Consuming every non-`Clone` item from a persistent
             foreign collection remains separately tracked by the stream/iterator design
             rather than hidden behind a conversion helper.
+
+            The `http-server` provider exposes a Terrane application API for route and
+            static-directory composition, string-returning asynchronous handlers, WebSocket
+            sessions, network allowlists, and an asynchronous `serve` operation. Its
+            implementation composes projected Axum and Tokio operations, including listener
+            binding, connection-info service construction, middleware, and server awaiting.
+            This records the available source/provider boundary; it is not evidence that a
+            live HTTP request has completed successfully.
 
             When one irreducible host or projection boundary remains, declare the exact
             dependency graph and add the narrowest package-local maintained module through

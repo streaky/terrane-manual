@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 443211d09ff741eef8b549bc4495505958ee9c1df994f2558e1bd4f828577d74
+  input-sha256: 8bfb6a92a55ae52b5f9127630024ac10045941200d4afa70fd520ada57f6b0b0
 format: 2
 generated: true
 records:
@@ -631,6 +631,9 @@ records:
     sections: []
   - id: constructors
     title: Constructor payloads select native record types
+    sections: []
+  - id: native-selections
+    title: Written native type and callable selections
     sections: []
   - id: inputs
     title: Operation arguments select concrete native inputs
@@ -2531,9 +2534,6 @@ records:
   - id: projected-tuple-payload-inference
     title: LIM-PROJ-TUPLE-PAYLOAD-INFERENCE
     sections: []
-  - id: projection-namespace-cycles
-    title: LIM-PROJ-NAMESPACE-CYCLES
-    sections: []
   - id: implicit-support-dependencies
     title: LIM-CORE-IMPLICIT-SUPPORT-DEPENDENCY
     sections: []
@@ -2753,6 +2753,7 @@ records:
     - reference-group-map
     - reference-call-result-invalidation
     - borrow-across-await
+    - projected-string-reuse-and-optional-ref
     compiler: null
   sections:
   - id: representation

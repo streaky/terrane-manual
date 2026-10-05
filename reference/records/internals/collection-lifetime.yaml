@@ -83,12 +83,19 @@ documentation:
           since: null
           evidence:
             - string-result-list-iteration
+            - string-list-index-in-catch
           markdown: |-
             Compiler-produced read-only string and text-range lists retain their raw-vector
             representation, but `for` constructs a slice-backed iterator that borrows the
             vector and clones each logical value as it advances. Iteration never consumes
             the result-list binding, so the list remains readable and may be iterated again
             afterward without cloning or reallocating the entire collection.
+
+            Indexing evaluates its receiver and index once, in that order. For raw-vector
+            result lists, the checked index is materialized before any out-of-bounds error
+            closure is formed. A failed index conversion therefore propagates through the
+            enclosing throwable completion, including nested try and catch paths, rather
+            than returning from a native error-construction closure.
     - id: descriptor-metadata
       title: Descriptor metadata
       blocks:

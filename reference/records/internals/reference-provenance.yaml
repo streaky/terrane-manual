@@ -59,6 +59,11 @@ documentation:
             admitted provenance shape has no native lowering arm. The compiler does not
             panic or pass a partial generated program to Cargo when semantic and lowering
             support drift apart.
+
+            Inside a proven present optional branch, taking a reference borrows the payload,
+            not the optional storage and not a cloned snapshot. Native mutable-reference
+            inference selects a mutable payload borrow when a called helper writes through
+            that reference; subsequent reads observe the mutation in the original optional.
   see-also:
     - lang.types.references
 
@@ -72,4 +77,5 @@ provenance:
     - reference-group-map
     - reference-call-result-invalidation
     - borrow-across-await
+    - projected-string-reuse-and-optional-ref
   compiler: null

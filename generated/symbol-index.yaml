@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 443211d09ff741eef8b549bc4495505958ee9c1df994f2558e1bd4f828577d74
+  input-sha256: 8bfb6a92a55ae52b5f9127630024ac10045941200d4afa70fd520ada57f6b0b0
 format: 1
 generated: true
 symbols:
@@ -1211,6 +1211,10 @@ symbols:
 - name: Clone
   record: internals.integration-boundaries
   section: tracking
+  declaration: Clone
+- name: Clone
+  record: lang.types.generics
+  section: native-selections
   declaration: Clone
 - name: Clone
   record: tool.packages.rust-dependencies
@@ -3193,6 +3197,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: Future
+- name: Future::Output
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: Future::Output
 - name: gen
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
@@ -3353,6 +3361,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: host-invocation-scoped-native
+- name: http-server
+  record: tool.packages.rust-dependencies
+  section: integration-boundaries
+  declaration: http-server
 - name: hypotenuse
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -3368,6 +3380,10 @@ symbols:
 - name: i64
   record: book.native-program
   section: reading-generated-rust
+  declaration: i64
+- name: i64
+  record: internals.projection.resolution
+  section: destination-results
   declaration: i64
 - name: i64
   record: lang.types.scalars
@@ -3634,6 +3650,10 @@ symbols:
   section: what-we-learned
   declaration: int
 - name: int
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: int
+- name: int
   record: lang.expressions.operators
   section: operators-precedence
   declaration: int
@@ -3724,6 +3744,10 @@ symbols:
 - name: int64
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
+  declaration: int64
+- name: int64
+  record: internals.projection.resolution
+  section: destination-results
   declaration: int64
 - name: int64
   record: lang.numerics.integers
@@ -3865,6 +3889,14 @@ symbols:
   record: lang.functions.callable-types
   section: exact-metadata
   declaration: invocation-mode
+- name: IpAddr
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: IpAddr
+- name: ipnet
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: ipnet
 - name: is
   record: book.terrane-shaped-programs
   section: pass-values-unless-identity-matters
@@ -5028,6 +5060,10 @@ symbols:
 - name: of
   record: internals.projection.resolution
   section: destination-results
+  declaration: of
+- name: of
+  record: lang.types.generics
+  section: native-selections
   declaration: of
 - name: offset
   record: book.namespaces-imports-and-packages
@@ -6532,6 +6568,10 @@ symbols:
   section: identity
   declaration: selected_target
 - name: Self
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: Self
+- name: Self
   record: internals.projection.resolution
   section: destination-results
   declaration: Self
@@ -6588,6 +6628,10 @@ symbols:
   section: transferability
   declaration: Send
 - name: Send
+  record: lang.types.generics
+  section: native-selections
+  declaration: Send
+- name: Send
   record: tool.editor-support
   section: editor-support
   declaration: Send
@@ -6627,6 +6671,10 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: serializable
+- name: serve
+  record: tool.packages.rust-dependencies
+  section: integration-boundaries
+  declaration: serve
 - name: server/terrane-language-server
   record: tool.editor-support
   section: editor-support
@@ -6746,6 +6794,10 @@ symbols:
 - name: SocketAddr
   record: lang.types.generics
   section: constructors
+  declaration: SocketAddr
+- name: SocketAddr
+  record: tool.packages.rust-dependencies
+  section: workflow
   declaration: SocketAddr
 - name: Some
   record: internals.projection.resolution
@@ -7006,6 +7058,10 @@ symbols:
 - name: Sync
   record: lang.classes.interfaces
   section: interfaces
+  declaration: Sync
+- name: Sync
+  record: lang.types.generics
+  section: native-selections
   declaration: Sync
 - name: Sync
   record: tool.editor-support
@@ -7907,6 +7963,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: typeof
+- name: u8
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: u8
 - name: uint128
   record: lang.numerics.integers
   section: fixed-integers
@@ -7942,6 +8002,10 @@ symbols:
 - name: uint8
   record: app.collection-string-idioms
   section: bytes
+  declaration: uint8
+- name: uint8
+  record: internals.projection.resolution
+  section: destination-results
   declaration: uint8
 - name: uint8
   record: lang.collections.protocols

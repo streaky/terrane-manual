@@ -154,16 +154,18 @@ documentation:
 
             `collections/consume-non-clone-foreign-items` identifies consuming iteration
             needed to process every non-`Clone` foreign item in a persistent collection and
-            belongs to the separate stream/iterator design.
-            `projection/mutually-referential-namespace-sources` identifies demanded
-            projected signatures that still require a cyclic source graph.
+            belongs to the separate stream/iterator design. The former
+            `projection/mutually-referential-namespace-sources` gap is closed: generated
+            dependency declarations are staged together, including demanded namespace
+            cycles. Authored namespace cycles remain invalid.
             `native-interop/rust-proc-macro-extension-entry` identifies Godot's remaining
             GDExtension entrypoint and class-registration boundary. The former
             `projection/godot-generated-reexport-surface` gap is closed by
             generated/reexported API projection and its pinned Godot evidence.
 
             The compiler plan's direct-first integration cutover section owns the affected
-            version ranges and exact observable removal criteria for all three open keys.
+            version ranges and exact observable removal criteria for the two remaining open
+            keys.
     - id: verification
       title: Verify the real boundary
       blocks:

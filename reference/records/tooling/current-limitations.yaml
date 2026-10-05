@@ -69,36 +69,6 @@ documentation:
                 and accepts its operations without a written intermediate destination.
             - field: Changes semantics
               value: No; the annotation names the already selected native payload type.
-    - id: projection-namespace-cycles
-      title: LIM-PROJ-NAMESPACE-CYCLES
-      blocks:
-        - type: table
-          id: limitation-projected-namespace-cycles
-          title: Eager projected namespace cycles
-          show-header: true
-          columns:
-            - id: field
-              title: Field
-              cell: text
-            - id: value
-              title: Value
-              cell: markdown
-          rows:
-            - field: Affected versions
-              value: Terrane compiler 0.1.x
-            - field: Observable failure
-              value: Projection rejects cyclic generated namespaces before a usable member can be imported.
-            - field: Intended behavior
-              value:
-                Member-demand projection admits an acyclic reachable operation without importing an unrelated cyclic
-                graph.
-            - field: Safe workaround
-              value: Use a registered narrow adapter operation for the concrete input and output shape.
-            - field: Removal target
-              value: "`projection/projected-namespace-cycles-and-generic-path-save`"
-            - field: Changes semantics
-              value: No, only if the adapter preserves upstream behavior and failure.
-
     - id: implicit-support-dependencies
       title: LIM-CORE-IMPLICIT-SUPPORT-DEPENDENCY
       blocks:

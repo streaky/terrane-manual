@@ -799,6 +799,18 @@ documentation:
             express additional relationships when concrete constructors alone would lose
             them.
 
+            Public projected dependency types can use the same `of` notation. A constructor
+            payload may supply enough information to infer an application; when an operation
+            has no such payload, write the type selection explicitly. The selected
+            relationship stays precise through member access, borrowing, factory results,
+            and later calls.
+
+            Naming a projected type does not grant permission to construct its private
+            storage. Receive an opaque value from an admitted factory and use its public
+            operations. The
+            [native selection contract](lang.types.generics#native-selections) explains
+            defaults, bounds, and the distinction between naming and construction.
+
             Type-constructor punctuation can become dense in a parameter list. Prefer one
             clear parameter per line for complicated signatures, and give important
             intermediate types names through domain interfaces or classes rather than

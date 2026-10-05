@@ -295,6 +295,74 @@ documentation:
             Use the written payload destination before chaining its address operations here.
             This works around [[tool.current-limitations#projected-tuple-payload-inference]]
             without changing the selected native representation.
+    - id: native-selections
+      title: Written native type and callable selections
+      blocks:
+        - type: markdown
+          markdown: |-
+            A public projected native type can use ordinary `of` arguments independently of
+            its construction recipe. Arguments follow the exposed native binder order;
+            omitted arguments use recorded defaults, including defaults referring to earlier
+            arguments. Selection substitutes through fields, operations, nested containers,
+            and borrowed callback contracts. Arity, repeated selections, and exact native
+            bounds are checked before lowering. Importing a projected generic also retains
+            its declaration root, independently of whether a selected/default object
+            argument occurs through native-argument metadata or ordinary language
+            application. Signatures retain the selected native identity while declaration
+            keys are normalized for import closure.
+
+            Projected Rust type aliases are selectable when Rustdoc resolves the alias to a
+            public named native struct and every exposed parameter is a type parameter. The
+            alias exposes those parameters in declaration order, with each representable
+            Rust default retained; a default may refer to an earlier parameter. Other alias
+            parameter kinds or unprojectable defaults prevent this alias selection. The
+            selected native identity is the resolved struct with the alias arguments
+            substituted, not a separate wrapper type.
+
+            A private-field native type can therefore be named as a selected parameter or
+            factory result and passed to another native operation. Naming it does not grant
+            field construction. Its concrete identity survives optional, tuple, set, and map
+            crossings without an authored forwarding type.
+
+            A projected generic free function, static function, or method can use a written
+            callable selection to specify its exposed type binders. Supply one selection for
+            each exposed callable binder; implementation-only callback parameters remain
+            inferred. Arguments and destination information still constrain the selection
+            and must agree with it. Selecting a generic does not change safety: an unsafe
+            native operation still requires an explicit unsafe call.
+
+            A selected async native call remains async. Its completed selected payload is
+            carried by a task using the callable's actual transferability contract; grouping
+            or applying type arguments does not erase that contract. Awaiting the task
+            produces the selected payload.
+        - type: example
+          id: native-explicit-selection
+          title: Select a native representation without a constructor payload
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /deps/witness import Opaque, make, inspect
+
+            value Opaque of bool = (make of bool);
+            result bool = inspect; value
+        - type: markdown
+          markdown: |-
+            `Clone`, `Send`, and `Sync` are facts about the selected concrete Rust type, not
+            permissions inherited from an open generic declaration. A conditional
+            implementation is used only when its exact selected obligations are proven. A
+            borrowed source-storage bridge retains its own ownership contract rather than
+            borrowing the capability of a different native representation.
+
+            Native `Clone` proof overrides a nominal open-resource marker when established
+            for the actual selected representation. Reusing a receiver after a consuming
+            native call likewise requires the native call's selected-source clone
+            conversion; it does not follow from the source class being nominally cloneable.
+            Task transferability likewise uses the exact selected native `Send` fact before
+            falling back to a nominal declaration. A negative concrete proof stays negative.
+
+            Nongeneric native types retain their declaration's ownership facts even when
+            they need no concrete specialization proof. Extracting a non-`Clone` native
+            field transfers the value rather than introducing an implicit clone.
     - id: inputs
       title: Operation arguments select concrete native inputs
       blocks:

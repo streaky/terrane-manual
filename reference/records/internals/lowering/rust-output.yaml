@@ -41,12 +41,40 @@ documentation:
             identities. Lowered output retains source and namespace associations, including
             generated module-association comments.
 
+            Signature types recursively preserve a projected value's canonical native Rust
+            representation, including nested callable results and async `Future::Output`
+            bounds. Source-class collision names do not replace selected native owners.
+            Imports retain declaration roots and their Rust binders/defaults, rather than
+            synthesizing aliases for each closed application. Anonymous native arguments
+            remain inferred at use sites; they cannot appear in item-level type aliases.
+            Destination-selected native calls retain Rust method type-parameter positions in
+            declaration order, including inferred callback implementation slots; concrete
+            UFCS owner arguments stay in the trait path, not the method turbofish. Explicit
+            native callable selection also retains the metadata-selected result and async
+            effects during initial typing; omitted source binders do not imply a void
+            result. Selected callable shapes remain tied to declaration identity. Static
+            operation helpers retain the owning inherent implementation's generic bounds
+            separately from method-owned parameters. `Self` uses the actual impl owner,
+            including defaults in a bare impl, rather than the nominal declaration's open
+            parameters. Helper declarations and calls bind only that operation's owner
+            parameters and share namespace-qualified symbol identities. Public aliases call
+            the canonical source owner's single static wrapper declaration, rather than
+            emitting duplicate symbols for the same native operation. Inherent owner-bound
+            extraction applies to static helpers, not direct instance operations:
+            invocation-scoped methods retain their existing lifetime-aware operation graph
+            instead of being rejected by a lifetime-free helper signature.
+
             Safety does not rename ordinary methods: a safe method always retains its
             canonical generated Rust name. An unsafe method uses a reserved deterministic
             encoding of its complete source name that cannot collide with any safe generated
             method name. This local mapping prevents an unrelated unsafe declaration from
             changing runtime, generated, or projected implementations of a fixed-name safe
             protocol method such as `render`, `log`, or `construct`.
+
+            Conformance cases may omit emitted-source snapshots while retaining acceptance,
+            runtime-output, warning, and canonical-Rust checks. Filtered golden regeneration
+            with `TERRANE_UPDATE_GOLDENS=projection` updates only reviewed projection
+            histories, leaving emitted-source snapshots unchanged.
 
             `terrane rust` streams a complete standalone Rust translation unit by default.
             With `--output` or `-o`, it writes a split artifact. For a requested entrypoint
