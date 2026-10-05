@@ -87,8 +87,10 @@ documentation:
             paths alone do not prevent different projects from sharing a top-level Cargo
             executable output. Distinct target names keep tier dispatch and inspection
             artifacts separate while dependencies continue sharing `.trn/cache/target`.
-            Copies in a role's public `artifacts/<profile>` slot keep the normalized
-            `terrane_program` executable/library basename.
+            Copies in a role's public `artifacts/<profile>` slot normalize executable
+            basenames to `terrane_program`. Dynamic libraries retain their role-specific
+            target basename, including the Windows MSVC `.dll.lib` companion, so DLL imports
+            and macOS `@rpath` install names resolve within the cached slot.
 
             Each workspace stores its native-artifact fingerprint in `.artifact-identity`;
             generated source, manifests, support, lock, toolchain, build environment,
