@@ -68,14 +68,26 @@ documentation:
             than silently producing mixed Unicode semantics.
 
             Generated workspaces use stable role-specific directories:
-            `.trn/build/application`, `.trn/build/test-unit`, `.trn/build/test-integration`,
-            and `.trn/build/test-end-to-end`. Source edits replace generated files in place
-            and remove obsolete sources. Each workspace stores its native-artifact
-            fingerprint in `.artifact-identity`; generated source, manifests, support, lock,
-            toolchain, build environment, artifact kind, containment, and profile determine
-            validity. A mismatch removes cached executables and check stamps before backend
-            validation. Test harnesses and application executables cannot share that cache.
-            Cargo retains its own incremental artifacts under `.trn/cache/target`; Terrane
+            `.trn/build/application` for ordinary builds, `.trn/build/application-debug` for
+            debugger/profiler source markers, and `.trn/build/test-unit`,
+            `.trn/build/test-integration`, and `.trn/build/test-end-to-end` for test
+            harnesses. Inspection lowering adds source markers, so it must not overwrite the
+            ordinary application's generated source. Source edits replace files in the
+            corresponding role and remove obsolete sources.
+
+            Every generated manifest declares the same named Cargo profiles. Ordinary
+            development and release builds use `debug` and `release` artifact slots;
+            debugging uses `terrane-debug`, inheriting `dev`, and profiling uses
+            `terrane-profile`, inheriting `release`. Switching commands does not change
+            manifests or evict unrelated slots. The debugger profile never reuses an
+            ordinary development executable built without its required settings.
+
+            Each workspace stores its native-artifact fingerprint in `.artifact-identity`;
+            generated source, manifests, support, lock, toolchain, build environment,
+            artifact kind, and the declared profile settings determine validity. Changed
+            inputs remove that workspace's cached executables and check stamps before
+            backend validation. Test harnesses and application executables cannot share that
+            cache. Cargo retains incremental artifacts under `.trn/cache/target`; Terrane
             does not create a workspace directory for each source revision. Recognized
             legacy hash-named generated workspaces are removed during the cutover.
     - id: native-artifact-kind

@@ -38,11 +38,14 @@ documentation:
             `terrane debug [--embed-sources] [--embed-generated-sources] <file-or-manifest> [-- arguments]`
             builds with the named `terrane-debug-v1` profile shared by Cargo emission and
             provenance: full debug information, optimization disabled, compiler-default
-            inlining at that optimization level, and stripping disabled.
-            `terrane debug --release` is rejected. Authored and generated source snapshots
-            are independently excluded unless their corresponding embedding flag is given.
-            Its inspection commands are `frames`, `frame N`, `source [RADIUS]`, `locals`,
-            `value NAME`, `generated [RADIUS]`, `native`, `registers`, and `lldb COMMAND`.
+            inlining at that optimization level, and stripping disabled. Cargo builds the
+            dedicated `terrane-debug` profile in the stable `.trn/build/application-debug`
+            workspace. It neither changes ordinary development settings nor evicts the
+            application's development/release artifacts. `terrane debug --release` is
+            rejected. Authored and generated source snapshots are independently excluded
+            unless their corresponding embedding flag is given. Its inspection commands are
+            `frames`, `frame N`, `source [RADIUS]`, `locals`, `value NAME`,
+            `generated [RADIUS]`, `native`, `registers`, and `lldb COMMAND`.
             Source/generated context is bounded to radius 20; focused values are depth-,
             cycle-, and count-bounded. Generated source rendering falls back to an exact
             explicitly embedded snapshot when its build-tree file is unavailable.

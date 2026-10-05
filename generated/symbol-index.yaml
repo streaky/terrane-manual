@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 068363088aa4ad06d3381c24dadd5b98ad8cfd4441a1250fbb75b04c54ab4dca
+  input-sha256: 6ecdfe9981061e7768288ed031043f86a7e2e1deae9cd2bde6f8396aea717704
 format: 1
 generated: true
 symbols:
@@ -1747,6 +1747,10 @@ symbols:
   declaration: deadline-exceeded
 - name: debug
   record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: debug
+- name: debug
+  record: internals.build.toolchain-profiles
   section: native-artifact-kind
   declaration: debug
 - name: debug
@@ -1961,6 +1965,10 @@ symbols:
   record: std.time
   section: tickers
   declaration: destruct
+- name: dev
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: dev
 - name: dev
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
@@ -6027,6 +6035,10 @@ symbols:
   record: std.concurrency.channels
   section: overflow
   declaration: rejected-value
+- name: release
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: release
 - name: remainder
   record: lang.numerics.arithmetic
   section: integer-operators
@@ -7331,6 +7343,14 @@ symbols:
   record: tool.packages.command-line
   section: scripts
   declaration: terrane
+- name: terrane-debug
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: terrane-debug
+- name: terrane-debug
+  record: tool.debugging
+  section: commands
+  declaration: terrane-debug
 - name: terrane-debug-v1
   record: tool.debugging
   section: commands
@@ -7379,6 +7399,14 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: terrane-language-server
+- name: terrane-profile
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: terrane-profile
+- name: terrane-profile
+  record: tool.profiling
+  section: attribution
+  declaration: terrane-profile
 - name: terrane-profile-cpu-v1
   record: tool.profiling
   section: commands

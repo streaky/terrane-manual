@@ -55,7 +55,11 @@ documentation:
             Native bound, call, and implementation probe reports share
             `.trn/dependencies/oracle.json`. Its identity-scoped batch maps preserve useful
             answers for different question batches; changing the identity discards the old
-            reports. Writes replace the complete file atomically.
+            reports. Malformed or obsolete cache JSON, including a body incompatible with
+            the current schema under the same identity, is a cache miss and regenerates
+            native proof rather than permanently failing analysis. Actual filesystem I/O
+            failures remain errors. Writes replace the complete file atomically; a failed
+            write or replacement removes its temporary file without altering the old target.
 
             Identity construction lives in
             `crates/terrane-compiler/src/rust_interop/projection.rs` under `cache_identity`
