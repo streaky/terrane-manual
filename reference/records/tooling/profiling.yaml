@@ -128,6 +128,13 @@ documentation:
             receive guessed source attribution. A CPU sample count is statistical evidence:
             the command does not relabel it as deterministic wall time, CPU duration,
             invocation count, or percentage of unobserved events.
+
+            Generated build workspaces are updated in place. A later build can replace the
+            executable referenced by an older capture, so that capture may report reduced
+            native fidelity rather than finding an archived binary. Embedded generated
+            source, and authored source selected with `--embed-sources`, remain verifiable
+            independently; replacing the executable does not discard captured samples or
+            their embedded source evidence.
     - id: privacy-limitations
       title: Privacy and current limits
       blocks:
