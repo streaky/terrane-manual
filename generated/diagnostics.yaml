@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2a8a6b3609e4e702efec5962e57d6b00d63729aa1efb50528ec5bc2bd27e733a
+  input-sha256: eed1a64fa0987ba21a0241c36495310e95cbdf76cda4f885bc6296e4f90f9c6d
 format: 1
 generated: true
 diagnostics:
@@ -1297,25 +1297,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1263
+    line: 1265
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1306
+    line: 1308
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1357
+    line: 1359
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1329
+    line: 1331
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1366
+    line: 1368
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
