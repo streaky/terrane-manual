@@ -415,6 +415,37 @@ documentation:
             integrate a Rust crate, or optimize a native section. A small tool can grow
             without being rewritten solely to gain access to those lower levels.
 
+            Rust is more than Terrane's compiler target. It is the ecosystem bridge, safety
+            substrate, optimisation target, debugging substrate, and **readable explanation
+            of what the compiler chose to do**.
+
+            That matters because Terrane does not need to replace mature native tooling. It
+            can reuse Rust libraries, rustc and LLVM, native debuggers and profilers, while
+            preserving enough provenance to relate their results back to the Terrane source
+            that produced them.
+
+            Keep three layers distinct:
+        - type: example
+          id: three-program-layers
+          title: null
+          language: text
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            Terrane source  →  what the program means
+            generated Rust  →  how the compiler realised it
+            native program  →  what actually executes
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            Generated Rust explains the implementation; it does not replace the Terrane
+            source as the program's contract. You can inspect that explanation when you need
+            to understand a representation, investigate a cost, or follow a problem into
+            native tooling without adopting a second source language for everyday work.
+
             The generated Rust is visible because a native toolchain should not become a
             sealed box. Visibility does not mean that Terrane is merely shorthand for Rust,
             nor that every Terrane concept must have a matching Rust object at runtime.

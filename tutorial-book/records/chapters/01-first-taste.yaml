@@ -68,37 +68,6 @@ documentation:
             annotations. Nor does it hide the native program behind a permanent interpreter
             or virtual machine.
 
-            Rust is more than Terrane's compiler target. It is the ecosystem bridge, safety
-            substrate, optimisation target, debugging substrate, and **readable explanation
-            of what the compiler chose to do**.
-
-            That matters because Terrane does not need to replace mature native tooling. It
-            can reuse Rust libraries, rustc and LLVM, native debuggers and profilers, while
-            preserving enough provenance to relate their results back to the Terrane source
-            that produced them.
-
-            Keep three layers distinct:
-        - type: example
-          id: three-program-layers
-          title: null
-          language: text
-          mode: illustrative
-          target: null
-          timeout-ms: null
-          source: |2
-            Terrane source  →  what the program means
-            generated Rust  →  how the compiler realised it
-            native program  →  what actually executes
-          response: null
-          diagnostic: null
-          markdown: null
-        - type: markdown
-          markdown: |-
-            Generated Rust explains the implementation; it does not replace the Terrane
-            source as the program's contract. You can inspect that explanation when you need
-            to understand a representation, investigate a cost, or follow a problem into
-            native tooling without adopting a second source language for everyday work.
-
             The broad path is:
         - type: example
           id: legacy-fence-001
