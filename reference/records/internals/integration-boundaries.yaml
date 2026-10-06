@@ -236,3 +236,6 @@ implementation:
   compiler:
     - crates/terrane-compiler/src/package.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection/dependency_owners.rs
+    - crates/terrane-compiler/src/rust_interop/projection/namespace_overlays.rs
+    - crates/terrane-compiler/src/rust_interop/projection/resolution.rs

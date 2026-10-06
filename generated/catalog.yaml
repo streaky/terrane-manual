@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ff4b012c60cf80055c36cae3cdf16f2c68772e4068343e8c1ef7c105ab547353
+  input-sha256: 860d787b843f4cd89aa6f229ebaae55283da63da21d54e03c131ba5825a31372
 format: 2
 generated: true
 records:
@@ -2362,7 +2362,8 @@ records:
     - godot-generated-api-projection
     - projected-macro-reexport
     compiler:
-    - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection/macros.rs
+    - crates/terrane-compiler/src/rust_interop/projection/reexports.rs
     - crates/terrane-rust-analysis/src/lib.rs
   sections:
   - id: dependency-and-imports

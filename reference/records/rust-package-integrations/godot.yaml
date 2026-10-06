@@ -138,5 +138,6 @@ provenance:
     - godot-generated-api-projection
     - projected-macro-reexport
   compiler:
-    - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection/macros.rs
+    - crates/terrane-compiler/src/rust_interop/projection/reexports.rs
     - crates/terrane-rust-analysis/src/lib.rs
