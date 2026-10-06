@@ -102,6 +102,10 @@ documentation:
             parent. These boundaries do not alter the serialized projection schema or the
             public `projection::resolve` entry point.
 
+            Owner-local regressions share public-metadata constructors through the test-only
+            `test_support.rs` module. Tests import those fixtures directly; the public
+            parent does not reexport private implementation helpers to make them testable.
+
             A published artifact is admitted only when its envelope format, cache identity,
             target, stable and rustdoc toolchains, rustdoc format, projection schema, and
             payload identity match. Dependency names, packages, exact versions, and effects
