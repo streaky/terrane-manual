@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 943700c33428e3929fa9ef4c8e075cc37a8288d34f1d80f36af28f5a1983d44f
+  input-sha256: bc5b0c85d8b117229f26f73061c3b9846fd2309382915932f581dd347c9724d7
 format: 1
 generated: true
 diagnostics:
@@ -985,21 +985,21 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 7462
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 473
+    line: 474
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 585
+    line: 586
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 643
+    line: 644
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 665
+    line: 666
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 747
+    line: 748
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 838
+    line: 839
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 983
+    line: 984
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 999
+    line: 1000
 - code: T0002
   messages:
   - '{label} value'
@@ -1009,17 +1009,17 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 830
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 147
+    line: 235
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 245
+    line: 333
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 180
+    line: 181
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 331
+    line: 332
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1057
+    line: 1058
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1063
+    line: 1064
 - code: T0003
   messages:
   - constant `{text}` is not an exact `{destination}` value
@@ -1165,7 +1165,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 293
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1672
+    line: 1673
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1174,7 +1174,7 @@ diagnostics:
   - '`.{member_name}` requires a floating receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 367
+    line: 455
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1548
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1227,7 +1227,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 1201
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1675
+    line: 1676
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1366,7 +1366,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 1394
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 539
+    line: 540
 - code: T0028
   messages:
   - '`await` is valid only inside an async callable'
@@ -1395,7 +1395,7 @@ diagnostics:
   - '`{receiver_type}` has no member `.{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 393
+    line: 481
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 740
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1467,13 +1467,13 @@ diagnostics:
   - an empty iterator requires an explicit item type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 759
+    line: 848
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 770
+    line: 859
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 779
+    line: 868
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 789
+    line: 878
 - code: T0042
   messages:
   - collection items require a statically known value type
@@ -1482,13 +1482,13 @@ diagnostics:
   - map values must have one statically known type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 13
+    line: 101
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 54
+    line: 142
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 666
+    line: 755
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 677
+    line: 766
 - code: T0043
   messages:
   - an empty `{collection}` requires an explicit item type
@@ -1496,11 +1496,11 @@ diagnostics:
   - '/core/collections::'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 64
+    line: 152
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 688
+    line: 777
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 242
+    line: 243
 - code: T0044
   messages:
   - set keys must be immutable scalar values
@@ -1508,11 +1508,11 @@ diagnostics:
   - entry keys must be immutable scalar values
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 609
+    line: 698
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 621
+    line: 710
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 642
+    line: 731
 - code: T0045
   messages:
   - '`entry` requires exactly a key and value'
@@ -1524,33 +1524,32 @@ diagnostics:
   - '`iteration-step` requires exactly one item'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 173
+    line: 261
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 229
+    line: 317
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 359
+    line: 447
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 402
+    line: 490
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 463
+    line: 551
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 479
+    line: 567
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 515
+    line: 604
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 632
+    line: 721
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 704
+    line: 793
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 232
+    line: 233
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 255
+    line: 256
 - code: T0046
-  messages:
-  - indexed assignment requires `{expected}`, found `{actual}`
+  messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 127
+    line: 130
 - code: T0048
   messages:
   - tuple items and length are fixed at construction
@@ -1558,7 +1557,7 @@ diagnostics:
   - indexed assignment is not supported for `{other}`
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 499
+    line: 587
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 107
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2272,7 +2271,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2276
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 215
+    line: 216
 - code: T0128
   messages:
   - mutating collection method `.{member}` cannot discard a temporary receiver
@@ -2374,7 +2373,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 203
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 460
+    line: 461
 - code: T0131
   messages:
   - select case expression must produce a task, found {found}
@@ -2399,9 +2398,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 227
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 407
+    line: 408
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 424
+    line: 425
 - code: T0132
   messages:
   - select cases cannot hold overlapping incompatible borrows of `{name}`
@@ -2464,9 +2463,9 @@ diagnostics:
     references'
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1297
+    line: 1298
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1327
+    line: 1328
 - code: T0210
   messages:
   - enum `{}` requires a fully selected application with {} type argument(s)

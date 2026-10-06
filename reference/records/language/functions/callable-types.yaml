@@ -142,10 +142,11 @@ documentation:
             callable that requires mutation through a native reference. Terrane rejects such
             arguments, initializers, assignments, and returns with T0140 before Rust
             lowering. Collection elements use shared-reference function storage even when
-            their types are inferred, so inferred collection literals reject these mutators
-            as well. Direct calls, inferred aliases, shared observers (including collection
-            elements), and callbacks whose mutable borrow authority is selected by a native
-            API remain supported.
+            their types are inferred, so inferred collection literals, collection method
+            storage arguments, and indexed assignments reject these mutators as well. Direct
+            calls, inferred aliases, shared observers (including collection elements), and
+            callbacks whose mutable borrow authority is selected by a native API remain
+            supported.
 
             Reflection exposes `invocation-mode` and `exact-invocation-mode` alongside
             `throwable-contract`, `escaping-throwables`, and the aggregate `contracts`
