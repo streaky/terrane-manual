@@ -138,6 +138,12 @@ documentation:
             invocation through that storage observes the written bound. The same rules apply
             to synchronous and asynchronous callable values.
 
+            A written shared-reference function type cannot accept a named or anonymous
+            callable that requires mutation through a native reference. Terrane rejects such
+            arguments, initializers, assignments, and returns with T0140 before Rust
+            lowering. Direct calls, inferred aliases, shared observers, and callbacks whose
+            mutable borrow authority is selected by a native API remain supported.
+
             Reflection exposes `invocation-mode` and `exact-invocation-mode` alongside
             `throwable-contract`, `escaping-throwables`, and the aggregate `contracts`
             marker.
