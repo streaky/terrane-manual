@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9bf587b666b89c3dedc6ada2566a2b568cc899ebd539486fd4021291e38a4dd9
+  input-sha256: ff4b012c60cf80055c36cae3cdf16f2c68772e4068343e8c1ef7c105ab547353
 format: 1
 generated: true
 symbols:
@@ -516,6 +516,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: artifact
+- name: artifacts.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: artifacts.rs
 - name: as
   record: book.errors
   section: handling-errors-with-try-and-catch
@@ -924,6 +928,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: cache_identity
+- name: callable.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: callable.rs
 - name: CallResult
   record: internals.semantics.reference-provenance
   section: representation
@@ -956,6 +964,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: CARGO_BUILD_TARGET
+- name: cargo_workspace.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: cargo_workspace.rs
 - name: case-fold
   record: lang.text.search
   section: string-search
@@ -1709,10 +1721,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: crates/terrane-compiler/src/runtime/async_native.rs
-- name: crates/terrane-compiler/src/rust_interop/projection.rs
+- name: crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs
   record: internals.projection.resolution
   section: identity
-  declaration: crates/terrane-compiler/src/rust_interop/projection.rs
+  declaration: crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs
 - name: crates/terrane-compiler/src/semantics/bindings.rs
   record: internals.execution.runtime-selection
   section: requirements
@@ -1901,6 +1913,10 @@ symbols:
   record: std.logging
   section: dependency-bridge
   declaration: dependency://
+- name: dependency_owners.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: dependency_owners.rs
 - name: dependency_sink_layer
   record: internals.observability.runtime
   section: dependency-bridge
@@ -3201,6 +3217,10 @@ symbols:
   record: lang.types.authority-in-practice
   section: declaration-table
   declaration: function retain none; value shared ref some-type
+- name: functions.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: functions.rs
 - name: Future
   record: tool.packages.rust-dependencies
   section: interfaces
@@ -3845,6 +3865,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: structural-words
   declaration: interface
+- name: interfaces.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: interfaces.rs
 - name: IntoFuture
   record: tool.packages.rust-dependencies
   section: async-projected-calls
@@ -3973,6 +3997,10 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
   declaration: items
+- name: items.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: items.rs
 - name: iterator
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
@@ -4453,6 +4481,10 @@ symbols:
   record: std.text-bytes-codecs
   section: octets-and-codecs
   declaration: message
+- name: methods.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: methods.rs
 - name: minimum
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -4625,6 +4657,10 @@ symbols:
   record: tool.packages.command-line
   section: scripts
   declaration: namespace
+- name: namespace_overlays.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: namespace_overlays.rs
 - name: namespaces.<namespace>
   record: tool.packages.package-manifest
   section: fields
@@ -5363,6 +5399,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: from-one-file-to-a-project
   declaration: part-two.trn
+- name: partial.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: partial.rs
 - name: pass
   record: lang.lexical-structure.source-layout
   section: utf8-layout
@@ -5763,6 +5803,10 @@ symbols:
   record: lang.types.generics
   section: destinations
   declaration: projected-destination-results
+- name: projection.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: projection.rs
 - name: projection/godot-generated-reexport-surface
   record: internals.integration-boundaries
   section: tracking
@@ -5771,6 +5815,10 @@ symbols:
   record: internals.integration-boundaries
   section: tracking
   declaration: projection/mutually-referential-namespace-sources
+- name: projection::resolve
+  record: internals.projection.resolution
+  section: resolution
+  declaration: projection::resolve
 - name: projection_history_keeps_content_origin_across_cache_hits
   record: internals.projection.resolution
   section: history
@@ -5915,6 +5963,10 @@ symbols:
   record: std.concurrency.channels
   section: construction
   declaration: receiver
+- name: reexports.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: reexports.rs
 - name: ref
   record: book.identity-and-movement
   section: copy-on-write-behavior-in-practice
@@ -6147,6 +6199,10 @@ symbols:
   record: book.errors
   section: throwing-an-error
   declaration: require-entry
+- name: resolution.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: resolution.rs
 - name: resolve
   record: internals.projection.resolution
   section: resolution
@@ -6363,6 +6419,10 @@ symbols:
   record: internals.build.toolchain-profiles
   section: selected-inputs
   declaration: rust-version
+- name: rust_interop/projection/
+  record: internals.projection.resolution
+  section: resolution
+  declaration: rust_interop/projection/
 - name: rustc
   record: book.native-program
   section: from-terrane-source-to-an-executable
@@ -8007,6 +8067,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: typeof
+- name: types.rs
+  record: internals.projection.resolution
+  section: resolution
+  declaration: types.rs
 - name: u8
   record: internals.projection.resolution
   section: destination-results

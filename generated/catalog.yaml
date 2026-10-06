@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9bf587b666b89c3dedc6ada2566a2b568cc899ebd539486fd4021291e38a4dd9
+  input-sha256: ff4b012c60cf80055c36cae3cdf16f2c68772e4068343e8c1ef7c105ab547353
 format: 2
 generated: true
 records:
@@ -2826,6 +2826,18 @@ records:
     compiler:
     - crates/terrane-compiler/src/rust_interop/mod.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection/resolution.rs
+    - crates/terrane-compiler/src/rust_interop/projection/artifacts.rs
+    - crates/terrane-compiler/src/rust_interop/projection/cargo_workspace.rs
+    - crates/terrane-compiler/src/rust_interop/projection/dependency_owners.rs
+    - crates/terrane-compiler/src/rust_interop/projection/reexports.rs
+    - crates/terrane-compiler/src/rust_interop/projection/namespace_overlays.rs
+    - crates/terrane-compiler/src/rust_interop/projection/items.rs
+    - crates/terrane-compiler/src/rust_interop/projection/methods.rs
+    - crates/terrane-compiler/src/rust_interop/projection/interfaces.rs
+    - crates/terrane-compiler/src/rust_interop/projection/partial.rs
+    - crates/terrane-compiler/src/rust_interop/projection/functions.rs
+    - crates/terrane-compiler/src/rust_interop/projection/types.rs
     - crates/terrane-compiler/src/rust_interop/projection/callable.rs
     - crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs
     - crates/terrane-compiler/src/rust_interop/projection/data.rs

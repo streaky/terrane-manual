@@ -62,12 +62,12 @@ documentation:
             write or replacement removes its temporary file without altering the old target.
 
             Identity construction lives in
-            `crates/terrane-compiler/src/rust_interop/projection.rs` under `cache_identity`
-            and `selected_target`. The identity is deliberately environment-specific when
-            the resolved Cargo lock, effective target, toolchain, or containment tier
-            differs; it is not part of the reviewed semantic surface fixture.
-            `target_identity_reads_effective_cargo_configuration` covers target-sensitive
-            construction, while
+            `crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs` under
+            `cache_identity` and `selected_target`. The identity is deliberately
+            environment-specific when the resolved Cargo lock, effective target, toolchain,
+            or containment tier differs; it is not part of the reviewed semantic surface
+            fixture. `target_identity_reads_effective_cargo_configuration` covers
+            target-sensitive construction, while
             `projection_history_migrates_provenance_and_detects_replay_drift` proves that
             one exact identity cannot admit two content hashes.
     - id: resolution
@@ -87,6 +87,20 @@ documentation:
             otherwise generates rustdoc locally with the pinned nightly toolchain. Every
             attempted source records a status and reason, and the final projection records
             its resolution outcome.
+
+            The public `projection.rs` surface owns shared metadata and projection queries.
+            Implementations live under `rust_interop/projection/`: `resolution.rs` owns this
+            transaction; `artifacts.rs` owns artifact validation and cache writes;
+            `cargo_workspace.rs` owns Cargo execution, containment, metadata, and locks;
+            `reexports.rs` owns supplemental Rustdoc discovery; `dependency_owners.rs` owns
+            reachability, dependency binding, canonical naming, and Cargo-root rewrites;
+            `namespace_overlays.rs` owns overlay discovery and relocation. Rustdoc admission
+            belongs to `items.rs`, `methods.rs`, `interfaces.rs`, `functions.rs`, and
+            `types.rs`; unavailable partial contracts belong to `partial.rs`. Generic
+            callable selection remains in `callable.rs`, distinct from complete
+            function-signature admission. Add policy to its owning module, not the public
+            parent. These boundaries do not alter the serialized projection schema or the
+            public `projection::resolve` entry point.
 
             A published artifact is admitted only when its envelope format, cache identity,
             target, stable and rustdoc toolchains, rustdoc format, projection schema, and
@@ -884,6 +898,18 @@ provenance:
   compiler:
     - crates/terrane-compiler/src/rust_interop/mod.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
+    - crates/terrane-compiler/src/rust_interop/projection/resolution.rs
+    - crates/terrane-compiler/src/rust_interop/projection/artifacts.rs
+    - crates/terrane-compiler/src/rust_interop/projection/cargo_workspace.rs
+    - crates/terrane-compiler/src/rust_interop/projection/dependency_owners.rs
+    - crates/terrane-compiler/src/rust_interop/projection/reexports.rs
+    - crates/terrane-compiler/src/rust_interop/projection/namespace_overlays.rs
+    - crates/terrane-compiler/src/rust_interop/projection/items.rs
+    - crates/terrane-compiler/src/rust_interop/projection/methods.rs
+    - crates/terrane-compiler/src/rust_interop/projection/interfaces.rs
+    - crates/terrane-compiler/src/rust_interop/projection/partial.rs
+    - crates/terrane-compiler/src/rust_interop/projection/functions.rs
+    - crates/terrane-compiler/src/rust_interop/projection/types.rs
     - crates/terrane-compiler/src/rust_interop/projection/callable.rs
     - crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs
     - crates/terrane-compiler/src/rust_interop/projection/data.rs
