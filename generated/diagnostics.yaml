@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: eed1a64fa0987ba21a0241c36495310e95cbdf76cda4f885bc6296e4f90f9c6d
+  input-sha256: 943700c33428e3929fa9ef4c8e075cc37a8288d34f1d80f36af28f5a1983d44f
 format: 1
 generated: true
 diagnostics:
@@ -1007,7 +1007,7 @@ diagnostics:
   - numeric destination is ambiguous between {}
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 824
+    line: 830
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 147
   - path: crates/terrane-compiler/src/semantics/collections.rs
@@ -1135,37 +1135,37 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 100
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 264
+    line: 270
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 276
+    line: 282
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 294
+    line: 300
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 390
+    line: 396
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1162
+    line: 1168
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1173
+    line: 1179
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1186
+    line: 1192
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1200
+    line: 1206
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1272
+    line: 1278
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1297
+    line: 1303
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1311
+    line: 1317
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1335
+    line: 1341
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1345
+    line: 1351
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 263
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 293
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1651
+    line: 1672
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1227,7 +1227,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 1201
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1654
+    line: 1675
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1242,7 +1242,7 @@ diagnostics:
   - iteration item of type `{other}` does not support {}-target destructuring
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 441
+    line: 447
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 247
   - path: crates/terrane-compiler/src/semantics/model.rs
@@ -1280,7 +1280,7 @@ diagnostics:
   - '`.coerce` and its policy members are not storable values before bound methods exist'
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 737
+    line: 743
   - path: crates/terrane-compiler/src/semantics/descriptors.rs
     line: 720
 - code: T0019
@@ -1423,7 +1423,7 @@ diagnostics:
   - '`print` requires a text-displayable scalar value, found {}'
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 230
+    line: 236
 - code: T0036
   messages:
   - '`.{}` requires an integer receiver'
@@ -2083,7 +2083,7 @@ diagnostics:
   - projected generic result requires an explicit type argument or one explicit destination type
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 332
+    line: 338
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 644
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
@@ -2198,17 +2198,17 @@ diagnostics:
   - interface-typed values cannot select a projected source generic bound
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 532
+    line: 538
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 546
+    line: 552
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 593
+    line: 599
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 619
+    line: 625
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 627
+    line: 633
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 641
+    line: 647
 - code: T0122
   messages:
   - class `{}` cannot implement authored interface `{}` because field `{}` does not satisfy the {requirement}
@@ -2248,9 +2248,9 @@ diagnostics:
     obligation
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 660
+    line: 666
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 705
+    line: 711
 - code: T0127
   messages:
   - projected interface `{}` requires one closed associated type
@@ -2460,9 +2460,13 @@ diagnostics:
 - code: T0140
   messages:
   - 'native-mutating callable cannot enter `{name}`: function-typed storage requires shared native references'
+  - 'native-mutating callable cannot enter `collection`: function-typed storage requires shared native
+    references'
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1297
+  - path: crates/terrane-compiler/src/semantics/types.rs
+    line: 1327
 - code: T0210
   messages:
   - enum `{}` requires a fully selected application with {} type argument(s)
