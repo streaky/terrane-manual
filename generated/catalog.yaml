@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: cbadd3a4d05628e580167c97fcb6e3926689e05f3dd62e41d1b2b2719e2c3223
+  input-sha256: 828f52391d0d2c50201a1cb0482b256da0429bc0657e71b24e910c9116af65ca
 format: 2
 generated: true
 records:
@@ -3188,6 +3188,110 @@ records:
   sections:
   - id: rust-lowering
     title: Deterministic Rust Lowering
+    sections: []
+  declaration-synopsis: []
+- id: internals.future.build-selection
+  title: Future compile-time build selection
+  summary: 'Preserves the planned `when build` design: deterministic compile-time branch selection over
+    declared build inputs, scheduled for Milestone 32 and absent from the selected compiler surface.'
+  kind: topic
+  manual: reference
+  group: Future designs
+  position: 102
+  source: reference/records/internals/future/build-selection.yaml
+  lifecycle-status: planned
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: compiler-plan
+      section: Milestone 32
+    conformance: null
+    compiler: null
+  sections:
+  - id: status
+    title: Planned status
+    sections: []
+  - id: selection-model
+    title: Selection model
+    sections: []
+  - id: cache-identity
+    title: Cache and reproducibility boundary
+    sections: []
+  - id: delivery
+    title: Milestone 32 delivery boundary
+    sections: []
+  declaration-synopsis: []
+- id: internals.future.decorative-modifiers
+  title: Future open decorative modifiers
+  summary: Preserves the planned package-defined `with` modifier protocol for declaration realization
+    outside the selected Terrane source surface.
+  kind: topic
+  manual: reference
+  group: Future designs
+  position: 103
+  source: reference/records/internals/future/decorative-modifiers.yaml
+  lifecycle-status: planned
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: compiler-plan
+      section: Explicitly deferred
+    conformance: null
+    compiler: null
+  sections:
+  - id: status
+    title: Planned status
+    sections: []
+  - id: structural-boundary
+    title: Structural and decorative boundary
+    sections: []
+  - id: syntax
+    title: Planned clause syntax
+    sections: []
+  - id: semantic-boundary
+    title: Planned semantic boundary
+    sections: []
+  declaration-synopsis: []
+- id: internals.future.annotations
+  title: General declaration annotations
+  summary: Describes a planned package-defined, typed annotation system for declaration metadata and explicit
+    consumers, separate from declaration-realization modifiers.
+  kind: topic
+  manual: reference
+  group: Future designs
+  position: 104
+  source: reference/records/internals/future/annotations.yaml
+  lifecycle-status: planned
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: compiler-plan
+      section: Milestone 31.0
+    - document: language-spec
+      section: General declaration annotations (planned)
+    conformance: null
+    compiler: null
+  sections:
+  - id: status
+    title: Planned status and boundary
+    sections: []
+  - id: model
+    title: Annotation types and application
+    sections: []
+  - id: grammar-and-targets
+    title: Placement, targets, and repetition
+    sections: []
+  - id: docs-and-metadata
+    title: Documentation and retained metadata
+    sections: []
+  - id: consumers
+    title: Explicit package and tool consumers
+    sections: []
+  - id: identity-and-boundaries
+    title: Identity, cache, and implementation boundary
     sections: []
   declaration-synopsis: []
 - id: book.preface

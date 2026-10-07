@@ -117,7 +117,8 @@ navigation:
       - source: records/internals/proof-guided-lowering.yaml
       - source: records/internals/diagnostics/source-projection.yaml
       - source: records/internals/lowering/rust-output.yaml
-      - group: Future designs
-        children:
-          - source: records/internals/future/build-selection.yaml
-          - source: records/internals/future/decorative-modifiers.yaml
+  - group: Future designs
+    children:
+      - source: records/internals/future/build-selection.yaml
+      - source: records/internals/future/decorative-modifiers.yaml
+      - source: records/internals/future/annotations.yaml

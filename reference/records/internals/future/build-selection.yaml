@@ -28,9 +28,9 @@ documentation:
           kind: important
           title: Planned syntax
           markdown: >-
-            This is a settled future design, not part of the selected Terrane source surface.
-            The selected compiler rejects `when` in statement position. Milestone 32 owns its
-            implementation and conformance evidence.
+            This is a settled future design, not part of the selected Terrane source
+            surface. The selected compiler rejects `when` in statement position. Milestone
+            32 owns its implementation and conformance evidence.
     - id: selection-model
       title: Selection model
       blocks:
@@ -38,8 +38,8 @@ documentation:
           markdown: |-
             `when build` will select one branch during compilation. Its condition may use
             literals; immutable manifest, target, and capability descriptors; Boolean and
-            comparison operators; and compiler-provided pure queries. Runtime state is not an
-            input to selection.
+            comparison operators; and compiler-provided pure queries. Runtime state is not
+            an input to selection.
 
             The selected branch is the program presented to later semantic analysis and
             lowering. An inactive branch is not type-checked, resolved, lowered, or included
@@ -72,8 +72,9 @@ documentation:
           markdown: |-
             Every declared input consulted by a `when build` condition, together with the
             selected result, must participate in build-cache identity. Builds that differ in
-            manifest, target, capability, or another permitted query input must have distinct
-            identities. A cache hit is valid only when it preserves the same selected source.
+            manifest, target, capability, or another permitted query input must have
+            distinct identities. A cache hit is valid only when it preserves the same
+            selected source.
 
             Query evaluation must be deterministic, side-effect free, and limited to the
             declared build-input model. It must not read ambient process state, clock time,
@@ -84,10 +85,10 @@ documentation:
         - type: markdown
           markdown: |-
             Delivery requires parser support, selection before ordinary semantic analysis,
-            deterministic cache-key integration, and focused accepted and rejected conformance
-            cases. The evidence must cover selected and inactive branches, differing cache
-            identities for differing allowed inputs, and rejection of runtime or undeclared
-            condition inputs.
+            deterministic cache-key integration, and focused accepted and rejected
+            conformance cases. The evidence must cover selected and inactive branches,
+            differing cache identities for differing allowed inputs, and rejection of
+            runtime or undeclared condition inputs.
   see-also: []
 
 provenance:

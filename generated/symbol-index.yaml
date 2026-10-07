@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: cbadd3a4d05628e580167c97fcb6e3926689e05f3dd62e41d1b2b2719e2c3223
+  input-sha256: 828f52391d0d2c50201a1cb0482b256da0429bc0657e71b24e910c9116af65ca
 format: 1
 generated: true
 symbols:
@@ -25,9 +25,21 @@ symbols:
   section: comments-and-readable-layout
   declaration: //
 - name: //
+  record: internals.future.annotations
+  section: docs-and-metadata
+  declaration: //
+- name: //
   record: lang.lexical-structure.literals
   section: comments-literals
   declaration: //
+- name: ///
+  record: internals.future.annotations
+  section: docs-and-metadata
+  declaration: ///
+- name: ///
+  record: internals.future.annotations
+  section: grammar-and-targets
+  declaration: ///
 - name: /core
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -48,6 +60,10 @@ symbols:
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: /core
+- name: /core/annotations
+  record: internals.future.annotations
+  section: model
+  declaration: /core/annotations
 - name: /core/collections
   record: book.decisions-and-repetition
   section: ranges-and-ordinary-iteration
@@ -368,6 +384,10 @@ symbols:
   record: book.complete-program
   section: dividing-the-program-into-functions
   declaration: accepted-total
+- name: account_id
+  record: internals.future.annotations
+  section: consumers
+  declaration: account_id
 - name: active
   record: book.identity-and-movement
   section: transferring-a-value-with-move
@@ -424,6 +444,10 @@ symbols:
   record: lang.types.unions
   section: unions
   declaration: and
+- name: annotation-target
+  record: internals.future.annotations
+  section: model
+  declaration: annotation-target
 - name: answer
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -547,6 +571,10 @@ symbols:
 - name: async
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
+  declaration: async
+- name: async
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
   declaration: async
 - name: async
   record: lang.classes.lifecycle
@@ -928,6 +956,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: cache_identity
+- name: callable
+  record: internals.future.annotations
+  section: model
+  declaration: callable
 - name: callable.rs
   record: internals.projection.resolution
   section: resolution
@@ -1179,6 +1211,10 @@ symbols:
 - name: class
   record: book.classes-interfaces-and-traits
   section: defining-a-class
+  declaration: class
+- name: class
+  record: internals.future.annotations
+  section: model
   declaration: class
 - name: class
   record: lang.lexical-structure.keywords
@@ -1456,6 +1492,10 @@ symbols:
   record: lang.declarations.bindings
   section: declarations
   declaration: const
+- name: constant
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: constant
 - name: constant
   record: internals.projection.resolution
   section: projection-gap-census
@@ -2522,6 +2562,10 @@ symbols:
   section: dependencies
   declaration: fetch_one
 - name: field
+  record: internals.future.annotations
+  section: model
+  declaration: field
+- name: field
   record: internals.observability.runtime
   section: ownership
   declaration: field
@@ -3269,6 +3313,18 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: git
+- name: global
+  record: internals.future.decorative-modifiers
+  section: semantic-boundary
+  declaration: global
+- name: global
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: global
+- name: global
+  record: internals.future.decorative-modifiers
+  section: syntax
+  declaration: global
 - name: global
   record: lang.declarations.bindings
   section: declarations
@@ -5359,6 +5415,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: strategy
   declaration: Parallel
+- name: parameter
+  record: internals.future.annotations
+  section: model
+  declaration: parameter
 - name: parcel
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
@@ -6956,6 +7016,10 @@ symbols:
   section: string-operations
   declaration: start
 - name: static
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: static
+- name: static
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: static
@@ -7784,6 +7848,10 @@ symbols:
   section: what-we-learned
   declaration: throws
 - name: throws
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: throws
+- name: throws
   record: lang.errors.contracts
   section: throwable-inference
   declaration: throws
@@ -8559,6 +8627,10 @@ symbols:
   record: internals.semantics.reference-provenance
   section: lowering
   declaration: Weak
+- name: when
+  record: internals.future.build-selection
+  section: status
+  declaration: when
 - name: while
   record: book.decisions-and-repetition
   section: choosing-the-clearest-loop
@@ -8599,6 +8671,22 @@ symbols:
   record: book.functions
   section: local-scope
   declaration: width
+- name: with
+  record: internals.future.annotations
+  section: status
+  declaration: with
+- name: with
+  record: internals.future.decorative-modifiers
+  section: semantic-boundary
+  declaration: with
+- name: with
+  record: internals.future.decorative-modifiers
+  section: status
+  declaration: with
+- name: with
+  record: internals.future.decorative-modifiers
+  section: syntax
+  declaration: with
 - name: with-field
   record: std.logging
   section: events
