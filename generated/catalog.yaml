@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b694b744bceed728b087e0c985fbf0d08e635a0e613c81ca7069f99ba7936a1d
+  input-sha256: de6e05245c7f58d33ec016f721e305e53cd4fe809a0031a5d836df1c12cf6db3
 format: 2
 generated: true
 records:
@@ -2248,6 +2248,9 @@ records:
     sections: []
   - id: generated-package-state
     title: Generated package state and version control
+    sections: []
+  - id: declaration-interface
+    title: Exporting declaration metadata
     sections: []
   - id: package-management
     title: Hashing and installing Terrane libraries

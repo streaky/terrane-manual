@@ -74,6 +74,45 @@ documentation:
             repository or workspace. Generated files may still be inspected locally when
             investigating a build; ignoring them prevents editors and Git clients from
             treating the cache as authored work.
+    - id: declaration-interface
+      title: Exporting declaration metadata
+      blocks:
+        - type: markdown
+          markdown: |-
+            `terrane declaration-interface` exports a format 1 source-independent public
+            declaration interface from a package manifest, package directory, or `.trn`
+            source. The output retains public documentation, annotation payloads, signature
+            and field snapshots, and validated source origins without function bodies.
+            Declaration preparation does not execute configured consumer programs. Use the
+            resulting file in a consumer's `interfaces` list; consumers can inspect metadata
+            even when the original library source is unavailable.
+        - type: example
+          id: export-declaration-interface
+          title: Export public library metadata
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            terrane declaration-interface library/package.toml --output library.interface.json
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: example
+          id: regenerate-source-free-interface
+          title: Regenerate the source-free conformance interface
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            target/debug/terrane declaration-interface tests/conformance/run/declaration-annotations/case.trn --output tests/conformance/run/annotation-source-free/library.interface.json
+          response: null
+          diagnostic: null
+          markdown: >-
+            Run from the compiler repository after building `terrane`. The consumer fixture
+            loads only this exported interface; it does not load the tracked producer
+            source.
     - id: package-management
       title: Hashing and installing Terrane libraries
       blocks:

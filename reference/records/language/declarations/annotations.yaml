@@ -89,7 +89,11 @@ documentation:
             parameter list, including parenthesized multiline headers. Applications are
             checked against their annotation's declared target set. Unknown annotation
             names, malformed arguments, invalid values, inappropriate targets, and
-            disallowed duplicates are source-level errors.
+            disallowed duplicates are source-level errors. General evaluation errors use
+            `S2110`, duplicate non-repeatable annotations use `S2111`, constant cycles use
+            `S2112`, payload type mismatches use `S2113`, and invalid attachment targets use
+            `S2114`. Duplicate map keys and set members are rejected rather than silently
+            merged during annotation construction.
 
             Repeatability is declared per annotation type. A non-repeatable annotation may
             appear once per declaration; repeatable applications retain source order. The
@@ -107,9 +111,9 @@ documentation:
             from /annotation-codec import external-name
 
             /// Options for running the report command.
-            @[command; name = "report", summary = "Run the report command"]
+            @[command; name = 'report', summary = 'Run the report command']
             function run int; (
-                @[command-option; long-name = "output", help = "Write results to this path"]
+                @[command-option; long-name = '--output', help = 'Write results to this path']
                 output-path string,
             )
                 return 0
@@ -156,6 +160,12 @@ documentation:
             documentation block is diagnosed. Documentation retains the originating
             declaration and source span rather than transferring to aliases or overrides.
 
+            Named local callables retain their enclosing callable identity, and interface
+            and trait methods retain their declaring owner identity. For example, a local
+            `helper` inside `/example::run` is `/example::run::helper`; a method of
+            `/example::shape` is `/example::shape::area`. Same-spelled declarations in
+            different lexical owners do not share metadata.
+
             The compiler constructs and type-checks annotation values without executing
             arbitrary user constructors, decorators, or callbacks. Admitted values are
             compile-time data, including supported immutable scalar and collection values
@@ -173,7 +183,17 @@ documentation:
             declarations/fields; defaults for non-public or secret fields are redacted.
             Annotation schema data fields must be public. Runtime embedding is optional;
             compile-time inspection requires no dynamic reflection runtime or global
-            registration. Fingerprints include relevant metadata and docs.
+            registration. Fingerprints include relevant metadata and docs, including source
+            byte spans: whitespace edits that move origins invalidate the interface as well.
+            The `sources` map contains only files referenced by exported records, not the
+            entire bundled standard-library inventory. A parameter or field default that
+            requires runtime evaluation has its tagged `kind` set to `unsupported`, distinct
+            from a missing default; consumers must not silently replace it with a new
+            default. Export an interface with
+            `terrane declaration-interface <package-or-source> --output <interface.json>`;
+            declaration preparation does not run configured consumers. The source-free
+            conformance artifact is reproducible from the tracked
+            `tests/conformance/run/declaration-annotations/case.trn` input.
 
             Consumer presentation may use declaration documentation as a default. Explicit
             consumer configuration or annotation metadata can supply more specific help or
@@ -200,16 +220,23 @@ documentation:
             request contains package identity and selected declaration metadata. The
             response has `format`, `generated_sources`, and `diagnostics`; each generated
             source supplies an `identity` and Terrane `source` text. Generated identities
-            are namespaced by consumer and must be safe, unique relative identities.
-            Diagnostics identify a declaration span and message; they map to selected source
-            or exported origin, with origin information when source text is unavailable.
-            Input, stdout, stderr, and declaration interfaces are bounded to 16 MiB. Nonzero
-            exit or malformed protocol is a compilation error.
+            are namespaced by consumer and must be safe, unique relative identities. The
+            compiler writes their source text beneath
+            `.trn/generated/<consumer>/<identity>.trn`, so diagnostics point to inspectable
+            files with stable identity-based names. Diagnostics carry a message and an
+            optional declaration span; selected source spans map to source or exported
+            origins, while a missing span reports against the package fallback without
+            losing the message. All returned diagnostics are retained. Consumer-reported
+            failures use `S2061`; process, malformed protocol, and invalid source/span
+            failures use `S2060`. Input, stdout, stderr, and declaration interfaces are
+            bounded to 16 MiB.
 
             Consumers run after declaration preparation and before ordinary full-package
-            checking. Their generated sources are checked with authored sources through the
-            normal compiler pipeline. The executable is trusted package tooling; metadata
-            does not sandbox it or grant its promises authority over language semantics.
+            checking, including test-tier compilation. Their generated sources are checked
+            with authored sources through the normal compiler pipeline. Editor snapshots
+            deliberately do not execute trusted consumers and may not resolve generated
+            namespaces. The executable is trusted package tooling; metadata does not sandbox
+            it or grant its promises authority over language semantics.
 
             The reference consumers and their shared protocol library are written in
             Terrane. Build the compiler first, then run
@@ -239,6 +266,11 @@ documentation:
             consumer `--description` overrides the class documentation, while a field's
             `@description` overrides that field's documentation. Empty explicit text remains
             an override, not a fallback.
+
+            Each codec uses a namespace derived from its selected class's full canonical
+            identity: `/codec-model::account` produces
+            `/generated/annotation-codec/codec-model/account`. Independent class consumers
+            therefore coexist without colliding on their local helper declarations.
         - type: example
           id: cli-annotation-consumer
           title: Typed CLI consumer
@@ -249,9 +281,9 @@ documentation:
           source: |-
             from /annotation-cli import command-option, command
 
-            @[command; name = "report", summary = "Summarize rows"]
+            @[command; name = 'report', summary = 'Summarize rows']
             function report int; (
-                @[command-option; long-name = "limit", help = "Maximum rows"]
+                @[command-option; long-name = '--limit', help = 'Maximum rows']
                 limit int = 10,
             )
                 return limit

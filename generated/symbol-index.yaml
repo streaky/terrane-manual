@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b694b744bceed728b087e0c985fbf0d08e635a0e613c81ca7069f99ba7936a1d
+  input-sha256: de6e05245c7f58d33ec016f721e305e53cd4fe809a0031a5d836df1c12cf6db3
 format: 1
 generated: true
 symbols:
@@ -40,6 +40,14 @@ symbols:
   record: lang.lexical-structure.literals
   section: comments-literals
   declaration: ///
+- name: ////
+  record: lang.lexical-structure.literals
+  section: comments-literals
+  declaration: ////
+- name: /codec-model::account
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: /codec-model::account
 - name: /core
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -340,6 +348,26 @@ symbols:
   record: tool.packages.rust-dependencies
   section: transitive-owners
   declaration: /deps/std
+- name: /example::run
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: /example::run
+- name: /example::run::helper
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: /example::run::helper
+- name: /example::shape
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: /example::shape
+- name: /example::shape::area
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: /example::shape::area
+- name: /generated/annotation-codec/codec-model/account
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: /generated/annotation-codec/codec-model/account
 - name: /work-report/errors
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -3437,6 +3465,10 @@ symbols:
   record: lang.declarations.annotations
   section: grammar-and-targets
   declaration: help
+- name: helper
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: helper
 - name: hex
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -3957,6 +3989,10 @@ symbols:
   record: lang.declarations.annotations
   section: consumers
   declaration: interfaces
+- name: interfaces
+  record: tool.packages.command-line
+  section: declaration-interface
+  declaration: interfaces
 - name: interfaces.rs
   record: internals.projection.resolution
   section: resolution
@@ -4145,6 +4181,10 @@ symbols:
   record: std.paths
   section: examples
   declaration: join-path
+- name: kind
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: kind
 - name: known
   record: tool.source-intelligence
   section: queries
@@ -6639,6 +6679,34 @@ symbols:
   record: lang.namespaces.imports
   section: imports
   declaration: S2033
+- name: S2060
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: S2060
+- name: S2061
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: S2061
+- name: S2110
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: S2110
+- name: S2111
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: S2111
+- name: S2112
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: S2112
+- name: S2113
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: S2113
+- name: S2114
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: S2114
 - name: S9004
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -7541,6 +7609,10 @@ symbols:
   declaration: terrane
 - name: terrane
   record: tool.packages.command-line
+  section: declaration-interface
+  declaration: terrane
+- name: terrane
+  record: tool.packages.command-line
   section: scripts
   declaration: terrane
 - name: terrane-debug
@@ -7719,6 +7791,10 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: testing.unit
+- name: tests/conformance/run/declaration-annotations/case.trn
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: tests/conformance/run/declaration-annotations/case.trn
 - name: tests/conformance/run/projected-constructor-selected-native
   record: lang.types.generics
   section: constructors
@@ -8395,6 +8471,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: unsized
+- name: unsupported
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: unsupported
 - name: unsupported
   record: tool.source-intelligence
   section: queries

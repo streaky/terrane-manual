@@ -41,16 +41,17 @@ documentation:
             block. An unclosed block comment produces `L0002 unterminated block comment` at
             its source span.
 
-            `///` line comments and `/** ... */` block comments are declaration
-            documentation, retained byte-for-byte in trivia and also extracted as semantic
-            documentation. Consecutive documentation lines form one block; blank
-            documentation lines preserve paragraphs. Documentation attaches to the following
-            declaration across its annotation applications, but a blank source line or
-            ordinary intervening comment breaks attachment and produces `S1101` for the
-            dangling block. Extraction removes delimiters, surrounding blank lines, common
-            source indentation, and optional common leading `*` decoration without removing
-            meaningful content indentation. Formatting preserves the original documentation
-            comment bytes.
+            `///` line comments (but not `////`) and `/** ... */` block comments (but not
+            `/*** ... */` or `/**/`) are declaration documentation. Decorative banners
+            remain ordinary comments. Documentation is retained byte-for-byte in trivia and
+            also extracted as semantic documentation. Consecutive documentation lines form
+            one block; blank documentation lines preserve paragraphs. Documentation attaches
+            to the following declaration across its annotation applications, but a blank
+            source line or ordinary intervening comment breaks attachment and produces
+            `S1101` for the dangling block. Extraction removes delimiters, surrounding blank
+            lines, common source indentation, and optional common leading `*` decoration
+            without removing meaningful content indentation. Formatting preserves the
+            original documentation comment bytes.
 
             Text has three source forms:
         - type: example
