@@ -231,6 +231,11 @@ documentation:
             failures use `S2060`. Input, stdout, stderr, and declaration interfaces are
             bounded to 16 MiB.
 
+            Successful consumer preparation removes obsolete generated `.trn` files,
+            including outputs of consumers removed from the manifest or returning no source.
+            Failed consumer execution or response validation preserves the previous files;
+            cleanup does not follow symbolic links outside the generated-source tree.
+
             Consumers run after declaration preparation and before ordinary full-package
             checking, including test-tier compilation. Their generated sources are checked
             with authored sources through the normal compiler pipeline. Editor snapshots
@@ -271,6 +276,9 @@ documentation:
             identity: `/codec-model::account` produces
             `/generated/annotation-codec/codec-model/account`. Independent class consumers
             therefore coexist without colliding on their local helper declarations.
+            Generated codec file identities keep names readable and escape namespace
+            separators and underscores, so full canonical identities remain unambiguous
+            without relying on truncated-hash uniqueness.
         - type: example
           id: cli-annotation-consumer
           title: Typed CLI consumer

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6eeff68f53c3bdb6e312b84d9cf1add19eaf798c99d692483b3e351436384099
+  input-sha256: 72c5bd890dec0987c1234c255fa971d4c59f7005c0a98a6a867386211b60bce1
 format: 1
 generated: true
 diagnostics:
@@ -745,7 +745,7 @@ diagnostics:
   - duplicate binding `{name}` in the same lexical scope
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1313
+    line: 1329
 - code: S2013
   messages:
   - unresolved name `{name}`
@@ -788,9 +788,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 221
+    line: 232
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 239
+    line: 250
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -811,7 +811,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 1848
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 424
+    line: 440
 - code: S2022
   messages:
   - constant binding `{name}` cannot be reassigned
@@ -822,7 +822,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 47
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 412
+    line: 428
 - code: S2023
   messages:
   - binding `{}` cannot reference itself in its initializer
@@ -883,7 +883,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1117
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 203
+    line: 214
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -922,14 +922,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 740
+    line: 741
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 697
+    line: 698
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -956,33 +956,34 @@ diagnostics:
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
-  - 'Rust dependency member `Generic` in `/deps/shared` is ambiguous: projected Rust types `one::Generic<A>`,
-    `two::Generic<B>`'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 521
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1063
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 66
 - code: S2060
   messages:
   - "\n        && identity != "
+  - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_identity_paths_and_reject_traversal()\
+    \ {\n        let (mut package, root) = temporary_package();\n        let mut sources = vec![\n   \
+    \         ("
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 760
+    line: 930
+  - path: crates/terrane-compiler/src/consumers.rs
+    line: 1029
 - code: S2061
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'
   - called only for a nonempty consumer diagnostics list
-  - codec::typed-codec-a1
+  - ".to_owned(),\n            executable: "
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 535
+    line: 536
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 565
+    line: 566
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 842
+    line: 1012
 - code: S2110
   messages:
   - ",\n        "
@@ -1020,11 +1021,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 918
+    line: 919
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 946
+    line: 947
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1030
+    line: 1031
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1149,7 +1150,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 194
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 613
+    line: 629
 - code: T0008
   messages:
   - '`{}` from `{source_type}` requires one numeric destination'
@@ -1277,34 +1278,37 @@ diagnostics:
   - an `if` statement requires a condition
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 757
+    line: 773
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 908
+    line: 924
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 934
+    line: 950
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 947
+    line: 963
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 958
+    line: 974
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 975
+    line: 991
 - code: T0015
   messages:
   - function `{}` may finish without returning a value
   - function `{}` does not return a value
   - function `{}` must return `{}`
+  - main.trn
   - function `{name}` must return `{expected}`
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 666
+    line: 682
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1156
+    line: 1172
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1162
+    line: 1178
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1183
+    line: 1199
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1201
+    line: 1217
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 81
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1676
 - code: T0016
@@ -1347,7 +1351,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 458
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 862
+    line: 878
 - code: T0017
   messages:
   - '`{member}` is not valid syntax; use `.coerce.{}`'
@@ -2755,7 +2759,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 565
+    line: 566
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2788,11 +2792,11 @@ diagnostics:
   - main.trn
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 565
+    line: 566
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 260
+    line: 271
 - code: W4006
   messages:
   - binding `{}` is marked intentionally unused but is read

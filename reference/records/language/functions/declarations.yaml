@@ -39,8 +39,14 @@ documentation:
 
             The semicolon in the header introduces parameters and is present even when the
             parameter list is empty. A declared result type is a contract for every
-            reachable return path in both top-level functions and class methods. The
-            compiler rejects an incompatible returned value before generating Rust.
+            reachable return path in top-level functions, local functions, and class
+            methods. The compiler rejects an incompatible returned value before generating
+            Rust.
+
+            Local functions retain their own parameter and result contracts. A call to a
+            local function has that function's result type, including when assigned to an
+            inferred binding and returned by its enclosing function. Returns inside a nested
+            function neither satisfy nor replace the enclosing function's result contract.
 
             A method body may use less receiver authority than its written declaration,
             never more. `construct` has intrinsic mutable lifecycle authority. An authored
