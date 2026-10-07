@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e772db66c145be465cf79db406912ac29da24bb61effd6e3f3973fb34f857d55
+  input-sha256: 8d0a3bb45a95a79ec53336f953903ea206c75f14b74fa80458a73f26ac56a66c
 format: 1
 generated: true
 symbols:
@@ -6687,6 +6687,10 @@ symbols:
   record: lang.declarations.annotations
   section: consumers
   declaration: S2061
+- name: S2062
+  record: lang.functions.declarations
+  section: declaration
+  declaration: S2062
 - name: S2110
   record: lang.declarations.annotations
   section: grammar-and-targets
