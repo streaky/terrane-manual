@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f4a62c6480e73019db32574c90f4c535f509bb71582678b96afbe2c14578681f
+  input-sha256: b13e178f60cadc7e6630f7c8feb6292989a1aab1a2ddea1e5ccb7201b8bacf82
 format: 1
 generated: true
 diagnostics:
@@ -748,9 +748,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 194
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 416
+    line: 423
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1399
+    line: 1431
 - code: S2013
   messages:
   - unresolved name `{name}`
@@ -816,7 +816,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 1907
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 510
+    line: 542
 - code: S2022
   messages:
   - constant binding `{name}` cannot be reassigned
@@ -828,9 +828,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 47
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 468
+    line: 500
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 498
+    line: 530
 - code: S2023
   messages:
   - binding `{}` cannot reference itself in its initializer
@@ -905,7 +905,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1721
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 637
+    line: 635
 - code: S2032
   messages:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
@@ -1167,7 +1167,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 194
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 699
+    line: 731
 - code: T0008
   messages:
   - '`{}` from `{source_type}` requires one numeric destination'
@@ -1277,13 +1277,13 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1565
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 766
+    line: 764
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 816
+    line: 814
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 846
+    line: 844
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 879
+    line: 877
 - code: T0014
   messages:
   - '`{keyword}` is only valid inside a loop'
@@ -1295,17 +1295,17 @@ diagnostics:
   - an `if` statement requires a condition
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 843
+    line: 875
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 994
+    line: 1026
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1020
+    line: 1052
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1033
+    line: 1065
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1044
+    line: 1076
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1061
+    line: 1093
 - code: T0015
   messages:
   - function `{}` may finish without returning a value
@@ -1315,15 +1315,15 @@ diagnostics:
   - function `{name}` must return `{expected}`
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 752
+    line: 784
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1242
+    line: 1274
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1248
+    line: 1280
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1269
+    line: 1301
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 1287
+    line: 1319
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 94
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1368,7 +1368,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 458
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 948
+    line: 980
 - code: T0017
   messages:
   - '`{member}` is not valid syntax; use `.coerce.{}`'
@@ -1424,11 +1424,11 @@ diagnostics:
   - '`.{}` requires exactly {expected} argument{}'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 856
+    line: 854
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 989
+    line: 987
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1145
+    line: 1143
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 50
 - code: T0024
@@ -1438,26 +1438,26 @@ diagnostics:
   - '`.parse` requires a string receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1165
+    line: 1163
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1180
+    line: 1178
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1190
+    line: 1188
 - code: T0025
   messages:
   - '`.parse` requires a statically resolvable function name'
   - '`{callback_name}` does not resolve to a parse callback'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1199
+    line: 1197
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1209
+    line: 1207
 - code: T0026
   messages:
   - parse callback `{callback_name}` must take one `string` value and declare a scalar return
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1220
+    line: 1218
 - code: T0027
   messages:
   - '`{actual}` may escape `{}` but does not satisfy its `throws {bound}` contract'
@@ -1497,27 +1497,27 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 481
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 748
+    line: 746
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 781
+    line: 779
 - code: T0032
   messages:
   - '`.{family}` is not available on this receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 949
+    line: 947
 - code: T0033
   messages:
   - '`.{family}` received an incompatible argument'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 1004
+    line: 1002
 - code: T0034
   messages:
   - '`.{family}.{child}` is not available'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 961
+    line: 959
 - code: T0035
   messages:
   - '`print` requires a text-displayable scalar value, found {}'
@@ -1714,15 +1714,15 @@ diagnostics:
   - interface bound `{bound}` has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 300
+    line: 298
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 383
+    line: 381
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 589
+    line: 587
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 599
+    line: 597
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 653
+    line: 651
 - code: T0058
   messages:
   - '`{name}` was already moved and is unavailable until rebound'
@@ -1830,7 +1830,7 @@ diagnostics:
   - descriptor has no retained member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 318
+    line: 316
 - code: T0072
   messages:
   - member `{}` is read-only and cannot be assigned
@@ -1870,7 +1870,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1489
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 554
+    line: 552
 - code: T0076
   messages:
   - task must be awaited, joined, or bound for later consumption
@@ -1927,21 +1927,21 @@ diagnostics:
   - async iteration step has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 475
+    line: 473
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 487
+    line: 485
 - code: T0088
   messages:
   - async sink outcome has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 498
+    line: 496
 - code: T0097
   messages:
   - '`{result}` has no member `{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 539
+    line: 537
 - code: T0098
   messages:
   - a resource-owning class cannot extend or use a copyable object contract
@@ -2067,15 +2067,15 @@ diagnostics:
   - channel receive outcome has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 395
+    line: 393
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 416
+    line: 414
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 437
+    line: 435
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 451
+    line: 449
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 463
+    line: 461
 - code: T0109
   messages:
   - '`channel-sender.send` requires one item'
@@ -2163,9 +2163,9 @@ diagnostics:
   - document diagnostic has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 333
+    line: 331
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 345
+    line: 343
 - code: T0116
   messages:
   - structured log emission requires logger, level, message, and fields
@@ -2471,7 +2471,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 435
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
-    line: 620
+    line: 618
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 203
   - path: crates/terrane-compiler/src/semantics/types.rs

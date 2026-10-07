@@ -44,7 +44,9 @@ documentation:
             instance and static methods. Class-level `self::member` access is also available
             within a named local function declared in a method; it does not capture instance
             state. `self` does not replace the instance receiver used to access or mutate
-            instance state. Select static fields with `::`, never instance-selection `.`.
+            instance state. Select authored-class static fields with `::`, never
+            instance-selection `.`. Builtin descriptor constants retain their documented
+            property syntax.
   see-also: []
 
 provenance:
