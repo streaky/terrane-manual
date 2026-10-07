@@ -85,8 +85,8 @@ documentation:
             compiler-derived source information. The diagnostics displayed by the editor are
             therefore the compiler's diagnostics.
 
-            The compiler-owned `terrane-projection.generated.trn` is a generated report and
-            multi-unit source container, not one authored namespace source.
+            The compiler-owned `.trn/terrane-projection.generated.trn` is a generated report
+            and multi-unit source container, not one authored namespace source.
             `Generated source unit` markers delimit ordinary one-namespace Terrane units.
             When the physical container is opened for inspection, the language server
             suppresses both whole-file namespace-count and duplicate-namespace diagnostics

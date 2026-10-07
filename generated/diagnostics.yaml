@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fb5e79b603f989cdc562806a316cba743961ab6359d51214c7224e48e996a798
+  input-sha256: a2328aacb276af5ba1a10086f076d6a83fb8786c91b3323bf41d042bbf9a2841
 format: 1
 generated: true
 diagnostics:
@@ -742,7 +742,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 400
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 890
+    line: 892
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
@@ -827,7 +827,7 @@ diagnostics:
   - Rust dependency `{dependency}` is not declared in `package.toml`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1031
+    line: 1033
 - code: S2028
   messages:
   - 'cannot materialize generated projection source units: {message}'
@@ -840,18 +840,18 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 447
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 482
+    line: 484
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 573
+    line: 575
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 796
+    line: 798
 - code: S2029
   messages:
   - "\n    );\n}\n\n#[test]\nfn compiler_owned_declarations_require_kebab_case() {\n    let package =\
     \ Package::implicit(\n        "
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1104
+    line: 1106
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 203
 - code: S2031
@@ -863,7 +863,7 @@ diagnostics:
   - Rust dependency member `{}.{member_name}` was projected by version {} but is absent from version {}
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1065
+    line: 1067
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1721
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -873,7 +873,7 @@ diagnostics:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 960
+    line: 962
 - code: S2033
   messages:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
@@ -907,22 +907,22 @@ diagnostics:
   - test-only namespace `{}` is unavailable to production sources
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 947
+    line: 949
 - code: S2054
   messages:
   - integration test cannot declare production namespace `{}`
   - end-to-end test must drive the application artifact instead of importing `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 918
+    line: 920
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1006
+    line: 1008
 - code: S2055
   messages:
   - production source cannot import test-only namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 993
+    line: 995
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
@@ -930,9 +930,9 @@ diagnostics:
     `two::Generic<B>`'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 518
+    line: 520
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1050
+    line: 1052
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 66
 - code: S9004
@@ -1297,25 +1297,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1265
+    line: 1267
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1308
+    line: 1310
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1359
+    line: 1361
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1331
+    line: 1333
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1368
+    line: 1370
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1921,7 +1921,7 @@ diagnostics:
   - conversion callback must accept exactly one `{source_type}` parameter
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 742
+    line: 744
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1731
   - path: crates/terrane-compiler/src/semantics/numeric.rs
@@ -2448,7 +2448,7 @@ diagnostics:
   - awaited destructors require the threaded executor
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1180
+    line: 1182
 - code: T0139
   messages:
   - mutating callback parameter `{}` requires a mutable native reference; the selected callback supplies

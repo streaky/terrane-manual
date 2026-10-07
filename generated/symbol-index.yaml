@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 828f52391d0d2c50201a1cb0482b256da0429bc0657e71b24e910c9116af65ca
+  input-sha256: a17d72d7f6c12b8ee8f24ffb8d82b5b17abe7a903047ff0f3109ac97754a8513
 format: 1
 generated: true
 symbols:
@@ -7504,6 +7504,10 @@ symbols:
   section: identity
   declaration: terrane-dependencies.lock
 - name: terrane-dependencies.lock
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
   record: tool.packages.rust-dependencies
   section: resolution
   declaration: terrane-dependencies.lock
@@ -7539,21 +7543,13 @@ symbols:
   record: tool.profiling
   section: optimized-build
   declaration: terrane-profile-cpu-v1
-- name: terrane-projection.generated.trn
-  record: internals.projection.resolution
-  section: projection-gap-census
-  declaration: terrane-projection.generated.trn
-- name: terrane-projection.generated.trn
-  record: tool.editor-support
-  section: editor-support
-  declaration: terrane-projection.generated.trn
-- name: terrane-projection.generated.trn
-  record: tool.packages.rust-dependencies
-  section: workflow
-  declaration: terrane-projection.generated.trn
 - name: terrane-projection.lock
   record: internals.projection.resolution
   section: history
+  declaration: terrane-projection.lock
+- name: terrane-projection.lock
+  record: internals.projection.resolution
+  section: projection-gap-census
   declaration: terrane-projection.lock
 - name: terrane-projection.lock
   record: tool.packages.rust-dependencies
