@@ -234,8 +234,8 @@ documentation:
             Successful manifest-package consumer preparation removes obsolete generated
             `.trn` files, including outputs of consumers removed from the manifest or
             returning no source. Implicit single-file compilation does not reconcile a
-            neighboring manifest package's consumer inventory. Failed consumer execution
-            or response validation preserves the previous files; cleanup does not follow
+            neighboring manifest package's consumer inventory. Failed consumer execution or
+            response validation preserves the previous files; cleanup does not follow
             symbolic links outside the generated-source tree.
 
             Consumers run after declaration preparation and before ordinary full-package

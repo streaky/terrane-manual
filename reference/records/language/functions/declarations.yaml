@@ -48,13 +48,13 @@ documentation:
             inferred binding and returned by its enclosing function. Returns inside a nested
             function neither satisfy nor replace the enclosing function's result contract.
 
-            Named local functions can call themselves recursively and shadow a function
-            from an outer scope, while duplicate declarations in their own scope remain
-            errors. They do not capture enclosing callable bindings, including parameters,
-            local variables, and receiver state; such references are rejected with `S2062`
-            before Rust generation. Use an anonymous closure when captures are needed.
-            Anonymous closures within a named local function may capture that function's
-            own bindings, but cannot bypass its non-capturing boundary.
+            Named local functions can call themselves recursively and shadow a function from
+            an outer scope, while duplicate declarations in their own scope remain errors.
+            They do not capture enclosing callable bindings, including parameters, local
+            variables, and receiver state; such references are rejected with `S2062` before
+            Rust generation. Use an anonymous closure when captures are needed. Anonymous
+            closures within a named local function may capture that function's own bindings,
+            but cannot bypass its non-capturing boundary.
 
             A method body may use less receiver authority than its written declaration,
             never more. `construct` has intrinsic mutable lifecycle authority. An authored
