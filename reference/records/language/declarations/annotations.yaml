@@ -1,0 +1,344 @@
+format: 1
+id: lang.declarations.annotations
+kind: topic
+
+surface: null
+
+lifecycle:
+  status: current
+  stability: null
+  since: null
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: General declaration annotations
+  title-style: text
+  summary: >-
+    Defines typed declaration metadata, public declaration interfaces, documentation reflection, and explicit package consumers for metadata-driven code generation and validation.
+  tags: [annotations, metadata, reflection, declarations]
+  sections:
+    - id: status
+      title: Implementation status
+      blocks:
+        - type: admonition
+          kind: important
+          title: Implemented and verified
+          markdown: >-
+            General declaration annotations, documentation metadata, source-free declaration
+            interfaces, and explicit package consumers are implemented and verified through
+            compiler unit and end-to-end conformance tests. This capability is distinct from
+            the deferred `with` declaration-realization protocol in
+            [[internals.future.decorative-modifiers]].
+    - id: model
+      title: Annotation types and application
+      blocks:
+        - type: markdown
+          markdown: |-
+            An annotation is a package-defined type whose declaration opts into an
+            annotation marker supplied by `/core/annotations`. Its `targets` and
+            `repeatable` fields declare eligible declaration kinds and whether repeated
+            applications are admitted. Annotation schema data fields must be public. The
+            package owns the annotation's schema and documented meaning; fields are
+            immutable metadata, not executable callbacks. Annotation names and arguments
+            resolve through ordinary imports, with no special compiler registry of names.
+
+            The application form is `@[name; positional, named = value]`. The semicolon is
+            mandatory even with no arguments. Positional arguments bind in declaration
+            order; named arguments bind by annotation payload field name. Ordinary type
+            checking validates the application. Applications attach metadata; they do not
+            transform, wrap, replace, or synthesize the annotated declaration.
+        - type: example
+          id: annotation-type-example
+          title: Package-defined annotation type
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            from /core/annotations import annotation, annotation-target
+            from /core/collections import list
+
+            @[annotation; targets = (list; (instance annotation-target::parameter;))]
+            class command-option
+                long-name string
+                help string|none = none
+          response: null
+          diagnostic: null
+          markdown: >-
+            Annotation types declare accepted payload fields; an application supplies an
+            immutable compile-time value of that shape.
+        - type: markdown
+          markdown: |-
+            The `/core/annotations` marker supplies `targets` and `repeatable`;
+            `annotation-target` enumerates class, callable, parameter, and field. The
+            explicit `descriptor` schema slot admits canonical compile-time descriptors,
+            including builtin type names such as `int`, the `none` descriptor, and named
+            function declarations. It does not admit unrestricted runtime function or type
+            values. A class using the descriptor slot records metadata, not a runtime
+            descriptor object.
+    - id: grammar-and-targets
+      title: Placement, targets, and repetition
+      blocks:
+        - type: markdown
+          markdown: |-
+            Annotation applications may attach to classes, functions or methods, parameters,
+            and fields. Parameter annotations precede their parameter inside the ordinary
+            parameter list, including parenthesized multiline headers. Applications are
+            checked against their annotation's declared target set. Unknown annotation
+            names, malformed arguments, invalid values, inappropriate targets, and
+            disallowed duplicates are source-level errors.
+
+            Repeatability is declared per annotation type. A non-repeatable annotation may
+            appear once per declaration; repeatable applications retain source order. The
+            mechanism does not imply annotation inheritance: subclasses, aliases, and
+            re-exports do not silently acquire or copy another declaration's metadata.
+        - type: example
+          id: annotation-application-example
+          title: Callable, parameter, and field annotations
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            from /annotation-cli import command, command-option
+            from /annotation-codec import external-name
+
+            /// Options for running the report command.
+            @[command; name = "report", summary = "Run the report command"]
+            function run int; (
+                @[command-option; long-name = "output", help = "Write results to this path"]
+                output-path string,
+            )
+                return 0
+
+            class export-record
+                /**
+                 * Stable exported record identifier.
+                 */
+                @[external-name; 'record_id']
+                id int
+          response: null
+          diagnostic: null
+          markdown: >-
+            The CLI payloads use the tracked `command` (`name`, optional `summary`) and
+            `command-option` (`long-name`, optional `help`) metadata schemas. The codec
+            example uses a package-defined external field name. The text and package names
+            illustrate use of those schemas; the compiler does not standardize domain
+            meanings for package-defined annotation types.
+    - id: docs-and-metadata
+      title: Documentation and retained metadata
+      blocks:
+        - type: markdown
+          markdown: |-
+            A `///` line documentation block or `/** ... */` block documentation comment
+            attached to an annotation block documents the declaration that follows; it does
+            not document or alter the annotation value. Ordinary `#` (including `##`), `//`,
+            and `/* ... */` comments remain non-exported. Documentation and annotations are
+            separate declaration metadata, each exposed through declaration descriptors.
+
+            Consecutive `///` lines form one documentation block. The canonical block
+            documentation examples use leading `*` decoration; undecorated `/** ... */`
+            blocks are equally accepted and require no warning. Extraction removes the
+            delimiters and surrounding blank lines, strips common source-layout indentation,
+            then removes each decorative leading `*` and at most one following space.
+            Paragraph breaks and meaningful indentation after the decoration are retained.
+            Empty `///` lines likewise retain paragraph boundaries. Normalization affects
+            extracted documentation only, not the original lossless syntax-tree comment. The
+            illustrated field comment returns exactly `Stable exported record identifier.`;
+            its undecorated spelling returns the same text.
+
+            A contiguous documentation block attaches to the next declaration across its
+            annotation block. A plain blank source line outside the comment, ordinary
+            comment, or unrelated declaration ends the attachment opportunity. A dangling
+            documentation block is diagnosed. Documentation retains the originating
+            declaration and source span rather than transferring to aliases or overrides.
+
+            The compiler constructs and type-checks annotation values without executing
+            arbitrary user constructors, decorators, or callbacks. Admitted values are
+            compile-time data, including supported immutable scalar and collection values
+            and explicitly typed descriptor/kind slots. They cannot perform I/O, read
+            mutable state, or run arbitrary code.
+
+            Declaration descriptors expose canonical identity, source and origin spans,
+            documentation, ordered typed annotations, callable parameter
+            names/types/defaults, field visibility and metadata, declared results, and
+            existing callable contracts. `DeclarationInterface` format 1 provides `to_json`
+            and `from_json`, a package identity, metadata fingerprint, file-ID-to-path
+            `sources` map, and declaration records. It carries no source bodies: public
+            metadata can be consumed with paths for origin mapping even when dependency
+            source is unavailable. Export interfaces omit bundled roots and private
+            declarations/fields; defaults for non-public or secret fields are redacted.
+            Annotation schema data fields must be public. Runtime embedding is optional;
+            compile-time inspection requires no dynamic reflection runtime or global
+            registration. Fingerprints include relevant metadata and docs.
+
+            Consumer presentation may use declaration documentation as a default. Explicit
+            consumer configuration or annotation metadata can supply more specific help or
+            field descriptions without changing the declaration's annotation payload or type
+            contract. Relevant metadata and documentation edits participate in declaration
+            interface fingerprints.
+    - id: consumers
+      title: Explicit package and tool consumers
+      blocks:
+        - type: markdown
+          markdown: |-
+            An annotation has no effect merely because it is present. A package explicitly
+            selects declarations and consumes their metadata to validate declarations or
+            generate ordinary Terrane source. The compiler mechanism supplies typed metadata
+            and declaration contracts; it is not an implicit behavior hook. Consumers must
+            enforce any promise they claim to honor, while declared types and signatures
+            remain authoritative.
+
+            The package manifest configures each consumer with `[consumers.<id>]`, a trusted
+            executable `command`, string-array `args`, explicit canonical `declarations`,
+            and optional declaration-interface file paths in `interfaces`. The executable
+            runs synchronously in the package directory; it receives one JSON request on
+            stdin and returns one JSON response on stdout. Protocol format is `1`. The
+            request contains package identity and selected declaration metadata. The
+            response has `format`, `generated_sources`, and `diagnostics`; each generated
+            source supplies an `identity` and Terrane `source` text. Generated identities
+            are namespaced by consumer and must be safe, unique relative identities.
+            Diagnostics identify a declaration span and message; they map to selected source
+            or exported origin, with origin information when source text is unavailable.
+            Input, stdout, stderr, and declaration interfaces are bounded to 16 MiB. Nonzero
+            exit or malformed protocol is a compilation error.
+
+            Consumers run after declaration preparation and before ordinary full-package
+            checking. Their generated sources are checked with authored sources through the
+            normal compiler pipeline. The executable is trusted package tooling; metadata
+            does not sandbox it or grant its promises authority over language semantics.
+
+            The CLI consumer accepts standalone functions with `int` results that are
+            synchronous, safe, non-throwing, and non-variadic, with immutable scalar
+            `string`/`int` parameters. Metadata supports command name and nullable summary;
+            parameters support long option name and nullable help. Summary precedence is
+            explicitly supplied consumer `--summary` (including an empty string), annotation
+            summary, then declaration documentation. The codec consumer accepts public,
+            non-derived classes with the canonical default constructor; it supports
+            `string`, `bool`, `int`, fixed-width signed/unsigned integer, and nullable
+            scalar fields, skips static/private/secret fields, validates integer
+            constraints, honors defaults, and rejects unknown or inaccessible input fields.
+
+            The codec decodes a pre-parsed `document-value` into a typed class result;
+            callers parse JSON before invoking it. Encoding returns a result containing
+            `document-value|none`, not a JSON string. `--schema-only` emits only the schema
+            helper; `--include-schema` adds a runtime `describe-<class>` helper. Explicit
+            consumer `--description` overrides the class documentation, while a field's
+            `@description` overrides that field's documentation. Empty explicit text remains
+            an override, not a fallback.
+        - type: example
+          id: cli-annotation-consumer
+          title: Typed CLI consumer
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            from /annotation-cli import command-option, command
+
+            @[command; name = "report", summary = "Summarize rows"]
+            function report int; (
+                @[command-option; long-name = "limit", help = "Maximum rows"]
+                limit int = 10,
+            )
+                return limit
+          response: null
+          diagnostic: null
+          markdown: >-
+            The tracked CLI consumer (`tools/annotation-consumers/cli.py`) consumes this
+            metadata. Its manifest explicitly selects declarations; it derives string and
+            integer arguments and defaults from signatures. Explicit consumer summary
+            configuration takes precedence over the command summary, which takes precedence
+            over declaration documentation. Parameter help metadata takes precedence over
+            parameter documentation. The command retains its declared integer result.
+        - type: example
+          id: codec-annotation-consumer
+          title: Typed codec and validation consumer
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            from /annotation-codec import external-name, minimum, description
+
+            /**
+             * An account document.
+             */
+            class account
+                /**
+                 * The account identifier.
+                 */
+                @[external-name; 'accountId']
+                @[minimum; 1]
+                account-id int16
+                @[external-name; 'label']
+                @[description; 'Explicit label description']
+                display-name string = 'defaulted'
+                active bool = true
+                nickname string|none = 'fallback'
+          response: null
+          diagnostic: null
+          markdown: >-
+            The tracked codec consumer (`tools/annotation-consumers/codec.py`) selects this
+            class and derives a typed codec from its public fields. It skips private and
+            secret fields, supports `string`, `bool`, `int`, signed/unsigned 8-, 16-, 32-,
+            64-, and 128-bit integers, and nullable scalar variants. It validates integer
+            constraints, honors field defaults and requiredness, rejects unknown or
+            inaccessible input fields, and requires the class's canonical default
+            constructor. Unsupported types diagnose rather than falling back.
+        - type: markdown
+          markdown: |-
+            Other potential consumers include test and benchmark discovery, RPC and
+            persistence schemas, database mapping, and editor/tooling indexes. They remain
+            package or tool responsibilities. The compiler resolves annotation identities,
+            constructs and validates immutable values, checks targets and repeatability,
+            retains metadata in declaration interfaces, and makes it available to explicitly
+            configured compile-time consumers.
+
+            The package consumer wire protocol is versioned independently as format 1.
+            Consumer tools are ordinary trusted executables; this mechanism does not claim
+            process isolation. Input and output sizes are capped at 16 MiB. No wall-clock
+            timeout is currently part of the consumer contract.
+    - id: identity-and-boundaries
+      title: Identity, cache, and implementation boundary
+      blocks:
+        - type: markdown
+          markdown: |-
+            An annotation does not alter the semantic identity of a callable or type, change
+            its signature, or wrap its execution. There is no implicit inheritance or alias
+            propagation. Retained annotations and documentation are semantic inputs to
+            exported declaration interfaces; their fingerprints prevent consumers from
+            reusing stale metadata.
+
+            Annotation construction, target checking, repeatability, descriptor reflection,
+            and declaration-interface retention belong to compiler infrastructure.
+            Domain-specific interpretation, additional validation, and generated command or
+            schema code belong to explicit consumers. Consumers preserve ordinary
+            declaration effects, ownership, and type contracts rather than using metadata as
+            authority to rewrite them.
+
+            Compile-time metadata consumption does not require runtime reflection storage.
+            Annotation blocks are not realization modifiers and cannot request storage
+            layout, linkage, ABI, or alignment; those remain the separate concern of the
+            deferred decorative-modifier design.
+  see-also: [internals.future.decorative-modifiers]
+
+provenance:
+  specification:
+    - document: compiler-plan
+      section: "Milestone 31.0"
+    - document: language-spec
+      section: "ANNOTATIONS"
+  conformance:
+    - crates/terrane-compiler/tests/annotations.rs
+    - tests/conformance/run/annotation-cli-consumer
+    - tests/conformance/run/annotation-codec-consumer
+    - tests/conformance/run/annotation-source-free
+    - tests/conformance/run/declaration-annotations
+  compiler:
+    - crates/terrane-compiler/src/semantics/annotations.rs
+    - crates/terrane-compiler/src/semantics/model.rs
+    - crates/terrane-compiler/src/consumers.rs

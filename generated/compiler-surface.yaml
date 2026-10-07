@@ -1,9 +1,17 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a2328aacb276af5ba1a10086f076d6a83fb8786c91b3323bf41d042bbf9a2841
+  input-sha256: 2ef4e0318f5c6d209016c80b09113c075b40aee0e46a081302761f8527a1752b
 format: 1
 generated: true
 modules:
+- source: crates/terrane-compiler/src/core/annotations.trn
+  declarations:
+  - declaration: class annotation
+    line: 4
+  - declaration: enum annotation-target
+    line: 8
+  - declaration: class descriptor
+    line: 15
 - source: crates/terrane-compiler/src/core/codecs.trn
   declarations:
   - declaration: class decode-result

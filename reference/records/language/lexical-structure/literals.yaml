@@ -29,7 +29,7 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Terrane recognizes three comment forms:
+            Terrane recognizes three ordinary comment forms:
 
             - `#` begins a line comment.
             - `//` begins a line comment.
@@ -40,6 +40,17 @@ documentation:
             containing only the terminator of a multiline comment does not open or close a
             block. An unclosed block comment produces `L0002 unterminated block comment` at
             its source span.
+
+            `///` line comments and `/** ... */` block comments are declaration
+            documentation, retained byte-for-byte in trivia and also extracted as semantic
+            documentation. Consecutive documentation lines form one block; blank
+            documentation lines preserve paragraphs. Documentation attaches to the following
+            declaration across its annotation applications, but a blank source line or
+            ordinary intervening comment breaks attachment and produces `S1101` for the
+            dangling block. Extraction removes delimiters, surrounding blank lines, common
+            source indentation, and optional common leading `*` decoration without removing
+            meaningful content indentation. Formatting preserves the original documentation
+            comment bytes.
 
             Text has three source forms:
         - type: example

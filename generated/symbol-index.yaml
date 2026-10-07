@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a17d72d7f6c12b8ee8f24ffb8d82b5b17abe7a903047ff0f3109ac97754a8513
+  input-sha256: 5e04487cc2cc12d25f593a33ec01fa252d6db6f297abaa590d53f686a7735188
 format: 1
 generated: true
 symbols:
@@ -25,7 +25,7 @@ symbols:
   section: comments-and-readable-layout
   declaration: //
 - name: //
-  record: internals.future.annotations
+  record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: //
 - name: //
@@ -33,12 +33,12 @@ symbols:
   section: comments-literals
   declaration: //
 - name: ///
-  record: internals.future.annotations
+  record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: ///
 - name: ///
-  record: internals.future.annotations
-  section: grammar-and-targets
+  record: lang.lexical-structure.literals
+  section: comments-literals
   declaration: ///
 - name: /core
   record: book.namespaces-imports-and-packages
@@ -61,7 +61,7 @@ symbols:
   section: inline-rust
   declaration: /core
 - name: /core/annotations
-  record: internals.future.annotations
+  record: lang.declarations.annotations
   section: model
   declaration: /core/annotations
 - name: /core/collections
@@ -384,10 +384,6 @@ symbols:
   record: book.complete-program
   section: dividing-the-program-into-functions
   declaration: accepted-total
-- name: account_id
-  record: internals.future.annotations
-  section: consumers
-  declaration: account_id
 - name: active
   record: book.identity-and-movement
   section: transferring-a-value-with-move
@@ -445,7 +441,7 @@ symbols:
   section: unions
   declaration: and
 - name: annotation-target
-  record: internals.future.annotations
+  record: lang.declarations.annotations
   section: model
   declaration: annotation-target
 - name: answer
@@ -528,6 +524,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: arc-tangent-two
+- name: args
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: args
 - name: arithmetic-overflow
   record: book.errors
   section: designing-useful-error-values
@@ -571,10 +571,6 @@ symbols:
 - name: async
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
-  declaration: async
-- name: async
-  record: internals.future.decorative-modifiers
-  section: structural-boundary
   declaration: async
 - name: async
   record: lang.classes.lifecycle
@@ -759,6 +755,10 @@ symbols:
 - name: bool
   record: lang.classes.traits
   section: traits
+  declaration: bool
+- name: bool
+  record: lang.declarations.annotations
+  section: consumers
   declaration: bool
 - name: bool
   record: lang.text.search
@@ -956,10 +956,6 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: cache_identity
-- name: callable
-  record: internals.future.annotations
-  section: model
-  declaration: callable
 - name: callable.rs
   record: internals.projection.resolution
   section: resolution
@@ -1213,10 +1209,6 @@ symbols:
   section: defining-a-class
   declaration: class
 - name: class
-  record: internals.future.annotations
-  section: model
-  declaration: class
-- name: class
   record: lang.lexical-structure.keywords
   section: structural-words
   declaration: class
@@ -1404,6 +1396,18 @@ symbols:
   record: lang.namespaces.declarations
   section: namespace-paths
   declaration: com9
+- name: command
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: command
+- name: command
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: command
+- name: command-option
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: command-option
 - name: complete
   record: book.testing-and-debugging
   section: begin-with-one-observable-behavior
@@ -1492,10 +1496,6 @@ symbols:
   record: lang.declarations.bindings
   section: declarations
   declaration: const
-- name: constant
-  record: internals.future.decorative-modifiers
-  section: structural-boundary
-  declaration: constant
 - name: constant
   record: internals.projection.resolution
   section: projection-gap-census
@@ -1817,6 +1817,14 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: decimal-log
+- name: DeclarationInterface
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: DeclarationInterface
+- name: declarations
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: declarations
 - name: decode
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -1969,6 +1977,10 @@ symbols:
   record: book.types
   section: authored-generics
   declaration: describe
+- name: descriptor
+  record: lang.declarations.annotations
+  section: model
+  declaration: descriptor
 - name: descriptor_protocol_method
   record: internals.semantics.descriptor-contracts
   section: protocols
@@ -2029,6 +2041,10 @@ symbols:
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
   declaration: dev
+- name: diagnostics
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: diagnostics
 - name: Directly callable
   record: tool.packages.rust-dependencies
   section: workflow
@@ -2109,6 +2125,10 @@ symbols:
   record: std.documents.typed-decoding
   section: diagnostics
   declaration: document-validatable
+- name: document-value
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: document-value
 - name: document-value
   record: std.logging
   section: events
@@ -2561,10 +2581,6 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: fetch_one
-- name: field
-  record: internals.future.annotations
-  section: model
-  declaration: field
 - name: field
   record: internals.observability.runtime
   section: ownership
@@ -3181,6 +3197,10 @@ symbols:
   record: std.collections
   section: ordering-iteration-and-lifetime
   declaration: for
+- name: format
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: format
 - name: format/text.trn
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
@@ -3209,6 +3229,10 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: frames
+- name: from_json
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: from_json
 - name: function
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -3297,6 +3321,10 @@ symbols:
   record: tool.diagnostics
   section: generated-index
   declaration: generated/diagnostics.yaml
+- name: generated_sources
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: generated_sources
 - name: get.checked
   record: book.text-and-collections
   section: exercises
@@ -3313,18 +3341,6 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: git
-- name: global
-  record: internals.future.decorative-modifiers
-  section: semantic-boundary
-  declaration: global
-- name: global
-  record: internals.future.decorative-modifiers
-  section: structural-boundary
-  declaration: global
-- name: global
-  record: internals.future.decorative-modifiers
-  section: syntax
-  declaration: global
 - name: global
   record: lang.declarations.bindings
   section: declarations
@@ -3417,6 +3433,10 @@ symbols:
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
   declaration: help
+- name: help
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: help
 - name: hex
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -3473,6 +3493,10 @@ symbols:
   record: lang.types.scalars
   section: scalar-types
   declaration: i64
+- name: identity
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: identity
 - name: if
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
@@ -3738,6 +3762,14 @@ symbols:
   section: destination-results
   declaration: int
 - name: int
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: int
+- name: int
+  record: lang.declarations.annotations
+  section: model
+  declaration: int
+- name: int
   record: lang.expressions.operators
   section: operators-precedence
   declaration: int
@@ -3921,6 +3953,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: structural-words
   declaration: interface
+- name: interfaces
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: interfaces
 - name: interfaces.rs
   record: internals.projection.resolution
   section: resolution
@@ -4301,6 +4337,10 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: logging
+- name: long-name
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: long-name
 - name: lossy
   record: lang.numerics.conversion
   section: numeric-coercion
@@ -4698,6 +4738,10 @@ symbols:
   section: nested-calls-and-parentheses
   declaration: name
 - name: name
+  record: lang.declarations.annotations
+  section: grammar-and-targets
+  declaration: name
+- name: name
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: name
@@ -4976,6 +5020,10 @@ symbols:
 - name: none
   record: lang.collections.protocols
   section: source-iteration
+  declaration: none
+- name: none
+  record: lang.declarations.annotations
+  section: model
   declaration: none
 - name: none
   record: lang.errors.handling
@@ -5415,10 +5463,6 @@ symbols:
   record: internals.execution.runtime-selection
   section: strategy
   declaration: Parallel
-- name: parameter
-  record: internals.future.annotations
-  section: model
-  declaration: parameter
 - name: parcel
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
@@ -6223,6 +6267,10 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: reusing-fields-and-methods-with-traits
   declaration: render-category
+- name: repeatable
+  record: lang.declarations.annotations
+  section: model
+  declaration: repeatable
 - name: replace
   record: lang.text.transformation
   section: string-transform
@@ -6507,6 +6555,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: S1095
+- name: S1101
+  record: lang.lexical-structure.literals
+  section: comments-literals
+  declaration: S1101
 - name: S2002
   record: internals.projection.resolution
   section: projection-gap-census
@@ -6948,9 +7000,17 @@ symbols:
   section: exercises
   declaration: source
 - name: source
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: source
+- name: source
   record: tool.debugging
   section: provenance
   declaration: source
+- name: sources
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: sources
 - name: spare-bottles
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -7015,10 +7075,6 @@ symbols:
   record: std.text-bytes-codecs
   section: string-operations
   declaration: start
-- name: static
-  record: internals.future.decorative-modifiers
-  section: structural-boundary
-  declaration: static
 - name: static
   record: lang.classes.lifecycle
   section: lifecycle
@@ -7112,6 +7168,10 @@ symbols:
   section: if-while-for
   declaration: string
 - name: string
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: string
+- name: string
   record: lang.namespaces.prelude
   section: prelude
   declaration: string
@@ -7186,6 +7246,10 @@ symbols:
 - name: summary
   record: book.values-and-names
   section: exercises
+  declaration: summary
+- name: summary
+  record: lang.declarations.annotations
+  section: grammar-and-targets
   declaration: summary
 - name: swap_remove
   record: internals.collections.lifetime
@@ -7355,6 +7419,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: target_identity_reads_effective_cargo_configuration
+- name: targets
+  record: lang.declarations.annotations
+  section: model
+  declaration: targets
 - name: task
   record: book.classes-interfaces-and-traits
   section: defining-a-class
@@ -7844,10 +7912,6 @@ symbols:
   section: what-we-learned
   declaration: throws
 - name: throws
-  record: internals.future.decorative-modifiers
-  section: structural-boundary
-  declaration: throws
-- name: throws
   record: lang.errors.contracts
   section: throwable-inference
   declaration: throws
@@ -7899,6 +7963,18 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: to-document
+- name: to_json
+  record: lang.declarations.annotations
+  section: docs-and-metadata
+  declaration: to_json
+- name: tools/annotation-consumers/cli.py
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: tools/annotation-consumers/cli.py
+- name: tools/annotation-consumers/codec.py
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: tools/annotation-consumers/codec.py
 - name: tools/generate_manual_catalog.py
   record: std.filesystem
   section: whole-file-synopsis
@@ -8623,10 +8699,6 @@ symbols:
   record: internals.semantics.reference-provenance
   section: lowering
   declaration: Weak
-- name: when
-  record: internals.future.build-selection
-  section: status
-  declaration: when
 - name: while
   record: book.decisions-and-repetition
   section: choosing-the-clearest-loop
@@ -8668,20 +8740,8 @@ symbols:
   section: local-scope
   declaration: width
 - name: with
-  record: internals.future.annotations
+  record: lang.declarations.annotations
   section: status
-  declaration: with
-- name: with
-  record: internals.future.decorative-modifiers
-  section: semantic-boundary
-  declaration: with
-- name: with
-  record: internals.future.decorative-modifiers
-  section: status
-  declaration: with
-- name: with
-  record: internals.future.decorative-modifiers
-  section: syntax
   declaration: with
 - name: with-field
   record: std.logging
