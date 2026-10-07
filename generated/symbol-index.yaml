@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5e04487cc2cc12d25f593a33ec01fa252d6db6f297abaa590d53f686a7735188
+  input-sha256: b694b744bceed728b087e0c985fbf0d08e635a0e613c81ca7069f99ba7936a1d
 format: 1
 generated: true
 symbols:
@@ -4825,6 +4825,10 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: native-text
+- name: native-tools
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: native-tools
 - name: natural-log
   record: lang.numerics.floating-point
   section: operations
@@ -7403,6 +7407,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: tangent
+- name: target/annotation-consumers/
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: target/annotation-consumers/
 - name: target/debug
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
@@ -7967,14 +7975,14 @@ symbols:
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: to_json
-- name: tools/annotation-consumers/cli.py
+- name: tools/annotation-consumers/cli-consumer/src/main.trn
   record: lang.declarations.annotations
   section: consumers
-  declaration: tools/annotation-consumers/cli.py
-- name: tools/annotation-consumers/codec.py
+  declaration: tools/annotation-consumers/cli-consumer/src/main.trn
+- name: tools/annotation-consumers/codec-consumer/src/main.trn
   record: lang.declarations.annotations
   section: consumers
-  declaration: tools/annotation-consumers/codec.py
+  declaration: tools/annotation-consumers/codec-consumer/src/main.trn
 - name: tools/generate_manual_catalog.py
   record: std.filesystem
   section: whole-file-synopsis

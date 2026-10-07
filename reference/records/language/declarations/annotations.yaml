@@ -211,6 +211,16 @@ documentation:
             normal compiler pipeline. The executable is trusted package tooling; metadata
             does not sandbox it or grant its promises authority over language semantics.
 
+            The reference consumers and their shared protocol library are written in
+            Terrane. Build the compiler first, then run
+            `sh tools/annotation-consumers/build.sh`. The helper builds the CLI and codec
+            executables into `target/annotation-consumers/` and installs fixture copies
+            under `.trn/consumers/`. Neither consumer is required to build the compiler, and
+            neither consumes its own annotations during its build. Consumer conformance
+            cases declare `native-tools` so the test harness builds and stages the
+            executables itself; a clean checkout needs no prebuilt consumer or Python
+            consumer runtime.
+
             The CLI consumer accepts standalone functions with `int` results that are
             synchronous, safe, non-throwing, and non-variadic, with immutable scalar
             `string`/`int` parameters. Metadata supports command name and nullable summary;
@@ -248,11 +258,12 @@ documentation:
           response: null
           diagnostic: null
           markdown: >-
-            The tracked CLI consumer (`tools/annotation-consumers/cli.py`) consumes this
-            metadata. Its manifest explicitly selects declarations; it derives string and
-            integer arguments and defaults from signatures. Explicit consumer summary
-            configuration takes precedence over the command summary, which takes precedence
-            over declaration documentation. Parameter help metadata takes precedence over
+            The tracked CLI consumer
+            (`tools/annotation-consumers/cli-consumer/src/main.trn`) consumes this metadata.
+            Its manifest explicitly selects declarations; it derives string and integer
+            arguments and defaults from signatures. Explicit consumer summary configuration
+            takes precedence over the command summary, which takes precedence over
+            declaration documentation. Parameter help metadata takes precedence over
             parameter documentation. The command retains its declared integer result.
         - type: example
           id: codec-annotation-consumer
@@ -282,10 +293,11 @@ documentation:
           response: null
           diagnostic: null
           markdown: >-
-            The tracked codec consumer (`tools/annotation-consumers/codec.py`) selects this
-            class and derives a typed codec from its public fields. It skips private and
-            secret fields, supports `string`, `bool`, `int`, signed/unsigned 8-, 16-, 32-,
-            64-, and 128-bit integers, and nullable scalar variants. It validates integer
+            The tracked codec consumer
+            (`tools/annotation-consumers/codec-consumer/src/main.trn`) selects this class
+            and derives a typed codec from its public fields. It skips private and secret
+            fields, supports `string`, `bool`, `int`, signed/unsigned 8-, 16-, 32-, 64-, and
+            128-bit integers, and nullable scalar variants. It validates integer
             constraints, honors field defaults and requiredness, rejects unknown or
             inaccessible input fields, and requires the class's canonical default
             constructor. Unsupported types diagnose rather than falling back.
