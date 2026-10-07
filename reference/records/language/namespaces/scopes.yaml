@@ -33,7 +33,10 @@ documentation:
             namespace scope, program-global scope, and finally the selected prelude.
             Namespace lookup includes the current namespace and its parents. The nearest
             matching binding shadows farther bindings; shadowing changes which identity a
-            spelling resolves to rather than merging declarations.
+            spelling resolves to rather than merging declarations. A binding declared inside
+            a conditional branch stays in that branch. Its declaration and
+            definite-assignment state do not change an outer function's visibility after the
+            branch, even when both declarations have the same name.
 
             Ordinary names and object-form names occupy separate symbol tables, and
             object-form lookup is lexical. Lexical scope information covers function
