@@ -41,8 +41,10 @@ documentation:
 
             `this` denotes the current instance and is available only in instance methods.
             `self` denotes the effective, late-bound class receiver and is available in
-            instance and static methods. `self` does not replace the instance receiver used
-            to access or mutate instance state.
+            instance and static methods. Class-level `self::member` access is also available
+            within a named local function declared in a method; it does not capture instance
+            state. `self` does not replace the instance receiver used to access or mutate
+            instance state. Select static fields with `::`, never instance-selection `.`.
   see-also: []
 
 provenance:

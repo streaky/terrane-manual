@@ -101,7 +101,8 @@ documentation:
             released value becomes unusable, while a `shared ref` continues to own the old
             identity and is not retargeted. An identical type annotation makes the
             declaration equivalent to assignment for type purposes but does not preserve
-            identity.
+            identity. Named function declarations are block-visible declarations, not
+            replaceable mutable bindings: a same-scope binding cannot replace their names.
 
             Namespace-level declarations cannot replace one another. Namespace
             initialization dependencies, including dependencies introduced by
