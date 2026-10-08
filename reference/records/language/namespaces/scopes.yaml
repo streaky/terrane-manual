@@ -42,6 +42,11 @@ documentation:
             availability check, though native lowering may safely assert the compiler
             invariant when the variable needs uncertainty storage elsewhere.
 
+            A reachable loop back-edge can bring a later body declaration into lookup at an
+            earlier body use. This does not make the value available on the first iteration,
+            and declarations with no assignment path to a use do not authorize forward
+            reads.
+
             Ordinary names and object-form names occupy separate symbol tables, and
             object-form lookup is lexical. Lexical scope information covers function
             parameters, local bindings, assignments, and function-local imports. A selective

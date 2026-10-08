@@ -35,11 +35,20 @@ documentation:
             contract; operations needing additional semantics use selectively included
             support code.
 
-            Generated identifiers use an exact, deterministic, injective encoding.
-            Punctuation is not normalized away, so distinct Terrane names remain distinct. A
-            source name, its generated Rust name, and its native or link symbol are separate
-            identities. Lowered output retains source and namespace associations, including
-            generated module-association comments.
+            Generated symbol identifiers use an exact, deterministic, injective encoding.
+            Punctuation is not normalized away, so distinct Terrane symbol names remain
+            distinct. A source name, its generated Rust name, and its native or link symbol
+            are separate identities. Lowered output retains source and namespace
+            associations, including generated module-association comments.
+
+            Local storage instead favors readable source-name stems. The first physical
+            version keeps its plain stem when collision-free; later versions use stable
+            ordinals rather than source byte offsets. Allocation reserves authored stems and
+            captured outer names and visible callable items, so sanitized-name collisions,
+            ordinal-like suffixes, and hoisted locals shadowing native wrappers remain
+            distinct. Whitespace edits and unrelated functions do not rename a function's
+            locals. Parameters and union carriers share this canonical mapping with
+            lowering, ownership, and native debugger metadata.
 
             Signature types recursively preserve a projected value's canonical native Rust
             representation, including nested callable results and async `Future::Output`
