@@ -179,6 +179,13 @@ documentation:
             authoritative; knowing a nominal type or tag does not authorize an unavailable
             construction recipe. See [[tool.packages.rust-dependencies]] for demand-driven
             admission and gap reports.
+
+            Borrowed native matches retain payload references when the native and Terrane
+            representations agree, including fixed-width integer payloads. A native integer
+            projected as Terrane's unbounded `int` requires value conversion, so its pattern
+            binding is an independent integer value rather than a reference to a temporary.
+            Consuming native payload accessors extract an owned receiver and return owned
+            payloads; borrowing inspection operations do not consume the receiver.
   see-also:
     - lang.types.generics
     - lang.ownership.movement

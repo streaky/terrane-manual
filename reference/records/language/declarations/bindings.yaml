@@ -121,7 +121,9 @@ documentation:
             variable in that function, added if absent and visible after the loop. Thus
             `x int = 3` followed by `x string = 'cat'` leaves a `string`, `x int = 3` alone
             leaves an `int`, and `x string = 'cat'` alone leaves a `string`. Wrapping any
-            sequence in a branch or loop changes none of those per-path results.
+            sequence in a branch or loop changes none of those per-path results. Plain
+            assignment retains its destination type, including nullable and fixed-width
+            numeric types; narrowing does not replace the variable's storage type.
 
             Owned values are released on replacement or function exit, not when a
             control-flow body ends. Nested functions have independent scopes and may shadow
