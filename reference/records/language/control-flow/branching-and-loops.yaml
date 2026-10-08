@@ -88,9 +88,14 @@ documentation:
             `break` and `continue` are loop-control statements. Each must occur where an
             enclosing loop can receive it; otherwise it is rejected at the source location.
 
-            Control-flow analysis tracks reachability and definite assignment across
-            branches and loops. A binding cannot be read when a reachable path can arrive at
-            that read before assigning it.
+            Control-flow bodies do not introduce lexical scopes. Declarations and loop
+            targets belong to the surrounding function; an executed type replacement behaves
+            exactly like that replacement outside the control-flow body. Control-flow
+            analysis tracks reachability, definite assignment, and the ordinary finite union
+            of reaching types across branches and loops. Proven availability requires no
+            runtime check; uncertainty is represented only for variables that need it, and
+            checked at uncertain uses. A `for` target remains visible after its loop,
+            including its incoming type if the loop might execute zero times.
 
             `return` is checked against the function’s declared return contract. A returned
             expression receives the declared return type as its destination, including

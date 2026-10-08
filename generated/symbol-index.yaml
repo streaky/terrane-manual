@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9aa5e3bf85a494ea5c079e31b6a43fe92a09143d7ff9ec9c5e22f3071e751c46
+  input-sha256: b320be23cf0e77a5c5725bf79dc73283ecc20e4fdf49ce88df4f607f3ec5fc1e
 format: 1
 generated: true
 symbols:
@@ -2278,6 +2278,10 @@ symbols:
   section: if-while-for
   declaration: else
 - name: else
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: else
+- name: else
   record: lang.functions.declarations
   section: declaration
   declaration: else
@@ -3566,6 +3570,10 @@ symbols:
   section: if-while-for
   declaration: if
 - name: if
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: if
+- name: if
   record: lang.types.unions
   section: unions
   declaration: if
@@ -3802,6 +3810,10 @@ symbols:
   section: model
   declaration: int
 - name: int
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: int
+- name: int
   record: lang.expressions.operators
   section: operators-precedence
   declaration: int
@@ -3844,6 +3856,10 @@ symbols:
 - name: int
   record: lang.types.scalars
   section: scalar-types
+  declaration: int
+- name: int
+  record: lang.types.unions
+  section: unions
   declaration: int
 - name: int-mutex
   record: std.concurrency.shared-state
@@ -6816,6 +6832,10 @@ symbols:
   section: heterogeneous-selection
   declaration: select
 - name: select
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: select
+- name: select
   record: lang.functions.asynchronous
   section: selection
   declaration: select
@@ -7256,6 +7276,10 @@ symbols:
   section: consumers
   declaration: string
 - name: string
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: string
+- name: string
   record: lang.namespaces.prelude
   section: prelude
   declaration: string
@@ -7282,6 +7306,10 @@ symbols:
 - name: string
   record: lang.types.scalars
   section: scalar-types
+  declaration: string
+- name: string
+  record: lang.types.unions
+  section: unions
   declaration: string
 - name: string
   record: std.text-bytes-codecs
@@ -8831,6 +8859,10 @@ symbols:
   record: lang.control-flow.branching-and-loops
   section: if-while-for
   declaration: while
+- name: while
+  record: lang.declarations.bindings
+  section: declarations
+  declaration: while
 - name: widget
   record: lang.types.relations
   section: type-tests
@@ -8962,6 +8994,10 @@ symbols:
 - name: x
   record: lang.types.relations
   section: type-tests
+  declaration: x
+- name: x
+  record: lang.types.unions
+  section: unions
   declaration: x
 - name: y
   record: book.introduction

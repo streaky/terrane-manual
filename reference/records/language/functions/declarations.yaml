@@ -48,7 +48,7 @@ documentation:
             inferred binding and returned by its enclosing function. Returns inside a nested
             function neither satisfy nor replace the enclosing function's result contract.
 
-            Named local functions are visible throughout their declaring block, including
+            Named local functions are visible throughout their declaring function, including
             before their declaration and within later sibling functions. They can recurse
             mutually and shadow a function from an outer scope. Their declaration names
             cannot be reassigned or replaced by a binding in the same scope; duplicate

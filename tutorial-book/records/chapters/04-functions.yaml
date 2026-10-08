@@ -803,12 +803,13 @@ documentation:
             Local scope lets a function choose implementation names without publishing them
             as part of its contract.
       sections:
-        - id: local-scope-nested-blocks-have-their-own-scope
-          title: Nested blocks have their own scope
+        - id: local-scope-control-flow-shares-function-scope
+          title: Control flow shares the function scope
           blocks:
             - type: markdown
               markdown: |-
-                Every indented control-flow body introduces a nested lexical scope:
+                Only functions create lexical scopes; control-flow bodies share their enclosing
+                function's variables:
             - type: example
               id: legacy-fence-035
               title: null
@@ -829,10 +830,11 @@ documentation:
 
             - type: markdown
               markdown: |-
-                `prefix` is available only inside the `if` body. It cannot be used after that
-                body.
+                `prefix` belongs to the function, not the `if` body. It is assigned only on the
+                negative path. A later use whose availability cannot be proved checks whether it
+                has a value; visibility alone does not provide one.
 
-                An existing outer binding remains visible and may be updated:
+                An existing function variable may be updated inside a loop:
             - type: example
               id: legacy-fence-036
               title: null
@@ -852,8 +854,9 @@ documentation:
 
             - type: markdown
               markdown: |-
-                `total` is declared in the function body, so the loop updates that existing
-                binding. The loop target `value` remains local to the loop body.
+                `total` and the loop target `value` belong to the function. The target stays
+                visible after the loop. Because the list may be empty, an uncertain use checks
+                availability; a use proven available needs no runtime check.
 
                 The `list` type used here comes from `/core/collections`; a complete source file
                 would import its constructor and type vocabulary before this declaration.

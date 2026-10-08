@@ -41,6 +41,16 @@ documentation:
             different aliases of the same descriptor. Different source spellings therefore
             cannot create distinct alternatives when they denote one canonical type.
 
+            Flow joins also form ordinary finite unions. If one reaching path leaves `x` as
+            `int` and another leaves it as `string`, its type after the join is
+            `int|string`. Loop entry and iteration paths participate in the same rule. There
+            is no error at the join itself: each use must accept every reaching alternative,
+            or first narrow the union. Availability is independent of that type: an
+            unassigned path does not add a `none` arm or make the variable implicitly
+            nullable. Only uncertain variables represent runtime uncertainty; uncertain uses
+            check that a value exists, while proven-available uses need no availability
+            check.
+
             When a value reaches a union destination, Terrane first looks for an arm that
             exactly matches the value’s semantic type. If there is no exact match, it
             considers arms admitted through contextual constant typing or numeric

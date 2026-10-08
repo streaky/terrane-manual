@@ -148,6 +148,15 @@ documentation:
             compiler bindings by the exact stop, visibility range, lexical-scope ancestry,
             and innermost shadow rather than by demangling guesses.
 
+            Control-flow bodies share their enclosing function's scope. Function-owned
+            variables remain visible after branches and loops; replacement selects the
+            current logical variable rather than exposing obsolete Rust storage versions.
+            Compiler metadata records physical union storage separately from source types
+            and availability. Ordinary inspection unwraps its active arm and reports
+            `<unassigned>` for an uncertain variable whose storage is empty, rather than
+            displaying compiler-generated union or availability wrappers. Object arms retain
+            the ordinary field-privacy rules.
+
             Preserved fixed scalars use LLDB values. Adaptive integers are decoded exactly
             across small, wide, and arbitrary-precision tiers only when the provenance
             selects the supported 64-bit Linux ABI recipe; otherwise the raw backend scalar

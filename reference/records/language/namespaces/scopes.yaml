@@ -33,19 +33,22 @@ documentation:
             namespace scope, program-global scope, and finally the selected prelude.
             Namespace lookup includes the current namespace and its parents. The nearest
             matching binding shadows farther bindings; shadowing changes which identity a
-            spelling resolves to rather than merging declarations. A binding declared inside
-            a conditional branch stays in that branch. Its declaration and
-            definite-assignment state do not change an outer function's visibility after the
-            branch, even when both declarations have the same name.
+            spelling resolves to rather than merging declarations. Only named and anonymous
+            function bodies create lexical scopes. Conditional, selection, and loop bodies
+            share the surrounding function's declarations. Their variables remain visible
+            afterward. Control flow determines availability separately from the union of
+            reaching value types; proven uses need no runtime check, and uncertain uses
+            check availability using uncertainty represented only for variables that need
+            it.
 
             Ordinary names and object-form names occupy separate symbol tables, and
             object-form lookup is lexical. Lexical scope information covers function
-            parameters, local bindings, assignments, and block-local imports. A selective
-            import binds its object in the exact scope containing the import and does not
-            leak into an enclosing or sibling scope. An `as` alias changes the local name
-            without changing the imported object’s identity. Reimporting the same exported
-            identity is idempotent; importing a distinct identity under an occupied
-            same-scope import name produces `S2011`.
+            parameters, local bindings, assignments, and function-local imports. A selective
+            import binds its object in the containing function or namespace scope; a
+            control-flow body does not create a separate import scope. An `as` alias changes
+            the local name without changing the imported object's identity. Reimporting the
+            same exported identity is idempotent; importing a distinct identity under an
+            occupied same-scope import name produces `S2011`.
 
             Namespace variables have a deliberately narrow boundary. A plain top-level
             assignment creates a namespace-local variable, including in the root namespace.
