@@ -125,7 +125,9 @@ documentation:
           markdown: |-
             Continue, step-in, step-over, and step-out delegate process control to LLDB.
             `next` targets another authored point in the selected frame or its caller,
-            including loop re-entry; `stepOut` requires an exact frame-depth decrease. The
+            including loop re-entry; `stepOut` requires an exact frame-depth decrease and
+            advances beyond the caller's original call-site point. Source-step progress maps
+            the stopped top native frame, not a caller beneath an unmapped prologue. The
             breakpoint at the current native location is suspended while leaving it. Every
             other user breakpoint remains active. Up to 512 temporary source targets are
             installed and removed in batched LLDB requests; larger sets fall back without

@@ -37,9 +37,10 @@ documentation:
             function bodies create lexical scopes. Conditional, selection, and loop bodies
             share the surrounding function's declarations. Their variables remain visible
             afterward. Control flow determines availability separately from the union of
-            reaching value types; proven uses need no runtime check, and uncertain uses
-            check availability using uncertainty represented only for variables that need
-            it.
+            reaching value types; uncertain uses check availability using uncertainty
+            represented only for variables that need it. Proven uses need no source-level
+            availability check, though native lowering may safely assert the compiler
+            invariant when the variable needs uncertainty storage elsewhere.
 
             Ordinary names and object-form names occupy separate symbol tables, and
             object-form lookup is lexical. Lexical scope information covers function

@@ -856,7 +856,9 @@ documentation:
               markdown: |-
                 `total` and the loop target `value` belong to the function. The target stays
                 visible after the loop. Because the list may be empty, an uncertain use checks
-                availability; a use proven available needs no runtime check.
+                availability. Proven uses need no source-level availability check; native
+                lowering may retain a safe invariant assertion if that variable needs
+                uncertainty storage elsewhere.
 
                 The `list` type used here comes from `/core/collections`; a complete source file
                 would import its constructor and type vocabulary before this declaration.
