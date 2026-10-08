@@ -65,6 +65,10 @@ documentation:
             executed read before that assignment reports the same source-located
             availability error as other uncertain reads. A later declaration with no path
             back to the use does not make a provably unavailable forward read valid.
+            Reaching types also govern operators in inferred or explicitly typed
+            initializers and assignment values, including accumulators. These expressions
+            have the same operand requirements as operators in other expression positions;
+            runtime uncertainty does not change their value types.
 
             `constant` is the immutability qualifier; `const` is not its spelling. `global`
             is a compiler-owned structural qualifier. Visibility is public by default, and
