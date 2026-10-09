@@ -157,7 +157,9 @@ documentation:
             and availability. Ordinary inspection unwraps its active arm and reports
             `<unassigned>` for an uncertain variable whose storage is empty, rather than
             displaying compiler-generated union or availability wrappers. Object arms retain
-            the ordinary field-privacy rules.
+            the ordinary field-privacy rules. Arm selection reads native discriminants at
+            their full width, including 64-bit Rust niche tags, while handling LLDB's
+            truncated 32-bit variant names.
 
             Preserved fixed scalars use LLDB values. Adaptive integers are decoded exactly
             across small, wide, and arbitrary-precision tiers only when the provenance
