@@ -54,27 +54,31 @@ documentation:
             representation, including nested callable results and async `Future::Output`
             bounds. Source-class collision names do not replace selected native owners.
             Collision detection compares generated CamelCase type names, not only source
-            spelling: an authored `socket-addr` and a projected `SocketAddr` must remain
-            distinct. Colliding declaration names retain namespace-qualified Rust aliases.
-            Imports retain declaration roots and their Rust binders/defaults, rather than
-            synthesizing aliases for each closed application. Anonymous native arguments
-            remain inferred at use sites; they cannot appear in item-level type aliases.
-            Destination-selected native calls retain Rust method type-parameter positions in
-            declaration order, including inferred callback implementation slots; concrete
-            UFCS owner arguments stay in the trait path, not the method turbofish. Explicit
-            native callable selection also retains the metadata-selected result and async
-            effects during initial typing; omitted source binders do not imply a void
-            result. Selected callable shapes remain tied to declaration identity. Static
-            operation helpers retain the owning inherent implementation's generic bounds
-            separately from method-owned parameters. `Self` uses the actual impl owner,
-            including defaults in a bare impl, rather than the nominal declaration's open
-            parameters. Helper declarations and calls bind only that operation's owner
-            parameters and share namespace-qualified symbol identities. Public aliases call
-            the canonical source owner's single static wrapper declaration, rather than
-            emitting duplicate symbols for the same native operation. Inherent owner-bound
-            extraction applies to static helpers, not direct instance operations:
-            invocation-scoped methods retain their existing lifetime-aware operation graph
-            instead of being rejected by a lifetime-free helper signature.
+            spelling, within and across namespaces. An authored `socket-addr` and a
+            projected `SocketAddr`, or authored `foo-bar` and `fooBar`, remain distinct.
+            Collisions use an exact-byte encoding of the canonical namespace and name,
+            shared by declarations and import aliases. Names that would shadow Rust prelude
+            types or compiler support types are also qualified. Ordinary non-colliding names
+            keep their readable spelling. Imports retain declaration roots and their Rust
+            binders/defaults, rather than synthesizing aliases for each closed application.
+            Anonymous native arguments remain inferred at use sites; they cannot appear in
+            item-level type aliases. Destination-selected native calls retain Rust method
+            type-parameter positions in declaration order, including inferred callback
+            implementation slots; concrete UFCS owner arguments stay in the trait path, not
+            the method turbofish. Explicit native callable selection also retains the
+            metadata-selected result and async effects during initial typing; omitted source
+            binders do not imply a void result. Selected callable shapes remain tied to
+            declaration identity. Static operation helpers retain the owning inherent
+            implementation's generic bounds separately from method-owned parameters. `Self`
+            uses the actual impl owner, including defaults in a bare impl, rather than the
+            nominal declaration's open parameters. Helper declarations and calls bind only
+            that operation's owner parameters and share namespace-qualified symbol
+            identities. Public aliases call the canonical source owner's single static
+            wrapper declaration, rather than emitting duplicate symbols for the same native
+            operation. Inherent owner-bound extraction applies to static helpers, not direct
+            instance operations: invocation-scoped methods retain their existing
+            lifetime-aware operation graph instead of being rejected by a lifetime-free
+            helper signature.
 
             Safety does not rename ordinary methods: a safe method always retains its
             canonical generated Rust name. An unsafe method uses a reserved deterministic

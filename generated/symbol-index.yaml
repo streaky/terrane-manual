@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5fa79b05ac458fa3d8dc26babe6f174277a9dfce34e8e6e814e0bcd6c01ce5ea
+  input-sha256: 2cde2305ad66d058dc07aa698ca343b73127cafac5da70f819f70a0ad349664b
 format: 1
 generated: true
 symbols:
@@ -3153,6 +3153,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: FnOnce
+- name: foo-bar
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: foo-bar
 - name: foo/bar
   record: lang.namespaces.declarations
   section: namespace-paths
@@ -3161,6 +3165,10 @@ symbols:
   record: lang.namespaces.declarations
   section: namespace-paths
   declaration: foo/bar/dave
+- name: fooBar
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: fooBar
 - name: for
   record: book.decisions-and-repetition
   section: choosing-the-clearest-loop
