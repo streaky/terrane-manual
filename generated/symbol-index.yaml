@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 85e3740bd7a92a35b1278d586ab8a39869cf368155d45b23fde2aa6d3bf24d42
+  input-sha256: 5fa79b05ac458fa3d8dc26babe6f174277a9dfce34e8e6e814e0bcd6c01ce5ea
 format: 1
 generated: true
 symbols:
@@ -7087,6 +7087,14 @@ symbols:
   record: book.identity-and-movement
   section: project-observing-a-work-list
   declaration: snapshot
+- name: socket-addr
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: socket-addr
+- name: SocketAddr
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: SocketAddr
 - name: SocketAddr
   record: lang.types.generics
   section: constructors

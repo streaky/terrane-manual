@@ -53,6 +53,9 @@ documentation:
             Signature types recursively preserve a projected value's canonical native Rust
             representation, including nested callable results and async `Future::Output`
             bounds. Source-class collision names do not replace selected native owners.
+            Collision detection compares generated CamelCase type names, not only source
+            spelling: an authored `socket-addr` and a projected `SocketAddr` must remain
+            distinct. Colliding declaration names retain namespace-qualified Rust aliases.
             Imports retain declaration roots and their Rust binders/defaults, rather than
             synthesizing aliases for each closed application. Anonymous native arguments
             remain inferred at use sites; they cannot appear in item-level type aliases.

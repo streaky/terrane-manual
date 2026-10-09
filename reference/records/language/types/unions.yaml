@@ -140,7 +140,10 @@ documentation:
             once in written order, then assembled in declaration order. Omitted, duplicate,
             unknown, or incompatible payload fields are rejected. A payload can select a
             generic application; a payloadless variant needs enough information from an
-            explicit application or immediate written destination.
+            explicit application or immediate written destination. Imported enums retain
+            their declaring namespace and generic application. An import alias may qualify
+            both variant construction and matching; constructor payloads and match coverage
+            use the declaring enum's contract across source units.
 
             A match must cover every alternative exactly once or end with `case else`.
             Unknown or duplicate variants and branches after a catch-all are rejected.
