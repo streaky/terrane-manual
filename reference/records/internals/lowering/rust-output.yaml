@@ -50,6 +50,10 @@ documentation:
             locals. Parameters and union carriers share this canonical mapping with
             lowering, ownership, and native debugger metadata.
 
+            Unused authored class type parameters are retained by zero-sized phantom
+            markers. Those markers use the same canonical Rust type-parameter names as the
+            generic declaration, not local-variable name rendering.
+
             Signature types recursively preserve a projected value's canonical native Rust
             representation, including nested callable results and async `Future::Output`
             bounds. Source-class collision names do not replace selected native owners.
