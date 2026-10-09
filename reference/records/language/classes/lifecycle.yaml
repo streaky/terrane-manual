@@ -39,6 +39,12 @@ documentation:
             compose across the class’s single-inheritance chain, including `construct` and
             `destruct` behavior for inherited state.
 
+            An authored class with no declared or inherited `construct` method has an
+            implicit zero-argument constructor when its fields have defaults. Passing
+            positional or named arguments to that implicit constructor is a source error.
+            Field names do not become constructor parameters automatically. Fields without
+            defaults still require a constructor that initializes them.
+
             Construction has no independent unsafe call syntax: `instance` is the complete
             source-level construction operation. A class therefore cannot declare
             `unsafe function construct`; initialization that requires a caller-visible
