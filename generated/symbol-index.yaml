@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 19bef6a40fe4b8342d0c41dc0c1e92d848f58c2c34afe2f3dbd18f62b3e02a6e
+  input-sha256: e317ef01b73e84071f88d17d2e246e53538f9262f8cbd1c2c5a66172f49171f5
 format: 1
 generated: true
 symbols:
@@ -3330,6 +3330,10 @@ symbols:
   section: resolution
   declaration: functions.rs
 - name: Future
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: Future
+- name: Future
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: Future
@@ -4025,6 +4029,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: interfaces.rs
+- name: IntoFuture
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: IntoFuture
 - name: IntoFuture
   record: tool.packages.rust-dependencies
   section: async-projected-calls
