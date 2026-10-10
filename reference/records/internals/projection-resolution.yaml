@@ -41,9 +41,10 @@ documentation:
             A projection cache identity covers the package manifest,
             `terrane-dependencies.lock` complete resolved graph, effective compilation
             target, stable build toolchain, nightly rustdoc toolchain, rustdoc JSON format,
-            projection schema, and containment tier. Every field is length-delimited before
-            entering the SHA-256 digest so different input boundaries cannot produce the
-            same encoded sequence.
+            projection schema, containment tier, effective Cargo configuration, and content
+            identities of transitive local path and patch dependency inputs. Fields are
+            length-delimited before hashing; file timestamps do not establish source
+            identity. Registry packages retain Cargo's checksum/lock identity.
 
             The effective target is selected from `CARGO_BUILD_TARGET`, then Cargo's
             `build.target`, then the pinned stable compiler's host. The project-local cache
@@ -61,13 +62,16 @@ documentation:
             failures remain errors. Writes replace the complete file atomically; a failed
             write or replacement removes its temporary file without altering the old target.
 
-            Identity construction lives in
+            Manifest, lock, target, and toolchain identity construction lives in
             `crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs` under
-            `cache_identity` and `selected_target`. The identity is deliberately
-            environment-specific when the resolved Cargo lock, effective target, toolchain,
-            or containment tier differs; it is not part of the reviewed semantic surface
-            fixture. `target_identity_reads_effective_cargo_configuration` covers
-            target-sensitive construction, while
+            `cache_identity` and `selected_target`. The resolution transaction combines that
+            identity with local source and effective configuration fingerprints from
+            `crates/terrane-compiler/src/cache_identity.rs`. Supplemental owner Rustdoc
+            caches use the same local-input fingerprint. The identity is deliberately
+            environment-specific when graph, source, configuration, target, toolchain, or
+            containment differs; it is not part of the reviewed semantic surface fixture.
+            `target_identity_reads_effective_cargo_configuration` covers target-sensitive
+            construction, while
             `projection_history_migrates_provenance_and_detects_replay_drift` proves that
             one exact identity cannot admit two content hashes.
     - id: resolution

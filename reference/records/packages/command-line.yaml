@@ -79,6 +79,50 @@ documentation:
             builds. A failed build retains the active-stage message and normal diagnostics
             without claiming completion. Stdout remains only the artifact path, so scripts
             can continue capturing it. Other commands are unchanged.
+    - id: compilation-reuse
+      title: Compilation reuse and invalidation
+      blocks:
+        - type: markdown
+          markdown: |-
+            Package compilation persists successful outputs in
+            `.trn/cache/compilation.json`. An exact content-input match reuses semantic
+            analysis and Rust generation, including diagnostics, source associations, debug
+            information, runtime requirements, and authored Rust modules. Keys cover the
+            compiler content identity, source contents and membership, source roles and IDs,
+            package configuration, compilation options, native dependency inputs, Cargo
+            configuration, and environment inputs. Same-size edits are changes; timestamps
+            alone never authorize reuse.
+
+            Declaration consumers have a separate successful metadata snapshot in
+            `.trn/cache/declarations.json`. Consumers themselves still execute on every
+            invocation, and generated output is reconciled before the final
+            compilation-cache lookup. Identical generated output may reuse compilation;
+            changed or removed output cannot retain an obsolete compiled result.
+
+            An edited source invalidates the exact compilation snapshot, but unchanged
+            native semantic queries can reuse `.trn/cache/native-reconciliation.json`. This
+            cache is keyed by the compiler, the full projected semantic graph, and each
+            query's concrete type and signature inputs, including generic argument metadata
+            and associated-type context. Both successful and unavailable native selections
+            are reusable. Invocation-region-bearing inputs are excluded: source spans are
+            not portable across edited or reordered source units. Bound validation,
+            canonical contract propagation, and other semantic passes still run after an
+            edit; this is query reuse, not a dirty-file skip.
+
+            Local Cargo path and patch dependencies are content-fingerprinted, including
+            transitive local packages and effective Cargo configuration. Registry
+            dependencies retain Cargo's immutable package checksum and lock identity.
+            Dependency-source changes invalidate projection and supplemental Rustdoc caches
+            as well as compilation and native artifact caches, even if a package version and
+            generated Rust remain unchanged.
+
+            Cache format, compiler identity, input identity, and payload integrity must
+            match. Missing, incompatible, or malformed compiler snapshots recompute
+            normally; compiler snapshot persistence is best-effort. This does not suppress
+            errors reading actual inputs or executing consumers or native tools. Removing
+            `.trn/cache` discards the compiler snapshots. Build progress reports exact
+            compilation reuse, declaration-metadata reuse, and aggregate native query hits
+            on stderr.
     - id: generated-package-state
       title: Generated package state and version control
       blocks:

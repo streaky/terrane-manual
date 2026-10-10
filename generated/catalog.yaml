@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b881511ff2d02fdd298bc414bf43291fd601294d5079f3e22350deb94ff74ed8
+  input-sha256: 0fca0d754f7af16980c85d5018c60c1a8be689d6c69cbbd38dbef8591f0d1e5a
 format: 2
 generated: true
 records:
@@ -2248,6 +2248,9 @@ records:
     sections: []
   - id: build-progress
     title: Build progress and timing
+    sections: []
+  - id: compilation-reuse
+    title: Compilation reuse and invalidation
     sections: []
   - id: generated-package-state
     title: Generated package state and version control

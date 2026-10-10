@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b881511ff2d02fdd298bc414bf43291fd601294d5079f3e22350deb94ff74ed8
+  input-sha256: 0fca0d754f7af16980c85d5018c60c1a8be689d6c69cbbd38dbef8591f0d1e5a
 format: 1
 generated: true
 symbols:
@@ -1769,6 +1769,10 @@ symbols:
   record: book.testing-and-debugging
   section: profile-the-optimized-application
   declaration: cpu-clock
+- name: crates/terrane-compiler/src/cache_identity.rs
+  record: internals.projection.resolution
+  section: identity
+  declaration: crates/terrane-compiler/src/cache_identity.rs
 - name: crates/terrane-compiler/src/execution.rs
   record: internals.execution.runtime-selection
   section: requirements
