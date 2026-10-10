@@ -46,6 +46,12 @@ documentation:
             aliases preserve that same descriptor. Compiler-owned error kinds retain their
             lazy runtime-message path, and existing throwable values remain value throws.
 
+            Nominal interface conformance prefers an exact applied descriptor contract when
+            available. Projected interfaces retain specialized inherited interface
+            applications there; authored generic applications without an exact contract
+            instead use their canonical declaration's nominal conformance. Neither path
+            weakens equality between distinct applied types.
+
             Generated symbol identifiers use an exact, deterministic, injective encoding.
             Punctuation is not normalized away, so distinct Terrane symbol names remain
             distinct. A source name, its generated Rust name, and its native or link symbol
