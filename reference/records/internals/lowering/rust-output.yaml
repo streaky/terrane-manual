@@ -40,9 +40,11 @@ documentation:
             ordinary construction calls before type inference. Argument validation,
             ownership, and constructor lowering share the `instance` path; the throw emitter
             receives the constructed value rather than a class descriptor. Throwable
-            conformance uses canonical object identity, so imported aliases preserve the
-            same descriptor. Compiler-owned error kinds retain their lazy runtime-message
-            path, and existing throwable values remain value throws.
+            conformance, inferred escaping sets, declared throwable bounds, and runtime
+            error registration use the canonical base object identity. Generic arguments
+            remain part of construction typing, not a separate runtime error kind. Imported
+            aliases preserve that same descriptor. Compiler-owned error kinds retain their
+            lazy runtime-message path, and existing throwable values remain value throws.
 
             Generated symbol identifiers use an exact, deterministic, injective encoding.
             Punctuation is not normalized away, so distinct Terrane symbol names remain

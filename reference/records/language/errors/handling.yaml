@@ -71,6 +71,12 @@ documentation:
             including argument arity and types. User-defined throwable classes need no
             separate `instance` expression, just like built-in throwables.
 
+            Generic throwable construction keeps the usual class type arguments and
+            constructor checks. The runtime error descriptor names the canonical base class:
+            `catch boxed-error` handles errors constructed as `boxed-error of int` or
+            another application of that same class. Import aliases do not change that
+            descriptor identity.
+
             Within `try`, `catch` clauses are tested in source order against compatible
             classes or interfaces. A later clause made unreachable by an earlier clause is a
             compile-time diagnostic. Typed and catch-all clauses may bind the caught runtime
@@ -109,5 +115,11 @@ provenance:
   specification:
     - document: language-scoreboard
       section: "structured-errors"
-  conformance: null
-  compiler: null
+  conformance:
+    - throwable-direct-construction
+    - throwable-direct-construction-uncaught
+    - generic-throwable
+  compiler:
+    - crates/terrane-compiler/src/semantics/throw_construction.rs
+    - crates/terrane-compiler/src/semantics/analysis.rs
+    - crates/terrane-compiler/src/lowering/emitter/statements.rs

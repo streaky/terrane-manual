@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f5f25f0381a937d75d5399792a2864bfd986a60d5831590ed81998fde2957e2c
+  input-sha256: 493a1e0ebb5826aec392d9a9ad68c00fc65c5c6169a93bac633f565927858a4b
 format: 1
 generated: true
 diagnostics:
@@ -1267,7 +1267,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 300
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1686
+    line: 1690
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1332,7 +1332,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 94
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1689
+    line: 1693
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1409,18 +1409,18 @@ diagnostics:
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1401
+    line: 1405
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1452
+    line: 1456
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1424
+    line: 1428
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1461
+    line: 1465
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1469,7 +1469,7 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1397
+    line: 1395
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 547
 - code: T0028

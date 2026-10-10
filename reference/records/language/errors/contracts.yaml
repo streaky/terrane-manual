@@ -42,6 +42,11 @@ documentation:
             remain on that path. A final block that can fall through retains the pending
             outcome.
 
+            Generic throwable applications contribute their canonical base class descriptor
+            to the escaping set. Construction still checks the applied class type, but
+            matching a catch or checking a declared throwable upper bound uses the same
+            nominal descriptor identity as the runtime envelope.
+
             A callable declaration may include an optional postfix upper bound:
         - type: example
           id: legacy-fence-001
@@ -117,5 +122,7 @@ provenance:
   conformance:
     - finally-error-replacement
     - finally-throwable-replacement
+    - generic-throwable
+    - reject-generic-throwable-bound
   compiler:
     - crates/terrane-compiler/src/semantics/contracts.rs
