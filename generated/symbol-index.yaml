@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0fca0d754f7af16980c85d5018c60c1a8be689d6c69cbbd38dbef8591f0d1e5a
+  input-sha256: 06dab7e7dd70017a6825e8354dc37b7202b83087fd5a3f8b41336ce7a852932b
 format: 1
 generated: true
 symbols:
@@ -528,6 +528,10 @@ symbols:
   record: internals.projection.resolution
   section: history
   declaration: apply_projection_history
+- name: AR
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: AR
 - name: Arc
   record: book.identity-and-movement
   section: shared-references-and-ownership
@@ -1020,6 +1024,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: CARGO_BUILD_TARGET
+- name: CARGO_HOME
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: CARGO_HOME
 - name: cargo_workspace.rs
   record: internals.projection.resolution
   section: resolution
@@ -1084,6 +1092,10 @@ symbols:
   record: lang.errors.handling
   section: structured-errors
   declaration: cause
+- name: CC
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: CC
 - name: cdylib
   record: internals.build.toolchain-profiles
   section: native-artifact-kind
@@ -1817,6 +1829,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: cube-root
+- name: CXX
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: CXX
 - name: data
   record: std.filesystem
   section: whole-file-synopsis
@@ -3513,6 +3529,14 @@ symbols:
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
   declaration: high-priority
+- name: HOME
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: HOME
+- name: HOST
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: HOST
 - name: host-invocation-scoped-native
   record: tool.packages.rust-dependencies
   section: callbacks
@@ -4309,6 +4333,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: library
+- name: LIBRARY_PATH
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: LIBRARY_PATH
 - name: linear
   record: lang.lexical-structure.keywords
   section: structural-words
@@ -5615,6 +5643,10 @@ symbols:
   record: std.paths
   section: paths
   declaration: path
+- name: PATH
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: PATH
 - name: path
   record: tool.packages.command-line
   section: package-management
@@ -5695,6 +5727,10 @@ symbols:
   record: tool.profiling
   section: commands
   declaration: perf
+- name: PKG_CONFIG_PATH
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: PKG_CONFIG_PATH
 - name: plan-item
   record: book.terrane-shaped-programs
   section: exercises
@@ -6623,6 +6659,14 @@ symbols:
   record: book.native-program
   section: source-locations-and-diagnostics-across-lowering
   declaration: rustc
+- name: RUSTUP_HOME
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: RUSTUP_HOME
+- name: RUSTUP_TOOLCHAIN
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: RUSTUP_TOOLCHAIN
 - name: S
   record: tool.diagnostics
   section: families
@@ -7547,6 +7591,14 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: tangent
+- name: TARGET
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: TARGET
+- name: target
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: target
 - name: target/annotation-consumers/
   record: lang.declarations.annotations
   section: consumers
@@ -8919,6 +8971,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: with_capacity
+- name: with_compilation_cache
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: with_compilation_cache
 - name: word-frequency.trn
   record: book.text-and-collections
   section: project-word-frequency

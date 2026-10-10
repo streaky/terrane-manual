@@ -84,14 +84,28 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Package compilation persists successful outputs in
-            `.trn/cache/compilation.json`. An exact content-input match reuses semantic
-            analysis and Rust generation, including diagnostics, source associations, debug
-            information, runtime requirements, and authored Rust modules. Keys cover the
-            compiler content identity, source contents and membership, source roles and IDs,
-            package configuration, compilation options, native dependency inputs, Cargo
-            configuration, and environment inputs. Same-size edits are changes; timestamps
-            alone never authorize reuse.
+            CLI compilation explicitly enables persistent caches; ordinary library, editor,
+            determinism-test, and conformance calls do not read or write these snapshots.
+            Library clients may opt in with `with_compilation_cache`. Successful CLI outputs
+            persist in `.trn/cache/compilation.json`. An exact content-input match reuses
+            semantic analysis and Rust generation, including diagnostics, source
+            associations, debug information, runtime requirements, and authored Rust
+            modules. Keys cover the compiler content identity, source contents and
+            membership, source roles and IDs, package configuration, compilation options,
+            native dependency inputs, Cargo configuration, and environment inputs. Same-size
+            edits are changes; timestamps alone never authorize reuse.
+
+            Without Rust dependencies, environment inputs are `CARGO_*`, `RUST*`,
+            `TERRANE_*`, `PATH`, `HOME`, `CARGO_HOME`, `RUSTUP_HOME`, `RUSTUP_TOOLCHAIN`,
+            `CC`, `CXX`, `AR`, `TARGET`, `HOST`, `PKG_CONFIG_PATH`, and `LIBRARY_PATH`.
+            Consumer executables always rerun, so their environment-driven generated output
+            is observed rather than inferred. With Rust dependencies, arbitrary build
+            scripts can inspect any environment variable; the whole environment is
+            conservatively keyed. Terminal changes can therefore miss in that case.
+
+            External disk/environment inputs are captured before work and rechecked before
+            publishing. A change during analysis or consumer execution suppresses
+            reuse/publication rather than storing old results under new inputs.
 
             Declaration consumers have a separate successful metadata snapshot in
             `.trn/cache/declarations.json`. Consumers themselves still execute on every
@@ -107,14 +121,20 @@ documentation:
             are reusable. Invocation-region-bearing inputs are excluded: source spans are
             not portable across edited or reordered source units. Bound validation,
             canonical contract propagation, and other semantic passes still run after an
-            edit; this is query reuse, not a dirty-file skip.
+            edit; this is query reuse, not a dirty-file skip. When rewriting the native
+            query snapshot, only queries used in the current pass are retained, preventing
+            accumulation across source-edit histories.
 
             Local Cargo path and patch dependencies are content-fingerprinted, including
             transitive local packages and effective Cargo configuration. Registry
             dependencies retain Cargo's immutable package checksum and lock identity.
             Dependency-source changes invalidate projection and supplemental Rustdoc caches
             as well as compilation and native artifact caches, even if a package version and
-            generated Rust remain unchanged.
+            generated Rust remain unchanged. Local package trees are walked conservatively,
+            excluding `target`, `.git`, and `.trn` bookkeeping. Cargo package
+            include/exclude rules do not enumerate every build-script input. Other large
+            directories increase fingerprint cost; files outside these trees and
+            generated/bookkeeping inputs are not inferred.
 
             Cache format, compiler identity, input identity, and payload integrity must
             match. Missing, incompatible, or malformed compiler snapshots recompute
@@ -123,6 +143,10 @@ documentation:
             `.trn/cache` discards the compiler snapshots. Build progress reports exact
             compilation reuse, declaration-metadata reuse, and aggregate native query hits
             on stderr.
+
+            Each snapshot kind keeps one entry per package. Switching debug/profile or other
+            compiler options replaces the compilation entry; alternating modes may
+            recompute. Native artifact profiles retain their separate artifact slots.
     - id: generated-package-state
       title: Generated package state and version control
       blocks:

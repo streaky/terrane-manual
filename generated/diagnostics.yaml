@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4f586e34746c0a2b50e0e4feb83a2d1904ad3044af62fd45b883a4b2a9bcd0a0
+  input-sha256: fd67fcb03292d70975e27085cb4fff3ee3fbf680522c97400a0252e9b1b1cd8f
 format: 1
 generated: true
 diagnostics:
@@ -764,33 +764,30 @@ diagnostics:
   - package has no `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 434
+    line: 435
 - code: S2016
   messages:
   - package has more than one `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 453
+    line: 454
 - code: S2017
   messages:
   - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 410
+    line: 411
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 941
 - code: S2018
   messages:
-  - ",\n                    "
   - compiler-owned declaration `{text}` is not kebab-case
   - declared name `{text}` is not kebab-case
   - invalid namespace segment `{component}`; segments must match `[a-z]([a-z0-9]|-[a-z0-9])*`
   - compiler-owned declaration `NotKebab` is not kebab-case
   - declared name `Answer` is not kebab-case
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 238
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 50
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
@@ -935,14 +932,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 798
+    line: 819
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 755
+    line: 775
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -1043,17 +1040,17 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 978
+    line: 999
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1006
+    line: 1027
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1090
+    line: 1111
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 313
+    line: 314
 - code: T0001
   messages:
   - type parameter requires a name
@@ -2194,9 +2191,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 345
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 824
+    line: 847
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 983
+    line: 1006
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 5648
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2208,7 +2205,7 @@ diagnostics:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 487
+    line: 489
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3032
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2266,9 +2263,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/macros.rs
     line: 56
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1075
+    line: 1098
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1088
+    line: 1111
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3270
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2416,7 +2413,7 @@ diagnostics:
   - explicit native type arguments do not close the projected result representation
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 558
+    line: 560
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2864
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2783,7 +2780,6 @@ diagnostics:
     line: 206
 - code: W4001
   messages:
-  - ",\n                    "
   - ");\n            !dependency_warning && !library_export_warning\n        })\n        .collect();\n\
     \    let rust_dependencies = compilation_rust_dependencies(package, &semantic.projection);\n    let\
     \ mut rust_ir = crate::lowering::lower(semantic, options.debug_build.enabled())\n        .map_err(|failure|\
@@ -2791,68 +2787,57 @@ diagnostics:
     \ false);\n    lowering.finish();\n    let rendering = crate::compilation_progress::start("
   - binding `{}` is never read
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 239
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 615
+    line: 635
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
   messages:
-  - ",\n                    "
   - initial value assigned to `{}` is never read
   - value assigned to `{}` is never read
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 240
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 314
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 319
 - code: W4003
   messages:
-  - ",\n                    "
   - union arm `{text}` duplicates an earlier arm
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 241
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 120
 - code: W4004
   messages:
-  - ",\n                    "
   - namespace-wide import overwrites `{name}` from `{}` with `{}`
   - namespace-wide import leaves declared `{name}` from `{}` in place instead of `{}`
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 242
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 527
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 544
 - code: W4005
   messages:
-  - ",\n                    "
-  - ",\n                    _ => return Err(serde::de::Error::custom("
   - rendering Rust
   - function `{}` is never referenced
   - main.trn
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 243
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 615
+    line: 635
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 284
 - code: W4006
   messages:
-  - ",\n                    _ => return Err(serde::de::Error::custom("
-  - unknown cached warning code
   - binding `{}` is marked intentionally unused but is read
   sources:
-  - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 244
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 236
+- code: W4999
+  messages:
+  - new warning
+  sources:
+  - path: crates/terrane-compiler/src/compiler/cache.rs
+    line: 251
+  - path: crates/terrane-compiler/src/compiler/cache.rs
+    line: 257
