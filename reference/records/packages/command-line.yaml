@@ -42,6 +42,43 @@ documentation:
             pipeline. When the first CLI argument is an existing file or ends in `.trn`,
             `terrane <path>` is the same run operation. Remaining arguments are forwarded to
             the program; the implicit form accepts but does not require a leading `--`.
+    - id: build-progress
+      title: Build progress and timing
+      blocks:
+        - type: markdown
+          markdown: |-
+            `terrane build` reports each stage as it starts on stderr: loading the package,
+            compiling Terrane sources, preparing the native build, and compiling the native
+            artifact. Each successfully completed stage reports its elapsed wall-clock time
+            in seconds; a successful build also reports the total. These timings include
+            work performed by dependencies and external tools within the corresponding
+            stage.
+
+            Every top-level progress and completion line identifies the absolute input path.
+            Once loading succeeds, it also includes the package identity, distinguishing
+            builds invoked from different directories or by nested tools. The Terrane
+            compilation stage translates package source into Rust; it does not rebuild the
+            Terrane compiler itself.
+
+            During Terrane compilation, indented messages report internal phases live:
+            parsing individual authored and generated sources, preparing declaration
+            consumers, resolving Rust dependencies and projection caches, generating Rustdoc
+            metadata per dependency when needed, resolving imports, preparing type
+            declarations, inferring types, checking ownership and effects, final semantic
+            validation, and lowering and rendering Rust. Each message identifies its
+            package, source, dependency, consumer executable, or working directory. Exact
+            projection-cache reuse is reported explicitly.
+
+            Packages with declaration consumers first analyze declaration metadata, run the
+            configured consumers, then analyze the expanded sources. Progress labels
+            distinguish these passes. Internal timings are nested wall-clock measurements:
+            an enclosing phase includes its child phases, so they must not be summed. An
+            internal phase reports completion only after its work succeeds.
+
+            Progress is reported for both debug and `--release` builds, including cached
+            builds. A failed build retains the active-stage message and normal diagnostics
+            without claiming completion. Stdout remains only the artifact path, so scripts
+            can continue capturing it. Other commands are unchanged.
     - id: generated-package-state
       title: Generated package state and version control
       blocks:

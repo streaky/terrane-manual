@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dd5b63d568040c78ad171e70d0e0b71512688da4a3b0f3c8791124eede070d35
+  input-sha256: 1ab12561f243570aae2d2291ffe3e6ae37cfadebcc9a3d4e30fb44f8d3984ccb
 format: 1
 generated: true
 diagnostics:
@@ -779,7 +779,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 400
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 911
+    line: 941
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
@@ -867,7 +867,7 @@ diagnostics:
   - Rust dependency `{dependency}` is not declared in `package.toml`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1052
+    line: 1082
 - code: S2028
   messages:
   - 'cannot materialize generated projection source units: {message}'
@@ -876,22 +876,22 @@ diagnostics:
   - <terrane>/projected/{}.trn
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 408
+    line: 412
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 456
+    line: 460
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 493
+    line: 497
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 584
+    line: 605
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 807
+    line: 828
 - code: S2029
   messages:
   - "\n    );\n}\n\n#[test]\nfn compiler_owned_declarations_require_kebab_case() {\n    let package =\
     \ Package::implicit(\n        "
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1125
+    line: 1155
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 227
 - code: S2031
@@ -903,7 +903,7 @@ diagnostics:
   - Rust dependency member `{}.{member_name}` was projected by version {} but is absent from version {}
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1086
+    line: 1116
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1736
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -913,7 +913,7 @@ diagnostics:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 981
+    line: 1011
 - code: S2033
   messages:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
@@ -932,14 +932,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 743
+    line: 760
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 700
+    line: 717
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -947,31 +947,31 @@ diagnostics:
   - test-only namespace `{}` is unavailable to production sources
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 968
+    line: 998
 - code: S2054
   messages:
   - integration test cannot declare production namespace `{}`
   - end-to-end test must drive the application artifact instead of importing `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 939
+    line: 969
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1027
+    line: 1057
 - code: S2055
   messages:
   - production source cannot import test-only namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1014
+    line: 1044
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
   - one::Generic<A>
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 529
+    line: 550
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1071
+    line: 1101
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 64
 - code: S2060
@@ -982,9 +982,9 @@ diagnostics:
     \         ("
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 930
+    line: 935
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1029
+    line: 1034
 - code: S2061
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'
@@ -992,11 +992,11 @@ diagnostics:
   - ".to_owned(),\n            executable: "
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 536
+    line: 541
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 566
+    line: 571
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1012
+    line: 1017
 - code: S2062
   messages:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
@@ -1040,11 +1040,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 921
+    line: 938
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 949
+    line: 966
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1033
+    line: 1050
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1082,7 +1082,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2535
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7489
+    line: 7508
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 481
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1402,25 +1402,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1303
+    line: 1354
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1346
-  - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1397
+  - path: crates/terrane-compiler/src/semantics/analysis.rs
+    line: 1448
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1369
+    line: 1420
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1406
+    line: 1457
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1829,7 +1829,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7507
+    line: 7526
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -2028,7 +2028,7 @@ diagnostics:
   - conversion callback must accept exactly one `{source_type}` parameter
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 753
+    line: 774
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1746
   - path: crates/terrane-compiler/src/semantics/numeric.rs
@@ -2195,11 +2195,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 832
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5629
+    line: 5648
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5630
+    line: 5649
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5652
+    line: 5671
 - code: T0118
   messages:
   - 'projected result destination `{destination}` is not supported: {reason}'
@@ -2207,11 +2207,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 450
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3013
+    line: 3032
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5541
+    line: 5560
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5615
+    line: 5634
 - code: T0119
   messages:
   - parameter `{}` cannot use unresolved `host-invocation-scoped-native` as a source type
@@ -2267,27 +2267,27 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 937
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3251
+    line: 3270
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3361
+    line: 3380
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3412
+    line: 3431
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3444
+    line: 3463
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3479
+    line: 3498
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3568
+    line: 3587
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3581
+    line: 3600
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3589
+    line: 3608
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4561
+    line: 4580
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4570
+    line: 4589
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5680
+    line: 5699
 - code: T0120
   messages:
   - callable `{}` requires {required} invocation because its body uses {required} access; declare `{}function`
@@ -2415,55 +2415,55 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 514
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2845
+    line: 2864
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2854
+    line: 2873
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3301
+    line: 3320
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4666
+    line: 4685
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4774
+    line: 4793
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4819
+    line: 4838
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4830
+    line: 4849
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4857
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4874
+    line: 4876
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 4893
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4924
+    line: 4912
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4977
+    line: 4943
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5002
+    line: 4996
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5023
+    line: 5021
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5031
+    line: 5042
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5070
+    line: 5050
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5096
+    line: 5089
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5261
+    line: 5115
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5310
+    line: 5280
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5563
+    line: 5329
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5581
+    line: 5582
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5584
+    line: 5600
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5608
+    line: 5603
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5644
+    line: 5627
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5775
+    line: 5663
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 5794
 - code: T0130
   messages:
   - unsafe function `{name}` cannot be used as a function value; invoke it directly with `unsafe`
@@ -2555,7 +2555,7 @@ diagnostics:
   - awaited destructors require the threaded executor
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1217
+    line: 1259
 - code: T0139
   messages:
   - mutating callback parameter `{}` requires a mutable native reference; the selected callback supplies
@@ -2780,10 +2780,15 @@ diagnostics:
     line: 206
 - code: W4001
   messages:
+  - ");\n            !dependency_warning && !library_export_warning\n        })\n        .collect();\n\
+    \    let rust_dependencies = compilation_rust_dependencies(package, &semantic.projection);\n    let\
+    \ mut rust_ir = crate::lowering::lower(semantic, options.debug_build.enabled())\n        .map_err(|failure|\
+    \ lowering_failure(semantic, failure))?;\n    bind_tokio_runtime_alias(&mut rust_ir, &rust_dependencies,\
+    \ false);\n    lowering.finish();\n    let rendering = crate::compilation_progress::start("
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 568
+    line: 579
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2812,11 +2817,12 @@ diagnostics:
     line: 544
 - code: W4005
   messages:
+  - rendering Rust
   - function `{}` is never referenced
   - main.trn
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 568
+    line: 579
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
