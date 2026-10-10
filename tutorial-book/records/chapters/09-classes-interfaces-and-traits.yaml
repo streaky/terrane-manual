@@ -286,7 +286,6 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            from /core/output import print
 
             class label
               text string = ''

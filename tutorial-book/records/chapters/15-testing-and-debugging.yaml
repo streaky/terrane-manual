@@ -1175,7 +1175,6 @@ documentation:
               source: |-
                 namespace profile-study
 
-                from /core/output import print
 
                 function configured-count int64;
                   return 300000000
@@ -1460,7 +1459,6 @@ documentation:
               source: |-
                 namespace writing-plan
 
-                from /core/output import print
 
                 function main;
                   print; (summarize; 3, 5)

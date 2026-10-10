@@ -286,7 +286,6 @@ documentation:
           target: null
           timeout-ms: null
           source: |-
-            from /core/output import print
 
             class envelope of (T)
                 payload T
@@ -324,7 +323,6 @@ documentation:
           target: null
           timeout-ms: null
           source: |-
-            from /core/output import print
 
             interface describable
                 function describe string;
@@ -372,7 +370,6 @@ documentation:
           target: null
           timeout-ms: null
           source: |-
-            from /core/output import print
 
             enum operation-state of (T)
                 pending

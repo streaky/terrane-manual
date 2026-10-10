@@ -44,9 +44,12 @@ documentation:
               spelling `NaN` is normalized to `nan`.
 
             Core `print` displays its arguments from left to right and appends a newline.
-            Each argument uses canonical text display. Locale, styling, field width,
-            precision, and other presentation policies require imported formatting
-            facilities.
+            With the default prelude, `print` is already in the program-global namespace:
+            call it directly without `from /core/output import print`. Do not add that
+            redundant import to ordinary programs, examples, or tests. Explicit imports
+            remain useful when the prelude is disabled or when testing import behavior. Each
+            argument uses canonical text display. Locale, styling, field width, precision,
+            and other presentation policies require imported formatting facilities.
 
             Display-based string composition follows the same rule. Both `concat` and `join`
             convert their arguments through canonical text display and report a typed error
@@ -60,6 +63,14 @@ documentation:
             may be arbitrary bytes therefore cannot be passed to `print` on the assumption
             that its contents are textual; it must first be converted to a type with
             supported display.
+        - type: example
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace hello
+
+            function main;
+                print; 'Hello, Terrane!'
   see-also: []
 
 provenance:
