@@ -187,18 +187,20 @@ documentation:
           source: |2
             function require-entry throws invalid-report-entry; entry-name string, units int
               if entry-name == '' or units <= 0
-                throw instance invalid-report-entry; entry-name, units
+                throw invalid-report-entry; entry-name, units
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            Read the last line in two stages:
-            `instance invalid-report-entry; entry-name, units` constructs the error value,
-            and `throw` transfers control carrying it. The `instance` keyword appears
-            because a new class value is being constructed; `throw` can also carry an
-            existing throwable value.
+            `throw invalid-report-entry; entry-name, units` calls the class constructor and
+            transfers control carrying the resulting error value. It checks the arguments
+            just like `instance invalid-report-entry; entry-name, units`. There is no need
+            to construct a temporary value before throwing it. For a throwable class with a
+            zero-argument constructor, both `throw class` and `throw class;` construct and
+            throw it. These direct forms work for user-defined throwables, just like
+            built-in throwables. `throw` can also carry an existing throwable value.
 
             The optional `throws invalid-report-entry` clause is a contract bound. It says
             that every error escaping this function must conform to `invalid-report-entry`.

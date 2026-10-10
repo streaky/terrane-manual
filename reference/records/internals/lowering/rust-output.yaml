@@ -35,6 +35,15 @@ documentation:
             contract; operations needing additional semantics use selectively included
             support code.
 
+            Direct `throw class` and `throw class; arguments` expressions resolve class
+            designators after lexical scopes and imports are available, then normalize to
+            ordinary construction calls before type inference. Argument validation,
+            ownership, and constructor lowering share the `instance` path; the throw emitter
+            receives the constructed value rather than a class descriptor. Throwable
+            conformance uses canonical object identity, so imported aliases preserve the
+            same descriptor. Compiler-owned error kinds retain their lazy runtime-message
+            path, and existing throwable values remain value throws.
+
             Generated symbol identifiers use an exact, deterministic, injective encoding.
             Punctuation is not normalized away, so distinct Terrane symbol names remain
             distinct. A source name, its generated Rust name, and its native or link symbol

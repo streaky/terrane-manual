@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 91a3d6deec2abaf953a1d6cac939ca65db1c6853fc42d07788bbefed5796c01f
+  input-sha256: f5f25f0381a937d75d5399792a2864bfd986a60d5831590ed81998fde2957e2c
 format: 1
 generated: true
 diagnostics:
@@ -1402,25 +1402,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1354
+    line: 1355
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1397
+    line: 1401
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1448
+    line: 1452
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1420
+    line: 1424
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1457
+    line: 1461
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -2555,7 +2555,7 @@ diagnostics:
   - awaited destructors require the threaded executor
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1259
+    line: 1260
 - code: T0139
   messages:
   - mutating callback parameter `{}` requires a mutable native reference; the selected callback supplies

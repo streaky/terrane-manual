@@ -64,9 +64,12 @@ documentation:
 
         - type: markdown
           markdown: |-
-            `throw expression` throws an existing instance. `throw class; args` ordinarily
-            invokes the class constructor with those arguments and throws the resulting
-            instance.
+            `throw expression` throws an existing instance. When the operand names a
+            throwable class, `throw class` or `throw class;` constructs it with no
+            arguments; `throw class; args` constructs it with the supplied arguments. Each
+            form throws the resulting instance and follows the ordinary constructor rules,
+            including argument arity and types. User-defined throwable classes need no
+            separate `instance` expression, just like built-in throwables.
 
             Within `try`, `catch` clauses are tested in source order against compatible
             classes or interfaces. A later clause made unreachable by an earlier clause is a
