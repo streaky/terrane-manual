@@ -95,6 +95,12 @@ documentation:
             native dependency inputs, Cargo configuration, and environment inputs. Same-size
             edits are changes; timestamps alone never authorize reuse.
 
+            The compiler build identity includes Rust, bundled Terrane and TOML source
+            inputs in the selected compiler, Rust-analysis, ABI and support crates, plus
+            their manifests/build scripts and workspace toolchain inputs. Hidden files and
+            directories, `target`, `__pycache__` and other source extensions are excluded,
+            so editor files and generated source-local caches do not alter it.
+
             Without Rust dependencies, environment inputs are `CARGO_*`, `RUST*`,
             `TERRANE_*`, `PATH`, `HOME`, `CARGO_HOME`, `RUSTUP_HOME`, `RUSTUP_TOOLCHAIN`,
             `CC`, `CXX`, `AR`, `TARGET`, `HOST`, `PKG_CONFIG_PATH`, and `LIBRARY_PATH`.
