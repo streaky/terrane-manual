@@ -47,9 +47,13 @@ documentation:
             With the default prelude, `print` is already in the program-global namespace:
             call it directly without `from /core/output import print`. Do not add that
             redundant import to ordinary programs, examples, or tests. Explicit imports
-            remain useful when the prelude is disabled or when testing import behavior. Each
-            argument uses canonical text display. Locale, styling, field width, precision,
-            and other presentation policies require imported formatting facilities.
+            remain useful when the prelude is disabled or when testing import behavior.
+            Consumer-generated source units do not inherit the default prelude and must
+            import `print` explicitly when they use it.
+
+            Each argument uses canonical text display. Locale, styling, field width,
+            precision, and other presentation policies require imported formatting
+            facilities.
 
             Display-based string composition follows the same rule. Both `concat` and `join`
             convert their arguments through canonical text display and report a typed error
