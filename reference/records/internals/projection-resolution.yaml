@@ -486,10 +486,11 @@ documentation:
             Sysroot defining paths normalize to the selected stable compiler's public
             spelling before native ownership decisions. In particular, `core::io` error
             definitions retain the public `std::io::Error` and `std::io::ErrorKind`
-            identities. A signature reference already normalized to a standard-library owner
-            does not create a supplemental facade export that can collide with an unrelated
-            package-owned declaration. Actual public reexports remain subject to the
-            ordinary public-path discovery policy.
+            identities. IO error signature references retain their existing standard-library
+            boundary policy instead of creating supplemental facade exports that can collide
+            with unrelated package-owned declarations. Other core nominal families, such as
+            network addresses, still require supplemental declarations. Actual public
+            reexports remain subject to ordinary public-path discovery.
 
             Native reference metadata retains its inner projected type, mutability, and
             lifetime as separate fields. Recursive traversal, owner lookup, alias rewriting,
