@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a362876bf28191f9097ed6bf2a3c6279ee9477fb67d5aa28944700c0528c5ba4
+  input-sha256: 225cb8594b8683d926842547c6ef4deaf6e57bfb7701b08ff5150b20dfbc5398
 format: 1
 generated: true
 symbols:
@@ -1750,6 +1750,10 @@ symbols:
   section: operations
   declaration: copy-sign
 - name: core
+  record: app.error-boundaries
+  section: projected-dependencies
+  declaration: core
+- name: core
   record: internals.projection.resolution
   section: destination-results
   declaration: core
@@ -2019,12 +2023,20 @@ symbols:
   declaration: dependency-error
 - name: dependency-error
   record: tool.packages.rust-dependencies
-  section: async-sequences
+  section: async-projected-calls
   declaration: dependency-error
 - name: dependency-error
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: dependency-error
+- name: dependency-panic
+  record: app.error-boundaries
+  section: projected-dependencies
+  declaration: dependency-panic
+- name: dependency-panic
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: dependency-panic
 - name: dependency://
   record: internals.observability.runtime
   section: dependency-bridge
@@ -2277,6 +2289,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: dynamic-library
+- name: E
+  record: app.error-boundaries
+  section: projected-dependencies
+  declaration: E
 - name: e
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
@@ -2284,6 +2300,14 @@ symbols:
 - name: E
   record: tool.packages.rust-dependencies
   section: async-projected-calls
+  declaration: E
+- name: E
+  record: tool.packages.rust-dependencies
+  section: async-sequences
+  declaration: E
+- name: E
+  record: tool.packages.rust-dependencies
+  section: workflow
   declaration: E
 - name: editors/vscode/server/
   record: tool.editor-support
@@ -2429,6 +2453,10 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: environment-pair
+- name: Error
+  record: app.error-boundaries
+  section: projected-dependencies
+  declaration: Error
 - name: error
   record: book.async
   section: exercises
@@ -2453,10 +2481,22 @@ symbols:
   record: std.logging
   section: events
   declaration: error
+- name: Error
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: Error
 - name: 'ERROR:'
   record: tool.rust-package-integrations.godot
   section: verification
   declaration: 'ERROR:'
+- name: ErrorKind
+  record: app.error-boundaries
+  section: projected-dependencies
+  declaration: ErrorKind
+- name: ErrorKind
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: ErrorKind
 - name: errors
   record: book.namespaces-imports-and-packages
   section: from-one-file-to-a-project
@@ -6155,6 +6195,10 @@ symbols:
   record: lang.namespaces.scopes
   section: scopes
   declaration: public
+- name: public-api
+  record: internals.projection.resolution
+  section: resolved-graph-survey
+  declaration: public-api
 - name: public-bindings-with-hidden-definitions
   record: internals.projection.resolution
   section: resolved-graph-survey
@@ -6487,10 +6531,6 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: resolve
-- name: Result
-  record: app.error-boundaries
-  section: projected-dependencies
-  declaration: Result
 - name: result
   record: book.functions
   section: local-scope
@@ -6714,6 +6754,10 @@ symbols:
 - name: rustdoc-types
   record: internals.build.toolchain-profiles
   section: selected-inputs
+  declaration: rustdoc-types
+- name: rustdoc-types
+  record: internals.projection.resolution
+  section: resolved-graph-survey
   declaration: rustdoc-types
 - name: RUSTUP_HOME
   record: tool.packages.command-line
@@ -7327,6 +7371,10 @@ symbols:
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: static
+- name: std
+  record: app.error-boundaries
+  section: projected-dependencies
+  declaration: std
 - name: std
   record: internals.projection.resolution
   section: destination-results

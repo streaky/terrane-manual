@@ -48,9 +48,15 @@ documentation:
             - boundary: YAML or JSON parsing
               form: document-result
               handling: Inspect failed and diagnostics or message.
-            - boundary: Projected Rust Result or panic
+            - boundary: Projected Rust Result with an admitted error E
+              form: projected throwable E
+              handling: Catch the projected error identity at the dependency call boundary.
+            - boundary: Projected Rust Result with a supported standard-library fallback error
               form: dependency-error
-              handling: Catch at the dependency call boundary.
+              handling: Catch the fallback identity recorded for the call.
+            - boundary: Contained dependency panic under an unwinding profile
+              form: dependency-panic
+              handling: Catch separately; an abort profile does not translate panics.
             - boundary: Application validation
               form: application result object
               handling: Return domain-specific failure fields to the orchestrator.
@@ -140,9 +146,25 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            A projected Rust `Result` error and a contained dependency panic enter the
-            `dependency-error` path. Catch it around the smallest call chain that has enough
-            context to classify the failed operation.
+            A projected Rust `Result<T, E>` raises the projected throwable identity of an
+            admitted, displayable `E`. A supported standard-library error without an
+            admitted descriptor retains the `dependency-error` fallback. An unrepresentable
+            non-standard error declines the call; it is not silently converted to text.
+            Contained unwinding panics raise `dependency-panic`, not `dependency-error`.
+
+            Explicit public reexports of IO `Error` and `ErrorKind` are admitted by policy,
+            independently of whether Rustdoc reports `std` or `core` as the defining crate.
+            A signature-only IO reference does not manufacture a public facade export. With
+            Rust 1.99, Tokio IO failures that formerly used `dependency-error` now raise
+            `/deps/<alias>/io::Error`. Import `Error` from that namespace and catch it
+            instead; a `dependency-error` catch is not a catch-all or compatibility shim.
+
+            Typed failures preserve the native error's display message; the generic fallback
+            additionally prefixes the dependency and member context. Do not classify typed
+            errors using that old message prefix. Source frames still identify the call
+            site. Catch around the smallest call chain with enough application context to
+            classify the failed operation. The example below applies to a fallback-error
+            call.
         - type: example
           id: legacy-fence-002
           title: null

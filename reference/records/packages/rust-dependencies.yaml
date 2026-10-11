@@ -75,16 +75,18 @@ documentation:
                Closed numeric specializations of one native constructor likewise share one
                public class while exact native arguments remain compiler-owned for member
                selection and lowering. Universal panic translation is implicit and omitted
-               from generated declarations; projected `Result` errors retain an explicit
-               `throws dependency-error` contract. Admitted classes include every
-               already-projectable method, associated constant, and enum constructor.
-               Associated constants appear as `constant` members and are selected with
-               `Type::CONSTANT`; constants without an exactly translatable Terrane
-               initializer still lower directly to their canonical Rust path. Unsupported
-               public members remain inert comments inside their owning class with exact gap
-               evidence. A public opaque nominal can be named and selected without admitting
-               a source constructor; unavailable operations retain their own residual
-               obligations. Other unavailable nominal shapes remain explicit skeletons.
+               from generated declarations. Projected `Result` failures use the admitted,
+               displayable error's throwable identity where available; supported
+               standard-library errors without an admitted descriptor retain
+               `dependency-error`. Admitted classes include every already-projectable
+               method, associated constant, and enum constructor. Associated constants
+               appear as `constant` members and are selected with `Type::CONSTANT`;
+               constants without an exactly translatable Terrane initializer still lower
+               directly to their canonical Rust path. Unsupported public members remain
+               inert comments inside their owning class with exact gap evidence. A public
+               opaque nominal can be named and selected without admitting a source
+               constructor; unavailable operations retain their own residual obligations.
+               Other unavailable nominal shapes remain explicit skeletons.
             4. Import admitted names explicitly from `/deps/<alias>/...`. Public native
                signature types owned by Rust's standard library are projected through their
                declared provider namespace. For example, an `ipnet` signature can expose
@@ -98,8 +100,10 @@ documentation:
             6. Calling a currently unavailable declaration fails at the demanding source
                location and links to the generated inventory. Undemanded gaps do not fail
                the build.
-            7. Catch `dependency-error` where a projected Rust `Result` or dependency panic
-               crosses into application policy.
+            7. Catch an admitted projected error `E` where its Rust `Result<T, E>` crosses
+               into application policy. Use `dependency-error` only for a supported fallback
+               error, and handle contained `dependency-panic` separately under unwind
+               profiles.
             8. Use a demanded gap's generated contract and caller list as the basis for a
                generic compiler issue or an explicitly temporary integration adapter.
         - type: table
@@ -744,8 +748,9 @@ documentation:
             A concrete owned Rust producer with an asynchronous borrowed `next` returning
             `Result<Option<Item>, E>` and a consuming `close` projects as a resource-owning
             linear endpoint. Awaiting `next` returns `async-iteration-step of Item`: `item`,
-            `end`, and `value` distinguish an item from exhaustion. A Rust error enters the
-            `dependency-error` path, while cancellation remains the enclosing task outcome.
+            `end`, and `value` distinguish an item from exhaustion. A Rust error follows the
+            ordinary typed-`E` or standard-library fallback boundary; cancellation remains
+            the enclosing task outcome.
 
             Each borrowed operation must be awaited directly and reborrows the producer for
             one suspension. `close` consumes the producer, so later use is a source
@@ -981,6 +986,15 @@ documentation:
             distinct Rust wrapper order is retained so absence, success, and failure remain
             distinct. A non-standard error type that cannot be projected causes the call to
             be declined rather than converted to text or an optional sentinel.
+
+            Explicit public IO `Error` and `ErrorKind` reexports are admitted independently
+            of the sysroot defining crate. Signature-only references do not create facade
+            exports. In the Rust 1.99 upgrade, Tokio IO failures therefore move from
+            `dependency-error` to the admitted `/deps/<alias>/io::Error` identity. Import
+            `Error` from `/deps/<alias>/io` and replace the old fallback catch at those call
+            sites. Typed messages contain `E`'s display text rather than the fallback's
+            dependency/member prefix; add application context at the catch boundary instead
+            of parsing that prefix.
 
             Panic handling follows the selected profile. Under an unwinding profile,
             projected crossings use panic containment. Receiver-free crossings use Rust’s

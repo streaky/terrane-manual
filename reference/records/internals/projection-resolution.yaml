@@ -690,6 +690,14 @@ documentation:
             and recorded as compile-only probe outcomes; surveying never executes package
             code.
 
+            Optional `--complete-surface true` rendering additionally uses pinned
+            `public-api` 0.52.2, whose internal decoder is `rustdoc-types` 0.59.0. The
+            artifact is first validated by Terrane's strict format-61 decoder. No published
+            format-61-compatible `public-api` release is currently available: its separate
+            renderer decodes leniently, can omit newer metadata, and reports extraction
+            errors for unsupported shapes. This auxiliary rendering is not compiler
+            admission or a lossless format-61 schema representation.
+
             Versioned profiles in the native survey corpus materialize their declared Cargo
             inputs before invoking the survey and choose an enforced or explicitly
             unavailable containment tier. Enforced profiles require Linux bubblewrap and
@@ -766,21 +774,23 @@ documentation:
             a Terrane initializer; every other constant remains compiler-backed and lowers
             directly to its canonical native associated-constant path. Universal panic
             translation is implicit for projected calls and is not repeated as
-            `throws dependency-panic` on every generated declaration; projected Rust
-            `Result` errors retain their explicit `throws dependency-error` contract.
-            Projection parses each candidate declaration before admitting it to the
-            generated unit. Admitted members whose rendered declaration is not yet
-            syntax-valid remain adjacent inert comments with the exact parser rejection.
-            Public native members that remain unavailable are likewise retained immediately
-            inside the owning class as inert comments with their native path, recoverable
-            signature, and exact projection gap; the complete unavailable records still
-            appear in the report section. This preserves class structure without making an
-            omitted or declined member callable. When Rustdoc provides the nominal shape of
-            a demanded unavailable struct, enum, type alias, or trait, projection also emits
-            an active class or interface skeleton under its public `/deps/<package>`
-            namespace. Native generic and lifetime parameters that Terrane cannot yet
-            express are retained as residual obligations in adjacent comments, and such a
-            skeleton is not registered for lowering or treated as projection success.
+            `throws dependency-panic` on every generated declaration. Projected Rust
+            `Result` declarations retain a generic `throws dependency-error` inventory
+            marker; native admission metadata selects the actual admitted typed error
+            identity or supported standard-library fallback at the boundary. Projection
+            parses each candidate declaration before admitting it to the generated unit.
+            Admitted members whose rendered declaration is not yet syntax-valid remain
+            adjacent inert comments with the exact parser rejection. Public native members
+            that remain unavailable are likewise retained immediately inside the owning
+            class as inert comments with their native path, recoverable signature, and exact
+            projection gap; the complete unavailable records still appear in the report
+            section. This preserves class structure without making an omitted or declined
+            member callable. When Rustdoc provides the nominal shape of a demanded
+            unavailable struct, enum, type alias, or trait, projection also emits an active
+            class or interface skeleton under its public `/deps/<package>` namespace. Native
+            generic and lifetime parameters that Terrane cannot yet express are retained as
+            residual obligations in adjacent comments, and such a skeleton is not registered
+            for lowering or treated as projection success.
 
             Each unavailable declaration retains its canonical path and exact decline
             reason. Demanded functions whose native shape can be recovered retain a
@@ -845,8 +855,9 @@ documentation:
             published content-origin history instead of rewriting it as cache provenance. If
             the same format-4 identity, dependency surface, and private owner edge list
             later produce a different content hash, projection fails with a replay-mismatch
-            diagnostic. Version changes retain removed member identities so a later missing
-            import can be distinguished from a member that never existed.
+            diagnostic. Actual removed member identities are retained after any surface
+            change, including a changed source or producer at the same dependency version,
+            so a later missing import differs from a member that never existed.
 
             Before serializing, the shared writer compares the complete parsed history
             contract with the prospective history. Equality leaves the existing file
@@ -858,8 +869,10 @@ documentation:
             names use their namespace entry, static members use `Type::member`, and instance
             receivers use `Type.member`. Declared members resolve first; only an absent
             declared member consults matching removal history and emits S2031 with the
-            recorded version transition. A member absent from both the declaration and
-            history remains the ordinary unknown-member diagnostic.
+            recorded previous/current dependency versions. Those versions can be equal: the
+            diagnostic describes a projection transition, not necessarily a package upgrade.
+            A member absent from both declaration and history keeps the ordinary
+            unknown-member diagnostic. Reintroducing a member clears its removal.
 
             History migration, origin preservation, and replay detection live in
             `apply_projection_history`; focused unit coverage includes
