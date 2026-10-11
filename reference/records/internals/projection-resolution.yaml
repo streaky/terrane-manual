@@ -62,6 +62,13 @@ documentation:
             failures remain errors. Writes replace the complete file atomically; a failed
             write or replacement removes its temporary file without altering the old target.
 
+            Sysroot `core` Rustdoc surveys are cached beneath
+            `.trn/dependencies/rust-survey/sysroot/core/<rustdoc-toolchain>/format-<rustdoc-format>/<target>/core.json`.
+            Producer, decoder format, and target select separate files. Legacy unkeyed files
+            and files for another producer or format are not reused; the selected producer
+            generates its own cache without requiring deletion of `.trn`. The selected file
+            still undergoes strict schema validation.
+
             Manifest, lock, target, and toolchain identity construction lives in
             `crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs` under
             `cache_identity` and `selected_target`. The resolution transaction combines that
