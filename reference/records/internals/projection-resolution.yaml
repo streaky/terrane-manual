@@ -666,7 +666,7 @@ documentation:
             containment tier. Host-specific absolute paths and probe timings are not part of
             the portable semantic report.
 
-            Compiler projection and surveys share the pinned format-57 JSON arguments and
+            Compiler projection and surveys share the pinned format-61 JSON arguments and
             public-path index. Projection requests public Rustdoc only. The survey
             additionally retains hidden definitions so an item publicly reexported from a
             hidden module still contributes its full signature. The index excludes direct

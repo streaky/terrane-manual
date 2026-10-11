@@ -946,6 +946,13 @@ documentation:
             Unsupported members remain explicit declines in the transferable projection
             artifact. The compiler does not replace one Rust API shape with a nearby Terrane
             operation or silently admit unknown metadata.
+
+            C ABI variable-argument functions are explicitly unavailable, even when their
+            fixed parameter prefix is representable. Projection never erases the variable
+            tail into a fixed-arity callable or partial signature. Rust 1.99 stabilizing
+            definitions of these functions does not change Terrane's typed, list-backed
+            variadic parameters. A maintained Rust adapter may expose a fixed, reviewed
+            signature when a dependency requires a C variable-argument boundary.
     - id: async-projected-calls
       title: "Projected Rust Async Calls"
       blocks:

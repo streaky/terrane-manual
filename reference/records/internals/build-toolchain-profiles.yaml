@@ -44,6 +44,13 @@ documentation:
             release. Direct generated lowering and vendored support therefore share one Rust
             compatibility target.
 
+            The current stable selection is Rust 1.99.0. Dependency projection and native
+            surveys separately select `nightly-2026-10-02`, paired with `rustdoc-types`
+            0.61.0 and JSON format 61. The producer must accept the generated manifests'
+            Rust minimum and dependency syntax; matching its release number alone does not
+            establish JSON compatibility. Exact toolchain and format identities invalidate
+            older projection and native proof caches.
+
             Unicode behavior is a separate compiler-owned part of the toolchain profile.
             Version one selects Unicode 16.0.0 for full case folding, normalization, Unicode
             word segmentation, and extended grapheme segmentation. Pinned and system Rust

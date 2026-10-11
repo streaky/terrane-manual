@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 79d694bd99b6a24f2fb2de744ae06be80f2ecd788ecc861b3ac5d56970a9605c
+  input-sha256: 51f122ab0997318ee5de83f9578ebe2b7ddf7556b22edc50834fb8cee365c96f
 format: 1
 generated: true
 symbols:
@@ -5077,6 +5077,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: next-up
+- name: nightly-2026-10-02
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
+  declaration: nightly-2026-10-02
 - name: 'no'
   record: lang.types.generics
   section: destinations
@@ -6703,6 +6707,10 @@ symbols:
   record: book.native-program
   section: source-locations-and-diagnostics-across-lowering
   declaration: rustc
+- name: rustdoc-types
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
+  declaration: rustdoc-types
 - name: RUSTUP_HOME
   record: tool.packages.command-line
   section: compilation-reuse
