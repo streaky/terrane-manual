@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e8008e80d360e89cc535ae7f64eb5c50aec6f2cfc4a5fcc3340983251fafddc6
+  input-sha256: 34bf2e683ca0a246d2cf89b86ae38152fe732f2fbe1b47012e1dc82622f5922d
 format: 1
 generated: true
 diagnostics:
@@ -1774,7 +1774,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1583
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 4112
+    line: 4386
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
