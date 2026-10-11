@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 83879e05452a8bda82017d21e31cca4d7372ba51e70a6764ef58bc724ed42e09
+  input-sha256: 08761716c8525e0a8a3937c9ed367e10096a172dd956369fe9e625fe4fad893a
 format: 2
 generated: true
 records:
@@ -886,6 +886,13 @@ records:
     - throwable-direct-construction
     - throwable-direct-construction-uncaught
     - generic-throwable
+    - throwable-message-render
+    - throwable-message-render-uncaught
+    - throwable-self-construction
+    - reject-throwable-static-message
+    - reject-throwable-self-arguments
+    - reject-throwable-self-outside-class
+    - reject-nonthrowable-self
     compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

@@ -45,11 +45,17 @@ documentation:
             Field names do not become constructor parameters automatically. Fields without
             defaults still require a constructor that initializes them.
 
-            Construction has no independent unsafe call syntax: `instance` is the complete
-            source-level construction operation. A class therefore cannot declare
-            `unsafe function construct`; initialization that requires a caller-visible
-            external obligation must use an explicitly named unsafe factory operation
-            instead.
+            Ordinary class-value construction uses `instance class; arguments`. A
+            specialized `throw class; arguments` form invokes the same constructor and
+            throws its result; `throw class` and `throw class;` supply no arguments. The
+            class must implement `throwable`, and the same constructor checks apply. These
+            throw forms do not make class names generally callable.
+
+            Construction has no independent unsafe call syntax: neither `instance` nor
+            direct throwable construction provides a separate unsafe acknowledgement. A
+            class therefore cannot declare `unsafe function construct`; initialization that
+            requires a caller-visible external obligation must use an explicitly named
+            unsafe factory operation instead.
 
             Declare a destructor as `function destruct`; it is always consuming. Writing
             `consuming` is accepted as an explicit equivalent. `mutable`, `shared`,

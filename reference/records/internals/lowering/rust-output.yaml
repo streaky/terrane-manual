@@ -46,6 +46,17 @@ documentation:
             aliases preserve that same descriptor. Compiler-owned error kinds retain their
             lazy runtime-message path, and existing throwable values remain value throws.
 
+            Late-bound `self` construction resolves lexical object ownership before
+            function-owner contracts exist. When emitting an inherited method body,
+            construction value types are rebound to the effective class; descriptor
+            registration and polymorphic message-field access use that same class.
+
+            Source throwable envelopes retain the raw message and the class's captured
+            render text separately. Equal texts share one owned string. Envelope rendering
+            combines the display text with descriptor, causes, and source frames; cloning,
+            causal replacement, and rethrows preserve the raw message independently. The
+            source object and arbitrary payload fields are not retained by the envelope.
+
             Nominal interface conformance prefers an exact applied descriptor contract when
             available. Projected interfaces retain specialized inherited interface
             applications there; authored generic applications without an exact contract

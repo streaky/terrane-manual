@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 83879e05452a8bda82017d21e31cca4d7372ba51e70a6764ef58bc724ed42e09
+  input-sha256: 08761716c8525e0a8a3937c9ed367e10096a172dd956369fe9e625fe4fad893a
 format: 1
 generated: true
 symbols:
@@ -6923,6 +6923,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: selected_target
+- name: self
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: self
 - name: Self
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -8048,6 +8052,10 @@ symbols:
   section: package-manifest
   declaration: threads
 - name: throw
+  record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: throw
+- name: throw
   record: book.errors
   section: replacing-and-preserving-errors
   declaration: throw
@@ -8090,6 +8098,10 @@ symbols:
 - name: throwable
   record: book.namespaces-imports-and-packages
   section: dependencies
+  declaration: throwable
+- name: throwable
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: throwable
 - name: throwable
   record: lang.errors.handling

@@ -37,6 +37,14 @@ documentation:
             `cause throwable|none`, initially `none`, and retains the concrete descriptor
             and a deterministic source-context chain. Matching is based on descriptor
             compatibility, never message text.
+
+            A source-defined throwable's `message` is preserved independently of its `render` result.
+            Rendering the concrete class may produce different display text; the runtime
+            captures that result once when the value is thrown. The envelope's `render`
+            operation formats that display text with the descriptor, cause chain, and source
+            context. Rethrows preserve both the raw message and captured display.
+            Compiler-owned built-ins keep their lazy runtime messages, and native error
+            conversion keeps its existing Display-derived message.
         - type: example
           id: legacy-fence-001
           title: null
@@ -84,6 +92,10 @@ documentation:
             `render` operation. Throwing that bound value again preserves its kind and cause
             chain.
 
+            The binding is an envelope-only throwable value, not a typed view of the
+            original class instance. Arbitrary fields and methods from that source object
+            are not retained or exposed by a catch binding today.
+
             A `finally` block always executes. Normal completion of the block leaves the
             pending result, return, or throw unchanged. It replaces that outcome only by
             explicitly returning or throwing.
@@ -119,6 +131,13 @@ provenance:
     - throwable-direct-construction
     - throwable-direct-construction-uncaught
     - generic-throwable
+    - throwable-message-render
+    - throwable-message-render-uncaught
+    - throwable-self-construction
+    - reject-throwable-static-message
+    - reject-throwable-self-arguments
+    - reject-throwable-self-outside-class
+    - reject-nonthrowable-self
   compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

@@ -65,8 +65,10 @@ documentation:
         and binaries without a full local-variable debug-information copy for every generated case.
     - title: Reviewed lowering artifacts
       body: >-
-        Every accepted conformance case keeps a `lower.rs` golden. Its reviewed rendering begins with two deterministic manifest
-        comments, then retains program-owned lowering including generated reflection and error-site tables. The runtime manifest
+        An accepted conformance case may keep an optional `lower.rs` reviewed artifact when it protects a meaningful emitted-code contract.
+        Cases without one still compile and run through the same conformance driver; golden-update mode does not recreate missing artifacts.
+        Retire obsolete snapshots that only pin generated error-envelope scaffolding or incidental implementation layout, retaining the behavioral fixture.
+        A reviewed rendering begins with two deterministic manifest comments, then retains program-owned lowering including generated reflection and error-site tables. The runtime manifest
         names selected compiler `src/runtime` files in concatenation order, and the vendored-support manifest names exact
         support-crate identifiers referenced by the standalone program. Runtime implementations remain in the standalone Rust
         used by `terrane rust`, canonical Rust validation, generated-crate compilation, and execution; they are never copied

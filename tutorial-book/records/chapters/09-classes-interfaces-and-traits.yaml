@@ -251,7 +251,11 @@ documentation:
             The semicolon belongs to the construction operation, just as it belongs to an
             ordinary call. It is required even when there are no arguments.
 
-            Construction is not written as a call to the class name:
+            Ordinary class-value construction is not written as a call to the class name.
+            Throwable construction is a deliberate exception within `throw`: a direct class
+            throw invokes the same constructor and throws its result. It does not make the
+            class generally callable. Bare and empty-argument direct throws invoke a
+            zero-argument constructor.
         - type: example
           id: legacy-fence-008
           title: null
