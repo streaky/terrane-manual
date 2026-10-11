@@ -138,6 +138,18 @@ documentation:
             unrelated same-spelled names remain untouched. This applies equally to Terrane
             exports and projected dependencies.
 
+            The source token of an aliased import, including a cursor at its end, is
+            rejected with `import-export-rename` before proposing edits; the error directs
+            the caller to the alias or exporting declaration. The `as` keyword and internal
+            clause whitespace after the export-token end select the local alias.
+
+            A rename initiated at the exporting declaration updates the canonical export and
+            every selective import's source token. Unaliased bindings and uses follow the
+            new name; explicit local aliases and their uses keep their spelling. If the new
+            export spelling equals a local alias, the redundant `as` clause is removed
+            instead of emitting a same-name alias. Import source tokens resolve canonically
+            for navigation and references, independently of rename selection.
+
             `apply-edits` rejects diagnostic-bearing proposals with `invalid-proposal`,
             preflights every disk hash before writing, and uses same-directory temporary
             files; stale bytes are refused. A partial host failure returns a structured
@@ -186,11 +198,12 @@ documentation:
             silently add an `as` clause to recover from a rejected exported-symbol rename.
             Changing an existing `import f as x` to `import f as y` is an alias rename:
             select `x` or a use bound through it, and only that binding's scoped uses
-            change. Selecting `f` is not an alias rename; an attempted exported-symbol
-            rename may be rejected. To introduce an alias, make an explicit source edit or
-            use a separately implemented refactoring rather than rename. This distinction is
-            independent of whether the imported object comes from Terrane or a projected
-            dependency.
+            change. Selecting `f`, including its token-end cursor position, is rejected with
+            `import-export-rename`; select the exporting declaration to rename the export
+            instead. The `as` keyword and internal clause gaps select the alias. To
+            introduce an alias, make an explicit source edit or use a separately implemented
+            refactoring rather than rename. This distinction is independent of whether the
+            imported object comes from Terrane or a projected dependency.
 
             To remove an existing alias in an editor, select the alias or a bound use,
             invoke Rename Symbol, and enter the original exported spelling. For example,

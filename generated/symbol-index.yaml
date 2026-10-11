@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f8b59ab941dc81fd0967ce5145358151658873ea7c905e71df7b5e77a5fef717
+  input-sha256: 79d694bd99b6a24f2fb2de744ae06be80f2ecd788ecc861b3ac5d56970a9605c
 format: 1
 generated: true
 symbols:
@@ -591,6 +591,10 @@ symbols:
 - name: as
   record: lang.namespaces.scopes
   section: scopes
+  declaration: as
+- name: as
+  record: tool.source-intelligence
+  section: edits
   declaration: as
 - name: as
   record: tool.source-intelligence
@@ -3665,6 +3669,14 @@ symbols:
   record: lang.namespaces.imports
   section: imports
   declaration: import
+- name: import-export-rename
+  record: tool.source-intelligence
+  section: edits
+  declaration: import-export-rename
+- name: import-export-rename
+  record: tool.source-intelligence
+  section: language-server
+  declaration: import-export-rename
 - name: INDENT
   record: lang.lexical-structure.source-layout
   section: utf8-layout
