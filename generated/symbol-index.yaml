@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7027ba3d514ea547dbbef6462a43f6b13706798b7fc0e350c34e6480356675a8
+  input-sha256: f8b59ab941dc81fd0967ce5145358151658873ea7c905e71df7b5e77a5fef717
 format: 1
 generated: true
 symbols:
@@ -583,6 +583,10 @@ symbols:
 - name: as
   record: book.errors
   section: what-we-learned
+  declaration: as
+- name: as
+  record: book.namespaces-imports-and-packages
+  section: imports
   declaration: as
 - name: as
   record: lang.namespaces.scopes
@@ -1532,6 +1536,14 @@ symbols:
   record: lang.types.generics
   section: associated-interfaces
   declaration: ConcreteType
+- name: connect-info
+  record: tool.source-intelligence
+  section: language-server
+  declaration: connect-info
+- name: ConnectInfo
+  record: tool.source-intelligence
+  section: language-server
+  declaration: ConnectInfo
 - name: console-sink
   record: std.logging
   section: construction
@@ -5265,6 +5277,10 @@ symbols:
   record: lang.namespaces.declarations
   section: namespace-paths
   declaration: nul
+- name: 'null'
+  record: tool.source-intelligence
+  section: language-server
+  declaration: 'null'
 - name: number
   record: book.decisions-and-repetition
   section: break-and-continue
@@ -5914,6 +5930,10 @@ symbols:
 - name: print-report
   record: book.namespaces-imports-and-packages
   section: exercises
+  declaration: print-report
+- name: print-report
+  record: book.namespaces-imports-and-packages
+  section: imports
   declaration: print-report
 - name: print-report
   record: book.namespaces-imports-and-packages
@@ -6787,6 +6807,18 @@ symbols:
   record: lang.functions.declarations
   section: declaration
   declaration: S2062
+- name: S2063
+  record: book.namespaces-imports-and-packages
+  section: imports
+  declaration: S2063
+- name: S2063
+  record: lang.namespaces.imports
+  section: imports
+  declaration: S2063
+- name: S2063
+  record: tool.source-intelligence
+  section: language-server
+  declaration: S2063
 - name: S2110
   record: lang.declarations.annotations
   section: grammar-and-targets

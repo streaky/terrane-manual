@@ -61,6 +61,11 @@ documentation:
             scope produces `S2011`. Reimporting the same object identity is idempotent and
             silent.
 
+            An explicit alias must differ from the imported spelling. Writing
+            `from path import x as x` is an error (`S2063`) at the alias name; use
+            `from path import x` instead. This exact-spelling rule applies at every lexical
+            depth to Terrane and projected dependency imports alike.
+
             `import /namespace` binds every public function-body object from the namespace
             under its declared name. Private objects remain hidden, and imported identities
             remain in their source namespace. Namespace-wide imports have no alias clause.

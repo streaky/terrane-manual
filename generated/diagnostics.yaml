@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6387ecff39b66513910013e1acacc7cf4430a75edcd8ca1636e5eb3f29952b7d
+  input-sha256: 48bca6ce9157c8e46ac7e28140050ef28c05145a759425390a07d02d325a2fa5
 format: 1
 generated: true
 diagnostics:
@@ -725,21 +725,21 @@ diagnostics:
   - unknown namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 477
+    line: 494
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 487
+    line: 504
 - code: S2010
   messages:
   - name `{}` is inaccessible
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 452
+    line: 469
 - code: S2011
   messages:
   - object import collides on `{name}`; use an `as` alias
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 514
+    line: 531
 - code: S2012
   messages:
   - duplicate binding `{name}` in the same lexical scope
@@ -795,9 +795,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 245
-  - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 263
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 281
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -893,7 +893,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1155
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 227
+    line: 245
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was removed when the projected dependency changed from version
@@ -919,7 +919,7 @@ diagnostics:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 397
+    line: 414
 - code: S2050
   messages: []
   sources:
@@ -973,7 +973,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1101
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 64
+    line: 82
 - code: S2060
   messages:
   - "\n        && identity != "
@@ -1003,6 +1003,15 @@ diagnostics:
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 1640
+- code: S2063
+  messages:
+  - an explicit import alias must differ from the imported name
+  - alias diagnostic span
+  sources:
+  - path: crates/terrane-compiler/src/semantics/namespaces.rs
+    line: 389
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 66
 - code: S2110
   messages:
   - ",\n        "
@@ -1330,7 +1339,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 942
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 94
+    line: 112
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1703
 - code: T0016
@@ -1774,7 +1783,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1583
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 4402
+    line: 4509
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -2812,9 +2821,9 @@ diagnostics:
   - namespace-wide import leaves declared `{name}` from `{}` in place instead of `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 527
-  - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 544
+  - path: crates/terrane-compiler/src/semantics/namespaces.rs
+    line: 561
 - code: W4005
   messages:
   - rendering Rust
@@ -2826,7 +2835,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 284
+    line: 302
 - code: W4006
   messages:
   - binding `{}` is marked intentionally unused but is read

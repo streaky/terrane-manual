@@ -288,6 +288,12 @@ documentation:
             the name by which this scope refers to it; the alias does not create a wrapper
             or a second function.
 
+            An explicit alias must change the spelling: importing
+            `print-report as print-report` is an error (`S2063`). Omit the `as` clause when
+            you want the original name. In an LSP-enabled editor, renaming the existing
+            `show-report` alias back to `print-report` removes that clause and updates its
+            bound uses, provided the original name would not capture another binding.
+
             A namespace-wide import binds every public function-body object exported by that
             namespace:
         - type: example

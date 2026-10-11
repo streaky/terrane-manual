@@ -191,6 +191,16 @@ documentation:
             use a separately implemented refactoring rather than rename. This distinction is
             independent of whether the imported object comes from Terrane or a projected
             dependency.
+
+            To remove an existing alias in an editor, select the alias or a bound use,
+            invoke Rename Symbol, and enter the original exported spelling. For example,
+            renaming `connect-info` to `ConnectInfo` in an import of
+            `ConnectInfo as connect-info` removes the `as` clause and updates bound uses to
+            `ConnectInfo`. The operation preserves comments and rejects name capture. Use
+            the ordinary non-empty exported name; `null` and empty strings are not
+            alias-removal conventions. An explicit same-name alias such as
+            `ConnectInfo as ConnectInfo` is a language error (`S2063`), not the result of
+            removing an alias.
         - type: example
           id: source-intelligence-omp-project-server
           title: Use the repository-local server from oh-my-pi
