@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 51f122ab0997318ee5de83f9578ebe2b7ddf7556b22edc50834fb8cee365c96f
+  input-sha256: 2b29ab0737297037b6835364c9ec6fd5b6198e1578ccf7335a51e3da5c603de5
 format: 1
 generated: true
 symbols:
@@ -5077,10 +5077,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: next-up
-- name: nightly-2026-10-02
+- name: nightly-2026-08-01
   record: internals.build.toolchain-profiles
   section: selected-inputs
-  declaration: nightly-2026-10-02
+  declaration: nightly-2026-08-01
 - name: 'no'
   record: lang.types.generics
   section: destinations
