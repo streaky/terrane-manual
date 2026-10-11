@@ -80,12 +80,13 @@ documentation:
             remain available.
 
             Streamed Rust output is one complete standalone unit. Named-file output and
-            Cargo builds use a two-file layout: the requested entrypoint contains authored
-            lowering and one relative include, while `<entrypoint-stem>.support.rs` contains
-            the compiler prelude, runtime, structured-error and source-site infrastructure,
-            selectively included `/core` implementation code, and projected `/deps`
-            lowering. User-authored package modules remain in the entrypoint. The support
-            sidecar is emitted even when empty.
+            Cargo builds use a split layout: the requested entrypoint contains authored
+            lowering and includes `<entrypoint-stem>.support.rs` when support is needed.
+            That sidecar contains the compiler prelude, runtime, structured-error and
+            source-site infrastructure, selectively included `/core` implementation code,
+            projected `/deps` lowering, and the generated program's vendored-support-crate
+            list. User-authored package modules remain in the entrypoint. Empty support
+            means no sidecar or include.
 
             Ejection tooling can produce maintainable Rust and Cargo artifacts. Lowering
             itself remains canonical. A bundled pinned formatter may validate an untouched

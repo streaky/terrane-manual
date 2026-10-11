@@ -38,13 +38,13 @@ documentation:
             and a deterministic source-context chain. Matching is based on descriptor
             compatibility, never message text.
 
-            A source-defined throwable's `message` is preserved independently of its `render` result.
-            Rendering the concrete class may produce different display text; the runtime
-            captures that result once when the value is thrown. The envelope's `render`
-            operation formats that display text with the descriptor, cause chain, and source
-            context. Rethrows preserve both the raw message and captured display.
-            Compiler-owned built-ins keep their lazy runtime messages, and native error
-            conversion keeps its existing Display-derived message.
+            A source-defined throwable's `message` is preserved independently of its
+            `render` result. Rendering the concrete class may produce different display
+            text; the runtime captures that result once when the value is thrown. The
+            envelope's `render` operation formats that display text with the descriptor,
+            cause chain, and source context. Rethrows preserve both the raw message and
+            captured display. Compiler-owned built-ins keep their lazy runtime messages, and
+            native error conversion keeps its existing Display-derived message.
         - type: example
           id: legacy-fence-001
           title: null

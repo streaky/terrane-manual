@@ -35,6 +35,11 @@ documentation:
             contract; operations needing additional semantics use selectively included
             support code.
 
+            Split output places required runtime infrastructure in a sibling `.support.rs`
+            file, with a deterministic vendored-support-crate manifest. When no support code
+            is needed, lowering emits only the entrypoint, without a support include. Output
+            regeneration removes an obsolete generated support sidecar.
+
             Direct `throw class` and `throw class; arguments` expressions resolve class
             designators after lexical scopes and imports are available, then normalize to
             ordinary construction calls before type inference. Argument validation,
@@ -128,14 +133,14 @@ documentation:
 
             `terrane rust` streams a complete standalone Rust translation unit by default.
             With `--output` or `-o`, it writes a split artifact. For a requested entrypoint
-            named `<entrypoint-stem>.rs`, Terrane also emits `<entrypoint-stem>.support.rs`
-            beside it. The entrypoint contains authored lowering, user-authored package
-            modules, source and namespace associations, and one relative `include!`. The
-            support sidecar contains the compiler prelude, runtime, structured-error and
-            source-site infrastructure, selected bundled `/core` implementation code, and
-            projected `/deps` lowering. The sidecar is emitted even when empty, preserving a
-            uniform two-file layout. `check`, `build`, and `run` use the same renderer and
-            request `src/main.rs`, which is paired with `src/main.support.rs`.
+            named `<entrypoint-stem>.rs`, Terrane emits `<entrypoint-stem>.support.rs`
+            beside it when support code is needed. The entrypoint contains authored
+            lowering, user-authored package modules, source and namespace associations, and
+            a relative `include!` only when the sidecar exists. The support sidecar contains
+            the compiler prelude, runtime, structured-error and source-site infrastructure,
+            selected bundled `/core` implementation code, projected `/deps` lowering, and a
+            vendored-support-crate manifest. Empty sidecars and their includes are omitted.
+            `check`, `build`, and `run` use the same renderer and request `src/main.rs`.
 
             Each lowered item is parsed into a compiler-owned Rust syntax tree before
             rendering. Structural normalization removes redundant expression parentheses,

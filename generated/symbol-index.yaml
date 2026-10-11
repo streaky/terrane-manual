@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 08761716c8525e0a8a3937c9ed367e10096a172dd956369fe9e625fe4fad893a
+  input-sha256: 4dca05c1bd0f0ca204ed12848a2c53a73b682327bd59d94f9d285d95723572c8
 format: 1
 generated: true
 symbols:
@@ -7255,10 +7255,6 @@ symbols:
   record: internals.lowering.rust-output
   section: rust-lowering
   declaration: src/main.rs
-- name: src/main.support.rs
-  record: internals.lowering.rust-output
-  section: rust-lowering
-  declaration: src/main.support.rs
 - name: start
   record: std.text-bytes-codecs
   section: string-operations

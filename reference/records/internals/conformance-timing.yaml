@@ -65,17 +65,21 @@ documentation:
         and binaries without a full local-variable debug-information copy for every generated case.
     - title: Reviewed lowering artifacts
       body: >-
-        An accepted conformance case may keep an optional `lower.rs` reviewed artifact when it protects a meaningful emitted-code contract.
-        Cases without one still compile and run through the same conformance driver; golden-update mode does not recreate missing artifacts.
-        Retire obsolete snapshots that only pin generated error-envelope scaffolding or incidental implementation layout, retaining the behavioral fixture.
-        A reviewed rendering begins with two deterministic manifest comments, then retains program-owned lowering including generated reflection and error-site tables. The runtime manifest
-        names selected compiler `src/runtime` files in concatenation order, and the vendored-support manifest names exact
-        support-crate identifiers referenced by the standalone program. Runtime implementations remain in the standalone Rust
-        used by `terrane rust`, canonical Rust validation, generated-crate compilation, and execution; they are never copied
-        into `lower.rs`. Set `TERRANE_UPDATE_GOLDENS` together with `TERRANE_CONFORMANCE_FILTER` for a
-        focused regeneration. A corpus-wide regeneration requires the explicit value `TERRANE_UPDATE_GOLDENS=all`. The driver
-        reports only files whose contents changed. `docs/summarize-golden-churn.py <git range>` emits YAML containing each
-        distinct changed-line hunk once, its affected paths, and its file count.
+        Every accepted conformance case regenerates tracked `lower.rs` and, when support is needed, sibling `lower.support.rs`
+        review artifacts from compiler split output (`Compilation::rust_files_for`). Ordinary focused and corpus runs do this without golden
+        mode. Git's diff against these files is the review surface; there is no lowered-source snapshot-equality gate. Retain these
+        artifacts as a user-valued generated-code review surface rather than retiring them to avoid churn. Projection-only updates
+        leave them untouched, and projection inventory verification/update remains separate.
+
+        The harness compiles the split program, including its support file, and executes run cases. Cases with authored Rust
+        modules also regenerate the referenced module files beneath `lower.authored/`. Persisted review artifacts normalize the
+        compiler version; generated binaries use actual compiler output and dependencies. Never hand-edit these files.
+        The support sidecar lists vendored support crates used by the generated program. Empty support produces neither a sidecar
+        nor an include in `lower.rs`; regeneration removes a stale sidecar from an earlier run.
+        Inspect meaningful changes alongside acceptance, runtime output, and canonical-Rust validation.
+        A focused regeneration uses `TERRANE_CONFORMANCE_FILTER=<case-name-or-comma-separated-fragments> cargo test -p
+        terrane-compiler --test conformance every_manifest_drives_a_conformance_case`; the same command without a filter runs
+        the corpus. `docs/summarize-golden-churn.py <git range>` summarizes changed-line hunks.
     - title: Measurement boundary
       body: >-
         A case measurement includes manifest and source loading, semantic analysis, lowering, and program execution for run

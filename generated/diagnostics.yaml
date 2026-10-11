@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c230ebaf234c5a3285f35d831805eabdd4fd77b7b5a2e218df9ee8e50e504226
+  input-sha256: e8008e80d360e89cc535ae7f64eb5c50aec6f2cfc4a5fcc3340983251fafddc6
 format: 1
 generated: true
 diagnostics:
@@ -764,20 +764,20 @@ diagnostics:
   - package has no `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 435
+    line: 447
 - code: S2016
   messages:
   - package has more than one `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 454
+    line: 466
 - code: S2017
   messages:
   - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 411
+    line: 423
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 941
 - code: S2018
@@ -932,14 +932,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 819
+    line: 831
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 775
+    line: 787
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -1040,17 +1040,17 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 999
+    line: 1011
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1027
+    line: 1039
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1111
+    line: 1123
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 314
+    line: 326
 - code: T0001
   messages:
   - type parameter requires a name
@@ -2788,7 +2788,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 635
+    line: 647
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2822,7 +2822,7 @@ diagnostics:
   - main.trn
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 635
+    line: 647
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
