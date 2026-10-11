@@ -483,6 +483,14 @@ documentation:
             scalar representations: a native `u8` selection remains `uint8`, independently
             of an ordinary value parameter's adaptive `int` ABI.
 
+            Sysroot defining paths normalize to the selected stable compiler's public
+            spelling before native ownership decisions. In particular, `core::io` error
+            definitions retain the public `std::io::Error` and `std::io::ErrorKind`
+            identities. A signature reference already normalized to a standard-library owner
+            does not create a supplemental facade export that can collide with an unrelated
+            package-owned declaration. Actual public reexports remain subject to the
+            ordinary public-path discovery policy.
+
             Native reference metadata retains its inner projected type, mutability, and
             lifetime as separate fields. Recursive traversal, owner lookup, alias rewriting,
             and substitution preserve that structure. Rust syntax trees distinguish bare
