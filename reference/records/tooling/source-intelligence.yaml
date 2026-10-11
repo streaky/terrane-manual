@@ -132,17 +132,17 @@ documentation:
             (`invalid-rename`) and does not retain rejected proposals. `invalid-rename`
             includes the first preview diagnostic explaining the broken contract.
 
-            On a selective import or a resolved local use, rename changes only the local
-            binding. It inserts an `as` alias when absent, or replaces the existing alias,
-            whether the request selects the original import token or its alias token. Scoped
-            uses of that binding change; the export, other aliases and importers, and
-            unrelated same-spelled names do not. This applies to Terrane exports and
-            projected dependencies alike. A request at the exporting declaration remains a
-            canonical declaration rename. `apply-edits` rejects diagnostic-bearing proposals
-            with `invalid-proposal`, preflights every disk hash before writing, and uses
-            same-directory temporary files; stale bytes are refused. A partial host failure
-            returns a structured report naming committed, uncommitted, and recovery files
-            rather than continuing silently.
+            Renaming an existing selective-import alias changes only that local binding and
+            its scoped uses. The request selects the alias token or a use bound through it,
+            not the original exported name. The export, other aliases and importers, and
+            unrelated same-spelled names remain untouched. This applies equally to Terrane
+            exports and projected dependencies.
+
+            `apply-edits` rejects diagnostic-bearing proposals with `invalid-proposal`,
+            preflights every disk hash before writing, and uses same-directory temporary
+            files; stale bytes are refused. A partial host failure returns a structured
+            report naming committed, uncommitted, and recovery files rather than continuing
+            silently.
     - id: formatting
       title: Source formatting
       blocks:
@@ -180,6 +180,17 @@ documentation:
             positions are negotiated and converted only at the protocol boundary; compiler
             spans remain canonical UTF-8 byte offsets. Token highlighting retains a direct
             lossless-lexer encoding pass and does not define syntax or semantic meaning.
+
+            Introducing an alias by changing `from /namespace import f` to
+            `from /namespace import f as x` is not an LSP rename operation. Rename must not
+            silently add an `as` clause to recover from a rejected exported-symbol rename.
+            Changing an existing `import f as x` to `import f as y` is an alias rename:
+            select `x` or a use bound through it, and only that binding's scoped uses
+            change. Selecting `f` is not an alias rename; an attempted exported-symbol
+            rename may be rejected. To introduce an alias, make an explicit source edit or
+            use a separately implemented refactoring rather than rename. This distinction is
+            independent of whether the imported object comes from Terrane or a projected
+            dependency.
         - type: example
           id: source-intelligence-omp-project-server
           title: Use the repository-local server from oh-my-pi

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b0709d35d638026076578f3abfc1ac6634bbb0df7551fa03e84ba4060f577d22
+  input-sha256: 7027ba3d514ea547dbbef6462a43f6b13706798b7fc0e350c34e6480356675a8
 format: 1
 generated: true
 symbols:
@@ -590,7 +590,7 @@ symbols:
   declaration: as
 - name: as
   record: tool.source-intelligence
-  section: edits
+  section: language-server
   declaration: as
 - name: assert
   record: book.testing-and-debugging
@@ -2513,6 +2513,10 @@ symbols:
   record: lang.classes.fields
   section: declaration
   declaration: external-name
+- name: f
+  record: tool.source-intelligence
+  section: language-server
+  declaration: f
 - name: fail
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
@@ -9102,6 +9106,10 @@ symbols:
 - name: x
   record: lang.types.unions
   section: unions
+  declaration: x
+- name: x
+  record: tool.source-intelligence
+  section: language-server
   declaration: x
 - name: y
   record: book.introduction
