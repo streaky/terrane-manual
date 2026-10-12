@@ -231,6 +231,11 @@ documentation:
             failures use `S2060`. Input, stdout, stderr, and declaration interfaces are
             bounded to 16 MiB.
 
+            Request preparation validates identity uniqueness within the selected
+            declarations. Legitimate field/static-callable identity collisions elsewhere in
+            the package do not block an unrelated consumer; selecting an ambiguous identity
+            remains an `S2060` error.
+
             Successful manifest-package consumer preparation removes obsolete generated
             `.trn` files, including outputs of consumers removed from the manifest or
             returning no source. Implicit single-file compilation does not reconcile a

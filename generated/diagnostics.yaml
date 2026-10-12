@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: aa653a24fd9db7716aadb89b2da1ea33ff64d3cb7836fd9bf52421fac9c89b36
+  input-sha256: 587ec3e8dacbbf8b916bbf70ebe2fe34f0e5d0a80d3779d05ab30fec3c7e6aa9
 format: 1
 generated: true
 diagnostics:
@@ -978,14 +978,17 @@ diagnostics:
 - code: S2060
   messages:
   - "\n        && identity != "
+  - duplicate canonical declaration identity
   - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_identity_paths_and_reject_traversal()\
     \ {\n        let (mut package, root) = temporary_package();\n        let mut sources = vec![\n   \
     \         ("
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 935
+    line: 945
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1034
+    line: 1027
+  - path: crates/terrane-compiler/src/consumers.rs
+    line: 1096
 - code: S2061
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'
@@ -993,11 +996,11 @@ diagnostics:
   - ".to_owned(),\n            executable: "
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 541
+    line: 551
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 571
+    line: 581
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1017
+    line: 1079
 - code: S2062
   messages:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
