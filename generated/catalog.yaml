@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 86fa41b7013939b717ebf8ace070dc6ebd719677083f7964811c3788a41e3b2b
+  input-sha256: e0571cedb314d9b894736e5cd2e96f72f2d70e8ee3292cb3ae83adc123cdf641
 format: 2
 generated: true
 records:
@@ -767,8 +767,8 @@ records:
   declaration-synopsis: []
 - id: lang.control-flow.branching-and-loops
   title: Conditional and loop control
-  summary: '`if`/`else`, `while`, and `for` use checked control-flow semantics. The `break`, `continue`,
-    and `return` statements follow the same checked semantics.'
+  summary: '`if`/`else`, ordered selector or predicate `switch`, `while`, and `for` use checked control-flow
+    semantics. The `break`, `continue`, and `return` statements follow the same checked semantics.'
   kind: topic
   manual: reference
   group: Language
@@ -1253,9 +1253,9 @@ records:
     sections: []
   declaration-synopsis: []
 - id: lang.text.display
-  title: Canonical scalar display and print
-  summary: Strings, numerics, booleans, and `none` have canonical display and printing forms. Arbitrary
-    bytes have no display conversion.
+  title: Text display, conversion, and print
+  summary: Scalars render canonically, and classes opt into text display through `to-string`. String composition
+    and printing share this protocol; arbitrary bytes have no display conversion.
   kind: topic
   manual: reference
   group: Language
@@ -1272,7 +1272,7 @@ records:
     compiler: null
   sections:
   - id: scalar-display
-    title: Canonical Scalar Display
+    title: Text Display and Explicit Conversion
     sections: []
   declaration-synopsis: []
 - id: lang.text.encodings

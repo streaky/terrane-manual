@@ -48,10 +48,22 @@ documentation:
             Normalization is available through `normalise.nfc`, `normalise.nfd`,
             `normalise.nfkc`, and `normalise.nfkd`.
 
-            `split` and `replace` use literal, left-to-right, non-overlapping matching.
-            Splitting on an empty pattern returns the graphemes without synthetic empty
-            elements. Replacing an empty pattern inserts the replacement at every grapheme
-            boundary, including both ends.
+            `split` and scalar `replace` use literal, left-to-right, non-overlapping
+            matching. Splitting on an empty pattern returns the graphemes without synthetic
+            empty elements. Scalar replacement of an empty pattern inserts the replacement
+            at every grapheme boundary, including both ends.
+
+            `replace` also accepts a list of search strings with an equally sized list of
+            replacements, or a single replacement broadcast across the search list. Matches
+            are selected on the original input from left to right without overlap; when
+            patterns start at the same position, the earliest list entry wins, not the
+            longest. Inserted replacement text is never searched. An empty search-list is a
+            no-op. An empty search string matches only at an unconsumed original grapheme
+            boundary, using the same list priority as nonempty searches. When an empty
+            search wins, insert its replacement and advance past one original scalar
+            unchanged; do not try another search at that same position. A nonempty match
+            consumes its span, skipping any boundaries inside it. Paired lists with
+            different lengths throw `replace-error`.
 
             A `split` result is an iterable, read-only list with a `length`. It can be
             traversed repeatedly, but mutation is rejected. For example:

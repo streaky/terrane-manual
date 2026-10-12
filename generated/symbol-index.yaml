@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 86fa41b7013939b717ebf8ace070dc6ebd719677083f7964811c3788a41e3b2b
+  input-sha256: e0571cedb314d9b894736e5cd2e96f72f2d70e8ee3292cb3ae83adc123cdf641
 format: 1
 generated: true
 symbols:
@@ -6495,6 +6495,10 @@ symbols:
   record: lang.text.transformation
   section: string-transform
   declaration: replace
+- name: replace-error
+  record: lang.text.transformation
+  section: string-transform
+  declaration: replace-error
 - name: report.trn
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
@@ -7484,6 +7488,10 @@ symbols:
   section: declarations
   declaration: string
 - name: string
+  record: lang.expressions.operators
+  section: operators-precedence
+  declaration: string
+- name: string
   record: lang.namespaces.prelude
   section: prelude
   declaration: string
@@ -7571,6 +7579,10 @@ symbols:
   record: internals.collections.lifetime
   section: mutation-release-points
   declaration: swap_remove
+- name: switch
+  record: lang.control-flow.branching-and-loops
+  section: if-while-for
+  declaration: switch
 - name: Sync
   record: internals.projection.resolution
   section: callbacks
@@ -8307,6 +8319,10 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: to-document
+- name: to-string
+  record: lang.text.display
+  section: scalar-display
+  declaration: to-string
 - name: to_json
   record: lang.declarations.annotations
   section: docs-and-metadata

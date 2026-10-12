@@ -14,17 +14,17 @@ lifecycle:
 
 documentation:
   status: complete
-  title: "Canonical scalar display and print"
+  title: "Text display, conversion, and print"
   title-style: text
   summary: >-
-    Strings, numerics, booleans, and `none` have canonical display and printing forms. Arbitrary bytes have no display conversion.
+    Scalars render canonically, and classes opt into text display through `to-string`. String composition and printing share this protocol; arbitrary bytes have no display conversion.
   tags:
     - "text-data"
     - "display"
     - "scalar-display"
   sections:
     - id: scalar-display
-      title: "Canonical Scalar Display"
+      title: "Text Display and Explicit Conversion"
       blocks:
         - type: markdown
           markdown: |-
@@ -43,22 +43,34 @@ documentation:
             - Non-finite floating-point spellings are `nan`, `inf`, and `-inf`; the platform
               spelling `NaN` is normalized to `nan`.
 
-            Core `print` displays its arguments from left to right and appends a newline.
-            With the default prelude, `print` is already in the program-global namespace:
-            call it directly without `from /core/output import print`. Do not add that
-            redundant import to ordinary programs, examples, or tests. Explicit imports
-            remain useful when the prelude is disabled or when testing import behavior.
-            Consumer-generated source units do not inherit the default prelude and must
-            import `print` explicitly when they use it.
+            Every supported built-in scalar exposes the parameterless `.to-string;`
+            conversion. A class participates structurally by defining a safe, synchronous,
+            non-static, nonmutating, nonconsuming `to-string` method with no parameters or
+            method type parameters and return type `string`. Inherited and trait-supplied
+            implementations participate too. Explicit calls and implicit display use the
+            same implementation. An interface may require this method, and receivers
+            constrained by that nominal generic bound participate in implicit display.
+            Abstract dispatch retains the interface's written throwable bound;
+            implementations may be narrower. A throwing implementation retains its ordinary
+            inferred throwable set: callers may catch its failures, and display never
+            substitutes a fallback. Core `print` displays its arguments from left to right
+            and appends a newline. With the default prelude, `print` is already in the
+            program-global namespace: call it directly without
+            `from /core/output import print`. Do not add that redundant import to ordinary
+            programs, examples, or tests. Explicit imports remain useful when the prelude is
+            disabled or when testing import behavior. Consumer-generated source units do not
+            inherit the default prelude and must import `print` explicitly when they use it.
 
             Each argument uses canonical text display. Locale, styling, field width,
             precision, and other presentation policies require imported formatting
             facilities.
 
-            Display-based string composition follows the same rule. Both `concat` and `join`
-            convert their arguments through canonical text display and report a typed error
-            when an argument has no display operation; they do not silently invent a
-            representation.
+            String `+`, `concat`, and `join` use this same protocol. A string operand makes
+            binary `+` concatenation; the other operand must support text display. Pure
+            numeric addition remains arithmetic, and an unsupported pair is a compile-time
+            error. Display and operand evaluation retain source order. Concatenation chains
+            write into one result buffer where grouping permits, preserving numeric
+            subexpressions and invoking each required representation exactly once.
 
             Version-one dynamic bindings have finite, compiler-known alternatives. The
             compiler checks display support and typed-boundary compatibility across every
@@ -75,6 +87,19 @@ documentation:
 
             function main;
                 print; 'Hello, Terrane!'
+        - type: example
+          language: terrane
+          mode: illustrative
+          source: |-
+            class person
+                name string = 'Terrane'
+                function to-string string;
+                    return this.name
+
+            function main;
+                person = instance person;
+                print; 'Hello, ' + person
+                print; (42.to-string;)
   see-also: []
 
 provenance:

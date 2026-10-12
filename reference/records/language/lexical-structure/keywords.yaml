@@ -191,6 +191,9 @@ documentation:
                 - for
                 - in
                 - select
+                - switch
+                - match
+                - case
                 - return
                 - break
                 - continue
@@ -226,12 +229,10 @@ documentation:
               words:
                 - linear
                 - yield
-                - match
                 - label
                 - goto
                 - when
                 - use
-                - case
 
         - type: markdown
           markdown: |-

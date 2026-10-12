@@ -138,6 +138,12 @@ documentation:
             invocation through that storage observes the written bound. The same rules apply
             to synchronous and asynchronous callable values.
 
+            A bodyless interface signature is abstract, not an empty implementation. Its
+            written throwable bound supplies the dispatch ABI and possible effects for
+            interface and generic-bound callers. Concrete implementations retain their own
+            narrower exact summaries; an infallible implementation is widened into the
+            interface's result-bearing ABI at the forwarding boundary.
+
             A written shared-reference function type cannot accept a named or anonymous
             callable that requires mutation through a native reference. Terrane rejects such
             arguments, initializers, assignments, and returns with T0140 before Rust
