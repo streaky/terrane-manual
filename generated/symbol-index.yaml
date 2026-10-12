@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e0571cedb314d9b894736e5cd2e96f72f2d70e8ee3292cb3ae83adc123cdf641
+  input-sha256: f04c38577be23a2e2245458c144db289543479055dcaa683bea3e4a2cec0d7b7
 format: 1
 generated: true
 symbols:
@@ -4688,6 +4688,10 @@ symbols:
 - name: map
   record: lang.namespaces.prelude
   section: prelude
+  declaration: map
+- name: map
+  record: lang.types.generics
+  section: native-selections
   declaration: map
 - name: map
   record: std.collections

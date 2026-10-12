@@ -331,6 +331,11 @@ documentation:
             and must agree with it. Selecting a generic does not change safety: an unsafe
             native operation still requires an explicit unsafe call.
 
+            Callable selection follows the resolved declaration identity, not a search for
+            projected operations with the same short name. Source collection descriptors
+            such as `map of string, widget` remain source types even when a dependency
+            exposes a native callable named `map`.
+
             A selected async native call remains async. Its completed selected payload is
             carried by a task using the callable's actual transferability contract; grouping
             or applying type arguments does not erase that contract. Awaiting the task
