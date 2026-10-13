@@ -227,6 +227,10 @@ documentation:
             stable exposed name; missing, duplicate, unknown, and positionally invalid
             bindings are diagnostics.
 
+            A declared `none` default is still an argument value, including for optional
+            source-class parameters. Omitting it supplies `none`; it does not remove the
+            parameter from the call. The same rule applies to class constructors.
+
             A final `name T ...` parameter captures zero or more remaining positional
             arguments as an ordinary `list of T`. It cannot have a default and cannot be
             bound by name. Fixed required and optional parameters may precede it:
