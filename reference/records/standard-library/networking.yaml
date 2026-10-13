@@ -45,7 +45,7 @@ documentation:
             process-lifetime network runtime. Synchronous UDP operations wait on retained
             readiness rather than toggling the socket's shared nonblocking mode.
 
-            Shared `network-operation-options` and cancellation-token types are provided by
+            Shared `io-operation-options` and cancellation-token types are provided by
             `/core/io`. The options argument is optional and defaults to `none`: this
             installs neither a deadline nor a cancellation token, and does not allocate a
             cancellation token. A supplied deadline is absolute, and cancellation is
@@ -84,10 +84,15 @@ documentation:
             - networking-values
             - cancelled-stream-operation
           markdown: |-
-            `network-operation-options` carries an optional typed `/core/time` deadline and
+            `io-operation-options` carries an optional typed `/core/time` deadline and
             optional cancellation token. Omitting the options or passing `none` requests no
             cancellation token or timer. Deadlines and cancellation do not detach operations
             or permit scoped resources to be left unjoined.
+
+            The neutral `/core/io` surface names these objects `io-operation-options` and
+            `cancellation-token`. `cancel-operation; token` requests cancellation and
+            returns `io-operation-result` with failure, deadline, and message status. These
+            types are shared by networking and ordinary asynchronous byte streams.
     - id: scheduling
       title: Executor scheduling
       blocks:

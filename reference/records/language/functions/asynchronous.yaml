@@ -37,6 +37,7 @@ documentation:
           evidence:
             - async-await
             - rust-dependency-async-function
+            - stored-throwing-await
           markdown: |-
             Calling an `async function` constructs a linear Terrane task. `await` consumes
             that task exactly once and is valid only in an async callable. An asynchronous
@@ -44,6 +45,9 @@ documentation:
             future is constructed when the Terrane call expression is evaluated, before its
             generated async containment wrapper begins polling it. Pending timers and
             sockets sleep until their waker fires rather than being repeatedly polled.
+            Storing a task in a local binding does not discard its callable's error
+            contract: awaiting it propagates the same errors as awaiting the invocation
+            directly.
 
             Projected async completion and hover information report wake, runtime-context,
             and transfer requirements in Terrane terms. An unknown requirement remains
@@ -120,6 +124,10 @@ documentation:
             - task-group-missing-drain
             - task-group-failure-finally
             - task-group-parent-cancellation
+            - task-group-implicit-throw
+            - task-group-implicit-finally
+            - task-group-stored-throwing-await
+            - task-group-deferred-call
           markdown: |-
             `task-group; T` creates an owning local group whose child result type is one
             concrete transferable type. `group.spawn; callable` accepts a matching
@@ -136,6 +144,10 @@ documentation:
             `group.cancel;` requests cooperative child cancellation without consuming the
             group or joining children. A canceled group must still be awaited and drained.
             Parent cancellation waits for child finalizers before completing its cleanup.
+
+            Defining a nested callable does not execute its body. Throwing calls in that
+            body do not exit the enclosing group's scope at definition time; invoking the
+            callable does. Nested callables still cannot capture an owning group.
 
             Every reachable exit from a group's owning scope must consume it through an
             immediately awaited drain. This includes exception propagation from throwing

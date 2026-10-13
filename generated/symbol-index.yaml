@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6a0d417a35ef28e7163466db4eac43be72864bced36b66b08dd6840eef707531
+  input-sha256: 0bde31396120df3eb4c2c7bbd3122f500b516be2dd53caffc9e2b3dd81acf8bb
 format: 1
 generated: true
 symbols:
@@ -148,6 +148,10 @@ symbols:
   record: std.paths
   section: paths
   declaration: /core/filesystem/paths
+- name: /core/io
+  record: std.networking.operations
+  section: cancellation
+  declaration: /core/io
 - name: /core/io
   record: std.networking.operations
   section: operations
@@ -1012,6 +1016,10 @@ symbols:
   record: internals.semantics.reference-provenance
   section: representation
   declaration: CallResult
+- name: cancellation-token
+  record: std.networking.operations
+  section: cancellation
+  declaration: cancellation-token
 - name: cancelled
   record: book.async
   section: cancellation-and-partial-progress
@@ -2253,6 +2261,10 @@ symbols:
   record: std.logging
   section: redaction
   declaration: drain-memory
+- name: Drop
+  record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: Drop
 - name: Drop
   record: lang.functions.asynchronous
   section: cancellation
@@ -4213,6 +4225,18 @@ symbols:
   record: lang.functions.callable-types
   section: exact-metadata
   declaration: invocation-mode
+- name: io-operation-options
+  record: std.networking.operations
+  section: cancellation
+  declaration: io-operation-options
+- name: io-operation-options
+  record: std.networking.operations
+  section: operations
+  declaration: io-operation-options
+- name: io-operation-result
+  record: std.networking.operations
+  section: cancellation
+  declaration: io-operation-result
 - name: IpAddr
   record: tool.packages.rust-dependencies
   section: workflow
@@ -5077,14 +5101,6 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function nested-conditional int8; input int8
-- name: network-operation-options
-  record: std.networking.operations
-  section: cancellation
-  declaration: network-operation-options
-- name: network-operation-options
-  record: std.networking.operations
-  section: operations
-  declaration: network-operation-options
 - name: networking
   record: tool.packages.package-manifest
   section: capabilities-and-effects

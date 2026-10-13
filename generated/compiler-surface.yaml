@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b3b31bf467fc48a5e209c74262c7ddf50eee847aceb24e8819b481da18f1e524
+  input-sha256: b3002004b64a389d209952b8f24305f6c2199e2f81ca35f921e6a1f7d975c319
 format: 1
 generated: true
 modules:
@@ -280,22 +280,22 @@ modules:
     line: 181
 - source: crates/terrane-compiler/src/core/io.trn
   declarations:
-  - declaration: class network-cancellation-token
+  - declaration: class cancellation-token
     line: 5
-  - declaration: class network-operation-result
+  - declaration: class io-operation-result
     line: 8
   - declaration: function construct; failed bool, deadline-exceeded bool, message string
     line: 13
-  - declaration: function network-cancel-operation network-operation-result; cancellation network-cancellation-token
+  - declaration: function cancel-operation io-operation-result; cancellation cancellation-token
     line: 18
-  - declaration: class network-operation-options
+  - declaration: class io-operation-options
     line: 22
-  - declaration: function construct; requested deadline|none = none, cancellation network-cancellation-token|none
+  - declaration: function construct; requested deadline|none = none, cancellation cancellation-token|none
       = none
     line: 26
-  - declaration: function operation-cancellation host-platform-capability|none; options network-operation-options|none
+  - declaration: function operation-cancellation host-platform-capability|none; options io-operation-options|none
     line: 30
-  - declaration: function operation-deadline int; options network-operation-options|none
+  - declaration: function operation-deadline int; options io-operation-options|none
     line: 37
 - source: crates/terrane-compiler/src/core/json.trn
   declarations:
@@ -469,9 +469,9 @@ modules:
     line: 98
   - declaration: class tcp-stream implements async-byte-reader, async-byte-writer
     line: 107
-  - declaration: function configure network-operation-result; options tcp-options
+  - declaration: function configure io-operation-result; options tcp-options
     line: 157
-  - declaration: function shutdown network-operation-result; direction string
+  - declaration: function shutdown io-operation-result; direction string
     line: 161
   - declaration: class stream-result
     line: 173
@@ -494,7 +494,7 @@ modules:
     line: 265
   - declaration: class udp-socket
     line: 274
-  - declaration: function configure network-operation-result; options udp-options
+  - declaration: function configure io-operation-result; options udp-options
     line: 293
   - declaration: class udp-result
     line: 304

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b3b31bf467fc48a5e209c74262c7ddf50eee847aceb24e8819b481da18f1e524
+  input-sha256: b3002004b64a389d209952b8f24305f6c2199e2f81ca35f921e6a1f7d975c319
 format: 1
 generated: true
 diagnostics:
@@ -1530,7 +1530,7 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1472
+    line: 1497
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 548
 - code: T0028
@@ -1979,15 +1979,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
     line: 31
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
-    line: 107
+    line: 115
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
-    line: 129
+    line: 137
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
-    line: 139
+    line: 147
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
-    line: 150
+    line: 158
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
-    line: 164
+    line: 172
 - code: T0077
   messages: []
   sources:

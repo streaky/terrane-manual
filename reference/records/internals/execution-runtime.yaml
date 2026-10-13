@@ -262,6 +262,11 @@ documentation:
             or allowed to escape undrained. Group-aware function frames establish cleanup
             context even when called by foreign callers. This structured API does not expose
             Tokio or require a public Tokio dependency.
+
+            As a defensive native boundary, dropping an undrained group requests child
+            cancellation immediately and retains its join state until enclosing async
+            boundary cleanup. Rust `Drop` cannot await finalizers; this fallback does not
+            replace the source requirement to drain before leaving the owning scope.
   see-also:
     - lang.functions.asynchronous
     - std.networking.operations
