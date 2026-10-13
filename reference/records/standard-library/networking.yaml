@@ -2,7 +2,7 @@ format: 1
 id: std.networking.operations
 kind: topic
 
-surface: /core/networking/io
+surface: /core/networking
 
 documentation:
   status: complete
@@ -37,15 +37,27 @@ documentation:
             registered asynchronous transport across operations; a synchronously bound
             listener is registered lazily on its first asynchronous accept.
 
+            A retained registration stays attached to the reactor that created it. Native
+            callers may poll it from another live runtime while the originating reactor
+            remains alive; this does not rebind the socket. After the originating runtime
+            shuts down, a pending readiness operation reports an IO failure. Source async
+            entrypoints use one selected runtime; native synchronous adapters retain their
+            process-lifetime network runtime. Synchronous UDP operations wait on retained
+            readiness rather than toggling the socket's shared nonblocking mode.
+
             Shared `network-operation-options` and cancellation-token types are provided by
-            `/core/networking/io`. The options argument is optional and defaults to `none`:
-            this installs neither a deadline nor a cancellation token, and does not allocate
-            a cancellation token. A supplied deadline is absolute, and cancellation is
+            `/core/io`. The options argument is optional and defaults to `none`: this
+            installs neither a deadline nor a cancellation token, and does not allocate a
+            cancellation token. A supplied deadline is absolute, and cancellation is
             reported through each operation's result contract. TCP creation accepts optional
             `tcp-options` (no-delay defaults to false; TTL `-1` leaves the OS setting
             unchanged). Listener binding accepts optional `tcp-listener-options` (backlog
             defaults to 128, address reuse to false, accepted-socket no-delay to false, and
             TTL `-1` leaves the OS setting unchanged).
+
+            These creation defaults intentionally replace the former forced no-delay setting
+            and TTL 64. Supply explicit TCP settings to retain that policy; listener
+            accepted-socket settings apply before the accepted stream is exposed.
 
             Exact reads fail on short EOF; read-all preserves EOF as an ordinary
             termination. A zero-length read is not EOF. Read-into transfers its owned buffer
@@ -55,6 +67,12 @@ documentation:
             operation's established fields, including failure/deadline status, message,
             data, count, and peer address as appropriate. Ordinary TLS connection validates
             the certificate chain and host name.
+
+            TLS close is consuming; source ownership excludes closing a value while an
+            operation still borrows it. The native capability boundary additionally reports
+            busy when a retained read or write alias is pending: close does not interrupt
+            that operation or discard either TLS half. Native callers must cancel or finish
+            and join outstanding IO before retrying close.
     - id: cancellation
       title: Deadlines and cancellation
       blocks:

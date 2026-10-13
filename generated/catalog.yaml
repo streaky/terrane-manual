@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d263a6acbbf054cbaa0bbb44b4b0a84599ec69dadef1920a7415aa6b4f90ea8f
+  input-sha256: d14d2af6306fb83b9c51be0540a8c8ced1954a88ac6aa20737de50af378ab902
 format: 2
 generated: true
 records:
@@ -399,6 +399,9 @@ records:
     sections: []
   - id: structured-concurrency
     title: Scoped child tasks
+    sections: []
+  - id: task-groups
+    title: Typed structured task groups
     sections: []
   - id: selection
     title: Heterogeneous asynchronous selection
@@ -1524,7 +1527,7 @@ records:
   source: reference/records/standard-library/networking.yaml
   lifecycle-status: current
   documentation-status: complete
-  surface: /core/networking/io
+  surface: /core/networking
   provenance:
     specification: []
     conformance: []

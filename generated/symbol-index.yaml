@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d263a6acbbf054cbaa0bbb44b4b0a84599ec69dadef1920a7415aa6b4f90ea8f
+  input-sha256: d14d2af6306fb83b9c51be0540a8c8ced1954a88ac6aa20737de50af378ab902
 format: 1
 generated: true
 symbols:
@@ -148,6 +148,14 @@ symbols:
   record: std.paths
   section: paths
   declaration: /core/filesystem/paths
+- name: /core/io
+  record: std.networking.operations
+  section: operations
+  declaration: /core/io
+- name: /core/io
+  record: std.streams
+  section: byte-text-streams
+  declaration: /core/io
 - name: /core/logging
   record: book.async
   section: carrying-log-events-through-typed-channels
@@ -173,17 +181,13 @@ symbols:
   section: async-transport
   declaration: /core/logging/async
 - name: /core/networking
+  record: std.networking.operations
+  section: ''
+  declaration: /core/networking
+- name: /core/networking
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/networking
-- name: /core/networking/io
-  record: std.networking.operations
-  section: ''
-  declaration: /core/networking/io
-- name: /core/networking/io
-  record: std.networking.operations
-  section: operations
-  declaration: /core/networking/io
 - name: /core/networking/tls
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -1028,6 +1032,10 @@ symbols:
   record: lang.functions.asynchronous
   section: cancellation
   declaration: cancelled
+- name: cancelled
+  record: lang.functions.asynchronous
+  section: task-groups
+  declaration: cancelled
 - name: capabilities
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -1506,6 +1514,10 @@ symbols:
   declaration: completed
 - name: completed
   record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: completed
+- name: completed
+  record: lang.functions.asynchronous
   section: task-groups
   declaration: completed
 - name: completed
@@ -2486,6 +2498,10 @@ symbols:
   section: cancellation
   declaration: error
 - name: error
+  record: lang.functions.asynchronous
+  section: task-groups
+  declaration: error
+- name: error
   record: std.logging
   section: events
   declaration: error
@@ -2996,6 +3012,10 @@ symbols:
 - name: finally
   record: lang.functions.asynchronous
   section: selection
+  declaration: finally
+- name: finally
+  record: lang.functions.asynchronous
+  section: task-groups
   declaration: finally
 - name: finally
   record: tool.packages.rust-dependencies
@@ -8236,6 +8256,10 @@ symbols:
   section: selection
   declaration: throw
 - name: throw
+  record: lang.functions.asynchronous
+  section: task-groups
+  declaration: throw
+- name: throw
   record: lang.lexical-structure.literals
   section: comments-literals
   declaration: throw
@@ -8969,6 +8993,10 @@ symbols:
   declaration: value
 - name: value
   record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: value
+- name: value
+  record: lang.functions.asynchronous
   section: task-groups
   declaration: value
 - name: value

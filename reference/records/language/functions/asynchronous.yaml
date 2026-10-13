@@ -107,6 +107,52 @@ documentation:
             while a join is pending. A failed child retains its error in its outcome and
             requests cancellation of surviving siblings; each child remains joined exactly
             once.
+    - id: task-groups
+      title: Typed structured task groups
+      blocks:
+        - type: rule
+          id: rule.async.task-group-ownership
+          level: must
+          since: null
+          evidence:
+            - structured-task-group
+            - task-group-child-type
+            - task-group-missing-drain
+            - task-group-failure-finally
+            - task-group-parent-cancellation
+          markdown: |-
+            `task-group; T` creates an owning local group whose child result type is one
+            concrete transferable type. `group.spawn; callable` accepts a matching
+            zero-argument asynchronous callable; `group.spawn; (work; args)` transfers a
+            matching unpolled task into the group. Neither form exposes a separate linear
+            child handle. Type and transferability mismatches are diagnosed with T0074.
+
+            `outcomes = await group.drain;` consumes the group and joins every child,
+            returning a list of `task-outcome of T` in spawn order. An empty group returns
+            an empty list. Each outcome has `completed` and `cancelled` flags, `value`
+            present on successful completion, and `error` present on failure. Failure
+            requests sibling cancellation without discarding completed outcomes.
+
+            `group.cancel;` requests cooperative child cancellation without consuming the
+            group or joining children. A canceled group must still be awaited and drained.
+            Parent cancellation waits for child finalizers before completing its cleanup.
+
+            Every reachable exit from a group's owning scope must consume it through an
+            immediately awaited drain. This includes exception propagation from throwing
+            calls and awaited throwing tasks, not just explicit `throw` statements. Place
+            the awaited drain in `finally` when protected work may throw. An undrained exit,
+            alias, escape, or unawaited drain is diagnosed with T0076; reuse after
+            consumption is an ownership error.
+        - type: example
+          id: task-group-cancellation
+          title: Request cancellation and still join the group
+          language: terrane
+          mode: illustrative
+          source: |-
+            group = task-group; int
+            group.spawn; (work; argument)
+            group.cancel;
+            outcomes = await group.drain;
     - id: selection
       title: Heterogeneous asynchronous selection
       blocks:

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c9cf67f67a974634bec4db6646c78b708f85f1682f5c9cd146b3bea9169c80ab
+  input-sha256: 82ab72b6f74d5bf324ab58ab28ee671086a5deaffb7062645604e63ca8051a87
 format: 1
 generated: true
 modules:
@@ -278,6 +278,25 @@ modules:
   - declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target
       path
     line: 181
+- source: crates/terrane-compiler/src/core/io.trn
+  declarations:
+  - declaration: class network-cancellation-token
+    line: 5
+  - declaration: class network-operation-result
+    line: 8
+  - declaration: function construct; failed bool, deadline-exceeded bool, message string
+    line: 13
+  - declaration: function network-cancel-operation network-operation-result; cancellation network-cancellation-token
+    line: 18
+  - declaration: class network-operation-options
+    line: 22
+  - declaration: function construct; requested deadline|none = none, cancellation network-cancellation-token|none
+      = none
+    line: 26
+  - declaration: function operation-cancellation host-platform-capability|none; options network-operation-options|none
+    line: 30
+  - declaration: function operation-deadline int; options network-operation-options|none
+    line: 37
 - source: crates/terrane-compiler/src/core/json.trn
   declarations:
   - declaration: class json-options
@@ -414,107 +433,88 @@ modules:
 - source: crates/terrane-compiler/src/core/networking.trn
   declarations:
   - declaration: class tcp-options
-    line: 7
+    line: 8
   - declaration: function construct; no-delay bool = false, ttl int = -1
-    line: 11
+    line: 12
   - declaration: class tcp-listener-options
-    line: 15
+    line: 16
   - declaration: function construct; backlog int = 128, reuse-address bool = false, accepted-no-delay
       bool = false, accepted-ttl int = -1
-    line: 21
+    line: 22
   - declaration: class udp-options
-    line: 29
+    line: 30
   - declaration: function construct; broadcast bool, ttl int
-    line: 33
+    line: 34
   - declaration: class ip-address
-    line: 38
+    line: 39
   - declaration: function string string
-    line: 48
+    line: 49
   - declaration: class ip-result
-    line: 51
+    line: 52
   - declaration: function construct; failed bool, message string, address ip-address
-    line: 56
+    line: 57
   - declaration: function ip-address-from-string ip-result; text string
-    line: 61
+    line: 62
   - declaration: class socket-address
-    line: 67
+    line: 68
   - declaration: function string string
-    line: 77
+    line: 78
   - declaration: class socket-result
-    line: 80
+    line: 81
   - declaration: function construct; failed bool, message string, address socket-address
-    line: 85
+    line: 86
   - declaration: function socket-address-from-ip socket-result; ip ip-address, port int
-    line: 90
+    line: 91
   - declaration: function socket-address-from-string socket-result; text string
-    line: 97
+    line: 98
   - declaration: class tcp-stream implements async-byte-reader, async-byte-writer
-    line: 106
+    line: 107
   - declaration: function configure network-operation-result; options tcp-options
-    line: 175
+    line: 157
   - declaration: function shutdown network-operation-result; direction string
-    line: 179
+    line: 161
   - declaration: class stream-result
-    line: 191
+    line: 173
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, peer string,
       stream tcp-stream
-    line: 198
+    line: 180
   - declaration: class tcp-listener
-    line: 229
+    line: 211
   - declaration: class listener-result
-    line: 250
+    line: 232
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, listener tcp-listener
-    line: 256
+    line: 238
   - declaration: function bind-tcp listener-result; address socket-address, options tcp-listener-options|none
       = none
-    line: 262
+    line: 244
   - declaration: class datagram-io-result
-    line: 274
+    line: 256
   - declaration: function construct; failed bool, truncated bool, deadline-exceeded bool, message string,
       data bytes, completed int, peer string
-    line: 283
+    line: 265
   - declaration: class udp-socket
-    line: 292
+    line: 274
   - declaration: function configure network-operation-result; options udp-options
-    line: 311
+    line: 293
   - declaration: class udp-result
-    line: 322
+    line: 304
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, socket udp-socket
-    line: 328
+    line: 310
   - declaration: function bind-udp udp-result; address socket-address
-    line: 334
+    line: 316
   - declaration: class dns-result
-    line: 341
+    line: 323
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, ttl int, ttl-known
       bool, candidates list of string
-    line: 349
+    line: 331
   - declaration: class network-host-name
-    line: 357
+    line: 339
   - declaration: class network-host-name-result
-    line: 363
+    line: 345
   - declaration: function construct; failed bool, message string, host network-host-name
-    line: 368
+    line: 350
   - declaration: function parse-host-name network-host-name-result; text string
-    line: 373
-- source: crates/terrane-compiler/src/core/networking_io.trn
-  declarations:
-  - declaration: class network-cancellation-token
-    line: 5
-  - declaration: class network-operation-result
-    line: 8
-  - declaration: function construct; failed bool, deadline-exceeded bool, message string
-    line: 13
-  - declaration: function network-cancel-operation network-operation-result; cancellation network-cancellation-token
-    line: 18
-  - declaration: class network-operation-options
-    line: 22
-  - declaration: function construct; requested deadline|none = none, cancellation network-cancellation-token|none
-      = none
-    line: 26
-  - declaration: function operation-cancellation host-platform-capability|none; options network-operation-options|none
-    line: 30
-  - declaration: function operation-deadline int; options network-operation-options|none
-    line: 37
+    line: 355
 - source: crates/terrane-compiler/src/core/paths.trn
   declarations:
   - declaration: class path
@@ -711,87 +711,107 @@ modules:
     line: 43
   - declaration: class owned-read-buffer
     line: 48
+  - declaration: function capacity int
+    line: 54
+  - declaration: function completed int
+    line: 57
   - declaration: function filled-bytes buffer-bytes-result
-    line: 62
+    line: 63
   - declaration: function filled-text buffer-text-result
-    line: 66
+    line: 67
   - declaration: class buffered-read-result
-    line: 74
+    line: 75
   - declaration: function construct; buffer owned-read-buffer, completed int, end bool, failed bool, message
       string, deadline-exceeded bool = false
-    line: 82
+    line: 83
   - declaration: function make-read-buffer read-buffer-result; capacity int
-    line: 90
+    line: 91
   - declaration: class read-result
-    line: 95
+    line: 96
   - declaration: function construct; data bytes, completed int, end bool, failed bool, message string,
       deadline-exceeded bool = false
-    line: 103
+    line: 104
   - declaration: class text-read-result
-    line: 111
+    line: 112
   - declaration: function construct; text string, completed int, end bool, failed bool, message string
-    line: 118
+    line: 119
   - declaration: class write-result
-    line: 125
+    line: 126
   - declaration: function construct; data bytes, completed int, failed bool, message string, deadline-exceeded
       bool = false
-    line: 132
+    line: 133
+  - declaration: class exact-read-progress
+    line: 144
+  - declaration: function construct; count int
+    line: 152
+  - declaration: function pending bool
+    line: 155
+  - declaration: function remaining int
+    line: 158
+  - declaration: function result read-result; data bytes
+    line: 172
+  - declaration: class write-progress
+    line: 180
+  - declaration: function pending bool; count int
+    line: 186
+  - declaration: function result write-result; data bytes
+    line: 199
   - declaration: class byte-reader implements async-byte-reader
-    line: 154
+    line: 214
   - declaration: function read read-result; count int
-    line: 160
+    line: 220
   - declaration: function read-exact read-result; count int
-    line: 164
-  - declaration: function read-all read-result; limit int
-    line: 185
+    line: 224
+  - declaration: function read-all read-result; count int
+    line: 245
   - declaration: function text text-reader; codec encoding
-    line: 246
+    line: 289
   - declaration: class byte-writer implements async-byte-writer
-    line: 257
+    line: 299
   - declaration: function write write-result; data bytes
-    line: 263
+    line: 305
   - declaration: function write-all write-result; data bytes
-    line: 268
+    line: 310
   - declaration: function resume write-result; prior write-result
-    line: 282
-  - declaration: function text text-writer; codec encoding
-    line: 313
-  - declaration: function flush stream-operation-result
-    line: 316
-  - declaration: function sync-data stream-operation-result
-    line: 320
-  - declaration: function sync-all stream-operation-result
     line: 324
-  - declaration: class text-reader
-    line: 336
-  - declaration: function read text-read-result throws decode-error; count int
-    line: 344
-  - declaration: function read-exact text-read-result throws decode-error; count int
-    line: 349
-  - declaration: function read-all text-read-result throws decode-error; limit int
-    line: 371
-  - declaration: class text-writer
-    line: 403
-  - declaration: function write write-result; text string
-    line: 411
-  - declaration: function write-all write-result; text string
-    line: 416
-  - declaration: function resume write-result; prior write-result
-    line: 431
-  - declaration: function line write-result; text string
-    line: 437
+  - declaration: function text text-writer; codec encoding
+    line: 347
   - declaration: function flush stream-operation-result
-    line: 443
+    line: 350
   - declaration: function sync-data stream-operation-result
-    line: 447
+    line: 354
   - declaration: function sync-all stream-operation-result
+    line: 358
+  - declaration: class text-reader
+    line: 371
+  - declaration: function read text-read-result throws decode-error; count int
+    line: 379
+  - declaration: function read-exact text-read-result throws decode-error; count int
+    line: 384
+  - declaration: function read-all text-read-result throws decode-error; limit int
+    line: 406
+  - declaration: class text-writer
+    line: 438
+  - declaration: function write write-result; text string
+    line: 446
+  - declaration: function write-all write-result; text string
     line: 451
-  - declaration: function stdin byte-reader
-    line: 463
-  - declaration: function stdout byte-writer
+  - declaration: function resume write-result; prior write-result
     line: 466
+  - declaration: function line write-result; text string
+    line: 472
+  - declaration: function flush stream-operation-result
+    line: 478
+  - declaration: function sync-data stream-operation-result
+    line: 482
+  - declaration: function sync-all stream-operation-result
+    line: 486
+  - declaration: function stdin byte-reader
+    line: 498
+  - declaration: function stdout byte-writer
+    line: 501
   - declaration: function stderr byte-writer
-    line: 469
+    line: 504
 - source: crates/terrane-compiler/src/core/testing.trn
   declarations:
   - declaration: function render string
@@ -938,11 +958,11 @@ modules:
 - source: crates/terrane-compiler/src/core/tls.trn
   declarations:
   - declaration: class tls-stream implements async-byte-reader, async-byte-writer
-    line: 7
+    line: 8
   - declaration: class tls-result
-    line: 84
+    line: 61
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, stream tls-stream
-    line: 90
+    line: 67
 - source: crates/terrane-compiler/src/core/urls.trn
   declarations:
   - declaration: class url-query

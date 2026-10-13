@@ -62,13 +62,20 @@ documentation:
             Exact/all operations and `read-into-async(buffer, count, options)` are available
             through the protocol. `read-into-async` returns ownership of the buffer with its
             result: filled data appends, and clear resets contents while preserving the
-            allocation.
+            allocation. Buffer capacity and current filled-byte count are queried by
+            `buffer.capacity;` and `buffer.completed;`. These are host-state queries, not
+            assignable metadata fields.
 
-            Standard blocking stream adapters reject a supplied live deadline or
-            cancellation token before I/O; an already-expired deadline or canceled token is
-            reported as such. If cancellation arrives after a blocking operation begins,
-            cancellation waits for that operation to finish before returning. No detached
-            worker continues modifying a caller-owned buffer.
+            Shared operation options are defined by `/core/io`, not by a networking
+            namespace. Standard blocking stream adapters check these options before
+            delegating IO: an already-canceled token or expired deadline fails without
+            starting IO. Uncancelled tokens and future deadlines are accepted, but the
+            options cannot interrupt an in-progress blocking process-IO operation. The
+            deadline policy for these adapters is preflight-only, rather than a promise to
+            complete or interrupt the IO by the deadline.
+
+            Parent cancellation waits for a delegated blocking operation to finish before
+            returning. No detached worker continues modifying a caller-owned buffer.
 
             Close is explicit and consuming. Host release is idempotent, and an explicit
             close makes release failure observable. Destruction releases the resource but
