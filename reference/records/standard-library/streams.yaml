@@ -17,8 +17,7 @@ documentation:
   title: "Byte and text streams"
   title-style: text
   summary: >-
-    Byte and text streams provide linear readers and writers, encoded adapters, and access to process standard streams. Stream
-    operations preserve cancellation behavior and report…
+    Byte and text streams provide owning asynchronous reader and writer protocols, encoded adapters, and access to process standard streams.
   tags:
     - "async"
     - "streams"
@@ -46,29 +45,36 @@ documentation:
             explicitly appends `\n`, and its completed count includes the encoded newline.
             Malformed input during text decoding throws `decode-error`.
 
-            Reads and writes may complete partially. A byte read result contains data bytes,
-            a completed byte count, an `end` flag, a `failed` flag, and a message string. A
-            text read result contains text and the same byte-count and status fields. EOF is
-            explicit, including on a zero-length read. `read-exact` fails on short EOF.
-            Bounded read-all accepts EOF and requires an explicit limit.
+            Byte read results report data, completed byte count, EOF, failure, and message;
+            text results report decoded text and the corresponding byte count and status.
+            Zero-length reads are not EOF. `read-exact` reports short EOF as failure, while
+            bounded read-all accepts EOF and requires an explicit limit.
 
-            An incomplete write result retains the encoded data bytes required for
-            resumption; a completed result releases that data. Write results also report the
-            completed byte count, failure status, and message. `resume` performs one host
-            write and may remain partial, so it can be repeated. `write-all` loops until
-            completion, failure, or no progress. These rules apply to byte writes and
-            encoded text writes.
+            Incomplete writes retain the encoded data required for resumption; completed
+            writes release it. Results report completed bytes, failure, and message.
+            `resume` performs one write and may be partial; `write-all` repeats until
+            completion, failure, or no progress. These contracts apply to byte and encoded
+            text writes.
+
+            The async byte-reader and byte-writer interfaces are owning protocols, including
+            consuming close. Concrete standard-stream, TCP, and TLS endpoints implement the
+            protocols; interface erasure transfers the resource rather than cloning it.
+            Exact/all operations and `read-into-async(buffer, count, options)` are available
+            through the protocol. `read-into-async` returns ownership of the buffer with its
+            result: filled data appends, and clear resets contents while preserving the
+            allocation.
+
+            Standard blocking stream adapters reject a supplied live deadline or
+            cancellation token before I/O; an already-expired deadline or canceled token is
+            reported as such. If cancellation arrives after a blocking operation begins,
+            cancellation waits for that operation to finish before returning. No detached
+            worker continues modifying a caller-owned buffer.
 
             Close is explicit and consuming. Host release is idempotent, and an explicit
             close makes release failure observable. Destruction releases the resource but
             discards any release failure. Byte and text writers distinguish `flush`,
-            `sync-data`, and `sync-all`; an unsupported or failed operation is reported and
-            is not silently weakened to another operation.
-
-            `read-async` and `write-async` preserve the synchronous result contracts.
-            Cancellation is an outcome of the enclosing task and never fabricates stream
-            progress. When cancellation races completion, the task reports the resulting
-            cancellation or operation outcome without inventing bytes read or written.
+            `sync-data`, and `sync-all`; unsupported or failed operations are reported and
+            are not silently weakened to another operation.
 
             The host boundary consists of the process-I/O handle registry and one partial
             host operation at a time. Exact and all-operation loops, encoding, resumption,

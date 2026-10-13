@@ -27,7 +27,7 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            The version-one default prelude consists of exactly seven ordinary
+            The version-one default prelude consists of exactly eight ordinary
             program-global bindings:
         - type: example
           id: legacy-fence-001
@@ -37,7 +37,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            print task-scope utf8 utf16-le utf16-be utf32-le utf32-be
+            print task-scope task-group utf8 utf16-le utf16-be utf32-le utf32-be
           response: null
           diagnostic: null
           markdown: null
@@ -46,17 +46,17 @@ documentation:
           markdown: |-
             These compiler-owned names are available without an import when the package
             enables the default prelude. For example, `print; value` is a complete
-            statement, and `scope = task-scope;` creates a structured-concurrency scope
-            without any import lines. In `package.toml`, `prelude` is optional, defaults to
-            `true`, and may be set to `false`. A direct single-file input uses the default
-            prelude.
+            statement, `scope = task-scope;` creates a structured-concurrency scope, and
+            `group = task-group; int` creates a typed structured group without imports. In
+            `package.toml`, `prelude` is optional, defaults to `true`, and may be set to
+            `false`. A direct single-file input uses the default prelude.
 
             The prelude is deliberately small. Collection facilities such as `map`, `list`,
             and `range`, as well as filesystem tools, are not implicit bindings and must be
             imported. Explicit `/core` imports remain available for rebinding, aliasing, and
             shadowing names, including names normally supplied by the prelude.
 
-            Type descriptors are separate from the seven ordinary prelude bindings. Every
+            Type descriptors are separate from the eight ordinary prelude bindings. Every
             descriptor registered under `/core/types`—including scalar, fixed-width,
             abstract-category, `string`, `bytes`, and `none` descriptors—is available as
             construct vocabulary without an import, independently of whether the prelude is

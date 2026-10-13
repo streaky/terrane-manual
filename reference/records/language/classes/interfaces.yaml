@@ -82,6 +82,12 @@ documentation:
             according to argument types. Each declared operation provides the statically
             checked contract used at its call sites, and the conforming receiver provides
             the implementation reached through the interface dispatch boundary.
+
+            A source interface whose operations consume its receiver is an owning interface
+            protocol: a resource-owning class can implement it and be erased to that
+            interface. Erasing the value transfers ownership; it does not clone the concrete
+            resource. This does not relax nominal conformance or the compiler's `Send` and
+            `Sync` requirements for interface implementations.
   see-also: []
 
 provenance:

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 69927cc857ff2b1bfe96587d13f7ae2e58cf5385571b76d1bef7d9e93e144663
+  input-sha256: 8fba2f609ec1177428a67d3584b0f19d43f574cbf7273d6a5c940889d21d0aac
 format: 1
 generated: true
 symbols:
@@ -173,13 +173,17 @@ symbols:
   section: async-transport
   declaration: /core/logging/async
 - name: /core/networking
-  record: std.networking.operations
-  section: ''
-  declaration: /core/networking
-- name: /core/networking
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/networking
+- name: /core/networking/io
+  record: std.networking.operations
+  section: ''
+  declaration: /core/networking/io
+- name: /core/networking/io
+  record: std.networking.operations
+  section: operations
+  declaration: /core/networking/io
 - name: /core/networking/tls
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -729,10 +733,6 @@ symbols:
   section: lifetime
   declaration: await
 - name: await
-  record: std.networking.operations
-  section: operations
-  declaration: await
-- name: await
   record: std.time
   section: deadlines
   declaration: await
@@ -1019,6 +1019,10 @@ symbols:
 - name: cancelled
   record: book.async
   section: joining-tasks-and-observing-outcomes
+  declaration: cancelled
+- name: cancelled
+  record: internals.execution.runtime-selection
+  section: task-groups
   declaration: cancelled
 - name: cancelled
   record: lang.functions.asynchronous
@@ -1501,6 +1505,10 @@ symbols:
   section: type-inference
   declaration: completed
 - name: completed
+  record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: completed
+- name: completed
   record: std.filesystem
   section: whole-file-synopsis
   declaration: completed
@@ -1873,10 +1881,6 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: database
-- name: deadline-exceeded
-  record: std.networking.operations
-  section: operations
-  declaration: deadline-exceeded
 - name: debug
   record: internals.build.toolchain-profiles
   section: generated-artifacts
@@ -2398,10 +2402,6 @@ symbols:
   section: whole-file-synopsis
   declaration: end
 - name: end
-  record: std.streams
-  section: byte-text-streams
-  declaration: end
-- name: end
   record: std.text-bytes-codecs
   section: string-operations
   declaration: end
@@ -2472,6 +2472,10 @@ symbols:
 - name: error
   record: book.first-taste
   section: reading-a-compiler-diagnostic
+  declaration: error
+- name: error
+  record: internals.execution.runtime-selection
+  section: task-groups
   declaration: error
 - name: error
   record: internals.observability.runtime
@@ -2610,16 +2614,8 @@ symbols:
   section: whole-file-synopsis
   declaration: failed
 - name: failed
-  record: std.networking.operations
-  section: operations
-  declaration: failed
-- name: failed
   record: std.process
   section: process
-  declaration: failed
-- name: failed
-  record: std.streams
-  section: byte-text-streams
   declaration: failed
 - name: failed
   record: std.text-bytes-codecs
@@ -4762,10 +4758,6 @@ symbols:
   section: whole-file-synopsis
   declaration: message
 - name: message
-  record: std.networking.operations
-  section: operations
-  declaration: message
-- name: message
   record: std.process
   section: process
   declaration: message
@@ -5069,6 +5061,10 @@ symbols:
   record: std.networking.operations
   section: cancellation
   declaration: network-operation-options
+- name: network-operation-options
+  record: std.networking.operations
+  section: operations
+  declaration: network-operation-options
 - name: networking
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -5276,6 +5272,10 @@ symbols:
 - name: none
   record: std.networking.operations
   section: cancellation
+  declaration: none
+- name: none
+  record: std.networking.operations
+  section: operations
   declaration: none
 - name: none
   record: std.time
@@ -6271,14 +6271,14 @@ symbols:
   record: book.identity-and-movement
   section: shared-references-and-ownership
   declaration: Rc
-- name: read-async
-  record: std.streams
-  section: byte-text-streams
-  declaration: read-async
 - name: read-exact
   record: std.streams
   section: byte-text-streams
   declaration: read-exact
+- name: read-into-async
+  record: std.streams
+  section: byte-text-streams
+  declaration: read-into-async
 - name: read-write-lock
   record: book.async
   section: sharing-mutable-state-by-giving-it-one-owner
@@ -7807,6 +7807,10 @@ symbols:
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
   declaration: task
+- name: task-group
+  record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: task-group
 - name: task-list
   record: book.classes-interfaces-and-traits
   section: exercises
@@ -7859,6 +7863,10 @@ symbols:
   record: book.types
   section: type-inference
   declaration: task-view
+- name: TaskOutcome
+  record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: TaskOutcome
 - name: tasks_native_local.rs
   record: internals.execution.runtime-selection
   section: cancellation
@@ -7867,6 +7875,14 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: tasks_native_parallel.rs
+- name: tcp-listener-options
+  record: std.networking.operations
+  section: operations
+  declaration: tcp-listener-options
+- name: tcp-options
+  record: std.networking.operations
+  section: operations
+  declaration: tcp-options
 - name: terminateDebuggee
   record: tool.debugging
   section: lifecycle
@@ -8952,6 +8968,10 @@ symbols:
   section: exercises
   declaration: value
 - name: value
+  record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: value
+- name: value
   record: lang.numerics.arithmetic-policies
   section: bounded-arithmetic
   declaration: value
@@ -9219,10 +9239,6 @@ symbols:
   record: std.streams
   section: byte-text-streams
   declaration: write-all
-- name: write-async
-  record: std.streams
-  section: byte-text-streams
-  declaration: write-async
 - name: writing-plan
   record: book.terrane-shaped-programs
   section: exercises

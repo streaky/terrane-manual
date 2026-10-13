@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 69927cc857ff2b1bfe96587d13f7ae2e58cf5385571b76d1bef7d9e93e144663
+  input-sha256: 8fba2f609ec1177428a67d3584b0f19d43f574cbf7273d6a5c940889d21d0aac
 format: 2
 generated: true
 records:
@@ -1515,8 +1515,8 @@ records:
   declaration-synopsis: []
 - id: std.networking.operations
   title: Asynchronous networking operations
-  summary: Describes the asynchronous TCP, UDP, DNS, and TLS operations, their deadline and cancellation
-    options, and their executor behavior.
+  summary: Describes asynchronous TCP, UDP, DNS, and TLS operations, transport options, results, and stream
+    protocols.
   kind: topic
   manual: reference
   group: Standard library
@@ -1524,7 +1524,7 @@ records:
   source: reference/records/standard-library/networking.yaml
   lifecycle-status: current
   documentation-status: complete
-  surface: /core/networking
+  surface: /core/networking/io
   provenance:
     specification: []
     conformance: []
@@ -2034,8 +2034,8 @@ records:
   declaration-synopsis: []
 - id: std.streams
   title: Byte and text streams
-  summary: Byte and text streams provide linear readers and writers, encoded adapters, and access to process
-    standard streams. Stream operations preserve cancellation behavior and report…
+  summary: Byte and text streams provide owning asynchronous reader and writer protocols, encoded adapters,
+    and access to process standard streams.
   kind: topic
   manual: reference
   group: Standard library
@@ -2708,6 +2708,9 @@ records:
     - cancelled-finally-error-wins
     - async-await
     - cooperative-task-scope
+    - structured-task-group
+    - task-group-failure-finally
+    - task-group-parent-cancellation
     - networking-tcp-loopback
     - projected-async-local-task-threaded
     - rust-dependency-async-function
@@ -2736,6 +2739,9 @@ records:
     sections: []
   - id: task-ownership-lowering
     title: Task ownership across the lowering boundary
+    sections: []
+  - id: task-groups
+    title: Structured task groups
     sections: []
   declaration-synopsis: []
 - id: internals.semantics.conversion-lowering

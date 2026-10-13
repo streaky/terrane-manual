@@ -231,6 +231,30 @@ documentation:
             `crates/terrane-compiler/src/semantics/ownership.rs`; task consumption
             obligations live in `crates/terrane-compiler/src/semantics/bindings.rs`; Rust
             call emission lives in `crates/terrane-compiler/src/lowering/emitter/calls.rs`.
+    - id: task-groups
+      title: Structured task groups
+      blocks:
+        - type: rule
+          id: rule.internals.execution.task-groups-join-all
+          level: must
+          since: null
+          evidence:
+            - structured-task-group
+            - task-group-failure-finally
+            - task-group-parent-cancellation
+          markdown: |-
+            The public `task-group` provides a flat structured workflow: create a group,
+            call `group.spawn;(work; args)`, then consume it with
+            `outcomes = await group.drain;`. Outcomes preserve spawn order and are
+            `TaskOutcome` values with the canonical `completed`, `cancelled`, `value`, and
+            `error` fields. A child failure promptly cancels siblings, while every child is
+            still joined and its finalizers run. Parent cancellation likewise waits for
+            child cleanup.
+
+            Draining is consuming and awaited on every exit path: groups cannot be aliased
+            or allowed to escape undrained. Group-aware function frames establish cleanup
+            context even when called by foreign callers. This structured API does not expose
+            Tokio or require a public Tokio dependency.
   see-also:
     - lang.functions.asynchronous
     - std.networking.operations
@@ -247,6 +271,9 @@ provenance:
     - cancelled-finally-error-wins
     - async-await
     - cooperative-task-scope
+    - structured-task-group
+    - task-group-failure-finally
+    - task-group-parent-cancellation
     - networking-tcp-loopback
     - projected-async-local-task-threaded
     - rust-dependency-async-function
