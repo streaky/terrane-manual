@@ -217,6 +217,7 @@ documentation:
           evidence:
             - rejoined-task-scope-child
             - structured-task-scope
+            - throwing-scoped-task
           markdown: |-
             Terrane task and scoped-task values are statically non-copyable. Passing an
             unpolled task into `scope.spawn`, passing a child into `scope.join`, and
@@ -231,6 +232,12 @@ documentation:
             `crates/terrane-compiler/src/semantics/ownership.rs`; task consumption
             obligations live in `crates/terrane-compiler/src/semantics/bindings.rs`; Rust
             call emission lives in `crates/terrane-compiler/src/lowering/emitter/calls.rs`.
+
+            When spawning a freshly constructed asynchronous invocation, lowering selects
+            its throwing ABI through the same contract lookup used for an ordinary await. A
+            failed invocation becomes a failed task outcome with an error, not a completed
+            outcome whose value is a native Result. Callable spawning retains the callable's
+            own throwing ABI.
     - id: task-groups
       title: Structured task groups
       blocks:

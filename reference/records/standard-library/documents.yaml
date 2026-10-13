@@ -63,16 +63,18 @@ documentation:
           since: null
           evidence:
             - typed-document-decoding
+            - typed-json-boundaries
           markdown: |-
             External keys come from the class field descriptor. Missing fields retain their
             canonical type default or explicit initializer; absent `T|none` fields retain
             their initialized optional value. Fields without a default diagnose. Unknown
             fields are recursively rejected or ignored only by the explicit call policy.
 
-            Integer conversions are exact and range checked. Decimal or integer input to a
-            binary float rounds to the nearest finite destination value, ties-to-even, just
-            as in an ordinary floating destination. Input outside the destination's finite
-            range diagnoses.
+            Integer conversions are exact and range checked, including integral inputs whose
+            canonical document representation uses scientific notation. Conversion never
+            passes through a binary float. Decimal or integer input to a binary float rounds
+            to the nearest finite destination value, ties-to-even, just as in an ordinary
+            floating destination. Input outside the destination's finite range diagnoses.
     - id: diagnostics
       title: Outcomes, diagnostics, and validation
       blocks:
@@ -82,6 +84,7 @@ documentation:
           since: null
           evidence:
             - typed-document-decoding
+            - typed-json-boundaries
           markdown: |-
             A typed decode outcome carries the concrete initialized destination and a
             deterministic typed list of all diagnostics. `failed` is true exactly when that
@@ -110,7 +113,10 @@ notes:
   security: >-
     JSON/YAML parser limits and duplicate-key rejection run before typed conversion. Unknown fields require explicit policy.
   performance: >-
-    Decoding constructs the known destination directly and does not allocate a universal boxed runtime value.
+    Typed decoding parses one bounded document tree and borrows its fields and collection items while constructing the known
+    destination, transferring owned strings and map keys into the result rather than copying them. Successful traversal does not
+    canonicalize JSON, clone document subtrees, or allocate diagnostic path strings. The generic document APIs retain their
+    observable canonical encoded values.
 
 examples: []
 
