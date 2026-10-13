@@ -51,7 +51,7 @@ documentation:
             and each method's own caller obligation without turning an interface into a
             general unchecked region.
 
-            Authored interface values are safe to capture in ordinary shared function
+            Ordinary copyable interface values are safe to capture in shared function
             values: their dispatch protocols require thread-safe transfer and sharing. An
             interface-typed field therefore satisfies those obligations by contract, so
             transferable classes may compose interface values directly and through nested
@@ -83,11 +83,15 @@ documentation:
             checked contract used at its call sites, and the conforming receiver provides
             the implementation reached through the interface dispatch boundary.
 
-            A source interface whose operations consume its receiver is an owning interface
-            protocol: a resource-owning class can implement it and be erased to that
-            interface. Erasing the value transfers ownership; it does not clone the concrete
-            resource. This does not relax nominal conformance or the compiler's `Send` and
-            `Sync` requirements for interface implementations.
+            A source interface with any consuming instance method is an owning interface
+            protocol, even when its other operations are shared or mutable. A
+            resource-owning class can implement it and be erased to that interface. Erasing
+            the value transfers ownership; it does not clone the concrete resource.
+            Assignment and passing the owning interface by value transfer it; shared and
+            mutable method calls borrow it. Reuse after transfer or a consuming invocation
+            is rejected. Owning erasure provides no general copy or clone operation. This
+            does not relax nominal conformance or the compiler's `Send` and `Sync`
+            requirements for interface implementations.
   see-also: []
 
 provenance:
