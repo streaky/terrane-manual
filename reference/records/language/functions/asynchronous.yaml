@@ -38,6 +38,8 @@ documentation:
             - async-await
             - rust-dependency-async-function
             - stored-throwing-await
+            - heterogeneous-task-reassignment
+            - task-group-stored-alias-finally
           markdown: |-
             Calling an `async function` constructs a linear Terrane task. `await` consumes
             that task exactly once and is valid only in an async callable. An asynchronous
@@ -48,6 +50,14 @@ documentation:
             Storing a task in a local binding does not discard its callable's error
             contract: awaiting it propagates the same errors as awaiting the invocation
             directly.
+
+            Here, `task of T` describes an inferred semantic type, not a writable type
+            annotation. The current language does not expose `task` as a parameter or
+            return-type constructor. Store tasks through inference; use an asynchronous
+            callable when an API needs to receive deferred work. Aliasing a stored task
+            transfers its single-use value and preserves the possible errors of its reaching
+            construction. Reassignment and branch assignment preserve the possible errors of
+            every reaching write.
 
             Projected async completion and hover information report wake, runtime-context,
             and transfer requirements in Terrane terms. An unknown requirement remains
@@ -72,7 +82,10 @@ documentation:
             transferable callable and reports a source diagnostic rather than relying on a
             generated-Rust `Send` error. Direct calls and immediate `await` keep concrete
             future types; boxing and pinning occur only at erased callable or heterogeneous
-            task-storage boundaries.
+            task-storage boundaries. A local slot that must hold futures with different
+            concrete types uses an erased pinned carrier; ordinary single-origin task slots
+            remain concrete. A carrier's uniform native result ABI does not make a
+            known-safe reaching task semantically throwing.
     - id: structured-concurrency
       title: Scoped child tasks
       blocks:
@@ -128,6 +141,9 @@ documentation:
             - task-group-implicit-finally
             - task-group-stored-throwing-await
             - task-group-deferred-call
+            - task-group-stored-alias-await
+            - task-group-reassigned-await
+            - task-group-branch-assigned-await
           markdown: |-
             `task-group; T` creates an owning local group whose child result type is one
             concrete transferable type. `group.spawn; callable` accepts a matching
