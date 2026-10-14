@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 86785c3552928012fad9bd80ace17a220ffb1073cc3f62feb16336f27d8631eb
+  input-sha256: 4c1178c70b0ffe7b2ade9815597fa6a36a3e8a8a77f9654a34b6de013e929baa
 format: 1
 generated: true
 symbols:
@@ -380,6 +380,10 @@ symbols:
   record: lang.declarations.annotations
   section: consumers
   declaration: /generated/annotation-codec/codec-model/account
+- name: /proc/sys/net/core/somaxconn
+  record: std.networking.operations
+  section: listener-backlog
+  declaration: /proc/sys/net/core/somaxconn
 - name: /work-report/errors
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -784,6 +788,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: bind
+- name: bind-tcp
+  record: std.networking.operations
+  section: listener-backlog
+  declaration: bind-tcp
 - name: bool
   record: book.classes-interfaces-and-traits
   section: defining-a-class
@@ -5149,6 +5157,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function nested-conditional int8; input int8
+- name: net.core.somaxconn
+  record: std.networking.operations
+  section: listener-backlog
+  declaration: net.core.somaxconn
 - name: networking
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -7979,6 +7991,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: tasks_native_parallel.rs
+- name: tcp-listener-options
+  record: std.networking.operations
+  section: listener-backlog
+  declaration: tcp-listener-options
 - name: tcp-listener-options
   record: std.networking.operations
   section: operations

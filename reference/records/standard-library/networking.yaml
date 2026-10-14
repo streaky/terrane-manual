@@ -62,8 +62,9 @@ documentation:
             reported through each operation's result contract. TCP creation accepts optional
             `tcp-options` (no-delay defaults to false; TTL `-1` leaves the OS setting
             unchanged). Listener binding accepts optional `tcp-listener-options` (backlog
-            defaults to 128, address reuse to false, accepted-socket no-delay to false, and
-            TTL `-1` leaves the OS setting unchanged).
+            defaults to `-1`, selecting the automatic policy below; address reuse defaults
+            to false, accepted-socket no-delay to false, and TTL `-1` leaves the OS setting
+            unchanged).
 
             These creation defaults intentionally replace the former forced no-delay setting
             and TTL 64. Supply explicit TCP settings to retain that policy; listener
@@ -83,6 +84,89 @@ documentation:
             busy when a retained read or write alias is pending: close does not interrupt
             that operation or discard either TLS half. Native callers must cancel or finish
             and join outstanding IO before retrying close.
+    - id: listener-backlog
+      title: Listener backlog defaults and overrides
+      blocks:
+        - type: rule
+          id: rule.networking.listener-backlog
+          level: must
+          since: null
+          evidence:
+            - networking-listener-backlog
+            - networking-tcp-loopback
+          markdown: |-
+            Omitting listener options, or constructing `tcp-listener-options` without a
+            backlog, selects `backlog = -1`. This sentinel remains in the options object;
+            its effective capacity is resolved separately for each `bind-tcp` call.
+
+            On Linux, automatic selection reads `net.core.somaxconn` from
+            `/proc/sys/net/core/somaxconn` at bind time, without a process-wide cache. Later
+            binds therefore pick up administrator changes. A positive decimal value is used,
+            clamped to `2147483647` if larger. Missing, inaccessible, empty, malformed,
+            nonpositive, or overlong settings (more than 64 bytes) fall back to 128. Other
+            targets currently use that same fallback rather than a platform lookup.
+
+            An explicit integer from 0 through `2147483647` bypasses discovery and is passed
+            to the operating system. Zero is not automatic; its interpretation is
+            platform-dependent. Values below `-1` or above the maximum produce a failed
+            listener result. Kernel limits still apply to both automatic and explicit
+            capacities.
+        - type: markdown
+          markdown: |-
+            Following the host's configured capacity avoids a small arbitrary admission
+            bottleneck and lets an administrator size the queue for connection bursts. A
+            queue overflow can trigger TCP retries even after the accept loop catches up.
+            This default absorbs a temporary mismatch between arrivals and accepts; it does
+            not fix sustained overload or limit active connections.
+
+            The tradeoff is host-dependent behavior. Larger queues can retain more pending
+            connections and increase waiting time under overload. Choose a smaller explicit
+            backlog to bound pending work or favor earlier refusal/recovery, while accepting
+            that overflow can itself cause retry delays. Choose an explicit size for a known
+            workload or consistent requested capacity across deployments; a larger request
+            cannot exceed the host's cap. Setting the field back to `-1` restores automatic
+            selection.
+        - type: example
+          id: listener-backlog-selection
+          title: Automatic capacity, explicit override, and reset
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace reference-examples/listener-backlog
+
+            from /core/networking import tcp-listener-options, socket-address-from-string, bind-tcp
+            from /core/process import exit, make-exit-status
+
+            function main;
+                address = socket-address-from-string; '127.0.0.1:0'
+                if address.failed
+                    exit; (make-exit-status; 1)
+                automatic = bind-tcp; address.value
+                if automatic.failed
+                    print; automatic.message
+                    exit; (make-exit-status; 1)
+                automatic-listener = move automatic.value
+                automatic-listener.close;
+
+                options = instance tcp-listener-options; 128
+                limited = bind-tcp; address.value, options
+                if limited.failed
+                    print; limited.message
+                    exit; (make-exit-status; 1)
+                limited-listener = move limited.value
+                limited-listener.close;
+
+                options.backlog = -1
+                restored = bind-tcp; address.value, options
+                if restored.failed
+                    print; restored.message
+                    exit; (make-exit-status; 1)
+                restored-listener = move restored.value
+                restored-listener.close;
+          response: null
+          diagnostic: null
     - id: cancellation
       title: Deadlines and cancellation
       blocks:
