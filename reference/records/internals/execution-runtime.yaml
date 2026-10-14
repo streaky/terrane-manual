@@ -269,16 +269,6 @@ documentation:
             therefore wake blocked tasks directly; native scope execution does not poll
             cancellation with a periodic timer.
 
-            Each pending cancellation future owns an indexed waiter registration. Repeated
-            polling updates that entry rather than scanning other tasks' wakers; dropping
-            the future removes it so a completed operation cannot retain its task through
-            the cancellation state. The mutex-protected hash registry gives average
-            constant-time registration, update, and removal. Registration rechecks the
-            cancellation flag under that same mutex to avoid losing a concurrent request.
-            Cancellation detaches all entries before waking them, and removed or replaced
-            wakers are destroyed outside the registry lock. This registry is separate from
-            finalizer-depth notifications.
-
             Lowered asynchronous `try` regions with `finally` install nested finalization
             guards. Only the innermost active guard may observe the request; it drops the
             pending Rust future, including operation-only foreign owners, before generated
