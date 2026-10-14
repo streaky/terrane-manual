@@ -61,6 +61,13 @@ documentation:
             Reassignment and branch assignment preserve the possible errors of every
             reaching write; awaiting a reassigned task counts as reading that write.
 
+            This is a current expressibility limitation, not implicit task-return inference:
+            returning a task-constructing expression from an ordinary synchronous function
+            does not make the result seen by callers task-typed. Such a wrapper is not a
+            supported task factory. Expose an `async function` with the eventual result type
+            and await the operation inside it, or pass an asynchronous callable as deferred
+            work instead.
+
             Projected async completion and hover information report wake, runtime-context,
             and transfer requirements in Terrane terms. An unknown requirement remains
             conservative rather than selecting a hidden blocking fallback.

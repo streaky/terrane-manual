@@ -42,8 +42,18 @@ documentation:
             remains alive; this does not rebind the socket. After the originating runtime
             shuts down, a pending readiness operation reports an IO failure. Source async
             entrypoints use one selected runtime; native synchronous adapters retain their
-            process-lifetime network runtime. Synchronous UDP operations wait on retained
-            readiness rather than toggling the socket's shared nonblocking mode.
+            process-lifetime network runtime. Native synchronous networking runs off-runtime
+            or uses blocking delegation on a multithread runtime. It rejects calls while a
+            current-thread runtime handle is entered: callers must delegate into an
+            off-runtime context while allowing the originating reactor to progress, rather
+            than block its sole thread. Delegation that still exposes a current-thread
+            runtime handle remains rejected. This restriction is specific to native
+            synchronous adapters: Terrane core TCP connect, accept, read, and write APIs are
+            asynchronous. Synchronous UDP operations wait on retained readiness rather than
+            toggling the socket's shared nonblocking mode. Because `O_NONBLOCK` is shared
+            across duplicated descriptors for a socket, asynchronous registration may leave
+            the underlying socket nonblocking after the registration is dropped; dropping
+            the duplicate does not restore the prior mode.
 
             Shared `io-operation-options` and cancellation-token types are provided by
             `/core/io`. The options argument is optional and defaults to `none`: this

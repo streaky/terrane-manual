@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0a1c691033eb065d22b01959eaf5cb7bcf58f1e7d50799212d878484b98b7e1d
+  input-sha256: 2ed44a3551a470a5e6e0ff7dcfebdfde2c05ecfe1692bd6d82d148d2ef582f54
 format: 1
 generated: true
 symbols:
@@ -1845,14 +1845,30 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: crates/terrane-compiler/src/cache_identity.rs
+- name: crates/terrane-compiler/src/core/streams.trn
+  record: internals.execution.runtime-selection
+  section: callback-snapshot-ownership
+  declaration: crates/terrane-compiler/src/core/streams.trn
+- name: crates/terrane-compiler/src/core/streams.trn
+  record: internals.execution.runtime-selection
+  section: stream-adapters
+  declaration: crates/terrane-compiler/src/core/streams.trn
 - name: crates/terrane-compiler/src/execution.rs
   record: internals.execution.runtime-selection
   section: requirements
   declaration: crates/terrane-compiler/src/execution.rs
 - name: crates/terrane-compiler/src/lowering/emitter/calls.rs
   record: internals.execution.runtime-selection
+  section: host-intrinsic-abi-names
+  declaration: crates/terrane-compiler/src/lowering/emitter/calls.rs
+- name: crates/terrane-compiler/src/lowering/emitter/calls.rs
+  record: internals.execution.runtime-selection
   section: task-ownership-lowering
   declaration: crates/terrane-compiler/src/lowering/emitter/calls.rs
+- name: crates/terrane-compiler/src/lowering/emitter/items/objects.rs
+  record: internals.execution.runtime-selection
+  section: callback-snapshot-ownership
+  declaration: crates/terrane-compiler/src/lowering/emitter/items/objects.rs
 - name: crates/terrane-compiler/src/lowering/emitter/pipeline.rs
   record: internals.execution.runtime-selection
   section: strategy
@@ -1861,10 +1877,18 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: crates/terrane-compiler/src/lowering/emitter/statements.rs
+- name: crates/terrane-compiler/src/lowering/helpers.rs
+  record: internals.execution.runtime-selection
+  section: generated-support
+  declaration: crates/terrane-compiler/src/lowering/helpers.rs
 - name: crates/terrane-compiler/src/runtime/async_native.rs
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: crates/terrane-compiler/src/runtime/async_native.rs
+- name: crates/terrane-compiler/src/runtime/task_groups_native.rs
+  record: internals.execution.runtime-selection
+  section: task-groups
+  declaration: crates/terrane-compiler/src/runtime/task_groups_native.rs
 - name: crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs
   record: internals.projection.resolution
   section: identity
@@ -1881,6 +1905,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
   declaration: crates/terrane-compiler/src/semantics/ownership.rs
+- name: crates/terrane-compiler/src/semantics/task_groups.rs
+  record: internals.execution.runtime-selection
+  section: async-analysis-boundaries
+  declaration: crates/terrane-compiler/src/semantics/task_groups.rs
 - name: created-item
   record: lang.lexical-structure.keywords
   section: always-reserved
@@ -2561,6 +2589,10 @@ symbols:
   record: lang.functions.callable-types
   section: exact-metadata
   declaration: exact-invocation-mode
+- name: exact-read-progress
+  record: internals.execution.runtime-selection
+  section: stream-adapters
+  declaration: exact-read-progress
 - name: executable
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -3209,6 +3241,10 @@ symbols:
   record: lang.numerics.conversion
   section: declared-family
   declaration: floor
+- name: FlowEnv
+  record: internals.execution.runtime-selection
+  section: async-analysis-boundaries
+  declaration: FlowEnv
 - name: flush
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -3445,6 +3481,10 @@ symbols:
   record: lang.types.authority-in-practice
   section: declaration-table
   declaration: function retain none; value shared ref some-type
+- name: FunctionContract
+  record: internals.execution.runtime-selection
+  section: host-intrinsic-abi-names
+  declaration: FunctionContract
 - name: functions.rs
   record: internals.projection.resolution
   section: resolution
@@ -4317,6 +4357,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: items.rs
+- name: items/projected_interfaces.rs
+  record: internals.execution.runtime-selection
+  section: callback-snapshot-ownership
+  declaration: items/projected_interfaces.rs
 - name: iterator
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
@@ -5113,6 +5157,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: networking
+- name: networking.trn
+  record: internals.execution.runtime-selection
+  section: stream-adapters
+  declaration: networking.trn
 - name: NEWLINE
   record: lang.lexical-structure.source-layout
   section: utf8-layout
@@ -5421,6 +5469,10 @@ symbols:
   record: book.decisions-and-repetition
   section: project-classify-a-range-of-numbers
   declaration: number-classifier.trn
+- name: O_NONBLOCK
+  record: std.networking.operations
+  section: operations
+  declaration: O_NONBLOCK
 - name: object
   record: lang.types.descriptors
   section: type-descriptors
@@ -5699,6 +5751,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: package.toml
+- name: package_uses_advanced_streams
+  record: internals.execution.runtime-selection
+  section: generated-support
+  declaration: package_uses_advanced_streams
 - name: packing-list.trn
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -7143,6 +7199,10 @@ symbols:
   record: lang.functions.declarations
   section: declaration
   declaration: self::member
+- name: semantics/contracts.rs
+  record: internals.execution.runtime-selection
+  section: async-analysis-boundaries
+  declaration: semantics/contracts.rs
 - name: send
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -8383,6 +8443,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: tls
+- name: tls.trn
+  record: internals.execution.runtime-selection
+  section: stream-adapters
+  declaration: tls.trn
 - name: to
   record: book.types
   section: function-types
@@ -9291,6 +9355,10 @@ symbols:
   record: std.streams
   section: byte-text-streams
   declaration: write-all
+- name: write-progress
+  record: internals.execution.runtime-selection
+  section: stream-adapters
+  declaration: write-progress
 - name: writing-plan
   record: book.terrane-shaped-programs
   section: exercises

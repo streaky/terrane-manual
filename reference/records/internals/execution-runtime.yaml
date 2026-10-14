@@ -94,8 +94,90 @@ documentation:
 
             An asynchronous entrypoint is wrapped in exactly one selected wake-driven
             runtime. The generated Cargo dependency and support modules follow the same
-            semantic decision so synchronous packages do not acquire an unused runtime.
-            Generated module assembly remains deterministic for identical semantic input.
+            semantic decision so synchronous packages do not acquire an unused runtime. The
+            optional advanced-stream bundle uses a conservative authored-demand test, not
+            general call-graph reachability or dead-code elimination. Any authored
+            asynchronous function activates the bundle, even if it does not itself call an
+            advanced stream operation. This keeps selection simple and avoids omitting
+            support reachable through indirect or otherwise difficult-to-prove use; it is an
+            implementation tradeoff, not a claim that all bundled support is necessary for
+            every such function. The decision is made by `package_uses_advanced_streams` in
+            `crates/terrane-compiler/src/lowering/helpers.rs`.
+    - id: stream-adapters
+      title: Concrete stream adapters and shared completion policy
+      blocks:
+        - type: rule
+          id: rule.internals.execution.stream-adapter-progress
+          level: must
+          since: null
+          evidence:
+            - networking-tcp-loopback
+          markdown: |-
+            Exact-read and write-all completion use shared progress state and policy while
+            TCP and TLS adapters retain their transport-specific host calls and ownership.
+            These are short adapter-specific loops, rather than one erased-interface
+            implementation: keeping each concrete call path avoids boxing through an erased
+            stream interface and avoids copying buffers merely to share loop structure. The
+            shared `exact-read-progress` and `write-progress` policy is implemented in
+            `crates/terrane-compiler/src/core/streams.trn`; concrete async adapters are in
+            `networking.trn` and `tls.trn`.
+    - id: async-analysis-boundaries
+      title: Separate async liveness and ownership analyses
+      blocks:
+        - type: rule
+          id: rule.internals.execution.async-analyses-share-throwable-query
+          level: must
+          since: null
+          evidence:
+            - structured-task-group
+            - task-group-failure-finally
+          markdown: |-
+            Scoped-group liveness uses a set of source spans rather than the ownership
+            analysis `FlowEnv`, so its transfer walk remains separate instead of forcing
+            both analyses into one state representation. It deliberately shares the
+            canonical fixed-point escaping-throwable query, along with the language's
+            branch/finally structure and exit validation; this avoids duplicating effect
+            inference while retaining distinct liveness and ownership state. The rationale
+            is recorded beside the walker in
+            `crates/terrane-compiler/src/semantics/task_groups.rs`; throwable inference is
+            in `semantics/contracts.rs`.
+    - id: host-intrinsic-abi-names
+      title: Private host intrinsic argument mapping
+      blocks:
+        - type: rule
+          id: rule.internals.execution.intrinsic-abi-names-explicit
+          level: must
+          since: null
+          evidence:
+            - networking-tcp-loopback
+          markdown: |-
+            Private host intrinsics have no source `FunctionContract`. The byte-buffer and
+            TCP/TLS bridge adaptations therefore record ABI parameter names alongside
+            resolved intrinsic identities and use parameter roles for argument conversion,
+            rather than deriving names from a nonexistent source contract or scattering
+            positional-index rules. The mapping and its rationale are in
+            `crates/terrane-compiler/src/lowering/emitter/calls.rs`; when adding a bridge
+            operation, update those names and semantic return inference as well as Rust
+            emission.
+    - id: callback-snapshot-ownership
+      title: Async callback snapshots and erased ownership
+      blocks:
+        - type: rule
+          id: rule.internals.execution.callback-snapshots-preserve-erased-ownership
+          level: must
+          since: null
+          evidence:
+            - rust-dependency-callbacks
+          markdown: |-
+            Foreign cancellation shielding can require an owned receiver snapshot for a
+            private async callback. For a resource-owning erased interface, that internal
+            snapshot operation does not restore public cloneability or separation on the
+            owning erased interface: cloning an owning stream value would conflict with
+            transfer-based ownership. The compiler emits a private callback-snapshot hook
+            only for that boundary; the source comment is in
+            `crates/terrane-compiler/src/lowering/emitter/items/objects.rs`, with its use in
+            `items/projected_interfaces.rs`. The broader owning byte-I/O contract is in
+            `crates/terrane-compiler/src/core/streams.trn`.
     - id: heterogeneous-selection
       title: Selection state and cancellation runtime
       blocks:
@@ -264,9 +346,19 @@ documentation:
             Tokio or require a public Tokio dependency.
 
             As a defensive native boundary, dropping an undrained group requests child
-            cancellation immediately and retains its join state until enclosing async
-            boundary cleanup. Rust `Drop` cannot await finalizers; this fallback does not
-            replace the source requirement to drain before leaving the owning scope.
+            cancellation immediately. With an enclosing async cancellation context, its join
+            state is retained until boundary cleanup, which still joins children and their
+            finalizers. The group and unfinished cleanup can therefore remain retained until
+            that boundary is reached; dropping does not synchronously finish cleanup before
+            a surrounding catch. Rust `Drop` cannot await finalizers, so this fallback does
+            not replace the source requirement to drain before leaving the owning scope.
+
+            Generated group-aware frames establish this context for foreign invocation too.
+            Raw native callers that bypass those frames and drop an undrained group without
+            a cancellation context receive only last-resort cancellation and handle abort,
+            not an awaited-finalizer guarantee. This defensive path is not a supported
+            source-level scope-exit strategy. The native implementation is in
+            `crates/terrane-compiler/src/runtime/task_groups_native.rs`.
   see-also:
     - lang.functions.asynchronous
     - std.networking.operations
