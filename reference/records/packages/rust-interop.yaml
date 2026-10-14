@@ -43,6 +43,13 @@ documentation:
             surrounding Terrane lifetime and escape checks. Owned, reusable inputs retain
             their ordinary value-separation behavior.
 
+            For core TCP transports, prefer the supported consuming `into-native` boundary
+            over extracting private resource handles. `/core/networking/native` provides
+            native listener, stream, and socket-address types usable in ordinary typed
+            adapters and projected generic calls. The compiler supplies the runtime
+            dependency owner; the receiving integration owns transport cleanup. See
+            [[std.networking.operations#native-transport]].
+
             Packages can also include maintained Rust source files declared in the manifest.
             A Rust module declaration maps a module name to an authored `.rs` file:
         - type: example

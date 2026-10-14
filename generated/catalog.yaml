@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 095e420956979ced93c10845c4c2f866c70bb69db4ee4a935fb53eebcb75800b
+  input-sha256: 287f95149283ee62e5bf9bbabcd908b8cea01e901f8d6499d850ef738eba4de1
 format: 2
 generated: true
 records:
@@ -1538,6 +1538,9 @@ records:
     sections: []
   - id: listener-backlog
     title: Listener backlog defaults and overrides
+    sections: []
+  - id: native-transport
+    title: Native TCP interoperability
     sections: []
   - id: cancellation
     title: Deadlines and cancellation

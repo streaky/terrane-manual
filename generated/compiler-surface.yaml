@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5b5020cd4145e9b26ec30d0f49d442faaee6cb3884f3584f0f79349037fa856c
+  input-sha256: ed99546c3912c1b0630eebdceb00a9423887d4bf5d7d7a40c61a2de9ae68854e
 format: 1
 generated: true
 modules:
@@ -432,89 +432,103 @@ modules:
   declarations: []
 - source: crates/terrane-compiler/src/core/networking.trn
   declarations:
-  - declaration: class tcp-options
-    line: 8
-  - declaration: function construct; no-delay bool = false, ttl int = -1
-    line: 12
-  - declaration: class tcp-listener-options
+  - declaration: class network-error implements throwable
+    line: 10
+  - declaration: function construct; message string
+    line: 13
+  - declaration: function render string
     line: 16
+  - declaration: class tcp-options
+    line: 19
+  - declaration: function construct; no-delay bool = false, ttl int = -1
+    line: 23
+  - declaration: class tcp-listener-options
+    line: 27
   - declaration: function construct; backlog int = -1, reuse-address bool = false, accepted-no-delay bool
       = false, accepted-ttl int = -1
-    line: 22
+    line: 33
   - declaration: class udp-options
-    line: 30
+    line: 41
   - declaration: function construct; broadcast bool, ttl int
-    line: 34
+    line: 45
   - declaration: class ip-address
-    line: 39
+    line: 50
   - declaration: function string string
-    line: 49
+    line: 60
   - declaration: class ip-result
-    line: 52
+    line: 63
   - declaration: function construct; failed bool, message string, address ip-address
-    line: 57
-  - declaration: function ip-address-from-string ip-result; text string
-    line: 62
-  - declaration: class socket-address
     line: 68
+  - declaration: function ip-address-from-string ip-result; text string
+    line: 73
+  - declaration: class socket-address
+    line: 79
   - declaration: function string string
-    line: 78
+    line: 89
   - declaration: class socket-result
-    line: 81
+    line: 92
   - declaration: function construct; failed bool, message string, address socket-address
-    line: 86
+    line: 97
   - declaration: function socket-address-from-ip socket-result; ip ip-address, port int
-    line: 91
+    line: 102
   - declaration: function socket-address-from-string socket-result; text string
-    line: 98
+    line: 109
   - declaration: class tcp-stream implements async-byte-reader, async-byte-writer
-    line: 107
+    line: 118
   - declaration: function configure io-operation-result; options tcp-options
-    line: 157
-  - declaration: function shutdown io-operation-result; direction string
-    line: 161
-  - declaration: class stream-result
     line: 173
+  - declaration: function shutdown io-operation-result; direction string
+    line: 177
+  - declaration: class stream-result
+    line: 189
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, peer string,
       stream tcp-stream
-    line: 180
+    line: 196
   - declaration: class tcp-listener
-    line: 211
+    line: 227
   - declaration: class listener-result
-    line: 232
+    line: 253
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, listener tcp-listener
-    line: 238
+    line: 259
   - declaration: function bind-tcp listener-result; address socket-address, options tcp-listener-options|none
       = none
-    line: 244
+    line: 265
   - declaration: class datagram-io-result
-    line: 256
+    line: 290
   - declaration: function construct; failed bool, truncated bool, deadline-exceeded bool, message string,
       data bytes, completed int, peer string
-    line: 265
+    line: 299
   - declaration: class udp-socket
-    line: 274
+    line: 308
   - declaration: function configure io-operation-result; options udp-options
-    line: 293
+    line: 327
   - declaration: class udp-result
-    line: 304
+    line: 338
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, socket udp-socket
-    line: 310
+    line: 344
   - declaration: function bind-udp udp-result; address socket-address
-    line: 316
+    line: 350
   - declaration: class dns-result
-    line: 323
+    line: 357
   - declaration: function construct; failed bool, deadline-exceeded bool, message string, ttl int, ttl-known
       bool, candidates list of string
-    line: 331
+    line: 365
   - declaration: class network-host-name
-    line: 339
+    line: 373
   - declaration: class network-host-name-result
-    line: 345
+    line: 379
   - declaration: function construct; failed bool, message string, host network-host-name
-    line: 350
+    line: 384
   - declaration: function parse-host-name network-host-name-result; text string
-    line: 355
+    line: 389
+- source: crates/terrane-compiler/src/core/networking_native.trn
+  declarations:
+  - declaration: class native-tcp-listener
+    line: 3
+  - declaration: class native-tcp-stream
+    line: 7
+  - declaration: class native-socket-address
+    line: 11
 - source: crates/terrane-compiler/src/core/paths.trn
   declarations:
   - declaration: class path

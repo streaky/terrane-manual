@@ -175,6 +175,73 @@ documentation:
                 restored-listener.close;
           response: null
           diagnostic: null
+    - id: native-transport
+      title: Native TCP interoperability
+      blocks:
+        - type: rule
+          id: rule.networking.native-transport
+          level: must
+          since: null
+          evidence:
+            - core-native-transport
+            - core-native-address
+            - core-native-copy
+            - core-native-use-after
+            - core-native-fabrication
+            - projected-websocket-protocol
+          markdown: |-
+            `listen-tcp; address, options` asynchronously resolves a textual host/port and
+            binds a core `tcp-listener`, trying resolved addresses in order. It accepts the
+            same optional listener policy as `bind-tcp`, exposes the actual bound address
+            through `local-address`, and throws `network-error` on resolution or bind
+            failure. `bind-tcp` remains the result-returning operation for a parsed
+            `socket-address`.
+
+            `tcp-listener.into-native` and `tcp-stream.into-native` consume their receiver
+            and return `native-tcp-listener` and `native-tcp-stream` from
+            `/core/networking/native`. These are non-cloneable native transport values, not
+            fresh connections or another networking implementation. They cannot be
+            constructed directly, and the consumed core value cannot subsequently be used.
+            Handoff failure throws `network-error`; the receiver is still consumed. These
+            names are interoperability carriers, not a projection of Tokio's complete source
+            API. Use ordinary core networking until transfer, then the receiving library's
+            operations.
+
+            The current native representations are Tokio's owned TCP listener and stream. A
+            stream therefore already implements Tokio's `AsyncRead` and `AsyncWrite`;
+            integrations can pass the listener directly to compatible projected Rust APIs.
+            `native-socket-address` names the standard-library socket-address type used by
+            such APIs, including peer connection metadata. Application manifests need not
+            declare Tokio solely to name or obtain these transports: the compiler binds its
+            private runtime owner into projection and generated builds. Native
+            interoperability currently requires one resolved Tokio version in the dependency
+            inventory; incompatible multiple owners are diagnosed rather than coerced.
+
+            Handoff requires an active Tokio runtime and no in-flight operation retaining
+            the transport. An existing registration is transferred without re-registration;
+            an unregistered transport is registered once. The originating reactor must
+            remain alive. After successful transfer, closing or dropping the old host
+            capability cannot close the exported socket. The recipient owns shutdown and
+            cleanup; core operation options are not automatically applied to foreign IO.
+
+            Listener binding installs accepted no-delay and TTL settings on the listening
+            socket so native accepts inherit the policy, including connections already
+            queued before handoff. Backlog and local/peer addresses are preserved. Core
+            retains its ordinary per-accept configuration as well. This is a general
+            transport boundary, not an HTTP adapter or a second executor.
+        - type: example
+          language: terrane
+          mode: illustrative
+          title: Transfer a core listener to a native integration
+          source: |-
+            from /core/networking import listen-tcp, network-error
+            from /core/networking/native import native-tcp-listener
+
+            async function open-listener native-tcp-listener throws network-error;
+                listener = await listen-tcp; 'localhost:8080'
+                return listener.into-native;
+          response: null
+          diagnostic: null
     - id: cancellation
       title: Deadlines and cancellation
       blocks:

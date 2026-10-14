@@ -251,6 +251,22 @@ documentation:
             blocking-pool capacity at one while completing substantially more concurrent
             socket operations. This guards the architectural boundary: readiness-capable
             network operations must not regress to universal `spawn_blocking` offload.
+
+            Native TCP handoff detaches the stored transport through
+            `terrane-platform-support/src/networking_native.rs`; it does not duplicate or
+            register a socket for each subsequent read/write. Already registered transports
+            retain their reactor identity. Unregistered transports register on transfer, and
+            busy transfers fail without losing the host resource. Listener accepted settings
+            are installed before listening so even already-queued native accepts inherit the
+            policy.
+
+            Core native type metadata binds the actual resolved Tokio dependency owner
+            before the projection oracle checks ecosystem generic bounds. This private
+            dependency participates in both the oracle workspace and emitted Cargo
+            inventory; source applications need not redeclare Tokio. CLI, conformance, and
+            oracle builds publish the same platform sources through
+            `terrane_compiler::write_platform_support`, preventing divergent embedded
+            transport implementations.
     - id: cancellation
       title: Wake-driven cancellation and cleanup
       blocks:

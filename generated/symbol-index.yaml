@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 095e420956979ced93c10845c4c2f866c70bb69db4ee4a935fb53eebcb75800b
+  input-sha256: 287f95149283ee62e5bf9bbabcd908b8cea01e901f8d6499d850ef738eba4de1
 format: 1
 generated: true
 symbols:
@@ -192,6 +192,14 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/networking
+- name: /core/networking/native
+  record: std.networking.operations
+  section: native-transport
+  declaration: /core/networking/native
+- name: /core/networking/native
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: /core/networking/native
 - name: /core/networking/tls
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -664,6 +672,14 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sinks
   declaration: async-sink-outcome
+- name: AsyncRead
+  record: std.networking.operations
+  section: native-transport
+  declaration: AsyncRead
+- name: AsyncWrite
+  record: std.networking.operations
+  section: native-transport
+  declaration: AsyncWrite
 - name: atomic-int64
   record: std.concurrency.shared-state
   section: unavailable-cells
@@ -791,6 +807,10 @@ symbols:
 - name: bind-tcp
   record: std.networking.operations
   section: listener-backlog
+  declaration: bind-tcp
+- name: bind-tcp
+  record: std.networking.operations
+  section: native-transport
   declaration: bind-tcp
 - name: bool
   record: book.classes-interfaces-and-traits
@@ -4217,6 +4237,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: interfaces.rs
+- name: into-native
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: into-native
 - name: IntoFuture
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -4557,6 +4581,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: strategy
   declaration: Local
+- name: local-address
+  record: std.networking.operations
+  section: native-transport
+  declaration: local-address
 - name: locals
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -5105,10 +5133,22 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: native-raw
+- name: native-socket-address
+  record: std.networking.operations
+  section: native-transport
+  declaration: native-socket-address
 - name: native-string
   record: std.process
   section: process
   declaration: native-string
+- name: native-tcp-listener
+  record: std.networking.operations
+  section: native-transport
+  declaration: native-tcp-listener
+- name: native-tcp-stream
+  record: std.networking.operations
+  section: native-transport
+  declaration: native-tcp-stream
 - name: native-text
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -5161,6 +5201,10 @@ symbols:
   record: std.networking.operations
   section: listener-backlog
   declaration: net.core.somaxconn
+- name: network-error
+  record: std.networking.operations
+  section: native-transport
+  declaration: network-error
 - name: networking
   record: tool.packages.package-manifest
   section: capabilities-and-effects
@@ -7399,6 +7443,10 @@ symbols:
   record: internals.lowering.rust-output
   section: rust-lowering
   declaration: socket-addr
+- name: socket-address
+  record: std.networking.operations
+  section: native-transport
+  declaration: socket-address
 - name: SocketAddr
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -7995,6 +8043,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: cancellation
   declaration: tasks_native_parallel.rs
+- name: tcp-listener
+  record: std.networking.operations
+  section: native-transport
+  declaration: tcp-listener
 - name: tcp-listener-options
   record: std.networking.operations
   section: listener-backlog
@@ -8003,10 +8055,18 @@ symbols:
   record: std.networking.operations
   section: operations
   declaration: tcp-listener-options
+- name: tcp-listener.into-native
+  record: std.networking.operations
+  section: native-transport
+  declaration: tcp-listener.into-native
 - name: tcp-options
   record: std.networking.operations
   section: operations
   declaration: tcp-options
+- name: tcp-stream.into-native
+  record: std.networking.operations
+  section: native-transport
+  declaration: tcp-stream.into-native
 - name: terminateDebuggee
   record: tool.debugging
   section: lifecycle
@@ -8087,6 +8147,10 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: terrane-language-server
+- name: terrane-platform-support/src/networking_native.rs
+  record: internals.execution.runtime-selection
+  section: readiness-io
+  declaration: terrane-platform-support/src/networking_native.rs
 - name: terrane-profile
   record: internals.build.toolchain-profiles
   section: generated-artifacts
@@ -8147,6 +8211,10 @@ symbols:
   record: internals.projection.resolution
   section: subsystem-ownership
   declaration: terrane_compiler::rust_interop
+- name: terrane_compiler::write_platform_support
+  record: internals.execution.runtime-selection
+  section: readiness-io
+  declaration: terrane_compiler::write_platform_support
 - name: terrane_program
   record: internals.build.toolchain-profiles
   section: generated-artifacts
