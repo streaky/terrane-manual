@@ -126,6 +126,14 @@ documentation:
             workload or consistent requested capacity across deployments; a larger request
             cannot exceed the host's cap. Setting the field back to `-1` restores automatic
             selection.
+
+            On Linux, requesting `2147483647` and relying on the kernel's `somaxconn` clamp
+            is another possible policy. It avoids procfs access, including in sandboxes
+            where procfs is unavailable. Terrane instead discovers a validated host value to
+            make the requested capacity explicit, with a defined fallback when discovery
+            fails; it does not assume that Linux's maximum-clamping behavior is a portable
+            discovery mechanism. This is a policy choice, not a claim that the
+            kernel-clamped alternative is incorrect.
         - type: example
           id: listener-backlog-selection
           title: Automatic capacity, explicit override, and reset

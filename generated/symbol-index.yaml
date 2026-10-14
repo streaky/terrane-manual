@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4c1178c70b0ffe7b2ade9815597fa6a36a3e8a8a77f9654a34b6de013e929baa
+  input-sha256: 095e420956979ced93c10845c4c2f866c70bb69db4ee4a935fb53eebcb75800b
 format: 1
 generated: true
 symbols:
@@ -7411,6 +7411,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: SocketAddr
+- name: somaxconn
+  record: std.networking.operations
+  section: listener-backlog
+  declaration: somaxconn
 - name: Some
   record: internals.projection.resolution
   section: async-sequences
