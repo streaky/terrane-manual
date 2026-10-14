@@ -124,9 +124,37 @@ documentation:
             Pending readiness-based socket operations do not occupy an executor worker.
             Socket deadline and cancellation outcomes retain the operation's explicit source
             contract.
+    - id: connection-reuse-recipe
+      title: "Recipe: connection-owned reuse"
+      blocks:
+        - type: markdown
+          markdown: |-
+            When the application protocol permits serial connection reuse:
+
+            1. Give each connection task sole ownership of its stream. Frame and validate
+               one complete request/response before starting the next exchange on that
+               stream; TCP keepalive probes are not application-level connection reuse.
+            2. Make logical requests available through an application work coordinator. Each
+               established connection owner claims another request after validating its
+               previous response. A smaller fixed connection limit is a separate concurrency
+               policy, not a prerequisite for reuse.
+            3. Count completed requests, not accepted connections. On completion or error,
+               stop accepting, cancel unused dials, close owned streams, and drain/join
+               every task group and scope before returning.
+
+            This owner-task pattern is not a general idle-connection pool. Resource-owning
+            collections are currently unsupported, and built-in channel endpoints remain
+            linear single-producer/single-consumer paths, not an implicit shared mailbox.
+
+            Choose listener backlog separately to absorb the expected admission burst; it
+            does not limit active connections. When benchmarking, match connection reuse and
+            shutdown policies as well as request count and protocol. A pooled client can
+            finish requests while unrelated background dials are still pending.
 relationships:
   see-also:
     - lang.functions.asynchronous
+    - std.concurrency.channels
+    - std.concurrency.shared-state
   supersedes: []
   superseded-by: []
   conflicts-with: []
