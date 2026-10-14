@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 50b773eb4be8d79606007bb11c1b7e4a0afcba67cc203b9377f8941d13563a0a
+  input-sha256: 7dc7543e3e9800ae9bbab9a974dab6d79774c62b09905d208202fd2de0805f1d
 format: 1
 generated: true
 diagnostics:
@@ -1530,7 +1530,7 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1563
+    line: 1576
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 548
 - code: T0028
@@ -2895,11 +2895,14 @@ diagnostics:
   messages:
   - initial value assigned to `{}` is never read
   - value assigned to `{}` is never read
+  - pending = (value; 2)
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 314
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 319
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 326
 - code: W4003
   messages:
   - union arm `{text}` duplicates an earlier arm
@@ -2918,7 +2921,9 @@ diagnostics:
 - code: W4005
   messages:
   - function `{}` is never referenced
-  - main.trn
+  - 'namespace task-liveness
+
+    '
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 677

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 52cdbc51383a7967222c87ea35276a2ea1080d544e42a07e0c468e9b7747956a
+  input-sha256: 0a1c691033eb065d22b01959eaf5cb7bcf58f1e7d50799212d878484b98b7e1d
 format: 1
 generated: true
 symbols:
@@ -4880,6 +4880,10 @@ symbols:
 - name: move
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
+  declaration: move
+- name: move
+  record: lang.functions.asynchronous
+  section: invocation
   declaration: move
 - name: move
   record: lang.functions.asynchronous

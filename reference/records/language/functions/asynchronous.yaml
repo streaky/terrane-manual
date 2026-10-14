@@ -40,6 +40,7 @@ documentation:
             - stored-throwing-await
             - heterogeneous-task-reassignment
             - task-group-stored-alias-finally
+            - moved-throwing-await
           markdown: |-
             Calling an `async function` constructs a linear Terrane task. `await` consumes
             that task exactly once and is valid only in an async callable. An asynchronous
@@ -54,10 +55,11 @@ documentation:
             Here, `task of T` describes an inferred semantic type, not a writable type
             annotation. The current language does not expose `task` as a parameter or
             return-type constructor. Store tasks through inference; use an asynchronous
-            callable when an API needs to receive deferred work. Aliasing a stored task
-            transfers its single-use value and preserves the possible errors of its reaching
-            construction. Reassignment and branch assignment preserve the possible errors of
-            every reaching write.
+            callable when an API needs to receive deferred work. Aliasing a stored task,
+            including an explicit `move` with or without parentheses, transfers its
+            single-use value and preserves the possible errors of its reaching construction.
+            Reassignment and branch assignment preserve the possible errors of every
+            reaching write; awaiting a reassigned task counts as reading that write.
 
             Projected async completion and hover information report wake, runtime-context,
             and transfer requirements in Terrane terms. An unknown requirement remains
@@ -144,6 +146,8 @@ documentation:
             - task-group-stored-alias-await
             - task-group-reassigned-await
             - task-group-branch-assigned-await
+            - task-group-moved-await
+            - task-group-parenthesized-moved-await
           markdown: |-
             `task-group; T` creates an owning local group whose child result type is one
             concrete transferable type. `group.spawn; callable` accepts a matching
