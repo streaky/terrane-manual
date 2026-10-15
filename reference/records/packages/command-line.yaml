@@ -245,6 +245,7 @@ documentation:
             terrane package hash --git https://example.invalid/work-report-formatters.git --tag v1.2.3
             terrane package hash --archive https://github.com/example/formatters/releases/download/v1.2.3/formatters-source.tar.gz
             terrane package hash --archive https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip
+            terrane package hash --archive https://github.com/example/formatters/archive/refs/tags/v1.2.3.tar.gz
           response: null
           diagnostic: null
           markdown: null
@@ -254,9 +255,12 @@ documentation:
             point to release assets or GitHub source archives; examples are illustrative and
             do not assert that those URLs are published. Archive extraction accepts a root
             `package.toml` or exactly one wrapper directory containing it. Safe extraction
-            rejects links, devices and unsafe/conflicting paths, with limits of 128 MiB
-            downloaded, 512 MiB expanded, and 10,000 entries. Hashes cover normalized
-            extracted tree contents, not compressed archive bytes.
+            rejects links, devices and unsafe/conflicting paths, omits unhashed `.git` and
+            `.trn` directories, and skips global PAX metadata emitted by `git archive`.
+            Limits are 128 MiB downloaded, 512 MiB expanded ZIP file data or complete
+            decompressed tar stream, and 10,000 entries. Skipped contents still count toward
+            resource limits. Hashes cover normalized extracted tree contents, not compressed
+            archive bytes.
 
             Run `package install` from an application directory containing `package.toml`:
         - type: example
@@ -281,7 +285,9 @@ documentation:
             `[terrane-dependencies.<owner>.<package>]` table; dependency keys are not
             consumer-chosen aliases. Existing normalized identities are rejected rather than
             replaced, and resolution requires the target manifest to declare that same
-            identity.
+            identity. An existing owner value containing source fields or other non-package
+            values is rejected without modifying the manifest, rather than merged into a
+            malformed dependency declaration.
 
             A local install records only its relative `path`, leaving development edits
             immediately visible. A remote install records `git`, `tag`, and the required

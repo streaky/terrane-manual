@@ -278,7 +278,8 @@ documentation:
             `[terrane-dependencies."example/library"]` denotes the same identity; declaring
             both spellings is a duplicate after normalization. Ownerless dependency entries
             are reserved for core packages; no ownerless core dependencies are currently
-            enabled.
+            enabled. An owner table must declare at least one package; an empty owner table
+            is a manifest error.
 
             Resolution verifies that the package found through `path`, `git`, or `archive`
             declares the same canonical identity. The table key is identity, not a local
@@ -320,11 +321,15 @@ documentation:
             `https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip` may contain
             a single wrapper directory; that wrapper is removed when it alone contains
             `package.toml`. A root manifest is also accepted; arbitrary recursive search is
-            not. Extraction accepts only regular files/directories, rejecting links,
-            devices, traversal and conflicting entries. Limits: 128 MiB compressed download,
-            512 MiB expanded data, and 10,000 entries. Hashes cover normalized extracted
-            package trees, not compressed archive bytes; Git and archive hashes are
-            required.
+            not. Extraction accepts regular files/directories, rejecting links, devices,
+            traversal and conflicting entries. Global PAX metadata from `git archive`
+            tarballs is consumed without creating a source file and counts toward the entry
+            limit. Unhashed `.git` and `.trn` directories are omitted from archives. Limits:
+            128 MiB compressed download, 512 MiB expanded ZIP file data or full decompressed
+            tar stream (including metadata, headers and padding), and 10,000 entries.
+            Skipped data still consumes the expansion budget. Hashes cover normalized
+            extracted package trees, not compressed archive bytes; Git and archive hashes
+            are required.
         - type: markdown
           markdown: |-
             The hash is not a Git object ID. It is the complete deterministic SHA-256 of
@@ -333,6 +338,9 @@ documentation:
             therefore affect a local tree hash. Symbolic links are rejected, and abbreviated
             hashes are not accepted. Git verifies the exact requested tag; archives verify
             the extracted source tree before publication to the application-local cache.
+            Cache validation and publication are serialized by a per-digest filesystem lock
+            outside the replaceable entry. Each cache miss owns a unique staging directory;
+            invalid cache files or directories are replaced only after acquiring the lock.
 
             Calculate or record declarations with these commands:
         - type: example
