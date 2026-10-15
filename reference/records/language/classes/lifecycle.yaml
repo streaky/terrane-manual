@@ -73,6 +73,12 @@ documentation:
             Each independently owned value has its own lifecycle lineage. Copying creates a
             fresh lineage, so the copy and original have independent lifecycles. Moving a
             value preserves its existing lineage rather than creating another one.
+
+            Calling a consuming method on an owned object binding transfers the existing
+            value into the call, even when its class is otherwise copyable. It does not
+            implicitly separate a copy with a new lifecycle lineage or retain an extra
+            original for scope-exit destruction. Parenthesizing the receiver and storing the
+            binding across a `try`/`finally` boundary do not change this rule.
   see-also: []
 
 provenance:

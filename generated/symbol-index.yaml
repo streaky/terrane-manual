@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 44a166b9f6627b83d093a51cce25e82771864f10f2f7b8d9e80561b1cff96887
+  input-sha256: f1ad8c10743e1290a8ce330865f443fc06965fa1e0d49f2e988d32d4d543f065
 format: 1
 generated: true
 symbols:
@@ -3072,6 +3072,10 @@ symbols:
 - name: finally
   record: internals.execution.runtime-selection
   section: cancellation
+  declaration: finally
+- name: finally
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: finally
 - name: finally
   record: lang.errors.contracts
@@ -8750,6 +8754,10 @@ symbols:
 - name: try
   record: internals.execution.runtime-selection
   section: cancellation
+  declaration: try
+- name: try
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: try
 - name: try
   record: lang.errors.handling
