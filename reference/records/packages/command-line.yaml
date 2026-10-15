@@ -229,8 +229,10 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `terrane package hash` calculates the complete deterministic source hash
-            accepted by `[terrane-dependencies]`:
+            `terrane package hash` calculates the complete deterministic extracted-source
+            hash accepted by `[terrane-dependencies]`. Directory and exact-tag Git forms
+            remain supported; `--archive` accepts explicit HTTP(S) ZIP or gzip-compressed
+            tar source archive URLs:
         - type: example
           id: legacy-fence-001
           title: null
@@ -239,17 +241,22 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            terrane package hash ../document-model
-            terrane package hash --git https://example.invalid/document-model.git --tag v1.2.3
+            terrane package hash ../work-report-formatters
+            terrane package hash --git https://example.invalid/work-report-formatters.git --tag v1.2.3
+            terrane package hash --archive https://github.com/example/formatters/releases/download/v1.2.3/formatters-source.tar.gz
+            terrane package hash --archive https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip
           response: null
           diagnostic: null
           markdown: null
-
         - type: markdown
           markdown: |-
-            The remote form clones and verifies an exact Git tag before hashing its source
-            tree. It does not accept a branch or abbreviate the resulting 64-digit SHA-256
-            value.
+            Git verifies an exact tag, never a branch or untagged revision. Archive URLs may
+            point to release assets or GitHub source archives; examples are illustrative and
+            do not assert that those URLs are published. Archive extraction accepts a root
+            `package.toml` or exactly one wrapper directory containing it. Safe extraction
+            rejects links, devices and unsafe/conflicting paths, with limits of 128 MiB
+            downloaded, 512 MiB expanded, and 10,000 entries. Hashes cover normalized
+            extracted tree contents, not compressed archive bytes.
 
             Run `package install` from an application directory containing `package.toml`:
         - type: example
@@ -260,7 +267,9 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            terrane package install ../example-library
+            terrane package install ../work-report-formatters
+            terrane package install --git https://example.invalid/work-report-formatters.git --tag v1.2.3
+            terrane package install --archive https://github.com/example/formatters/releases/download/v1.2.3/formatters-source.tar.gz
           response: null
           diagnostic: null
           markdown: null

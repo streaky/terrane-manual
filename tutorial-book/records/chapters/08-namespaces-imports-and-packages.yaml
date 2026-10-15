@@ -610,7 +610,10 @@ documentation:
 
         - type: markdown
           markdown: |-
-            A published package can be consumed directly from an exact Git tag:
+            A published package can be consumed from a local directory, an exact Git tag, or
+            a downloaded source archive. The `example/library` identity above can use any of
+            those locations. Choose ONE source form for that identity in a real manifest;
+            the following are alternatives, not simultaneous declarations:
         - type: example
           id: legacy-fence-022
           title: null
@@ -619,20 +622,34 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            terrane package install --git https://example.invalid/work-report-formatters.git --tag v1.2.3
+            terrane package hash ../example-library
+            terrane package hash --git https://example.invalid/example-library.git --tag v1.2.3
+            terrane package hash --archive https://github.com/example/library/releases/download/v1.2.3/library-source.tar.gz
+            terrane package hash --archive https://github.com/example/library/archive/refs/tags/v1.2.3.zip
+            terrane package install ../example-library
+            terrane package install --git https://example.invalid/example-library.git --tag v1.2.3
+            terrane package install --archive https://github.com/example/library/releases/download/v1.2.3/library-source.tar.gz
           response: null
           diagnostic: null
           markdown: null
-
         - type: markdown
           markdown: |-
-            Terrane verifies that the checkout is exactly that tag and records a full
-            SHA-256 source-tree hash. This hash is not a Git commit ID and is never
-            abbreviated. `terrane package hash <directory>` and
-            `terrane package hash --git <url> --tag <tag>` print the same value without
-            changing the application manifest. The local command hashes every file outside
-            `.git` and `.trn`, including README files or stray build output, so use a clean
-            tree when comparing it with a Git tag.
+            These URLs are illustrative, not claims that the repositories or assets exist.
+            Each successful install derives the dotted table from the located package's
+            canonical identity and verifies its `package.toml`; no package registry or
+            identity-only install exists. The local source is `path`; Git records `git`,
+            exact `tag`, and full tree hash; archive records its URL and full tree hash. Git
+            and archive hashes are mandatory; a local development path may omit its hash.
+
+            The hash is deterministic SHA-256 of the extracted source tree, not a Git object
+            ID and not the compressed archive bytes. Archive URLs may identify ZIP or
+            gzip-compressed tar sources, including GitHub release-download assets or the
+            `archive/refs/tags/v1.2.3.zip` source arrangement shown above. A root
+            `package.toml` or exactly one wrapper directory containing it is accepted, with
+            no arbitrary recursive search. Extraction rejects links, devices, traversal and
+            conflicting paths; limits are 128 MiB download, 512 MiB expanded data, and
+            10,000 entries. Tree hashes include normalized paths and file bytes, excluding
+            only `.git` and `.trn` directories.
 
             Rust dependencies are declared in `package.toml`, never smuggled into source
             through an undeclared path. A later package might contain:

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fa202b942f81d2a006ae5d47c1272766bf4d5b190f6a3044f8679df2f7e4e2d0
+  input-sha256: 298f8366568b8a32096c2e9c6bd66b69c3eb0b823698795c1143f042daf5e525
 format: 1
 generated: true
 diagnostics:
@@ -724,7 +724,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/package.rs
-    line: 270
+    line: 271
 - code: S2002
   messages:
   - each source unit must declare exactly one namespace

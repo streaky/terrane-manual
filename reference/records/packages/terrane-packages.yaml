@@ -110,27 +110,50 @@ documentation:
             key such as `[terrane-dependencies."example/library"]` is an equivalent spelling
             if used, and duplicates are rejected after normalization. Ownerless entries are
             reserved for core packages, of which none are currently enabled. Resolution
-            verifies the located package's manifest declares the same canonical identity.
-            The `path` or `git` source and optional/required tree hash are independent of
-            identity, and no central registry is required.
-
-            Each entry specifies exactly one source: a relative local `path`, or `git` with
-            a required tag. Git dependencies also require a `sha256:<lowercase-hex>` tree
-            hash; local dependencies may optionally provide one.
+            verifies the located manifest declares that same canonical identity. There is no
+            central registry or identity-only package lookup. Each entry specifies exactly
+            one source: relative `path`, `git` plus exact `tag`, or explicit HTTP(S)
+            `archive`. Git and archive require a full extracted-tree hash; local paths may
+            optionally provide one. Git branches and untagged revisions are not accepted.
         - type: example
-          id: legacy-fence-003
+          id: legacy-fence-004
           title: null
           language: toml
           mode: illustrative
           target: null
           timeout-ms: null
           source: |2
-            [terrane-dependencies.example.library]
-            path = "../example-library"
+            [terrane-dependencies.work-report.formatters]
+            path = "../work-report-formatters"
+
+            [terrane-dependencies.example.git-library]
+            git = "https://example.invalid/formatters.git"
+            tag = "v1.2.3"
+            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+
+            [terrane-dependencies.example.archive-library]
+            archive = "https://github.com/example/formatters/releases/download/v1.2.3/formatters-source.tar.gz"
+            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
           response: null
           diagnostic: null
           markdown: null
-
+        - type: markdown
+          markdown: |-
+            These are separate illustrative identities; choose only one source form for any
+            one identity. Source archives include ZIP and gzip-compressed tar, including
+            release-download assets and GitHub tag ZIP URLs such as
+            `https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip`. A root
+            `package.toml` or one wrapper directory containing it is accepted; arbitrary
+            recursive searching is not. Archives reject links, devices and
+            unsafe/conflicting paths. Limits are 128 MiB downloaded, 512 MiB expanded, and
+            10,000 entries. Hash the normalized extracted source tree—not compressed archive
+            bytes.
+        - type: markdown
+          markdown: |-
+            The hash covers every sorted, normalized relative file path and its bytes,
+            excluding only `.git` and `.trn` directories. Symbolic links are rejected. As a
+            result, files such as local README files, ignored build output, and editor files
+            affect the hash.
         - type: markdown
           markdown: |-
             The hash covers every sorted, normalized relative file path and its bytes,

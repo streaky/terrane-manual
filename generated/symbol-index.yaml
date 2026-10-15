@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1f0511e395dd03134affd8101fd0c5b65c7e4639a0b7982591a76be6417c4868
+  input-sha256: f0b20e9899c69c49d001cc9653582fba9c0cb2c7d69ae28889aea89c93d6311e
 format: 1
 generated: true
 symbols:
@@ -584,6 +584,18 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: arc-tangent-two
+- name: archive
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: archive
+- name: archive
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: archive
+- name: archive/refs/tags/v1.2.3.zip
+  record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: archive/refs/tags/v1.2.3.zip
 - name: args
   record: lang.declarations.annotations
   section: consumers
@@ -2626,6 +2638,10 @@ symbols:
   section: stream-adapters
   declaration: exact-read-progress
 - name: example/library
+  record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: example/library
+- name: example/library
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
   declaration: example/library
@@ -3578,6 +3594,10 @@ symbols:
   section: exercises
   declaration: get.checked
 - name: git
+  record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: git
+- name: git
   record: tool.packages.command-line
   section: package-management
   declaration: git
@@ -3649,10 +3669,6 @@ symbols:
   record: std.compression
   section: compression
   declaration: gzip
-- name: hash
-  record: tool.packages.package-manifest
-  section: terrane-library-dependencies
-  declaration: hash
 - name: height
   record: book.functions
   section: local-scope
@@ -3729,6 +3745,14 @@ symbols:
   record: tool.packages.rust-dependencies
   section: integration-boundaries
   declaration: http-server
+- name: https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip
+- name: https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip
 - name: hypotenuse
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -5915,6 +5939,10 @@ symbols:
   record: book.first-taste
   section: installing-the-toolchain
   declaration: PATH
+- name: path
+  record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: path
 - name: PATH
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -7928,12 +7956,20 @@ symbols:
   section: foreign-value-ownership
   declaration: T0135
 - name: tag
+  record: book.namespaces-imports-and-packages
+  section: dependencies
+  declaration: tag
+- name: tag
   record: tool.packages.command-line
   section: package-management
   declaration: tag
 - name: tag
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
+  declaration: tag
+- name: tag
+  record: tool.packages.terrane-packages
+  section: package-manifest
   declaration: tag
 - name: tangent
   record: lang.numerics.floating-point

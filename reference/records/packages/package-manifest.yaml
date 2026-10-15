@@ -280,17 +280,13 @@ documentation:
             are reserved for core packages; no ownerless core dependencies are currently
             enabled.
 
-            Resolution verifies that the package found through `path` or `git` declares the
-            same canonical identity. The table key is identity, not a local alias;
-            mismatches are rejected. Identity is independent of location and integrity:
-            `path` or `git` plus an exact `tag` selects the source, while `hash` verifies
-            its tree. No central registry is required.
-
-            `[terrane-dependencies.<owner>.<package>]` selects either a relative local
-            development directory with `path`, or a remote repository with `git` and an
-            exact `tag`. Git branches and untagged revisions are not accepted. A Git
-            dependency requires `hash`; a local dependency may omit it while actively
-            developing, and local installation leaves it unpinned.
+            Resolution verifies that the package found through `path`, `git`, or `archive`
+            declares the same canonical identity. The table key is identity, not a local
+            alias; mismatches are rejected. Identity is independent of location and
+            integrity. Select exactly one source: relative development `path`, a Git
+            repository plus exact `tag`, or a source `archive` URL. Git and archive require
+            a full SHA-256 extracted-tree hash; local paths may omit it during development.
+            There is no central registry or identity-only lookup.
         - type: example
           id: legacy-fence-002
           title: null
@@ -299,12 +295,63 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
+            # Three distinct illustrative dependencies, one source each.
+            [terrane-dependencies.work-report.formatters]
+            path = "../work-report-formatters"
+
             [terrane-dependencies.example.library]
-            path = "../example-library"
+            git = "https://example.invalid/library.git"
+            tag = "v1.2.3"
+            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+
+            [terrane-dependencies.example.archive-library]
+            archive = "https://example.invalid/releases/source.tar.gz"
+            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
           response: null
           diagnostic: null
           markdown: null
+        - type: markdown
+          markdown: |-
+            The entries use distinct illustrative identities. Never combine multiple source
+            forms under one identity in a real manifest.
 
+            `archive` is an explicit HTTP(S) URL to a ZIP or gzip-compressed tar source
+            archive, including GitHub release assets and source archives. ZIPs such as
+            `https://github.com/example/formatters/archive/refs/tags/v1.2.3.zip` may contain
+            a single wrapper directory; that wrapper is removed when it alone contains
+            `package.toml`. A root manifest is also accepted; arbitrary recursive search is
+            not. Extraction accepts only regular files/directories, rejecting links,
+            devices, traversal and conflicting entries. Limits: 128 MiB compressed download,
+            512 MiB expanded data, and 10,000 entries. Hashes cover normalized extracted
+            package trees, not compressed archive bytes; Git and archive hashes are
+            required.
+        - type: markdown
+          markdown: |-
+            The hash is not a Git object ID. It is the complete deterministic SHA-256 of
+            every normalized package-relative file path and file byte, excluding only `.git`
+            and `.trn` directories. README files, ignored build output, and editor files
+            therefore affect a local tree hash. Symbolic links are rejected, and abbreviated
+            hashes are not accepted. Git verifies the exact requested tag; archives verify
+            the extracted source tree before publication to the application-local cache.
+
+            Calculate or record declarations with these commands:
+        - type: example
+          id: legacy-fence-003
+          title: null
+          language: console
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            terrane package hash ../work-report-formatters
+            terrane package hash --git https://example.invalid/work-report-formatters.git --tag v1.2.3
+            terrane package hash --archive https://github.com/example/formatters/releases/download/v1.2.3/formatters-source.tar.gz
+            terrane package install ../work-report-formatters
+            terrane package install --git https://example.invalid/work-report-formatters.git --tag v1.2.3
+            terrane package install --archive https://github.com/example/formatters/releases/download/v1.2.3/formatters-source.tar.gz
+          response: null
+          diagnostic: null
+          markdown: null
         - type: markdown
           markdown: |-
             The hash is not a Git object ID. It is the complete deterministic SHA-256 of
