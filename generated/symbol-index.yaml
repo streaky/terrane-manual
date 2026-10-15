@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 287f95149283ee62e5bf9bbabcd908b8cea01e901f8d6499d850ef738eba4de1
+  input-sha256: 7da2941d036d74147b5471a84f1401484015e010e998f2c0a798a3a43d1e6094
 format: 1
 generated: true
 symbols:
@@ -184,6 +184,10 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: /core/logging/async
+- name: /core/networking
+  record: internals.execution.runtime-selection
+  section: readiness-io
+  declaration: /core/networking
 - name: /core/networking
   record: std.networking.operations
   section: ''
@@ -4238,6 +4242,10 @@ symbols:
   section: resolution
   declaration: interfaces.rs
 - name: into-native
+  record: internals.execution.runtime-selection
+  section: readiness-io
+  declaration: into-native
+- name: into-native
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: into-native
@@ -4303,12 +4311,20 @@ symbols:
   declaration: io-operation-options
 - name: io-operation-options
   record: std.networking.operations
+  section: native-transport
+  declaration: io-operation-options
+- name: io-operation-options
+  record: std.networking.operations
   section: operations
   declaration: io-operation-options
 - name: io-operation-result
   record: std.networking.operations
   section: cancellation
   declaration: io-operation-result
+- name: IP_TTL
+  record: std.networking.operations
+  section: native-transport
+  declaration: IP_TTL
 - name: IpAddr
   record: tool.packages.rust-dependencies
   section: workflow
@@ -4569,6 +4585,10 @@ symbols:
   record: std.collections
   section: construction-and-types
   declaration: list
+- name: listen-tcp
+  record: std.networking.operations
+  section: native-transport
+  declaration: listen-tcp
 - name: lldb-dap
   record: tool.debugging
   section: commands

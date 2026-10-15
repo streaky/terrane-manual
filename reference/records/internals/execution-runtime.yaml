@@ -255,10 +255,11 @@ documentation:
             Native TCP handoff detaches the stored transport through
             `terrane-platform-support/src/networking_native.rs`; it does not duplicate or
             register a socket for each subsequent read/write. Already registered transports
-            retain their reactor identity. Unregistered transports register on transfer, and
-            busy transfers fail without losing the host resource. Listener accepted settings
-            are installed before listening so even already-queued native accepts inherit the
-            policy.
+            retain their reactor identity. TLS upgrades and native handoff share one
+            detach/register implementation: busy registrations are restored, and an
+            unregistered socket remains retained until registration of a duplicate succeeds.
+            Listener accepted settings are installed before listening; inheritance by
+            already-queued native accepts is verified on Linux, not on every target.
 
             Core native type metadata binds the actual resolved Tokio dependency owner
             before the projection oracle checks ecosystem generic bounds. This private
@@ -267,6 +268,11 @@ documentation:
             oracle builds publish the same platform sources through
             `terrane_compiler::write_platform_support`, preventing divergent embedded
             transport implementations.
+
+            Runtime-owner preparation is requested by authored native TCP type imports or
+            `into-native` calls, not ordinary `/core/networking` or TLS imports. The call
+            gate runs before receiver typing, so an authored method with the same
+            `into-native` spelling conservatively requests preparation as well.
     - id: cancellation
       title: Wake-driven cancellation and cleanup
       blocks:

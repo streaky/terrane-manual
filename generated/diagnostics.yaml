@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ed99546c3912c1b0630eebdceb00a9423887d4bf5d7d7a40c61a2de9ae68854e
+  input-sha256: 43f71d90a422f4cd59813d2f9ef401966b0ae08cc0548fbf71eb2045b02de202
 format: 1
 generated: true
 diagnostics:
@@ -827,7 +827,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 461
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 961
+    line: 988
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
@@ -915,7 +915,7 @@ diagnostics:
   - Rust dependency `{dependency}` is not declared in `package.toml`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1102
+    line: 1129
 - code: S2028
   messages:
   - 'cannot materialize generated projection source units: {message}'
@@ -932,14 +932,14 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 605
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 847
+    line: 876
 - code: S2029
   messages:
   - "\n    );\n}\n\n#[test]\nfn compiler_owned_declarations_require_kebab_case() {\n    let package =\
     \ Package::implicit(\n        "
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1175
+    line: 1202
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 245
 - code: S2031
@@ -952,7 +952,7 @@ diagnostics:
     {}, but is absent from the current projection at version {}
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1136
+    line: 1163
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1903
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -962,7 +962,7 @@ diagnostics:
   - profile `{}` forbids capability `{capability}` required by `{}` imported by `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1031
+    line: 1058
 - code: S2033
   messages:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
@@ -996,22 +996,22 @@ diagnostics:
   - test-only namespace `{}` is unavailable to production sources
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1018
+    line: 1045
 - code: S2054
   messages:
   - integration test cannot declare production namespace `{}`
   - end-to-end test must drive the application artifact instead of importing `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 989
+    line: 1016
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1077
+    line: 1104
 - code: S2055
   messages:
   - production source cannot import test-only namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1064
+    line: 1091
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
@@ -1020,7 +1020,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 550
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1121
+    line: 1148
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 82
 - code: S2060
@@ -1463,25 +1463,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1381
+    line: 1408
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1431
+    line: 1458
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1482
+    line: 1509
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1454
+    line: 1481
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1491
+    line: 1518
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -2660,7 +2660,7 @@ diagnostics:
   - awaited destructors require the threaded executor
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1280
+    line: 1307
 - code: T0139
   messages:
   - mutating callback parameter `{}` requires a mutable native reference; the selected callback supplies

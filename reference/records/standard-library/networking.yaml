@@ -195,7 +195,21 @@ documentation:
             same optional listener policy as `bind-tcp`, exposes the actual bound address
             through `local-address`, and throws `network-error` on resolution or bind
             failure. `bind-tcp` remains the result-returning operation for a parsed
-            `socket-address`.
+            `socket-address`. Only the first address that binds successfully becomes the
+            listener; a hostname resolving to both IPv4 and IPv6 does not create one
+            listener per family or guarantee dual-stack coverage. Use an explicit address
+            when the family matters.
+
+            `listen-tcp` currently accepts listener policy, not `io-operation-options`: it
+            has no operation-specific deadline or cancellation token. Cancel the enclosing
+            task to stop waiting for it; an already-started system resolver job may continue
+            in the background. Use the separate DNS lookup and parsed-address `bind-tcp`
+            operations when an explicit DNS operation-options boundary is required.
+
+            `network-error` currently exposes only a message, not a stable error kind or
+            deadline flag. Resolution, listener-policy validation, bind, and native-handoff
+            failures share this type. Callers can catch it but cannot reliably distinguish
+            these causes programmatically; do not treat its message text as a stable code.
 
             `tcp-listener.into-native` and `tcp-stream.into-native` consume their receiver
             and return `native-tcp-listener` and `native-tcp-stream` from
@@ -224,11 +238,15 @@ documentation:
             capability cannot close the exported socket. The recipient owns shutdown and
             cleanup; core operation options are not automatically applied to foreign IO.
 
-            Listener binding installs accepted no-delay and TTL settings on the listening
-            socket so native accepts inherit the policy, including connections already
-            queued before handoff. Backlog and local/peer addresses are preserved. Core
-            retains its ordinary per-accept configuration as well. This is a general
-            transport boundary, not an HTTP adapter or a second executor.
+            Listener binding installs accepted no-delay and IPv4 TTL settings on the
+            listening socket so native accepts inherit the policy on platforms that support
+            that inheritance, including connections already queued before handoff. This
+            inheritance is verified on Linux; other targets are not currently proven.
+            Backlog and local/peer addresses are preserved. Core retains its ordinary
+            per-accept configuration as well. TTL uses `IP_TTL`, not the IPv6 hop limit: on
+            targets rejecting `IP_TTL` for an IPv6 socket, a TTL-configured bind can fail
+            before any accept. This is a general transport boundary, not an HTTP adapter or
+            a second executor.
         - type: example
           language: terrane
           mode: illustrative
