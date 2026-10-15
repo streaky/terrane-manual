@@ -273,6 +273,11 @@ documentation:
             `into-native` calls, not ordinary `/core/networking` or TLS imports. The call
             gate runs before receiver typing, so an authored method with the same
             `into-native` spelling conservatively requests preparation as well.
+
+            Core native metadata supplies type equivalence, not ownership of a projected
+            public API. Projected-source rendering excludes bundled core carriers from
+            declaration selection so opaque aliases cannot replace a projected type's
+            constructors or methods.
     - id: cancellation
       title: Wake-driven cancellation and cleanup
       blocks:
