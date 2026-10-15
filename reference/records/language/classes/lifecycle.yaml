@@ -74,11 +74,16 @@ documentation:
             fresh lineage, so the copy and original have independent lifecycles. Moving a
             value preserves its existing lineage rather than creating another one.
 
-            Calling a consuming method on an owned object binding transfers the existing
-            value into the call, even when its class is otherwise copyable. It does not
-            implicitly separate a copy with a new lifecycle lineage or retain an extra
+            Calling a consuming method on an owned source-object binding transfers the
+            existing value into the call, even when its class is otherwise copyable. It does
+            not implicitly separate a copy with a new lifecycle lineage or retain an extra
             original for scope-exit destruction. Parenthesizing the receiver and storing the
             binding across a `try`/`finally` boundary do not change this rule.
+
+            Projected Rust value receivers retain their separately proven clone-conversion
+            contract: a copyable projected value may be reused after a native consuming call
+            when that conversion is available. This does not create an extra authored-class
+            lifecycle lineage.
   see-also: []
 
 provenance:
