@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c21034e0ae9f710ffae3d4bf351f3c591e425b68b7ed13e8bdb34bcbc36faa8f
+  input-sha256: 1f0511e395dd03134affd8101fd0c5b65c7e4639a0b7982591a76be6417c4868
 format: 1
 generated: true
 symbols:
@@ -2625,6 +2625,14 @@ symbols:
   record: internals.execution.runtime-selection
   section: stream-adapters
   declaration: exact-read-progress
+- name: example/library
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: example/library
+- name: example/library
+  record: tool.packages.terrane-packages
+  section: package-manifest
+  declaration: example/library
 - name: executable
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -5731,6 +5739,10 @@ symbols:
   record: book.identity-and-movement
   section: shared-references-and-ownership
   declaration: owner
+- name: owner/package
+  record: tool.packages.package-manifest
+  section: terrane-library-dependencies
+  declaration: owner/package
 - name: package
   record: book.namespaces-imports-and-packages
   section: the-package-manifest
@@ -8123,22 +8135,22 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: terrane-debug-v1
-- name: terrane-dependencies.<name>.git
+- name: terrane-dependencies.<owner>.<package>.git
   record: tool.packages.package-manifest
   section: fields
-  declaration: terrane-dependencies.<name>.git
-- name: terrane-dependencies.<name>.hash
+  declaration: terrane-dependencies.<owner>.<package>.git
+- name: terrane-dependencies.<owner>.<package>.hash
   record: tool.packages.package-manifest
   section: fields
-  declaration: terrane-dependencies.<name>.hash
-- name: terrane-dependencies.<name>.path
+  declaration: terrane-dependencies.<owner>.<package>.hash
+- name: terrane-dependencies.<owner>.<package>.path
   record: tool.packages.package-manifest
   section: fields
-  declaration: terrane-dependencies.<name>.path
-- name: terrane-dependencies.<name>.tag
+  declaration: terrane-dependencies.<owner>.<package>.path
+- name: terrane-dependencies.<owner>.<package>.tag
   record: tool.packages.package-manifest
   section: fields
-  declaration: terrane-dependencies.<name>.tag
+  declaration: terrane-dependencies.<owner>.<package>.tag
 - name: terrane-dependencies.lock
   record: internals.projection.resolution
   section: history

@@ -67,8 +67,8 @@ documentation:
             capabilities = ["filesystem", "process", "build"]
             panic = "unwind"
 
-            [terrane-dependencies.document-model]
-            path = "../document-model"
+            [terrane-dependencies.example.library]
+            path = "../example-library"
             hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 
             [rust-dependencies.codec]
@@ -178,22 +178,22 @@ documentation:
               default: inherits package profile
               repeatability: once
               example: capabilities = ["process"]
-            - path: terrane-dependencies.<name>.path
+            - path: terrane-dependencies.<owner>.<package>.path
               type: relative directory
               default: one source required
               repeatability: mutually exclusive with git
               example: path = "../document-model"
-            - path: terrane-dependencies.<name>.git
+            - path: terrane-dependencies.<owner>.<package>.git
               type: Git repository URL
               default: one source required
               repeatability: mutually exclusive with path
               example: git = "https://example.invalid/document-model.git"
-            - path: terrane-dependencies.<name>.tag
+            - path: terrane-dependencies.<owner>.<package>.tag
               type: non-empty Git tag
               default: required with git
               repeatability: once per Git dependency
               example: tag = "v1.2.3"
-            - path: terrane-dependencies.<name>.hash
+            - path: terrane-dependencies.<owner>.<package>.hash
               type: "sha256: plus 64 lowercase hexadecimal digits"
               default: required with git; optional with path
               repeatability: once per dependency
@@ -270,11 +270,27 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `[terrane-dependencies.<name>]` selects either a relative local development
-            directory with `path`, or a remote repository with `git` and an exact `tag`. Git
-            branches and untagged revisions are not accepted. A Git dependency requires
-            `hash`; a local dependency may omit it while actively developing, and local
-            installation leaves it unpinned.
+            A Terrane dependency table is keyed by the package's canonical `owner/package`
+            identity, not by a consumer-chosen alias. Standard TOML separates the components
+            into dotted keys, for example `[terrane-dependencies.example.library]`, which
+            identifies `example/library`. Both identity components are portable lowercase
+            kebab-case names. A quoted key such as
+            `[terrane-dependencies."example/library"]` denotes the same identity; declaring
+            both spellings is a duplicate after normalization. Ownerless dependency entries
+            are reserved for core packages; no ownerless core dependencies are currently
+            enabled.
+
+            Resolution verifies that the package found through `path` or `git` declares the
+            same canonical identity. The table key is identity, not a local alias;
+            mismatches are rejected. Identity is independent of location and integrity:
+            `path` or `git` plus an exact `tag` selects the source, while `hash` verifies
+            its tree. No central registry is required.
+
+            `[terrane-dependencies.<owner>.<package>]` selects either a relative local
+            development directory with `path`, or a remote repository with `git` and an
+            exact `tag`. Git branches and untagged revisions are not accepted. A Git
+            dependency requires `hash`; a local dependency may omit it while actively
+            developing, and local installation leaves it unpinned.
         - type: example
           id: legacy-fence-002
           title: null
@@ -283,13 +299,8 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            [terrane-dependencies.document-model]
-            path = "../document-model"
-
-            [terrane-dependencies.remote-codec]
-            git = "https://example.invalid/remote-codec.git"
-            tag = "v1.2.3"
-            hash = "sha256:fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"
+            [terrane-dependencies.example.library]
+            path = "../example-library"
           response: null
           diagnostic: null
           markdown: null
@@ -322,10 +333,8 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            terrane package hash ../document-model
-            terrane package hash --git https://example.invalid/remote-codec.git --tag v1.2.3
-            terrane package install ../document-model
-            terrane package install --git https://example.invalid/remote-codec.git --tag v1.2.3
+            terrane package hash ../example-library
+            terrane package install ../example-library
           response: null
           diagnostic: null
           markdown: null
@@ -336,8 +345,9 @@ documentation:
             current directory. It validates the library, preserves existing manifest
             content, and refuses to replace an existing dependency. A local install writes
             only `path` so edits remain immediately visible; a Git install records `git`,
-            `tag`, and the full required hash. `--name <dependency-name>` overrides the
-            table key; otherwise the library package identity is used.
+            `tag`, and the full required hash. Installation derives the dotted TOML table
+            from the package's canonical owner/package identity. This identity is not a
+            dependency alias; Rust dependency aliases remain a separate mechanism.
     - id: overlays-and-local-patches
       title: Namespace overlays and local Cargo patches
       blocks:

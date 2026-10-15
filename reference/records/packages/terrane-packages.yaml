@@ -104,9 +104,18 @@ documentation:
             profile. Omitted fields inherit from the ordinary profile, so test compilation
             cannot acquire an undeclared capability implicitly.
 
-            Terrane dependencies are declared under `[terrane-dependencies.<name>]`. Each
-            entry specifies exactly one source: a relative local `path`, or `git` with a
-            required tag. Git dependencies also require a `sha256:<lowercase-hex>` tree
+            Terrane dependency tables use canonical package identities, not consumer-chosen
+            aliases. Write owner/package as dotted TOML keys, for example
+            `[terrane-dependencies.example.library]` for `example/library`; a quoted slash
+            key such as `[terrane-dependencies."example/library"]` is an equivalent spelling
+            if used, and duplicates are rejected after normalization. Ownerless entries are
+            reserved for core packages, of which none are currently enabled. Resolution
+            verifies the located package's manifest declares the same canonical identity.
+            The `path` or `git` source and optional/required tree hash are independent of
+            identity, and no central registry is required.
+
+            Each entry specifies exactly one source: a relative local `path`, or `git` with
+            a required tag. Git dependencies also require a `sha256:<lowercase-hex>` tree
             hash; local dependencies may optionally provide one.
         - type: example
           id: legacy-fence-003
@@ -116,13 +125,8 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            [terrane-dependencies.codec]
-            path = "../codec"
-
-            [terrane-dependencies.remote]
-            git = "https://example.invalid/remote.git"
-            tag = "v1.2.3"
-            hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+            [terrane-dependencies.example.library]
+            path = "../example-library"
           response: null
           diagnostic: null
           markdown: null

@@ -260,19 +260,19 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            terrane package install ../document-model
-            terrane package install --git https://example.invalid/document-model.git --tag v1.2.3
-            terrane package install ../document-model --name model
+            terrane package install ../example-library
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            Installation validates `artifact = "library"`, obtains the library package
-            identity, and adds one `[terrane-dependencies.<name>]` table. The package
-            identity is the default name; `--name` selects another table key. Existing keys
-            are rejected rather than replaced.
+            Installation validates `artifact = "library"` and obtains the library's
+            canonical owner/package identity. It writes the corresponding dotted
+            `[terrane-dependencies.<owner>.<package>]` table; dependency keys are not
+            consumer-chosen aliases. Existing normalized identities are rejected rather than
+            replaced, and resolution requires the target manifest to declare that same
+            identity.
 
             A local install records only its relative `path`, leaving development edits
             immediately visible. A remote install records `git`, `tag`, and the required

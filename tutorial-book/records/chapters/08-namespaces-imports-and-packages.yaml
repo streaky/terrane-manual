@@ -500,7 +500,9 @@ documentation:
             "work-report/app" = "app"
             "work-report/errors" = "errors"
             "work-report/reporting" = "reporting"
-          response: null
+
+            [terrane-dependencies.example.library]
+            path = "../example-library"
           diagnostic: null
           markdown: null
 
@@ -566,7 +568,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            terrane package install ../work-report-formatters
+            terrane package install ../example-library
           response: null
           diagnostic: null
           markdown: null
@@ -583,8 +585,8 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            [terrane-dependencies."work-report/formatters"]
-            path = "../work-report-formatters"
+            [terrane-dependencies.example.library]
+            path = "../example-library"
           response: null
           diagnostic: null
           markdown: null
@@ -601,7 +603,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            from /work-report/formatters import progress-label
+            from /example/library import answer
           response: null
           diagnostic: null
           markdown: null
