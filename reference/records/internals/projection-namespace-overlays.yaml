@@ -65,9 +65,9 @@ documentation:
 
             Direct target items and overlaid provider items therefore form one Terrane
             import surface while generated Rust continues to invoke their distinct recorded
-            owners. Diagnostics, editor information, hover, and durable projection history
-            must expose that provenance rather than pretending the target package implements
-            the overlaid operation.
+            owners. Diagnostics, editor information, hover, and local projection-cache
+            history must expose that provenance rather than pretending the target package
+            implements the overlaid operation.
     - id: validation
       title: Validation and collision safety
       blocks:

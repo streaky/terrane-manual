@@ -82,11 +82,11 @@ documentation:
             Every debug build writes deterministic schema `1.3` provenance beside the
             generated Rust and executable. It records compiler/toolchain/exact Rust compiler
             release/sysroot/target/toolchain-bound ABI recipe/named artifact profile
-            identity; manifest and projection-lock hashes when present; every logical source
-            hash; optional explicitly requested source snapshots; final generated-file
-            hashes and byte/line associations; stable function, scope, binding, object, and
-            field identities; inlining and stripping state; the executable hash; and
-            source/build relocation roots.
+            identity; manifest and local projection-cache hashes when present; every logical
+            source hash; optional explicitly requested source snapshots; final
+            generated-file hashes and byte/line associations; stable function, scope,
+            binding, object, and field identities; inlining and stripping state; the
+            executable hash; and source/build relocation roots.
 
             Source translation is enabled only when the compiler/schema, selected target and
             toolchain-bound ABI recipe, every named profile property, sidecar, native

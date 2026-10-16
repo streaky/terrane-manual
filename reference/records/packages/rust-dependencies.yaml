@@ -94,9 +94,9 @@ documentation:
                `/deps/<alias>/net`. This retains the canonical standard-library native
                identity; it neither requires a maintained re-export crate nor grants
                visibility into arbitrary undeclared dependencies.
-            5. Review `terrane-dependencies.lock` for the exact complete resolved package
-               graph and `terrane-projection.lock` for reproducible admitted and declined
-               history.
+            5. Commit `terrane-dependencies.lock` to preserve the exact complete resolved
+               package graph. The ignored `.trn/projection-cache.json` is disposable local
+               projection cache/history, not a reproducibility lock.
             6. Calling a currently unavailable declaration fails at the demanding source
                location and links to the generated inventory. Undemanded gaps do not fail
                the build.
@@ -144,36 +144,28 @@ documentation:
               action: Declare both packages and preserve upstream identities.
 
         - type: note
-          id: projection-lock-review
+          id: projection-cache-and-dependency-state
           style: information
           markdown: |-
-            `terrane-dependencies.lock` is the derived Cargo-compatible lock for the
+            `terrane-dependencies.lock` is the tracked Cargo-compatible lock for the
             complete resolved Rust graph, including recursive packages, exact versions,
-            sources and checksums. Commit it with the application; the compiler seeds
+            sources, and checksums. Commit it with the application; the compiler seeds
             subsequent resolution from it and regenerates it only through ordinary package
             commands.
 
-            `terrane-projection.lock` is separate derived package evidence for reproducible
-            projected API history. Commit it when projection review is required. The ignored
-            `.trn/terrane-projection.generated.trn` under the package root is the current
-            projection inventory and compiler-owned source container. Ordinary commands
-            deterministically refresh its required-first report, application demand sites,
-            and separately syntax-validated nominal source units. A changed dependency
-            version, feature set, target, rustdoc toolchain, projection schema, generated
-            private owner edge, or admitted/declined inventory deserves review even when
-            authored Terrane source is unchanged. Never edit locks or the generated
-            inventory to manufacture availability; regenerate them through the compiler.
-
-            An existing format-4 reviewed projection history without machine-local cache
-            fields keeps that format during CLI and language-server resolution. Semantic
-            inventory updates and removed-member history still persist; resolution must not
-            reinsert cache_identity, content_hash, projection_schema, or resolution. Stable
-            source and rustdoc-format fields do not opt a reviewed history into cache
-            provenance. Newly created ordinary locks and legacy migrations retain normal
-            cache provenance. If the parsed history contract is unchanged, CLI and
-            language-server resolution leave the existing bytes untouched, including key
-            order, whitespace, and newline spelling. Changes to history fields and legacy
-            migrations still write an updated lock.
+            The ignored `.trn/projection-cache.json` is disposable generated local
+            projection cache/history. It can retain removed-member and replay-mismatch
+            evidence while present; clearing it or using a fresh checkout regenerates
+            current projection state and loses historical removal context, not dependency
+            identity. The ignored `.trn/terrane-projection.generated.trn` under the package
+            root is the current projection inventory and compiler-owned source container.
+            Ordinary commands deterministically refresh its required-first report,
+            application demand sites, and separately syntax-validated nominal source units.
+            Changed dependency version, feature set, target, rustdoc toolchain, projection
+            schema, generated private owner edge, or admitted/declined inventory may change
+            current projection output even when authored Terrane source is unchanged. Never
+            edit the dependency lock or generated inventory to manufacture availability;
+            regenerate them through the compiler.
     - id: imports
       title: Importing admitted members
       blocks:
@@ -944,9 +936,9 @@ documentation:
             the generated Cargo manifest. `terrane-dependencies.lock` preserves the complete
             pre-existing resolved graph; the generated edges use exact versions with no
             default-feature or feature widening. The private edge list is content-hashed and
-            reviewable in `terrane-projection.lock`. These invariants permit Cargo's offline
-            post-resolution manifest rewrite without exposing recursive packages as source
-            imports.
+            recorded in `.trn/projection-cache.json`. These invariants permit Cargo's
+            offline post-resolution manifest rewrite without exposing recursive packages as
+            source imports.
 
             Unsupported members remain explicit declines in the transferable projection
             artifact. The compiler does not replace one Rust API shape with a nearby Terrane

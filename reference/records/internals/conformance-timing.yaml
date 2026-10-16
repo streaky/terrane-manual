@@ -46,10 +46,9 @@ documentation:
         builds because their dependency graphs may conflict. The driver removes fixture-specific Cargo configuration before
         the shared dependency-free build, while all builds retain one Cargo target directory for dependency reuse. The driver
         executes each exact case-specific artifact; no case can reuse another case's executable when Cargo decides that a
-        target is fresh. Package fixtures are staged outside the corpus. When a package carries a reviewed `terrane-projection.lock`,
-        the driver compares the staged post-compilation history with the source fixture after excluding only machine-derived
-        cache identity and content hash fields. A format migration or any semantic projection change fails the case instead
-        of silently rewriting the reviewed fixture.
+        target is fresh. Package fixtures are staged outside the corpus. Projection history is
+        disposable local cache data and is not reviewed as a tracked package lock; the deliberate
+        format-3 compatibility fixture remains data under the projection-history fixture path.
     - title: Focused execution and cache locality
       body: >-
         Set `TERRANE_CONFORMANCE_FILTER` to one case-name or to comma-separated corpus-path fragments when running `every_manifest_drives_a_conformance_case`.
@@ -68,8 +67,7 @@ documentation:
         Every accepted conformance case regenerates tracked `lower.rs` and, when support is needed, sibling `lower.support.rs`
         review artifacts from compiler split output (`Compilation::rust_files_for`). Ordinary focused and corpus runs do this without golden
         mode. Git's diff against these files is the review surface; there is no lowered-source snapshot-equality gate. Retain these
-        artifacts as a user-valued generated-code review surface rather than retiring them to avoid churn. Projection-only updates
-        leave them untouched, and projection inventory verification/update remains separate.
+        artifacts as a user-valued generated-code review surface rather than retiring them to avoid churn.
 
         The harness compiles the split program, including its support file, and executes run cases. Cases with authored Rust
         modules also regenerate the referenced module files beneath `lower.authored/`. Persisted review artifacts normalize the

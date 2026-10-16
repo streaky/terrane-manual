@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8c3a9a8575a40a8b572b98eb77a84b68666266e5478b4a3af2c21776738d050c
+  input-sha256: 48690a21293d5c62cc5d28a60296aab9626e6f84ee0cb271b4b6077248325be9
 format: 2
 generated: true
 records:
@@ -2907,8 +2907,8 @@ records:
   declaration-synopsis: []
 - id: internals.projection.resolution
   title: Dependency projection resolution
-  summary: Describes the exact identities, ordered resolution sources, artifact validation, and durable
-    history used to turn locked Rust dependencies into one reusable compiler projection.
+  summary: Describes the exact identities, ordered resolution sources, artifact validation, and disposable
+    local history used to turn locked Rust dependencies into one reusable compiler projection.
   kind: topic
   manual: reference
   group: Compiler internals
@@ -2992,7 +2992,7 @@ records:
     title: Compiler-backed projection gap census
     sections: []
   - id: history
-    title: Durable origin and replay history
+    title: Local cache history and replay evidence
     sections: []
   - id: subsystem-ownership
     title: Rust-interop subsystem ownership

@@ -127,9 +127,9 @@ documentation:
             protocol method such as `render`, `log`, or `construct`.
 
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
-            runtime-output, warning, and canonical-Rust checks. Filtered golden regeneration
-            with `TERRANE_UPDATE_GOLDENS=projection` updates only reviewed projection
-            histories, leaving emitted-source snapshots unchanged.
+            runtime-output, warning, and canonical-Rust checks. Projection cache/history is
+            disposable local state, not a tracked golden; the deliberate format-3 projection
+            history compatibility fixture remains test data.
 
             `terrane rust` streams a complete standalone Rust translation unit by default.
             With `--output` or `-o`, it writes a split artifact. For a requested entrypoint

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8c3a9a8575a40a8b572b98eb77a84b68666266e5478b4a3af2c21776738d050c
+  input-sha256: 48690a21293d5c62cc5d28a60296aab9626e6f84ee0cb271b4b6077248325be9
 format: 1
 generated: true
 symbols:
@@ -8239,22 +8239,6 @@ symbols:
   record: tool.profiling
   section: optimized-build
   declaration: terrane-profile-cpu-v1
-- name: terrane-projection.lock
-  record: internals.projection.resolution
-  section: history
-  declaration: terrane-projection.lock
-- name: terrane-projection.lock
-  record: internals.projection.resolution
-  section: projection-gap-census
-  declaration: terrane-projection.lock
-- name: terrane-projection.lock
-  record: tool.packages.rust-dependencies
-  section: resolution
-  declaration: terrane-projection.lock
-- name: terrane-projection.lock
-  record: tool.packages.rust-dependencies
-  section: workflow
-  declaration: terrane-projection.lock
 - name: terrane-rust-analysis
   record: internals.projection.resolution
   section: subsystem-ownership

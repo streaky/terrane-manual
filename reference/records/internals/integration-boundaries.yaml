@@ -202,10 +202,10 @@ documentation:
             alias. Remove a `[rust-modules]` entry only after no other host boundary in that
             file remains.
 
-            Update conformance, projection locks, current-surface documentation, capability
-            tracking, and application documentation in the same work unit. A deleted ledger
-            does not prove that a capability gap closed; only its stated direct behavior
-            does.
+            Update conformance, projection-cache evidence, current-surface documentation,
+            capability tracking, and application documentation in the same work unit. A
+            deleted ledger does not prove that a capability gap closed; only its stated
+            direct behavior does.
 relationships:
   see-also:
     - internals.projection.namespace-overlays

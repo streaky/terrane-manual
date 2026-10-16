@@ -17,7 +17,7 @@ documentation:
   title: Dependency projection resolution
   title-style: text
   summary: >-
-    Describes the exact identities, ordered resolution sources, artifact validation, and durable history used to turn locked
+    Describes the exact identities, ordered resolution sources, artifact validation, and disposable local history used to turn locked
     Rust dependencies into one reusable compiler projection.
   tags:
     - compiler-internals
@@ -162,14 +162,14 @@ documentation:
             retained separately so a facade alias cannot leak into an unrelated dependency.
             `project_rustdoc` replaces rustdoc's defining paths with the applicable declared
             owner or facade-fragment paths before creating projected items, so compiler
-            lookup, generated Rust, editor tooling, and durable projection history expose
-            one matching surface. Associated functions are recorded on their owning foreign
-            type and emitted as Terrane static members rather than duplicate namespace
-            functions. A single admitted concrete generic instantiation keeps the readable
-            type name; only multiple admitted instantiations require canonical hash
-            suffixes. Projection history records instance members as `Type.member` and
-            static members as `Type::member`, so method-level surface loss is visible across
-            dependency upgrades.
+            lookup, generated Rust, editor tooling, and local projection-cache history
+            expose one matching surface. Associated functions are recorded on their owning
+            foreign type and emitted as Terrane static members rather than duplicate
+            namespace functions. A single admitted concrete generic instantiation keeps the
+            readable type name; only multiple admitted instantiations require canonical hash
+            suffixes. Cached history records instance members as `Type.member` and static
+            members as `Type::member`, so method-level surface loss is visible while the
+            local cache remains.
 
             Projection schema 63 also follows source-demanded public bindings whose concrete
             definition is owned by another package in the resolved Cargo graph. External
@@ -757,12 +757,12 @@ documentation:
             discovery or import.
 
             Ordinary package analysis also writes an ignored
-            `.trn/terrane-projection.generated.trn` rooted at the package; `package.toml`,
-            `terrane-dependencies.lock`, and `terrane-projection.lock` remain at package
-            root. It remains complete over the discovered surface rather than being
-            restricted to current imports. The file orders demanded unavailable declarations
-            and a required-admitted index first, active compiler-owned Terrane source
-            second, and the unreachable unavailable inventory last. Deterministic
+            `.trn/terrane-projection.generated.trn` rooted at the package; `package.toml`
+            and `terrane-dependencies.lock` remain at package root, and ignored
+            `.trn/projection-cache.json` stores disposable local projection cache/history.
+            It remains restricted to current imports. The file orders demanded unavailable
+            declarations and a required-admitted index first, active compiler-owned Terrane
+            source second, and the unreachable unavailable inventory last. Deterministic
             `Generated source unit` markers introduce the active source. Each marker starts
             an ordinary one-namespace virtual source unit, so a single physical artifact may
             contain `/deps/iced`, `/deps/iced/application`, and other namespaces without
@@ -845,7 +845,7 @@ documentation:
             without library targets remain explicit records. The rendered API is
             completeness evidence, not yet a stable Terrane semantic schema.
     - id: history
-      title: Durable origin and replay history
+      title: Local cache history and replay evidence
       blocks:
         - type: rule
           id: rule.internals.projection.history-preserves-origin
@@ -860,25 +860,27 @@ documentation:
             unique locked recursive owner nameable to Rust lowering, but never add a Terrane
             source import root.
 
-            `terrane-projection.lock` is durable API-surface history rather than a
-            dependency graph or cache index. History format 4 groups projected member names
-            by namespace and records removed members, injected exact private owner
+            The ignored `.trn/projection-cache.json` is disposable local projection
+            cache/history, distinct from `terrane-dependencies.lock` and the separate
+            `.trn/dependencies/projection.json` cache. Cache format 4 groups projected
+            member names by namespace and records removals, injected exact private owner
             dependencies, content origin, rustdoc format, projection schema, cache identity,
-            verified content hash, and the resolution events that produced that content.
+            verified content hash, and resolution events.
 
-            An exact-cache hit for unchanged content preserves the original local or
-            published content-origin history instead of rewriting it as cache provenance. If
-            the same format-4 identity, dependency surface, and private owner edge list
-            later produce a different content hash, projection fails with a replay-mismatch
-            diagnostic. Actual removed member identities are retained after any surface
-            change, including a changed source or producer at the same dependency version,
-            so a later missing import differs from a member that never existed.
+            An exact-cache hit for unchanged content preserves its original local or
+            published content origin rather than rewriting it as cache provenance. If the
+            same format-4 identity, dependency surface, and private owner edge list later
+            produce a different content hash, projection fails with a replay-mismatch
+            diagnostic. Removed member identities remain available to diagnose S2031 only
+            while this local cache is present; clearing it or using a fresh checkout
+            regenerates current projection and loses that historical context, not dependency
+            identity. `terrane-dependencies.lock` remains the tracked exact graph.
 
-            Before serializing, the shared writer compares the complete parsed history
-            contract with the prospective history. Equality leaves the existing file
-            untouched, preserving key order, whitespace, and trailing newline spelling
-            without another parse or serialization. Semantic changes and migrations still
-            persist normally; replay checks run before this equality decision.
+            Before serializing, the shared writer compares the complete parsed cache-history
+            contract with prospective history. Equality leaves the existing file untouched,
+            preserving key order, whitespace, and trailing newline spelling. Semantic
+            changes and migrations persist normally; replay checks run before this equality
+            decision.
 
             Removed-member history participates in every projected lookup tier: top-level
             names use their namespace entry, static members use `Type::member`, and instance

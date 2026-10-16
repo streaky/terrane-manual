@@ -1023,12 +1023,12 @@ documentation:
           markdown: |-
             A debug build records versioned provenance beside both generated Rust and the
             executable. It binds compiler, exact Rust release and sysroot, target,
-            toolchain-bound ABI recipe, named unoptimized artifact profile, manifest,
-            projection lock, logical source, final generated files, semantic identities, and
-            native module by hash. Changed source or generated files, a mismatched
-            executable, malformed metadata, or any profile/toolchain/ABI mismatch disables
-            Terrane translation with a diagnostic instead of showing plausible but wrong
-            locations.
+            toolchain-bound ABI recipe, named unoptimized artifact profile, manifest, local
+            projection-cache data, logical source, final generated files, semantic
+            identities, and native module by hash. Changed source or generated files, a
+            mismatched executable, malformed metadata, or any profile/toolchain/ABI mismatch
+            disables Terrane translation with a diagnostic instead of showing plausible but
+            wrong locations.
 
             Explicit relocation mappings may point copied-but-identical artifacts at new
             source and build roots; the adapter forwards the same mapping to LLDB so native
