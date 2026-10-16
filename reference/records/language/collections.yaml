@@ -82,6 +82,22 @@ documentation:
             unavailable. `for` invokes authored protocol methods directly, including across
             package namespaces. Missing, effectful, parameterized, or wrongly typed protocol
             methods produce targeted source diagnostics.
+    - id: contextual-collection-initializers
+      title: Contextual collection initializers
+      blocks:
+        - type: rule
+          id: rule.collections.contextual-initializers
+          level: must
+          since: null
+          evidence:
+            - function-owned-contextual-collections
+          markdown: |-
+            A collection initializer is analyzed and emitted using the same destination type
+            in every valid declaration context, including declarations inside loops and
+            nested control-flow bodies. Contextual element types and collection builder
+            prefixes remain local to the owning function; reusing one mutable Rust
+            accumulator across loop iterations must not reuse the prior iteration's logical
+            collection.
     - id: compiler-produced-read-only-lists
       title: Compiler-produced read-only lists
       blocks:

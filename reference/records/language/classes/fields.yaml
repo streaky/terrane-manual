@@ -41,6 +41,8 @@ documentation:
             - authored-required-missing-branch
             - authored-required-double-write
             - authored-required-move-out
+            - object-field-owned-snapshot
+            - imported-effective-fields
           markdown: |-
             A typed class or trait field may omit its initializer when its declared type has
             a canonical default. Boolean fields receive `false`, numeric fields receive
@@ -65,9 +67,12 @@ documentation:
             the incomplete object's user destructor. Internal initialization storage is not
             an observable optional type and never fabricates a `T`.
 
-            A trait may provide an initializer, or the using class may override its field.
-            Inherited initializers retain their declaring source and object context.
-            Omission never infers a type or invokes an arbitrary constructor.
+            A value read from a class field is an owned snapshot when its contract requires
+            value separation: mutating a local copy does not mutate the stored field. This
+            applies equally to required fields initialized by a constructor and fields with
+            defaults. A trait may provide an initializer, or the using class may override
+            its field. Inherited initializers retain their declaring source and object
+            context. Omission never infers a type or invokes an arbitrary constructor.
     - id: declaration
       title: Declaring field metadata
       blocks:

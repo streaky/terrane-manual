@@ -124,20 +124,24 @@ documentation:
             encoding of its complete source name that cannot collide with any safe generated
             method name. This local mapping prevents an unrelated unsafe declaration from
             changing runtime, generated, or projected implementations of a fixed-name safe
-            protocol method such as `render`, `log`, or `construct`.
+            protocol method such as `render`, `log`, or `construct`. Collection contextual
+            typing and builder evidence are preserved across function-owned lowering: a
+            local collection declaration inside a loop retains its destination element type
+            while each iteration constructs a fresh logical value. Field reads likewise
+            preserve owned value separation; copying a non-resource class field and mutating
+            the local snapshot does not mutate the original object.
 
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
             runtime-output, warning, and canonical-Rust checks. Projection cache/history is
             disposable local state, not a tracked golden; the deliberate format-3 projection
-            history compatibility fixture remains test data.
-
-            `terrane rust` streams a complete standalone Rust translation unit by default.
-            With `--output` or `-o`, it writes a split artifact. For a requested entrypoint
-            named `<entrypoint-stem>.rs`, Terrane emits `<entrypoint-stem>.support.rs`
-            beside it when support code is needed. The entrypoint contains authored
-            lowering, user-authored package modules, source and namespace associations, and
-            a relative `include!` only when the sidecar exists. The support sidecar contains
-            the compiler prelude, runtime, structured-error and source-site infrastructure,
+            history compatibility fixture remains test data. `terrane rust` streams a
+            complete standalone Rust translation unit by default. With `--output` or `-o`,
+            it writes a split artifact. For a requested entrypoint named
+            `<entrypoint-stem>.rs`, Terrane emits `<entrypoint-stem>.support.rs` beside it
+            when support code is needed. The entrypoint contains authored lowering,
+            user-authored package modules, source and namespace associations, and a relative
+            `include!` only when the sidecar exists. The support sidecar contains the
+            compiler prelude, runtime, structured-error and source-site infrastructure,
             selected bundled `/core` implementation code, projected `/deps` lowering, and a
             vendored-support-crate manifest. Empty sidecars and their includes are omitted.
             `check`, `build`, and `run` use the same renderer and request `src/main.rs`.
@@ -168,5 +172,12 @@ provenance:
   specification:
     - document: language-scoreboard
       section: "rust-lowering"
-  conformance: null
-  compiler: null
+  conformance:
+    - function-owned-contextual-collections
+    - imported-effective-fields
+    - object-field-owned-snapshot
+  compiler:
+    - crates/terrane-compiler/src/lowering/emitter/expressions.rs
+    - crates/terrane-compiler/src/lowering/emitter/items/unions.rs
+    - crates/terrane-compiler/src/lowering/emitter/members.rs
+    - crates/terrane-compiler/src/semantics/analysis.rs

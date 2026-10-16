@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 48690a21293d5c62cc5d28a60296aab9626e6f84ee0cb271b4b6077248325be9
+  input-sha256: 60cf09cd2c9834260e18c47af79d36af886c7e52b0ff7668523b5aba08a3887e
 format: 2
 generated: true
 records:
@@ -577,6 +577,9 @@ records:
     sections: []
   - id: source-iteration
     title: Source-defined iteration
+    sections: []
+  - id: contextual-collection-initializers
+    title: Contextual collection initializers
     sections: []
   - id: compiler-produced-read-only-lists
     title: Compiler-produced read-only lists
@@ -3285,8 +3288,15 @@ records:
     specification:
     - document: language-scoreboard
       section: rust-lowering
-    conformance: null
-    compiler: null
+    conformance:
+    - function-owned-contextual-collections
+    - imported-effective-fields
+    - object-field-owned-snapshot
+    compiler:
+    - crates/terrane-compiler/src/lowering/emitter/expressions.rs
+    - crates/terrane-compiler/src/lowering/emitter/items/unions.rs
+    - crates/terrane-compiler/src/lowering/emitter/members.rs
+    - crates/terrane-compiler/src/semantics/analysis.rs
   sections:
   - id: rust-lowering
     title: Deterministic Rust Lowering
