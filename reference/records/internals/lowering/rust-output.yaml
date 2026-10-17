@@ -145,6 +145,21 @@ documentation:
             owned reads dereference the getter result inside the receiver's borrow or lock;
             the required-slot path performs that dereference exactly once as well.
 
+            Native/platform-result fields and document-result fields already return an owned
+            converted value. Matching destination-directed reads reuse that value rather
+            than copying it again. Proven reads of uncertain-binding storage likewise
+            produce their owned snapshot at the availability boundary; ordinary destination
+            adaptation and adaptive integer arithmetic do not add another clone. Adaptive
+            integer conversion still lifts native small-integer storage into the source
+            integer representation; owning a snapshot does not remove that representation
+            change. Map-entry field extraction, logging argument adapters, and explicit
+            rethrows use the same single-snapshot ownership boundary. Destructor-backed
+            values still use their existing separation rules. Projected callback adapters
+            take ownership of the supplied callable snapshot; borrowed callable inputs are
+            copied at the borrow boundary, and shared async callbacks retain the
+            per-invocation handle copy needed by each future. These are ownership-specific
+            decisions, not rewriting or trimming generated clone suffixes.
+
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
             runtime-output, warning, and canonical-Rust checks. Projection cache/history is
             disposable local state, not a tracked golden; the deliberate format-3 projection
