@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 68a386675de5ce1a5b7cdf0a472072090e8e8acb78d0898027f606e800ec11bb
+  input-sha256: 224d4f4e0a25f67dad1537b3102108e519d5fb7c4a8e2515954a274de74ac146
 format: 1
 generated: true
 diagnostics:
@@ -2696,7 +2696,7 @@ diagnostics:
     helper)
   sources:
   - path: crates/terrane-compiler/src/semantics/shared_reentry.rs
-    line: 183
+    line: 179
 - code: T0210
   messages:
   - enum `{}` requires a fully selected application with {} type argument(s)
