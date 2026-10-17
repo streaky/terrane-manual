@@ -134,7 +134,13 @@ documentation:
             value whose receiver is immediately discarded. This optimization does not apply
             to borrowed results, required-field slots, native projections, or
             destructor-backed receiver storage; those retain their existing access and
-            value-separation rules.
+            value-separation rules. When a matching owned field contract is read through a
+            non-owning or shared object reference, member lowering materializes that
+            snapshot once, while the borrow or shared lock is still live.
+            Destination-directed lowering does not clone the resulting snapshot again.
+            Required-field slots follow the same rule, and values with destructor-backed
+            identity use value separation rather than a redundant clone followed by
+            separation.
 
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
             runtime-output, warning, and canonical-Rust checks. Projection cache/history is
