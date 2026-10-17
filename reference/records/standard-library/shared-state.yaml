@@ -17,14 +17,31 @@ documentation:
   title: Shared mutable state
   title-style: text
   summary: >-
-    Defines the version-one owner-task and typed-channel boundary for mutable application state and the remaining integer-specialized
-    facilities.
+    Describes checked synchronous shared-reference state, owner-task/channel workflows,
+    integer-specialized synchronization and the limits of explicit userspace lock control.
   tags:
     - standard-library
     - concurrency
     - async
     - ownership
   sections:
+    - id: synchronous-state
+      title: Synchronous shared operations
+      blocks:
+        - type: markdown
+          markdown: |-
+            A class-backed `shared ref` can own arbitrary application state. Put an atomic
+            read/modify/write operation in one synchronous mutable method; the invocation
+            holds its checked exclusive storage guard for that body. Separate method calls
+            or field assignments are not one transaction. Copying a handle preserves the
+            state identity. See
+            [checked shared storage](lang.types.references#shared-deadlocks) for reentry
+            errors, guard lifetimes and cross-thread lock-order responsibilities.
+
+            This automatic guard is not a user-accessible mutex guard. There is no explicit
+            shared-reference try-lock, timed acquisition, read/write-compatible borrow, or
+            ordered multi-object lock operation. Blocking mutex acquisition does not become
+            interruptible merely because the surrounding task has a deadline.
     - id: owner-task
       title: One mutation owner
       blocks:
@@ -35,11 +52,10 @@ documentation:
           evidence:
             - shared-state-owner
           markdown: |-
-            Version one deliberately has no generic shared mutable cell. Keep mutable
-            application state in one owner task. Other tasks send typed commands and receive
-            typed results through bounded channels. This keeps mutation authority,
-            backpressure, shutdown, and task ownership explicit without guard lifetimes or
-            suspendable critical sections.
+            For asynchronous workflows that need to suspend while coordinating state, use
+            one owner task. Other tasks transfer typed commands and receive typed results
+            through bounded channels. Mutation, backpressure, shutdown and task ownership
+            remain explicit without suspendable lock guards.
 
             The state itself can be a class or collection owned by that task. Senders
             transfer command values through `channel-sender`; only the owner mutates the
@@ -64,10 +80,29 @@ documentation:
             `int-mutex`, `int-read-write-lock`, `atomic-int64`, and `thread-local-int`
             remain concrete low-level integer facilities. Their presence does not promise
             generic stored values or exposed lock guards.
+    - id: advanced-boundaries
+      title: Advanced synchronization boundaries
+      blocks:
+        - type: markdown
+          markdown: |-
+            The integer facilities provide load/store, mutex-backed increment, and
+            `atomic-int64` load/store/increase with explicit memory ordering. They do not
+            expose generic guarded payloads or compare-and-swap. Core currently has no
+            user-facing generic lock guards, condition variables, semaphores or barriers.
+
+            Typed channels expose one linear sender and one linear receiver, not clonable
+            multi-producer senders or broadcast. The owner-task recipe therefore does not by
+            itself supply arbitrary many-client fan-in. See the channel ownership boundary
+            before designing a worker pool or multi-client state service.
+
+            These are current tooling limitations, not compatibility promises or committed
+            additions. Runtime shared-reference checking is independent of any future
+            explicit synchronization API; it does not pretend to provide those controls.
 relationships:
   see-also:
     - std.concurrency.channels
     - lang.functions.asynchronous
+    - lang.types.references
   supersedes: []
   superseded-by: []
   conflicts-with: []

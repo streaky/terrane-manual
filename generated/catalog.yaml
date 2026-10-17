@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 586cb95a9c3d371c8979be6c111564c1261f595a32fa8dc880df970db5a0ff51
+  input-sha256: 0f43fa55409b00497b6e54f320a0e3cb0e3d04814842b0719eb5b6d277ac9dcb
 format: 2
 generated: true
 records:
@@ -1643,8 +1643,8 @@ records:
   declaration-synopsis: []
 - id: std.concurrency.shared-state
   title: Shared mutable state
-  summary: Defines the version-one owner-task and typed-channel boundary for mutable application state
-    and the remaining integer-specialized facilities.
+  summary: Describes checked synchronous shared-reference state, owner-task/channel workflows, integer-specialized
+    synchronization and the limits of explicit userspace lock control.
   kind: topic
   manual: reference
   group: Standard library
@@ -1658,11 +1658,17 @@ records:
     conformance: []
     compiler: null
   sections:
+  - id: synchronous-state
+    title: Synchronous shared operations
+    sections: []
   - id: owner-task
     title: One mutation owner
     sections: []
   - id: unavailable-cells
     title: Generic cell diagnostics
+    sections: []
+  - id: advanced-boundaries
+    title: Advanced synchronization boundaries
     sections: []
   declaration-synopsis: []
 - id: std.documents.typed-decoding

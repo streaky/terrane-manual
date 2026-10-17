@@ -239,6 +239,12 @@ documentation:
                 multi-thread dependency cycle, not local recursive acquisition. There is no
                 general deadlock-freedom guarantee.
 
+                Shared-reference acquisition is a blocking synchronous operation; task
+                cancellation or deadlines do not interrupt that mutex wait. There is no exposed
+                try-lock, timed lock or read/write-compatible guard. See
+                [shared mutable state](std.concurrency.shared-state#advanced-boundaries) for the
+                existing userspace tools and explicit synchronization gaps.
+
                 The ordinary weak-observer lifetime rules, `T0141` plain-reference parameter
                 restriction and `T0142` carrier-kind restriction remain unchanged. Runtime
                 checking does not grant mutation authority or extend reference lifetimes.

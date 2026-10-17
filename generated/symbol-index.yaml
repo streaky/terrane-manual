@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 586cb95a9c3d371c8979be6c111564c1261f595a32fa8dc880df970db5a0ff51
+  input-sha256: 0f43fa55409b00497b6e54f320a0e3cb0e3d04814842b0719eb5b6d277ac9dcb
 format: 1
 generated: true
 symbols:
@@ -700,6 +700,10 @@ symbols:
   record: std.networking.operations
   section: native-transport
   declaration: AsyncWrite
+- name: atomic-int64
+  record: std.concurrency.shared-state
+  section: advanced-boundaries
+  declaration: atomic-int64
 - name: atomic-int64
   record: std.concurrency.shared-state
   section: unavailable-cells
