@@ -39,6 +39,12 @@ documentation:
             immutable receiver. A contract that permits mutation exposes that possibility to
             callers even when a particular invocation does not change the receiver.
 
+            Source methods retain their declared identity when selected through either `ref`
+            or `shared ref` receivers, including inherited methods. Names such as `add`,
+            `multiply`, or `encode` do not select a builtin scalar, collection, or text
+            operation on a source object. Normal receiver-authority rules still apply; a
+            method name does not grant additional mutation authority.
+
             `this` denotes the current instance and is available only in instance methods.
             `self` denotes the effective, late-bound class receiver and is available in
             instance and static methods. Class-level `self::member` access is also available
@@ -53,5 +59,6 @@ provenance:
   specification:
     - document: language-scoreboard
       section: "receiver-mutability"
-  conformance: null
+  conformance:
+    - source-method-builtin-name-dispatch
   compiler: null

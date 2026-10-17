@@ -110,6 +110,21 @@ documentation:
             method body must not synchronously reacquire the same shared storage through
             another alias.
 
+            For synchronous shared or mutable source methods invoked through a `shared ref`
+            receiver, `T0143` rejects an explicit `shared ref` argument proven to identify
+            that same storage. This includes the receiver binding itself, unchanged handle
+            aliases, and an explicit `shared ref` of its originating owner. Parentheses and
+            named arguments do not hide the match. This is a conservative call-boundary
+            restriction even if the method body does not dereference that argument; it is
+            not an interprocedural lock-effect analysis. Pass distinct storage or move the
+            operation to a helper without an already-guarded receiver.
+
+            The check does not establish general deadlock freedom. It does not trace
+            computed aliases, alias relationships after handle replacement, indirect calls,
+            implicit/default arguments, or calls through weak observers or the original
+            owner. Those cases still require the non-reentry rule above; asynchronous and
+            consuming methods are outside this synchronous-guard check.
+
             A projected native reference parameter uses shared access for observation.
             Mutating native operations, including operations reached through source helper
             calls, infer a mutable native borrow and require matching caller access. This
@@ -150,4 +165,9 @@ provenance:
     - shared-read-guard-scope
     - inherited-shared-field-writes
     - shared-native-call-arguments
+    - shared-storage-reentry-direct
+    - shared-storage-reentry-owner
+    - shared-storage-reentry-alias
+    - shared-storage-reentry-distinct
+    - shared-storage-reentry-safe
   compiler: null

@@ -156,6 +156,15 @@ documentation:
             storage copies only the selected field rather than the entire referent. No
             copied getter receiver is used as a mutation target.
 
+            Source-object exclusions in name-keyed builtin dispatch inspect the unwrapped
+            receiver type, including the separate string-family selector. Source methods
+            named like builtin families therefore use ordinary authored method calls through
+            ordinary/shared references rather than scalar helpers. Semantic
+            callable-contract lookup likewise unwraps cached reference types before
+            resolving the source method contract. The `T0143` call-boundary check diagnoses
+            statically matching shared receiver/argument storage before lowering; it does
+            not add runtime locks, snapshots, or reentrancy machinery.
+
             Native/platform-result fields and document-result fields already return an owned
             converted value. Matching destination-directed reads reuse that value rather
             than copying it again. Proven reads of uncertain-binding storage likewise

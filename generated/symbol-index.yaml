@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f287de529576b063363f8f943ef44586542f3ba9fadb4610f36d8feb2456f9f2
+  input-sha256: 905331723fef09dbe527b5cb7dbaef14c07cb969f9fc0b4a11393eb354c08c2a
 format: 1
 generated: true
 symbols:
@@ -455,6 +455,10 @@ symbols:
 - name: add
   record: book.functions
   section: parameters-and-results
+  declaration: add
+- name: add
+  record: lang.classes.methods
+  section: receiver-mutability
   declaration: add
 - name: add
   record: lang.numerics.arithmetic
@@ -2469,6 +2473,10 @@ symbols:
   record: std.logging
   section: events
   declaration: emit
+- name: encode
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: encode
 - name: encode
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -5050,6 +5058,10 @@ symbols:
   section: framework
   declaration: ms
 - name: multiply
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: multiply
+- name: multiply
   record: lang.numerics.arithmetic
   section: integer-operators
   declaration: multiply
@@ -6564,6 +6576,10 @@ symbols:
   section: callbacks
   declaration: ref
 - name: ref
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: ref
+- name: ref
   record: lang.declarations.bindings
   section: declarations
   declaration: ref
@@ -7967,6 +7983,14 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0142
+- name: T0143
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: T0143
+- name: T0143
+  record: lang.types.references
+  section: lowering
+  declaration: T0143
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies

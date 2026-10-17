@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f287de529576b063363f8f943ef44586542f3ba9fadb4610f36d8feb2456f9f2
+  input-sha256: 905331723fef09dbe527b5cb7dbaef14c07cb969f9fc0b4a11393eb354c08c2a
 format: 2
 generated: true
 records:
@@ -525,6 +525,11 @@ records:
     - shared-read-guard-scope
     - inherited-shared-field-writes
     - shared-native-call-arguments
+    - shared-storage-reentry-direct
+    - shared-storage-reentry-owner
+    - shared-storage-reentry-alias
+    - shared-storage-reentry-distinct
+    - shared-storage-reentry-safe
     compiler: null
   sections:
   - id: forms
@@ -758,7 +763,8 @@ records:
     specification:
     - document: language-scoreboard
       section: receiver-mutability
-    conformance: null
+    conformance:
+    - source-method-builtin-name-dispatch
     compiler: null
   sections:
   - id: receiver-mutability
