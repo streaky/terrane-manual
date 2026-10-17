@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e87960ade783fb0f128a7b82d718a4f8e6a61cb432a438c846d11bd0d3114362
+  input-sha256: c6baa0d94c39055a7352ee20a16f79358bc45354681a0ed885672e762497ee50
 format: 1
 generated: true
 symbols:
@@ -5420,6 +5420,10 @@ symbols:
 - name: none
   record: book.types
   section: union-types-and-optional-values
+  declaration: none
+- name: none
+  record: internals.lowering.rust-output
+  section: rust-lowering
   declaration: none
 - name: None
   record: internals.projection.resolution

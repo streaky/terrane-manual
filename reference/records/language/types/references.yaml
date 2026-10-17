@@ -357,6 +357,7 @@ provenance:
     - shared-async-direct-await
     - shared-async-inherited-dispatch
     - shared-async-static-nested
+    - shared-async-resource-field
     - static-class-reentry
     - static-class-checked-storage-safe
   compiler: null
