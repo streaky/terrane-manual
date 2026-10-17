@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 00d9e79ed92572ecab40cc6d70c26a7ecd6ce739afed29b8519149eaf972d1a4
+  input-sha256: 6c05d04da1b7dfc862b37945184cd236e9c947e26396951c7692266b720ec6fc
 format: 1
 generated: true
 symbols:
@@ -7963,6 +7963,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0141
+- name: T0142
+  record: lang.types.references
+  section: lowering
+  declaration: T0142
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies

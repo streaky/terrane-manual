@@ -87,6 +87,14 @@ documentation:
             lock-scoped borrow or referent snapshot is inserted: the former can deadlock
             through another shared alias, and the latter would change reference identity.
 
+            An ordinary observer binding keeps the storage kind selected by its initial
+            owner. Reassigning it between a plain owner and a shared-backed owner is
+            rejected with `T0142`, in either direction, for both inferred and explicitly
+            typed bindings. Use a separate observer binding for the other storage kind.
+            Reassignment between owners of the same storage kind remains supported, subject
+            to the ordinary reference lifetime rules. The compiler does not implicitly
+            promote a plain owner into shared storage to unify these carriers.
+
             A projected native reference parameter uses shared access for observation.
             Mutating native operations, including operations reached through source helper
             calls, infer a mutable native borrow and require matching caller access. This
@@ -120,4 +128,8 @@ provenance:
     - shared-observer-named-argument
     - shared-observer-named-typed-binding
     - shared-observer-callable-alias
+    - observer-reassignment-plain-to-shared-inferred
+    - observer-reassignment-plain-to-shared-typed
+    - observer-reassignment-shared-to-plain-inferred
+    - observer-reassignment-shared-to-plain-typed
   compiler: null

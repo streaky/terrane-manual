@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 00d9e79ed92572ecab40cc6d70c26a7ecd6ce739afed29b8519149eaf972d1a4
+  input-sha256: 6c05d04da1b7dfc862b37945184cd236e9c947e26396951c7692266b720ec6fc
 format: 2
 generated: true
 records:
@@ -518,6 +518,10 @@ records:
     - shared-observer-named-argument
     - shared-observer-named-typed-binding
     - shared-observer-callable-alias
+    - observer-reassignment-plain-to-shared-inferred
+    - observer-reassignment-plain-to-shared-typed
+    - observer-reassignment-shared-to-plain-inferred
+    - observer-reassignment-shared-to-plain-typed
     compiler: null
   sections:
   - id: forms
