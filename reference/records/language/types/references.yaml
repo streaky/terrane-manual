@@ -95,6 +95,21 @@ documentation:
             to the ordinary reference lifetime rules. The compiler does not implicitly
             promote a plain owner into shared storage to unify these carriers.
 
+            A field read from shared storage materializes its result inside a bounded guard
+            scope and releases the guard before evaluating sibling expressions. This applies
+            to owning handles, weak observers, and the original named owner, including Copy
+            scalars and inheritance-backed getters. Field writes, required-slot replacement,
+            and nested collection mutations instead retain the live storage identity; they
+            do not mutate a receiver snapshot.
+
+            A guarded synchronous method call captures its receiver identity first,
+            evaluates explicit arguments in written order and supplies defaults before
+            acquiring the invocation guard. Assignment right-hand sides and collection
+            arguments likewise finish before the write guard is acquired. This bounds read
+            and argument temporaries; it does not make the native mutex reentrant. A guarded
+            method body must not synchronously reacquire the same shared storage through
+            another alias.
+
             A projected native reference parameter uses shared access for observation.
             Mutating native operations, including operations reached through source helper
             calls, infer a mutable native borrow and require matching caller access. This
@@ -132,4 +147,7 @@ provenance:
     - observer-reassignment-plain-to-shared-typed
     - observer-reassignment-shared-to-plain-inferred
     - observer-reassignment-shared-to-plain-typed
+    - shared-read-guard-scope
+    - inherited-shared-field-writes
+    - shared-native-call-arguments
   compiler: null

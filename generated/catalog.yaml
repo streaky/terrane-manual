@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 677daf4653cc7f69e3c9354c2ac4ba86eea0df558a38d7fbe20e919c73e97333
+  input-sha256: f287de529576b063363f8f943ef44586542f3ba9fadb4610f36d8feb2456f9f2
 format: 2
 generated: true
 records:
@@ -522,6 +522,9 @@ records:
     - observer-reassignment-plain-to-shared-typed
     - observer-reassignment-shared-to-plain-inferred
     - observer-reassignment-shared-to-plain-typed
+    - shared-read-guard-scope
+    - inherited-shared-field-writes
+    - shared-native-call-arguments
     compiler: null
   sections:
   - id: forms

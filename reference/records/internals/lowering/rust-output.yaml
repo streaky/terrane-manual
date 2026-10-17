@@ -145,6 +145,17 @@ documentation:
             owned reads dereference the getter result inside the receiver's borrow or lock;
             the required-slot path performs that dereference exactly once as well.
 
+            Shared field reads bind the owned result in an inner block, so Rust's
+            statement-temporary lifetime cannot retain a lock across sibling reads,
+            arithmetic operands, aggregate elements, or call arguments. Write places are a
+            distinct lowering path: capture the shared owner or upgrade the weak handle,
+            evaluate the value arguments, then acquire the live guard and follow mutable
+            getters or required-field slots recursively. Synchronous guarded method calls
+            use that same identity-before-arguments, lock-after-arguments ordering,
+            including projected native methods. Reading the original named owner of shared
+            storage copies only the selected field rather than the entire referent. No
+            copied getter receiver is used as a mutation target.
+
             Native/platform-result fields and document-result fields already return an owned
             converted value. Matching destination-directed reads reuse that value rather
             than copying it again. Proven reads of uncertain-binding storage likewise
