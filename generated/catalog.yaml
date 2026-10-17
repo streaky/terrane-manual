@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 60cf09cd2c9834260e18c47af79d36af886c7e52b0ff7668523b5aba08a3887e
+  input-sha256: 34d0f4153d5ffcebee6af73e2304a81fd4b1a0294e7302c612acb375b47ccba3
 format: 2
 generated: true
 records:
@@ -507,6 +507,7 @@ records:
     - reference-shared-acyclic
     - reference-shared-cycle
     - reference-shared-promotion
+    - shared-native-header-owner
     - borrow-across-await
     compiler: null
   sections:

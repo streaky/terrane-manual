@@ -29,6 +29,11 @@ documentation:
             lender's lifetime. `shared ref T` is an explicit shared owner. `move` transfers
             an owned value. Assignment and calls do not silently convert among these
             contracts, and a `ref T` cannot be promoted to `shared ref T`.
+
+            Copying `shared ref T` copies its owning handle, not `T`. A resource-shaped or
+            non-Clone native referent therefore does not by itself make a containing class
+            or enum noncopyable. Other directly owned linear fields retain their normal
+            transfer rules.
     - id: provenance
       title: Whole-path provenance
       blocks:
@@ -93,5 +98,6 @@ provenance:
     - reference-shared-acyclic
     - reference-shared-cycle
     - reference-shared-promotion
+    - shared-native-header-owner
     - borrow-across-await
   compiler: null
