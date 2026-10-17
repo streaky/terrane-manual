@@ -114,8 +114,8 @@ documentation:
             explicit source-call arguments. It recognizes direct aliases, sequential
             replacements and copies, selected pass-through results, and transitive source
             helper parameter pairs, including owning, weak, and original-owner receivers. It
-            also propagates definite exit aliases for supported nonempty literal loops. See
-            [Shared-storage deadlocks](lang.types.references#shared-deadlocks) for the
+            also propagates definite exit aliases for supported literal and counter loops.
+            See [Shared-storage deadlocks](lang.types.references#shared-deadlocks) for the
             precise coverage, unchecked cases, and safe structuring guidance. Compilation
             success is not a guarantee of deadlock freedom.
 
@@ -172,15 +172,15 @@ documentation:
                 inferred bindings, and named arguments do not intentionally hide an otherwise
                 known match.
 
-                | Recognized shape                                                                | Basis for the diagnostic                                                                                                                                           |
-                | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-                | The receiver handle is also an argument                                         | Same resolved binding and storage identity                                                                                                                         |
-                | Another handle is created from the same owner                                   | Both select the same originating storage                                                                                                                           |
-                | A local handle or observer copies another                                       | The copy retains the identity held at that assignment                                                                                                              |
-                | A handle is replaced and later assigned back                                    | Sequential assignment tracking restores the current identity rather than using its first initializer                                                               |
-                | A synchronous helper returns one selected shared-reference parameter            | The existing return-lender analysis identifies an identity-preserving pass-through; field/element projections and bodies with replacements are not treated as such |
-                | A source helper or wrapper chain passes a guarded receiver/argument pair        | Parameter-pair summaries grow to a finite fixed point across direct source calls, including cross-unit chains and recursive call graph components                  |
-                | A direct nonempty core list/tuple loop assigns a handle in a straight-line body | With no early exit, facts established independently of loop-written entry values hold at the final normal exit                                                     |
+                | Recognized shape                                                                         | Basis for the diagnostic                                                                                                                                           |
+                | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+                | The receiver handle is also an argument                                                  | Same resolved binding and storage identity                                                                                                                         |
+                | Another handle is created from the same owner                                            | Both select the same originating storage                                                                                                                           |
+                | A local handle or observer copies another                                                | The copy retains the identity held at that assignment                                                                                                              |
+                | A handle is replaced and later assigned back                                             | Sequential assignment tracking restores the current identity rather than using its first initializer                                                               |
+                | A synchronous helper returns one selected shared-reference parameter                     | The existing return-lender analysis identifies an identity-preserving pass-through; field/element projections and bodies with replacements are not treated as such |
+                | A source helper or wrapper chain passes a guarded receiver/argument pair                 | Parameter-pair summaries grow to a finite fixed point across direct source calls, including cross-unit chains and recursive call graph components                  |
+                | A definitely entered supported loop assigns a handle, possibly in nested supported loops | With no early exit, facts established independently of loop-written entry values hold at the final normal exit                                                     |
 
                 This is a conservative source-call restriction, not a proof that a particular
                 callee execution will deadlock. It can reject a matching argument even when the
@@ -220,15 +220,24 @@ documentation:
                 safety merely because compilation succeeds:
 
                 - **Ambiguous control flow.** General branch, loop, exception, and completion
-                  writes discard affected local alias facts. There is one narrow loop proof: a
-                  direct core `list` or `tuple` construction with at least one explicit item,
-                  possibly grouped, and a straight-line body without nested control flow or
-                  `break`, `continue`, `return`, or `throw`. The check forgets loop-written
-                  inputs and retains only aliases recoverable independently at every normal
-                  iteration exit. Empty/unknown iterables, ranges, named collections, early
-                  exits, and loop-carried alias dependencies do not receive that post-loop
-                  proof. The compiler does not guess branch selection or general loop entry/exit
-                  counts; identical assignments in both branches may still lose a proof.
+                  writes discard affected local alias facts. A narrow definite-entry proof
+                  supports direct core `list` or `tuple` construction with at least one explicit
+                  item (possibly grouped), and counter loops whose simple assignment initializes
+                  the same counter used on the left of an initially true `<` or `<=` comparison.
+                  The initializer and comparison bound must be compile-time integer expressions;
+                  the update must be a postfix numeric update. Supported loops may nest, but
+                  their bodies must otherwise be straight-line, without branches or `break`,
+                  `continue`, `return`, or `throw`. The check forgets loop-written inputs and
+                  retains only aliases recoverable independently at every normal iteration exit;
+                  it does not prove termination or a precise iteration count. Empty/unknown
+                  iterables, ranges, named collections, early exits, and loop-carried alias
+                  dependencies do not receive that post-loop proof. Named collections require
+                  reaching collection-value/cardinality facts, not merely their first
+                  initializer; loop-carried aliases require iteration-sensitive facts to
+                  distinguish one pass from later passes. These remain limitations, not promised
+                  extensions. The compiler does not guess branch selection or general loop
+                  entry/exit counts; identical assignments in both branches may still lose a
+                  proof.
                 - **Stored or projected handles.** Alias paths through object fields,
                   collections, indexing, and arbitrary native results are not tracked. A
                   returned shared handle selected from a field is not assumed to be identical to
