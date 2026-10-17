@@ -140,7 +140,10 @@ documentation:
             Destination-directed lowering does not clone the resulting snapshot again.
             Required-field slots follow the same rule, and values with destructor-backed
             identity use value separation rather than a redundant clone followed by
-            separation.
+            separation. Getter-backed fields of inheritance-wrapped classes return
+            references even when their scalar representation implements Rust Copy. Their
+            owned reads dereference the getter result inside the receiver's borrow or lock;
+            the required-slot path performs that dereference exactly once as well.
 
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
             runtime-output, warning, and canonical-Rust checks. Projection cache/history is
