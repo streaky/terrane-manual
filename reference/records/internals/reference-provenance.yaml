@@ -52,13 +52,14 @@ documentation:
             produce explicit function/result lifetimes, field and supported
             collection-element derivation borrows the stored value directly, captured refs
             remain borrows, and borrowed list iteration yields `&T`. Only explicit
-            `shared ref T` storage uses `Arc<Mutex<T>>`. When an ordinary ref observes that
-            same explicitly shared owner, it remains non-owning through a `Weak` handle. No
-            ordinary reference is silently promoted to ownership. Reference-address lowering
-            records an internal `S9005` diagnostic and aborts compilation if a semantically
-            admitted provenance shape has no native lowering arm. The compiler does not
-            panic or pass a partial generated program to Cargo when semantic and lowering
-            support drift apart.
+            `shared ref T` storage uses `Arc<TerraneSharedCell<T>>`, whose checked mutex
+            rejects same-thread reacquisition before waiting. When an ordinary ref observes
+            that same explicitly shared owner, it remains non-owning through a `Weak`
+            handle. No ordinary reference is silently promoted to ownership.
+            Reference-address lowering records an internal `S9005` diagnostic and aborts
+            compilation if a semantically admitted provenance shape has no native lowering
+            arm. The compiler does not panic or pass a partial generated program to Cargo
+            when semantic and lowering support drift apart.
 
             Inside a proven present optional branch, taking a reference borrows the payload,
             not the optional storage and not a cloned snapshot. Native mutable-reference

@@ -106,18 +106,19 @@ documentation:
             evaluates explicit arguments in written order and supplies defaults before
             acquiring the invocation guard. Assignment right-hand sides and collection
             arguments likewise finish before the write guard is acquired. This bounds read
-            and argument temporaries; it does not make the native mutex reentrant. A guarded
-            method body must not synchronously reacquire the same shared storage through
-            another alias.
+            and argument temporaries. Shared-storage access is exclusive and checked at
+            runtime: reacquisition by the same thread fails immediately with a
+            borrow-conflict panic instead of waiting on itself. This includes read-only
+            method reentry; a recursive mutex does not make overlapping mutable references
+            safe.
 
-            `T0143` provides best-effort static detection of shared-storage reentry through
-            explicit source-call arguments. It recognizes direct aliases, sequential
-            replacements and copies, selected pass-through results, and transitive source
-            helper parameter pairs, including owning, weak, and original-owner receivers. It
-            also propagates definite exit aliases for supported literal and counter loops.
-            See [Shared-storage deadlocks](lang.types.references#shared-deadlocks) for the
-            precise coverage, unchecked cases, and safe structuring guidance. Compilation
-            success is not a guarantee of deadlock freedom.
+            `T0143` remains a cheap compile-time error for obvious receiver/argument
+            aliases, including local straight-line copies and replacements. It is not the
+            runtime enforcement mechanism. Helpers, loops, stored handles and indirect calls
+            need not be statically resolved for actual same-thread reentry to fail promptly.
+            See [Checked shared storage](lang.types.references#shared-deadlocks) for the
+            runtime contract, guard lifetimes, concurrent limitations and safe structuring
+            guidance.
 
             A projected native reference parameter uses shared access for observation.
             Mutating native operations, including operations reached through source helper
@@ -126,22 +127,24 @@ documentation:
             through a shared native input. Authored-class receiver authority remains
             explicit.
     - id: shared-deadlocks
-      title: Shared-storage deadlocks and static protection
+      title: Checked shared storage and concurrent deadlocks
       blocks:
         - type: markdown
           markdown: |-
             Explicit shared ownership preserves one storage identity; copying a handle does
-            not copy its referent. Native shared storage uses a non-reentrant mutex. Even a
-            read-only source method can hold that mutex for its synchronous body. If the
-            body reaches the same storage through another owning handle, weak observer, or
-            original owner, the second acquisition can wait forever on the guard held by the
-            current call. There need not be competing threads, a cycle of source ownership,
-            high CPU use, or recursion.
+            not copy its referent. Native shared storage combines mutex synchronization with
+            an ownership-aware runtime borrow check. A synchronous method holds exclusive
+            access for its body. Access through `this` uses that existing guard; trying to
+            acquire the same storage again through another owning handle, weak observer or
+            original owner on the same thread fails immediately with
+            `shared reference borrow conflict: storage is already borrowed by this thread`.
+            Read/read alias reentry is also rejected: this implementation is exclusive, not
+            a recursive lock or a read/write borrowing system.
 
-            A method's direct access through `this` operates under its existing receiver
-            guard. It is the additional access through an alias that creates reentry.
-            Distinct source variable names do not establish distinct storage, and calling a
-            method `shared` or read-only does not make its native lock reentrant.
+            A different thread waits normally and can acquire the storage after release.
+            Multiple threads acquiring different objects in opposite order can still
+            deadlock. Native locks outside this shared-storage carrier retain their own
+            contracts. This is not a general deadlock detector or a lock timeout.
       sections:
         - id: automatic-guard-scopes
           title: What generated guard scopes prevent
@@ -158,8 +161,13 @@ documentation:
                 in source order, supply defaults, then acquire the invocation guard. Writes and
                 nested collection mutations similarly evaluate values before acquiring the live
                 write guard; they do not mutate cloned receiver snapshots. These rules apply to
-                source and projected native invocation lowering. They remove temporary-lifetime
-                deadlocks, not reentry during a method body. The runtime mutex is unchanged.
+                source and projected native invocation lowering. They avoid unnecessary
+                temporary-lifetime conflicts; they do not authorize recursive access.
+
+                Guards do not survive suspension: synchronous guarded methods cannot await,
+                while async invocation uses the existing owned receiver/snapshot path. A native
+                guard cannot migrate threads. The same-thread ownership check relies on these
+                lifetime rules; it is not ambient task-local request state.
         - id: diagnosed-reentry
           title: What T0143 diagnoses
           blocks:
@@ -172,25 +180,20 @@ documentation:
                 inferred bindings, and named arguments do not intentionally hide an otherwise
                 known match.
 
-                | Recognized shape                                                                         | Basis for the diagnostic                                                                                                                                           |
-                | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-                | The receiver handle is also an argument                                                  | Same resolved binding and storage identity                                                                                                                         |
-                | Another handle is created from the same owner                                            | Both select the same originating storage                                                                                                                           |
-                | A local handle or observer copies another                                                | The copy retains the identity held at that assignment                                                                                                              |
-                | A handle is replaced and later assigned back                                             | Sequential assignment tracking restores the current identity rather than using its first initializer                                                               |
-                | A synchronous helper returns one selected shared-reference parameter                     | The existing return-lender analysis identifies an identity-preserving pass-through; field/element projections and bodies with replacements are not treated as such |
-                | A source helper or wrapper chain passes a guarded receiver/argument pair                 | Parameter-pair summaries grow to a finite fixed point across direct source calls, including cross-unit chains and recursive call graph components                  |
-                | A definitely entered supported loop assigns a handle, possibly in nested supported loops | With no early exit, facts established independently of loop-written entry values hold at the final normal exit                                                     |
+                The inexpensive check recognizes the same resolved handle, handles created from
+                one owner, and local straight-line copies/replacements. It forgets affected
+                identities at compound control-flow writes. There are no loop-entry proofs,
+                iteration-count reasoning, pass-through-return alias inference, or transitive
+                helper parameter-pair summaries in this diagnostic.
 
-                This is a conservative source-call restriction, not a proof that a particular
-                callee execution will deadlock. It can reject a matching argument even when the
-                method does not read it, or when a summarized call is conditional. No
-                interprocedural lock-effect proof is claimed. The diagnostic is reported before
-                backend compilation or program execution; the compiler does not repair the call
-                by copying the referent or making the mutex reentrant.
+                This is a conservative source-call restriction: it can reject a matching
+                argument even if the method never reads it. It is reported before backend
+                compilation, and remains an error rather than a new warning-severity protocol.
+                Compilation success does not authorize reentry: checked runtime acquisition
+                enforces the same-thread rule independently of static alias recognition.
             - type: example
               id: reentry-through-helper
-              title: A visible helper parameter pair
+              title: Hidden helper aliases still fail promptly at runtime
               language: terrane
               mode: illustrative
               source: |-
@@ -209,64 +212,36 @@ documentation:
               target: null
               return_value: null
               stdout: null
-              diagnostic: "T0143: both helper parameters receive the same shared storage"
+              diagnostic: "Runtime panic: shared reference borrow conflict"
               markdown: null
         - id: unchecked-reentry
-          title: What remains unchecked
+          title: Runtime enforcement and remaining concurrent responsibilities
           blocks:
             - type: markdown
               markdown: |-
-                Detection is best-effort. In particular, none of the following is a promise of
-                safety merely because compilation succeeds:
+                Helpers and wrapper chains, indirect calls, returned handles, named collections,
+                nested/counter loops and loop-carried aliases may hide an identity from `T0143`.
+                If execution actually reacquires storage already held by the same thread, the
+                runtime check still fails before attempting to wait. An unexecuted conflicting
+                path does not itself cause a runtime error.
 
-                - **Ambiguous control flow.** General branch, loop, exception, and completion
-                  writes discard affected local alias facts. A narrow definite-entry proof
-                  supports direct core `list` or `tuple` construction with at least one explicit
-                  item (possibly grouped), and counter loops whose simple assignment initializes
-                  the same counter used on the left of an initially true `<` or `<=` comparison.
-                  The initializer and comparison bound must be compile-time integer expressions;
-                  the update must be a postfix numeric update. Supported loops may nest, but
-                  their bodies must otherwise be straight-line, without branches or `break`,
-                  `continue`, `return`, or `throw`. The check forgets loop-written inputs and
-                  retains only aliases recoverable independently at every normal iteration exit;
-                  it does not prove termination or a precise iteration count. Empty/unknown
-                  iterables, ranges, named collections, early exits, and loop-carried alias
-                  dependencies do not receive that post-loop proof. Named collections require
-                  reaching collection-value/cardinality facts, not merely their first
-                  initializer; loop-carried aliases require iteration-sensitive facts to
-                  distinguish one pass from later passes. These remain limitations, not promised
-                  extensions. The compiler does not guess branch selection or general loop
-                  entry/exit counts; identical assignments in both branches may still lose a
-                  proof.
-                - **Stored or projected handles.** Alias paths through object fields,
-                  collections, indexing, and arbitrary native results are not tracked. A
-                  returned shared handle selected from a field is not assumed to be identical to
-                  the helper's receiver or parameter.
-                - **Unproven return selection.** A shared-return helper with replacements,
-                  multiple possible lenders, or no known lender is not a pass-through identity
-                  proof. The compiler does not inspect arbitrary computed results to recover an
-                  owner.
-                - **Indirect calls.** Callable values, callbacks, native callees, and unresolved
-                  source targets have no source parameter-pair summary here. Direct source calls
-                  do propagate across wrapper chains and recursive components to a fixed point,
-                  without an arbitrary wrapper-depth cutoff. A call cycle alone creates no
-                  constraint; a guarded-call pair must seed the summary.
-                - **Omitted arguments.** The alias check binds explicit positional/named
-                  arguments. It does not analyze an omitted default expression or implicit
-                  source of a handle as though it were supplied at the call site.
-                - **Hidden method-body aliases.** A method can reach its own receiver storage
-                  through a field, a captured handle, a global, or another service. The explicit
-                  receiver/argument check does not establish an effect summary for those
-                  accesses.
-                - **Other invocation modes.** Async and consuming methods are outside this
-                  synchronous shared/mutable guard analysis. It does not verify suspension-time
-                  lock behavior, native internal locking, or interactions between several
-                  different locks.
+                A borrow conflict is a runtime panic, not a declared Terrane throwable or a
+                recoverable `catch` contract. Unwinding releases guards. The underlying mutex
+                retains normal poison semantics if a holder unwinds; subsequent generated access
+                reports the existing lock-poison failure. The runtime never fabricates a copied
+                referent, skips a mutation, or retries under a different identity.
 
-                The general rule still applies: do not synchronously reacquire storage whose
-                guard is already held. Additional guards and aliases can create deadlocks
-                outside these recognized shapes. There is no general deadlock-freedom guarantee,
-                runtime timeout, or automatic fallback.
+                Cross-thread contention waits rather than spuriously reporting a borrow
+                conflict. Applications remain responsible for ordering acquisitions of distinct
+                shared objects, avoiding lock cycles with native synchronization, and not
+                waiting for work that needs storage the current operation holds. In particular,
+                waiting for a second thread which needs the first thread's guard is a
+                multi-thread dependency cycle, not local recursive acquisition. There is no
+                general deadlock-freedom guarantee.
+
+                The ordinary weak-observer lifetime rules, `T0141` plain-reference parameter
+                restriction and `T0142` carrier-kind restriction remain unchanged. Runtime
+                checking does not grant mutation authority or extend reference lifetimes.
         - id: structuring-shared-operations
           title: Structuring operations without reentry
           blocks:
@@ -363,4 +338,10 @@ provenance:
     - shared-storage-reentry-tuple-loop
     - shared-storage-reentry-deep-helper-safe
     - shared-storage-reentry-loop-safe
+    - shared-storage-reentry-counter-loop
+    - shared-storage-reentry-nested-loop
+    - shared-storage-reentry-loop-boundaries-safe
+    - shared-storage-reentry-named-loop
+    - shared-storage-reentry-carried-loop
+    - shared-storage-reentry-indirect-helper
   compiler: null

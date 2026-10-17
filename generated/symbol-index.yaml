@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9ec50784d6abb7a021ca9d4eca4c8b611e32fee1f1df6cc74ab620d8c5b7d774
+  input-sha256: 586cb95a9c3d371c8979be6c111564c1261f595a32fa8dc880df970db5a0ff51
 format: 1
 generated: true
 symbols:
@@ -7459,10 +7459,6 @@ symbols:
   record: lang.expressions.operators
   section: operators-precedence
   declaration: shared
-- name: shared
-  record: lang.types.references
-  section: shared-deadlocks
-  declaration: shared
 - name: shared-cell
   record: book.async
   section: sharing-mutable-state-by-giving-it-one-owner
@@ -7475,6 +7471,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: naming-guidance
   declaration: shared-item
+- name: shared-storage
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: shared-storage
 - name: shared-values
   record: book.identity-and-movement
   section: project-observing-a-work-list

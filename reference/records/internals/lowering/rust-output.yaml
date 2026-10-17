@@ -165,26 +165,34 @@ documentation:
             to an effective authored method before applying builtin arity or policy rules,
             including `parse`, `radix`, and `coerce`.
 
-            Best-effort `T0143` validation precedes lowering. It tracks symbolic storage
-            owners under canonical reaching binding identities, preserving copy-time values
-            across sequential replacements. Unsupported compound writes discard affected
-            proofs. Direct nonempty core list/tuple loops and constant-entry counter loops,
-            including nested supported loops, recover definite final aliases after
-            forgetting loop-written inputs. Counter entry requires a constant integer
-            initializer and bound, the same canonical counter binding in an initially true
-            `<`/`<=` condition, and a postfix update. Bodies otherwise remain straight-line
-            without early exits. This is neither a termination proof nor a general loop
-            dataflow solver. Named collection cardinality and iteration-sensitive
-            loop-carried aliases remain unchecked. Existing return-lender analysis
-            recognizes identity-preserving shared returns without confusing projected
-            field/element lenders with handle identity. Source-helper receiver/argument
-            parameter-pair summaries grow monotonically to a finite fixed point, including
-            cross-unit and recursive call graph components. Pairs contain only parameter
-            indices; no arbitrary depth cap or runtime bookkeeping is needed. Owning, weak,
-            and original shared-backed receiver forms share the same storage predicate. See
-            [Shared-storage deadlocks](lang.types.references#shared-deadlocks) for
-            user-facing coverage and unchecked paths. This is compile-time validation only:
-            no runtime locks, snapshots, or reentrancy machinery are added.
+            Explicit shared storage uses `Arc<TerraneSharedCell<T>>`; observers of the same
+            identity use `Weak<TerraneSharedCell<T>>`. The demand-emitted `shared-storage`
+            runtime fragment wraps a mutex with an atomic owner token. A lazy per-thread
+            nonzero scalar token is unique without wrap reuse; acquisition checks for the
+            current token before blocking, and normal cross-thread contention still waits.
+            Once acquired, both ordinary and poisoned guards register ownership. Guard drop
+            clears the owner while still holding the mutex, before the inner guard unlocks;
+            clearing afterward could erase a different thread's newly acquired owner.
+            Acquisition performs no per-access allocation, referent copy or global-map
+            lookup.
+
+            Checked access is exclusive, including read-only source methods. Same-thread
+            reacquisition panics with a clear shared-reference borrow-conflict diagnostic,
+            rather than recursively exposing overlapping references. Rust mutex poisoning is
+            preserved on unwinding. The native guard is not Send and does not survive await:
+            synchronous guarded calls cannot suspend; async receiver operations retain their
+            existing owned snapshot path. Unrelated global, static and explicit concurrency
+            mutexes are not replaced by this carrier.
+
+            `T0143` remains a small early error for direct receiver/argument aliases and
+            local sequential copies/replacements under canonical binding identities.
+            Compound writes discard affected facts. Loop-specific proofs,
+            pass-through-result identity tracking in this check, and transitive
+            source-helper pair summaries are removed. Runtime acquisition detects actual
+            same-thread conflicts independently of those proofs. Cross-thread multi-object
+            lock cycles remain ordinary synchronization responsibilities; no timeout,
+            recursive mutex or general deadlock detector is added. See
+            [Checked shared storage](lang.types.references#shared-deadlocks).
 
             Native/platform-result fields and document-result fields already return an owned
             converted value. Matching destination-directed reads reuse that value rather

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9ec50784d6abb7a021ca9d4eca4c8b611e32fee1f1df6cc74ab620d8c5b7d774
+  input-sha256: 586cb95a9c3d371c8979be6c111564c1261f595a32fa8dc880df970db5a0ff51
 format: 2
 generated: true
 records:
@@ -542,6 +542,12 @@ records:
     - shared-storage-reentry-tuple-loop
     - shared-storage-reentry-deep-helper-safe
     - shared-storage-reentry-loop-safe
+    - shared-storage-reentry-counter-loop
+    - shared-storage-reentry-nested-loop
+    - shared-storage-reentry-loop-boundaries-safe
+    - shared-storage-reentry-named-loop
+    - shared-storage-reentry-carried-loop
+    - shared-storage-reentry-indirect-helper
     compiler: null
   sections:
   - id: forms
@@ -557,7 +563,7 @@ records:
     title: Cost and cycle contracts
     sections: []
   - id: shared-deadlocks
-    title: Shared-storage deadlocks and static protection
+    title: Checked shared storage and concurrent deadlocks
     sections:
     - id: automatic-guard-scopes
       title: What generated guard scopes prevent
@@ -566,7 +572,7 @@ records:
       title: What T0143 diagnoses
       sections: []
     - id: unchecked-reentry
-      title: What remains unchecked
+      title: Runtime enforcement and remaining concurrent responsibilities
       sections: []
     - id: structuring-shared-operations
       title: Structuring operations without reentry
@@ -2947,6 +2953,9 @@ records:
     sections: []
   - id: null
     title: Generated-crate isolation
+    sections: []
+  - id: null
+    title: Bounded expected runtime failures
     sections: []
   - id: null
     title: Focused execution and cache locality
