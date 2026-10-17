@@ -129,7 +129,12 @@ documentation:
             local collection declaration inside a loop retains its destination element type
             while each iteration constructs a fresh logical value. Field reads likewise
             preserve owned value separation; copying a non-resource class field and mutating
-            the local snapshot does not mutate the original object.
+            the local snapshot does not mutate the original object. A direct owned object
+            field can move from a temporary call or constructor result rather than copying a
+            value whose receiver is immediately discarded. This optimization does not apply
+            to borrowed results, required-field slots, native projections, or
+            destructor-backed receiver storage; those retain their existing access and
+            value-separation rules.
 
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
             runtime-output, warning, and canonical-Rust checks. Projection cache/history is
