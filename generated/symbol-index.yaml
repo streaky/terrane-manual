@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dda883c5bcf687e77066c315a3515f2b6780ff728efae3ffcc9bd0ff97980fa2
+  input-sha256: 00d9e79ed92572ecab40cc6d70c26a7ecd6ce739afed29b8519149eaf972d1a4
 format: 1
 generated: true
 symbols:
@@ -7959,6 +7959,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: T0135
+- name: T0141
+  record: lang.types.references
+  section: lowering
+  declaration: T0141
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies

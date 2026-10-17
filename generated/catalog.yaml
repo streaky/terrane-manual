@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dda883c5bcf687e77066c315a3515f2b6780ff728efae3ffcc9bd0ff97980fa2
+  input-sha256: 00d9e79ed92572ecab40cc6d70c26a7ecd6ce739afed29b8519149eaf972d1a4
 format: 2
 generated: true
 records:
@@ -509,6 +509,15 @@ records:
     - reference-shared-promotion
     - shared-native-header-owner
     - borrow-across-await
+    - inferred-reference-provenance
+    - shared-observer-direct-before-sharing
+    - shared-observer-direct-after-sharing
+    - shared-observer-typed-binding
+    - shared-observer-inferred-binding
+    - shared-observer-list-referent
+    - shared-observer-named-argument
+    - shared-observer-named-typed-binding
+    - shared-observer-callable-alias
     compiler: null
   sections:
   - id: forms
