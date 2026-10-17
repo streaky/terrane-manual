@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 905331723fef09dbe527b5cb7dbaef14c07cb969f9fc0b4a11393eb354c08c2a
+  input-sha256: f5e883bc5807cb1c957b2b4769118562189a3bfae4da876620c18f2960c2bbd7
 format: 1
 generated: true
 symbols:
@@ -1441,8 +1441,16 @@ symbols:
   section: coercion
   declaration: coerce
 - name: coerce
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: coerce
+- name: coerce
   record: internals.semantics.conversion-lowering
   section: resolution
+  declaration: coerce
+- name: coerce
+  record: lang.classes.methods
+  section: receiver-mutability
   declaration: coerce
 - name: coerce
   record: lang.numerics.conversion
@@ -5912,6 +5920,14 @@ symbols:
   section: small-functions-that-compose
   declaration: parity
 - name: parse
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: parse
+- name: parse
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: parse
+- name: parse
   record: lang.numerics.conversion
   section: numeric-coercion
   declaration: parse
@@ -6479,6 +6495,14 @@ symbols:
   record: lang.types.generics
   section: inputs
   declaration: Radius
+- name: radix
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: radix
+- name: radix
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: radix
 - name: range
   record: book.decisions-and-repetition
   section: exercises
@@ -7434,6 +7458,10 @@ symbols:
 - name: shared
   record: lang.expressions.operators
   section: operators-precedence
+  declaration: shared
+- name: shared
+  record: lang.types.references
+  section: shared-deadlocks
   declaration: shared
 - name: shared-cell
   record: book.async
@@ -8470,6 +8498,10 @@ symbols:
 - name: this
   record: lang.lexical-structure.keywords
   section: overview
+  declaration: this
+- name: this
+  record: lang.types.references
+  section: shared-deadlocks
   declaration: this
 - name: thread-local-int
   record: std.concurrency.shared-state

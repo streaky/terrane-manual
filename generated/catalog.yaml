@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 905331723fef09dbe527b5cb7dbaef14c07cb969f9fc0b4a11393eb354c08c2a
+  input-sha256: f5e883bc5807cb1c957b2b4769118562189a3bfae4da876620c18f2960c2bbd7
 format: 2
 generated: true
 records:
@@ -530,6 +530,11 @@ records:
     - shared-storage-reentry-alias
     - shared-storage-reentry-distinct
     - shared-storage-reentry-safe
+    - shared-storage-reentry-reassign-back
+    - shared-storage-reentry-passthrough
+    - shared-storage-reentry-original-owner
+    - shared-storage-reentry-weak-receiver
+    - shared-storage-reentry-helper
     compiler: null
   sections:
   - id: forms
@@ -544,6 +549,21 @@ records:
   - id: lowering
     title: Cost and cycle contracts
     sections: []
+  - id: shared-deadlocks
+    title: Shared-storage deadlocks and static protection
+    sections:
+    - id: automatic-guard-scopes
+      title: What generated guard scopes prevent
+      sections: []
+    - id: diagnosed-reentry
+      title: What T0143 diagnoses
+      sections: []
+    - id: unchecked-reentry
+      title: What remains unchecked
+      sections: []
+    - id: structuring-shared-operations
+      title: Structuring operations without reentry
+      sections: []
   declaration-synopsis: []
 - id: lang.types.authority-in-practice
   title: Parameter and receiver authority in practice

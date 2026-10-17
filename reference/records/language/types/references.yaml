@@ -110,20 +110,13 @@ documentation:
             method body must not synchronously reacquire the same shared storage through
             another alias.
 
-            For synchronous shared or mutable source methods invoked through a `shared ref`
-            receiver, `T0143` rejects an explicit `shared ref` argument proven to identify
-            that same storage. This includes the receiver binding itself, unchanged handle
-            aliases, and an explicit `shared ref` of its originating owner. Parentheses and
-            named arguments do not hide the match. This is a conservative call-boundary
-            restriction even if the method body does not dereference that argument; it is
-            not an interprocedural lock-effect analysis. Pass distinct storage or move the
-            operation to a helper without an already-guarded receiver.
-
-            The check does not establish general deadlock freedom. It does not trace
-            computed aliases, alias relationships after handle replacement, indirect calls,
-            implicit/default arguments, or calls through weak observers or the original
-            owner. Those cases still require the non-reentry rule above; asynchronous and
-            consuming methods are outside this synchronous-guard check.
+            `T0143` provides best-effort static detection of shared-storage reentry through
+            explicit source-call arguments. It recognizes direct aliases, sequential
+            replacements and copies, selected pass-through results, and direct helper
+            parameter pairs, including owning, weak, and original-owner receivers. See
+            [Shared-storage deadlocks](lang.types.references#shared-deadlocks) for the
+            precise coverage, unchecked cases, and safe structuring guidance. Compilation
+            success is not a guarantee of deadlock freedom.
 
             A projected native reference parameter uses shared access for observation.
             Mutating native operations, including operations reached through source helper
@@ -131,6 +124,178 @@ documentation:
             inference does not copy the referent, transfer ownership, or grant mutation
             through a shared native input. Authored-class receiver authority remains
             explicit.
+    - id: shared-deadlocks
+      title: Shared-storage deadlocks and static protection
+      blocks:
+        - type: markdown
+          markdown: |-
+            Explicit shared ownership preserves one storage identity; copying a handle does
+            not copy its referent. Native shared storage uses a non-reentrant mutex. Even a
+            read-only source method can hold that mutex for its synchronous body. If the
+            body reaches the same storage through another owning handle, weak observer, or
+            original owner, the second acquisition can wait forever on the guard held by the
+            current call. There need not be competing threads, a cycle of source ownership,
+            high CPU use, or recursion.
+
+            A method's direct access through `this` operates under its existing receiver
+            guard. It is the additional access through an alias that creates reentry.
+            Distinct source variable names do not establish distinct storage, and calling a
+            method `shared` or read-only does not make its native lock reentrant.
+      sections:
+        - id: automatic-guard-scopes
+          title: What generated guard scopes prevent
+          blocks:
+            - type: markdown
+              markdown: |-
+                Field reads produce the requested owned result inside a bounded guard scope,
+                including inherited getters, Copy scalars, weak observers, and original shared
+                owners. The guard ends before sibling expressions run. Repeated field reads in
+                arithmetic, aggregate elements, and explicit arguments therefore do not retain
+                the first read's guard across the next.
+
+                Synchronous calls capture receiver identity first, evaluate explicit arguments
+                in source order, supply defaults, then acquire the invocation guard. Writes and
+                nested collection mutations similarly evaluate values before acquiring the live
+                write guard; they do not mutate cloned receiver snapshots. These rules apply to
+                source and projected native invocation lowering. They remove temporary-lifetime
+                deadlocks, not reentry during a method body. The runtime mutex is unchanged.
+        - id: diagnosed-reentry
+          title: What T0143 diagnoses
+          blocks:
+            - type: markdown
+              markdown: |-
+                For synchronous shared or mutable source instance methods, `T0143` rejects an
+                explicit shared-reference argument when the compiler identifies it as the
+                receiver's storage. The receiver may be an owning shared handle, a weak observer
+                of shared storage, or the original shared-backed owner. Parentheses, typed or
+                inferred bindings, and named arguments do not intentionally hide an otherwise
+                known match.
+
+                | Recognized shape                                                                              | Basis for the diagnostic                                                                                                                                           |
+                | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+                | The receiver handle is also an argument                                                       | Same resolved binding and storage identity                                                                                                                         |
+                | Another handle is created from the same owner                                                 | Both select the same originating storage                                                                                                                           |
+                | A local handle or observer copies another                                                     | The copy retains the identity held at that assignment                                                                                                              |
+                | A handle is replaced and later assigned back                                                  | Sequential assignment tracking restores the current identity rather than using its first initializer                                                               |
+                | A synchronous helper returns one selected shared-reference parameter                          | The existing return-lender analysis identifies an identity-preserving pass-through; field/element projections and bodies with replacements are not treated as such |
+                | A helper directly calls a guarded method on one shared-reference parameter and passes another | A one-level summary records that parameter pair; a call supplying the same storage to both is rejected                                                             |
+
+                This is a conservative source-call restriction, not a proof that a particular
+                callee execution will deadlock. It can reject a matching argument even when the
+                method does not read it, or when a summarized call is conditional. No
+                interprocedural lock-effect proof is claimed. The diagnostic is reported before
+                backend compilation or program execution; the compiler does not repair the call
+                by copying the referent or making the mutex reentrant.
+            - type: example
+              id: reentry-through-helper
+              title: A visible helper parameter pair
+              language: terrane
+              mode: illustrative
+              source: |-
+                class counter
+                    count int = 5
+                    function peek int; other shared ref counter
+                        return other.count
+
+                function inspect int; receiver shared ref counter, argument shared ref counter
+                    return receiver.peek; argument
+
+                function main;
+                    owner = instance counter;
+                    held = shared ref owner
+                    print; (inspect; held, held)
+              target: null
+              return_value: null
+              stdout: null
+              diagnostic: "T0143: both helper parameters receive the same shared storage"
+              markdown: null
+        - id: unchecked-reentry
+          title: What remains unchecked
+          blocks:
+            - type: markdown
+              markdown: |-
+                Detection is best-effort. In particular, none of the following is a promise of
+                safety merely because compilation succeeds:
+
+                - **Ambiguous control flow.** Writes inside branches, loops, exception paths,
+                  completion blocks, or other compound control flow discard the affected local
+                  alias facts. The analysis does not select a branch or compute a lock-aware
+                  fixed point. Known straight-line identities in a branch can still be checked;
+                  ambiguous identities after it are not guessed. Even branches that happen to
+                  assign the same owner may lose the proof.
+                - **Stored or projected handles.** Alias paths through object fields,
+                  collections, indexing, and arbitrary native results are not tracked. A
+                  returned shared handle selected from a field is not assumed to be identical to
+                  the helper's receiver or parameter.
+                - **Unproven return selection.** A shared-return helper with replacements,
+                  multiple possible lenders, or no known lender is not a pass-through identity
+                  proof. The compiler does not inspect arbitrary computed results to recover an
+                  owner.
+                - **Indirect and deeper calls.** Callable values, callbacks, and native callees
+                  have no source parameter-pair summary here. Direct helper summaries are
+                  applied at one call boundary, not propagated to a transitive fixed point
+                  through wrapper chains.
+                - **Omitted arguments.** The alias check binds explicit positional/named
+                  arguments. It does not analyze an omitted default expression or implicit
+                  source of a handle as though it were supplied at the call site.
+                - **Hidden method-body aliases.** A method can reach its own receiver storage
+                  through a field, a captured handle, a global, or another service. The explicit
+                  receiver/argument check does not establish an effect summary for those
+                  accesses.
+                - **Other invocation modes.** Async and consuming methods are outside this
+                  synchronous shared/mutable guard analysis. It does not verify suspension-time
+                  lock behavior, native internal locking, or interactions between several
+                  different locks.
+
+                The general rule still applies: do not synchronously reacquire storage whose
+                guard is already held. Additional guards and aliases can create deadlocks
+                outside these recognized shapes. There is no general deadlock-freedom guarantee,
+                runtime timeout, or automatic fallback.
+        - id: structuring-shared-operations
+          title: Structuring operations without reentry
+          blocks:
+            - type: markdown
+              markdown: |-
+                Use the already-guarded receiver directly inside its method rather than passing
+                an alias back into that storage. When an operation needs two handles that may
+                alias, prefer a free helper whose separate field reads finish before the next
+                read, rather than an outer guarded method that accesses the other handle while
+                holding its receiver guard.
+
+                If a method only needs scalar or other value data, obtain that data before
+                entering the guarded method and pass the value explicitly. This is an
+                application-level value contract, not a compiler-inserted snapshot that silently
+                changes reference identity. When identity or atomic read/modify/write behavior
+                is required, keep the whole operation under one receiver's authority and avoid
+                reacquisition through aliases; splitting it into several reads is not an atomic
+                replacement.
+
+                Passing distinct owners is permitted, but variable names and declaration sites
+                alone do not prove distinctness after aliases or replacements. For
+                indirect/native operations, reason about their own locking contracts as well.
+                These structuring rules prevent the described self-reentry; they do not solve
+                arbitrary multi-lock ordering.
+            - type: example
+              id: bounded-shared-field-helper
+              title: Separate bounded field reads can accept the same handle
+              language: terrane
+              mode: illustrative
+              source: |-
+                class counter
+                    count int = 5
+
+                function total int; first shared ref counter, second shared ref counter
+                    return first.count + second.count
+
+                function main;
+                    owner = instance counter;
+                    held = shared ref owner
+                    print; (total; held, held)
+              target: null
+              return_value: null
+              stdout: "10"
+              diagnostic: null
+              markdown: null
   see-also: []
 
 provenance:
@@ -170,4 +335,9 @@ provenance:
     - shared-storage-reentry-alias
     - shared-storage-reentry-distinct
     - shared-storage-reentry-safe
+    - shared-storage-reentry-reassign-back
+    - shared-storage-reentry-passthrough
+    - shared-storage-reentry-original-owner
+    - shared-storage-reentry-weak-receiver
+    - shared-storage-reentry-helper
   compiler: null

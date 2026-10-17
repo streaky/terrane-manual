@@ -39,11 +39,13 @@ documentation:
             immutable receiver. A contract that permits mutation exposes that possibility to
             callers even when a particular invocation does not change the receiver.
 
-            Source methods retain their declared identity when selected through either `ref`
+            Source methods retain their declared identity on plain objects and through `ref`
             or `shared ref` receivers, including inherited methods. Names such as `add`,
-            `multiply`, or `encode` do not select a builtin scalar, collection, or text
-            operation on a source object. Normal receiver-authority rules still apply; a
-            method name does not grant additional mutation authority.
+            `multiply`, `encode`, `parse`, `radix`, and `coerce` do not select builtin
+            scalar, collection, or text operations on a source object with that method. The
+            authored signature, not a builtin family's arity or policy rules, controls the
+            call. Normal receiver-authority rules still apply; a method name does not grant
+            additional mutation authority.
 
             `this` denotes the current instance and is available only in instance methods.
             `self` denotes the effective, late-bound class receiver and is available in
