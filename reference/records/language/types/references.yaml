@@ -164,10 +164,12 @@ documentation:
                 source and projected native invocation lowering. They avoid unnecessary
                 temporary-lifetime conflicts; they do not authorize recursive access.
 
-                Guards do not survive suspension: synchronous guarded methods cannot await,
-                while async invocation uses the existing owned receiver/snapshot path. A native
-                guard cannot migrate threads. The same-thread ownership check relies on these
-                lifetime rules; it is not ambient task-local request state.
+                Guards do not survive suspension: synchronous guarded methods cannot await. An
+                async source method invoked through shared storage owns its receiver handle, not
+                a borrowed guard or a copied referent. Each field access or synchronous method
+                call acquires a bounded guard; writes remain visible to other handles. Other
+                invocations may interleave while the method awaits, so a whole async method is
+                not an atomic transaction. A native guard cannot migrate threads.
         - id: diagnosed-reentry
           title: What T0143 diagnoses
           blocks:
@@ -350,4 +352,11 @@ provenance:
     - shared-storage-reentry-named-loop
     - shared-storage-reentry-carried-loop
     - shared-storage-reentry-indirect-helper
+    - shared-async-mutable-overlap
+    - shared-async-mutable-await-reader
+    - shared-async-direct-await
+    - shared-async-inherited-dispatch
+    - shared-async-static-nested
+    - static-class-reentry
+    - static-class-checked-storage-safe
   compiler: null

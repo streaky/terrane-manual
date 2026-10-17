@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0f43fa55409b00497b6e54f320a0e3cb0e3d04814842b0719eb5b6d277ac9dcb
+  input-sha256: e87960ade783fb0f128a7b82d718a4f8e6a61cb432a438c846d11bd0d3114362
 format: 1
 generated: true
 symbols:
@@ -8482,6 +8482,10 @@ symbols:
 - name: this
   record: book.classes-interfaces-and-traits
   section: what-we-learned
+  declaration: this
+- name: this
+  record: internals.lowering.rust-output
+  section: rust-lowering
   declaration: this
 - name: this
   record: lang.classes.fields

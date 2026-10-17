@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0f43fa55409b00497b6e54f320a0e3cb0e3d04814842b0719eb5b6d277ac9dcb
+  input-sha256: e87960ade783fb0f128a7b82d718a4f8e6a61cb432a438c846d11bd0d3114362
 format: 2
 generated: true
 records:
@@ -548,6 +548,13 @@ records:
     - shared-storage-reentry-named-loop
     - shared-storage-reentry-carried-loop
     - shared-storage-reentry-indirect-helper
+    - shared-async-mutable-overlap
+    - shared-async-mutable-await-reader
+    - shared-async-direct-await
+    - shared-async-inherited-dispatch
+    - shared-async-static-nested
+    - static-class-reentry
+    - static-class-checked-storage-safe
     compiler: null
   sections:
   - id: forms
@@ -3357,6 +3364,12 @@ records:
     - function-owned-contextual-collections
     - imported-effective-fields
     - object-field-owned-snapshot
+    - shared-async-mutable-overlap
+    - shared-async-mutable-await-reader
+    - shared-async-inherited-dispatch
+    - shared-async-static-nested
+    - static-class-reentry
+    - static-class-checked-storage-safe
     compiler:
     - crates/terrane-compiler/src/lowering/emitter/expressions.rs
     - crates/terrane-compiler/src/lowering/emitter/items/unions.rs

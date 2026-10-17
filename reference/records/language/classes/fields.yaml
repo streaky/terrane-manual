@@ -73,6 +73,13 @@ documentation:
             defaults. A trait may provide an initializer, or the using class may override
             its field. Inherited initializers retain their declaring source and object
             context. Omission never infers a type or invokes an arbitrary constructor.
+
+            Authored static fields share one lazily initialized storage cell per effective
+            class. Access uses the same checked exclusive acquisition as explicit shared
+            storage: same-thread reentry fails with a shared-reference borrow conflict,
+            while another thread waits normally. Mutable calls and nested writes update that
+            live cell rather than a snapshot. Separate source operations are not an atomic
+            transaction. Explicit native synchronization retains its own contract.
     - id: declaration
       title: Declaring field metadata
       blocks:

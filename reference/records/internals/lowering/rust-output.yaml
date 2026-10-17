@@ -179,10 +179,17 @@ documentation:
             Checked access is exclusive, including read-only source methods. Same-thread
             reacquisition panics with a clear shared-reference borrow-conflict diagnostic,
             rather than recursively exposing overlapping references. Rust mutex poisoning is
-            preserved on unwinding. The native guard is not Send and does not survive await:
-            synchronous guarded calls cannot suspend; async receiver operations retain their
-            existing owned snapshot path. Unrelated global, static and explicit concurrency
-            mutexes are not replaced by this carrier.
+            preserved on unwinding. The native guard is not Send and does not survive await.
+            Async source methods have a handle-owning associated entry point for shared
+            receivers; accesses to `this` acquire bounded guards, without cloning the whole
+            referent or holding a guard across suspension. Ordinary receivers retain their
+            normal method path. Authored static fields use `LazyLock<TerraneSharedCell<T>>`
+            and live guarded mutation as well. Module-global scalar storage and explicit
+            native concurrency mutexes retain their separate implementations. Enum-backed
+            inheritance projects the owned handle to the selected variant with safe
+            read/write accessors, preserving dynamic method dispatch and the original cell's
+            borrow-conflict, poison, and unlock behavior without allocating another cell or
+            cloning its referent.
 
             `T0143` remains a small early error for direct receiver/argument aliases and
             local sequential copies/replacements under canonical binding identities.
@@ -254,6 +261,12 @@ provenance:
     - function-owned-contextual-collections
     - imported-effective-fields
     - object-field-owned-snapshot
+    - shared-async-mutable-overlap
+    - shared-async-mutable-await-reader
+    - shared-async-inherited-dispatch
+    - shared-async-static-nested
+    - static-class-reentry
+    - static-class-checked-storage-safe
   compiler:
     - crates/terrane-compiler/src/lowering/emitter/expressions.rs
     - crates/terrane-compiler/src/lowering/emitter/items/unions.rs
