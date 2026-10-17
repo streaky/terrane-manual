@@ -49,6 +49,12 @@ documentation:
         target is fresh. Package fixtures are staged outside the corpus. Projection history is
         disposable local cache data and is not reviewed as a tracked package lock; the deliberate
         format-3 compatibility fixture remains data under the projection-history fixture path.
+
+        There is deliberately no corpus-wide reviewed baseline for admitted or declined
+        projection inventories. Used surface is checked by actual conformance consumers,
+        generated lowering diffs, and native execution; unused surface drift may escape
+        those checks. This is an accepted coverage tradeoff of disposable inventory state,
+        not a claim that existing behavior tests replace full inventory comparison.
     - title: Focused execution and cache locality
       body: >-
         Set `TERRANE_CONFORMANCE_FILTER` to one case-name or to comma-separated corpus-path fragments when running `every_manifest_drives_a_conformance_case`.

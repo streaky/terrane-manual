@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: af4d1980d8b5dfbec427bfe36919d2647881305dced9fd806f0507316af77c31
+  input-sha256: 8958e0c3e6e0115a3e2b5ab371d8f5c3d2f9965a6c852ccbb3f44c544f573c4b
 format: 1
 generated: true
 diagnostics:
@@ -1412,27 +1412,27 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 250
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 328
+    line: 331
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 380
+    line: 383
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 390
+    line: 393
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 404
+    line: 407
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 410
+    line: 413
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 418
+    line: 421
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 425
+    line: 428
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 432
+    line: 435
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 464
+    line: 467
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 472
+    line: 475
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 481
+    line: 484
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 667
 - code: T0017
@@ -2645,7 +2645,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 516
   - path: crates/terrane-compiler/src/semantics/model.rs
-    line: 360
+    line: 363
 - code: T0136
   messages:
   - '`construct` is invoked through `instance` and cannot declare `unsafe`'

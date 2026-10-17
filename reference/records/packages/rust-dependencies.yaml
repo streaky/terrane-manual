@@ -157,15 +157,19 @@ documentation:
             projection cache/history. It can retain removed-member and replay-mismatch
             evidence while present; clearing it or using a fresh checkout regenerates
             current projection state and loses historical removal context, not dependency
-            identity. The ignored `.trn/terrane-projection.generated.trn` under the package
-            root is the current projection inventory and compiler-owned source container.
-            Ordinary commands deterministically refresh its required-first report,
-            application demand sites, and separately syntax-validated nominal source units.
-            Changed dependency version, feature set, target, rustdoc toolchain, projection
-            schema, generated private owner edge, or admitted/declined inventory may change
-            current projection output even when authored Terrane source is unchanged. Never
-            edit the dependency lock or generated inventory to manufacture availability;
-            regenerate them through the compiler.
+            identity. Malformed JSON and unsupported cache formats are treated as misses and
+            replaced with current state. Filesystem access or publication errors remain
+            failures. A same-identity replay mismatch remains an error with the cache path:
+            investigate the drift before removing that disposable file to request fresh
+            projection. The ignored `.trn/terrane-projection.generated.trn` under the
+            package root is the current projection inventory and compiler-owned source
+            container. Ordinary commands deterministically refresh its required-first
+            report, application demand sites, and separately syntax-validated nominal source
+            units. Changed dependency version, feature set, target, rustdoc toolchain,
+            projection schema, generated private owner edge, or admitted/declined inventory
+            may change current projection output even when authored Terrane source is
+            unchanged. Never edit the dependency lock or generated inventory to manufacture
+            availability; regenerate them through the compiler.
     - id: imports
       title: Importing admitted members
       blocks:

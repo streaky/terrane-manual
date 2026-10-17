@@ -32,8 +32,9 @@ documentation:
 
             Copying `shared ref T` copies its owning handle, not `T`. A resource-shaped or
             non-Clone native referent therefore does not by itself make a containing class
-            or enum noncopyable. Other directly owned linear fields retain their normal
-            transfer rules.
+            or enum noncopyable. Collection indexing and iteration likewise copy shared
+            handles without consuming or cloning their referents. Other directly owned
+            linear fields retain their normal transfer rules.
     - id: provenance
       title: Whole-path provenance
       blocks:
