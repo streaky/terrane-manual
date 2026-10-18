@@ -25,9 +25,38 @@ REFERENCE_RE = re.compile(r"\[\[([^\]#]+)(?:#[^\]]+)?\]\]")
 
 
 
+class UniqueKeySafeLoader(yaml.SafeLoader):
+    """Reject duplicate authored keys without rejecting YAML merge overrides."""
+
+    _merge_key = object()
+
+    def construct_mapping(self, node: yaml.MappingNode, deep: bool = False) -> dict:
+        first_marks = {}
+        for key_node, _ in node.value:
+            key = (
+                self._merge_key
+                if key_node.tag == "tag:yaml.org,2002:merge"
+                else self.construct_object(key_node, deep=deep)
+            )
+            try:
+                first = first_marks.get(key)
+                first_marks[key] = key_node.start_mark
+            except TypeError:
+                raise yaml.constructor.ConstructorError(
+                    "while constructing a mapping", node.start_mark,
+                    "found unhashable key", key_node.start_mark,
+                ) from None
+            if first is not None:
+                raise yaml.constructor.ConstructorError(
+                    "first occurrence of this mapping key", first,
+                    f"found duplicate key {key_node.value!r}", key_node.start_mark,
+                )
+        return super().construct_mapping(node, deep=deep)
+
+
 def load_yaml(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as handle:
-        value = yaml.safe_load(handle)
+        value = yaml.load(handle, Loader=UniqueKeySafeLoader)
     if not isinstance(value, dict):
         raise ValueError(f"{path}: expected a YAML mapping")
     return value
@@ -368,9 +397,12 @@ def main() -> int:
 
     root = Path(__file__).resolve().parents[1]
     compiler_root = args.compiler_root.resolve() if args.compiler_root else None
-    paths = formatting_paths(root)
-    snapshots = {path: path.read_bytes() for path in paths}
+    snapshots: dict[Path, bytes] = {}
     try:
+        paths = formatting_paths(root)
+        snapshots = {path: path.read_bytes() for path in paths}
+        for path in paths:
+            load_yaml(path)
         format_yaml_documents(paths)
         reflow_markdown_scalars(paths)
         format_yaml_documents(paths)

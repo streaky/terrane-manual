@@ -199,7 +199,6 @@ documentation:
               stdout: "1"
               diagnostic: null
               markdown: null
-              markdown: null
         - id: diagnosed-reentry
           title: What T0143 diagnoses
           blocks:

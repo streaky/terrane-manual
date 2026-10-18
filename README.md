@@ -57,6 +57,17 @@ python tools/generate_manual_catalog.py
 python tools/generate_manual_catalog.py --check
 ```
 
+Both commands reject duplicate YAML mapping keys before running the formatter, including
+duplicates nested inside examples. Errors identify the input file and the first and
+repeated key locations; invalid input is left unchanged. Standard YAML merge keys and
+explicit overrides of merged defaults remain supported.
+
+Run the validator regression tests with:
+
+```sh
+python -m unittest discover -s tools -p 'test_*.py'
+```
+
 Prettier formats the YAML envelope at an 80-character print width, then reflows
 prose-only `markdown` literal scalars at the same width. Typed preformatted material
 is preserved; code and other preformatted content belong in `example` or `grammar`
