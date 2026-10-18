@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e0b48cb4d1998a1ad49ce8410fda9735864440f225cbc9ff3953e3145a5688bf
+  input-sha256: 77196e21b8441d5641cd4b6b961883458c9c2a88c3b4faeb064a99ed2333c256
 format: 1
 generated: true
 symbols:
@@ -6383,6 +6383,10 @@ symbols:
   record: lang.types.generics
   section: destinations
   declaration: projected-destination-results
+- name: projected-generated-api-reexport
+  record: tool.rust-package-integrations.godot
+  section: verification
+  declaration: projected-generated-api-reexport
 - name: projection.rs
   record: internals.projection.resolution
   section: resolution
