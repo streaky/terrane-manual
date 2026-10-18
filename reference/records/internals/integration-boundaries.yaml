@@ -47,6 +47,11 @@ documentation:
             application work established direct integration paths. Ordinary conformance now
             uses small structural query, document-byte, and framed-socket witnesses; those
             fixtures are compiler regressions, not upstream-library compatibility checks.
+            The query-chain witness retains a mutable connection borrow across a real
+            Pending/resume boundary before inserting a row. The framed-socket witness uses
+            blocking standard-library sockets with a peer thread; it proves projected
+            protocol behavior, not asynchronous server scheduling or framework
+            compatibility.
         - type: description
           id: description.internals.integration-boundaries.recognize-gap
           since: null

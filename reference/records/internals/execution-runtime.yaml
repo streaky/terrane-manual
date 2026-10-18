@@ -87,6 +87,7 @@ documentation:
             - networking-tcp-loopback
             - rust-dependency-async-function
             - native_test_command_reports_isolated_cases_deterministically_from_relative_paths
+            - sync_filesystem_streams_do_not_require_async_runtime
           markdown: |-
             Lowering emits async runtime support only for a package that uses asynchronous
             functions. It adds a selected entrypoint executor only for an asynchronous
@@ -99,12 +100,14 @@ documentation:
             optional advanced-stream bundle uses a conservative emitted-unit demand test,
             not general call-graph reachability or dead-code elimination. Any authored
             asynchronous function activates the bundle, even if it does not call an advanced
-            stream operation. Other emitted bundled units participate too: testing helpers,
-            for example, still need the duration type in their signatures and bodies. Only
-            the fast-path stream, IO, and time modules themselves may omit unused advanced
-            declarations. This avoids dropping support referenced by retained code; it does
-            not claim every emitted helper is necessary. The decision is made by
-            `package_uses_advanced_streams` in
+            stream operation. Retained bundled consumers participate only through canonical
+            IO/time bindings, because the fast path omits those units. This retains the
+            duration type needed by testing helpers without treating filesystem capability
+            intrinsics or raw host types as demand for asynchronous streams. The stream, IO,
+            and time units themselves are excluded from that scan. This remains
+            conservative: an unused bundled IO/time import can activate the bundle; this is
+            not general declaration reachability or a promise to eliminate every helper. The
+            decision is made by `package_uses_advanced_streams` in
             `crates/terrane-compiler/src/lowering/helpers.rs`.
     - id: stream-adapters
       title: Concrete stream adapters and shared completion policy
