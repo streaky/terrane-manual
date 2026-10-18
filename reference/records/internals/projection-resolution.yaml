@@ -85,10 +85,9 @@ documentation:
             caches use the same local-input fingerprint. The identity is deliberately
             environment-specific when graph, source, configuration, target, toolchain, or
             containment differs; it is not part of the reviewed semantic surface fixture.
-            `target_identity_reads_effective_cargo_configuration` covers target-sensitive
-            construction, while
-            `projection_history_migrates_provenance_and_detects_replay_drift` proves that
-            one exact identity cannot admit two content hashes.
+            `target_reads_cargo_config` covers target-sensitive construction, while
+            `migration_detects_replay_drift` proves that one exact identity cannot admit two
+            content hashes.
     - id: resolution
       title: Ordered resolution transaction
       blocks:
@@ -135,9 +134,8 @@ documentation:
             Missing or rejected published artifacts fall back to local rustdoc; validation
             never weakens a mismatch into a nearby reusable result. A verified published
             result is written into the same exact local cache used by later offline
-            resolution. The focused unit test
-            `remote_artifact_requires_exact_projection_inputs` exercises the artifact
-            boundary and its distinct mismatch causes.
+            resolution. The focused unit test `remote_requires_exact_inputs` exercises the
+            artifact boundary and its distinct mismatch causes.
     - id: public-paths
       title: Canonical public paths
       blocks:
@@ -893,8 +891,7 @@ documentation:
 
             History migration, origin preservation, and replay detection live in
             `apply_projection_history`; focused unit coverage includes
-            `projection_history_keeps_content_origin_across_cache_hits` and
-            `projection_history_migrates_provenance_and_detects_replay_drift`.
+            `cache_hits_keep_content_origin` and `migration_detects_replay_drift`.
     - id: subsystem-ownership
       title: Rust-interop subsystem ownership
       blocks:

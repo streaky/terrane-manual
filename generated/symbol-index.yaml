@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f094ad7e80b5ba0f6f2d54dfb843dea934e12a069ad3921baa8c9c4ed41220a5
+  input-sha256: 5b260d624c9bbe386c1241e330c8306260bc3db44d1a01e91cfe6bad71fefb4e
 format: 1
 generated: true
 symbols:
@@ -1056,6 +1056,10 @@ symbols:
   record: lang.types.relations
   section: type-tests
   declaration: c
+- name: cache_hits_keep_content_origin
+  record: internals.projection.resolution
+  section: history
+  declaration: cache_hits_keep_content_origin
 - name: cache_identity
   record: internals.projection.resolution
   section: identity
@@ -4969,6 +4973,14 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: methods.rs
+- name: migration_detects_replay_drift
+  record: internals.projection.resolution
+  section: history
+  declaration: migration_detects_replay_drift
+- name: migration_detects_replay_drift
+  record: internals.projection.resolution
+  section: identity
+  declaration: migration_detects_replay_drift
 - name: minimum
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -6407,18 +6419,6 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: projection::resolve
-- name: projection_history_keeps_content_origin_across_cache_hits
-  record: internals.projection.resolution
-  section: history
-  declaration: projection_history_keeps_content_origin_across_cache_hits
-- name: projection_history_migrates_provenance_and_detects_replay_drift
-  record: internals.projection.resolution
-  section: history
-  declaration: projection_history_migrates_provenance_and_detects_replay_drift
-- name: projection_history_migrates_provenance_and_detects_replay_drift
-  record: internals.projection.resolution
-  section: identity
-  declaration: projection_history_migrates_provenance_and_detects_replay_drift
 - name: projects/godot-test
   record: tool.rust-package-integrations.godot
   section: verification
@@ -6711,10 +6711,10 @@ symbols:
   record: std.time
   section: deadlines
   declaration: remaining
-- name: remote_artifact_requires_exact_projection_inputs
+- name: remote_requires_exact_inputs
   record: internals.projection.resolution
   section: resolution
-  declaration: remote_artifact_requires_exact_projection_inputs
+  declaration: remote_requires_exact_inputs
 - name: rename-capture
   record: tool.source-intelligence
   section: edits
@@ -8083,10 +8083,10 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: target/release/terrane-language-server
-- name: target_identity_reads_effective_cargo_configuration
+- name: target_reads_cargo_config
   record: internals.projection.resolution
   section: identity
-  declaration: target_identity_reads_effective_cargo_configuration
+  declaration: target_reads_cargo_config
 - name: targets
   record: lang.declarations.annotations
   section: model

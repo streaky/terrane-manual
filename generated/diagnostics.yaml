@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 60f7c765f9ff5bf2b047bd971644721d4aeb27eb67f066951425643df013a2e2
+  input-sha256: 0409d1a6a92e49522656409986d78be96f627c49d21eb49149adfb8944d21970
 format: 1
 generated: true
 diagnostics:
@@ -1027,7 +1027,7 @@ diagnostics:
   messages:
   - "\n        && identity != "
   - duplicate canonical declaration identity
-  - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_identity_paths_and_reject_traversal()\
+  - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_paths_and_reject_traversal()\
     \ {\n        let (mut package, root) = temporary_package();\n        let mut sources = vec![\n   \
     \         ("
   sources:
