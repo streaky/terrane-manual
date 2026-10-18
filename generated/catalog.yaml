@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 77196e21b8441d5641cd4b6b961883458c9c2a88c3b4faeb064a99ed2333c256
+  input-sha256: f094ad7e80b5ba0f6f2d54dfb843dea934e12a069ad3921baa8c9c4ed41220a5
 format: 2
 generated: true
 records:
@@ -3131,8 +3131,8 @@ records:
       section: '24.7'
     conformance:
     - authored-rust-module
-    - projected-sqlx-query-chain
-    - projected-pdf-html-bytes
+    - projected-query-chain
+    - projected-document-bytes
     - projected-websocket-protocol
     - projected-demanded-member-cycle
     - projected-generated-api-reexport

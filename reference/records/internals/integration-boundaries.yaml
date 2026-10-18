@@ -32,8 +32,8 @@ documentation:
           level: must
           since: null
           evidence:
-            - projected-sqlx-query-chain
-            - projected-pdf-html-bytes
+            - projected-query-chain
+            - projected-document-bytes
             - projected-websocket-protocol
           markdown: |-
             Use the direct `/deps/<package>` surface whenever generic projection admits the
@@ -43,9 +43,10 @@ documentation:
 
             The former shared `terrane-integration-adapters` crate and its registry have
             been deleted. Do not recreate a central convenience layer or a compatibility
-            alias for an operation that projects directly. SQLx query construction, binding,
-            execution, fetching, row access, errors, and connection closure are direct, as
-            are the evidenced PDF and Axum paths.
+            alias for an operation that projects directly. The original SQLx, PDF, and Axum
+            application work established direct integration paths. Ordinary conformance now
+            uses small structural query, document-byte, and framed-socket witnesses; those
+            fixtures are compiler regressions, not upstream-library compatibility checks.
         - type: description
           id: description.internals.integration-boundaries.recognize-gap
           since: null
@@ -176,13 +177,15 @@ documentation:
           since: null
           evidence:
             - authored-rust-module
-            - projected-sqlx-query-chain
+            - projected-query-chain
           markdown: |-
             Compile against the exact dependency versions, features, target, and
             capabilities. Exercise the typed Terrane boundary and every runtime behavior
             that motivated it, including real failure, cancellation, cleanup, and closure
-            where applicable. A generic compiler fix needs both a non-framework structural
-            witness and the real dependency call.
+            where applicable. Keep generic compiler regressions in small local structural
+            witnesses. Verify real dependency compatibility separately in exact
+            native-survey profiles and application checks; a structural stand-in is not
+            library evidence.
 
             Review generated Rust for direct deterministic calls and conversions. Do not
             edit generated output, suppress a native compiler error, broaden features
@@ -227,8 +230,8 @@ provenance:
       section: "24.7"
   conformance:
     - authored-rust-module
-    - projected-sqlx-query-chain
-    - projected-pdf-html-bytes
+    - projected-query-chain
+    - projected-document-bytes
     - projected-websocket-protocol
     - projected-demanded-member-cycle
     - projected-generated-api-reexport

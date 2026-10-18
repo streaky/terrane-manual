@@ -265,8 +265,8 @@ documentation:
             - projected-macro-callable-value
             - projected-macro-reference-conversion
             - projected-macro-supplemental-owner-leak
-            - projected-iced-expression-macros
-            - projected-iced-scoped-macro-token-mismatch
+            - projected-scoped-expression-macros
+            - projected-scoped-macro-token-mismatch
           markdown: |-
             ProjectedKind::Macro retains a native macro identity separately from ordinary
             functions. Its generated variadic callable surface describes expression argument

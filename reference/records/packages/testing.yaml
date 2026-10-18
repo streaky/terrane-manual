@@ -54,7 +54,7 @@ documentation:
           since: null
           evidence:
             - native_test_timeout_terminates_the_isolated_process
-            - end_to_end_tests_receive_the_built_application_artifact
+            - end_to_end_artifact_passes_inputs_and_drains_large_output
           markdown: |-
             The compiler semantically analyzes production sources and every populated test
             root before selection, then lowers and backend-validates one native dispatch

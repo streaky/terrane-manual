@@ -86,6 +86,7 @@ documentation:
             - cooperative-task-scope
             - networking-tcp-loopback
             - rust-dependency-async-function
+            - native_test_command_reports_isolated_cases_deterministically_from_relative_paths
           markdown: |-
             Lowering emits async runtime support only for a package that uses asynchronous
             functions. It adds a selected entrypoint executor only for an asynchronous
@@ -95,13 +96,15 @@ documentation:
             An asynchronous entrypoint is wrapped in exactly one selected wake-driven
             runtime. The generated Cargo dependency and support modules follow the same
             semantic decision so synchronous packages do not acquire an unused runtime. The
-            optional advanced-stream bundle uses a conservative authored-demand test, not
-            general call-graph reachability or dead-code elimination. Any authored
-            asynchronous function activates the bundle, even if it does not itself call an
-            advanced stream operation. This keeps selection simple and avoids omitting
-            support reachable through indirect or otherwise difficult-to-prove use; it is an
-            implementation tradeoff, not a claim that all bundled support is necessary for
-            every such function. The decision is made by `package_uses_advanced_streams` in
+            optional advanced-stream bundle uses a conservative emitted-unit demand test,
+            not general call-graph reachability or dead-code elimination. Any authored
+            asynchronous function activates the bundle, even if it does not call an advanced
+            stream operation. Other emitted bundled units participate too: testing helpers,
+            for example, still need the duration type in their signatures and bodies. Only
+            the fast-path stream, IO, and time modules themselves may omit unused advanced
+            declarations. This avoids dropping support referenced by retained code; it does
+            not claim every emitted helper is necessary. The decision is made by
+            `package_uses_advanced_streams` in
             `crates/terrane-compiler/src/lowering/helpers.rs`.
     - id: stream-adapters
       title: Concrete stream adapters and shared completion policy

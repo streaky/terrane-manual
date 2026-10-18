@@ -301,8 +301,8 @@ documentation:
             - projected-macro-token-mismatch
             - projected-macro-callable-value
             - projected-macro-reference-conversion
-            - projected-iced-expression-macros
-            - projected-iced-scoped-macro-token-mismatch
+            - projected-scoped-expression-macros
+            - projected-scoped-macro-token-mismatch
           markdown: |-
             Public native macros project into a separate macros namespace beneath their
             public package or module namespace. This keeps a macro distinct from a Rust
@@ -827,8 +827,8 @@ documentation:
           level: must
           since: null
           evidence:
-            - projected-sqlx-query-chain
-            - projected-pdf-html-bytes
+            - projected-query-chain
+            - projected-document-bytes
             - projected-websocket-protocol
           markdown: |-
             Use projected upstream operations directly and preserve their canonical owners.
@@ -838,12 +838,20 @@ documentation:
             recreate them or retain compatibility helpers for operations that project
             directly.
 
-            SQLx query construction, binding, execution, fetching, row access, typed errors,
-            and connection lifecycle are direct. PDF construction and serialization, plus
-            the evidenced Axum response, callback, WebSocket, listener, and server-await
-            shapes, are direct as well. Consuming every non-`Clone` item from a persistent
-            foreign collection remains separately tracked by the stream/iterator design
-            rather than hidden behind a conversion helper.
+            These generic operations support direct query construction, binding, execution,
+            fetching, row access, typed errors, and connection lifecycle, as well as
+            document serialization and native response/callback/socket shapes. Ordinary
+            conformance uses minimal local witnesses for these structural boundaries, not
+            the SQLx, PDF, Iced, or Axum dependency graphs. Exact library compatibility
+            belongs in separate native-survey and application evidence. Consuming every
+            non-`Clone` item from a persistent foreign collection remains separately tracked
+            by the stream/iterator design rather than hidden behind a conversion helper.
+
+            The local row witnesses retain the two-crate provided-trait boundary, not merely
+            a generic instance method: `Row::try_get` closes its receiver lifetime,
+            associated database, input-selected column index, and destination-selected
+            decode/type bounds against the actual native owner. This keeps the regression
+            faithful without requiring a database implementation.
 
             The `http-server` provider exposes a Terrane application API for route and
             static-directory composition, string-returning asynchronous handlers, WebSocket

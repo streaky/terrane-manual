@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 77196e21b8441d5641cd4b6b961883458c9c2a88c3b4faeb064a99ed2333c256
+  input-sha256: f094ad7e80b5ba0f6f2d54dfb843dea934e12a069ad3921baa8c9c4ed41220a5
 format: 1
 generated: true
 symbols:
@@ -5735,6 +5735,10 @@ symbols:
   record: book.text-and-collections
   section: assignment-and-copy-on-write-value-behavior
   declaration: original
+- name: OsString
+  record: tool.debugging
+  section: commands
+  declaration: OsString
 - name: out
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -6907,6 +6911,10 @@ symbols:
   record: lang.numerics.conversion
   section: declared-family
   declaration: round
+- name: Row::try_get
+  record: tool.packages.rust-dependencies
+  section: integration-boundaries
+  declaration: Row::try_get
 - name: run
   record: book.first-taste
   section: running-a-source-file

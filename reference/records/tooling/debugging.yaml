@@ -33,7 +33,8 @@ documentation:
           id: rule.debugging.commands
           level: must
           since: null
-          evidence: []
+          evidence:
+            - cli_locals_decode_active_union_arms_and_uncertain_availability
           markdown: |-
             `terrane debug [--embed-sources] [--embed-generated-sources] <file-or-manifest> [-- arguments]`
             builds with the named `terrane-debug-v1` profile shared by Cargo emission and
@@ -52,6 +53,11 @@ documentation:
             `terrane debug-adapter --stdio` serves the same translation engine as a Debug
             Adapter Protocol endpoint. Protocol frames are the only adapter stdout content;
             backend and adapter diagnostics use stderr or framed output events.
+
+            Program arguments after `--` cross the LLDB DAP boundary as JSON strings,
+            preserving UTF-8 text, spaces, and argument boundaries. Non-UTF-8 native
+            arguments are rejected explicitly rather than replaced lossily or encoded as
+            platform-specific `OsString` serialization objects.
 
             The selected implementation is `lldb-dap`. Linux x86-64 with LLDB 22 is
             exercised end to end. Launch is supported there. Attach is experimental and
