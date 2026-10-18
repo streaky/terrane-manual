@@ -116,9 +116,15 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            The required `godot-generated-api-compile` native-survey profile combines
-            resolved-graph surveys for `godot` and `godot-core`, the focused generated API
-            acceptance fixture, and compilation of `projects/godot-test`. The dedicated
+            Ordinary compiler conformance uses the small local
+            `projected-generated-api-reexport` witness, not the Godot dependency graph. Its
+            build script generates hidden owner definitions, a facade exposes module and
+            glob reexports, and Terrane executes constructor and borrowed-method calls. This
+            is structural regression evidence, not a Godot compatibility test.
+
+            The required `godot-generated-api-compile` native-survey profile combines that
+            structural fixture with separate resolved-graph surveys for `godot` and
+            `godot-core`, and compilation of `projects/godot-test`. The dedicated
             `godot-generated-api-runtime` profile adds extension installation and a headless
             run on the pinned `4.7.2.stable` release line; build metadata suffixes may vary.
             Ordinary compile evidence never reports runtime success when that release line
@@ -135,7 +141,7 @@ provenance:
     - document: adapt-crate
       section: "M7"
   conformance:
-    - godot-generated-api-projection
+    - projected-generated-api-reexport
     - projected-macro-reexport
   compiler:
     - crates/terrane-compiler/src/rust_interop/projection/macros.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e0b48cb4d1998a1ad49ce8410fda9735864440f225cbc9ff3953e3145a5688bf
+  input-sha256: 77196e21b8441d5641cd4b6b961883458c9c2a88c3b4faeb064a99ed2333c256
 format: 2
 generated: true
 records:
@@ -2519,7 +2519,7 @@ records:
     - document: adapt-crate
       section: M7
     conformance:
-    - godot-generated-api-projection
+    - projected-generated-api-reexport
     - projected-macro-reexport
     compiler:
     - crates/terrane-compiler/src/rust_interop/projection/macros.rs
@@ -3135,7 +3135,7 @@ records:
     - projected-pdf-html-bytes
     - projected-websocket-protocol
     - projected-demanded-member-cycle
-    - godot-generated-api-projection
+    - projected-generated-api-reexport
     compiler: null
   sections:
   - id: direct-first
