@@ -167,9 +167,39 @@ documentation:
                 Guards do not survive suspension: synchronous guarded methods cannot await. An
                 async source method invoked through shared storage owns its receiver handle, not
                 a borrowed guard or a copied referent. Each field access or synchronous method
-                call acquires a bounded guard; writes remain visible to other handles. Other
-                invocations may interleave while the method awaits, so a whole async method is
-                not an atomic transaction. A native guard cannot migrate threads.
+                call acquires a bounded guard; writes remain visible to other handles. On a
+                threaded executor, another invocation may interleave between any two separately
+                guarded accesses, even when the async method contains no `await`. Therefore
+                `this.total = this.total + 1` is not atomic; neither an await-free statement, a
+                segment between awaits, nor a whole async method is a transaction. For an atomic
+                read-modify-write, put the operation in a synchronous mutable helper and call it
+                through `this`: the helper body executes under one receiver guard.
+            - type: example
+              id: async-shared-atomic-helper
+              title: Keep an async update inside a synchronous guarded helper
+              language: terrane
+              mode: illustrative
+              source: |-
+                class counter
+                    total int = 0
+
+                    mutable function increment;
+                        this.total = this.total + 1
+
+                    mutable async function advance;
+                        this.increment;
+
+                async function main;
+                    value = instance counter;
+                    owner = shared ref value
+                    await owner.advance;
+                    print; owner.total
+              target: null
+              return_value: null
+              stdout: "1"
+              diagnostic: null
+              markdown: null
+              markdown: null
         - id: diagnosed-reentry
           title: What T0143 diagnoses
           blocks:
@@ -358,6 +388,9 @@ provenance:
     - shared-async-inherited-dispatch
     - shared-async-static-nested
     - shared-async-resource-field
+    - shared-async-atomic-helper
+    - static-async-receiver-identity
+    - static-async-inherited-receiver-identity
     - static-class-reentry
     - static-class-checked-storage-safe
   compiler: null

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c6baa0d94c39055a7352ee20a16f79358bc45354681a0ed885672e762497ee50
+  input-sha256: 1b360601d9b6f3120c73d8e1d8f459135fa1d179206d5046c1158f2b937e2a32
 format: 2
 generated: true
 records:
@@ -554,6 +554,9 @@ records:
     - shared-async-inherited-dispatch
     - shared-async-static-nested
     - shared-async-resource-field
+    - shared-async-atomic-helper
+    - static-async-receiver-identity
+    - static-async-inherited-receiver-identity
     - static-class-reentry
     - static-class-checked-storage-safe
     compiler: null
@@ -3372,6 +3375,9 @@ records:
     - static-class-reentry
     - static-class-checked-storage-safe
     - shared-async-resource-field
+    - shared-async-atomic-helper
+    - static-async-receiver-identity
+    - static-async-inherited-receiver-identity
     compiler:
     - crates/terrane-compiler/src/lowering/emitter/expressions.rs
     - crates/terrane-compiler/src/lowering/emitter/items/unions.rs

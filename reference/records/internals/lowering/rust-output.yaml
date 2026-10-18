@@ -183,15 +183,20 @@ documentation:
             Async source methods have a handle-owning associated entry point for shared
             receivers; accesses to `this` acquire bounded guards, without cloning the whole
             referent or holding a guard across suspension. Ordinary receivers retain their
-            normal method path. Authored static fields use `LazyLock<TerraneSharedCell<T>>`
-            and live guarded mutation as well. Module-global scalar storage and explicit
-            native concurrency mutexes retain their separate implementations. Enum-backed
-            inheritance projects the owned handle to the selected variant with safe
-            read/write accessors, preserving dynamic method dispatch and the original cell's
-            borrow-conflict, poison, and unlock behavior without allocating another cell or
-            cloning its referent. Moving an optional resource field takes its live guarded
-            place and leaves `none`; it must not route through the owned-read snapshot path
-            or require the resource to implement Clone.
+            normal method path. Object-valued static fields use
+            `LazyLock<TerraneStaticObject<T>>`: a checked slot containing an
+            `Arc<TerraneSharedCell<T>>`. Receiver capture clones the current handle before
+            arguments or future polling. Replacement swaps in a new handle and drops the old
+            one after releasing the slot guard. In-flight calls retain the original object
+            and inherited variant across suspension. Scalar static fields retain direct
+            `LazyLock<TerraneSharedCell<T>>` storage. Module-global scalar storage and
+            explicit native concurrency mutexes retain their separate implementations.
+            Enum-backed inheritance projects the owned handle to the selected variant with
+            safe read/write accessors, preserving dynamic method dispatch and the original
+            cell's borrow-conflict, poison, and unlock behavior without allocating another
+            cell or cloning its referent. Moving an optional resource field takes its live
+            guarded place and leaves `none`; it must not route through the owned-read
+            snapshot path or require the resource to implement Clone.
 
             `T0143` remains a small early error for direct receiver/argument aliases and
             local sequential copies/replacements under canonical binding identities.
@@ -270,6 +275,9 @@ provenance:
     - static-class-reentry
     - static-class-checked-storage-safe
     - shared-async-resource-field
+    - shared-async-atomic-helper
+    - static-async-receiver-identity
+    - static-async-inherited-receiver-identity
   compiler:
     - crates/terrane-compiler/src/lowering/emitter/expressions.rs
     - crates/terrane-compiler/src/lowering/emitter/items/unions.rs

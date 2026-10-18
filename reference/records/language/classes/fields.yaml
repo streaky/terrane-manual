@@ -74,12 +74,19 @@ documentation:
             its field. Inherited initializers retain their declaring source and object
             context. Omission never infers a type or invokes an arbitrary constructor.
 
-            Authored static fields share one lazily initialized storage cell per effective
-            class. Access uses the same checked exclusive acquisition as explicit shared
-            storage: same-thread reentry fails with a shared-reference borrow conflict,
-            while another thread waits normally. Mutable calls and nested writes update that
-            live cell rather than a snapshot. Separate source operations are not an atomic
-            transaction. Explicit native synchronization retains its own contract.
+            Authored static fields share one lazily initialized slot per effective class. An
+            object-valued slot owns a shared handle to its current object. A method call
+            captures that handle before evaluating arguments; replacing the slot installs a
+            new object without retargeting an already-created or suspended invocation.
+            Mutations by an old invocation affect only its original object. The slot's guard
+            is released before accessing or dropping user objects.
+
+            Object access uses the same checked exclusive acquisition as explicit shared
+            storage: same-thread reentry into the same object fails with a shared-reference
+            borrow conflict, while another thread waits normally. Scalar slots use direct
+            checked storage without an object-handle allocation. Mutable calls and nested
+            writes use live storage rather than snapshots. Separate source operations are
+            not a transaction. Explicit native synchronization retains its own contract.
     - id: declaration
       title: Declaring field metadata
       blocks:
