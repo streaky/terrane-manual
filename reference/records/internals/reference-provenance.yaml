@@ -81,6 +81,18 @@ documentation:
             before the next function or format argument is evaluated. For a potentially
             unassigned local, handle capture and payload access first check the outer
             availability wrapper, which is distinct from the inner optional payload.
+
+            Mutable calls, field/index writes and nested collection updates reuse the same
+            refinement selection as value reads, projecting the live guarded payload rather
+            than a snapshot or the optional carrier. The selected owner is staged before
+            arguments or the right-hand side; the guard and payload projection are evaluated
+            only when that live receiver is used. Read-only field-presence queries use the
+            corresponding immutable projection inside their operand scope.
+
+            Assignment destinations still read their receiver and index expressions.
+            Point-specific flow facts for those reads are recorded alongside right-hand-side
+            facts, while assignment to a whole binding remains a write that can invalidate
+            its previous refinement.
   see-also:
     - lang.types.references
 
