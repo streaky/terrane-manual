@@ -73,6 +73,14 @@ documentation:
             receiver is evaluated once and the Boolean query completes before its guard is
             released. The presence query does not borrow an already-unwrapped payload.
             Computed properties retain their ordinary value-producing semantics.
+
+            A narrowed shared-local read projects the payload under its checked guard,
+            rather than matching the shared handle. Owned reads copy or snapshot that
+            payload without transferring the shared carrier; display uses the payload borrow
+            inside its own operand scope. Presence and display results release their guard
+            before the next function or format argument is evaluated. For a potentially
+            unassigned local, handle capture and payload access first check the outer
+            availability wrapper, which is distinct from the inner optional payload.
   see-also:
     - lang.types.references
 
