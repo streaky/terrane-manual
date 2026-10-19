@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 15211145b8c405f22638aab3b77a3e7eeab67becf33846d1390b34db893ac416
+  input-sha256: ed41279a36e4a7c5f6255f4bec8ce3a0371c46c36ec23fda88a1aa105b748a86
 format: 1
 generated: true
 symbols:
@@ -1861,6 +1861,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: transitive-owners
   declaration: core
+- name: core::future::Future
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
+  declaration: core::future::Future
 - name: core::future::into_future::IntoFuture
   record: tool.packages.rust-dependencies
   section: async-projected-calls

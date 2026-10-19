@@ -937,6 +937,11 @@ documentation:
             explicitly deferred until Terrane has a release artifact channel rather than
             being silently attempted.
 
+            Projection content identity covers semantic declarations, native owner aliases,
+            and probe evidence, not elapsed probe time. A cold and warm resolution with
+            identical inputs and evidence therefore has the same content hash; genuine
+            same-input semantic drift still fails replay validation.
+
             Project-local generated cache paths describe roles rather than source revisions:
             `.trn/dependencies/projection.json` holds the current projection, and
             `oracle.json` holds identity-scoped native proof batches. Cache fingerprints are
@@ -974,13 +979,19 @@ documentation:
             execution context.
 
             The same inert task-construction rule applies when a concrete non-async Rust
-            return type implements the exact canonical
-            `core::future::into_future::IntoFuture` contract. Owner arguments must close the
-            associated `Output` type before call specialization. The first poll evaluates
-            the Rust call once and performs the `IntoFuture` conversion once; subsequent
-            work follows ordinary polling. A similarly named trait does not qualify.
-            Unresolved, borrowed, lifetime-escaping, or unrepresentable outputs are
-            declined.
+            return type directly implements canonical `core::future::Future` or
+            `core::future::into_future::IntoFuture`. Owner arguments must close the
+            associated `Output` type before call specialization. Rustdoc's unevaluated
+            blanket implementation candidates are not evidence of this contract. The first
+            poll evaluates the Rust call once and performs the `IntoFuture` conversion once;
+            subsequent work follows ordinary polling. A similarly named trait does not
+            qualify.
+
+            A concrete future may retain an admitted receiver or input borrow when the
+            operation is awaited immediately. That lender remains alive until completion or
+            cancellation drops the native future; it is available again afterward. The
+            completed output must have an owned projected representation. Unresolved,
+            borrowed, lifetime-escaping, or unrepresentable outputs are declined.
 
             Result conversion follows the ordinary projected boundary rules. Supported owned
             values and aggregate shapes are converted recursively. A projected `Result<T,E>`
