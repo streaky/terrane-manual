@@ -66,10 +66,13 @@ documentation:
             inference selects a mutable payload borrow when a called helper writes through
             that reference; subsequent reads observe the mutation in the original optional.
 
-            Comparing a local optional binding with `none` inspects its physical optional
-            storage without cloning or moving the payload. This also applies after flow
-            refinement and through a shared owner's checked guard; the presence query does
-            not borrow an already-unwrapped payload.
+            Comparing an optional binding or stored field with `none` inspects its physical
+            optional storage without cloning or moving the payload. This also applies after
+            local flow refinement and through a shared owner's checked guard. Stored object
+            fields, inherited field getters and task-outcome fields use a read borrow; the
+            receiver is evaluated once and the Boolean query completes before its guard is
+            released. The presence query does not borrow an already-unwrapped payload.
+            Computed properties retain their ordinary value-producing semantics.
   see-also:
     - lang.types.references
 

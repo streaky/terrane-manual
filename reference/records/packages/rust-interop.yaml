@@ -50,6 +50,19 @@ documentation:
             closure. A named local function may read its own parameters and local bindings
             within a Rust boundary.
 
+            Capture checks, ownership read events, and boundary snapshots use the same
+            syntactic free-value analysis. Qualified Rust path segments, field and method
+            labels, and Rust-local bindings are not enclosing Terrane reads. A local
+            initializer is analyzed before its pattern becomes bound; closure parameters,
+            block scopes, loop patterns, match arms, and conditional patterns retain their
+            Rust lexical scope.
+
+            This analysis does not perform Rust name resolution or expand macros. Opaque
+            macro tokens and fragments that cannot be parsed retain conservative identifier
+            matching, so these boundaries can still report a potential capture or preserve
+            an unnecessary snapshot. Wildcard imports are not resolved, and references
+            introduced only by macro expansion are not inferred from string literals.
+
             For core TCP transports, prefer the supported consuming `into-native` boundary
             over extracting private resource handles. `/core/networking/native` provides
             native listener, stream, and socket-address types usable in ordinary typed
