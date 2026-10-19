@@ -44,6 +44,12 @@ documentation:
             into the Rust boundary without a snapshot; an input read again afterward or
             retained by a repeatable callback keeps its ordinary value-separation behavior.
 
+            Named local functions cannot capture enclosing Terrane bindings through inline
+            `rust` or `unsafe rust` any more than through ordinary Terrane expressions:
+            these reads diagnose `S2062`. Pass the value as a parameter or use an anonymous
+            closure. A named local function may read its own parameters and local bindings
+            within a Rust boundary.
+
             For core TCP transports, prefer the supported consuming `into-native` boundary
             over extracting private resource handles. `/core/networking/native` provides
             native listener, stream, and socket-address types usable in ordinary typed

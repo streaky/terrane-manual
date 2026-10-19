@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ed41279a36e4a7c5f6255f4bec8ce3a0371c46c36ec23fda88a1aa105b748a86
+  input-sha256: 516f494779ae5f2ef3b1d713ffab1c4c8c062e5de29ba3516f5d67d0740f520d
 format: 1
 generated: true
 symbols:
@@ -5450,6 +5450,10 @@ symbols:
   section: destination-results
   declaration: none
 - name: none
+  record: internals.semantics.reference-provenance
+  section: lowering
+  declaration: none
+- name: none
   record: lang.classes.fields
   section: classes
   declaration: none
@@ -7170,6 +7174,10 @@ symbols:
 - name: S2062
   record: lang.functions.declarations
   section: declaration
+  declaration: S2062
+- name: S2062
+  record: tool.packages.rust-interop
+  section: inline-rust
   declaration: S2062
 - name: S2063
   record: book.namespaces-imports-and-packages

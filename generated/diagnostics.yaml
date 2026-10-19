@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 11d94f57e1bd285035533894da0e785e8343773f6308d67e1a5cf230a231f44f
+  input-sha256: 874c240ef6f90fc91e5fff95ad66197730dc877e88ff9a0dc5e8b733ad2a2532
 format: 1
 generated: true
 diagnostics:
@@ -806,7 +806,7 @@ diagnostics:
   - unresolved name `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1803
+    line: 1842
 - code: S2015
   messages:
   - package has no `main` function
@@ -864,7 +864,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2192
+    line: 2231
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 519
 - code: S2022
@@ -886,15 +886,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2095
+    line: 2134
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2158
+    line: 2197
 - code: S2024
   messages:
   - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2230
+    line: 2269
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -907,9 +907,9 @@ diagnostics:
   - namespace variable `{name}` cannot be imported outside its namespace
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1909
+    line: 1948
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1929
+    line: 1968
 - code: S2027
   messages:
   - Rust dependency `{dependency}` is not declared in `package.toml`
@@ -1054,7 +1054,7 @@ diagnostics:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1745
+    line: 1754
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name

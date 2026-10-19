@@ -65,6 +65,11 @@ documentation:
             not the optional storage and not a cloned snapshot. Native mutable-reference
             inference selects a mutable payload borrow when a called helper writes through
             that reference; subsequent reads observe the mutation in the original optional.
+
+            Comparing a local optional binding with `none` inspects its physical optional
+            storage without cloning or moving the payload. This also applies after flow
+            refinement and through a shared owner's checked guard; the presence query does
+            not borrow an already-unwrapped payload.
   see-also:
     - lang.types.references
 
