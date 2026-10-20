@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: bda0f0b694edf88355e51b67f1aa1e3233ac7506feabfa1c5f3a468580112d26
+  input-sha256: 61be5a012a7bb08610b4e1aaac80e488dd43227d40eb5688f39715f926b81768
 format: 1
 generated: true
 symbols:
@@ -7923,6 +7923,10 @@ symbols:
   record: lang.control-flow.branching-and-loops
   section: if-while-for
   declaration: switch
+- name: sync
+  record: internals.execution.runtime-selection
+  section: generated-support
+  declaration: sync
 - name: Sync
   record: internals.projection.resolution
   section: callbacks

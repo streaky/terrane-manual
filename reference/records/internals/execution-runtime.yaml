@@ -120,6 +120,11 @@ documentation:
             synchronous scoped fallback. A current handle alone is not evidence of liveness:
             Tokio also enters it while dropping a runtime.
 
+            Shutdown draining uses a standard condition variable, with the mutex acquired
+            only by the shutdown waiter and the final closing permit. Ordinary destructor
+            reuse remains atomic and thread-local. This coordination does not require
+            Tokio's `sync` feature, which basic async artifacts do not otherwise request.
+
             Projected async entry cancellation retains the task's join handle. Cleanup waits
             for finalizers, requests abort, then joins the task before decrementing the
             outstanding-cleanup count. The executor's cleanup wait therefore includes
