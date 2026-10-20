@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4ab9f0e4bf53f9cc2405de453dcd24a461d9e7b35f300626ece0a6754419a80f
+  input-sha256: 24ae8d40b497396e991fda849bbe4ecf0ee9d9930daf34857a33b045e198c1da
 format: 1
 generated: true
 symbols:
@@ -8558,6 +8558,10 @@ symbols:
 - name: this
   record: lang.types.references
   section: shared-deadlocks
+  declaration: this
+- name: this
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
   declaration: this
 - name: thread-local-int
   record: std.concurrency.shared-state

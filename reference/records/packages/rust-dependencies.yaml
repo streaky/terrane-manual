@@ -553,6 +553,10 @@ documentation:
             - projected-owned-borrowed-struct
             - native-field-snapshot
             - native-borrowed-future
+            - native-owned-field-snapshot
+            - native-consuming-field-snapshot
+            - native-async-field-borrow
+            - native-field-transfer
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
@@ -582,11 +586,19 @@ documentation:
             recursively follow nested source fields and these closed foreign auto-trait
             facts.
 
-            An owned field snapshot through a borrowed receiver cannot copy a non-`Clone`
-            projected value, including an optional one; it is rejected before lowering with
-            `T0135`. Borrow the field when the consumer accepts a reference, or use an
-            explicit move through a mutable receiver. Moving an optional field clears its
-            slot; presence queries and synchronous borrowed observations remain valid.
+            An implicit owned field snapshot cannot copy a non-`Clone` projected value,
+            including an optional one, and is rejected before lowering with `T0135`. This
+            applies to borrowed receivers, owned roots, and consuming `this`: extraction
+            requires explicit transfer rather than an untracked partial move. Borrow the
+            field when the consumer accepts a reference, or use an explicit move through a
+            mutable receiver. Moving an optional field clears its slot; presence queries and
+            synchronous borrowed observations remain valid.
+
+            An ordinary reference directly to such a field through a shared async receiver
+            currently lacks a scoped lender and is also rejected with `T0135`. Observe it in
+            a synchronous helper invoked through `this`, or explicitly take an optional
+            field in a mutable method. The diagnostic does not establish scoped async field
+            borrowing support.
 
             Persistent lists currently expose elements by value. Iteration or indexing that
             would copy an item containing a non-`Clone` projected foreign value is rejected

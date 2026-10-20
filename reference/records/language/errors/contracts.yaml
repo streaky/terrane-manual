@@ -143,5 +143,9 @@ provenance:
     - generic-throwable
     - reject-generic-throwable-bound
     - native-borrowed-future
+    - native-error-value
+    - native-error-throw
+    - native-callable-effects
   compiler:
     - crates/terrane-compiler/src/semantics/contracts.rs
+    - crates/terrane-compiler/src/semantics/types.rs
