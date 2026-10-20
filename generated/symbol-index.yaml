@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 61be5a012a7bb08610b4e1aaac80e488dd43227d40eb5688f39715f926b81768
+  input-sha256: b3679862c27ade36083ed736af85f388325339ab34e4533cd113ca62b7e9520b
 format: 1
 generated: true
 symbols:
@@ -8051,6 +8051,10 @@ symbols:
   record: lang.numerics.constants
   section: constant-arithmetic
   declaration: T0003
+- name: T0006
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: T0006
 - name: T0012
   record: lang.errors.contracts
   section: throwable-inference

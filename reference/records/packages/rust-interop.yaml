@@ -37,6 +37,11 @@ documentation:
             not bypass Terrane's definite-assignment, cleanup, lifetime, capability,
             ownership, or effect rules.
 
+            A value-producing inline Rust block needs a declared destination type. Inferred
+            binding declarations and untyped `_` discards diagnose `T0006`; bind the result
+            with an explicit type before discarding it. Standalone Rust statement blocks and
+            declared return destinations retain their existing behavior.
+
             An inline Rust boundary observes a Terrane `ref` binding as the existing native
             borrow. Lowering does not clone the referent into the boundary: a native result
             may therefore retain the admitted relationship to that lender, subject to the
@@ -125,5 +130,9 @@ provenance:
   specification:
     - document: language-scoreboard
       section: "inline-rust"
-  conformance: null
+  conformance:
+    - inline-rust-boundaries
+    - inline-rust-untyped-discard
+    - inline-rust-untyped-binding
+    - inline-rust-untyped-unsafe-discard
   compiler: null
