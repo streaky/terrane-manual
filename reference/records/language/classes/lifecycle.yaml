@@ -62,17 +62,18 @@ documentation:
             `static`, and `async` are invalid destructor qualifiers and produce a compiler
             error. A destructor may await required finalization without itself being
             declared as an ordinary async callable. Destruction completes only after each
-            such await completes; it is never deferred as background cleanup. Inside a
-            running multithreaded runtime, finalization reuses that runtime through a
-            blocking handoff rather than creating a runtime per drop. Destruction outside a
-            running runtime, or on a current-thread runtime, retains a temporary scoped
-            thread and runtime to preserve immediate completion. Awaited destructors
-            currently require the threaded executor; the cooperative executor rejects them
-            with a source diagnostic because it permits non-transferable values. Finalizers
-            must not wait for another operation that needs the same held shared-object
-            guard. A destructor cannot report a normal failure result, so resource APIs
-            should also expose an explicit async close operation when callers need to
-            observe close failures.
+            such await completes; it is never deferred as background cleanup. Inside a live
+            Terrane-owned multithreaded runtime, finalization reuses that runtime through a
+            blocking handoff rather than creating a runtime per drop. Shutdown closes
+            admission to that path and drains already-active destructors before stopping the
+            runtime's drivers. Destruction during runtime shutdown, outside a Terrane-owned
+            runtime, or on a current-thread runtime uses a temporary scoped thread and
+            runtime to preserve immediate completion. Awaited destructors currently require
+            the threaded executor; the cooperative executor rejects them with a source
+            diagnostic because it permits non-transferable values. Finalizers must not wait
+            for another operation that needs the same held shared-object guard. A destructor
+            cannot report a normal failure result, so resource APIs should also expose an
+            explicit async close operation when callers need to observe close failures.
 
             Each independently owned value has its own lifecycle lineage. Copying creates a
             fresh lineage, so the copy and original have independent lifecycles. Moving a
@@ -96,4 +97,5 @@ provenance:
       section: "lifecycle"
   conformance:
     - awaited-destructor
+    - awaited-destructor-native
   compiler: null

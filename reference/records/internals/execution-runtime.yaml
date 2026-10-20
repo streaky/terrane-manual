@@ -109,6 +109,21 @@ documentation:
             not general declaration reachability or a promise to eliminate every helper. The
             decision is made by `package_uses_advanced_streams` in
             `crates/terrane-compiler/src/lowering/helpers.rs`.
+
+            Simple and cancellation-aware async support share awaited-destructor execution
+            through `runtime/async_destructor.rs`. Each parallel executor owns one shared
+            admission state, installed on its root and worker threads with the runtime's
+            identity. Reuse checks that identity and acquires an atomic in-flight permit; it
+            does not allocate a runtime per destructor or lock a global runtime map. Before
+            normal or unwinding shutdown, an ownership guard closes admission and drains
+            existing permits while drivers remain live. Later destructors use the
+            synchronous scoped fallback. A current handle alone is not evidence of liveness:
+            Tokio also enters it while dropping a runtime.
+
+            Projected async entry cancellation retains the task's join handle. Cleanup waits
+            for finalizers, requests abort, then joins the task before decrementing the
+            outstanding-cleanup count. The executor's cleanup wait therefore includes
+            destruction of the aborted future rather than just the abort request.
     - id: stream-adapters
       title: Concrete stream adapters and shared completion policy
       blocks:

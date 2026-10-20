@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b7fe9d2f9b7769112cb01e227d3c6099a2a6e7c3be1563fb85eb94c591c3f4c2
+  input-sha256: bda0f0b694edf88355e51b67f1aa1e3233ac7506feabfa1c5f3a468580112d26
 format: 2
 generated: true
 records:
@@ -794,6 +794,7 @@ records:
       section: lifecycle
     conformance:
     - awaited-destructor
+    - awaited-destructor-native
     compiler: null
   sections:
   - id: lifecycle

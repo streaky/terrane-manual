@@ -1053,7 +1053,10 @@ documentation:
             `Error` from `/deps/<alias>/io` and replace the old fallback catch at those call
             sites. Typed messages contain `E`'s display text rather than the fallback's
             dependency/member prefix; add application context at the catch boundary instead
-            of parsing that prefix.
+            of parsing that prefix. Fallback member labels use qualified metadata paths with
+            generic arguments omitted, so an unresolved owner template is not presented as
+            the instantiated native type. This display normalization does not alter the
+            generated call's concrete generic substitutions.
 
             Panic handling follows the selected profile. Under an unwinding profile,
             projected crossings use panic containment. Receiver-free crossings use Rust’s
