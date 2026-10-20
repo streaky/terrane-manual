@@ -1033,7 +1033,9 @@ documentation:
             native receiver is initialized inside a `try` block. Flow-available storage
             remains the lender; lowering does not borrow a temporary receiver clone. Generic
             native trait calls use the receiver's instantiated owner arguments, including
-            cloning a native value through an ordinary reference.
+            cloning a native value through an ordinary reference. Proven call-specialization
+            substitutions take precedence over open owner metadata; receiver arguments fill
+            missing owner substitutions rather than replacing closed ones.
 
             Result conversion follows the ordinary projected boundary rules. Supported owned
             values and aggregate shapes are converted recursively. A projected `Result<T,E>`
