@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6b356fa6f22d6a3ecadc62c5d119e5ae6a361bd7fdc7771d5046b1e75982b939
+  input-sha256: 4eb1d268a1b599b205cb416ae8fe365f6a3022fd7b0e5a750b66ea6c39f25abb
 format: 1
 generated: true
 diagnostics:
@@ -1162,15 +1162,12 @@ diagnostics:
     line: 1013
 - code: T0002
   messages:
-  - parameter `{parameter}` requires an explicit ordinary reference
   - '{label} value'
   - value is not admitted by any union destination arm
   - numeric destination is ambiguous between {}
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 853
-  - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1350
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 235
   - path: crates/terrane-compiler/src/semantics/collections.rs
@@ -1288,6 +1285,7 @@ diagnostics:
   - variadic parameter `{}` accepts positional arguments only
   - positional arguments must precede named arguments
   - too many arguments for function `{}`
+  - '`{parameter}` requires `{}`, found `{}`'
   - parameter `{}` is bound more than once
   - projected generic `{generic}` is inferred as incompatible argument types
   - ",\n            format!("
@@ -1317,13 +1315,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1225
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1386
+    line: 1352
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1414
+    line: 1392
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1448
+    line: 1420
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1458
+    line: 1454
+  - path: crates/terrane-compiler/src/semantics/calls.rs
+    line: 1464
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 294
   - path: crates/terrane-compiler/src/semantics/expressions.rs

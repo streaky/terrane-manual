@@ -82,10 +82,11 @@ documentation:
             optional: `ref owner.field` has a reference to the field's declared type, not a
             reference to an implementation `Option`. Source parameters written `ref T`
             require an explicit `ref` expression or an already-reference-valued argument;
-            passing an owned value receives `T0002`. Projected Rust borrowed-argument
-            adaptation and invocation-scoped native borrowed views retain their distinct
-            interop contracts; they do not introduce implicit owned-to-reference conversion
-            for source callables.
+            passing an owned value or a `shared ref T` receives `T0012`, naming both the
+            required reference type and the actual argument type. Projected Rust
+            borrowed-argument adaptation and invocation-scoped native borrowed views retain
+            their distinct interop contracts; they do not introduce implicit
+            owned-to-reference conversion for source callables.
 
             Inferred ordinary-reference bindings retain the same owner provenance and weak
             storage as explicitly typed observers. Copying such an observer copies only its
@@ -415,6 +416,7 @@ provenance:
     - required-field-reference
     - required-field-reference-async-lender
     - owned-to-reference-argument
+    - shared-to-reference-argument
     - source-reference-argument
     - static-async-receiver-identity
     - static-async-inherited-receiver-identity

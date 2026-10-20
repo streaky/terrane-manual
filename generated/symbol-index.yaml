@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6aaeb7e09bf6840601fe0939430877c4f17367e914fd76e8ab01c8348dbe7f46
+  input-sha256: d1fa77798e5087fbc835b95df20a749909e1f305206d126931a0e1dc12e817f3
 format: 1
 generated: true
 symbols:
@@ -8039,10 +8039,6 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: T
-- name: T0002
-  record: lang.types.references
-  section: lowering
-  declaration: T0002
 - name: T0003
   record: lang.numerics.constants
   section: constant-arithmetic
@@ -8050,6 +8046,10 @@ symbols:
 - name: T0012
   record: lang.errors.contracts
   section: throwable-inference
+  declaration: T0012
+- name: T0012
+  record: lang.types.references
+  section: lowering
   declaration: T0012
 - name: T0021
   record: lang.errors.contracts
