@@ -551,6 +551,8 @@ documentation:
             - consume-nonclone-foreign-list-iteration
             - index-nonclone-foreign-list-item
             - projected-owned-borrowed-struct
+            - native-field-snapshot
+            - native-borrowed-future
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
@@ -579,6 +581,12 @@ documentation:
             type does not support it. Projected interface and retained-bound checks
             recursively follow nested source fields and these closed foreign auto-trait
             facts.
+
+            An owned field snapshot through a borrowed receiver cannot copy a non-`Clone`
+            projected value, including an optional one; it is rejected before lowering with
+            `T0135`. Borrow the field when the consumer accepts a reference, or use an
+            explicit move through a mutable receiver. Moving an optional field clears its
+            slot; presence queries and synchronous borrowed observations remain valid.
 
             Persistent lists currently expose elements by value. Iteration or indexing that
             would copy an item containing a non-`Clone` projected foreign value is rejected

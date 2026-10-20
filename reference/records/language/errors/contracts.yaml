@@ -39,9 +39,16 @@ documentation:
             empty source implementations. Their concrete projected error types propagate
             transitively through synchronous and asynchronous source wrappers and callbacks.
             When a native error has no nameable projected representation, the boundary uses
-            `dependency-error` instead. A concrete projected error satisfies `throwable`
-            through its runtime error envelope; it need not declare source `message` fields
-            or `render` methods to serve as a callable throwable bound.
+            `dependency-error` instead. A native failure's caught runtime error envelope
+            satisfies `throwable`; the concrete projected type is also valid as a callable
+            throwable bound without source `message` fields or `render` methods. This
+            error-channel classification does not make an ordinary native value implement
+            `throwable`: passing such a value to a `throwable` parameter or explicitly
+            throwing it remains a source error (`T0012` or `T0021`).
+
+            Callable mismatch diagnostics show a written throwable bound when one exists;
+            otherwise they show the inferred escaping errors rather than an apparently
+            infallible callable.
 
             A catch removes the failures it handles from the escaping set, while failures
             produced by the handler remain relevant. Inference also accounts for `finally`:
