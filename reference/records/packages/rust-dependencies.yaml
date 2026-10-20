@@ -557,6 +557,15 @@ documentation:
             - native-consuming-field-snapshot
             - native-async-field-borrow
             - native-field-transfer
+            - projected-native-nonclone-field-double-move
+            - projected-native-nonclone-field-root-reuse
+            - source-required-field-double-move
+            - source-required-field-read-after-move
+            - source-required-field-loop-move
+            - projected-native-nonclone-field-disjoint-rebind
+            - source-required-field-reinitialize
+            - native-async-field-implicit-borrow
+            - native-mutable-async-field-borrow
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
@@ -589,16 +598,21 @@ documentation:
             An implicit owned field snapshot cannot copy a non-`Clone` projected value,
             including an optional one, and is rejected before lowering with `T0135`. This
             applies to borrowed receivers, owned roots, and consuming `this`: extraction
-            requires explicit transfer rather than an untracked partial move. Borrow the
-            field when the consumer accepts a reference, or use an explicit move through a
-            mutable receiver. Moving an optional field clears its slot; presence queries and
-            synchronous borrowed observations remain valid.
+            requires explicit transfer. Borrow the field when the consumer accepts a
+            reference, or explicitly move it from an owned root or a receiver that permits
+            transfer. Moving a required source field or a native field containing a
+            non-`Clone` value makes that field unavailable: repeated moves, later reads, and
+            whole-owner uses receive `T0101`. Disjoint fields remain accessible, and
+            assigning a replacement field or owner restores the corresponding storage.
+            Moving an optional source field instead clears its slot to `none`; repeated
+            takes, presence queries, and synchronous borrowed observations remain valid.
 
-            An ordinary reference directly to such a field through a shared async receiver
-            currently lacks a scoped lender and is also rejected with `T0135`. Observe it in
-            a synchronous helper invoked through `this`, or explicitly take an optional
-            field in a mutable method. The diagnostic does not establish scoped async field
-            borrowing support.
+            Directly borrowing such a field through a non-consuming async receiver currently
+            lacks a scoped lender and is rejected with `T0135`. This includes shared and
+            mutable async receivers, explicit references, and implicitly borrowing native
+            invocations. Observe the field in a synchronous helper invoked through `this`;
+            when mutation is permitted, explicitly take an optional field before use. The
+            diagnostic does not establish scoped async field borrowing support.
 
             Persistent lists currently expose elements by value. Iteration or indexing that
             would copy an item containing a non-`Clone` projected foreign value is rejected

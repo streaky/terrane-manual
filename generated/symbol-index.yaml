@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 24ae8d40b497396e991fda849bbe4ecf0ee9d9930daf34857a33b045e198c1da
+  input-sha256: bac2ac17535c2473d8cb1d6cf6aa138f715b32f286583aeb8aa110aa74db997d
 format: 1
 generated: true
 symbols:
@@ -5543,6 +5543,10 @@ symbols:
   declaration: none
 - name: none
   record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
+  declaration: none
+- name: none
+  record: tool.packages.rust-dependencies
   section: payload-enums
   declaration: none
 - name: none
@@ -8047,6 +8051,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
   declaration: T0058
+- name: T0101
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
+  declaration: T0101
 - name: T0111
   record: std.concurrency.shared-state
   section: unavailable-cells
