@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: bac2ac17535c2473d8cb1d6cf6aa138f715b32f286583aeb8aa110aa74db997d
+  input-sha256: 73db16d7c658038e3051c39356a0401a912001a039afbe102ee2780de47ac1b7
 format: 1
 generated: true
 symbols:
@@ -8060,6 +8060,10 @@ symbols:
   section: unavailable-cells
   declaration: T0111
 - name: T0135
+  record: internals.semantics.reference-provenance
+  section: lowering
+  declaration: T0135
+- name: T0135
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: T0135
@@ -8542,6 +8546,10 @@ symbols:
 - name: this
   record: internals.lowering.rust-output
   section: rust-lowering
+  declaration: this
+- name: this
+  record: internals.semantics.reference-provenance
+  section: lowering
   declaration: this
 - name: this
   record: lang.classes.fields

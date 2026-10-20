@@ -174,6 +174,16 @@ documentation:
                 segment between awaits, nor a whole async method is a transaction. For an atomic
                 read-modify-write, put the operation in a synchronous mutable helper and call it
                 through `this`: the helper body executes under one receiver guard.
+
+                A non-consuming async method cannot borrow an inline source-object field of
+                `this` as another shared or mutable async method's receiver: the child has no
+                independent shared handle, and the parent's bounded field guard cannot lend it
+                across suspension. This currently receives `T0135` before lowering, even when
+                the child is copyable. Use a synchronous helper through `this`, or explicitly
+                bind an owned snapshot when independent value semantics are intended. A field
+                containing an explicit `shared ref` already owns a child handle and remains
+                supported without copying the referent. This is a current scoped-lender
+                limitation, not a promise that scoped field lending is implemented.
             - type: example
               id: async-shared-atomic-helper
               title: Keep an async update inside a synchronous guarded helper
@@ -388,6 +398,9 @@ provenance:
     - shared-async-static-nested
     - shared-async-resource-field
     - shared-async-atomic-helper
+    - source-async-field-lender
+    - source-mutable-async-field-lender
+    - source-async-field-receivers
     - static-async-receiver-identity
     - static-async-inherited-receiver-identity
     - static-class-reentry
