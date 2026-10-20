@@ -261,6 +261,8 @@ documentation:
             - rust-dependency-async-function
             - rust-dependency-callbacks
             - sync-main-later-async
+            - native-borrowed-future
+            - projected-native-generic-clone
           markdown: |-
             A projected Rust `async fn` is an asynchronous Terrane callable. Calling it
             constructs a linear task, and `await` consumes that task inside an async
@@ -1026,6 +1028,12 @@ documentation:
             cancellation drops the native future; it is available again afterward. The
             completed output must have an owned projected representation. Unresolved,
             borrowed, lifetime-escaping, or unrepresentable outputs are declined.
+
+            Immediate awaits also work when their result is explicitly discarded or the
+            native receiver is initialized inside a `try` block. Flow-available storage
+            remains the lender; lowering does not borrow a temporary receiver clone. Generic
+            native trait calls use the receiver's instantiated owner arguments, including
+            cloning a native value through an ordinary reference.
 
             Result conversion follows the ordinary projected boundary rules. Supported owned
             values and aggregate shapes are converted recursively. A projected `Result<T,E>`
