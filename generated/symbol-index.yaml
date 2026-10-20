@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ba597226eb9f476e98171aa295fc6216845444583b849eec54f1fa9af7252c57
+  input-sha256: 4f323f953354747f971286fa42c278f7e1cac12d49c460567545fa50aaf73de0
 format: 1
 generated: true
 symbols:
@@ -2144,6 +2144,10 @@ symbols:
 - name: dependency-error
   record: book.namespaces-imports-and-packages
   section: dependencies
+  declaration: dependency-error
+- name: dependency-error
+  record: lang.errors.contracts
+  section: throwable-inference
   declaration: dependency-error
 - name: dependency-error
   record: tool.packages.rust-dependencies
@@ -4958,6 +4962,10 @@ symbols:
   section: giving-a-value-a-name
   declaration: message
 - name: message
+  record: lang.errors.contracts
+  section: throwable-inference
+  declaration: message
+- name: message
   record: lang.errors.handling
   section: structured-errors
   declaration: message
@@ -6762,6 +6770,10 @@ symbols:
 - name: render
   record: internals.lowering.rust-output
   section: rust-lowering
+  declaration: render
+- name: render
+  record: lang.errors.contracts
+  section: throwable-inference
   declaration: render
 - name: render
   record: lang.errors.handling
@@ -8614,6 +8626,10 @@ symbols:
 - name: throwable
   record: lang.classes.lifecycle
   section: lifecycle
+  declaration: throwable
+- name: throwable
+  record: lang.errors.contracts
+  section: throwable-inference
   declaration: throwable
 - name: throwable
   record: lang.errors.handling

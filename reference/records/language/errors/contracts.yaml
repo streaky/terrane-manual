@@ -35,6 +35,14 @@ documentation:
             fallible implicit numeric destination conversions. It applies to public and
             private callables, including named functions, closures, and bound methods.
 
+            Projected native functions and methods are opaque throwable boundaries, not
+            empty source implementations. Their concrete projected error types propagate
+            transitively through synchronous and asynchronous source wrappers and callbacks.
+            When a native error has no nameable projected representation, the boundary uses
+            `dependency-error` instead. A concrete projected error satisfies `throwable`
+            through its runtime error envelope; it need not declare source `message` fields
+            or `render` methods to serve as a callable throwable bound.
+
             A catch removes the failures it handles from the escaping set, while failures
             produced by the handler remain relevant. Inference also accounts for `finally`:
             when the final block cannot fall through because it explicitly returns or
@@ -76,6 +84,9 @@ documentation:
             written callable type declares an infallible callable type. Callable
             compatibility therefore admits fewer compatible throwables, but never an
             incompatible throwable. Terrane introduces no implicit broad fallback contract.
+            In particular, a `throws throwable` destination accepts native errors even when
+            their concrete class is not imported into that source unit. This broad bound
+            does not replace the implementation's exact inferred escaping set.
 
             Postfix throwable bounds on nested callable results associate to the right. In
         - type: example
@@ -124,5 +135,6 @@ provenance:
     - finally-throwable-replacement
     - generic-throwable
     - reject-generic-throwable-bound
+    - native-borrowed-future
   compiler:
     - crates/terrane-compiler/src/semantics/contracts.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ba597226eb9f476e98171aa295fc6216845444583b849eec54f1fa9af7252c57
+  input-sha256: 4f323f953354747f971286fa42c278f7e1cac12d49c460567545fa50aaf73de0
 format: 2
 generated: true
 records:
@@ -932,6 +932,7 @@ records:
     - finally-throwable-replacement
     - generic-throwable
     - reject-generic-throwable-bound
+    - native-borrowed-future
     compiler:
     - crates/terrane-compiler/src/semantics/contracts.rs
   sections:
