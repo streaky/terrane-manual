@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8ac19fcb04a94ef1b1b14bb1840ec44bbbd43793c90365ff9e55090c0a9de738
+  input-sha256: 6b356fa6f22d6a3ecadc62c5d119e5ae6a361bd7fdc7771d5046b1e75982b939
 format: 1
 generated: true
 diagnostics:
@@ -806,7 +806,7 @@ diagnostics:
   - unresolved name `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2012
+    line: 2021
 - code: S2015
   messages:
   - package has no `main` function
@@ -864,7 +864,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2401
+    line: 2410
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 519
 - code: S2022
@@ -886,15 +886,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2304
+    line: 2313
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2367
+    line: 2376
 - code: S2024
   messages:
   - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2439
+    line: 2448
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -907,9 +907,9 @@ diagnostics:
   - namespace variable `{name}` cannot be imported outside its namespace
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2118
+    line: 2127
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2138
+    line: 2147
 - code: S2027
   messages:
   - Rust dependency `{dependency}` is not declared in `package.toml`
@@ -1054,7 +1054,7 @@ diagnostics:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1924
+    line: 1933
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name
@@ -1162,12 +1162,15 @@ diagnostics:
     line: 1013
 - code: T0002
   messages:
+  - parameter `{parameter}` requires an explicit ordinary reference
   - '{label} value'
   - value is not admitted by any union destination arm
   - numeric destination is ambiguous between {}
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 853
+  - path: crates/terrane-compiler/src/semantics/calls.rs
+    line: 1350
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 235
   - path: crates/terrane-compiler/src/semantics/collections.rs
@@ -1314,13 +1317,13 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1225
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1363
+    line: 1386
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1391
+    line: 1414
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1422
+    line: 1448
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1432
+    line: 1458
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 294
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1807,7 +1810,7 @@ diagnostics:
   - reference to owner `{owner_name}{path}` remains in use after this mutation, move, or replacement
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1760
+    line: 1769
 - code: T0060
   messages:
   - class field initializer is unavailable
@@ -1851,7 +1854,7 @@ diagnostics:
   - '`ref` requires a supported owner-proven name, field, or collection element'
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1577
+    line: 1586
 - code: T0065
   messages:
   - object field type cannot be inferred
@@ -1888,7 +1891,7 @@ diagnostics:
     use ordinary `ref` for a non-owning back-edge
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1880
+    line: 1889
 - code: T0070
   messages:
   - the selected minimal profile does not retain reflection metadata

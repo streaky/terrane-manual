@@ -77,6 +77,16 @@ documentation:
             shared cycles are not traced and must be broken explicitly; ordinary `ref`
             back-edges are not ownership edges.
 
+            A field reference borrows its declared payload, including inherited fields. A
+            required field's internal initialization slot does not make the reference
+            optional: `ref owner.field` has a reference to the field's declared type, not a
+            reference to an implementation `Option`. Source parameters written `ref T`
+            require an explicit `ref` expression or an already-reference-valued argument;
+            passing an owned value receives `T0002`. Projected Rust borrowed-argument
+            adaptation and invocation-scoped native borrowed views retain their distinct
+            interop contracts; they do not introduce implicit owned-to-reference conversion
+            for source callables.
+
             Inferred ordinary-reference bindings retain the same owner provenance and weak
             storage as explicitly typed observers. Copying such an observer copies only its
             non-owning handle, not the referent. If a named owner is explicitly shared
@@ -176,14 +186,15 @@ documentation:
                 through `this`: the helper body executes under one receiver guard.
 
                 A non-consuming async method cannot borrow an inline source-object field of
-                `this` as another shared or mutable async method's receiver: the child has no
-                independent shared handle, and the parent's bounded field guard cannot lend it
-                across suspension. This currently receives `T0135` before lowering, even when
-                the child is copyable. Use a synchronous helper through `this`, or explicitly
-                bind an owned snapshot when independent value semantics are intended. A field
-                containing an explicit `shared ref` already owns a child handle and remains
-                supported without copying the referent. This is a current scoped-lender
-                limitation, not a promise that scoped field lending is implemented.
+                `this` as another shared or mutable async method's receiver, or create a plain
+                reference into that inline child: the child has no independent shared handle,
+                and the parent's bounded field guard cannot lend it outside that access. These
+                currently receive `T0135` before lowering, even when the child is copyable. Use
+                a synchronous helper through `this`, or explicitly bind an owned snapshot when
+                independent value semantics are intended. A field containing an explicit
+                `shared ref` already owns a child handle and remains supported without copying
+                the referent. This is a current scoped-lender limitation, not a promise that
+                scoped field lending is implemented.
             - type: example
               id: async-shared-atomic-helper
               title: Keep an async update inside a synchronous guarded helper
@@ -401,6 +412,10 @@ provenance:
     - source-async-field-lender
     - source-mutable-async-field-lender
     - source-async-field-receivers
+    - required-field-reference
+    - required-field-reference-async-lender
+    - owned-to-reference-argument
+    - source-reference-argument
     - static-async-receiver-identity
     - static-async-inherited-receiver-identity
     - static-class-reentry

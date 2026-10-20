@@ -94,13 +94,24 @@ documentation:
             facts, while assignment to a whole binding remains a write that can invalidate
             its previous refinement.
 
+            Explicit field references reuse borrowed receiver-place projection rather than
+            raw field syntax. Required slots project their initialized payload; inherited
+            wrapper accessors already return a borrow and must not acquire another `Option`
+            layer. Immutable and mutable wrapped payload access uses the existing field
+            getters, not an immutable slot getter that the wrapper does not provide. Source
+            argument validation checks the written ordinary-reference contract before native
+            destination normalization can erase it. Native projected calls keep their
+            borrowing adaptation, and invocation-scoped native arguments are already
+            borrowed views, not owned source values eligible for implicit conversion.
+
             Shared-async source dispatch selects a handle-taking helper only when receiver
             lowering actually produces that helper's handle binding. An outer receiver's
             shared handle does not independently own an inline child object. Shared and
-            mutable async calls on such a field of async `this` receive `T0135` before
-            lowering; they do not emit an unbound helper argument or silently snapshot a
-            child to change invocation identity. Explicit owned snapshots and fields that
-            already contain an owning shared handle retain their separate supported paths.
+            mutable async calls and plain reference creation on such a field of async `this`
+            receive `T0135` before lowering; they do not emit an unbound helper argument, a
+            borrow of a temporary guard, or silently snapshot a child to change invocation
+            identity. Explicit owned snapshots and fields that already contain an owning
+            shared handle retain their separate supported paths.
   see-also:
     - lang.types.references
 
@@ -118,4 +129,8 @@ provenance:
     - source-async-field-lender
     - source-mutable-async-field-lender
     - source-async-field-receivers
+    - required-field-reference
+    - required-field-reference-async-lender
+    - owned-to-reference-argument
+    - source-reference-argument
   compiler: null

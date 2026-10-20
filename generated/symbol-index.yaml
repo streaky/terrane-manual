@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 73db16d7c658038e3051c39356a0401a912001a039afbe102ee2780de47ac1b7
+  input-sha256: 6aaeb7e09bf6840601fe0939430877c4f17367e914fd76e8ab01c8348dbe7f46
 format: 1
 generated: true
 symbols:
@@ -5719,6 +5719,14 @@ symbols:
   record: internals.projection.resolution
   section: destination-results
   declaration: Option
+- name: Option
+  record: internals.semantics.reference-provenance
+  section: lowering
+  declaration: Option
+- name: Option
+  record: lang.types.references
+  section: lowering
+  declaration: Option
 - name: optional
   record: lang.classes.fields
   section: classes
@@ -8031,6 +8039,10 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: T
+- name: T0002
+  record: lang.types.references
+  section: lowering
+  declaration: T0002
 - name: T0003
   record: lang.numerics.constants
   section: constant-arithmetic

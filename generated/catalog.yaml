@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 73db16d7c658038e3051c39356a0401a912001a039afbe102ee2780de47ac1b7
+  input-sha256: 6aaeb7e09bf6840601fe0939430877c4f17367e914fd76e8ab01c8348dbe7f46
 format: 2
 generated: true
 records:
@@ -558,6 +558,10 @@ records:
     - source-async-field-lender
     - source-mutable-async-field-lender
     - source-async-field-receivers
+    - required-field-reference
+    - required-field-reference-async-lender
+    - owned-to-reference-argument
+    - source-reference-argument
     - static-async-receiver-identity
     - static-async-inherited-receiver-identity
     - static-class-reentry
@@ -2941,6 +2945,10 @@ records:
     - source-async-field-lender
     - source-mutable-async-field-lender
     - source-async-field-receivers
+    - required-field-reference
+    - required-field-reference-async-lender
+    - owned-to-reference-argument
+    - source-reference-argument
     compiler: null
   sections:
   - id: representation
