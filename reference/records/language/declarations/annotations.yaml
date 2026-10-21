@@ -17,8 +17,16 @@ documentation:
   title: General declaration annotations
   title-style: text
   summary: >-
-    Defines typed declaration metadata, public declaration interfaces, documentation reflection, and explicit package consumers for metadata-driven code generation and validation.
-  tags: [annotations, metadata, reflection, declarations]
+    Defines typed declaration metadata, public declaration interfaces, documentation reflection, and explicit package consumers for general-purpose source generation and validation.
+  tags:
+    [
+      annotations,
+      metadata,
+      reflection,
+      declarations,
+      consumers,
+      code-generation,
+    ]
   sections:
     - id: status
       title: Implementation status
@@ -211,6 +219,58 @@ documentation:
             and declaration contracts; it is not an implicit behavior hook. Consumers must
             enforce any promise they claim to honor, while declared types and signatures
             remain authoritative.
+
+            This is a general source-generation boundary: a consumer can use selected
+            declarations, external files, or both. Templates and HTTP/API metadata are
+            examples, not compiler-specific consumer kinds.
+        - type: table
+          id: consumer-use-cases
+          title: Illustrative consumer use cases
+          show-header: true
+          columns:
+            - id: consumer
+              title: Consumer
+              cell: text
+            - id: inputs
+              title: Typical inputs
+              cell: text
+            - id: generated
+              title: Generated Terrane source
+              cell: text
+          rows:
+            - consumer: Template rendering
+              inputs: Templates and recursive includes
+              generated: Compiled rendering functions
+            - consumer: HTTP routing and API descriptions
+              inputs: Handler declarations and annotations
+              generated: Route bindings and API-description accessors
+            - consumer: ORM models and database access
+              inputs: Model declarations, schema files, or queries
+              generated: Typed row mappings, query helpers, and persistence code
+            - consumer: Serialization and codecs
+              inputs: Type declarations
+              generated: Encoders, decoders, and validation helpers
+            - consumer: CLI bindings
+              inputs: Function signatures and annotations
+              generated: Argument parsing and command dispatch
+            - consumer: RPC clients and servers
+              inputs: Service declarations or protocol schemas
+              generated: Typed clients, dispatchers, and handlers
+            - consumer: Parsers
+              inputs: Grammar files
+              generated: Lexer and parser implementations
+            - consumer: Embedded resources
+              inputs: Resource files and manifests
+              generated: Embedded data and typed accessors
+            - consumer: UI bindings
+              inputs: Declarative layouts and component metadata
+              generated: Construction and binding code
+        - type: markdown
+          markdown: |-
+            These are illustrative applications of the mechanism, not a catalogue of
+            implemented packages or built-in features. The current consumer protocol
+            supplies generated Terrane source and diagnostics; it is not an arbitrary build
+            hook for compiling other languages, packaging applications, or deployment.
 
             A library may export named buildable consumers through `[consumer-tools]`,
             mapping each name to a package-relative executable `package.toml`. A caller

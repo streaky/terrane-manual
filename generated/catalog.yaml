@@ -1,13 +1,13 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 26a0b69c94ccc04bdd4135872a531027f2d02b7a5b75015a0d9090fdcfa5193e
+  input-sha256: d6a918af3cfb3f743393316866ef1f89f87554123f34ab2fd7c9cb22dcf4ade7
 format: 2
 generated: true
 records:
 - id: lang.declarations.annotations
   title: General declaration annotations
   summary: Defines typed declaration metadata, public declaration interfaces, documentation reflection,
-    and explicit package consumers for metadata-driven code generation and validation.
+    and explicit package consumers for general-purpose source generation and validation.
   kind: topic
   manual: reference
   group: Language

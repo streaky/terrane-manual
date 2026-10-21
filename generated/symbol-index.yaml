@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fa33af3601f4bd28419194422868e36290c2a389bf39463eaa5bc3ba86833b95
+  input-sha256: d6a918af3cfb3f743393316866ef1f89f87554123f34ab2fd7c9cb22dcf4ade7
 format: 1
 generated: true
 symbols:
@@ -484,6 +484,14 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: allow-unknown
+- name: allow_consumer_execution
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: allow_consumer_execution
+- name: allowConsumerExecution
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: allowConsumerExecution
 - name: and
   record: book.decisions-and-repetition
   section: what-we-learned
@@ -1745,6 +1753,30 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: consume-events
+- name: consumer-tools.<name>
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: consumer-tools.<name>
+- name: consumers.<id>.args
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: consumers.<id>.args
+- name: consumers.<id>.command
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: consumers.<id>.command
+- name: consumers.<id>.declarations
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: consumers.<id>.declarations
+- name: consumers.<id>.interfaces
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: consumers.<id>.interfaces
+- name: consumers.<id>.tool
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: consumers.<id>.tool
 - name: consuming
   record: lang.classes.lifecycle
   section: lifecycle
@@ -5908,6 +5940,10 @@ symbols:
   section: public-paths
   declaration: package.toml
 - name: package.toml
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: package.toml
+- name: package.toml
   record: lang.namespaces.prelude
   section: prelude
   declaration: package.toml
@@ -6179,6 +6215,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: prelude
+- name: preparation
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: preparation
 - name: prepared
   record: lang.functions.declarations
   section: unreferenced
@@ -7715,6 +7755,10 @@ symbols:
   record: std.text-bytes-codecs
   section: string-operations
   declaration: start
+- name: state_directory
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: state_directory
 - name: static
   record: lang.classes.lifecycle
   section: lifecycle
@@ -8411,6 +8455,10 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: terrane.server.path
+- name: terrane/consumer-cache
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: terrane/consumer-cache
 - name: terrane/fidelity
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -8787,6 +8835,18 @@ symbols:
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: to_json
+- name: tool
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: tool
+- name: tool_identity
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: tool_identity
+- name: tools/annotation-consumers/cache
+  record: lang.declarations.annotations
+  section: consumers
+  declaration: tools/annotation-consumers/cache
 - name: tools/annotation-consumers/cli-consumer/src/main.trn
   record: lang.declarations.annotations
   section: consumers
