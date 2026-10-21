@@ -1,0 +1,453 @@
+format: 1
+id: tool.build-time-tools
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: null
+  since: null
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Build-time tools and source generation
+  title-style: text
+  summary:
+    Defines explicit build-time tools and declaration consumers for source generation, including
+    ORM/model, template, codec, and RPC use cases, automatic tool builds, consumer-owned freshness, and
+    trusted editor preparation.
+  tags:
+    - tooling
+    - build-tools
+    - source-generation
+    - consumers
+    - metadata
+  sections:
+    - id: overview
+      title: Build-time tooling is broader than annotations
+      blocks:
+        - type: markdown
+          markdown: |-
+            Terrane packages can explicitly select trusted tools that validate declarations
+            or supply ordinary Terrane source during package preparation. Annotations are
+            one possible input, not the parent execution mechanism: generation can depend on
+            declaration metadata, external files, or both. The declaration-consumer protocol
+            is the package-tool integration described here.
+        - type: markdown
+          markdown: |-
+            The protocol supplies source and diagnostics; it is not an arbitrary build hook
+            for compiling other languages, packaging applications, or deployment. Native
+            dependency integration remains documented separately in
+            [[tool.packages.rust-dependencies]].
+    - id: use-cases
+      title: Illustrative source-generation use cases
+      blocks:
+        - type: table
+          id: consumer-use-cases
+          title: Illustrative consumer use cases
+          show-header: true
+          columns:
+            - id: consumer
+              title: Consumer
+              cell: text
+            - id: inputs
+              title: Typical inputs
+              cell: text
+            - id: generated
+              title: Generated Terrane source
+              cell: text
+          rows:
+            - consumer: Template rendering
+              inputs: Templates and recursive includes
+              generated: Compiled rendering functions
+            - consumer: HTTP routing and API descriptions
+              inputs: Handler declarations and annotations
+              generated: Route bindings and API-description accessors
+            - consumer: ORM models and database access
+              inputs: Model declarations, schema files, or queries
+              generated: Typed row mappings, query helpers, and persistence code
+            - consumer: Serialization and codecs
+              inputs: Type declarations
+              generated: Encoders, decoders, and validation helpers
+            - consumer: CLI bindings
+              inputs: Function signatures and annotations
+              generated: Argument parsing and command dispatch
+            - consumer: RPC clients and servers
+              inputs: Service declarations or protocol schemas
+              generated: Typed clients, dispatchers, and handlers
+            - consumer: Parsers
+              inputs: Grammar files
+              generated: Lexer and parser implementations
+            - consumer: Embedded resources
+              inputs: Resource files and manifests
+              generated: Embedded data and typed accessors
+            - consumer: UI bindings
+              inputs: Declarative layouts and component metadata
+              generated: Construction and binding code
+        - type: markdown
+          markdown: |-
+            These are illustrative applications of the mechanism, not a catalogue of
+            implemented packages or built-in features. Other possible package
+            responsibilities include test and benchmark discovery and editor/tooling
+            indexes.
+    - id: declaration-consumers
+      title: Declaration consumers
+      blocks:
+        - type: markdown
+          markdown: |-
+            A declaration consumer is an ordinary executable explicitly selected by a
+            package. Its generation rules and additional validation belong to that tool;
+            neither its name nor an annotation activates a compiler-specific generator.
+            Configuration currently requires a non-empty canonical declaration selection
+            even when the tool uses it only as an anchor for file-driven generation.
+            Annotations are not required.
+      sections:
+        - id: selecting-and-building-tools
+          title: Selecting and building tools
+          blocks:
+            - type: markdown
+              markdown: |-
+                A library may export named buildable consumers through `[consumer-tools]`,
+                mapping each name to a package-relative executable `package.toml`. A caller
+                explicitly selects one with `[consumers.<id>]` and
+                `tool = "owner/package::tool-name"` from its resolved Terrane dependencies.
+                Terrane builds the tool for the host, preparing its own consumers recursively,
+                before invoking it. Real tool-build action cycles diagnose; a tool depending on
+                the library that exports it is not by itself a cycle.
+            - type: markdown
+              markdown: |-
+                Alternatively, `command` selects an existing trusted executable. Exactly one of
+                `tool` and `command` is required. Both forms accept string-array `args`, an
+                explicit non-empty selection of canonical `declarations`, and optional
+                declaration-interface file paths in `interfaces`.
+            - type: example
+              id: consumer-tool-export
+              title: Export a package-owned tool
+              language: toml
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                [consumer-tools]
+                generate = "consumer/package.toml"
+              response: null
+              diagnostic: null
+              markdown: |-
+                This illustrative fragment belongs to the `example/generator` library. The
+                export must point to a real executable package within that library.
+            - type: example
+              id: consumer-tool-selection
+              title: Select a dependency tool
+              language: toml
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                [terrane-dependencies.example.generator]
+                path = "../generator"
+
+                [consumers.models]
+                tool = "example/generator::generate"
+                args = ["--schema", "schemas/models.json"]
+                declarations = ["/app::model"]
+              response: null
+              diagnostic: null
+              markdown: |-
+                The consuming package explicitly selects the export and declarations. These
+                names illustrate the manifest relationship; no built-in `example/generator`
+                package is implied. The full field contract is
+                [[tool.packages.package-manifest]].
+        - id: declaration-inputs
+          title: Declaration and external inputs
+          blocks:
+            - type: markdown
+              markdown: |-
+                The request supplies the selected declaration metadata. Optional `interfaces`
+                paths add exported declaration metadata without requiring dependency source
+                bodies. Declaration identity, documentation, annotation values, source origins,
+                default-value tags, and interface fingerprints follow
+                [[lang.declarations.annotations#docs-and-metadata]]. A tool chooses which of
+                these inputs affect its result.
+            - type: markdown
+              markdown: |-
+                File-driven consumers may use a declaration such as the application's canonical
+                `main` only as a selection anchor, then read their own template, schema,
+                grammar, or resource inputs. Such tools do not need annotation metadata or
+                runtime reflection storage.
+            - type: example
+              id: declaration-interface-export
+              title: Export metadata without executing consumers
+              language: console
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                terrane declaration-interface <package-or-source> --output <interface.json>
+              response: null
+              diagnostic: null
+              markdown: |-
+                Declaration preparation for this command does not run configured consumers. The
+                tracked source-free conformance artifact can be reproduced from
+                `tests/conformance/run/declaration-annotations/case.trn`.
+        - id: protocol-and-diagnostics
+          title: Invocation, protocol, and diagnostics
+          blocks:
+            - type: markdown
+              markdown: |-
+                The executable runs synchronously in the caller's package directory; it receives
+                one JSON request on stdin and returns one JSON response on stdout. Protocol
+                format is `1`. The request contains package identity and selected declaration
+                metadata. The response has `format`, `generated_sources`, and `diagnostics`;
+                each generated source supplies an `identity` and Terrane `source` text.
+                Generated identities are namespaced by consumer and must be safe, unique
+                relative identities. The compiler writes their source text beneath
+                `.trn/generated/<consumer>/<identity>.trn`, so diagnostics point to inspectable
+                files with stable identity-based names. Diagnostics carry a message and an
+                optional declaration span; selected source spans map to source or exported
+                origins, while a missing span reports against the package fallback without
+                losing the message. All returned diagnostics are retained. Consumer-reported
+                failures use `S2061`; process, malformed protocol, and invalid source/span
+                failures use `S2060`. Input, stdout, stderr, and declaration interfaces are
+                bounded to 16 MiB.
+            - type: markdown
+              markdown: |-
+                Request preparation validates identity uniqueness within the selected
+                declarations. Legitimate field/static-callable identity collisions elsewhere in
+                the package do not block an unrelated consumer; selecting an ambiguous identity
+                remains an `S2060` error.
+            - type: markdown
+              markdown: |-
+                The package consumer wire protocol is versioned independently as format 1.
+                Consumer tools are trusted executables; this mechanism does not claim process
+                isolation. Execution is synchronous and no wall-clock timeout is currently part
+                of the contract.
+        - id: generated-source-lifecycle
+          title: Preparation and generated-source lifecycle
+          blocks:
+            - type: markdown
+              markdown: |-
+                Consumers run after declaration preparation and before ordinary full-package
+                checking, including test-tier compilation. Their generated sources are checked
+                with authored sources through the normal compiler pipeline.
+            - type: markdown
+              markdown: |-
+                Successful manifest-package consumer preparation removes obsolete generated
+                `.trn` files, including outputs of consumers removed from the manifest or
+                returning no source. Implicit single-file compilation does not reconcile a
+                neighboring manifest package's consumer inventory. Failed consumer execution or
+                response validation preserves the previous files; cleanup does not follow
+                symbolic links outside the generated-source tree.
+        - id: consumer-owned-freshness
+          title: Consumer-owned freshness
+          blocks:
+            - type: markdown
+              markdown: |-
+                Every preparation consults the consumer. The compiler ensures a buildable tool
+                executable is current but does not infer generator-specific input dependencies
+                or decide whether regeneration is needed. The request's `preparation` object
+                supplies `state_directory` and `tool_identity`, a content identity of the
+                executable. The consumer owns its freshness decision and optional persisted
+                state, accounting for its arguments, selected metadata, executable identity, and
+                all external inputs that affect generation. A fresh consumer still returns its
+                complete ordinary source response; returning no sources means removing its
+                outputs, not retaining them.
+            - type: markdown
+              markdown: |-
+                The optional `terrane/consumer-cache` helper under
+                `tools/annotation-consumers/cache` stores an exact input key and generated
+                source using bounded reads and atomic writes. Executable identity and arguments
+                always participate; its caller supplies external input contents and any relevant
+                metadata explicitly. Omitting metadata allows a metadata-independent generator
+                to reuse source across unrelated caller edits. The helper does not discover
+                dependencies or make policy for the compiler. Consumers without preparation
+                context may generate normally without caching.
+        - id: editor-preparation-and-trust
+          title: Editor preparation and workspace trust
+          blocks:
+            - type: markdown
+              markdown: |-
+                Semantic editor snapshots use the same declaration-first preparation when
+                execution is explicitly allowed. Source-intelligence `allow_consumer_execution`
+                and language-server initialization option `allowConsumerExecution` default to
+                false. Without permission, configured consumers report that execution is
+                disabled rather than running package code. Trusted snapshots use current source
+                overlays and publish inspectable immutable files under
+                `.trn/editor-generated/<source-hash>/`, without publishing or reconciling the
+                build inventory. Editor and build consumer state directories are separate. The
+                VS Code client enables consumer execution only in trusted workspaces and
+                restarts the server when trust is granted. The executable is trusted package
+                tooling; metadata does not sandbox it or grant its promises authority over
+                language semantics.
+            - type: markdown
+              markdown: |-
+                Semantic language-server requests refresh preparation even without a
+                source-document edit, so a changed external template or schema can update
+                generated navigation. Generated units participate in snapshot identity; opening
+                an editor-generated file retains its owning caller graph for definition and
+                reference queries. Source snapshot and query contracts are documented in
+                [[tool.source-intelligence]].
+    - id: annotation-driven-generation
+      title: Annotation-driven generation and validation
+      blocks:
+        - type: markdown
+          markdown: |-
+            An annotation has no effect merely because it is present. A package explicitly
+            selects declarations and consumes their metadata to validate declarations or
+            generate ordinary Terrane source. The compiler mechanism supplies typed metadata
+            and declaration contracts; it is not an implicit behavior hook. Consumers must
+            enforce any promise they claim to honor, while declared types and signatures
+            remain authoritative.
+        - type: markdown
+          markdown: |-
+            Consumer presentation may use declaration documentation as a default. Explicit
+            consumer configuration or annotation metadata can supply more specific help or
+            field descriptions without changing the declaration's annotation payload or type
+            contract. Relevant metadata and documentation edits participate in declaration
+            interface fingerprints.
+        - type: markdown
+          markdown: |-
+            Annotation construction, target checking, repeatability, and reflection remain
+            language contracts in [[lang.declarations.annotations]]. Domain-specific
+            interpretation and generated code belong to the selected consumer; it cannot
+            rewrite existing declarations or override their effects, ownership, or type
+            contracts.
+        - type: markdown
+          markdown: |-
+            The tracked CLI and codec reference fixtures exercise the existing-executable
+            `command` form. The reference consumers and their shared protocol library are
+            written in Terrane. Build the compiler first, then run
+            `sh tools/annotation-consumers/build.sh`. The helper builds the CLI and codec
+            executables into `target/annotation-consumers/` and installs fixture copies
+            under `.trn/consumers/`. Neither consumer is required to build the compiler, and
+            neither consumes its own annotations during its build. Consumer conformance
+            cases declare `native-tools` so the test harness builds and stages the
+            executables itself; a clean checkout needs no prebuilt consumer or Python
+            consumer runtime. This staging helper is for those fixtures, not a prerequisite
+            for normal builds selecting package-owned `tool` exports.
+      sections:
+        - id: cli-reference-consumer
+          title: CLI reference consumer
+          blocks:
+            - type: markdown
+              markdown: |-
+                The CLI consumer accepts standalone functions with `int` results that are
+                synchronous, safe, non-throwing, and non-variadic, with immutable scalar
+                `string`/`int` parameters. Metadata supports command name and nullable summary;
+                parameters support long option name and nullable help. Summary precedence is
+                explicitly supplied consumer `--summary` (including an empty string), annotation
+                summary, then declaration documentation.
+            - type: example
+              id: cli-annotation-consumer
+              title: Typed CLI consumer
+              language: terrane
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                from /annotation-cli import command-option, command
+
+                @[command; name = 'report', summary = 'Summarize rows']
+                function report int; (
+                    @[command-option; long-name = '--limit', help = 'Maximum rows']
+                    limit int = 10,
+                )
+                    return limit
+              response: null
+              diagnostic: null
+              markdown: |-
+                The tracked CLI consumer
+                (`tools/annotation-consumers/cli-consumer/src/main.trn`) consumes this metadata.
+                Its manifest explicitly selects declarations; it derives string and integer
+                arguments and defaults from signatures. Explicit consumer summary configuration
+                takes precedence over the command summary, which takes precedence over
+                declaration documentation. Parameter help metadata takes precedence over
+                parameter documentation. The command retains its declared integer result.
+        - id: codec-reference-consumer
+          title: Codec and validation reference consumer
+          blocks:
+            - type: markdown
+              markdown: |-
+                The codec consumer accepts public, non-derived classes with the canonical
+                default constructor; it supports `string`, `bool`, `int`, fixed-width
+                signed/unsigned integer, and nullable scalar fields, skips static/private/secret
+                fields, validates integer constraints, honors defaults, and rejects unknown or
+                inaccessible input fields.
+            - type: markdown
+              markdown: |-
+                The codec decodes a pre-parsed `document-value` into a typed class result;
+                callers parse JSON before invoking it. Encoding returns a result containing
+                `document-value|none`, not a JSON string. `--schema-only` emits only the schema
+                helper; `--include-schema` adds a runtime `describe-<class>` helper. Explicit
+                consumer `--description` overrides the class documentation, while a field's
+                `@description` overrides that field's documentation. Empty explicit text remains
+                an override, not a fallback.
+            - type: markdown
+              markdown: |-
+                Each codec uses a namespace derived from its selected class's full canonical
+                identity: `/codec-model::account` produces
+                `/generated/annotation-codec/codec-model/account`. Independent class consumers
+                therefore coexist without colliding on their local helper declarations.
+                Generated codec file identities keep names readable and escape namespace
+                separators and underscores, so full canonical identities remain unambiguous
+                without relying on truncated-hash uniqueness.
+            - type: example
+              id: codec-annotation-consumer
+              title: Typed codec and validation consumer
+              language: terrane
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                from /annotation-codec import external-name, minimum, description
+
+                /**
+                 * An account document.
+                 */
+                class account
+                    /**
+                     * The account identifier.
+                     */
+                    @[external-name; 'accountId']
+                    @[minimum; 1]
+                    account-id int16
+                    @[external-name; 'label']
+                    @[description; 'Explicit label description']
+                    display-name string = 'defaulted'
+                    active bool = true
+                    nickname string|none = 'fallback'
+              response: null
+              diagnostic: null
+              markdown: |-
+                The tracked codec consumer
+                (`tools/annotation-consumers/codec-consumer/src/main.trn`) selects this class
+                and derives a typed codec from its public fields. It skips private and secret
+                fields, supports `string`, `bool`, `int`, signed/unsigned 8-, 16-, 32-, 64-, and
+                128-bit integers, and nullable scalar variants. It validates integer
+                constraints, honors field defaults and requiredness, rejects unknown or
+                inaccessible input fields, and requires the class's canonical default
+                constructor. Unsupported types diagnose rather than falling back.
+  see-also:
+    - tool.packages.package-manifest
+    - tool.packages.command-line
+    - lang.declarations.annotations
+    - tool.source-intelligence
+    - tool.editor-support
+provenance:
+  specification:
+    - document: compiler-plan
+      section: Milestone 31.0
+    - document: language-spec
+      section: BUILD_TIME_TOOLS
+  conformance:
+    - crates/terrane-compiler/tests/consumer_tools.rs
+    - crates/terrane-compiler/tests/annotations.rs
+    - tests/conformance/run/annotation-cli-consumer
+    - tests/conformance/run/annotation-codec-consumer
+    - tests/conformance/run/annotation-source-free
+  compiler:
+    - crates/terrane-compiler/src/consumers.rs
+    - crates/terrane-compiler/src/consumer_tools.rs
+    - crates/terrane-compiler/src/native_build.rs
+    - crates/terrane-compiler/src/package/consumers.rs
+    - crates/terrane-compiler/src/tooling/consumer_preparation.rs

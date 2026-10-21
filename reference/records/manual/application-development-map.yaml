@@ -42,6 +42,8 @@ documentation:
               route: "[[tool.packages.package-manifest#namespaces-and-artifacts]] and [[lang.lexical-structure.keywords]]"
             - task: Define public classes and interfaces
               route: "[[lang.classes.fields]] and [[lang.classes.protocols]]"
+            - task: Attach typed declaration metadata
+              route: "[[lang.declarations.annotations]]"
             - task: Read command-line arguments
               route: "[[tool.packages.command-line]]"
             - task: Read and write files
@@ -52,6 +54,8 @@ documentation:
               route: "[[app.error-boundaries]]"
             - task: Add a Rust dependency
               route: "[[tool.packages.rust-dependencies]]"
+            - task: Generate source from models, schemas, templates, or other inputs
+              route: "[[tool.build-time-tools]]"
             - task: Add and run tests
               route: "[[tool.packages.testing]]"
             - task: Build and run an executable
@@ -78,6 +82,7 @@ documentation:
             repository entry point.
   see-also:
     - tool.packages.package-manifest
+    - tool.build-time-tools
     - lang.types.authority-in-practice
     - app.collection-string-idioms
     - app.error-boundaries

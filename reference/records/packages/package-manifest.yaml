@@ -263,7 +263,11 @@ documentation:
               default: "[]"
               repeatability: once per consumer
               example: interfaces = ["model-interface.json"]
-
+        - type: markdown
+          markdown: |-
+            For consumer tool exports, explicit selection, automatic builds, freshness, and
+            generated-source lifecycle, see [[tool.build-time-tools]]. The table above
+            defines the manifest fields; that page owns their execution contract.
     - id: capabilities-and-effects
       title: Profiles, capabilities, and dependency effects
       blocks:
@@ -481,6 +485,7 @@ documentation:
             alter the Terrane manifest, projected package identity, enabled features, or
             review obligation. Do not add unsupported path keys to `package.toml`.
   see-also:
+    - tool.build-time-tools
     - tool.packages.rust-dependencies
     - tool.packages.testing
     - tool.packages.command-line

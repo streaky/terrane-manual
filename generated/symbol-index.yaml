@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d6a918af3cfb3f743393316866ef1f89f87554123f34ab2fd7c9cb22dcf4ade7
+  input-sha256: d845a492fd090468a5b1f4145346413525a963b7d32a3b9cabb1b982a621a3a3
 format: 1
 generated: true
 symbols:
@@ -44,10 +44,6 @@ symbols:
   record: lang.lexical-structure.literals
   section: comments-literals
   declaration: ////
-- name: /codec-model::account
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: /codec-model::account
 - name: /core
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -388,10 +384,6 @@ symbols:
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: /example::shape::area
-- name: /generated/annotation-codec/codec-model/account
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: /generated/annotation-codec/codec-model/account
 - name: /proc/sys/net/core/somaxconn
   record: std.networking.operations
   section: listener-backlog
@@ -484,14 +476,6 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: allow-unknown
-- name: allow_consumer_execution
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: allow_consumer_execution
-- name: allowConsumerExecution
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: allowConsumerExecution
 - name: and
   record: book.decisions-and-repetition
   section: what-we-learned
@@ -608,10 +592,6 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: archive/refs/tags/v1.2.3.zip
-- name: args
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: args
 - name: arithmetic-overflow
   record: book.errors
   section: designing-useful-error-values
@@ -867,10 +847,6 @@ symbols:
 - name: bool
   record: lang.classes.traits
   section: traits
-  declaration: bool
-- name: bool
-  record: lang.declarations.annotations
-  section: consumers
   declaration: bool
 - name: bool
   record: lang.text.search
@@ -1542,11 +1518,11 @@ symbols:
   declaration: com9
 - name: command
   record: lang.declarations.annotations
-  section: consumers
+  section: grammar-and-targets
   declaration: command
 - name: command
-  record: lang.declarations.annotations
-  section: grammar-and-targets
+  record: tool.build-time-tools
+  section: annotation-driven-generation
   declaration: command
 - name: command-option
   record: lang.declarations.annotations
@@ -2053,10 +2029,6 @@ symbols:
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: DeclarationInterface
-- name: declarations
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: declarations
 - name: decode
   record: std.text-bytes-codecs
   section: compiler-synopsis
@@ -2285,10 +2257,6 @@ symbols:
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
   declaration: dev
-- name: diagnostics
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: diagnostics
 - name: Directly callable
   record: tool.packages.rust-dependencies
   section: workflow
@@ -2369,10 +2337,6 @@ symbols:
   record: std.documents.typed-decoding
   section: diagnostics
   declaration: document-validatable
-- name: document-value
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: document-value
 - name: document-value
   record: std.logging
   section: events
@@ -3517,10 +3481,6 @@ symbols:
   record: std.collections
   section: ordering-iteration-and-lifetime
   declaration: for
-- name: format
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: format
 - name: format/text.trn
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
@@ -3649,10 +3609,6 @@ symbols:
   record: tool.diagnostics
   section: generated-index
   declaration: generated/diagnostics.yaml
-- name: generated_sources
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: generated_sources
 - name: get.checked
   record: book.text-and-collections
   section: exercises
@@ -3841,10 +3797,6 @@ symbols:
   record: lang.types.scalars
   section: scalar-types
   declaration: i64
-- name: identity
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: identity
 - name: if
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
@@ -4127,10 +4079,6 @@ symbols:
   declaration: int
 - name: int
   record: lang.declarations.annotations
-  section: consumers
-  declaration: int
-- name: int
-  record: lang.declarations.annotations
   section: model
   declaration: int
 - name: int
@@ -4329,10 +4277,6 @@ symbols:
   record: lang.lexical-structure.keywords
   section: structural-words
   declaration: interface
-- name: interfaces
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: interfaces
 - name: interfaces
   record: tool.packages.command-line
   section: declaration-interface
@@ -5290,8 +5234,8 @@ symbols:
   section: drive-the-built-application
   declaration: native-text
 - name: native-tools
-  record: lang.declarations.annotations
-  section: consumers
+  record: tool.build-time-tools
+  section: annotation-driven-generation
   declaration: native-tools
 - name: natural-log
   record: lang.numerics.floating-point
@@ -5767,6 +5711,10 @@ symbols:
   record: lang.classes.fields
   section: declaration
   declaration: optional
+- name: options.allow_consumer_execution
+  record: tool.source-intelligence
+  section: snapshots
+  declaration: options.allow_consumer_execution
 - name: options.generated
   record: tool.source-intelligence
   section: protocol
@@ -5938,10 +5886,6 @@ symbols:
 - name: package.toml
   record: internals.projection.resolution
   section: public-paths
-  declaration: package.toml
-- name: package.toml
-  record: lang.declarations.annotations
-  section: consumers
   declaration: package.toml
 - name: package.toml
   record: lang.namespaces.prelude
@@ -6215,10 +6159,6 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: prelude
-- name: preparation
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: preparation
 - name: prepared
   record: lang.functions.declarations
   section: unreferenced
@@ -7231,14 +7171,6 @@ symbols:
   record: lang.namespaces.imports
   section: imports
   declaration: S2033
-- name: S2060
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: S2060
-- name: S2061
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: S2061
 - name: S2062
   record: lang.functions.declarations
   section: declaration
@@ -7684,10 +7616,6 @@ symbols:
   section: exercises
   declaration: source
 - name: source
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: source
-- name: source
   record: tool.debugging
   section: provenance
   declaration: source
@@ -7755,10 +7683,6 @@ symbols:
   record: std.text-bytes-codecs
   section: string-operations
   declaration: start
-- name: state_directory
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: state_directory
 - name: static
   record: lang.classes.lifecycle
   section: lifecycle
@@ -7862,10 +7786,6 @@ symbols:
 - name: string
   record: lang.control-flow.branching-and-loops
   section: if-while-for
-  declaration: string
-- name: string
-  record: lang.declarations.annotations
-  section: consumers
   declaration: string
 - name: string
   record: lang.declarations.bindings
@@ -8188,8 +8108,8 @@ symbols:
   section: compilation-reuse
   declaration: TARGET
 - name: target/annotation-consumers/
-  record: lang.declarations.annotations
-  section: consumers
+  record: tool.build-time-tools
+  section: annotation-driven-generation
   declaration: target/annotation-consumers/
 - name: target/debug
   record: internals.build.toolchain-profiles
@@ -8455,10 +8375,6 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: terrane.server.path
-- name: terrane/consumer-cache
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: terrane/consumer-cache
 - name: terrane/fidelity
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -8535,10 +8451,6 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: testing.unit
-- name: tests/conformance/run/declaration-annotations/case.trn
-  record: lang.declarations.annotations
-  section: docs-and-metadata
-  declaration: tests/conformance/run/declaration-annotations/case.trn
 - name: tests/conformance/run/projected-constructor-selected-native
   record: lang.types.generics
   section: constructors
@@ -8836,25 +8748,9 @@ symbols:
   section: docs-and-metadata
   declaration: to_json
 - name: tool
-  record: lang.declarations.annotations
-  section: consumers
+  record: tool.build-time-tools
+  section: annotation-driven-generation
   declaration: tool
-- name: tool_identity
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: tool_identity
-- name: tools/annotation-consumers/cache
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: tools/annotation-consumers/cache
-- name: tools/annotation-consumers/cli-consumer/src/main.trn
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: tools/annotation-consumers/cli-consumer/src/main.trn
-- name: tools/annotation-consumers/codec-consumer/src/main.trn
-  record: lang.declarations.annotations
-  section: consumers
-  declaration: tools/annotation-consumers/codec-consumer/src/main.trn
 - name: tools/generate_manual_catalog.py
   record: std.filesystem
   section: whole-file-synopsis

@@ -42,6 +42,12 @@ documentation:
             an optional exact build ID. Unsaved overlays are the supplied bytes; queries
             never replace them with disk contents.
 
+            Semantic snapshots can prepare configured declaration consumers when
+            `options.allow_consumer_execution` is explicitly enabled. Generated source
+            participates in the snapshot alongside the current overlays; the build-time
+            execution and trust contract is
+            [[tool.build-time-tools#editor-preparation-and-trust]].
+
             Retention is bounded by snapshot count and source bytes. `close-snapshot`
             releases a snapshot eagerly. A closed or evicted ID returns `expired-snapshot`
             with `retry-fresh-query: true`; continuations and edit proposals tied to it
@@ -253,6 +259,7 @@ documentation:
             language-server manager remains alive; confirm the new process uses the rebuilt
             executable before diagnosing stale results.
   see-also:
+    - tool.build-time-tools
     - tool.packages.command-line
 
 provenance:

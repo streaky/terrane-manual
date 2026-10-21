@@ -85,6 +85,11 @@ documentation:
             compiler-derived source information. The diagnostics displayed by the editor are
             therefore the compiler's diagnostics.
 
+            Workspace trust controls execution of package-defined build-time tools during
+            editor preparation. Generated-source navigation and the separation between
+            editor snapshots and build outputs follow
+            [[tool.build-time-tools#editor-preparation-and-trust]].
+
             The compiler-owned `.trn/terrane-projection.generated.trn` is a generated report
             and multi-unit source container, not one authored namespace source.
             `Generated source unit` markers delimit ordinary one-namespace Terrane units.
@@ -100,7 +105,9 @@ documentation:
             the first matching import line and can consequently show the wrong dependency
             namespace. Completion does not use this first-match lookup, and compilation is
             unaffected.
-  see-also: []
+  see-also:
+    - tool.build-time-tools
+    - tool.source-intelligence
 
 provenance:
   specification:

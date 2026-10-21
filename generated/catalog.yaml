@@ -1,13 +1,13 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d6a918af3cfb3f743393316866ef1f89f87554123f34ab2fd7c9cb22dcf4ade7
+  input-sha256: d845a492fd090468a5b1f4145346413525a963b7d32a3b9cabb1b982a621a3a3
 format: 2
 generated: true
 records:
 - id: lang.declarations.annotations
   title: General declaration annotations
-  summary: Defines typed declaration metadata, public declaration interfaces, documentation reflection,
-    and explicit package consumers for general-purpose source generation and validation.
+  summary: Defines typed declaration annotations, documentation metadata, source-free declaration interfaces,
+    and reflection contracts.
   kind: topic
   manual: reference
   group: Language
@@ -31,7 +31,6 @@ records:
     compiler:
     - crates/terrane-compiler/src/semantics/annotations.rs
     - crates/terrane-compiler/src/semantics/model.rs
-    - crates/terrane-compiler/src/consumers.rs
   sections:
   - id: status
     title: Implementation status
@@ -45,11 +44,11 @@ records:
   - id: docs-and-metadata
     title: Documentation and retained metadata
     sections: []
-  - id: consumers
-    title: Explicit package and tool consumers
+  - id: using-metadata
+    title: Using metadata in build-time tools
     sections: []
   - id: identity-and-boundaries
-    title: Identity, cache, and implementation boundary
+    title: Declaration identity and language boundaries
     sections: []
   declaration-synopsis: []
 - id: lang.lexical-structure.keywords
@@ -2567,6 +2566,75 @@ records:
     title: Verification profile
     sections: []
   declaration-synopsis: []
+- id: tool.build-time-tools
+  title: Build-time tools and source generation
+  summary: Defines explicit build-time tools and declaration consumers for source generation, including
+    ORM/model, template, codec, and RPC use cases, automatic tool builds, consumer-owned freshness, and
+    trusted editor preparation.
+  kind: topic
+  manual: reference
+  group: Tooling
+  position: 80
+  source: reference/records/tooling/build-time-tools.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: null
+  provenance:
+    specification:
+    - document: compiler-plan
+      section: Milestone 31.0
+    - document: language-spec
+      section: BUILD_TIME_TOOLS
+    conformance:
+    - crates/terrane-compiler/tests/consumer_tools.rs
+    - crates/terrane-compiler/tests/annotations.rs
+    - tests/conformance/run/annotation-cli-consumer
+    - tests/conformance/run/annotation-codec-consumer
+    - tests/conformance/run/annotation-source-free
+    compiler:
+    - crates/terrane-compiler/src/consumers.rs
+    - crates/terrane-compiler/src/consumer_tools.rs
+    - crates/terrane-compiler/src/native_build.rs
+    - crates/terrane-compiler/src/package/consumers.rs
+    - crates/terrane-compiler/src/tooling/consumer_preparation.rs
+  sections:
+  - id: overview
+    title: Build-time tooling is broader than annotations
+    sections: []
+  - id: use-cases
+    title: Illustrative source-generation use cases
+    sections: []
+  - id: declaration-consumers
+    title: Declaration consumers
+    sections:
+    - id: selecting-and-building-tools
+      title: Selecting and building tools
+      sections: []
+    - id: declaration-inputs
+      title: Declaration and external inputs
+      sections: []
+    - id: protocol-and-diagnostics
+      title: Invocation, protocol, and diagnostics
+      sections: []
+    - id: generated-source-lifecycle
+      title: Preparation and generated-source lifecycle
+      sections: []
+    - id: consumer-owned-freshness
+      title: Consumer-owned freshness
+      sections: []
+    - id: editor-preparation-and-trust
+      title: Editor preparation and workspace trust
+      sections: []
+  - id: annotation-driven-generation
+    title: Annotation-driven generation and validation
+    sections:
+    - id: cli-reference-consumer
+      title: CLI reference consumer
+      sections: []
+    - id: codec-reference-consumer
+      title: Codec and validation reference consumer
+      sections: []
+  declaration-synopsis: []
 - id: tool.source-intelligence
   title: Compiler-backed source intelligence
   summary: Exposes Terrane's recovered syntax, canonical semantic identities, generated source associations,
@@ -2575,7 +2643,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 80
+  position: 81
   source: reference/records/tooling/source-intelligence.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2613,7 +2681,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 81
+  position: 82
   source: reference/records/tooling/debugging.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2648,7 +2716,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 82
+  position: 83
   source: reference/records/tooling/profiling.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2680,7 +2748,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 83
+  position: 84
   source: reference/records/tooling/diagnostics.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2707,7 +2775,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 84
+  position: 85
   source: reference/records/tooling/current-limitations.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2737,7 +2805,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 85
+  position: 86
   source: reference/records/tooling/editor-support.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2760,7 +2828,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 86
+  position: 87
   source: reference/records/tooling/formatting.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2783,7 +2851,7 @@ records:
   kind: topic
   manual: reference
   group: Application development
-  position: 87
+  position: 88
   source: reference/records/manual/application-development-map.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2807,7 +2875,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 88
+  position: 89
   source: reference/records/internals/execution-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2878,7 +2946,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 89
+  position: 90
   source: reference/records/internals/conversion-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2904,7 +2972,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 90
+  position: 91
   source: reference/records/internals/descriptor-contracts.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2942,7 +3010,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 91
+  position: 92
   source: reference/records/internals/reference-provenance.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2985,7 +3053,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 92
+  position: 93
   source: reference/records/internals/conformance-timing.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3027,7 +3095,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 93
+  position: 94
   source: reference/records/internals/projection-resolution.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3121,7 +3189,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 94
+  position: 95
   source: reference/records/internals/projection-namespace-overlays.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3154,7 +3222,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 95
+  position: 96
   source: reference/records/internals/integration-boundaries.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3200,7 +3268,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 96
+  position: 97
   source: reference/records/internals/observability-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3227,7 +3295,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 97
+  position: 98
   source: reference/records/internals/build-toolchain-profiles.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3260,7 +3328,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 98
+  position: 99
   source: reference/records/internals/semantic-return-validation.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3284,7 +3352,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 99
+  position: 100
   source: reference/records/internals/collection-lifetime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3314,7 +3382,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 100
+  position: 101
   source: reference/records/internals/proof-guided-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3368,7 +3436,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 101
+  position: 102
   source: reference/records/internals/diagnostics/source-projection.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3391,7 +3459,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 102
+  position: 103
   source: reference/records/internals/lowering/rust-output.yaml
   lifecycle-status: current
   documentation-status: complete

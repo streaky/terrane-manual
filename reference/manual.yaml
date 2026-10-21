@@ -91,6 +91,7 @@ navigation:
       - source: records/rust-package-integrations/godot.yaml
   - group: Tooling
     children:
+      - source: records/tooling/build-time-tools.yaml
       - source: records/tooling/source-intelligence.yaml
       - source: records/tooling/debugging.yaml
       - source: records/tooling/profiling.yaml
