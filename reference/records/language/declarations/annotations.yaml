@@ -212,16 +212,24 @@ documentation:
             enforce any promise they claim to honor, while declared types and signatures
             remain authoritative.
 
-            The package manifest configures each consumer with `[consumers.<id>]`, a trusted
-            executable `command`, string-array `args`, explicit canonical `declarations`,
-            and optional declaration-interface file paths in `interfaces`. The executable
-            runs synchronously in the package directory; it receives one JSON request on
-            stdin and returns one JSON response on stdout. Protocol format is `1`. The
-            request contains package identity and selected declaration metadata. The
-            response has `format`, `generated_sources`, and `diagnostics`; each generated
-            source supplies an `identity` and Terrane `source` text. Generated identities
-            are namespaced by consumer and must be safe, unique relative identities. The
-            compiler writes their source text beneath
+            A library may export named buildable consumers through `[consumer-tools]`,
+            mapping each name to a package-relative executable `package.toml`. A caller
+            explicitly selects one with `[consumers.<id>]` and
+            `tool = "owner/package::tool-name"` from its resolved Terrane dependencies.
+            Terrane builds the tool for the host, preparing its own consumers recursively,
+            before invoking it. Real tool-build action cycles diagnose; a tool depending on
+            the library that exports it is not by itself a cycle.
+
+            Alternatively, `command` selects an existing trusted executable. Exactly one of
+            `tool` and `command` is required. Both forms accept string-array `args`,
+            explicit canonical `declarations`, and optional declaration-interface file paths
+            in `interfaces`. The executable runs synchronously in the caller's package
+            directory; it receives one JSON request on stdin and returns one JSON response
+            on stdout. Protocol format is `1`. The request contains package identity and
+            selected declaration metadata. The response has `format`, `generated_sources`,
+            and `diagnostics`; each generated source supplies an `identity` and Terrane
+            `source` text. Generated identities are namespaced by consumer and must be safe,
+            unique relative identities. The compiler writes their source text beneath
             `.trn/generated/<consumer>/<identity>.trn`, so diagnostics point to inspectable
             files with stable identity-based names. Diagnostics carry a message and an
             optional declaration span; selected source spans map to source or exported
@@ -236,6 +244,25 @@ documentation:
             the package do not block an unrelated consumer; selecting an ambiguous identity
             remains an `S2060` error.
 
+            Every preparation consults the consumer. The compiler ensures a buildable tool
+            executable is current but does not infer generator-specific input dependencies
+            or decide whether regeneration is needed. The request's `preparation` object
+            supplies `state_directory` and `tool_identity`, a content identity of the
+            executable. The consumer owns its freshness decision and optional persisted
+            state, accounting for its arguments, selected metadata, executable identity, and
+            all external inputs that affect generation. A fresh consumer still returns its
+            complete ordinary source response; returning no sources means removing its
+            outputs, not retaining them.
+
+            The optional `terrane/consumer-cache` helper under
+            `tools/annotation-consumers/cache` stores an exact input key and generated
+            source using bounded reads and atomic writes. Executable identity and arguments
+            always participate; its caller supplies external input contents and any relevant
+            metadata explicitly. Omitting metadata allows a metadata-independent generator
+            to reuse source across unrelated caller edits. The helper does not discover
+            dependencies or make policy for the compiler. Consumers without preparation
+            context may generate normally without caching.
+
             Successful manifest-package consumer preparation removes obsolete generated
             `.trn` files, including outputs of consumers removed from the manifest or
             returning no source. Implicit single-file compilation does not reconcile a
@@ -245,10 +272,19 @@ documentation:
 
             Consumers run after declaration preparation and before ordinary full-package
             checking, including test-tier compilation. Their generated sources are checked
-            with authored sources through the normal compiler pipeline. Editor snapshots
-            deliberately do not execute trusted consumers and may not resolve generated
-            namespaces. The executable is trusted package tooling; metadata does not sandbox
-            it or grant its promises authority over language semantics.
+            with authored sources through the normal compiler pipeline. Semantic editor
+            snapshots use the same declaration-first preparation when execution is
+            explicitly allowed. Source-intelligence `allow_consumer_execution` and
+            language-server initialization option `allowConsumerExecution` default to false.
+            Without permission, configured consumers report that execution is disabled
+            rather than running package code. Trusted snapshots use current source overlays
+            and publish inspectable immutable files under
+            `.trn/editor-generated/<source-hash>/`, without publishing or reconciling the
+            build inventory. Editor and build consumer state directories are separate. The
+            VS Code client enables consumer execution only in trusted workspaces and
+            restarts the server when trust is granted. The executable is trusted package
+            tooling; metadata does not sandbox it or grant its promises authority over
+            language semantics.
 
             The reference consumers and their shared protocol library are written in
             Terrane. Build the compiler first, then run

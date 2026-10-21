@@ -233,6 +233,36 @@ documentation:
               default: none
               repeatability: once per Rust identifier
               example: helper = "native/helper.rs"
+            - path: consumer-tools.<name>
+              type: package-relative executable manifest path
+              default: none
+              repeatability: once per exported tool name
+              example: generate = "consumer/package.toml"
+            - path: consumers.<id>.tool
+              type: canonical dependency tool identity
+              default: exactly one of tool or command
+              repeatability: once per consumer
+              example: tool = "example/library::generate"
+            - path: consumers.<id>.command
+              type: trusted executable path or command name
+              default: exactly one of tool or command
+              repeatability: once per consumer
+              example: command = "./tools/generate"
+            - path: consumers.<id>.args
+              type: string array
+              default: "[]"
+              repeatability: once per consumer
+              example: args = ["--mode", "schema"]
+            - path: consumers.<id>.declarations
+              type: non-empty array of canonical declaration identities
+              default: required
+              repeatability: once per consumer
+              example: declarations = ["/app::model"]
+            - path: consumers.<id>.interfaces
+              type: array of declaration-interface file paths
+              default: "[]"
+              repeatability: once per consumer
+              example: interfaces = ["model-interface.json"]
 
     - id: capabilities-and-effects
       title: Profiles, capabilities, and dependency effects

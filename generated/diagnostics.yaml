@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 54b8751a5c20a6a37d63f6bdfe3e3f1bfcaac08eeac353a71c576b6150696835
+  input-sha256: 26136f79873fb55d642f86c51d24a05ecbbe6a88c9cff25276764fbeade9d575
 format: 1
 generated: true
 diagnostics:
@@ -724,7 +724,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/package.rs
-    line: 272
+    line: 289
 - code: S2002
   messages:
   - each source unit must declare exactly one namespace
@@ -981,14 +981,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 869
+    line: 915
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 825
+    line: 871
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -1025,30 +1025,40 @@ diagnostics:
     line: 82
 - code: S2060
   messages:
+  - package configures compile-time consumers; enable trusted consumer execution in editor tooling to
+    run them
+  - src/main.rs
   - "\n        && identity != "
   - duplicate canonical declaration identity
   - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_paths_and_reject_traversal()\
     \ {\n        let (mut package, root) = temporary_package();\n        let mut sources = vec![\n   \
     \         ("
   sources:
+  - path: crates/terrane-compiler/src/compiler.rs
+    line: 572
+  - path: crates/terrane-compiler/src/consumer_tools.rs
+    line: 358
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 960
+    line: 1083
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1041
+    line: 1166
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1110
+    line: 1243
+  - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
+    line: 106
 - code: S2061
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'
   - called only for a nonempty consumer diagnostics list
-  - ".to_owned(),\n            executable: "
+  - ".to_owned(),\n            executable: crate::package::ConsumerExecutable::Command {\n           \
+    \     executable: "
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 566
+    line: 678
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 596
+    line: 708
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1093
+    line: 1218
 - code: S2062
   messages:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
@@ -1101,11 +1111,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1049
+    line: 1095
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1077
+    line: 1123
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1161
+    line: 1207
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1848,7 +1858,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1599
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 4095
+    line: 4187
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -2925,7 +2935,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 685
+    line: 731
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2963,7 +2973,7 @@ diagnostics:
     '
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 685
+    line: 731
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
@@ -2979,6 +2989,6 @@ diagnostics:
   - new warning
   sources:
   - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 251
+    line: 250
   - path: crates/terrane-compiler/src/compiler/cache.rs
-    line: 257
+    line: 256
