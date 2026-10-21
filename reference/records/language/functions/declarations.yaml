@@ -39,14 +39,17 @@ documentation:
 
             The semicolon in the header introduces parameters and is present even when the
             parameter list is empty. A declared result type is a contract for every
-            reachable return path in top-level functions, local functions, and class
-            methods. The compiler rejects an incompatible returned value before generating
-            Rust.
+            reachable return path in top-level functions, local functions, class methods,
+            and anonymous functions, including async closures. Incompatible values, missing
+            values, and value-returning bodies that may fall through diagnose `T0015` before
+            generating Rust.
 
             Local functions retain their own parameter and result contracts. A call to a
             local function has that function's result type, including when assigned to an
             inferred binding and returned by its enclosing function. Returns inside a nested
-            function neither satisfy nor replace the enclosing function's result contract.
+            named or anonymous function neither satisfy nor replace the enclosing function's
+            result contract. Loop control likewise belongs to the current callable: a
+            closure cannot break or continue its enclosing function's loop.
 
             Named local functions are visible throughout their declaring function, including
             before their declaration and within later sibling functions. They can recurse
@@ -269,4 +272,13 @@ provenance:
     - optional-member-post-if-return
     - static-class-singleton
     - return-tail-block-strings
+    - closure-return-contracts
+    - closure-void-rust-return
+    - closure-void-value-return
+    - closure-return-fallthrough
+    - closure-bare-return
+    - closure-return-type-mismatch
+    - closure-nested-return-mismatch
+    - closure-loop-boundary
+    - closure-async-return-mismatch
   compiler: null

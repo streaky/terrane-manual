@@ -35,12 +35,24 @@ documentation:
           evidence:
             - ordinary-method-wrong-return
             - method-fallthrough
+            - closure-return-contracts
+            - closure-void-rust-return
+            - closure-void-value-return
+            - closure-return-fallthrough
+            - closure-bare-return
+            - closure-return-type-mismatch
+            - closure-nested-return-mismatch
+            - closure-loop-boundary
+            - closure-async-return-mismatch
           markdown: |-
-            Every concrete top-level function and class method body enters the same
-            control-flow validator. Each reachable `return` is checked against the semantic
-            result type before lowering; incompatible values receive T0015 at the source
-            return rather than reaching rustc. Empty projected or declaration-only bodies
-            remain outside concrete-body validation.
+            Every concrete named or anonymous function and class method body enters the same
+            control-flow validator with its own semantic contract and a fresh loop depth.
+            Discovery recurses through callable bodies to find nested declarations; the
+            per-body flow walk does not descend into nested callables using the outer
+            contract. Each reachable `return` is checked against the result type before
+            lowering; incompatible or missing values and value-returning bodies that may
+            fall through receive T0015 rather than reaching rustc. Empty projected or
+            declaration-only bodies remain outside concrete-body validation.
     - id: initialized-static-optional
       title: Initialized static optional
       blocks:
@@ -69,4 +81,4 @@ relationships:
 
 implementation:
   compiler:
-    - crates/terrane-compiler/src/semantics/scopes.rs
+    - crates/terrane-compiler/src/semantics/scope_validation.rs

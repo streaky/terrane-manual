@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b3679862c27ade36083ed736af85f388325339ab34e4533cd113ca62b7e9520b
+  input-sha256: fa33af3601f4bd28419194422868e36290c2a389bf39463eaa5bc3ba86833b95
 format: 2
 generated: true
 records:
@@ -146,6 +146,15 @@ records:
     - optional-member-post-if-return
     - static-class-singleton
     - return-tail-block-strings
+    - closure-return-contracts
+    - closure-void-rust-return
+    - closure-void-value-return
+    - closure-return-fallthrough
+    - closure-bare-return
+    - closure-return-type-mismatch
+    - closure-nested-return-mismatch
+    - closure-loop-boundary
+    - closure-async-return-mismatch
     compiler: null
   sections:
   - id: declaration

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7019bae74990f5bd61923a9a9427f6048853acd3ac2975846c112ff79f9bdb47
+  input-sha256: 54b8751a5c20a6a37d63f6bdfe3e3f1bfcaac08eeac353a71c576b6150696835
 format: 1
 generated: true
 diagnostics:
@@ -1145,24 +1145,25 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 7553
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 490
+    line: 498
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 607
+    line: 615
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 665
+    line: 673
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 687
+    line: 695
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 769
+    line: 777
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 860
+    line: 868
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1005
+    line: 1013
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1021
+    line: 1029
 - code: T0002
   messages:
   - '{label} value'
+  - inline Rust cannot reassign a scalar binding; declare a new typed binding instead
   - value is not admitted by any union destination arm
   - numeric destination is ambiguous between {}
   sources:
@@ -1173,13 +1174,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 333
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 189
+    line: 186
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 348
+    line: 197
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1079
+    line: 356
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1085
+    line: 1087
+  - path: crates/terrane-compiler/src/semantics/types.rs
+    line: 1093
 - code: T0003
   messages:
   - constant `{text}` is not an exact `{destination}` value
@@ -1220,7 +1223,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 495
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 308
+    line: 316
 - code: T0007
   messages:
   - ");\n    std::process::exit(1);\n}\n"
@@ -1332,7 +1335,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 321
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1740
+    line: 1748
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1365,17 +1368,17 @@ diagnostics:
   - an `if` statement requires a condition
   sources:
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 515
+    line: 514
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 713
+    line: 712
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 739
+    line: 738
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 752
+    line: 751
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 763
+    line: 762
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 780
+    line: 779
 - code: T0015
   messages:
   - function `{}` may finish without returning a value
@@ -1385,19 +1388,19 @@ diagnostics:
   - function `{name}` must return `{expected}`
   sources:
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 421
+    line: 420
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 961
+    line: 960
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 967
+    line: 966
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 988
+    line: 987
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 1006
+    line: 1005
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 112
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1743
+    line: 1751
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1438,7 +1441,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 484
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 667
+    line: 666
 - code: T0017
   messages:
   - '`{member}` is not valid syntax; use `.coerce.{}`'
@@ -1536,7 +1539,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 1647
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 561
+    line: 569
 - code: T0028
   messages:
   - '`await` is valid only inside an async callable'
@@ -1676,7 +1679,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 777
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 251
+    line: 259
 - code: T0044
   messages:
   - set keys must be immutable scalar values
@@ -1718,9 +1721,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 793
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 241
+    line: 249
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 264
+    line: 272
 - code: T0046
   messages: []
   sources:
@@ -2490,7 +2493,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2312
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 224
+    line: 232
 - code: T0128
   messages:
   - mutating collection method `.{member}` cannot discard a temporary receiver
@@ -2592,7 +2595,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 203
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 477
+    line: 485
 - code: T0131
   messages:
   - select case expression must produce a task, found {found}
@@ -2617,9 +2620,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 227
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 424
+    line: 432
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 441
+    line: 449
 - code: T0132
   messages:
   - select cases cannot hold overlapping incompatible borrows of `{name}`
@@ -2689,9 +2692,9 @@ diagnostics:
     references'
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1345
+    line: 1353
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1375
+    line: 1383
 - code: T0141
   messages:
   - a non-owning observer of shared storage cannot be passed to plain `ref` parameter `{destination}`;
