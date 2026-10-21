@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 12cf2c1e72b7110c53b80dc2c65dc8ab361f89a168e36c586eba8671ba9385b8
+  input-sha256: 2ec0b53263c1d0c752c7b6fba74893c4dcf54c782d3f58f6e7454d8810543254
 format: 1
 generated: true
 diagnostics:
@@ -981,14 +981,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 915
+    line: 918
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 871
+    line: 874
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -1025,19 +1025,20 @@ diagnostics:
     line: 82
 - code: S2060
   messages:
-  - package configures compile-time consumers; enable trusted consumer execution in editor tooling to
-    run them
+  - manifest `{}` configures compile-time consumers {consumers}; enable trusted consumer execution in
+    editor tooling to run them
   - src/main.rs
   - "\n        && identity != "
   - duplicate canonical declaration identity
   - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_paths_and_reject_traversal()\
     \ {\n        let (mut package, root) = temporary_package();\n        let mut sources = vec![\n   \
     \         ("
+  - 'in `{}`: {}'
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 572
+    line: 573
   - path: crates/terrane-compiler/src/consumer_tools.rs
-    line: 358
+    line: 391
   - path: crates/terrane-compiler/src/consumers.rs
     line: 1083
   - path: crates/terrane-compiler/src/consumers.rs
@@ -1045,7 +1046,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/consumers.rs
     line: 1243
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
-    line: 106
+    line: 225
+  - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
+    line: 328
 - code: S2061
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'
@@ -1111,11 +1114,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1095
+    line: 1098
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1123
+    line: 1126
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1207
+    line: 1210
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1858,7 +1861,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1599
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 4187
+    line: 4278
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -2935,7 +2938,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 731
+    line: 734
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2973,7 +2976,7 @@ diagnostics:
     '
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 731
+    line: 734
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs

@@ -260,8 +260,10 @@ documentation:
                 always participate; its caller supplies external input contents and any relevant
                 metadata explicitly. Omitting metadata allows a metadata-independent generator
                 to reuse source across unrelated caller edits. The helper does not discover
-                dependencies or make policy for the compiler. Consumers without preparation
-                context may generate normally without caching.
+                dependencies or make policy for the compiler. Cache reads that fail or contain
+                invalid data are misses; `store` is best-effort and does not fail generation
+                when an atomic write fails or the encoded entry exceeds its size bound.
+                Consumers without preparation context may generate normally without caching.
         - id: editor-preparation-and-trust
           title: Editor preparation and workspace trust
           blocks:
@@ -270,23 +272,36 @@ documentation:
                 Semantic editor snapshots use the same declaration-first preparation when
                 execution is explicitly allowed. Source-intelligence `allow_consumer_execution`
                 and language-server initialization option `allowConsumerExecution` default to
-                false. Without permission, configured consumers report that execution is
-                disabled rather than running package code. Trusted snapshots use current source
+                false. Without permission, configured consumers report `S2060` rather than
+                running package code. Such a package retains syntax tooling but has no semantic
+                snapshot, including for authored code: omitted generated declarations can affect
+                resolution and types throughout the package. Grant workspace trust to enable
+                semantic hover, navigation, and checking. Trusted snapshots use current source
                 overlays and publish inspectable immutable files under
-                `.trn/editor-generated/<source-hash>/`, without publishing or reconciling the
-                build inventory. Editor and build consumer state directories are separate. The
-                VS Code client enables consumer execution only in trusted workspaces and
-                restarts the server when trust is granted. The executable is trusted package
-                tooling; metadata does not sandbox it or grant its promises authority over
-                language semantics.
+                `.trn/editor-generated/<session>/<source-hash>/`, without publishing or
+                reconciling the build inventory. Each source-intelligence engine owns a separate
+                session, collecting unchanged generated files after their last retained snapshot
+                closes or is evicted, and on normal engine shutdown. Modified files, untracked
+                files, symlinks, and other sessions are not collected. A crash or failed
+                deletion can leave abandoned output; startup does not scavenge other sessions.
+                Edit previews validate generated contracts without publishing editor-generated
+                files. A trusted preview still executes consumers, which may update their own
+                private cache or state. Editor and build consumer state directories are
+                separate. The VS Code client enables consumer execution only in trusted
+                workspaces and restarts the server when trust is granted. The executable is
+                trusted package tooling; metadata does not sandbox it or grant its promises
+                authority over language semantics.
             - type: markdown
               markdown: |-
-                Semantic language-server requests refresh preparation even without a
-                source-document edit, so a changed external template or schema can update
-                generated navigation. Generated units participate in snapshot identity; opening
-                an editor-generated file retains its owning caller graph for definition and
-                reference queries. Source snapshot and query contracts are documented in
-                [[tool.source-intelligence]].
+                Authored document changes prepare immediately. Semantic language-server requests
+                reuse their document's prepared snapshot for up to one second after preparation;
+                the first request after that interval consults consumers again, even without a
+                source-document edit. External-only changes therefore have bounded request-time
+                staleness, not an immediate file-watch guarantee. Consumers may read inputs
+                outside the workspace; the editor does not infer those dependencies. Generated
+                units participate in snapshot identity; opening an editor-generated file retains
+                its owning caller graph for definition and reference queries. Source snapshot
+                and query contracts are documented in [[tool.source-intelligence]].
     - id: annotation-driven-generation
       title: Annotation-driven generation and validation
       blocks:
