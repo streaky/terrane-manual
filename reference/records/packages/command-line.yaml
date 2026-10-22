@@ -120,7 +120,10 @@ documentation:
             rejection itself is never cached. Consumers still execute on every invocation,
             and generated output is reconciled before the final compilation-cache lookup.
             Identical generated output may reuse compilation; changed or removed output
-            cannot retain an obsolete compiled result.
+            cannot retain an obsolete compiled result. A declaration-metadata cache hit
+            leaves its snapshot file untouched: only fresh, successful analysis is
+            published, including after a later consumer rejection when the inputs remain
+            unchanged.
 
             An edited source invalidates the exact compilation snapshot, but unchanged
             native semantic queries can reuse `.trn/cache/native-reconciliation.json`. This

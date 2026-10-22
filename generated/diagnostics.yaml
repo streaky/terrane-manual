@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8fe399e1d6a2b1330d0815197790d8a6677546f81ad928a1be3b3458c57e6207
+  input-sha256: 6e1998df4f3c391e6fd429c448dfbd01e4d4993fdb52c34b4d8ac60013dacd02
 format: 1
 generated: true
 diagnostics:
@@ -981,14 +981,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 923
+    line: 927
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 879
+    line: 883
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -1114,11 +1114,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1103
+    line: 1107
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1131
+    line: 1135
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1215
+    line: 1219
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -2938,7 +2938,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 739
+    line: 743
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2976,7 +2976,7 @@ diagnostics:
     '
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 739
+    line: 743
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs
