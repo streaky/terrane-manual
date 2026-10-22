@@ -36,6 +36,13 @@ documentation:
             canonical collection iterator operation. Function contracts retain the full
             canonical owner identity so same-named classes from different namespaces cannot
             cross-select methods.
+
+            Native contract normalization gathers shared descriptor identities once per
+            pass. Projection and closed-selection lookup depends on the full canonical
+            identity, not on how many semantic units expose that descriptor. This pass-local
+            deduplication also applies without persistent compilation caches; written type
+            occurrences, source spans, bound checks, and contract propagation remain
+            unit-specific and are still processed.
     - id: protocols
       title: Structural queries
       blocks:

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 61ec8cc7525cc048f6efbe483795f6807930cfcad78761340088ccbd91d73624
+  input-sha256: 8fe399e1d6a2b1330d0815197790d8a6677546f81ad928a1be3b3458c57e6207
 format: 1
 generated: true
 diagnostics:
@@ -981,14 +981,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 918
+    line: 923
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 874
+    line: 879
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 295
 - code: S2053
@@ -1114,11 +1114,11 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1098
+    line: 1103
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1126
+    line: 1131
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1210
+    line: 1215
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -2320,9 +2320,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 334
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 850
+    line: 860
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1010
+    line: 1020
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 5692
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2334,7 +2334,7 @@ diagnostics:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 491
+    line: 501
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3076
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2392,9 +2392,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/macros.rs
     line: 56
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1102
+    line: 1112
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1115
+    line: 1125
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3314
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2541,7 +2541,7 @@ diagnostics:
   - explicit native type arguments do not close the projected result representation
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 562
+    line: 572
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2908
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2938,7 +2938,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 734
+    line: 739
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 311
 - code: W4002
@@ -2976,7 +2976,7 @@ diagnostics:
     '
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 734
+    line: 739
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 199
   - path: crates/terrane-compiler/src/semantics/tests.rs

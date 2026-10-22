@@ -114,10 +114,13 @@ documentation:
             reuse/publication rather than storing old results under new inputs.
 
             Declaration consumers have a separate successful metadata snapshot in
-            `.trn/cache/declarations.json`. Consumers themselves still execute on every
-            invocation, and generated output is reconciled before the final
-            compilation-cache lookup. Identical generated output may reuse compilation;
-            changed or removed output cannot retain an obsolete compiled result.
+            `.trn/cache/declarations.json`. Successful declaration analysis remains reusable
+            even when a subsequent consumer rejects the input or its generated source cannot
+            be attached, provided the original compiler inputs are still unchanged. The
+            rejection itself is never cached. Consumers still execute on every invocation,
+            and generated output is reconciled before the final compilation-cache lookup.
+            Identical generated output may reuse compilation; changed or removed output
+            cannot retain an obsolete compiled result.
 
             An edited source invalidates the exact compilation snapshot, but unchanged
             native semantic queries can reuse `.trn/cache/native-reconciliation.json`. This
