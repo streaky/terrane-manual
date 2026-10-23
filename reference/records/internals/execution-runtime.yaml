@@ -64,6 +64,8 @@ documentation:
           evidence:
             - rust-dependency-async-function
             - projected-async-local-task-threaded
+            - try-loop-completion
+            - projected-local-cleanup
           markdown: |-
             The package manifest's `cooperative` and `threaded` executor profiles map to the
             compiler-owned `Local` and `Parallel` execution strategies. Semantic analysis
@@ -74,6 +76,18 @@ documentation:
             `crates/terrane-compiler/src/lowering/emitter/pipeline.rs`. Keeping this
             selection at one boundary prevents runtime-library types from leaking into
             semantic contracts and gives a replacement executor a single integration seam.
+
+            Asynchronous finalization demand includes source class methods and methods
+            imported from dependency packages, not only root-level functions. A loop nested
+            inside a protected try body keeps its local break/continue targets; exits
+            targeting an enclosing loop cross the completion boundary only after its
+            finalizer. Catches and nested protected loops obey the same distinction.
+
+            Executor entry and cancellation-operation helpers pin child storage before
+            constructing their wrapper futures. Moving an unboxed child into a wrapper first
+            can create multi-megabyte debug polling frames even without recursion. This
+            preserves the same cancellation and destructor-draining semantics without
+            carrying the child's complete inline state through each runtime wrapper.
     - id: generated-support
       title: Demand-driven generated support
       blocks:

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e3eab9bc4deb21bbe5a6716c0ad454dd1d94d1ca70051756ce5c3669f5771f38
+  input-sha256: c3cc69d999be4ae63a6948977e14bc415939843d55bd184a4ace9484e670968c
 format: 1
 generated: true
 symbols:
@@ -3797,6 +3797,10 @@ symbols:
   record: lang.types.scalars
   section: scalar-types
   declaration: i64
+- name: i64
+  record: tool.packages.rust-dependencies
+  section: payload-enums
+  declaration: i64
 - name: if
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
@@ -4136,6 +4140,10 @@ symbols:
 - name: int
   record: lang.types.unions
   section: unions
+  declaration: int
+- name: int
+  record: tool.packages.rust-dependencies
+  section: payload-enums
   declaration: int
 - name: int-mutex
   record: std.concurrency.shared-state
@@ -8011,6 +8019,10 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: T
+- name: T
+  record: tool.packages.rust-dependencies
+  section: crossed-types
+  declaration: T
 - name: T0002
   record: tool.packages.rust-interop
   section: inline-rust
@@ -8999,6 +9011,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: types.rs
+- name: u64
+  record: tool.packages.rust-dependencies
+  section: payload-enums
+  declaration: u64
 - name: u8
   record: internals.projection.resolution
   section: destination-results

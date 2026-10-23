@@ -208,7 +208,16 @@ documentation:
             rejected in those positions. Shims reuse the vector backing for identity element
             conversions and move uniquely owned tuple elements rather than cloning them.
             Shared tuple storage fails at the dependency boundary instead of panicking.
-            `Vec<u8>` remains `bytes`.
+            `Vec<u8>` remains `bytes`. A shared Rust slice parameter `&[T]` accepts a
+            Terrane list when its elements have an admitted conversion to `T`.
+            Identity-represented elements borrow the existing list slice, retaining its
+            lender across an immediate native await. Elements requiring conversion use the
+            normal checked native conversion into an owned vector for the call. Empty lists
+            are valid. Mutable slice parameters remain unavailable.
+
+            Concrete native methods with `self: Box<Self>` consume the source value;
+            lowering reconstructs the box required by that native receiver ABI. This does
+            not reinterpret arbitrary wrapped receivers as consuming methods.
 
             Heterogeneous tuples and aggregates containing an unsupported component are
             declined rather than partially reinterpreted.
@@ -370,10 +379,12 @@ documentation:
             callback supplies a mutable reference. Passing it through a shared map or
             and_then edge is a source error (T0139), not a deferred Rust backend failure.
             Read-only callbacks remain valid on either receiver. Ordinary source helpers
-            infer mutable native reference inputs only when their bodies require mutation,
-            including transitive calls through imported helpers and callable aliases. The
-            same inferred requirement governs callback checking and ordinary argument
-            reborrowing; a helper cannot hide mutation from a shared callback boundary.
+            infer mutable native reference inputs when their bodies require mutation,
+            including through an explicit mutable reborrow in an inline Rust block. A Rust
+            local shadowing the source parameter name does not change which source input
+            requires mutation. The same inferred requirement governs callback checking and
+            ordinary argument reborrowing; a helper cannot hide mutation from a shared
+            callback boundary.
 
             Native operations with direct static reference parameters are unavailable,
             including aliases of those reference types. A Terrane string literal still
@@ -522,6 +533,7 @@ documentation:
           evidence:
             - projected-payload-enum
             - projected-unrepresentable-enum-payload
+            - projected-local-cleanup
           markdown: |-
             A public Rust enum projects as one nominal Terrane class. Public unit variants
             become zero-argument type functions. A representable single-field tuple variant
@@ -539,6 +551,11 @@ documentation:
             otherwise unrepresentable fields leave only that variant unavailable; projection
             does not invent storage, borrowing, or conversion. Non-exhaustive enum
             inspection continues to return `unknown` for undisclosed variants.
+
+            Both borrowed and consuming enum matches convert native integer payloads through
+            the exact native-to-source scalar boundary. An adaptive Terrane `int` binding is
+            not raw Rust `i64` or `u64`; signed minima and unsigned maxima retain their
+            exact values rather than relying on a Rust type annotation.
     - id: foreign-value-ownership
       title: Foreign fields and value ownership
       blocks:
@@ -568,6 +585,7 @@ documentation:
             - source-required-field-reinitialize
             - native-async-field-implicit-borrow
             - native-mutable-async-field-borrow
+            - native-explicit-mutable-reborrow
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
@@ -616,12 +634,12 @@ documentation:
             when mutation is permitted, explicitly take an optional field before use. The
             diagnostic does not establish scoped async field borrowing support.
 
-            Persistent lists currently expose elements by value. Iteration or indexing that
-            would copy an item containing a non-`Clone` projected foreign value is rejected
-            before lowering with `T0135` and the tracking key
-            `collections/consume-non-clone-foreign-items`. S1 closes that limitation only
-            when consuming collection or stream iteration can transfer each item without
-            cloning.
+            Owned persistent-list traversal and indexing that would copy an item containing
+            a non-`Clone` projected foreign value remain rejected before lowering with
+            `T0135` and the tracking key `collections/consume-non-clone-foreign-items`.
+            Borrowed traversal with `for item in ref records` instead lends each element
+            without cloning it. The owner remains live while those element references are
+            used.
     - id: interfaces
       title: Implementing projected Rust traits
       blocks:
@@ -715,6 +733,15 @@ documentation:
             aliases and omitted default generic arguments are expanded before projected
             output wrappers such as `Result<(), E>` are classified. Static value paths for
             instantiated native owners use Rust turbofish syntax.
+
+            Native trait defaults are discovered through the defining crate's Rustdoc
+            identity even when the concrete implementer is in another declared crate.
+            Explicit implementations retain override dispatch. If the concrete impl
+            signature cannot represent an external error alias, projection may recover the
+            exact trait declaration with the concrete associated-type substitutions. Alias
+            expansion uses that declaration's indexed types, not an error-name heuristic;
+            unresolved error shapes remain unavailable. Canonical native owner paths also
+            apply to these attached UFCS calls through provider facades.
 
             A producer-selected return-position `impl Trait` remains an owned opaque native
             witness. Projection retains every canonical bound and associated-type equality
@@ -887,7 +914,14 @@ documentation:
             a generic instance method: `Row::try_get` closes its receiver lifetime,
             associated database, input-selected column index, and destination-selected
             decode/type bounds against the actual native owner. This keeps the regression
-            faithful without requiring a database implementation.
+            faithful without requiring a database implementation. A local two-crate witness
+            demonstrates cross-crate native default methods for a concrete projected type: a
+            default returning the implementation's associated owner type and a result-only
+            generic default selected from an explicit Terrane destination. It also confirms
+            that a concrete override remains selected. This is evidence for those
+            demonstrated concrete method shapes, not a promise to project a complete Rust
+            trait interface or arbitrary trait obligations, associated items, or generic
+            signatures.
 
             The `http-server` provider exposes a Terrane application API for route and
             static-directory composition, string-returning asynchronous handlers, WebSocket
@@ -1022,6 +1056,10 @@ documentation:
             poll evaluates the Rust call once and performs the `IntoFuture` conversion once;
             subsequent work follows ordinary polling. A similarly named trait does not
             qualify.
+
+            A direct return-position `impl Future<Output = T>` follows the same task
+            contract when its canonical future bound exposes an admitted output. The output,
+            not a storable opaque future object, becomes the source result.
 
             A concrete future may retain an admitted receiver or input borrow when the
             operation is awaited immediately. That lender remains alive until completion or
