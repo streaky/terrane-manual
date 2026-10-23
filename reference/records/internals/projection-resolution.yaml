@@ -124,6 +124,20 @@ documentation:
             `test_support.rs` module. Tests import those fixtures directly; the public
             parent does not reexport private implementation helpers to make them testable.
 
+            The initial projection and late explicit-trait recovery use the same named
+            normalization transaction: declared and bound Cargo roots are rewritten before
+            reachability and canonical naming, with error identities checked afterward. Late
+            recovery cannot bypass these consistency checks.
+
+            Associated owners with a Rustdoc resolved-path identity use that exact `Id`. A
+            substituted generic owner no longer has a graph-local identity, so the current
+            fallback compares canonical path segments without allocating joined paths and
+            accepts only a unique candidate. That fallback is still linear in the document's
+            path count; a shared reverse index is not implemented or a committed follow-up.
+            Revisit its projection-context plumbing if measured generic-associated-owner
+            resolution cost warrants it, without changing deterministic ambiguity rejection
+            or persisting document-local IDs as global native identities.
+
             A published artifact is admitted only when its envelope format, cache identity,
             target, stable and rustdoc toolchains, rustdoc format, projection schema, and
             payload identity match. Dependency names, packages, exact versions, and effects

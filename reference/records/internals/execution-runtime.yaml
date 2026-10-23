@@ -83,11 +83,12 @@ documentation:
             targeting an enclosing loop cross the completion boundary only after its
             finalizer. Catches and nested protected loops obey the same distinction.
 
-            Executor entry and cancellation-operation helpers pin child storage before
-            constructing their wrapper futures. Moving an unboxed child into a wrapper first
-            can create multi-megabyte debug polling frames even without recursion. This
-            preserves the same cancellation and destructor-draining semantics without
-            carrying the child's complete inline state through each runtime wrapper.
+            Executor entry pins its owned child before polling. Cancellation-operation
+            helpers pin the native child before constructing their async wrapper. Moving an
+            unboxed child into that wrapper first can create multi-megabyte debug polling
+            frames even without recursion. Both boundaries preserve cancellation and
+            destructor draining without carrying the complete inline child through the
+            runtime wrapper.
     - id: generated-support
       title: Demand-driven generated support
       blocks:

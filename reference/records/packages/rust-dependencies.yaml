@@ -673,21 +673,33 @@ documentation:
             - projected-namespace-value-collision
             - projected-concrete-trait-operations
             - projected-foreign-owner-trait-operation
+            - projected-boxed-trait-receivers
           markdown: |-
             An eligible fixed-signature Rust trait projects as a nominal Terrane interface.
             Plain Rust `&self`, `&mut self`, and `self` receivers become shared, mutable,
-            and consuming requirements; wrapped receivers such as `Arc<Self>`, `Box<Self>`,
-            and `Pin<&mut Self>` remain unavailable. Required methods demand matching class
-            methods. Provided methods remain callable Rust defaults. Terrane may override
-            them only when their foreign signatures use owned, non-`Result` parameters and
-            results. A local class adopts the projected identity with ordinary `implements`,
-            and lowering emits the corresponding foreign Rust implementation.
+            and consuming requirements. A `self: Box<Self>` requirement also consumes the
+            native receiver; adapters may forward to shared, mutable, or consuming source
+            methods, with mutable forwarding retaining mutable access to the boxed value.
+            Other wrapped receivers such as `Arc<Self>` and `Pin<&mut Self>` remain
+            unavailable. Required methods demand matching class methods. Provided methods
+            remain callable Rust defaults. Terrane may override them only when their foreign
+            signatures use owned, non-`Result` parameters and results. A local class adopts
+            the projected identity with ordinary `implements`, and lowering emits the
+            corresponding foreign Rust implementation.
 
             Concrete native arguments and written result destinations select supported
             generic operations without requiring every bound trait to become an interface.
             See [[lang.types.generics#inputs]] and [[lang.types.generics#destinations]] for
             selection rules and examples. Exact native operation paths and cross-crate
             implementation discovery are described in [[internals.projection.resolution]].
+
+            Immediate trait-bounded generic inputs retain both crossing paths: native values
+            select their concrete Rust ABI and native bound proof, while source classes use
+            the projected-interface implementation and associated-type checks. A source
+            class is not rejected merely because it lacks a dependency-graph Rust identity,
+            and an erased interface is not probed as a bare Rust type. Accepted borrowed
+            provided methods support both instance calls and the associated form with an
+            explicit receiver; both retain native errors and panic attribution.
 
             A direct `Fn`, `FnMut`, or `FnOnce` callback whose input or exact result
             mentions open function generics projects as a deferred callback template. Its
@@ -1109,9 +1121,9 @@ documentation:
           markdown: |-
             Projected asynchronous methods require a `Send` interface and an asynchronous
             main context. Resource-owning classes require consuming receivers. Receiver
-            forms such as `Arc<Self>`, `Box<Self>`, `Pin<&mut Self>`, and other wrapped
+            forms such as `Arc<Self>`, `Pin<&mut Self>`, and other unadmitted wrapped
             receivers are declined rather than treated as plain shared, mutable, or
-            consuming receivers.
+            consuming receivers. The explicitly admitted `Box<Self>` contract is consuming.
 
             Cancellation preserves receiver cleanup. Dropping a projected Rust future
             detaches the cancellation cleanup associated with that future. Nested `finally`
