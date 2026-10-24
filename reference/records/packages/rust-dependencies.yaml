@@ -381,12 +381,14 @@ documentation:
             Read-only callbacks remain valid on either receiver. Ordinary source helpers
             infer mutable native reference inputs when their bodies require mutation,
             including through an explicit mutable reborrow in an inline Rust block. This
-            also applies to a reference to an optional native value: named helper, callable
-            signature, and argument lowering preserve the mutable `Option<T>` carrier
-            without unwrapping it. A Rust local shadowing the source parameter name does not
-            change which source input requires mutation. The same inferred requirement
-            governs callback checking and ordinary argument reborrowing; a helper cannot
-            hide mutation from a shared callback boundary.
+            also applies to a reference to an optional native value: named helpers,
+            anonymous functions and their stored callable signatures preserve the mutable
+            `Option<T>` carrier without unwrapping it. Forwarding that input to another
+            mutable helper reborrows the same carrier; read-only inputs remain shared. A
+            Rust local shadowing the source parameter name does not change which source
+            input requires mutation. The same inferred requirement governs callback checking
+            and ordinary argument reborrowing; a helper cannot hide mutation from a shared
+            callback boundary.
 
             Native operations with direct static reference parameters are unavailable,
             including aliases of those reference types. A Terrane string literal still

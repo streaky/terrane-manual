@@ -44,6 +44,12 @@ documentation:
             existing scalar binding from inline Rust diagnoses `T0002`, even if that binding
             was originally declared with a type; declare a new typed binding instead.
 
+            Both standalone `rust` and `unsafe rust` statement blocks are supported. A
+            function with a declared result type can return a native expression through
+            `return rust` or `return unsafe rust`. All these headers, like typed native
+            binding initializers, introduce raw Rust bodies: string literals, raw strings,
+            macros, and native operator spacing are not interpreted as Terrane syntax.
+
             An inline Rust boundary observes a Terrane `ref` binding as the existing native
             borrow. Lowering does not clone the referent into the boundary: a native result
             may therefore retain the admitted relationship to that lender, subject to the
