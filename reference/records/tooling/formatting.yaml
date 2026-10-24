@@ -58,6 +58,13 @@ documentation:
             without treating malformed or unsupported syntax as valid. Syntax diagnostics
             remain authoritative; formatting must preserve the parser’s structural
             interpretation rather than guess at semantic intent.
+
+            Native Rust block bodies are preserved byte-for-byte, including their operator
+            spacing, comments, raw strings, and trailing whitespace. This applies to Rust
+            expressions and standalone or unsafe Rust blocks, including `return rust`.
+            Terrane headers and surrounding statements remain eligible for canonical
+            formatting. Native code is not formatted as Terrane; a subsequent native build
+            still validates its Rust syntax.
   see-also: []
 
 provenance:
