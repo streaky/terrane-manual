@@ -34,6 +34,9 @@ documentation:
             propagated from called functions, fallible explicit integer coercions, and
             fallible implicit numeric destination conversions. It applies to public and
             private callables, including named functions, closures, and bound methods.
+            Static calls contribute both the selected function's escaping throwables and
+            failures from evaluating their arguments. These propagate through undeclared
+            free and class-static wrappers and remain catchable by their callers.
 
             Projected native functions and methods are opaque throwable boundaries, not
             empty source implementations. Their concrete projected error types propagate
@@ -146,6 +149,7 @@ provenance:
     - native-error-value
     - native-error-throw
     - native-callable-effects
+    - static-call-throw-inference
   compiler:
     - crates/terrane-compiler/src/semantics/contracts.rs
     - crates/terrane-compiler/src/semantics/types.rs

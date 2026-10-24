@@ -78,10 +78,13 @@ documentation:
             semantic contracts and gives a replacement executor a single integration seam.
 
             Asynchronous finalization demand includes source class methods and methods
-            imported from dependency packages, not only root-level functions. A loop nested
-            inside a protected try body keeps its local break/continue targets; exits
-            targeting an enclosing loop cross the completion boundary only after its
-            finalizer. Catches and nested protected loops obey the same distinction.
+            imported from dependency packages, not only root-level functions. It is selected
+            for a `try` statement only when it has a `finally` clause and its subtree
+            contains a unary `await`; support selection and statement lowering share
+            `syntax::try_needs_cancellation_aware_finally`. A loop nested inside a protected
+            try body keeps its local break/continue targets; exits targeting an enclosing
+            loop cross the completion boundary only after its finalizer. Catches and nested
+            protected loops obey the same distinction.
 
             Executor entry pins its owned child before polling. Cancellation-operation
             helpers pin the native child before constructing their async wrapper. Moving an
@@ -103,6 +106,7 @@ documentation:
             - rust-dependency-async-function
             - native_test_command_reports_isolated_cases_deterministically_from_relative_paths
             - sync_filesystem_streams_do_not_require_async_runtime
+            - synchronous-duration
           markdown: |-
             Lowering emits async runtime support only for a package that uses asynchronous
             functions. It adds a selected entrypoint executor only for an asynchronous
@@ -110,19 +114,23 @@ documentation:
             exists, and task-scope support only when the semantic package uses a scope.
 
             An asynchronous entrypoint is wrapped in exactly one selected wake-driven
-            runtime. The generated Cargo dependency and support modules follow the same
-            semantic decision so synchronous packages do not acquire an unused runtime. The
-            optional advanced-stream bundle uses a conservative emitted-unit demand test,
-            not general call-graph reachability or dead-code elimination. Any authored
-            asynchronous function activates the bundle, even if it does not call an advanced
-            stream operation. Retained bundled consumers participate only through canonical
-            IO/time bindings, because the fast path omits those units. This retains the
-            duration type needed by testing helpers without treating filesystem capability
-            intrinsics or raw host types as demand for asynchronous streams. The stream, IO,
-            and time units themselves are excluded from that scan. This remains
-            conservative: an unused bundled IO/time import can activate the bundle; this is
-            not general declaration reachability or a promise to eliminate every helper. The
-            decision is made by `package_uses_advanced_streams` in
+            runtime. Cargo dependency selection also accounts for emitted support: async
+            support includes Tokio-typed destructor machinery, so retaining it requires the
+            runtime dependency even with a synchronous entrypoint. For example, a
+            duration-only program can retain bundled asynchronous time declarations. Its
+            synchronous `main` still has no executor wrapper; dependency admission does not
+            itself create a runtime. The optional advanced-stream bundle uses a conservative
+            emitted-unit demand test, not general call-graph reachability or dead-code
+            elimination. Any authored asynchronous function activates the bundle, even if it
+            does not call an advanced stream operation. Retained bundled consumers
+            participate only through canonical IO/time bindings, because the fast path omits
+            those units. This retains the duration type needed by testing helpers without
+            treating filesystem capability intrinsics or raw host types as demand for
+            asynchronous streams. The stream, IO, and time units themselves are excluded
+            from that scan. This remains conservative: an unused bundled IO/time import can
+            activate the bundle; this is not general declaration reachability or a promise
+            to eliminate every helper. The decision is made by
+            `package_uses_advanced_streams` in
             `crates/terrane-compiler/src/lowering/helpers.rs`.
 
             Simple and cancellation-aware async support share awaited-destructor execution

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5ee38e276f4aef55bf21ae9178545caf14401540a52e1bc92e9187b362a9a15f
+  input-sha256: a6202c444c5edca7a3332fb47fb88853465edb2dce9224c36fbbbb3fee190158
 format: 1
 generated: true
 symbols:
@@ -755,6 +755,10 @@ symbols:
 - name: await
   record: internals.execution.runtime-selection
   section: cancellation
+  declaration: await
+- name: await
+  record: internals.execution.runtime-selection
+  section: strategy
   declaration: await
 - name: await
   record: lang.functions.asynchronous
@@ -3124,6 +3128,10 @@ symbols:
 - name: finally
   record: internals.execution.runtime-selection
   section: cancellation
+  declaration: finally
+- name: finally
+  record: internals.execution.runtime-selection
+  section: strategy
   declaration: finally
 - name: finally
   record: lang.classes.lifecycle
@@ -7951,6 +7959,10 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: syntax
+- name: syntax::try_needs_cancellation_aware_finally
+  record: internals.execution.runtime-selection
+  section: strategy
+  declaration: syntax::try_needs_cancellation_aware_finally
 - name: T
   record: book.identity-and-movement
   section: when-a-value-is-no-longer-available
@@ -8938,6 +8950,10 @@ symbols:
 - name: try
   record: internals.execution.runtime-selection
   section: cancellation
+  declaration: try
+- name: try
+  record: internals.execution.runtime-selection
+  section: strategy
   declaration: try
 - name: try
   record: lang.classes.lifecycle
