@@ -57,6 +57,14 @@ documentation:
             into the Rust boundary without a snapshot; an input read again afterward or
             retained by a repeatable callback keeps its ordinary value-separation behavior.
 
+            An outer value read only inside an anonymous function's native Rust body is
+            still a closure capture. Its ordinary value snapshot is established before
+            constructing the closure, so later outer reads and reassignment remain
+            independent. Snapshots inside a repeatable native body do not replace that
+            creation-time capture; those conservative per-invocation snapshots can still be
+            needed because syntactic free-value analysis does not prove the ownership
+            effects of arbitrary Rust operations.
+
             Named local functions cannot capture enclosing Terrane bindings through inline
             `rust` or `unsafe rust` any more than through ordinary Terrane expressions:
             these reads diagnose `S2062`. Pass the value as a parameter or use an anonymous
@@ -69,6 +77,12 @@ documentation:
             initializer is analyzed before its pattern becomes bound; closure parameters,
             block scopes, loop patterns, match arms, and conditional patterns retain their
             Rust lexical scope.
+
+            Free native value references select the innermost visible Terrane binding. An
+            anonymous function's reference parameter can therefore shadow an enclosing owned
+            native value without capturing or cloning that outer value. Direct inline-Rust
+            access to a genuinely selected non-copyable owned binding still diagnoses
+            `T0134`; shadowing does not relax the ownership check.
 
             This analysis does not perform Rust name resolution or expand macros. Opaque
             macro tokens and fragments that cannot be parsed retain conservative identifier
