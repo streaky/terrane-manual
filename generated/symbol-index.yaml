@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1ddf6a52e9f3258248b2dec2d656423f092133fc5b6f30486a8f8988d1095b22
+  input-sha256: 52bd9ffe6f1d198b170ed21455db786ca2d0b810c01ad6d3ea49cf4d9d3be73b
 format: 1
 generated: true
 symbols:
@@ -1367,6 +1367,10 @@ symbols:
 - name: Clone
   record: internals.integration-boundaries
   section: tracking
+  declaration: Clone
+- name: Clone
+  record: lang.functions.callable-types
+  section: exact-metadata
   declaration: Clone
 - name: Clone
   record: lang.types.generics
@@ -6673,6 +6677,10 @@ symbols:
   declaration: ref
 - name: ref
   record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: ref
+- name: ref
+  record: tool.packages.rust-dependencies
   section: callbacks
   declaration: ref
 - name: ref
@@ -8034,6 +8042,10 @@ symbols:
 - name: T
   record: tool.diagnostics
   section: families
+  declaration: T
+- name: T
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
   declaration: T
 - name: T
   record: tool.packages.rust-dependencies

@@ -395,6 +395,20 @@ documentation:
             are reborrowed; owned source implementors of native interfaces remain ordinary
             values and are not dereferenced.
 
+            A native generic input keeps the exact reference ABI proven by its Rust bounds,
+            including when demand specializes the generic to a concrete input. For a Rust
+            by-value generic input such as an executor, write `ref value` when the selected
+            native implementation requires a mutable reference. Passing an already-reference
+            source parameter without that explicit `ref` is rejected with T0129 rather than
+            left to Rust. This differs from a Rust formal `&mut T`: its reference is already
+            part of the declared input contract, and an existing source reference is
+            reborrowed without inferring `T` as another reference.
+
+            Native foreign and enum inputs are checked against their exact Rust bounds, not
+            treated as source interface implementors. Source classes still need the
+            corresponding admitted source interface. These admission and adaptation rules
+            are the same for fresh and cached dependency projections.
+
             Native operations with direct static reference parameters are unavailable,
             including aliases of those reference types. A Terrane string literal still
             crosses the ordinary owned-string ABI and does not establish static native

@@ -154,6 +154,16 @@ documentation:
             callbacks whose mutable borrow authority is selected by a native API remain
             supported.
 
+            Native captures retain their ownership and snapshot constraints. T0144 rejects
+            mutable lending from a captured non-`Clone` native value, or a non-`Clone`
+            native capture whose repeatable asynchronous invocation or mutable-environment
+            separation requires cloning. This is a current native-capture implementation
+            boundary, not permission to silently clone resources or generate a Rust-only
+            failure. Pass the native value as a reference parameter, use a cloneable or
+            shared-owned representation, or use an explicit consuming callable where
+            ownership permits. Supported shared read-only captures and mutations through
+            callback parameters remain valid.
+
             Reflection exposes `invocation-mode` and `exact-invocation-mode` alongside
             `throwable-contract`, `escaping-throwables`, and the aggregate `contracts`
             marker.
