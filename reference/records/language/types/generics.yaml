@@ -424,7 +424,7 @@ documentation:
             - projected-result-conflicting-destinations
             - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
-            - projected-result-unknown-bound
+            - projected-result-associated-bound
             - projected-result-borrowed
             - projected-result-source-object
           markdown: |-

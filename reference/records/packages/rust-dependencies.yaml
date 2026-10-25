@@ -360,6 +360,14 @@ documentation:
             - projected-borrowed-interior-graphs
             - projected-borrowed-interior-binding
             - projected-borrowed-interior-return
+            - native-generic-executor
+            - native-deferred-executor
+            - native-generic-executor-implicit-ref
+            - native-deferred-executor-implicit-ref
+            - projected-associated-mismatch
+            - projected-retained-bound
+            - projected-markdown-typed-rendering
+            - projected-reachable-standard-network-types
           markdown: |-
             A nested projected expression can traverse shared or mutable native interiors
             without copying the container or exposing a storable source reference. Methods,
@@ -402,12 +410,17 @@ documentation:
             source parameter without that explicit `ref` is rejected with T0129 rather than
             left to Rust. This differs from a Rust formal `&mut T`: its reference is already
             part of the declared input contract, and an existing source reference is
-            reborrowed without inferring `T` as another reference.
+            reborrowed without inferring `T` as another reference. An explicit `ref` does
+            not itself require mutation: a selected shared native input stays shared,
+            including when its argument is read from a capture.
 
             Native foreign and enum inputs are checked against their exact Rust bounds, not
             treated as source interface implementors. Source classes still need the
-            corresponding admitted source interface. These admission and adaptation rules
-            are the same for fresh and cached dependency projections.
+            corresponding admitted source interface, including its associated-type
+            constraints and retained `Send`, `Sync`, and static-lifetime obligations.
+            Closing a call's native ABI does not erase those declaration constraints. These
+            admission and adaptation rules are the same for fresh and cached dependency
+            projections.
 
             Native operations with direct static reference parameters are unavailable,
             including aliases of those reference types. A Terrane string literal still
@@ -609,6 +622,11 @@ documentation:
             - native-async-field-implicit-borrow
             - native-mutable-async-field-borrow
             - native-explicit-mutable-reborrow
+            - native-capture-controls
+            - native-mutable-capture-sync
+            - native-mutable-capture-async
+            - native-nonclone-async-capture
+            - native-nonclone-mutable-capture
           markdown: |-
             Projection records whether an owned foreign Rust type implements `Clone`,
             `Send`, and `Sync`; the latter two are independently proven against the resolved
