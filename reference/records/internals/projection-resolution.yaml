@@ -394,6 +394,7 @@ documentation:
             - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
             - projected-result-associated-bound
+            - projected-result-unknown-bound
             - projected-constructor-selected-native
             - projected-constructor-selected-bound
             - projected-constructor-selected-conflicting-payload
@@ -534,7 +535,11 @@ documentation:
 
             Call specialization preserves an answered native reference ABI independently of
             generic-name retention. A source reference is only an input candidate: without a
-            successful bound question it does not establish mutable native access.
+            successful bound question it does not establish mutable native access. Pure
+            outlives predicates are region constraints, not isolated type proofs. The common
+            input/result specialization plan leaves them to the final emitted Rust borrow
+            graph while retaining the original native signature. They are not oracle `yes`
+            answers and cannot establish mutable input access by themselves.
             Source-interface associated-type and transfer obligations remain declaration
             constraints even when the specialized ABI clears generic bounds. Reference
             policy, mutation inference, and argument emission share one decision; computed
@@ -542,6 +547,10 @@ documentation:
             facade must not add another borrow when the source parameter contract is already
             a reference. Rebinding that reference's scoped lifetime preserves its depth and
             identity; it does not turn a native shared input into a double borrow.
+            Synchronous native panic boundaries evaluate materializable fallible or awaited
+            receivers and argument expressions in the caller's context before catching the
+            native call. Expression-scoped borrowed native graphs remain intact through
+            their terminal call so temporary owners stay alive.
 
             Direct native reference parameters requiring a static lifetime, including
             reference type aliases and receivers, are declined before source admission.

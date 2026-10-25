@@ -425,6 +425,7 @@ documentation:
             - projected-result-incompatible-template
             - projected-result-unsatisfied-bound
             - projected-result-associated-bound
+            - projected-result-unknown-bound
             - projected-result-borrowed
             - projected-result-source-object
           markdown: |-
@@ -433,12 +434,14 @@ documentation:
             their complete result template against exactly one written binding, argument,
             class-field, or return destination, requires repeated occurrences to agree, and
             substitutes the jointly selected parameters before proving bounds. The
-            projection oracle must prove every rendered Rust bound for each exact concrete
-            representation; `no`, `unknown`, absent, incompatible, or conflicting
-            destinations are compile-time failures. Higher-ranked lifetimes and associated
-            constraints remain part of the proof rather than being approximated from rustdoc
-            implementation lists. Higher-ranked and nested bound paths use the dependency's
-            manifest alias at every Rust path-root occurrence.
+            projection oracle must prove every rendered type or trait bound for each exact
+            concrete representation; `no`, `unknown`, absent, incompatible, or conflicting
+            destinations are compile-time failures. Pure lifetime-outlives constraints
+            remain in the native signature and are checked against the complete emitted Rust
+            borrow graph, not asserted as isolated type facts. Higher-ranked trait lifetimes
+            and associated constraints remain part of the proof rather than being
+            approximated from rustdoc implementation lists. Higher-ranked and nested bound
+            paths use the dependency's manifest alias at every Rust path-root occurrence.
 
             Closed scalar, string, bytes, optional, sequence, mapping, set, homogeneous
             tuple, and projected foreign-object shapes recurse through the result template.

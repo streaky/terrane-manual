@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 37b67c69d5072396d64cd0516b50c7bd799dab79339c0948088818dce8375823
+  input-sha256: a19f34601d348f6d7ccfae9e16d56efd63fe604442e9444b894dfd786110441d
 format: 1
 generated: true
 symbols:
@@ -9743,6 +9743,10 @@ symbols:
   record: lang.namespaces.imports
   section: imports
   declaration: y
+- name: 'yes'
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: 'yes'
 - name: zero
   record: lang.numerics.floating-point
   section: values
