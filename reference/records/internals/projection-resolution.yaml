@@ -524,6 +524,10 @@ documentation:
             and substitution preserve that structure. Rust syntax trees distinguish bare
             generic binders from qualified names; a qualified identifier cannot be
             substituted merely because its final segment has the same spelling as a binder.
+            Rust-bound name qualification likewise distinguishes associated-binding labels
+            inside generic argument lists from type subjects in where predicates. Labels
+            remain unchanged while their type values and concrete predicate subjects use
+            canonical native paths, including after nested generic arguments.
             Borrowed-option callbacks specialize their shared or mutable native payload
             contract from the selected receiver, including the corresponding native callable
             bound.
