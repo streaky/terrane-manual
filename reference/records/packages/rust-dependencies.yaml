@@ -388,7 +388,12 @@ documentation:
             Rust local shadowing the source parameter name does not change which source
             input requires mutation. The same inferred requirement governs callback checking
             and ordinary argument reborrowing; a helper cannot hide mutation from a shared
-            callback boundary.
+            callback boundary. Cross-unit forwarding uses the defining source unit's final
+            mutation contract, not an imported pre-inference copy. Passing a deferred native
+            local to a projected generic reference input borrows its available payload
+            rather than its internal optional storage. Already borrowed native parameters
+            are reborrowed; owned source implementors of native interfaces remain ordinary
+            values and are not dereferenced.
 
             Native operations with direct static reference parameters are unavailable,
             including aliases of those reference types. A Terrane string literal still
