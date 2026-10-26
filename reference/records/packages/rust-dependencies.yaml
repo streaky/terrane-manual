@@ -418,6 +418,14 @@ documentation:
             existing source reference is reborrowed without inferring `T` as another
             reference. An unconstrained by-value generic still takes a value; establish a
             local reference binding first when an independent reference value is intended.
+            Input-bound proofs retain the receiver owner's declared type parameters and
+            their representable bounds, even when other instance-implementation predicates
+            must remain in the connected Rust graph. Concrete receiver substitutions take
+            precedence; otherwise owner parameters used by a bound remain inferable. For
+            example, an executor constraint equating its associated database with an owner
+            database parameter can select a mutable connection borrow without an undeclared
+            type name in the proof. Local native reference bindings used by mutable helpers
+            retain that inferred mutable ABI and keep their owning storage mutable.
             Invocation lifetimes and associated owner constraints remain checked in the
             complete native graph; a detached type proof does not extend a lender's
             lifetime. Receiver predicates such as `Self: Contains<T>` are also checked

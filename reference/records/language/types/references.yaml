@@ -37,7 +37,9 @@ documentation:
             linear fields retain their normal transfer rules. In type expressions, `ref`
             binds more tightly than the union operator `|`. Thus `ref holder|none` means
             `(ref holder)|none`, not `ref (holder|none)`. To borrow the union as a whole,
-            write `ref (holder|none)`.
+            write `ref (holder|none)`. Argument mismatch diagnostics preserve the complete
+            optional types and show the grouping of an optional reference, rather than
+            dropping the `|none` arms while comparing their non-optional payloads.
     - id: provenance
       title: Whole-path provenance
       blocks:

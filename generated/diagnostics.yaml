@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 87402c226fa0abdaad3a0e2aa6005f0f756940cd39f3a5621e8af5f727d99d76
+  input-sha256: 490acbc62bfbbcc836488d95d387834d58da28dfe23fb112a4fd90ebfa192fbd
 format: 1
 generated: true
 diagnostics:
@@ -1347,7 +1347,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 321
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1748
+    line: 1740
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1415,7 +1415,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 112
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1751
+    line: 1743
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -2713,9 +2713,9 @@ diagnostics:
     references'
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1353
+    line: 1345
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1383
+    line: 1375
 - code: T0141
   messages:
   - a non-owning observer of shared storage cannot be passed to plain `ref` parameter `{destination}`;
