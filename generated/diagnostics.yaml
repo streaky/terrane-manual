@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 79b1c28079dda7eafabbf66c958daa13a3f8e420fa64775d3edb42bd5c4a2427
+  input-sha256: b5d6e0d9204b7be927877b1ac11994a007f0ad578f950950badeee5327dbfc33
 format: 1
 generated: true
 diagnostics:
@@ -806,7 +806,7 @@ diagnostics:
   - unresolved name `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2022
+    line: 2029
 - code: S2015
   messages:
   - package has no `main` function
@@ -866,7 +866,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2476
+    line: 2483
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 519
 - code: S2022
@@ -888,15 +888,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2379
+    line: 2386
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2442
+    line: 2449
 - code: S2024
   messages:
   - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2514
+    line: 2521
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -909,9 +909,9 @@ diagnostics:
   - namespace variable `{name}` cannot be imported outside its namespace
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2193
+    line: 2200
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2213
+    line: 2220
 - code: S2027
   messages:
   - Rust dependency `{dependency}` is not declared in `package.toml`
@@ -1069,7 +1069,7 @@ diagnostics:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1936
+    line: 1943
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name
@@ -1831,7 +1831,7 @@ diagnostics:
   - reference to owner `{owner_name}{path}` remains in use after this mutation, move, or replacement
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1772
+    line: 1779
 - code: T0060
   messages:
   - class field initializer is unavailable
@@ -1875,7 +1875,7 @@ diagnostics:
   - '`ref` requires a supported owner-proven name, field, or collection element'
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1585
+    line: 1592
 - code: T0065
   messages:
   - object field type cannot be inferred
@@ -1905,14 +1905,14 @@ diagnostics:
   - returned reference is not proven to originate from one declared reference-parameter lender
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1517
+    line: 1524
 - code: T0069
   messages:
   - native target rejects descriptor fields whose `shared ref` ownership graph can form a strong cycle;
     use ordinary `ref` for a non-owning back-edge
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1892
+    line: 1899
 - code: T0070
   messages:
   - the selected minimal profile does not retain reflection metadata
@@ -2730,7 +2730,7 @@ diagnostics:
     observer binding
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1547
+    line: 1554
 - code: T0143
   messages:
   - a guarded method cannot receive an alias of its receiver's shared storage
@@ -2743,7 +2743,7 @@ diagnostics:
     consuming callable when ownership permits
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2171
+    line: 2178
 - code: T0210
   messages:
   - enum `{}` requires a fully selected application with {} type argument(s)

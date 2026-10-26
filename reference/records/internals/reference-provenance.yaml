@@ -33,6 +33,11 @@ documentation:
             returned call results, and borrowed iteration targets. Reference-return lender
             contracts are inferred from return flow to a fixed point through calls rather
             than from arity.
+
+            Function inventories include namespace contracts from multiple source files.
+            Lender inference analyzes each contract in its defining unit, and containing
+            function selection matches source-file identity before comparing byte ranges. An
+            overlapping range in another file cannot supply or replace a return lender.
     - id: rejection
       title: Escape and invalidation
       blocks:
@@ -122,6 +127,7 @@ provenance:
   conformance:
     - references-derived-provenance
     - reference-return-selected-lender
+    - reference-return-cross-file
     - reference-group-map
     - reference-call-result-invalidation
     - borrow-across-await
