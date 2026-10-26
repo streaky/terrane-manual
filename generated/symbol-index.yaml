@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d7c0d932e84c4211d13e7b5c4ea38d32b6c119226ea47b3200aa8610ef905dee
+  input-sha256: 5d143f409d13c5f9e25385950af0b12cb6c6afb8ce4ba5a119688b04bcd3d5aa
 format: 1
 generated: true
 symbols:
@@ -1773,6 +1773,10 @@ symbols:
   record: lang.types.authority-in-practice
   section: declaration-table
   declaration: consuming function close;
+- name: containing_function
+  record: internals.semantics.reference-provenance
+  section: representation
+  declaration: containing_function
 - name: contains
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
@@ -3585,6 +3589,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: functions.rs
+- name: functions_containing
+  record: internals.semantics.reference-provenance
+  section: representation
+  declaration: functions_containing
 - name: Future
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -7423,6 +7431,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: async-analysis-boundaries
   declaration: semantics/contracts.rs
+- name: SemanticUnit::local_functions
+  record: internals.semantics.reference-provenance
+  section: representation
+  declaration: SemanticUnit::local_functions
 - name: send
   record: book.namespaces-imports-and-packages
   section: dependencies

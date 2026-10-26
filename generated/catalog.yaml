@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d7c0d932e84c4211d13e7b5c4ea38d32b6c119226ea47b3200aa8610ef905dee
+  input-sha256: 5d143f409d13c5f9e25385950af0b12cb6c6afb8ce4ba5a119688b04bcd3d5aa
 format: 2
 generated: true
 records:
@@ -3024,6 +3024,9 @@ records:
     - references-derived-provenance
     - reference-return-selected-lender
     - reference-return-cross-file
+    - generic-return-cross-file
+    - enum-return-cross-file
+    - select-cross-file-async
     - reference-group-map
     - reference-call-result-invalidation
     - borrow-across-await

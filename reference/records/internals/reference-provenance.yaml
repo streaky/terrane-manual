@@ -35,9 +35,13 @@ documentation:
             than from arity.
 
             Function inventories include namespace contracts from multiple source files.
-            Lender inference analyzes each contract in its defining unit, and containing
-            function selection matches source-file identity before comparing byte ranges. An
-            overlapping range in another file cannot supply or replace a return lender.
+            `SemanticUnit::local_functions` restricts body analysis to the defining unit.
+            `containing_function` selects the narrowest contract containing a complete
+            file-qualified span; `functions_containing` provides the same rule when a
+            consumer intentionally filters for a particular kind of enclosing callable.
+            Return inference, async checks, generic caller selection, closure lowering and
+            debugger attribution share these queries. An overlapping byte range in another
+            file cannot supply a return lender, destination type, async context or frame.
     - id: rejection
       title: Escape and invalidation
       blocks:
@@ -48,6 +52,15 @@ documentation:
             mutation, movement, or replacement are rejected before lowering. Async liveness
             and capture checks consume the same provenance and require the selected lender
             proof to remain valid at those boundaries.
+
+            Anonymous-callable validation distinguishes a captured outer lender from a
+            closure-local owner, including when a foreign callable overlaps their offsets.
+            This semantic proof is not a complete native lending-callable ABI: stored
+            callables returning a reference into their captured environment do not yet have
+            a supported environment-lent native result lifetime. Such programs can fail
+            native backend validation even when the ownership analysis accepts them. The
+            frontend regression coverage does not establish executable support for that
+            boundary, and an ABI extension is not a committed implementation plan.
     - id: lowering
       title: Native representation
       blocks:
@@ -128,6 +141,9 @@ provenance:
     - references-derived-provenance
     - reference-return-selected-lender
     - reference-return-cross-file
+    - generic-return-cross-file
+    - enum-return-cross-file
+    - select-cross-file-async
     - reference-group-map
     - reference-call-result-invalidation
     - borrow-across-await

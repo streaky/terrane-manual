@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b5d6e0d9204b7be927877b1ac11994a007f0ad578f950950badeee5327dbfc33
+  input-sha256: e0e60da37f1081f504685b73cbbe6bef769890ca9fa12038c8782bfc8b3db1de
 format: 1
 generated: true
 diagnostics:
@@ -806,7 +806,7 @@ diagnostics:
   - unresolved name `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2029
+    line: 2007
 - code: S2015
   messages:
   - package has no `main` function
@@ -866,7 +866,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2483
+    line: 2461
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 519
 - code: S2022
@@ -888,15 +888,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2386
+    line: 2364
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2449
+    line: 2427
 - code: S2024
   messages:
   - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2521
+    line: 2499
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -909,9 +909,9 @@ diagnostics:
   - namespace variable `{name}` cannot be imported outside its namespace
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2200
+    line: 2178
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2220
+    line: 2198
 - code: S2027
   messages:
   - Rust dependency `{dependency}` is not declared in `package.toml`
@@ -1069,7 +1069,7 @@ diagnostics:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1943
+    line: 1921
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name
@@ -1823,15 +1823,15 @@ diagnostics:
   - '`{name}` was moved and is unavailable until rebound'
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 354
+    line: 348
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 654
+    line: 648
 - code: T0059
   messages:
   - reference to owner `{owner_name}{path}` remains in use after this mutation, move, or replacement
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1779
+    line: 1757
 - code: T0060
   messages:
   - class field initializer is unavailable
@@ -1875,7 +1875,7 @@ diagnostics:
   - '`ref` requires a supported owner-proven name, field, or collection element'
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1592
+    line: 1570
 - code: T0065
   messages:
   - object field type cannot be inferred
@@ -1905,14 +1905,14 @@ diagnostics:
   - returned reference is not proven to originate from one declared reference-parameter lender
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1524
+    line: 1502
 - code: T0069
   messages:
   - native target rejects descriptor fields whose `shared ref` ownership graph can form a strong cycle;
     use ordinary `ref` for a non-owning back-edge
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1899
+    line: 1877
 - code: T0070
   messages:
   - the selected minimal profile does not retain reflection metadata
@@ -1937,7 +1937,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 581
+    line: 582
 - code: T0074
   messages:
   - '`task-group` requires one child result type descriptor'
@@ -1995,9 +1995,9 @@ diagnostics:
   - task group cannot be copied, moved, borrowed, or returned; use its operations in the owning scope
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 683
+    line: 684
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 697
+    line: 698
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
     line: 31
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
@@ -2099,7 +2099,7 @@ diagnostics:
   - resource transfer requires a named binding
   sources:
   - path: crates/terrane-compiler/src/semantics/field_moves.rs
-    line: 145
+    line: 139
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 292
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2111,9 +2111,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 978
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 495
+    line: 489
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 584
+    line: 578
 - code: T0102
   messages:
   - class `{name}` is not callable; construct it with `instance {name};`
@@ -2143,9 +2143,9 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 756
+    line: 757
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 770
+    line: 771
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 587
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -2615,7 +2615,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 632
   - path: crates/terrane-compiler/src/semantics/selection.rs
-    line: 203
+    line: 201
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 485
 - code: T0131
@@ -2638,9 +2638,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1578
   - path: crates/terrane-compiler/src/semantics/selection.rs
-    line: 219
+    line: 217
   - path: crates/terrane-compiler/src/semantics/selection.rs
-    line: 227
+    line: 225
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 432
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2650,7 +2650,7 @@ diagnostics:
   - select cases cannot hold overlapping incompatible borrows of `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/selection.rs
-    line: 249
+    line: 247
 - code: T0133
   messages:
   - duration multipliers must be non-negative
@@ -2668,7 +2668,7 @@ diagnostics:
   - inline Rust cannot directly access non-copyable binding `{}`; use a typed Terrane adapter
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 308
+    line: 302
 - code: T0135
   messages:
   - persistent list indexing cannot copy an item containing a non-Clone projected foreign value (`collections/consume-non-clone-foreign-items`)
@@ -2684,7 +2684,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 32
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 85
+    line: 79
 - code: T0136
   messages:
   - '`construct` is invoked through `instance` and cannot declare `unsafe`'
@@ -2730,7 +2730,7 @@ diagnostics:
     observer binding
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1554
+    line: 1532
 - code: T0143
   messages:
   - a guarded method cannot receive an alias of its receiver's shared storage
@@ -2743,7 +2743,7 @@ diagnostics:
     consuming callable when ownership permits
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2178
+    line: 2156
 - code: T0210
   messages:
   - enum `{}` requires a fully selected application with {} type argument(s)
@@ -2948,7 +2948,7 @@ diagnostics:
   - generic recursion expands type parameter `{}` through a type constructor
   sources:
   - path: crates/terrane-compiler/src/semantics/generic_recursion.rs
-    line: 207
+    line: 202
 - code: W4001
   messages:
   - binding `{}` is never read
