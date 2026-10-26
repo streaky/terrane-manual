@@ -341,6 +341,14 @@ documentation:
             arguments, arbitrary token-tree syntax, and declaration-generating invocations
             are not this expression-call interface. Macros that generate ordinary public
             declarations continue through normal Rustdoc projection.
+
+            Macro arguments are not automatically borrowed. If a macro requires an
+            identity-preserving native loan, bind `borrowed = ref value` locally and pass
+            `borrowed`; when the argument contract cannot be checked, `T0119` help
+            recommends this binding workaround. For mutation, use a typed source helper that
+            explicitly declares a `ref` parameter and performs the mutating operation, so
+            mutable-borrow inference follows the helper's typed native call rather than an
+            untyped macro expansion.
         - type: example
           id: example.dependencies.expression-macro
           language: terrane
@@ -412,7 +420,16 @@ documentation:
             local reference binding first when an independent reference value is intended.
             Invocation lifetimes and associated owner constraints remain checked in the
             complete native graph; a detached type proof does not extend a lender's
-            lifetime.
+            lifetime. Receiver predicates such as `Self: Contains<T>` are also checked
+            through the public native operation, including when the trait lives in a private
+            module. This check does not search alternative reference inputs for a
+            receiver-only predicate. If the by-value input cannot satisfy that predicate,
+            `T0119` recommends establishing a local reference binding and passing that
+            binding. An owned input whose implementation does satisfy the predicate remains
+            valid. A by-value native argument that would move noncopyable captured state out
+            of a repeatable callable receives `T0144`; use a reference binding for
+            observation or an explicitly consuming callable when ownership transfer is
+            intended.
 
             Native foreign and enum inputs are checked against their exact Rust bounds, not
             treated as source interface implementors. Source classes still need the

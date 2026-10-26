@@ -34,7 +34,10 @@ documentation:
             non-Clone native referent therefore does not by itself make a containing class
             or enum noncopyable. Collection indexing and iteration likewise copy shared
             handles without consuming or cloning their referents. Other directly owned
-            linear fields retain their normal transfer rules.
+            linear fields retain their normal transfer rules. In type expressions, `ref`
+            binds more tightly than the union operator `|`. Thus `ref holder|none` means
+            `(ref holder)|none`, not `ref (holder|none)`. To borrow the union as a whole,
+            write `ref (holder|none)`.
     - id: provenance
       title: Whole-path provenance
       blocks:
@@ -93,14 +96,25 @@ documentation:
             rejected with `T0146`; remove it because the selected function declaration
             determines borrowing. Returning an ordinary reference likewise writes the lender
             expression directly, without `ref`. Local bindings such as
-            `selected = ref cameras[id]` remain valid: they establish a reference
-            independently of any function signature. Implicit ordinary borrows still require
-            an owner-proven name, field, or collection element; the declaration does not
-            extend the owner's lifetime or permit returning references to local values. The
-            referent keeps its declared representation: borrowing does not perform an owned
-            numeric conversion or wrap an owner in a different value carrier. Projected Rust
-            borrowed arguments follow their projected signature's conversion contract;
-            invocation-scoped native views retain their separate lifetime rules.
+            `selected = ref cameras[id]` establish a reference independently of any function
+            signature. Implicit ordinary borrows require an owner-proven name, field, or
+            collection element; a computed temporary has no owner path and is rejected with
+            `T0064`. The declaration does not extend the owner's lifetime or permit
+            returning references to local values. `ref T` preserves the referent's declared
+            representation: borrowing does not perform an owned numeric conversion or wrap
+            an owner in a different value carrier. It currently requires an exact referent
+            type; subtype/interface assignability and owner-to-reference-base borrowing are
+            not supported. This documents current expressibility only; it does not decide
+            whether future assignability support should be added. Ordinary source references
+            are read-only: direct field, nested field, indexed, compound, and
+            increment/decrement writes through them receive `T0147`, as do mutable
+            source-method calls through such a reference. Mutate an owned receiver or an
+            explicit shared owner instead. Checked shared-storage mutation and inferred
+            projected-native reference mutability remain separate. Returning `ref T` from a
+            function declared to return an owned generic `T` receives `T0015`; declare a
+            `ref T` result when borrowing is intended. Projected Rust borrowed arguments
+            follow their projected signature's conversion contract; invocation-scoped native
+            views retain their separate lifetime rules.
 
             Inferred ordinary-reference bindings retain the same owner provenance and weak
             storage as explicitly typed observers. Copying such an observer copies only its
@@ -429,7 +443,7 @@ provenance:
     - source-async-field-receivers
     - required-field-reference
     - required-field-reference-async-lender
-    - owned-to-reference-argument
+    - explicit-ref-call-argument-grouped
     - shared-to-reference-argument
     - source-reference-argument
     - explicit-ref-call-argument

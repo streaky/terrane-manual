@@ -349,8 +349,10 @@ documentation:
 
         - type: markdown
           markdown: |-
-            The parameter declaration selects borrowing. At the call boundary, ordinary
-            expressions preserve the caller-visible source value's identity.
+            The parameter declaration selects borrowing, but only an owner-proven name,
+            field, or collection element supplies a borrowable path. A computed temporary
+            has no such owner path and is rejected with `T0064`; bind it to a local owner
+            first when it must be borrowed.
 
             A `ref` aliases the value identity, not the binding slot. If the owning binding
             is rebound to a different value, an existing reference does not retarget itself

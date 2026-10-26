@@ -122,8 +122,17 @@ documentation:
             getters, not an immutable slot getter that the wrapper does not provide. Source
             argument validation checks the written ordinary-reference contract before native
             destination normalization can erase it. Native projected calls keep their
-            borrowing adaptation, and invocation-scoped native arguments are already
-            borrowed views, not owned source values eligible for implicit conversion.
+            borrowing adaptation, and invocation-scoped native arguments are borrowed views,
+            not owned source values eligible for implicit conversion. Source `ref T`
+            parameters select borrowing implicitly at the call boundary. The caller's
+            owner-proven names, fields, and elements supply the lender path; local reference
+            expressions remain a separate explicit binding operation. Analysis records
+            implicit owner bindings in `reference_owner_spans`, keyed by the canonical
+            binding declaration, without fabricating a reference expression. Lowering
+            consults both these owner facts and explicit reference provenance when selecting
+            scalar storage and inline-Rust snapshots. A scalar lent to `ref int` therefore
+            keeps the adaptive integer representation required by its borrow, rather than
+            retaining incompatible compact integer storage.
 
             Shared-async source dispatch selects a handle-taking helper only when receiver
             lowering actually produces that helper's handle binding. An outer receiver's
@@ -160,7 +169,7 @@ provenance:
     - source-async-field-receivers
     - required-field-reference
     - required-field-reference-async-lender
-    - owned-to-reference-argument
+    - explicit-ref-call-argument-grouped
     - shared-to-reference-argument
     - source-reference-argument
   compiler: null

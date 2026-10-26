@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: bb60cd5da868eddc9c53f37f6c57d2f2944ae28182b1f9deae09cfb33bae75b8
+  input-sha256: 4274ae8223d3f71d8f069a20dabbc5f75a49c2a93f07c31361bdab00447133db
 format: 1
 generated: true
 symbols:
@@ -864,6 +864,10 @@ symbols:
   record: std.collections
   section: sets
   declaration: bool
+- name: borrowed
+  record: tool.packages.rust-dependencies
+  section: expression-macros
+  declaration: borrowed
 - name: both-affine
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -3372,6 +3376,10 @@ symbols:
 - name: Fn
   record: internals.projection.resolution
   section: callbacks
+  declaration: Fn
+- name: Fn
+  record: internals.projection.resolution
+  section: destination-results
   declaration: Fn
 - name: Fn
   record: tool.packages.rust-dependencies
@@ -6685,6 +6693,10 @@ symbols:
   declaration: ref
 - name: ref
   record: lang.types.references
+  section: forms
+  declaration: ref
+- name: ref
+  record: lang.types.references
   section: lowering
   declaration: ref
 - name: ref
@@ -6696,9 +6708,17 @@ symbols:
   section: callbacks
   declaration: ref
 - name: ref
+  record: tool.packages.rust-dependencies
+  section: expression-macros
+  declaration: ref
+- name: ref
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: ref
+- name: reference_owner_spans
+  record: internals.semantics.reference-provenance
+  section: lowering
+  declaration: reference_owner_spans
 - name: ReferenceProvenance
   record: internals.semantics.reference-provenance
   section: representation
@@ -8060,6 +8080,10 @@ symbols:
   section: forms
   declaration: T
 - name: T
+  record: lang.types.references
+  section: lowering
+  declaration: T
+- name: T
   record: lang.types.unions
   section: unions
   declaration: T
@@ -8095,6 +8119,10 @@ symbols:
   record: lang.functions.declarations
   section: declaration
   declaration: T0015
+- name: T0015
+  record: lang.types.references
+  section: lowering
+  declaration: T0015
 - name: T0021
   record: lang.errors.contracts
   section: throwable-inference
@@ -8107,6 +8135,14 @@ symbols:
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
   declaration: T0058
+- name: T0064
+  record: book.identity-and-movement
+  section: sharing-identity-explicitly-with-ref
+  declaration: T0064
+- name: T0064
+  record: lang.types.references
+  section: lowering
+  declaration: T0064
 - name: T0068
   record: lang.types.references
   section: provenance
@@ -8119,6 +8155,14 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: T0111
+- name: T0119
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: T0119
+- name: T0119
+  record: tool.packages.rust-dependencies
+  section: expression-macros
+  declaration: T0119
 - name: T0134
   record: tool.packages.rust-interop
   section: inline-rust
@@ -8147,6 +8191,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0143
+- name: T0144
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: T0144
 - name: T0145
   record: lang.types.references
   section: provenance
@@ -8155,6 +8203,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0146
+- name: T0147
+  record: lang.types.references
+  section: lowering
+  declaration: T0147
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies

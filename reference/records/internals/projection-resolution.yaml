@@ -547,6 +547,15 @@ documentation:
             facade must not add another borrow when the source parameter contract is already
             a reference. Rebinding that reference's scoped lifetime preserves its depth and
             identity; it does not turn a native shared input into a double borrow.
+
+            When a native generic's constraints require a borrowed argument, bind an
+            owner-proven local reference first (for example, `observer = ref value`) and
+            pass that binding; do not expect a generic source parameter to select the
+            borrowed native ABI without matching bound evidence. If an owned value is
+            captured by an `Fn` closure, passing it by value may also be unavailable because
+            the closure cannot move it; a local observer is the supported route when the
+            native call accepts a borrow.
+
             Synchronous native panic boundaries evaluate materializable fallible or awaited
             receivers and argument expressions in the caller's context before catching the
             native call. Expression-scoped borrowed native graphs remain intact through
