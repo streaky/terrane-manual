@@ -362,7 +362,6 @@ documentation:
             - projected-borrowed-interior-return
             - native-generic-executor
             - native-deferred-executor
-            - native-generic-executor-implicit-ref
             - native-deferred-executor-implicit-ref
             - projected-associated-mismatch
             - projected-retained-bound
@@ -404,15 +403,16 @@ documentation:
             values and are not dereferenced.
 
             A native generic input keeps the exact reference ABI proven by its Rust bounds,
-            including when demand specializes the generic to a concrete input. For a Rust
-            by-value generic input such as an executor, write `ref value` when the selected
-            native implementation requires a mutable reference. Passing an already-reference
-            source parameter without that explicit `ref` is rejected with T0129 rather than
-            left to Rust. This differs from a Rust formal `&mut T`: its reference is already
-            part of the declared input contract, and an existing source reference is
-            reborrowed without inferring `T` as another reference. An explicit `ref` does
-            not itself require mutation: a selected shared native input stays shared,
-            including when its argument is read from a capture.
+            including when demand specializes the generic to a concrete input. Callers pass
+            ordinary arguments: native bound selection prefers a conforming value input,
+            then a shared borrow, then a mutable borrow. An explicit argument-site `ref` is
+            rejected with T0146. A Rust formal `&mut T` already declares borrowing, so an
+            existing source reference is reborrowed without inferring `T` as another
+            reference. An unconstrained by-value generic still takes a value; establish a
+            local reference binding first when an independent reference value is intended.
+            Invocation lifetimes and associated owner constraints remain checked in the
+            complete native graph; a detached type proof does not extend a lender's
+            lifetime.
 
             Native foreign and enum inputs are checked against their exact Rust bounds, not
             treated as source interface implementors. Source classes still need the
@@ -1011,7 +1011,7 @@ documentation:
               async function main;
                   options = (SqliteConnectOptions::new).filename; 'application.db'
                   database = await connect; options
-                  await (query; 'CREATE TABLE events (body BLOB)').execute; ref database
+                  await (query; 'CREATE TABLE events (body BLOB)').execute; database
                   await (close; move database)
         - type: example
           id: example.dependencies.generic-namespace-overlay

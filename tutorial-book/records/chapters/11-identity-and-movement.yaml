@@ -331,7 +331,8 @@ documentation:
 
         - type: markdown
           markdown: |-
-            The caller must pass a compatible reference explicitly:
+            The parameter declaration selects borrowing, so the caller writes an ordinary
+            expression:
         - type: example
           id: legacy-fence-011
           title: null
@@ -341,16 +342,15 @@ documentation:
           timeout-ms: null
           source: |2
             values = list; 1, 2, 3
-            print; count-items; (ref values)
+            print; count-items; values
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            Terrane does not silently turn an ordinary value into a reference because a
-            parameter asks for one. The call site shows that the function receives identity
-            rather than an independent value.
+            The parameter declaration selects borrowing. At the call boundary, ordinary
+            expressions preserve the caller-visible source value's identity.
 
             A `ref` aliases the value identity, not the binding slot. If the owning binding
             is rebound to a different value, an existing reference does not retarget itself
@@ -662,7 +662,7 @@ documentation:
           source: |2
             function escaping ref list of int;
               values = list; 1, 2
-              return ref values
+              return values
           response: null
           diagnostic: null
           markdown: null

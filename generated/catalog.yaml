@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 54f4c7e69b42c22cd2dca61b790b8d691b6604ccd664bad32fbba8851b4ebf06
+  input-sha256: bb60cd5da868eddc9c53f37f6c57d2f2944ae28182b1f9deae09cfb33bae75b8
 format: 2
 generated: true
 records:
@@ -575,6 +575,8 @@ records:
     - owned-to-reference-argument
     - shared-to-reference-argument
     - source-reference-argument
+    - explicit-ref-call-argument
+    - explicit-ref-return
     - reference-return-captured-environment
     - reference-return-owned-environment
     - reference-return-callable-parameter

@@ -994,7 +994,7 @@ documentation:
                 delayed tick = await heartbeats.next;
 
                 print; 'coalesced heartbeat count: ', delayed.count
-                print; 'late by nanoseconds: ', (delayed.scheduled.duration-until; ref delayed.observed).total-nanoseconds
+                print; 'late by nanoseconds: ', (delayed.scheduled.duration-until; delayed.observed).total-nanoseconds
 
                 select
                     case pulse tick = await heartbeats.next;

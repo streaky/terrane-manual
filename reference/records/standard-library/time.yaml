@@ -118,7 +118,7 @@ documentation:
             from observation time, so late consumers do not introduce cumulative schedule
             drift.
 
-            `scheduled.duration-until; ref observed` measures delivery lateness without
+            `scheduled.duration-until; observed` measures delivery lateness without
             consulting adjustable wall time. Code should not assume an upper timing bound
             merely because the period is exact: executor scheduling and host load may delay
             observation.

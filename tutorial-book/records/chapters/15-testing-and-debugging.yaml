@@ -411,7 +411,7 @@ documentation:
               started = clock::monotonic;
               advance-time; 25000000
               finished = clock::monotonic;
-              elapsed = started.duration-until; ref finished
+              elapsed = started.duration-until; finished
               assert-equal-int; elapsed.nanoseconds, 25000000
               return none
           files: null

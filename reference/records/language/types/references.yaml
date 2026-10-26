@@ -88,12 +88,19 @@ documentation:
             required field's internal initialization slot does not make the reference
             optional: `ref owner.field` has a reference to the field's declared type, not a
             reference to an implementation `Option`. Source parameters written `ref T`
-            require an explicit `ref` expression or an already-reference-valued argument;
-            passing an owned value or a `shared ref T` receives `T0012`, naming both the
-            required reference type and the actual argument type. Projected Rust
-            borrowed-argument adaptation and invocation-scoped native borrowed views retain
-            their distinct interop contracts; they do not introduce implicit
-            owned-to-reference conversion for source callables.
+            select borrowing from the declaration: callers pass ordinary expressions,
+            without a unary `ref`. Writing `ref` on a call argument or return expression is
+            rejected with `T0146`; remove it because the selected function declaration
+            determines borrowing. Returning an ordinary reference likewise writes the lender
+            expression directly, without `ref`. Local bindings such as
+            `selected = ref cameras[id]` remain valid: they establish a reference
+            independently of any function signature. Implicit ordinary borrows still require
+            an owner-proven name, field, or collection element; the declaration does not
+            extend the owner's lifetime or permit returning references to local values. The
+            referent keeps its declared representation: borrowing does not perform an owned
+            numeric conversion or wrap an owner in a different value carrier. Projected Rust
+            borrowed arguments follow their projected signature's conversion contract;
+            invocation-scoped native views retain their separate lifetime rules.
 
             Inferred ordinary-reference bindings retain the same owner provenance and weak
             storage as explicitly typed observers. Copying such an observer copies only its
@@ -425,6 +432,8 @@ provenance:
     - owned-to-reference-argument
     - shared-to-reference-argument
     - source-reference-argument
+    - explicit-ref-call-argument
+    - explicit-ref-return
     - reference-return-captured-environment
     - reference-return-owned-environment
     - reference-return-callable-parameter

@@ -40,6 +40,19 @@ documentation:
             is needed, lowering emits only the entrypoint, without a support include. Output
             regeneration removes an obsolete generated support sidecar.
 
+            Ordinary reference arguments and results are declaration-directed. Semantic
+            validation proves the argument place and returned lender path; lowering emits a
+            borrow or reborrow without cloning or upgrading the owner. Argument-site and
+            return-site unary `ref` expressions are rejected before type analysis, while
+            independent local reference bindings retain their provenance.
+
+            Native generic inputs select their value, shared-borrow, or mutable-borrow ABI
+            from bound evidence. A concrete-type probe instantiates inferred associated type
+            arguments rather than accepting a vacuous conditional bound. Callable-owned
+            lifetime variables remain invocation-scoped; genuinely higher-ranked bound
+            lifetimes retain their quantification. The complete native graph still checks
+            owner-associated equalities and lender lifetimes.
+
             Direct `throw class` and `throw class; arguments` expressions resolve class
             designators after lexical scopes and imports are available, then normalize to
             ordinary construction calls before type inference. Argument validation,

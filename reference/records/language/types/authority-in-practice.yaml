@@ -40,7 +40,7 @@ documentation:
           rows:
             - intent: Borrow without ownership
               declaration: function inspect none; value ref some-type
-              call: inspect; ref value
+              call: inspect; value
             - intent: Share ownership explicitly
               declaration: function retain none; value shared ref some-type
               call: retain; shared ref value

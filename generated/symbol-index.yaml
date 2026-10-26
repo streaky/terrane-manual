@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 54f4c7e69b42c22cd2dca61b790b8d691b6604ccd664bad32fbba8851b4ebf06
+  input-sha256: bb60cd5da868eddc9c53f37f6c57d2f2944ae28182b1f9deae09cfb33bae75b8
 format: 1
 generated: true
 symbols:
@@ -6652,6 +6652,10 @@ symbols:
   section: representation-identity
   declaration: ref
 - name: ref
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: ref
+- name: ref
   record: internals.projection.resolution
   section: callbacks
   declaration: ref
@@ -8087,10 +8091,6 @@ symbols:
   record: lang.errors.contracts
   section: throwable-inference
   declaration: T0012
-- name: T0012
-  record: lang.types.references
-  section: lowering
-  declaration: T0012
 - name: T0015
   record: lang.functions.declarations
   section: declaration
@@ -8151,6 +8151,10 @@ symbols:
   record: lang.types.references
   section: provenance
   declaration: T0145
+- name: T0146
+  record: lang.types.references
+  section: lowering
+  declaration: T0146
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies
