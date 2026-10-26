@@ -32,7 +32,10 @@ documentation:
             adds projections for member access, supported list/map/unordered-map indexing,
             returned call results, and borrowed iteration targets. Reference-return lender
             contracts are inferred from return flow to a fixed point through calls rather
-            than from arity.
+            than from arity. Analysis descends the enclosing syntax path to a selected
+            nested callable, then gathers only that callable's returns, excluding nested
+            siblings and other source files. Anonymous parameter-lent results therefore
+            retain the same single-lender proof rather than relying on a capture exception.
 
             Function inventories include namespace contracts from multiple source files.
             `SemanticUnit::local_functions` restricts body analysis to the defining unit.
@@ -53,14 +56,14 @@ documentation:
             and capture checks consume the same provenance and require the selected lender
             proof to remain valid at those boundaries.
 
-            Anonymous-callable validation distinguishes a captured outer lender from a
-            closure-local owner, including when a foreign callable overlaps their offsets.
-            This semantic proof is not a complete native lending-callable ABI: stored
-            callables returning a reference into their captured environment do not yet have
-            a supported environment-lent native result lifetime. Such programs can fail
-            native backend validation even when the ownership analysis accepts them. The
-            frontend regression coverage does not establish executable support for that
-            boundary, and an ABI extension is not a committed implementation plan.
+            Anonymous-callable validation distinguishes captured environment lenders,
+            declared reference parameters and closure-local owners, even when a foreign
+            callable overlaps their offsets. Parameter provenance is marked external too;
+            that flag alone does not mean an environment capture. A captured-environment
+            ordinary-reference result receives T0145 before native lowering, because the
+            current stored callable ABI has no environment-lent result lifetime. Passing the
+            owner as a declared reference parameter or returning an owned result remains
+            supported. Closure-local and ambiguous parameter origins retain T0068.
     - id: lowering
       title: Native representation
       blocks:
@@ -141,6 +144,10 @@ provenance:
     - references-derived-provenance
     - reference-return-selected-lender
     - reference-return-cross-file
+    - reference-return-captured-environment
+    - reference-return-owned-environment
+    - reference-return-callable-parameter
+    - reference-return-callable-ambiguous
     - generic-return-cross-file
     - enum-return-cross-file
     - select-cross-file-async

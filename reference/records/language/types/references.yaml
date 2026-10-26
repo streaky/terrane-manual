@@ -50,6 +50,13 @@ documentation:
             returned ordinary reference. Returning an explicit `shared ref T` transfers or
             copies shared ownership instead; it does not require an external reference
             lender.
+
+            Anonymous callables returning an ordinary reference into their captured
+            environment are currently unsupported and receive `T0145` before native
+            lowering. Return a reference lent by an explicit reference parameter, or an
+            owned value, instead. A reference to a callable-local owner and an ambiguous
+            choice among declared parameter lenders still receive `T0068`; they are not
+            treated as supported captured-environment returns.
     - id: lifetime
       title: Lifetime-ending operations
       blocks:
@@ -418,6 +425,10 @@ provenance:
     - owned-to-reference-argument
     - shared-to-reference-argument
     - source-reference-argument
+    - reference-return-captured-environment
+    - reference-return-owned-environment
+    - reference-return-callable-parameter
+    - reference-return-callable-ambiguous
     - static-async-receiver-identity
     - static-async-inherited-receiver-identity
     - static-class-reentry

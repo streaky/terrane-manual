@@ -164,6 +164,15 @@ documentation:
             ownership permits. Supported shared read-only captures and mutations through
             callback parameters remain valid.
 
+            An anonymous callable cannot return an ordinary reference borrowed from its
+            captured environment. The current native callable ABI has no result lifetime
+            lent by that environment, so Terrane reports T0145 before Rust lowering. This
+            includes returning a captured reference alias or borrowing a captured owned
+            value. Pass the owner as an explicit reference parameter, or return an owned
+            result instead. A callable may still return a reference selected from its
+            declared reference parameters, subject to the ordinary single-lender rule;
+            capturing other values does not by itself prohibit that result.
+
             Reflection exposes `invocation-mode` and `exact-invocation-mode` alongside
             `throwable-contract`, `escaping-throwables`, and the aggregate `contracts`
             marker.
@@ -190,4 +199,8 @@ provenance:
     - throwable-function-value
     - callable-invocation-modes
     - consuming-callable-reuse
+    - reference-return-captured-environment
+    - reference-return-owned-environment
+    - reference-return-callable-parameter
+    - reference-return-callable-ambiguous
   compiler: null

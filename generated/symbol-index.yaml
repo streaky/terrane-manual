@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5d143f409d13c5f9e25385950af0b12cb6c6afb8ce4ba5a119688b04bcd3d5aa
+  input-sha256: 54f4c7e69b42c22cd2dca61b790b8d691b6604ccd664bad32fbba8851b4ebf06
 format: 1
 generated: true
 symbols:
@@ -8107,6 +8107,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
   declaration: T0058
+- name: T0068
+  record: lang.types.references
+  section: provenance
+  declaration: T0068
 - name: T0101
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
@@ -8143,6 +8147,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0143
+- name: T0145
+  record: lang.types.references
+  section: provenance
+  declaration: T0145
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies

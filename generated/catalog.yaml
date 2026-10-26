@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5d143f409d13c5f9e25385950af0b12cb6c6afb8ce4ba5a119688b04bcd3d5aa
+  input-sha256: 54f4c7e69b42c22cd2dca61b790b8d691b6604ccd664bad32fbba8851b4ebf06
 format: 2
 generated: true
 records:
@@ -199,6 +199,10 @@ records:
     - throwable-function-value
     - callable-invocation-modes
     - consuming-callable-reuse
+    - reference-return-captured-environment
+    - reference-return-owned-environment
+    - reference-return-callable-parameter
+    - reference-return-callable-ambiguous
     compiler: null
   sections:
   - id: syntax
@@ -571,6 +575,10 @@ records:
     - owned-to-reference-argument
     - shared-to-reference-argument
     - source-reference-argument
+    - reference-return-captured-environment
+    - reference-return-owned-environment
+    - reference-return-callable-parameter
+    - reference-return-callable-ambiguous
     - static-async-receiver-identity
     - static-async-inherited-receiver-identity
     - static-class-reentry
@@ -3024,6 +3032,10 @@ records:
     - references-derived-provenance
     - reference-return-selected-lender
     - reference-return-cross-file
+    - reference-return-captured-environment
+    - reference-return-owned-environment
+    - reference-return-callable-parameter
+    - reference-return-callable-ambiguous
     - generic-return-cross-file
     - enum-return-cross-file
     - select-cross-file-async
