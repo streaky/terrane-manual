@@ -236,6 +236,16 @@ documentation:
             per-invocation handle copy needed by each future. These are ownership-specific
             decisions, not rewriting or trimming generated clone suffixes.
 
+            Adaptive integer comparisons borrow stable, unshared local storage, including
+            flow-refined optional and union payloads, rather than cloning it for an
+            operation that only reads its operands. Fixed-width operands still convert
+            exactly into the adaptive representation. Shared and mutable-capture reads
+            retain their existing owned snapshots so a sibling operand cannot keep or
+            reacquire a live guard. Collection length lowering already produces an adaptive
+            integer; destination adaptation does not add an identity conversion around it.
+            Primitive text and byte lengths still lift into the adaptive representation
+            where required.
+
             Conformance cases may omit emitted-source snapshots while retaining acceptance,
             runtime-output, warning, and canonical-Rust checks. Projection cache/history is
             disposable local state, not a tracked golden; the deliberate format-3 projection

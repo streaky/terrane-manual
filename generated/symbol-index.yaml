@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7c8fe93300227cfc71e2e24e7a308cdad7b842e1f3c3d392ce0529322f2ac50d
+  input-sha256: a5a39caf3f793007db3320cd100e0219f04ad5709fa505ba5d0bb9f974a44e26
 format: 1
 generated: true
 symbols:
@@ -956,6 +956,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: build.target
+- name: build.target
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: build.target
 - name: byte-reader
   record: std.streams
   section: byte-text-streams
@@ -1103,6 +1107,10 @@ symbols:
 - name: CARGO_BUILD_TARGET
   record: internals.projection.resolution
   section: identity
+  declaration: CARGO_BUILD_TARGET
+- name: CARGO_BUILD_TARGET
+  record: tool.packages.rust-dependencies
+  section: workflow
   declaration: CARGO_BUILD_TARGET
 - name: CARGO_HOME
   record: tool.packages.command-line

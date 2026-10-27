@@ -170,6 +170,15 @@ documentation:
             may change current projection output even when authored Terrane source is
             unchanged. Never edit the dependency lock or generated inventory to manufacture
             availability; regenerate them through the compiler.
+
+            Custom JSON target specifications are currently unsupported for dependency
+            projection. The pinned nightly Cargo requires the unstable `-Zjson-target-spec`
+            gate, which projection does not enable. Resolving a relative JSON `build.target`
+            from its configuration origin only establishes path selection, not a working
+            custom-target compilation pipeline. Relative JSON paths in `CARGO_BUILD_TARGET`
+            are forwarded unchanged rather than rebased to the invoking directory and must
+            not be assumed to resolve from the application root. Use the normal host-target
+            workflow.
     - id: imports
       title: Importing admitted members
       blocks:
