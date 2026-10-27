@@ -279,6 +279,17 @@ documentation:
             ownership, and dependency panic handling use the same boundary contract as
             synchronous projected members.
 
+            A literal passed directly to an admitted native string-slice parameter keeps its
+            decoded literal storage through the complete call graph, including an awaited
+            future and a staged generic string-like builder call. It does not allocate an
+            intermediate owned string just to borrow it. Grouping and native aliases of
+            `str` preserve this behavior. Named string owners keep their existing borrow
+            rules, and owned-string or reference-to-owned-string parameters retain their
+            distinct ABI; this is not a general conversion of every string argument to a
+            slice. Calls through generated interface facades, including reference receivers,
+            retain their owned Terrane parameter contract even when the underlying Rust
+            trait method takes a string slice.
+
             Projected asynchronous interface methods require `Send` and an asynchronous
             package entry. Terrane-driven calls run within that generated runtime. A Rust
             caller that obtains a projected method future must poll it on a thread entered
@@ -448,9 +459,10 @@ documentation:
             projections.
 
             Native operations with direct static reference parameters are unavailable,
-            including aliases of those reference types. A Terrane string literal still
-            crosses the ordinary owned-string ABI and does not establish static native
-            storage. Prefer an admitted parser such as from_str over from_static.
+            including aliases of those reference types. Literal storage used for an ordinary
+            admitted string-slice borrow does not establish a source-visible static-lifetime
+            contract or bypass this admission rule. Owned wrapper inputs still cross the
+            owned-string ABI. Prefer an admitted parser such as from_str over from_static.
         - type: example
           id: example.dependencies.borrowed-interior-snapshot
           language: terrane
