@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8e8a88008fd8548547e97c8cf3e569cef05fa5cf1ac48d3bcb29a63e384fa3b5
+  input-sha256: 300a998b174e5d6f9bc6ab918083a54fb4c6379a753573ef7ed052959ca11c8e
 format: 1
 generated: true
 symbols:
@@ -1627,6 +1627,10 @@ symbols:
 - name: concat
   record: lang.text.transformation
   section: string-transform
+  declaration: concat
+- name: concat
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
   declaration: concat
 - name: concat
   record: std.text-bytes-codecs
@@ -4061,6 +4065,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: overview
   declaration: instance
+- name: instance
+  record: manual.changelog.unreleased
+  section: changes-2026-10-04
+  declaration: instance
 - name: instant
   record: std.time
   section: values
@@ -4538,6 +4546,10 @@ symbols:
   section: string-transform
   declaration: join
 - name: join
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
+  declaration: join
+- name: join
   record: std.text-bytes-codecs
   section: string-operations
   declaration: join
@@ -4944,6 +4956,14 @@ symbols:
 - name: match
   record: lang.text.search
   section: string-search
+  declaration: match
+- name: match
+  record: manual.changelog.unreleased
+  section: changes-2026-10-04
+  declaration: match
+- name: match
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
   declaration: match
 - name: match-rule
   record: lang.lexical-structure.keywords
@@ -5864,6 +5884,10 @@ symbols:
   section: shared-references-and-ownership
   declaration: owner
 - name: owner/package
+  record: manual.changelog.unreleased
+  section: changes-2026-10-15
+  declaration: owner/package
+- name: owner/package
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
   declaration: owner/package
@@ -6282,6 +6306,10 @@ symbols:
 - name: print
   record: lang.text.display
   section: scalar-display
+  declaration: print
+- name: print
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
   declaration: print
 - name: print-entry
   record: book.complete-program
@@ -6708,6 +6736,10 @@ symbols:
   section: lowering
   declaration: ref
 - name: ref
+  record: manual.changelog.unreleased
+  section: changes-2026-10-26
+  declaration: ref
+- name: ref
   record: tool.packages.rust-dependencies
   section: borrowed-interiors
   declaration: ref
@@ -6855,9 +6887,17 @@ symbols:
   record: lang.text.transformation
   section: string-transform
   declaration: replace
+- name: replace
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
+  declaration: replace
 - name: replace-error
   record: lang.text.transformation
   section: string-transform
+  declaration: replace-error
+- name: replace-error
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
   declaration: replace-error
 - name: report.trn
   record: book.namespaces-imports-and-packages
@@ -7967,6 +8007,10 @@ symbols:
   record: lang.control-flow.branching-and-loops
   section: if-while-for
   declaration: switch
+- name: switch
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
+  declaration: switch
 - name: sync
   record: internals.execution.runtime-selection
   section: generated-support
@@ -8214,6 +8258,10 @@ symbols:
 - name: T0146
   record: lang.types.references
   section: lowering
+  declaration: T0146
+- name: T0146
+  record: manual.changelog.unreleased
+  section: changes-2026-10-26
   declaration: T0146
 - name: T0147
   record: lang.types.references
@@ -8464,6 +8512,10 @@ symbols:
   section: projection-gap-census
   declaration: terrane-dependencies.lock
 - name: terrane-dependencies.lock
+  record: manual.changelog.unreleased
+  section: changes-2026-10-16
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
   record: tool.packages.rust-dependencies
   section: resolution
   declaration: terrane-dependencies.lock
@@ -8503,6 +8555,10 @@ symbols:
   record: tool.profiling
   section: optimized-build
   declaration: terrane-profile-cpu-v1
+- name: terrane-projection.lock
+  record: manual.changelog.unreleased
+  section: changes-2026-10-16
+  declaration: terrane-projection.lock
 - name: terrane-rust-analysis
   record: internals.projection.resolution
   section: subsystem-ownership
@@ -8883,10 +8939,18 @@ symbols:
   record: lang.text.display
   section: scalar-display
   declaration: to-string
+- name: to-string
+  record: manual.changelog.unreleased
+  section: changes-2026-10-12
+  declaration: to-string
 - name: to_json
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: to_json
+- name: tool
+  record: manual.changelog.unreleased
+  section: changes-2026-10-21
+  declaration: tool
 - name: tool
   record: tool.build-time-tools
   section: annotation-driven-generation

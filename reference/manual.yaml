@@ -5,6 +5,7 @@ navigation:
   - group: Changelog
     children:
       - source: records/manual/changelog.yaml
+      - source: records/manual/changelog/unreleased.yaml
   - group: Language
     children:
       - source: records/language/declarations/annotations.yaml
