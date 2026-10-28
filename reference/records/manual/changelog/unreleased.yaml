@@ -167,6 +167,12 @@ documentation:
               instead of triggering a compiler panic; unit values, tuple grouping, and
               arithmetic precedence are preserved. No syntax migration is required. See
               [[lang.expressions.operators#operators-precedence]].
+            - **Fixed — book PDF rendering.** The documentation converter now prints the
+              structured HTML directly through Chromium instead of using a PDF backend that
+              internally round-tripped it through Markdown. Code blocks and normal prose no
+              longer flip formatting or acquire stray fence backticks. PDF publishing now
+              requires Chromium/Chrome; set `CHROME` to its executable path when needed.
+              HTML, Markdown, and JSON output do not launch a browser.
   see-also:
     - manual.changelog
     - lang.types.references

@@ -36,6 +36,13 @@ navigation and select canonical records. Records own stable semantic IDs,
 documentation blocks, lifecycle data, and provenance. The Markdown renderer is one
 output consumer; records are not converted through Markdown before HTML generation.
 
+PDF publishing consumes that structured HTML directly through Chromium's print
+engine, not through a Markdown round-trip. The converter needs an installed
+Chromium/Chrome executable for PDF output; set `CHROME` to its full path if it is
+not found automatically. In a Terrane checkout, see
+`projects/docs-converter/README.md` for runtime prerequisites and the real-PDF
+regression command.
+
 The manual repository is intentionally separate from the Terrane compiler repository.
 Authored documentation remains reviewable and versionable here. Build inputs such as
 compiler snapshots are supplied by the documentation pipeline, while generated lookup
