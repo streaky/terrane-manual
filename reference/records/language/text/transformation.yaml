@@ -85,6 +85,11 @@ documentation:
 
         - type: markdown
           markdown: |-
+            Prefer `+` for ordinary text composition; it shares canonical text display with
+            `print` and `.to-string;`. Keep arithmetic grouped when it must finish before
+            joining text. See [[lang.expressions.operators#operators-precedence]] and
+            [[lang.text.display#scalar-display]].
+
             `concat` and `join` are separate, nonmutating operations that return new
             strings. `concat` appends its arguments to the receiver without a separator:
             `'a'.concat; b, c` produces `'abc'`. For `join`, the receiver is the separator:

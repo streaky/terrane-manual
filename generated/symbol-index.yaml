@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c80601add95d22900883dfaa4af8db06173c9e5e60f959d7ad3b6ffb878b6983
+  input-sha256: 06385011ae28706031eefc72f43600c5d56709b59be9c6c3da227677e9e15535
 format: 1
 generated: true
 symbols:
@@ -508,6 +508,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: exercises
   declaration: app/main.trn
+- name: append
+  record: book.classes-interfaces-and-traits
+  section: project-model-a-small-task-list
+  declaration: append
 - name: append
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -1617,18 +1621,6 @@ symbols:
   section: everything-is-an-object-semantically
   declaration: concat
 - name: concat
-  record: book.values-and-names
-  section: exercises
-  declaration: concat
-- name: concat
-  record: book.values-and-names
-  section: nested-calls-and-parentheses
-  declaration: concat
-- name: concat
-  record: book.values-and-names
-  section: project-calculate-a-small-purchase
-  declaration: concat
-- name: concat
   record: lang.text.display
   section: scalar-display
   declaration: concat
@@ -1639,6 +1631,10 @@ symbols:
 - name: concat
   record: manual.changelog.unreleased
   section: changes-2026-10-12
+  declaration: concat
+- name: concat
+  record: manual.changelog.unreleased
+  section: changes-2026-10-28
   declaration: concat
 - name: concat
   record: std.text-bytes-codecs
@@ -4525,10 +4521,6 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: encapsulation-and-visibility
   declaration: items
-- name: items
-  record: book.classes-interfaces-and-traits
-  section: project-model-a-small-task-list
-  declaration: items
 - name: items.rs
   record: internals.projection.resolution
   section: resolution
@@ -6043,6 +6035,10 @@ symbols:
   record: book.first-taste
   section: exercises
   declaration: packing-list.trn
+- name: page-break
+  record: manual.changelog.unreleased
+  section: changes-2026-10-28
+  declaration: page-break
 - name: panic
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -6346,6 +6342,10 @@ symbols:
 - name: print
   record: lang.text.display
   section: scalar-display
+  declaration: print
+- name: print
+  record: lang.text.transformation
+  section: string-transform
   declaration: print
 - name: print
   record: manual.changelog.unreleased
@@ -8059,6 +8059,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-10-12
   declaration: switch
+- name: switch
+  record: manual.changelog.unreleased
+  section: changes-2026-10-28
+  declaration: switch
 - name: sync
   record: internals.execution.runtime-selection
   section: generated-support
@@ -8531,6 +8535,10 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: terrane-debug-v1
+- name: terrane-dependencies.<owner>.<package>.archive
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: terrane-dependencies.<owner>.<package>.archive
 - name: terrane-dependencies.<owner>.<package>.git
   record: tool.packages.package-manifest
   section: fields

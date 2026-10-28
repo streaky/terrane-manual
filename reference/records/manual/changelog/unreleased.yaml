@@ -173,6 +173,19 @@ documentation:
               longer flip formatting or acquire stray fence backticks. PDF publishing now
               requires Chromium/Chrome; set `CHROME` to its executable path when needed.
               HTML, Markdown, and JSON output do not launch a browser.
+            - **Added — print pagination.** Book chapters now begin on fresh PDF pages.
+              Authored `page-break` IR blocks can also insert boundaries within a chapter;
+              continuous screen HTML remains unchanged and machine-readable IR retains the
+              blocks. Generated Markdown preserves styled HTML break markers for consumers
+              that support print styles.
+            - **Documentation — current language idioms.** Tutorial and reference examples
+              prefer string `+` for ordinary composition, retaining explicit `concat` API
+              demonstrations and byte concatenation. The book now also introduces ordered
+              `switch`, list-based replacement, and package-owned build-time tools, and
+              distinguishes disposable projection history from the dependency lock. See
+              [[lang.expressions.operators#operators-precedence]],
+              [[lang.text.transformation#string-transform]], and
+              [[tool.build-time-tools#selecting-and-building-tools]].
   see-also:
     - manual.changelog
     - lang.types.references

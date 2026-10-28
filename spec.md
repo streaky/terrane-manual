@@ -663,10 +663,11 @@ choose a block before consulting the complete definition below.
 | `entity-index` | `query`, `sort`, `layout` | A generated member list queried from the assembled IR. |
 | `image` | `id`, `asset`, `alt`, `caption` | A validated asset with explicit accessibility semantics. |
 | `exercise` | `id`, `title`, `prompt`, `starter`, `solution` | A structured learning task with optional starter and solution content. |
+| `page-break` | none (`id` is optional) | An explicit print page boundary with no reader-facing content. |
 
 Unknown block types and fields not allowed by the selected block type are
 errors. This table is an index, not a substitute for the field contracts and
-examples in §§11.4–11.14.
+examples in §§11.4–11.15.
 
 
 Page-level `documentation.blocks` contain introductions, learning objectives, or other content that follows the page title and summary but precedes the first titled section. Sections are ordered, may nest, and have stable local IDs:
@@ -725,6 +726,7 @@ Format version 1 block types are:
 | `term` | Addressable term definition. |
 | `entity-index` | Generated query over assembled entities. |
 | `diagnostic` | Structured diagnostic condition where not represented by a dedicated record. |
+| `page-break` | Explicit print page boundary; invisible in continuous screen reading. |
 
 Blocks are tagged unions. Fields not allowed for the selected `type` are errors. A renderer may give a block type a specialized visual treatment, but the block's meaning cannot depend on that treatment.
 
@@ -1023,6 +1025,19 @@ see-also:
 ```
 
 `id` is required and unique within the page. `title` may be `null`; `markdown` is the complete reader-facing prompt and may contain fenced illustrative code. Exercise numbering follows depth-first authored block order and is not part of the stable ID or title. Solutions and generated answer collections are deferred until the manual contains authored solutions whose requirements can determine their schema.
+
+### 11.15 Page breaks
+
+```yaml
+- type: page-break
+  id: before-the-worked-example
+```
+
+A `page-break` block ends the current printed page so that the following content begins on a new page. It has no prose or other payload. `id` is optional and, when present, is a page-local anchor subject to the same uniqueness rules as other block IDs. Any other field is an error.
+
+Print/PDF output honors the boundary in authored block order, including inside sections. Screen HTML remains continuous and hides the empty break marker. Generated Markdown preserves an empty HTML marker with CSS `break-after: page` and the legacy equivalent `page-break-after: always`; Markdown consumers that discard HTML or styles cannot preserve print pagination. Machine-readable output retains the block and its ID.
+
+Book print output also starts every published `chapter` record on a fresh page, including unnumbered introductory chapters and appendix chapters. Authors do not need to insert a `page-break` between chapters. Adjacent explicit and automatic boundaries must not produce an extra blank page, and a final explicit break must not add an otherwise empty trailing page.
 
 ## 12. Markdown cross-references
 

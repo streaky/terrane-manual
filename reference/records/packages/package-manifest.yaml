@@ -181,13 +181,18 @@ documentation:
             - path: terrane-dependencies.<owner>.<package>.path
               type: relative directory
               default: one source required
-              repeatability: mutually exclusive with git
+              repeatability: mutually exclusive with git and archive
               example: path = "../document-model"
             - path: terrane-dependencies.<owner>.<package>.git
               type: Git repository URL
               default: one source required
-              repeatability: mutually exclusive with path
+              repeatability: mutually exclusive with path and archive
               example: git = "https://example.invalid/document-model.git"
+            - path: terrane-dependencies.<owner>.<package>.archive
+              type: HTTP(S) ZIP or gzip-compressed tar source URL
+              default: one source required
+              repeatability: mutually exclusive with path and git
+              example: archive = "https://example.invalid/releases/document-model.tar.gz"
             - path: terrane-dependencies.<owner>.<package>.tag
               type: non-empty Git tag
               default: required with git
@@ -195,7 +200,7 @@ documentation:
               example: tag = "v1.2.3"
             - path: terrane-dependencies.<owner>.<package>.hash
               type: "sha256: plus 64 lowercase hexadecimal digits"
-              default: required with git; optional with path
+              default: required with git or archive; optional with path
               repeatability: once per dependency
               example: hash = "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
             - path: rust-dependencies.<alias>.package

@@ -145,7 +145,7 @@ documentation:
               target: null
               timeout-ms: null
               source: |2
-                message = 'Hello'.concat; ', ', name
+                message = 'Hello' + ', ' + name
               response: null
               diagnostic: null
               markdown: null
@@ -271,7 +271,8 @@ documentation:
           blocks:
             - type: markdown
               markdown: |-
-                `concat` appends the canonical display of each argument to the receiver:
+                `concat` is the explicit append method. The following example demonstrates that
+                API; use `+` for ordinary text composition:
             - type: example
               id: legacy-fence-009
               title: null
@@ -336,10 +337,18 @@ documentation:
 
             - type: markdown
               markdown: |-
-                Use `concat` when one string grows around adjoining pieces. Use `join` when one
-                separator belongs between a sequence of values.
+                Use `+` for ordinary text composition. Use `concat` when explicitly invoking the
+                append method, and `join` when one separator belongs between a sequence of
+                values.
 
-                Both operations produce new strings. They do not mutate the receiver:
+                A string operand selects text display for the other supported operand, so
+                numbers and booleans do not need a preceding `.to-string;` call. Evaluation
+                remains pairwise and left-associated: `'total: ' + (2 + 3)` displays `5`, while
+                `'total: ' + 2 + 3` appends `2` and then `3`. Explicit `.to-string;` is still
+                useful when a named string value, rather than composition, is wanted.
+
+                Composition, `concat`, and `join` produce new strings; they do not mutate the
+                source values:
             - type: example
               id: legacy-fence-013
               title: null
@@ -349,7 +358,7 @@ documentation:
               timeout-ms: null
               source: |2
                 prefix = 'Hello'
-                message = prefix.concat; ', world'
+                message = prefix + ', world'
                 print; prefix
               response: null
               diagnostic: null
@@ -425,6 +434,44 @@ documentation:
               markdown: |-
                 Later chapters examine member families and protocol contracts directly. For now,
                 use the default operation whose name states the intended text transformation.
+            - type: markdown
+              markdown: |-
+                `replace` also accepts several searches at once. Pair a search list with an
+                equally sized replacement list, or give one replacement for every search.
+                Matching uses the original input: inserted replacement text is not searched
+                again, so replacing red with blue does not then turn that new blue into green.
+                The `(list; ...)` expressions construct short ordered lists; later sections
+                develop collection construction and iteration in detail.
+            - type: example
+              id: multiple-replacements
+              title: Paired and shared replacements
+              language: terrane
+              mode: run
+              source: |-
+                namespace tutorial/multiple-replacements
+
+                from /core/collections import list
+                from /core/errors import throwable
+
+                function main throws throwable;
+                  paired = 'red blue red'.replace; (list; 'red', 'blue'), (list; 'blue', 'green')
+                  shared-replacement = 'red blue red'.replace; (list; 'red', 'blue'), 'colour'
+                  print; paired
+                  print; shared-replacement
+              response:
+                kind: stdout
+                language: text
+                display: shown
+                content: |-
+                  blue green blue
+                  colour colour colour
+            - type: markdown
+              markdown: |-
+                Paired lists of different lengths throw `replace-error`. The `throws`
+                declaration above makes the possible failure explicit; Chapter 7 explains error
+                declarations and handling. For overlapping searches, the longest match wins at
+                the earliest input position, with search-list order breaking ties. See
+                [[lang.text.transformation#string-transform]] for the complete contract.
           sections: []
         - id: common-string-operations-length
           title: Length
@@ -1229,7 +1276,7 @@ documentation:
                   words.append; current-word
                   current-word = ''
               else
-                current-word = current-word.concat; character
+                current-word = current-word + character
 
             if current-word != ''
               words.append; current-word
@@ -1647,7 +1694,7 @@ documentation:
                     words.append; current-word
                     current-word = ''
                 else
-                  current-word = current-word.concat; character
+                  current-word = current-word + character
 
               if current-word != ''
                 words.append; current-word

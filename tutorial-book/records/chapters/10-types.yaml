@@ -1000,7 +1000,7 @@ documentation:
               category string = 'general'
 
               function render-category string;
-                return ' ('.concat; this.category, ')'
+                return ' (' + this.category + ')'
 
             class task implements task-view uses categorized
               title string = ''
@@ -1014,13 +1014,13 @@ documentation:
                 this.estimate = estimate
                 this.priority = priority
 
-              function mark-complete;
+              mutable function mark-complete;
                 this.completed = true
 
               function render string;
                 if this.completed
-                  return '[done] '.concat; this.title, (this.render-category;)
-                return '[ ] '.concat; this.title, (this.render-category;)
+                  return '[done] ' + this.title + (this.render-category;)
+                return '[ ] ' + this.title + (this.render-category;)
 
               function estimate-units int8|none;
                 return this.estimate
@@ -1030,16 +1030,16 @@ documentation:
 
             class urgent-task extends task
               function render string;
-                return '[urgent] '.concat; this.title, (this.render-category;)
+                return '[urgent] ' + this.title + (this.render-category;)
 
             function high-priority bool; priority int8
               return priority >= 8
 
             class task-list
-              private items list of task-view = list
+              private items list of task-view
 
-              function add; item task-view
-                this.items = this.items.append; item
+              mutable function add; item task-view
+                this.items.append; item
 
               function show-estimates;
                 for item in this.items

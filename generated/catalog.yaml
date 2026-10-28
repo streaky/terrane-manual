@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c80601add95d22900883dfaa4af8db06173c9e5e60f959d7ad3b6ffb878b6983
+  input-sha256: 06385011ae28706031eefc72f43600c5d56709b59be9c6c3da227677e9e15535
 format: 2
 generated: true
 records:
@@ -3832,6 +3832,9 @@ records:
     - id: choosing-with-if-and-else-more-than-two-alternatives
       title: More than two alternatives
       sections: []
+    - id: choosing-with-switch
+      title: Ordered dispatch with switch
+      sections: []
     - id: choosing-with-if-and-else-indentation-is-the-block
       title: Indentation is the block
       sections: []
@@ -4298,7 +4301,10 @@ records:
     sections: []
   - id: building-and-running-a-package
     title: Building and running a package
-    sections: []
+    sections:
+    - id: generated-sources-and-package-tools
+      title: Generated sources and package-owned tools
+      sections: []
   - id: project-split-the-reporting-tool-across-files
     title: 'Project: split the reporting tool across files'
     sections:

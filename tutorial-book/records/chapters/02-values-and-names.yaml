@@ -43,8 +43,8 @@ documentation:
       timeout-ms: null
       source: |2
         within-budget = total <= budget
-        summary = 'Item: '.concat; item, ', total: ', total
-        print; ('Characters: '.concat; item.length)
+        summary = 'Item: ' + item + ', total: ' + total
+        print; ('Characters: ' + item.length)
       response: null
       diagnostic: null
       markdown: null
@@ -306,8 +306,8 @@ documentation:
                 standard string representation—the dominant encoding of the modern web and a
                 common default in contemporary terminals and development tools.
 
-                For the moment, we will compose short strings with `concat` and display them
-                with `print`. Chapter 5 explores text, multiline literals, searching, splitting,
+                For the moment, we will compose short strings with `+` and display them with
+                `print`. Chapter 5 explores text, multiline literals, searching, splitting,
                 encoding, and explicit text views in detail.
           sections: []
     - id: giving-a-value-a-name
@@ -1085,15 +1085,14 @@ documentation:
               target: null
               timeout-ms: null
               source: |2
-                message = 'Item: '.concat; item, ', total: ', total
+                message = 'Item: ' + item + ', total: ' + total
               response: null
               diagnostic: null
               markdown: null
 
             - type: markdown
               markdown: |-
-                The call to `concat` receives three arguments: `item`, the middle string, and
-                `total`. Its result is assigned to `message`.
+                The `+` operator combines the text and displayed values into `message`.
 
                 Likewise:
             - type: example
@@ -1131,18 +1130,17 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            print; ('Hello, '.concat; name, '!')
+            print; ('Hello, ' + name + '!')
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            The parentheses delimit the inner call. Read from the inside out:
+            The parentheses delimit the inner expression. Read from the inside out:
 
-            1. select `concat` from `'Hello, '`;
-            2. invoke it with `name` and `'!'`;
-            3. pass the resulting string to `print`.
+            1. combine `'Hello, '`, `name`, and `'!'` with `+`;
+            2. pass the resulting string to `print`.
 
             Without grouping, an unwrapped call owns the remainder of its logical
             expression. Terrane therefore rejects ambiguous ungrouped nested invocation
@@ -1158,7 +1156,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            long-enough = (prefix.concat; suffix).length >= 8
+            long-enough = (prefix + suffix).length >= 8
           response: null
           diagnostic: null
           markdown: null
@@ -1174,7 +1172,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            print; 'Message: ', (prefix.concat; suffix), ' ready'
+            print; 'Message: ', (prefix + suffix), ' ready'
           response: null
           diagnostic: null
           markdown: null
@@ -1573,7 +1571,7 @@ documentation:
               budget = 25
               within-budget = total <= budget
 
-              summary = 'Item: '.concat; item, ', total: ', total
+              summary = 'Item: ' + item + ', total: ' + total
               print; summary
               print; 'Within budget: ', within-budget
               print; 'Characters in item: ', item.length
@@ -1644,7 +1642,7 @@ documentation:
 
         - type: markdown
           markdown: |-
-            Second, it selects the string's `concat` method and calls it to build a summary:
+            Second, it combines text and displayed values with `+` to build a summary:
         - type: example
           id: legacy-fence-072
           title: null
@@ -1653,7 +1651,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            summary = 'Item: '.concat; item, ', total: ', total
+            summary = 'Item: ' + item + ', total: ' + total
           response: null
           diagnostic: null
           markdown: null
@@ -1698,7 +1696,8 @@ documentation:
                the result flips.
 
             4. Build the summary directly inside `print` instead of assigning it to
-               `summary`. Remember to delimit the nested `concat` call.
+               `summary`. Keep parentheses around arithmetic that must finish before text
+               composition.
 
             5. Print the length of a different Unicode string. Chapter 5 will explain
                grapheme-aware length in detail; for now, compare your expectation with the

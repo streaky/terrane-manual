@@ -375,8 +375,8 @@ documentation:
 
               function render string;
                 if this.completed
-                  return '[done] '.concat; this.title
-                return '[ ] '.concat; this.title
+                  return '[done] ' + this.title
+                return '[ ] ' + this.title
           response: null
           diagnostic: null
           markdown: null
@@ -1013,10 +1013,10 @@ documentation:
           timeout-ms: null
           source: |2
             class task-list
-              private items list of task = list
+              private items list of task
 
               mutable function add; item task
-                this.items = this.items.append; item
+                this.items.append; item
 
               function count int;
                 return this.items.length
@@ -1133,14 +1133,14 @@ documentation:
 
               function render string;
                 if this.completed
-                  return '[done] '.concat; this.title
-                return '[ ] '.concat; this.title
+                  return '[done] ' + this.title
+                return '[ ] ' + this.title
 
             class urgent-task extends task
               function render string;
                 if this.completed
-                  return '[done, urgent] '.concat; this.title
-                return '[urgent] '.concat; this.title
+                  return '[done, urgent] ' + this.title
+                return '[urgent] ' + this.title
           response: null
           diagnostic: null
           markdown: null
@@ -1366,7 +1366,7 @@ documentation:
               category string = 'general'
 
               function render-category string;
-                return ' ('.concat; this.category, ')'
+                return ' (' + this.category + ')'
           response: null
           diagnostic: null
           markdown: null
@@ -1401,7 +1401,7 @@ documentation:
           timeout-ms: null
           source: |2
             function render string;
-              return this.title.concat; (this.render-category;)
+              return this.title + (this.render-category;)
           response: null
           diagnostic: null
           markdown: null
@@ -1564,10 +1564,10 @@ documentation:
           timeout-ms: null
           source: |2
             class titles
-              values list of string = list
+              values list of string
 
-              function append; value string
-                this.values = this.values.append; value
+              mutable function append; value string
+                this.values.append; value
           response: null
           diagnostic: null
           markdown: null
@@ -1669,7 +1669,7 @@ documentation:
               category string = 'general'
 
               function render-category string;
-                return ' ('.concat; this.category, ')'
+                return ' (' + this.category + ')'
           response: null
           diagnostic: null
           markdown: null
@@ -1698,8 +1698,8 @@ documentation:
 
               function render string;
                 if this.completed
-                  return '[done] '.concat; this.title, (this.render-category;)
-                return '[ ] '.concat; this.title, (this.render-category;)
+                  return '[done] ' + this.title + (this.render-category;)
+                return '[ ] ' + this.title + (this.render-category;)
           response: null
           diagnostic: null
           markdown: null
@@ -1723,8 +1723,8 @@ documentation:
             class urgent-task extends task
               function render string;
                 if this.completed
-                  return '[done, urgent] '.concat; this.title, (this.render-category;)
-                return '[urgent] '.concat; this.title, (this.render-category;)
+                  return '[done, urgent] ' + this.title + (this.render-category;)
+                return '[urgent] ' + this.title + (this.render-category;)
           response: null
           diagnostic: null
           markdown: null
@@ -1744,10 +1744,10 @@ documentation:
           timeout-ms: null
           source: |2
             class task-list
-              private items list of task-view = list
+              private items list of task-view
 
               mutable function add; item task-view
-                this.items = this.items.append; item
+                this.items.append; item
 
               function show;
                 for item in this.items
@@ -1763,7 +1763,7 @@ documentation:
             guaranteed by `task-view`, and dynamic behavior selects the appropriate
             implementation.
 
-            The assignment in `add` is intentional:
+            The mutable `add` method appends directly to its list:
         - type: example
           id: legacy-fence-059
           title: null
@@ -1772,15 +1772,16 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            this.items = this.items.append; item
+            this.items.append; item
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            It makes the containing field update visible to the compiler and keeps the
-            changed list in `items`.
+            `append` mutates its receiver and also returns that list; ignoring the returned
+            value does not lose the update. `mutable function` makes the receiver's access
+            contract explicit, so there is no need to assign the list back to the field.
 
             Here is `main`:
         - type: example
@@ -1827,7 +1828,7 @@ documentation:
               category string = 'general'
 
               function render-category string;
-                return ' ('.concat; this.category, ')'
+                return ' (' + this.category + ')'
 
             class task implements task-view uses categorized
               title string = ''
@@ -1842,20 +1843,20 @@ documentation:
 
               function render string;
                 if this.completed
-                  return '[done] '.concat; this.title, (this.render-category;)
-                return '[ ] '.concat; this.title, (this.render-category;)
+                  return '[done] ' + this.title + (this.render-category;)
+                return '[ ] ' + this.title + (this.render-category;)
 
             class urgent-task extends task
               function render string;
                 if this.completed
-                  return '[done, urgent] '.concat; this.title, (this.render-category;)
-                return '[urgent] '.concat; this.title, (this.render-category;)
+                  return '[done, urgent] ' + this.title + (this.render-category;)
+                return '[urgent] ' + this.title + (this.render-category;)
 
             class task-list
-              private items list of task-view = list
+              private items list of task-view
 
               mutable function add; item task-view
-                this.items = this.items.append; item
+                this.items.append; item
 
               function show;
                 for item in this.items

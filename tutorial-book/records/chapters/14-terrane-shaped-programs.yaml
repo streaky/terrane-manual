@@ -634,22 +634,22 @@ documentation:
                 this.title = title
                 this.estimate = estimate
 
-              function mark-complete;
+              mutable function mark-complete;
                 this.complete = true
 
               function render string;
                 if this.complete
-                  return '[done] '.concat; this.title
-                return '[todo] '.concat; this.title
+                  return '[done] ' + this.title
+                return '[todo] ' + this.title
 
               function estimate-units int;
                 return this.estimate
 
             class writing-plan
-              items list of plan-item = list
+              items list of plan-item
 
-              function add; item plan-item
-                this.items = this.items.append; item
+              mutable function add; item plan-item
+                this.items.append; item
 
               function total-estimate int;
                 total = 0

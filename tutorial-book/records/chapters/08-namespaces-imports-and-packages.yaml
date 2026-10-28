@@ -1055,7 +1055,51 @@ documentation:
 
             The package's entry point is still the real `main` function. Splitting the
             project does not replace language-level entry with a manifest script.
-      sections: []
+      sections:
+        - id: generated-sources-and-package-tools
+          title: Generated sources and package-owned tools
+          blocks:
+            - type: markdown
+              markdown: |-
+                Some libraries export build-time consumers: ordinary trusted executables that
+                receive selected declaration metadata and return generated Terrane sources. A
+                library names its exports in `[consumer-tools]`; a caller selects one with
+                `tool` rather than building and tracking a private executable by hand. This
+                illustrative fragment assumes `example/generator` really exports a tool named
+                `generate`; it is not a built-in package:
+            - type: example
+              id: select-package-tool
+              title: Select an exported generator
+              language: toml
+              mode: illustrative
+              source: |-
+                [terrane-dependencies.example.generator]
+                path = "../generator"
+
+                [consumers.models]
+                tool = "example/generator::generate"
+                args = ["--schema", "schemas/models.json"]
+                declarations = ["/work-report::main"]
+            - type: markdown
+              markdown: |-
+                Terrane prepares and builds the selected tool before invoking it. The consumer
+                decides whether its external inputs require regeneration. Even when its cached
+                result is fresh, it returns the complete source inventory; an empty inventory
+                means removal, not “keep the previous files.”
+
+                Commit `terrane-dependencies.lock` to preserve the resolved Rust graph. Ignore
+                `.trn/`, including `.trn/projection-cache.json`, generated projection source,
+                and generated consumer output. Projection history is disposable cache state, not
+                another lockfile; investigate same-input drift before discarding it. Do not
+                track the obsolete `terrane-projection.lock`.
+
+                Editor preparation can execute these tools only with explicit permission. In VS
+                Code, trust the workspace to permit that preparation. The build-time protocol
+                does not sandbox the executable. See
+                [[tool.build-time-tools#selecting-and-building-tools]],
+                [[tool.build-time-tools#consumer-owned-freshness]], and
+                [[tool.build-time-tools#editor-preparation-and-trust]] for the full contract.
+          sections: []
     - id: project-split-the-reporting-tool-across-files
       title: "Project: split the reporting tool across files"
       blocks:
@@ -1114,7 +1158,7 @@ documentation:
                     this.units = units
 
                   function render string;
-                    return 'invalid report entry: '.concat; this.message
+                    return 'invalid report entry: ' + this.message
               response: null
               diagnostic: null
               markdown: null

@@ -43,6 +43,8 @@ not found automatically. In a Terrane checkout, see
 `projects/docs-converter/README.md` for runtime prerequisites and the real-PDF
 regression command.
 
+Printed book chapters start on fresh pages. Authors can also place a `type: page-break` block between other blocks for an explicit print boundary; screen HTML remains continuous. The optional `id` is page-local, and the block takes no prose payload. See §11.15 of [`spec.md`](spec.md) for the output-format contract.
+
 The manual repository is intentionally separate from the Terrane compiler repository.
 Authored documentation remains reviewable and versionable here. Build inputs such as
 compiler snapshots are supplied by the documentation pipeline, while generated lookup

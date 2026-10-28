@@ -52,6 +52,7 @@ documentation:
         By the end of this chapter, you will be able to:
 
         - choose between branches with `if`, `else if`, and `else`;
+        - dispatch on one value or ordered predicates with `switch`;
         - combine conditions with `and`, `or`, and `not`;
         - repeat state-driven work with `while`;
         - iterate over strings and ranges with `for`;
@@ -187,6 +188,53 @@ documentation:
                 branch receives values excluded by earlier ones. If `temperature < 25` appeared
                 first, both freezing and cold temperatures would be reported as mild enough for
                 that broad condition.
+          sections: []
+        - id: choosing-with-switch
+          title: Ordered dispatch with switch
+          blocks:
+            - type: markdown
+              markdown: |-
+                Use `switch` when several branches classify one value. The selector is evaluated
+                once; comma-separated alternatives share a body. Bare `switch` instead tests
+                ordinary conditions in source order:
+            - type: example
+              id: ordered-switch
+              title: Selector and predicate cases
+              language: terrane
+              mode: run
+              source: |-
+                namespace tutorial/ordered-switch
+
+                function main;
+                  state = 'queued'
+                  switch state
+                    case 'queued', 'running'
+                      print; 'in progress'
+                    case else
+                      print; 'finished'
+
+                  count = 0
+                  switch
+                    case count == 0
+                      print; 'empty'
+                    case count < 5
+                      print; 'room available'
+                    case else
+                      print; 'full'
+              response:
+                kind: stdout
+                language: text
+                display: shown
+                content: |-
+                  in progress
+                  empty
+            - type: markdown
+              markdown: |-
+                The first matching case wins. There is no fallthrough, so the zero count prints
+                only `empty`, not `room available` too. An optional `case else` must be last.
+                Use `if` when one condition is the clearest statement of the choice; do not turn
+                every boolean expression into a switch. Chapter 10 introduces `match` for
+                decomposing closed enum alternatives.
           sections: []
         - id: choosing-with-if-and-else-indentation-is-the-block
           title: Indentation is the block

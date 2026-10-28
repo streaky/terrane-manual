@@ -156,7 +156,7 @@ documentation:
                 this.units = units
 
               function render string;
-                return 'invalid report entry: '.concat; this.message
+                return 'invalid report entry: ' + this.message
           response: null
           diagnostic: null
           markdown: null
@@ -862,7 +862,7 @@ documentation:
                 this.units = units
 
               function render string;
-                return 'invalid report entry: '.concat; this.message
+                return 'invalid report entry: ' + this.message
 
             function require-entry throws invalid-report-entry; entry-name string, units int
               if entry-name == '' or units <= 0

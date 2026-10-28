@@ -99,17 +99,17 @@ documentation:
               loaded = filesystem-read-bounded; (filesystem-capability;), (instance path; source), 1048577
               if loaded.failed
                 result.failed = true
-                result.message = 'read failed for '.concat; source, ': ', loaded.message
+                result.message = 'read failed for ' + source + ': ' + loaded.message
                 return result
               if loaded.completed >= 1048577
                 result.failed = true
-                result.message = 'input exceeds one megabyte: '.concat; source
+                result.message = 'input exceeds one megabyte: ' + source
                 return result
               try
                 result.value = loaded.data.decode; utf8
               catch decode-error as failure
                 result.failed = true
-                result.message = 'invalid UTF-8 in '.concat; source, ': ', failure.message
+                result.message = 'invalid UTF-8 in ' + source + ': ' + failure.message
               return result
           response: null
           diagnostic: null
@@ -136,7 +136,7 @@ documentation:
           source: |2
             parsed = parse-yaml; source, (default-yaml-options;)
             if parsed.failed
-              result.message = 'configuration parse failed: '.concat; parsed.message
+              result.message = 'configuration parse failed: ' + parsed.message
               return result
           response: null
           diagnostic: null
@@ -179,7 +179,7 @@ documentation:
               rendered = projected-render; input
             catch dependency-error as failure
               result.failed = true
-              result.message = 'render dependency failed: '.concat; failure.message
+              result.message = 'render dependency failed: ' + failure.message
           response: null
           diagnostic: null
           markdown: null

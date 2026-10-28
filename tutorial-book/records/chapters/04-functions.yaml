@@ -821,7 +821,7 @@ documentation:
                 function describe string; value int
                   if value < 0
                     prefix = 'negative '
-                    return prefix.concat; (-value)
+                    return 'negative ' + (-value)
 
                   return 'nonnegative'
               response: null
@@ -1086,8 +1086,8 @@ documentation:
               if not detailed
                 return kind
               if number < 0
-                return 'negative '.concat; kind
-              return 'positive '.concat; kind
+                return 'negative ' + kind
+              return 'positive ' + kind
           response: null
           diagnostic: null
           markdown: null
@@ -1134,7 +1134,7 @@ documentation:
               timeout-ms: null
               source: |2
                 kind = parity; number
-                return 'positive '.concat; kind
+                return 'positive ' + kind
               response: null
               diagnostic: null
               markdown: null
@@ -1198,8 +1198,8 @@ documentation:
               if not detailed
                 return kind
               if number < 0
-                return 'negative '.concat; kind
-              return 'positive '.concat; kind
+                return 'negative ' + kind
+              return 'positive ' + kind
 
             function double int; value int
               return value * 2
