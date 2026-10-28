@@ -12,6 +12,8 @@ It contains two publications:
 ## Where to start
 
 - New to Terrane: begin with the [tutorial preface](tutorial-book/records/preface.yaml).
+- Catching up after an upgrade: read the
+  [changelog](reference/records/manual/changelog.yaml), organized by version and then date.
 - Building a real application: use the
   [application development map](reference/records/manual/application-development-map.yaml).
 - Looking up package configuration: use the

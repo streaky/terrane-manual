@@ -2,6 +2,9 @@ format: 1
 title: Terrane Reference
 landing: lang.lexical-structure.keywords
 navigation:
+  - group: Changelog
+    children:
+      - source: records/manual/changelog.yaml
   - group: Language
     children:
       - source: records/language/declarations/annotations.yaml

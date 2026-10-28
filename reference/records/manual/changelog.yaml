@@ -1,0 +1,182 @@
+format: 1
+id: manual.changelog
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Terrane changelog
+  title-style: text
+  summary: >-
+    User-visible language, standard-library, package, and tooling changes, grouped by
+    version and then date, with migration guidance and links to the reference contracts.
+  tags: [manual, changelog, compatibility, migration]
+  blocks:
+    - type: markdown
+      markdown: |-
+        Changes are grouped by version, with **Unreleased** first and released versions
+        newest first. Within each version, dated subsections use `YYYY-MM-DD` and run
+        newest first. Dates identify when changes landed in development, not a release
+        date or a promise about a future release. When a release is cut, its dated
+        subsections move together under the named version without changing their dates
+        or section IDs.
+
+        This is a user-facing history, not a copy of the commit log. Entries distinguish
+        additions, breaking changes, and fixes, explain necessary migration, and link to
+        the reference sections that own the current contracts. Historical entries
+        describe their change at the time; linked reference pages describe current
+        behavior.
+
+        Changelog maintenance began on 2026-10-28. The earlier dates below are a
+        selective backfill verified against compiler history and the reference manual;
+        they are not an exhaustive account of development before that date. All listed
+        changes remain unreleased; no numbered release is implied.
+  sections:
+    - id: unreleased
+      title: Unreleased
+      blocks: []
+      sections:
+        # Compiler: 3319fa4b; subsequent reference validation fixes retain this syntax.
+        - id: changes-2026-10-26
+          title: "2026-10-26"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Breaking — declaration-directed borrowing.** Source and projected callable
+                  declarations now select argument borrowing. Pass an ordinary expression to a
+                  `ref T` parameter; remove unary `ref` from call arguments and return
+                  expressions. Those explicit forms now diagnose with `T0146`. Keep `ref` in
+                  reference types and in local reference bindings. This does not extend lender
+                  lifetimes or make temporary values valid source-reference lenders. See
+                  [[lang.types.references#lowering]].
+        # Compiler: a4e898c8.
+        - id: changes-2026-10-21
+          title: "2026-10-21"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Added — package-owned build-time tools.** Libraries can export executable
+                  consumers through `[consumer-tools]`; callers select a dependency's export
+                  with `tool` in `[consumers.<id>]`. Terrane builds and refreshes the
+                  executable, including its own consumer prerequisites. Replace caller-managed
+                  tool bootstrap steps where an exported tool is available. See
+                  [[tool.build-time-tools#selecting-and-building-tools]].
+                - **Changed — generation freshness and editor preparation.** Consumers own
+                  generated-source freshness and are consulted on every preparation. A fresh
+                  consumer must still return its complete source inventory; returning no sources
+                  removes its outputs. Semantic editor preparation executes consumers only with
+                  explicit permission; in VS Code, trust the workspace to enable it. See
+                  [[tool.build-time-tools#consumer-owned-freshness]] and
+                  [[tool.build-time-tools#editor-preparation-and-trust]].
+        # Compiler: e25faa69.
+        - id: changes-2026-10-16
+          title: "2026-10-16"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Breaking — projection history is disposable cache state.** Generated
+                  projection history moved from package-root `terrane-projection.lock` to
+                  `.trn/projection-cache.json`. Stop tracking the former file and ignore
+                  `.trn/`; normal package preparation regenerates the cache. Continue committing
+                  `terrane-dependencies.lock`, which preserves the resolved Rust dependency
+                  graph. Cache removal discards local history, not dependency pins; investigate
+                  same-input replay mismatches before resetting the cache. See
+                  [[tool.packages.rust-dependencies#workflow]] and
+                  [[tool.packages.rust-dependencies#resolution]].
+        # Compiler: 73bda4d3, 8f8866a2, 8d168ea3.
+        - id: changes-2026-10-15
+          title: "2026-10-15"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Breaking — canonical Terrane dependency identities.** Native Terrane
+                  dependency keys identify the actual `owner/package`, not a consumer-chosen
+                  alias. Use dotted TOML tables such as
+                  `[terrane-dependencies.example.library]`, and ensure the located manifest
+                  declares that identity. Rust dependency aliases are unchanged. See
+                  [[tool.packages.terrane-packages#package-manifest]].
+                - **Added — source archive dependencies.** Terrane dependencies can use explicit
+                  HTTP(S) ZIP or gzip-compressed tar archives alongside relative directories and
+                  exactly tagged Git sources. Git and archive sources require an extracted-tree
+                  hash, not a compressed-file checksum or Git object ID. There is no central
+                  registry or identity-only lookup. See
+                  [[tool.packages.terrane-packages#package-manifest]].
+        # Compiler: 62219318.
+        - id: changes-2026-10-12
+          title: "2026-10-12"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Added — string composition with `+`.** A string operand selects text
+                  composition when the other operand supports display. Numeric addition remains
+                  pairwise and left-associated: parenthesize arithmetic that must complete
+                  before it is appended to text. Existing `concat` and `join` remain available.
+                  See [[lang.expressions.operators#operators-precedence]].
+                - **Added — structural text display.** Supported scalars expose `.to-string;`,
+                  and classes can participate through a compatible `to-string` method. Explicit
+                  conversion, `print`, and string composition share that display contract and
+                  propagate its failures. See [[lang.text.display#scalar-display]].
+                - **Added — list-based string replacement.** `replace` accepts a list of
+                  searches and either paired replacements or one shared replacement. Matches are
+                  selected on the original input; inserted text is not searched again. Unequal
+                  paired-list lengths throw `replace-error`. See
+                  [[lang.text.transformation#string-transform]].
+                - **Added — ordered `switch` statements.** Selector cases may group
+                  alternatives; predicate cases use ordinary truth conditions. The first
+                  matching case wins, with no fallthrough. Use `switch` for value or predicate
+                  dispatch and `match` for closed enum decomposition. See
+                  [[lang.control-flow.branching-and-loops#if-while-for]].
+        # Compiler: f502e757, bd753557, 731ca2b1.
+        - id: changes-2026-10-07
+          title: "2026-10-07"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Added — typed declaration annotations and metadata consumers.**
+                  Package-defined annotation classes can attach typed metadata to declarations.
+                  Exported declaration metadata includes annotation and documentation
+                  information for explicitly configured consumer tools; annotations do not
+                  activate generators automatically. See
+                  [[lang.declarations.annotations#model]],
+                  [[lang.declarations.annotations#docs-and-metadata]], and
+                  [[tool.build-time-tools#annotation-driven-generation]].
+        # Compiler: 794bf761.
+        - id: changes-2026-10-04
+          title: "2026-10-04"
+          blocks:
+            - type: markdown
+              markdown: |-
+                - **Added — authored generics.** Classes, functions, interfaces, and enums can
+                  declare lexical type parameters with `of (T, U)` and use closed applications.
+                  Generic bodies are checked against their declared bounds; unconstrained type
+                  parameters do not acquire implicit defaults or copying capabilities. See
+                  [[lang.types.generics#authored-declarations]] and
+                  [[lang.types.generics#authored-bounds]].
+                - **Added — closed enums and exhaustive matching.** Scoped variants may have
+                  named payloads, are constructed with `instance`, and are decomposed with
+                  `match`. Borrowed and consuming matching preserve payload ownership. See
+                  [[lang.types.unions#enums]].
+                - **Changed — required-field construction.** A source field without a canonical
+                  or explicit default can be initialized by its constructor. Every successful
+                  constructor exit must initialize each required field exactly once before it is
+                  read or the incomplete receiver escapes. Injected object and interface fields
+                  no longer need throwaway default instances. Fields with canonical defaults,
+                  including empty collection fields, retain those defaults. See
+                  [[lang.classes.fields#initialization]] and
+                  [[lang.classes.lifecycle#lifecycle]].
+  see-also:
+    - lang.types.references
+    - lang.classes.fields
+    - tool.build-time-tools
+    - tool.packages.terrane-packages
+    - tool.packages.rust-dependencies
+provenance:
+  specification: []
+  conformance: []
+  compiler: null
