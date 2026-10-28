@@ -210,7 +210,7 @@ documentation:
             optional parameters, and each default must satisfy its parameter's destination
             type:
         - type: example
-          id: parameters-and-arguments
+          id: parameters-and-arguments-example
           title: null
           language: terrane
           mode: illustrative

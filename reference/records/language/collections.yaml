@@ -141,14 +141,9 @@ documentation:
             A value's `type` descriptor exposes `inherently-identity-bearing`. It reports
             the language contract, not backing representation: reference types report true;
             ordinary class values and collections report false.
-relationships:
   see-also:
     - std.collections
     - internals.collections.lifetime
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler:
     - crates/terrane-compiler/src/semantics/collections.rs

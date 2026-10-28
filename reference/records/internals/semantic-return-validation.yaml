@@ -71,14 +71,9 @@ documentation:
             return. This return-only postcondition is deliberately not general in-block
             member-expression narrowing and never applies to instance members; unsupported
             shapes retain their optional type and are rejected at the source boundary.
-relationships:
   see-also:
     - lang.functions.declarations
     - lang.types.optional-refinement
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler:
     - crates/terrane-compiler/src/semantics/scope_validation.rs

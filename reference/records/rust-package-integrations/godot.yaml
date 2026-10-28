@@ -133,7 +133,7 @@ documentation:
             diagnostics as runtime failure evidence.
   see-also:
     - tool.packages.rust-dependencies
-    - internals.projection-resolution
+    - internals.projection.resolution
     - internals.integration-boundaries
 
 provenance:

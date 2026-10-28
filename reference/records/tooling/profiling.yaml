@@ -60,9 +60,9 @@ documentation:
             that do not depend on inlining; allocated/retained byte thresholds render the
             report and return status 1 when exceeded. Explicit roots relocate
             copied-but-identical source and build trees; they never change identity.
-        - type: note
+        - type: admonition
           id: note.profiling.platform
-          style: warning
+          kind: warning
           markdown: |-
             CPU capture supports Linux x86-64 with host `perf` permission. Allocation
             capture requires Heaptrack and zstd; Heaptrack interposes allocation functions,
@@ -153,9 +153,9 @@ documentation:
             compiler-bundled source are embedded so exact source attribution remains
             verifiable after relocation. Source paths, symbol names, and timing are present
             and declared in the artifact privacy record.
-        - type: note
+        - type: admonition
           id: note.profiling.deferred
-          style: information
+          kind: note
           markdown: |-
             Allocation retention means allocations still live at normal exit; it is not
             garbage-collector reachability and is not automatically a leak claim. Heaptrack

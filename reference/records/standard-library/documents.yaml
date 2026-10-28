@@ -23,6 +23,8 @@ documentation:
     - json
     - yaml
     - decoding
+  see-also:
+    - lang.classes.fields
   sections:
     - id: opt-in
       title: Opt-in and supported shapes
@@ -45,9 +47,9 @@ documentation:
             tuples, and maps with string keys. Every nested value must be decodable.
             Resource-owning, inherited, custom-constructed, recursively sized, and otherwise
             unsupported classes must implement `deserializable` manually.
-        - type: note
+        - type: admonition
           id: note.documents.no-derived-encoding
-          style: warning
+          kind: warning
           markdown: |-
             Compiler-derived mapping currently covers document input only. There is no
             matching derived class-to-document encoder. A class may implement `serializable`
@@ -95,33 +97,34 @@ documentation:
             source, and field-declaration source. A class may also implement
             `document-validatable`; `validate-document` returns `string|none` after
             error-free field mapping. A returned string is a validation diagnostic.
-relationships:
-  related:
-    - lang.classes.fields
-  supersedes: []
-  superseded-by: []
-
-migration:
-  summary: null
-  steps: []
-
-notes:
-  implementation: >-
-    The compiler emits destination-specific Rust construction glue because the selected Terrane class has a statically specialized
-    Rust representation.
-  compatibility: null
-  security: >-
-    JSON/YAML parser limits and duplicate-key rejection run before typed conversion. Unknown fields require explicit policy.
-  performance: >-
-    Typed decoding parses one bounded document tree and borrows its fields and collection items while constructing the known
-    destination, transferring owned strings and map keys into the result rather than copying them. Successful traversal does not
-    canonicalize JSON, clone document subtrees, or allocate diagnostic path strings. The generic document APIs retain their
-    observable canonical encoded values.
-
-examples: []
-
-sources:
+    - id: implementation-notes
+      title: Implementation, security, and performance
+      blocks:
+        - type: admonition
+          id: note.documents.typed-decoding-implementation
+          kind: implementation
+          markdown: |-
+            The compiler emits destination-specific Rust construction glue because the
+            selected Terrane class has a statically specialized Rust representation.
+        - type: admonition
+          id: note.documents.typed-decoding-security
+          kind: warning
+          markdown: |-
+            JSON/YAML parser limits and duplicate-key rejection run before typed conversion.
+            Unknown fields require explicit policy.
+        - type: admonition
+          id: note.documents.typed-decoding-performance
+          kind: note
+          markdown: |-
+            Typed decoding parses one bounded document tree and borrows its fields and
+            collection items while constructing the known destination, transferring owned
+            strings and map keys into the result rather than copying them. Successful
+            traversal does not canonicalize JSON, clone document subtrees, or allocate
+            diagnostic path strings. The generic document APIs retain their observable
+            canonical encoded values.
+provenance:
   specification:
-    - docs/language-spec-and-compiler-architecture-draft.md#374-typed-document-decoding
-  compiler-plan: null
+    - document: language-spec
+      section: "12.4"
+  conformance: []
   compiler: null

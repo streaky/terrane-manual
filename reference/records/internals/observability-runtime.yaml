@@ -98,12 +98,7 @@ documentation:
             before global registration. A host integration can compose an optional reporting
             layer there rather than competing for a second global subscriber; omitting it
             creates no layer or work.
-relationships:
   see-also:
     - std.logging
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler: null

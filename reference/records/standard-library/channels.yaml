@@ -118,9 +118,9 @@ documentation:
             every iteration. Consuming that iteration's value does not carry moved state
             into the next declaration. An endpoint originating outside the loop remains
             consumed across its back-edge until explicitly rebound.
-        - type: note
+        - type: admonition
           id: note.channels.linear-fan-in-boundary
-          style: warning
+          kind: warning
           markdown: |-
             A built-in channel has one independently owned sender and one independently
             owned receiver. Endpoints are not clonable, and the current surface has no
@@ -128,12 +128,7 @@ documentation:
             expresses one producer/consumer ownership path, not arbitrary handler or worker
             fan-in. A multi-producer design needs an additional typed transport contract;
             duplicating a linear sender is a source error.
-relationships:
   see-also:
     - lang.functions.asynchronous
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler: null

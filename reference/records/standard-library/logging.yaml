@@ -133,13 +133,8 @@ documentation:
             are normalized to stable crate-relative paths when possible. Their origin is
             `dependency`, and their source begins with `dependency://`; the bridge never
             manufactures a Terrane call site for foreign work.
-relationships:
   see-also:
     - lang.classes.fields
     - std.documents.typed-decoding
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler: null

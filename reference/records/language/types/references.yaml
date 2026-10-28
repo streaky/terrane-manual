@@ -295,7 +295,12 @@ documentation:
               target: null
               return_value: null
               stdout: null
-              diagnostic: "Runtime panic: shared reference borrow conflict"
+              response:
+                kind: diagnostic
+                language: text
+                display: shown
+                content: "Runtime panic: shared reference borrow conflict"
+              diagnostic: null
               markdown: null
         - id: unchecked-reentry
           title: Runtime enforcement and remaining concurrent responsibilities

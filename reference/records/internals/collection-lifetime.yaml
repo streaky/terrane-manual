@@ -99,11 +99,9 @@ documentation:
     - id: descriptor-metadata
       title: Descriptor metadata
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.collections.descriptor-metadata
-          since: null
-          evidence:
-            - collection-identity-lifetime
+          kind: implementation
           markdown: |-
             Materialized descriptors carry `inherently_identity_bearing` alongside canonical
             identity, name, kind, and field metadata. The emitter reads the selected
@@ -114,15 +112,15 @@ documentation:
             collections are not. Runtime storage choices never change this bit. Inline
             `.type` expressions request the descriptor runtime; declared object members
             named `type` retain precedence.
-relationships:
   see-also:
     - lang.collections.protocols
     - internals.optimization.proof-guided-lowering
     - std.collections
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
+provenance:
+  specification: []
+  conformance:
+    - collection-identity-lifetime
+  compiler: null
 implementation:
   compiler:
     - crates/terrane-collection-support/src/lib.rs

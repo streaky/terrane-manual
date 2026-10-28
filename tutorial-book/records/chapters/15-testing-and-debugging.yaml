@@ -967,12 +967,10 @@ documentation:
           columns:
             - id: command
               title: Command
-              cell:
-                type: code
+              cell: code
             - id: purpose
               title: Purpose
-              cell:
-                type: text
+              cell: text
           rows:
             - command: break PATH:LINE
               purpose: Set or adjust a Terrane source breakpoint

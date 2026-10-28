@@ -55,7 +55,7 @@ documentation:
           id: guarded-optional-throwable
           title: Guard a stable optional binding
           language: terrane
-          mode: accept
+          mode: check
           target: null
           timeout-ms: null
           source: |-
@@ -113,7 +113,7 @@ documentation:
           id: stable-optional-cause
           title: Bind and guard a throwable cause
           language: terrane
-          mode: accept
+          mode: check
           target: null
           timeout-ms: null
           source: |-

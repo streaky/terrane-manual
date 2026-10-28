@@ -24,6 +24,9 @@ documentation:
     - fields
     - metadata
     - reflection
+  see-also:
+    - std.documents.typed-decoding
+    - std.logging
   sections:
     - id: initialization
       title: Initializing fields
@@ -190,33 +193,32 @@ documentation:
             explicit or canonical default, including one contributed by a base class or
             trait, determines `defaulted`; a declared `T|none` determines `optional`.
             Document mapping and redaction use the same field metadata.
-relationships:
-  related:
-    - std.documents.typed-decoding
-    - std.logging.events
-  supersedes: []
-  superseded-by: []
-
-migration:
-  summary: null
-  steps: []
-
-notes:
-  implementation: >-
-    The compiler retains metadata on ObjectField and materializes immutable metadata slices only when descriptor reflection
-    is required.
-  compatibility: null
-  security: >-
-    Secret metadata is policy input. Logging redacts the value before every sink rather than asking each sink to remember
-    the policy.
-  performance: >-
-    Static metadata is emitted once; field reflection allocates only the requested observed list.
-
-examples: []
-
-sources:
+    - id: implementation-notes
+      title: Implementation, security, and performance
+      blocks:
+        - type: admonition
+          id: note.classes.field-implementation
+          kind: implementation
+          markdown: |-
+            The compiler retains metadata on ObjectField and materializes immutable metadata
+            slices only when descriptor reflection is required.
+        - type: admonition
+          id: note.classes.field-security
+          kind: warning
+          markdown: |-
+            Secret metadata is policy input. Logging redacts the value before every sink
+            rather than asking each sink to remember the policy.
+        - type: admonition
+          id: note.classes.field-performance
+          kind: note
+          markdown: |-
+            Static metadata is emitted once; field reflection allocates only the requested
+            observed list.
+provenance:
   specification:
-    - docs/language-spec-and-compiler-architecture-draft.md#181-fields
-    - docs/language-scoreboard.yaml#classes
-  compiler-plan: null
+    - document: language-spec
+      section: "12.3"
+    - document: language-scoreboard
+      section: classes
+  conformance: []
   compiler: null

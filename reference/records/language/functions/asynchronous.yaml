@@ -297,9 +297,9 @@ documentation:
             Values required by Terrane cleanup remain owned by the cleanup state and are
             destroyed after that cleanup. A borrow shape that cannot assign those
             responsibilities unambiguously is rejected at the suspension point.
-        - type: note
+        - type: admonition
           id: note.async.cleanup-liveness
-          style: warning
+          kind: warning
           markdown: |-
             A deadline requests cancellation; it does not hard-kill cleanup. If cleanup
             awaits a foreign operation that never wakes, joining the task can remain

@@ -30,8 +30,8 @@ documentation:
             General declaration annotations, documentation metadata, and source-free
             declaration interfaces are implemented and verified through compiler unit and
             end-to-end conformance tests. This capability is distinct from the deferred
-            `with` declaration-realization protocol in
-            [[internals.future.decorative-modifiers]].
+            package-defined `with` declaration-realization protocol, which is not part of
+            the published compiler surface.
     - id: model
       title: Annotation types and application
       blocks:
@@ -225,7 +225,6 @@ documentation:
             deferred decorative-modifier design.
   see-also:
     - tool.build-time-tools
-    - internals.future.decorative-modifiers
 
 provenance:
   specification:

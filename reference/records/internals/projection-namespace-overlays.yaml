@@ -107,15 +107,10 @@ documentation:
             Projection, semantics, and lowering never dispatch on a dependency name,
             framework, application, or retired adapter registry. An ecosystem package
             receives no compiler-specific branch by participating in an overlay.
-relationships:
   see-also:
     - internals.projection.resolution
     - internals.integration-boundaries
     - tool.packages.rust-dependencies
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 provenance:
   specification:
     - document: language-spec

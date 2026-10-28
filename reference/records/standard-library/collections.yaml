@@ -225,9 +225,9 @@ documentation:
             Sets and unordered sets expose `.length`, `.contains; value`, `.add; value`, and
             `.remove; value`. Contains and remove return `bool`; add returns the resulting
             set. Adding an existing value leaves membership unchanged.
-        - type: note
+        - type: admonition
           id: note.collections.set-clear-boundary
-          style: warning
+          kind: warning
           markdown: |-
             The current set and unordered-set surface has no clear operation.
     - id: ranges
@@ -295,14 +295,9 @@ documentation:
             Replacement, removal, clear, and destruction have observable release ordering
             for contained values. See the collection language-contract and lowering pages
             for iterator protocol and detailed lifetime rules.
-relationships:
   see-also:
     - lang.collections.protocols
     - internals.collections.lifetime
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler:
     - crates/terrane-compiler/src/semantics/collections.rs

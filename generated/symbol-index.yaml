@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 300a998b174e5d6f9bc6ab918083a54fb4c6379a753573ef7ed052959ca11c8e
+  input-sha256: 6b140749a7cd3b05f4a98c79aba8c7ccde808445b70418f15eaa67fa629d72b8
 format: 1
 generated: true
 symbols:
@@ -1548,6 +1548,10 @@ symbols:
   record: lang.declarations.annotations
   section: grammar-and-targets
   declaration: command-option
+- name: Compilation::rust_files_for
+  record: internals.testing.conformance-timing
+  section: reviewed-lowering-artifacts
+  declaration: Compilation::rust_files_for
 - name: complete
   record: book.testing-and-debugging
   section: begin-with-one-observable-behavior
@@ -2285,6 +2289,10 @@ symbols:
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
   declaration: dev
+- name: dev
+  record: internals.testing.conformance-timing
+  section: focused-execution-and-cache-locality
+  declaration: dev
 - name: Directly callable
   record: tool.packages.rust-dependencies
   section: workflow
@@ -2353,6 +2361,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
   declaration: do
+- name: docs/measure-test-times.py
+  record: internals.testing.conformance-timing
+  section: collection-protocol
+  declaration: docs/measure-test-times.py
 - name: document-decodable
   record: std.documents.typed-decoding
   section: opt-in
@@ -2681,6 +2693,14 @@ symbols:
   record: book.types
   section: refinement-after-a-check
   declaration: estimate
+- name: every_manifest_drives_a_conformance_case
+  record: internals.testing.conformance-timing
+  section: focused-execution-and-cache-locality
+  declaration: every_manifest_drives_a_conformance_case
+- name: every_manifest_drives_a_conformance_case
+  record: internals.testing.conformance-timing
+  section: scoreboard-identity
+  declaration: every_manifest_drives_a_conformance_case
 - name: everyday-expressions.trn
   record: book.values-and-names
   section: project-calculate-a-small-purchase
@@ -3645,6 +3665,10 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: generated-rust
+- name: generated-rust/batched-dependency-free-build
+  record: internals.testing.conformance-timing
+  section: scoreboard-identity
+  declaration: generated-rust/batched-dependency-free-build
 - name: generated/diagnostics.yaml
   record: tool.diagnostics
   section: generated-index
@@ -4785,6 +4809,18 @@ symbols:
   record: lang.text.transformation
   section: string-transform
   declaration: lower
+- name: lower.authored/
+  record: internals.testing.conformance-timing
+  section: reviewed-lowering-artifacts
+  declaration: lower.authored/
+- name: lower.rs
+  record: internals.testing.conformance-timing
+  section: reviewed-lowering-artifacts
+  declaration: lower.rs
+- name: lower.support.rs
+  record: internals.testing.conformance-timing
+  section: reviewed-lowering-artifacts
+  declaration: lower.support.rs
 - name: lpt1
   record: lang.namespaces.declarations
   section: namespace-paths
@@ -7075,6 +7111,10 @@ symbols:
   record: tool.packages.testing
   section: execution
   declaration: run-process
+- name: runtime-error
+  record: internals.testing.conformance-timing
+  section: bounded-expected-runtime-failures
+  declaration: runtime-error
 - name: runtime/async_destructor.rs
   record: internals.execution.runtime-selection
   section: generated-support
@@ -7827,6 +7867,10 @@ symbols:
   record: internals.projection.resolution
   section: destination-results
   declaration: std::io::ErrorKind
+- name: stdout.txt
+  record: internals.testing.conformance-timing
+  section: bounded-expected-runtime-failures
+  declaration: stdout.txt
 - name: step
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -8591,6 +8635,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: readiness-io
   declaration: terrane_compiler::write_platform_support
+- name: TERRANE_CONFORMANCE_FILTER
+  record: internals.testing.conformance-timing
+  section: focused-execution-and-cache-locality
+  declaration: TERRANE_CONFORMANCE_FILTER
 - name: terrane_program
   record: internals.build.toolchain-profiles
   section: generated-artifacts
@@ -8603,6 +8651,14 @@ symbols:
   record: internals.build.toolchain-profiles
   section: generated-artifacts
   declaration: terrane_program_test_unit
+- name: TERRANE_SCORECARD_JOBS
+  record: internals.testing.conformance-timing
+  section: collection-protocol
+  declaration: TERRANE_SCORECARD_JOBS
+- name: TERRANE_TEST_TIMING_FILE
+  record: internals.testing.conformance-timing
+  section: collection-protocol
+  declaration: TERRANE_TEST_TIMING_FILE
 - name: TerraneAsyncMutableState::with_receiver
   record: internals.execution.runtime-selection
   section: mutable-async-callables
@@ -8614,6 +8670,10 @@ symbols:
 - name: test
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
+  declaration: test
+- name: test
+  record: internals.testing.conformance-timing
+  section: focused-execution-and-cache-locality
   declaration: test
 - name: test
   record: tool.packages.command-line

@@ -92,9 +92,9 @@ documentation:
               result: Normalized child beneath base; an absolute child replaces base.
               failure: Infallible.
 
-        - type: note
+        - type: admonition
           id: lexical-not-filesystem
-          style: warning
+          kind: warning
           markdown: |-
             Path normalization is lexical. It does not canonicalize symlinks, prove
             containment, check existence, or grant filesystem authority. Use

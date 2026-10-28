@@ -98,14 +98,9 @@ documentation:
             These are current tooling limitations, not compatibility promises or committed
             additions. Runtime shared-reference checking is independent of any future
             explicit synchronization API; it does not pretend to provide those controls.
-relationships:
   see-also:
     - std.concurrency.channels
     - lang.functions.asynchronous
     - lang.types.references
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler: null

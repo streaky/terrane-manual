@@ -143,9 +143,9 @@ documentation:
               meaning: A central feature-gated bridge exposes only the currently unprojectable operation.
               action: Declare both packages and preserve upstream identities.
 
-        - type: note
+        - type: admonition
           id: projection-cache-and-dependency-state
-          style: information
+          kind: note
           markdown: |-
             `terrane-dependencies.lock` is the tracked Cargo-compatible lock for the
             complete resolved Rust graph, including recursive packages, exact versions,

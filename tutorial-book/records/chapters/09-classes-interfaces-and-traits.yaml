@@ -305,8 +305,12 @@ documentation:
               tag.text = 'sealed'
               item parcel = instance parcel; tag
               print; item.contents.text
-          response: |-
-            sealed
+          response:
+            kind: stdout
+            language: text
+            display: shown
+            content: |-
+              sealed
           diagnostic: null
           markdown: null
 

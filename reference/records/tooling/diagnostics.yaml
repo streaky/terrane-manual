@@ -106,8 +106,12 @@ documentation:
 
             function event Event;
               return Event::Pair; 1, 2
-          response: null
-          diagnostic: T0105
+          response:
+            kind: diagnostic
+            language: text
+            display: shown
+            content: T0105
+          diagnostic: null
           markdown: null
 
         - type: example

@@ -77,16 +77,12 @@ documentation:
           id: source-intelligence-open-request
           title: Open a parse snapshot
           language: json
-          mode: static
+          mode: illustrative
           target: null
           timeout-ms: null
           source: |-
             {"schema_version":"1.0","request_id":"open-1","operation":"open-snapshot","sources":[{"uri":"file:///work/main.trn","text":"function main;\n"}]}
-          response:
-            kind: none
-            language: text
-            display: never
-            content: ""
+          response: null
           diagnostic: null
           markdown: |-
             Set `options.semantic` for canonical symbol/type queries and `options.generated`
@@ -224,7 +220,7 @@ documentation:
           id: source-intelligence-omp-project-server
           title: Use the repository-local server from oh-my-pi
           language: json
-          mode: static
+          mode: illustrative
           target: .omp/lsp.json
           timeout-ms: null
           source: |-
@@ -239,19 +235,15 @@ documentation:
                 }
               }
             }
-          response:
-            kind: none
-            language: text
-            display: never
-            content: ""
+          response: null
           diagnostic: null
           markdown: |-
             This development configuration requires oh-my-pi to start at the repository
             root. Build the executable with `cargo build -p terrane-language-server`;
             installation and `PATH` changes are unnecessary.
-        - type: note
+        - type: admonition
           id: note.source-intelligence-running-server-rebuild
-          style: warning
+          kind: warning
           markdown: |-
             Rebuilding replaces the executable on disk but does not update a language-server
             process that is already running. Restart that server process after a rebuild.

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 300a998b174e5d6f9bc6ab918083a54fb4c6379a753573ef7ed052959ca11c8e
+  input-sha256: 6b140749a7cd3b05f4a98c79aba8c7ccde808445b70418f15eaa67fa629d72b8
 format: 2
 generated: true
 records:
@@ -62,6 +62,9 @@ records:
     sections: []
   - id: changes-2026-10-26
     title: '2026-10-26'
+    sections: []
+  - id: changes-2026-10-28
+    title: '2026-10-28'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -383,7 +386,11 @@ records:
   documentation-status: complete
   surface: null
   provenance:
-    specification: []
+    specification:
+    - document: language-spec
+      section: '12.3'
+    - document: language-scoreboard
+      section: classes
     conformance: []
     compiler: null
   sections:
@@ -398,6 +405,9 @@ records:
     sections: []
   - id: classes
     title: Classes and Construction
+    sections: []
+  - id: implementation-notes
+    title: Implementation, security, and performance
     sections: []
   declaration-synopsis: []
 - id: lang.classes.protocols
@@ -1789,7 +1799,9 @@ records:
   documentation-status: complete
   surface: null
   provenance:
-    specification: []
+    specification:
+    - document: language-spec
+      section: '12.4'
     conformance: []
     compiler: null
   sections:
@@ -1801,6 +1813,9 @@ records:
     sections: []
   - id: diagnostics
     title: Outcomes, diagnostics, and validation
+    sections: []
+  - id: implementation-notes
+    title: Implementation, security, and performance
     sections: []
   declaration-synopsis: []
 - id: std.logging
@@ -3145,25 +3160,25 @@ records:
     - crates/terrane-cli/tests/cli.rs
     - crates/terrane-compiler/tests/conformance.rs
   sections:
-  - id: null
+  - id: collection-protocol
     title: Collection protocol
     sections: []
-  - id: null
+  - id: scoreboard-identity
     title: Scoreboard identity
     sections: []
-  - id: null
+  - id: generated-crate-isolation
     title: Generated-crate isolation
     sections: []
-  - id: null
+  - id: bounded-expected-runtime-failures
     title: Bounded expected runtime failures
     sections: []
-  - id: null
+  - id: focused-execution-and-cache-locality
     title: Focused execution and cache locality
     sections: []
-  - id: null
+  - id: reviewed-lowering-artifacts
     title: Reviewed lowering artifacts
     sections: []
-  - id: null
+  - id: measurement-boundary
     title: Measurement boundary
     sections: []
   declaration-synopsis: []
@@ -3319,6 +3334,7 @@ records:
     - projected-websocket-protocol
     - projected-demanded-member-cycle
     - projected-generated-api-reexport
+    - projection-namespace-overlays
     compiler: null
   sections:
   - id: direct-first
@@ -3381,7 +3397,8 @@ records:
   surface: null
   provenance:
     specification: []
-    conformance: []
+    conformance:
+    - byte-index-and-slice
     compiler: null
   sections:
   - id: selected-inputs
@@ -3438,7 +3455,8 @@ records:
   surface: null
   provenance:
     specification: []
-    conformance: []
+    conformance:
+    - collection-identity-lifetime
     compiler: null
   sections:
   - id: mutation-release-points
@@ -3468,7 +3486,9 @@ records:
   surface: null
   provenance:
     specification: []
-    conformance: []
+    conformance:
+    - list-append-bulk-mutation
+    - guarded-checked-arithmetic
     compiler: null
   sections:
   - id: optimization-contract

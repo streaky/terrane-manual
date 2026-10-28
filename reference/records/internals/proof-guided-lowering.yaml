@@ -55,12 +55,9 @@ documentation:
     - id: bounded-facts
       title: Bounded facts
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.optimization.bounded-facts
-          since: null
-          evidence:
-            - list-append-bulk-mutation
-            - guarded-checked-arithmetic
+          kind: implementation
           markdown: |-
             The compiler records exact facts rather than inferring safety from a benchmark
             or generated machine instruction. Canonical induction ranges, resolved local
@@ -116,11 +113,9 @@ documentation:
             ceiling. A larger range delegates to the ordinary bounded-growth loop, which may
             reserve at most the ceiling before normal `Vec` growth. Optimization never turns
             that capped policy into an arbitrarily large eager allocation.
-        - type: description
+        - type: admonition
           id: description.internals.optimization.list-builder-strategy
-          since: null
-          evidence:
-            - list-append-bulk-mutation
+          kind: implementation
           markdown: |-
             For a proven range beneath the allocation ceiling, lowering expresses the
             producer as an exact-size Rust range, mapping closure, and `collect` into the
@@ -171,11 +166,9 @@ documentation:
     - id: numeric-lowering-boundaries
       title: Numeric lowering boundaries
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.optimization.numeric-boundaries
-          since: null
-          evidence:
-            - guarded-checked-arithmetic
+          kind: implementation
           markdown: |-
             Fixed-width operations outside a complete proof continue through the ordinary
             checked arithmetic support. Positive-literal remainder may use direct Euclidean
@@ -186,12 +179,9 @@ documentation:
     - id: backend-handoff
       title: Backend handoff and performance claims
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.optimization.backend-handoff
-          since: null
-          evidence:
-            - list-append-bulk-mutation
-            - guarded-checked-arithmetic
+          kind: implementation
           markdown: |-
             Terrane proves the source-level shape and emits deterministic, readable,
             source-attributed Rust. Rust and LLVM remain responsible for selecting scalar,
@@ -203,16 +193,17 @@ documentation:
             Terrane-before versus Terrane-after comparison for the same workload and
             environment. Cross-language rankings and links to benchmark reports are not
             evidence for these rules.
-relationships:
   see-also:
     - internals.collections.lifetime
     - internals.semantics.conversion-lowering
     - lang.collections.protocols
     - lang.numerics.conversion
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
+provenance:
+  specification: []
+  conformance:
+    - list-append-bulk-mutation
+    - guarded-checked-arithmetic
+  compiler: null
 implementation:
   compiler:
     - crates/terrane-compiler/src/lowering/emitter/context.rs

@@ -327,14 +327,10 @@ documentation:
             does not limit active connections. When benchmarking, match connection reuse and
             shutdown policies as well as request count and protocol. A pooled client can
             finish requests while unrelated background dials are still pending.
-relationships:
   see-also:
     - lang.functions.asynchronous
     - std.concurrency.channels
     - std.concurrency.shared-state
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
 
 implementation:
   compiler: null

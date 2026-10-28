@@ -65,9 +65,9 @@ documentation:
             operating systems, architectures, LLDB versions, ABI recipes, optimized modules,
             and stripped modules report native fidelity rather than claiming equivalent
             source support.
-        - type: note
+        - type: admonition
           id: note.debugging.experimental-boundary
-          style: warning
+          kind: warning
           markdown: |-
             The CLI, DAP command set, and provenance schema are experimental in 0.1. Request
             ingress is serialized and cancellation is not advertised. Direct debugging of an

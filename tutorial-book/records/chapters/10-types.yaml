@@ -301,10 +301,14 @@ documentation:
                 print; number-envelope.payload
                 print; text-envelope.payload
                 print; ((identity of int); 42)
-          response: |-
-            41
-            hello
-            42
+          response:
+            kind: stdout
+            language: text
+            display: shown
+            content: |-
+              41
+              hello
+              42
           diagnostic: null
           markdown: null
         - type: markdown
@@ -340,8 +344,12 @@ documentation:
             function main;
                 kept = preserve; (instance note; 'hello')
                 print; (kept.describe;)
-          response: |-
-            hello
+          response:
+            kind: stdout
+            language: text
+            display: shown
+            content: |-
+              hello
           diagnostic: null
           markdown: null
         - type: markdown
@@ -394,10 +402,14 @@ documentation:
                 completed = instance operation-state::completed; result = 'done'
                 print; (report; running)
                 print; (report; completed)
-          response: |-
-            7
-            running
-            done
+          response:
+            kind: stdout
+            language: text
+            display: shown
+            content: |-
+              7
+              running
+              done
           diagnostic: null
           markdown: null
         - type: markdown

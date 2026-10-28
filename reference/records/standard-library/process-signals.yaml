@@ -60,13 +60,8 @@ documentation:
             interested subscription restores the exact prior host disposition for that
             signal kind and joins the broker worker. Receiving a signal never implicitly
             cancels a task scope or exits the process.
-relationships:
   see-also:
     - lang.functions.asynchronous
     - std.time
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
-
 implementation:
   compiler: null

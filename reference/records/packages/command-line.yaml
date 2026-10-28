@@ -162,9 +162,9 @@ documentation:
     - id: generated-package-state
       title: Generated package state and version control
       blocks:
-        - type: note
+        - type: admonition
           id: note.command-line.ignore-generated-state
-          style: information
+          kind: note
           markdown: |-
             Terrane stores generated source, native build artifacts, and reusable package
             state in `.trn/` directories. This state is derived from the package and should

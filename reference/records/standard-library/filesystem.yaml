@@ -96,9 +96,9 @@ documentation:
               failure: Sets failed and message; does not throw.
               ownership: Reads the path value.
 
-        - type: note
+        - type: admonition
           id: bounded-read-semantics
-          style: information
+          kind: note
           markdown: |-
             `filesystem-read-bounded` returns bytes in `file-data.data`. `completed` is the
             number of bytes returned. The current whole-file operation sets `end = true`
@@ -109,9 +109,9 @@ documentation:
 
             The operation never decodes text. Decode `data` explicitly with an encoding and
             catch `decode-error`; see [[std.text-bytes-codecs]].
-        - type: note
+        - type: admonition
           id: atomic-write-parent
-          style: warning
+          kind: warning
           markdown: |-
             `filesystem-write-atomic` does not promise to create missing parent directories.
             The target's parent must already exist. Success means the destination was

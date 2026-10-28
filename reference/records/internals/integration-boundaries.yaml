@@ -52,11 +52,9 @@ documentation:
             blocking standard-library sockets with a peer thread; it proves projected
             protocol behavior, not asynchronous server scheduling or framework
             compatibility.
-        - type: description
+        - type: admonition
           id: description.internals.integration-boundaries.recognize-gap
-          since: null
-          evidence:
-            - authored-rust-module
+          kind: implementation
           markdown: |-
             Reduce a failure to the smallest concrete Rust declaration and Terrane call
             before adding Rust. Inspect the complete projection diagnostic and exact
@@ -102,11 +100,9 @@ documentation:
           response: null
           diagnostic: null
           markdown: null
-        - type: description
+        - type: admonition
           id: description.internals.integration-boundaries.typed-surface
-          since: null
-          evidence:
-            - authored-rust-module
+          kind: implementation
           markdown: |-
             Put the raw call behind the narrowest practical typed Terrane function or
             method. That declaration owns parameter and result types, ownership, effects,
@@ -125,11 +121,9 @@ documentation:
     - id: overlays
       title: Namespace overlays remain generic metadata
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.integration-boundaries.overlays
-          since: null
-          evidence:
-            - projection-namespace-overlays
+          kind: implementation
           markdown: |-
             `package.metadata.terrane.namespace-overlays` is a generic Cargo metadata
             mechanism, not a shared adapter service. An enabled directly declared provider
@@ -177,12 +171,9 @@ documentation:
     - id: verification
       title: Verify the real boundary
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.integration-boundaries.verification
-          since: null
-          evidence:
-            - authored-rust-module
-            - projected-query-chain
+          kind: implementation
           markdown: |-
             Compile against the exact dependency versions, features, target, and
             capabilities. Exercise the typed Terrane boundary and every runtime behavior
@@ -216,16 +207,12 @@ documentation:
             capability tracking, and application documentation in the same work unit. A
             deleted ledger does not prove that a capability gap closed; only its stated
             direct behavior does.
-relationships:
   see-also:
     - internals.projection.namespace-overlays
     - internals.projection.resolution
     - tool.packages.rust-dependencies
     - tool.packages.package-manifest
-    - ecosystem.godot
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
+    - tool.rust-package-integrations.godot
 
 provenance:
   specification:
@@ -240,6 +227,7 @@ provenance:
     - projected-websocket-protocol
     - projected-demanded-member-cycle
     - projected-generated-api-reexport
+    - projection-namespace-overlays
   compiler: null
 
 implementation:

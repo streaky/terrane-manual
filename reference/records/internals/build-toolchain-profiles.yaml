@@ -58,11 +58,9 @@ documentation:
     - id: generated-artifacts
       title: Generated artifacts
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.build.generated-artifacts
-          since: null
-          evidence:
-            - byte-index-and-slice
+          kind: implementation
           markdown: |-
             Every generated program manifest records `unicode-data-version = "16.0.0"` under
             `[package.metadata.terrane]`. Generated support manifests use exact dependency
@@ -110,10 +108,9 @@ documentation:
     - id: native-artifact-kind
       title: Native artifact kind
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.build.native-artifact-kind
-          since: null
-          evidence: []
+          kind: implementation
           markdown: |-
             A package selects `artifact = "executable"` by default or
             `artifact = "dynamic-library"` for a host-loaded native extension. Both use the
@@ -134,10 +131,9 @@ documentation:
     - id: workspace-artifact-size
       title: Workspace artifact size
       blocks:
-        - type: description
+        - type: admonition
           id: description.internals.build.workspace-artifact-size
-          since: null
-          evidence: []
+          kind: implementation
           markdown: |-
             Workspace `dev` and `test` profiles retain incremental compilation while
             selecting line-table-only debug information. Rust backtraces, source locations,
@@ -168,12 +164,14 @@ documentation:
             every affected support dependency, generated manifest metadata, conformance
             witnesses, and language/manual claims together. Never allow a semver-compatible
             dependency update to select a new table version on its own.
-relationships:
   see-also:
     - internals.projection.resolution
-  supersedes: []
-  superseded-by: []
-  conflicts-with: []
+
+provenance:
+  specification: []
+  conformance:
+    - byte-index-and-slice
+  compiler: null
 
 implementation:
   compiler:

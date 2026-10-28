@@ -107,9 +107,9 @@ documentation:
     - id: repeated-use
       title: Why repeated by-value use can fail
       blocks:
-        - type: note
+        - type: admonition
           id: resource-shaped-values
-          style: warning
+          kind: warning
           markdown: |-
             A value containing a non-copyable foreign object, file handle, consuming
             callback, or another resource-owning field is linear. Passing it by value
