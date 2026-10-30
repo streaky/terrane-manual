@@ -45,6 +45,8 @@ regression command.
 
 Printed book chapters start on fresh pages. Authors can also place a `type: page-break` block between other blocks for an explicit print boundary; screen HTML remains continuous. The optional `id` is page-local, and the block takes no prose payload. See §11.15 of [`spec.md`](spec.md) for the output-format contract.
 
+Semantic diagrams use `type: diagram` blocks (see §11.16 of [`spec.md`](spec.md)). Keep their diagram IR in separate publication-owned files under `diagrams/`, select an explicit style-pack YAML file, and supply alternative text. HTML and PDF embed SVG; Markdown references generated PNG sidecars, so distribute its generated assets directory along with the Markdown file. Rendering graph diagrams requires Graphviz `dot`; PNG additionally requires librsvg `rsvg-convert` and the selected pack's installed fonts.
+
 The manual repository is intentionally separate from the Terrane compiler repository.
 Authored documentation remains reviewable and versionable here. Build inputs such as
 compiler snapshots are supplied by the documentation pipeline, while generated lookup

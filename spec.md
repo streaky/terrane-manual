@@ -662,12 +662,13 @@ choose a block before consulting the complete definition below.
 | `term` | `id`, `name`, `definition` | A globally identified glossary definition. |
 | `entity-index` | `query`, `sort`, `layout` | A generated member list queried from the assembled IR. |
 | `image` | `id`, `asset`, `alt`, `caption` | A validated asset with explicit accessibility semantics. |
+| `diagram` | `source`, `style`, `alt` | Semantic diagram IR rendered as SVG or PNG, with an explicit style pack. |
 | `exercise` | `id`, `title`, `prompt`, `starter`, `solution` | A structured learning task with optional starter and solution content. |
 | `page-break` | none (`id` is optional) | An explicit print page boundary with no reader-facing content. |
 
 Unknown block types and fields not allowed by the selected block type are
 errors. This table is an index, not a substitute for the field contracts and
-examples in §§11.4–11.15.
+examples in §§11.4–11.16.
 
 
 Page-level `documentation.blocks` contain introductions, learning objectives, or other content that follows the page title and summary but precedes the first titled section. Sections are ordered, may nest, and have stable local IDs:
@@ -722,6 +723,7 @@ Format version 1 block types are:
 | `example` | Structured single-file or multi-file source example and expected result. |
 | `admonition` | Semantic callout such as a note, rationale, guidance, warning, or implementation detail. |
 | `image` | Local image with explicit accessibility and caption data. |
+| `diagram` | Semantic diagram with accessible alternatives and optional caption. |
 | `exercise` | Addressable reader activity. |
 | `term` | Addressable term definition. |
 | `entity-index` | Generated query over assembled entities. |
@@ -1038,6 +1040,51 @@ A `page-break` block ends the current printed page so that the following content
 Print/PDF output honors the boundary in authored block order, including inside sections. Screen HTML remains continuous and hides the empty break marker. Generated Markdown preserves an empty HTML marker with CSS `break-after: page` and the legacy equivalent `page-break-after: always`; Markdown consumers that discard HTML or styles cannot preserve print pagination. Machine-readable output retains the block and its ID.
 
 Book print output also starts every published `chapter` record on a fresh page, including unnumbered introductory chapters and appendix chapters. Authors do not need to insert a `page-break` between chapters. Adjacent explicit and automatic boundaries must not produce an extra blank page, and a final explicit break must not add an otherwise empty trailing page.
+
+### 11.16 Diagrams
+
+```yaml
+- type: diagram
+  id: source-to-native
+  source: diagrams/source-to-native.yaml
+  style: diagrams/styles/editorial-light.yaml
+  alt: >-
+    Terrane source is checked, lowered to readable Rust, and compiled by Cargo
+    and rustc into a native executable.
+  caption: The source-to-native compilation path.
+```
+
+`source` is either a non-empty filename or an inline mapping containing the complete version-one `streaky/diagrams` semantic IR. A filename and `style` are relative to the owning publication root, not to the record or process working directory. `style` is a required filename selecting a version-one diagrams style pack; no style is inferred from the current directory. The semantic diagram describes entities, relationships, order, and grouping; the separate style pack owns colors, typography, and layout policy.
+
+```yaml
+- type: diagram
+  source:
+    version: 1
+    diagram:
+      id: checking
+      title: Checking a program
+      type: flowchart
+    nodes:
+      - id: source
+        label: Terrane source
+      - id: checked
+        label: Checked program
+    edges:
+      - id: check
+        from: source
+        to: checked
+        relation: checks
+  style: diagrams/styles/editorial-light.yaml
+  alt: Terrane source becomes a checked program.
+```
+
+`id`, `title`, and `caption` are optional and may be `null`. An `id` is a page-local anchor; `title` is plain text and `caption` is inline Markdown. Every diagram requires non-empty plain-text `alt`; diagrams are semantic content, not decorative images. Other block fields are errors. The nested diagram and style retain the diagrams package's versioned validation and vocabulary; renderers must not invent a second graph language.
+
+The Terrane manual authors diagrams in separate YAML files and references them with `source`; inline IR is accepted for other producers. Keep each publication's diagrams and selected style packs inside its own root so that the publication remains independently publishable. A diagram's `description_ref` files resolve relative to its YAML file; inline diagrams resolve them relative to the owning record's directory. Parent-relative description references are permitted only while remaining inside that publication root. Sources, packs, and description files use bounded, no-follow reads; missing files, invalid IR or styles, symlinks, and publication-root escapes are errors.
+
+HTML embeds self-contained SVG images with alternative text and optional captions. PDF prints the same SVG-bearing HTML without a Markdown intermediate. Markdown references separately generated PNG files with ordinary image syntax; SVG support varies among Markdown hosts, so PNG is the portable output contract. Generated image paths are relative to the Markdown file and deterministic for the rendered bytes. Copy the generated assets directory together with the Markdown file. JSON retains the authored block, including its source mapping or filename, rather than substituting a rendered image.
+
+Graphviz is required to render graph diagrams; PNG output additionally requires librsvg's `rsvg-convert`. The selected pack's fonts must be installed. Invalid inputs or rendering failures must not replace an existing main output file.
 
 ## 12. Markdown cross-references
 

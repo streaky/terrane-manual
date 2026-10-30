@@ -69,26 +69,13 @@ documentation:
             or virtual machine.
 
             The broad path is:
-        - type: example
-          id: legacy-fence-001
-          title: null
-          language: text
-          mode: illustrative
-          target: null
-          timeout-ms: null
-          source: |2
-            Terrane source
-                ↓
-            checked Terrane program
-                ↓
-            readable generated Rust
-                ↓
-            Cargo and rustc
-                ↓
-            native executable
-          response: null
-          diagnostic: null
-          markdown: null
+        - type: diagram
+          id: source-to-native
+          source: diagrams/source-to-native.yaml
+          style: diagrams/styles/editorial-light.yaml
+          alt: >-
+            Terrane source becomes a checked program, then readable generated Rust.
+            Cargo and rustc compile that Rust into a native executable.
 
         - type: markdown
           markdown: |-

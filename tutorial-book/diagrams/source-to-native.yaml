@@ -1,0 +1,42 @@
+version: 1
+diagram:
+  id: source-to-native
+  title: From Terrane source to a native program
+  type: flowchart
+layout:
+  direction: top-to-bottom
+nodes:
+  - id: source
+    label: Terrane source
+    kind: input
+  - id: checked
+    label: Checked Terrane program
+    kind: process
+  - id: rust
+    label: Readable generated Rust
+    kind: artifact
+    role: boundary
+  - id: toolchain
+    label: Cargo and rustc
+    kind: process
+  - id: executable
+    label: Native executable
+    kind: output
+    role: success
+edges:
+  - id: check
+    from: source
+    to: checked
+    relation: checks
+  - id: lower
+    from: checked
+    to: rust
+    relation: lowers
+  - id: build
+    from: rust
+    to: toolchain
+    relation: compiles
+  - id: link
+    from: toolchain
+    to: executable
+    relation: produces

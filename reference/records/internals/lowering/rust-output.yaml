@@ -26,6 +26,13 @@ documentation:
     - id: rust-lowering
       title: "Deterministic Rust Lowering"
       blocks:
+        - type: diagram
+          id: lowering-pipeline
+          source: diagrams/rust-lowering.yaml
+          style: diagrams/styles/editorial-light.yaml
+          alt: >-
+            The checked semantic model lowers to Rust-oriented IR, which emits
+            readable Rust modules. Cargo and rustc build the native artifact.
         - type: markdown
           markdown: |-
             Terrane uses Rust as a native compilation target rather than as a foreign

@@ -1,0 +1,36 @@
+version: 1
+diagram:
+  id: rust-lowering
+  title: Deterministic Rust lowering
+  type: architecture
+layout:
+  direction: top-to-bottom
+nodes:
+  - id: semantic-model
+    label: Checked semantic model
+    kind: input
+  - id: rust-ir
+    label: Rust-oriented IR
+    kind: process
+  - id: generated-rust
+    label: Readable Rust modules
+    kind: artifact
+    role: boundary
+  - id: native-artifact
+    label: Native artifact
+    kind: output
+    role: success
+edges:
+  - id: lower
+    from: semantic-model
+    to: rust-ir
+    relation: lowers
+  - id: emit
+    from: rust-ir
+    to: generated-rust
+    relation: emits
+  - id: compile
+    from: generated-rust
+    to: native-artifact
+    relation: builds
+    label: Cargo and rustc

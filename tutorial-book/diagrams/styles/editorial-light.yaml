@@ -1,0 +1,56 @@
+version: 1
+id: editorial-light
+palette:
+  paper: '#f5f5f5'
+  ink: '#2d3142'
+  muted: '#4f5d75'
+  rule: '#c8ccd3'
+  accent: '#eb6c36'
+  failure: '#8a4f55'
+  success: '#4f7968'
+  surface: '#ffffff'
+typography:
+  body: 'DejaVu Sans'
+  heading: 'DejaVu Serif'
+  mono: 'DejaVu Sans Mono'
+  body-size: 15
+  title-size: 38
+layout:
+  node-width: 180
+  node-height: 96
+  rank-gap: 96
+  cross-gap: 64
+  padding: 40
+lines:
+  width: 2
+  dash: solid
+nodes:
+  radius: 10
+budgets:
+  nodes: 120
+  edges: 240
+  notes: 40
+  bands: 24
+  legend: 32
+roles:
+  focal:
+    fill: '#fff0e8'
+    stroke: '#eb6c36'
+    color: '#2d3142'
+  boundary:
+    fill: '#e9edf4'
+    stroke: '#4f5d75'
+    color: '#2d3142'
+  external:
+    fill: '#ffffff'
+    stroke: '#4f5d75'
+    color: '#4f5d75'
+    dash: dashed
+  failure:
+    fill: '#f6ebec'
+    stroke: '#8a4f55'
+    color: '#8a4f55'
+  success:
+    fill: '#eaf2ed'
+    stroke: '#4f7968'
+    color: '#4f7968'
