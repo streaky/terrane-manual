@@ -40,6 +40,14 @@ documentation:
             aliasing or identity. Ordinary assignment therefore provides independent value
             behavior without requiring an eager physical duplication of backing storage.
 
+            Observation is not itself a value-copy boundary. Read-only builtin operations
+            and native calls whose inputs admit storage-preserving borrows can observe
+            existing storage without first constructing an independent owned input. Explicit
+            `ref` expresses an identity and lifetime relationship; it is not a performance
+            switch required for ordinary reads. The compiler must still preserve independent
+            value copies, source evaluation order, and any real ownership or representation
+            conversion required by the consumer.
+
             Use references only when shared identity is intentional. `ref T` is an explicit
             non-owning observer of an identity owned elsewhere and does not extend its
             lifetime. `shared ref T` preserves identity and carries shared ownership, so it

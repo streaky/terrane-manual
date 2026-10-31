@@ -176,6 +176,63 @@ documentation:
             divided by `-1`. Exact bounded integer-to-float conversions likewise use direct
             native conversion only when the compiler proves representability; conversion
             policy and failure behavior remain defined by Conversion analysis and lowering.
+    - id: borrowed-observations
+      title: Borrowed observations and native boundaries
+      blocks:
+        - type: markdown
+          markdown: |-
+            Observation lowering uses the canonical operand-reference/place planner rather
+            than asking for an owned expression and borrowing its snapshot. Physical
+            source/native fields, required-field getters, indexed list/map places, and
+            flow-available storage retain their real owner. Computed members and fields
+            requiring representation conversion still use their canonical value lowering;
+            they are not fabricated as Rust fields.
+
+            Indexed places bind each checked lookup immediately with a fresh binding before
+            later index or argument setup. This preserves nested element selection, failure
+            attribution, and receiver-before-argument evaluation. String-builtin literal
+            arguments use borrowed native string literals. Physical host-result fields use
+            canonical intrinsic member metadata, so stream decoding borrows its input buffer
+            without copying it merely to obtain a reference.
+
+            Projected parameters record whether their input representation can preserve
+            source storage. The same decision selects generated facade signatures and call
+            operands. String slices remain distinct from references to `String`;
+            identity-element native slices/vectors borrow the persistent list backing.
+            Synchronous provided-interface defaults propagate this input ABI through
+            protocol declarations, wrappers, forwarding implementations, and bound-method
+            adapters. Stored source callable values keep their declared value ABI.
+
+            Immediate text/byte iteration uses native lazy traversal and scopes iterator
+            destruction to the loop. Canonical scoped mutation facts decide whether the
+            source can be lent or needs a traversal snapshot. Explicitly shared storage
+            retains snapshot traversal rather than holding a shared guard across user code;
+            ordinary stable loans may span suspension under their lender rules.
+            Scalar/grapheme items remain owned strings; stored views and general source
+            value representations are not converted to a universal COW box.
+
+            Repeated simple borrowed-place operands from one canonical shared binding can
+            reuse one bounded read guard. Syntactic simplicity is not guard independence:
+            selectors that read guarded storage and ordinary value-lowered guarded operands
+            cannot run under that coalesced guard. Different bindings may alias, so multiple
+            binding roots do not acquire simultaneous read guards without a distinctness
+            proof. Guarded list/map selectors snapshot their collection before evaluating
+            the selector, releasing the collection's guard first. Builtin/native operand
+            conflict checks include guarded reads nested inside otherwise unguarded paths.
+            Snapshot lowering always binds the copied value in an inner statement before
+            yielding it, including when reference setup is empty for a shared-async `this`
+            handle. A bare clone expression, even as a block tail, can retain a Rust lock
+            temporary through a following chained lookup. Effectful operands retain
+            receiver-before-effects snapshots too. This is not a transitive alias solver or
+            a change to runtime reentry policy. Native argument planning selects borrow,
+            snapshot, retained-value, forwarding, or value modes without changing callback
+            precedence. Exact direct-await context permits a bounded input loan. Retained
+            native tasks capture canonical owned value inputs: reuse can transfer ownership,
+            while COW lists share their backing until a subsequent write separates it. The
+            task constructs its borrowing native future inside that ownership boundary.
+            Stage native receiver references outside the task body so `async move` does not
+            accidentally consume their owners. Shared-backed copyable inputs retain bounded
+            snapshots rather than carrying a guard across suspension.
     - id: backend-handoff
       title: Backend handoff and performance claims
       blocks:
@@ -203,6 +260,8 @@ provenance:
   conformance:
     - list-append-bulk-mutation
     - guarded-checked-arithmetic
+    - native-read-storage
+    - borrowed-text-observations
   compiler: null
 implementation:
   compiler:
@@ -210,5 +269,10 @@ implementation:
     - crates/terrane-compiler/src/lowering/emitter/expressions.rs
     - crates/terrane-compiler/src/lowering/emitter/guarded_arithmetic.rs
     - crates/terrane-compiler/src/lowering/emitter/statements.rs
+    - crates/terrane-compiler/src/lowering/emitter/read_access.rs
+    - crates/terrane-compiler/src/lowering/emitter/native_callable.rs
+    - crates/terrane-compiler/src/lowering/emitter/native_arguments.rs
     - tests/conformance/run/list-append-bulk-mutation/case.trn
     - tests/conformance/run/guarded-checked-arithmetic/case.trn
+    - tests/conformance/run/native-read-storage/src/main.trn
+    - tests/conformance/run/borrowed-text-observations/case.trn

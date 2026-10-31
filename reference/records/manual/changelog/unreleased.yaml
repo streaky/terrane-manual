@@ -191,14 +191,17 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            - **Added — semantic documentation diagrams.** Manual `diagram` blocks accept
-              referenced or inline version-one diagram IR, an explicit style-pack file, and
-              required alternative text. The manual keeps its diagram sources in separate
-              YAML files. HTML and PDF embed SVG; Markdown links generated PNG sidecars that
-              must travel with the output file. Rendering uses Graphviz, with librsvg
-              additionally required for PNG. Sources, styles, and referenced descriptions
-              remain confined to the owning publication. See
-              [[internals.lowering.rust-output#lowering-pipeline]].
+            - **Changed — borrowed core observations and native inputs.** Read-only
+              text/byte builtins and storage-preserving Rust inputs no longer clone an owned
+              intermediate merely to borrow it. Native free/static calls, indexed inputs,
+              and synchronous provided-interface facades preserve existing storage; COW list
+              reads do not separate their backing. Immediate text-view loops traverse lazily
+              rather than collecting the complete view first. Required ownership
+              conversions, mutation isolation, evaluation-order snapshots, and bounded
+              shared-guard lifetimes remain intact. No source syntax migration is required.
+              See [[lang.ownership.value-semantics#value-copy-semantics]],
+              [[tool.packages.rust-dependencies#crossed-types]], and
+              [[internals.optimization.proof-guided-lowering#borrowed-observations]].
   see-also:
     - manual.changelog
     - lang.types.references

@@ -64,15 +64,18 @@ documentation:
           id: note.profiling.platform
           kind: warning
           markdown: |-
-            CPU capture supports Linux x86-64 with host `perf` permission. Allocation
-            capture requires Heaptrack and zstd; Heaptrack interposes allocation functions,
-            so this is an instrumented optimized run rather than production-identical
-            execution. Process-memory timelines use Linux procfs and report unavailable
-            fields rather than substituting a nearby counter. Unsupported hosts, targets,
-            missing tools, permission failures, collector failures, and unusable captures
-            fail explicitly. A `.trnprof` file can contain source paths, symbols, allocation
-            stacks, timings, and workload structure; treat it as diagnostic material rather
-            than an anonymous report.
+            CPU capture supports Linux x86-64 with host `perf` permission. The collector
+            requests user-space CPU events and user-space-only DWARF callchains; it does not
+            request kernel callchains. `perf_event_paranoid = 2` does not by itself require
+            a weaker host setting for this capture. Other security restrictions may still
+            deny access. Allocation capture requires Heaptrack and zstd; Heaptrack
+            interposes allocation functions, so this is an instrumented optimized run rather
+            than production-identical execution. Process-memory timelines use Linux procfs
+            and report unavailable fields rather than substituting a nearby counter.
+            Unsupported hosts, targets, missing tools, permission failures, collector
+            failures, and unusable captures fail explicitly. A `.trnprof` file can contain
+            source paths, symbols, allocation stacks, timings, and workload structure; treat
+            it as diagnostic material rather than an anonymous report.
     - id: optimized-build
       title: Optimized exact-build evidence
       blocks:

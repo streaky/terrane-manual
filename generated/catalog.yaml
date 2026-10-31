@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3e18c83ade78c79168e8f0aa3bc17a00e2c50fc3cbcb83636d1e54e3b78a440c
+  input-sha256: b99340273e96ea15ae458c8effbf3de332215aaa7d999044bd4470d41da88608
 format: 2
 generated: true
 records:
@@ -3492,6 +3492,8 @@ records:
     conformance:
     - list-append-bulk-mutation
     - guarded-checked-arithmetic
+    - native-read-storage
+    - borrowed-text-observations
     compiler: null
   sections:
   - id: optimization-contract
@@ -3508,6 +3510,9 @@ records:
     sections: []
   - id: numeric-lowering-boundaries
     title: Numeric lowering boundaries
+    sections: []
+  - id: borrowed-observations
+    title: Borrowed observations and native boundaries
     sections: []
   - id: backend-handoff
     title: Backend handoff and performance claims
@@ -3531,6 +3536,16 @@ records:
   - function positive-lower-bound; input int8
   - function global-condition int8; input int8
   - function main
+  - class holder
+  - class inspector implements Inspect
+  - function marker bool
+  - function read-holder; item ref holder
+  - class holder
+  - function replace-shared string; owner shared ref holder
+  - function shrink-shared int; owner shared ref holder
+  - function counted-key string; owner shared ref holder, key string
+  - function decode-input string; source ref bytes
+  - function scan-input int; source ref string
 - id: internals.diagnostics.source-projection
   title: Source-projected backend diagnostics
   summary: Cargo and `rustc` failures are projected through generated-Rust spans into source-oriented

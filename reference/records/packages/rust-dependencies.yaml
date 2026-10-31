@@ -224,6 +224,38 @@ documentation:
             normal checked native conversion into an owned vector for the call. Empty lists
             are valid. Mutable slice parameters remain unavailable.
 
+            Native read-only `&str`, `&String`, byte-buffer, foreign-object, and
+            identity-element list inputs retain storage-preserving borrows through both
+            direct calls and generated free/static facades. Ordinary names, source and
+            native fields, indexed list/map values, and supported narrowed storage do not
+            need an explicit source reference merely to avoid an input snapshot. Synchronous
+            provided native trait methods retain the same borrowing through generated
+            interface facades, including reference receivers.
+
+            Reading a COW-backed list through that boundary does not separate its backing
+            storage. A subsequent Terrane mutation still separates shared backing before
+            changing it. Native mutable-reference calls use live places rather than
+            modifying a disposable input snapshot. Genuinely owned native inputs and
+            element-representation conversions retain their ownership and conversion
+            requirements.
+
+            A directly awaited native call can lend value inputs for the duration of that
+            await. A retained task instead owns its value inputs so replacing or mutating
+            the caller's value before polling cannot change the task's input. Canonical
+            value reuse can transfer a last-use input; COW-backed lists retain shared
+            backing and separate only when the caller subsequently mutates them. This does
+            not change declared reference contracts or remove existing restrictions
+            requiring borrowed projected asynchronous operations to be awaited immediately.
+
+            Shared storage uses bounded guards. Simple repeated reads of one canonical
+            shared owner can use one guard for a synchronous invocation. A retained native
+            future cannot keep that guard across suspension: copyable text/buffer inputs are
+            snapshotted before the task is created and owned by the task. Argument effects
+            and source replacement can likewise require an input snapshot to preserve
+            evaluation order. Stored source callables retain their declared value-parameter
+            ABI; adapting a native function does not silently turn a value parameter into a
+            source reference.
+
             Concrete native methods with `self: Box<Self>` consume the source value;
             lowering reconstructs the box required by that native receiver ABI. This does
             not reinterpret arbitrary wrapped receivers as consuming methods.
@@ -295,9 +327,11 @@ documentation:
             `str` preserve this behavior. Named string owners keep their existing borrow
             rules, and owned-string or reference-to-owned-string parameters retain their
             distinct ABI; this is not a general conversion of every string argument to a
-            slice. Calls through generated interface facades, including reference receivers,
-            retain their owned Terrane parameter contract even when the underlying Rust
-            trait method takes a string slice.
+            slice. Synchronous provided native methods preserve borrowed inputs through
+            generated interface facades as described in
+            [[tool.packages.rust-dependencies#crossed-types]]. Other source callable ABIs
+            and asynchronous interface facades retain their declared value-parameter
+            contracts.
 
             Projected asynchronous interface methods require `Send` and an asynchronous
             package entry. Terrane-driven calls run within that generated runtime. A Rust
