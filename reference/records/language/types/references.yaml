@@ -136,12 +136,18 @@ documentation:
             to the ordinary reference lifetime rules. The compiler does not implicitly
             promote a plain owner into shared storage to unify these carriers.
 
-            A field read from shared storage materializes its result inside a bounded guard
-            scope and releases the guard before evaluating sibling expressions. This applies
+            A standalone field read from shared storage materializes its result inside a
+            bounded guard scope and releases the guard before sibling effects. This applies
             to owning handles, weak observers, and the original named owner, including Copy
-            scalars and inheritance-backed getters. Field writes, required-slot replacement,
-            and nested collection mutations instead retain the live storage identity; they
-            do not mutate a receiver snapshot.
+            scalars and inheritance-backed getters. Builtin and native borrowed observations
+            may instead lend physical fields and reuse one bounded guard for simple
+            borrowed-place operands from one canonical binding. Effect-free syntax alone
+            does not prove guard independence: an index or map key may read guarded storage,
+            and different bindings may alias the same storage. Such selectors and
+            uncoalesced competing guarded operands retain bounded receiver snapshots whose
+            guards end before subsequent reads or effects. Field writes, required-slot
+            replacement, and nested collection mutations retain the live storage identity;
+            they do not mutate a receiver snapshot.
 
             A guarded synchronous method call captures its receiver identity first,
             evaluates explicit arguments in written order and supplies defaults before
@@ -192,11 +198,15 @@ documentation:
           blocks:
             - type: markdown
               markdown: |-
-                Field reads produce the requested owned result inside a bounded guard scope,
-                including inherited getters, Copy scalars, weak observers, and original shared
-                owners. The guard ends before sibling expressions run. Repeated field reads in
-                arithmetic, aggregate elements, and explicit arguments therefore do not retain
-                the first read's guard across the next.
+                Standalone field reads produce the requested owned result inside a bounded guard
+                scope, including inherited getters, Copy scalars, weak observers, and original
+                shared owners. Builtin/native borrowed observations may coalesce simple
+                borrowed-place operands from one canonical binding when their selectors require
+                no guarded reads. Guarded selectors, potentially aliased competing guards, and
+                effectful operands instead retain bounded snapshots; the snapshot guard ends
+                before later reads or effects. Ordinary value-lowered arguments likewise must
+                not reacquire a coalesced guard. Unrelated arithmetic and aggregate reads remain
+                bounded per operand.
 
                 Synchronous calls capture receiver identity first, evaluate explicit arguments
                 in source order, supply defaults, then acquire the invocation guard. Writes and

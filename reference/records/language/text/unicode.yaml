@@ -47,6 +47,14 @@ documentation:
             The UTF-8 byte view of a string is distinct from the `bytes` type. `bytes` is an
             immutable sequence of arbitrary octets; conversion between `string` and `bytes`
             is explicit through an encoding object.
+
+            Immediate `for` traversal of a string or its byte, scalar, or grapheme view does
+            not first collect the complete view into a list. A stable source is borrowed for
+            the traversal. If the loop can mutate or replace the source, lowering preserves
+            the original traversal with a source snapshot instead. Shared-storage guards do
+            not remain held while the loop body executes. Scalar and grapheme items retain
+            their ordinary string value representation; this does not introduce a
+            borrowed-character type or change stored-view semantics.
     - id: unicode-version
       title: "Unicode Data Version"
       blocks:
