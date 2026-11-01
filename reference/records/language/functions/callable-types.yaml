@@ -138,6 +138,11 @@ documentation:
             invocation through that storage observes the written bound. The same rules apply
             to synchronous and asynchronous callable values.
 
+            Compatibility is checked against the written throwable bound before exact
+            initializer metadata is retained. Refining borrowed environment storage or
+            recording an inferred escaping identity cannot widen that bound or grant
+            permission to throw an unrelated native error.
+
             A bodyless interface signature is abstract, not an empty implementation. Its
             written throwable bound supplies the dispatch ABI and possible effects for
             interface and generic-bound callers. Concrete implementations retain their own
