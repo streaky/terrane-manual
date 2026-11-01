@@ -143,6 +143,10 @@ documentation:
             recording an inferred escaping identity cannot widen that bound or grant
             permission to throw an unrelated native error.
 
+            A callable environment that owns an exclusive borrowed capture is noncopyable,
+            including a repeatable mutable callable. Transferring that callable to another
+            binding moves the environment; the original binding cannot be invoked afterward.
+
             A bodyless interface signature is abstract, not an empty implementation. Its
             written throwable bound supplies the dispatch ABI and possible effects for
             interface and generic-bound callers. Concrete implementations retain their own
