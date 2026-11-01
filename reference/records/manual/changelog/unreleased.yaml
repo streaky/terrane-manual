@@ -224,6 +224,18 @@ documentation:
               proven native dereference targets while retaining the owning pointer's
               identity and respecting mutable and consuming access. See
               [[internals.projection.resolution#native-receiver-regions]].
+    - id: changes-2026-11-01
+      title: "2026-11-01"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Fixed — reference and callable compatibility.** Ordinary observers retain
+              their mutation, move, and replacement invalidation checks; shared ownership
+              can be established from fresh factory results as well as constructors.
+              Borrowed callable storage refinement validates the declared throwable bound
+              before retaining inferred escaping identities. Repeated reads of narrowed
+              optional or union storage no longer move a payload before its final use. See
+              [[lang.types.references]] and [[lang.functions.callable-types#compatibility]].
   see-also:
     - manual.changelog
     - lang.types.references

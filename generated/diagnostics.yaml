@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9bdccf906a8c617899d13ddc9af2aa29e4c4a1f871f06325e5542af24ada599b
+  input-sha256: 7bab0a80f01947221dd92243034f114459af1063026fe81f64feb7ccdcd7e730
 format: 1
 generated: true
 diagnostics:
@@ -1972,7 +1972,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 573
+    line: 574
 - code: T0074
   messages:
   - '`task-group` requires one child result type descriptor'
@@ -2030,9 +2030,9 @@ diagnostics:
   - task group cannot be copied, moved, borrowed, or returned; use its operations in the owning scope
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 675
+    line: 676
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 689
+    line: 690
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
     line: 31
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
@@ -2178,9 +2178,9 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 748
+    line: 749
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 762
+    line: 763
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 617
   - path: crates/terrane-compiler/src/semantics/expressions.rs
