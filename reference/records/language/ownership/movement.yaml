@@ -43,6 +43,11 @@ documentation:
             for emphasis where transfer is already required for a noncopyable value. It
             neither creates a second owner nor keeps the moved-from binding available.
 
+            This also applies to copyable scalars such as `int`. After explicitly moving an
+            integer, its old binding is unavailable until rebound; rebinding does not change
+            the integer already transferred to the destination. Compact and
+            arbitrary-precision integer storage obey the same source ownership rule.
+
             Replacing a binding ends the lifetime of its previous value. Reference
             provenance tied to that value is bounded by the replacement, so a dependent
             reference cannot be used afterward. Uses after a move, replacement, or other
