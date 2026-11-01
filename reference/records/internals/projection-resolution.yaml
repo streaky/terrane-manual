@@ -427,9 +427,11 @@ documentation:
             Canonical last-dependent-use metadata selects an explicit release point for a
             local carrier so its captured loans do not remain live merely because the
             carrier has drop glue. Transfers follow binding identity, and release points
-            respect enclosing branch and loop boundaries. This is a lifetime repair, not a
-            new unboxed callable representation; eliminating existing callable erasure is a
-            separate optimization, not required to resume access to the original owner.
+            respect enclosing branch and loop boundaries. Abrupt exits use normal lexical
+            destruction rather than an unreachable release after the exit. This is a
+            lifetime repair, not a new unboxed callable representation; eliminating existing
+            callable erasure is a separate optimization, not required to resume access to
+            the original owner.
 
             A concrete invocation-scoped callback result also supplies context for nested
             native expression macros and terminal conversions. Open native families remain
