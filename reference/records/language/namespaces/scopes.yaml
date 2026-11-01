@@ -131,7 +131,10 @@ documentation:
             turn a non-transferable guard into a transferable value. Suspension additionally
             requires the native transfer and lifetime contracts to hold. Nested acquisition
             of the same resource follows that resource's locking and reentrancy contract;
-            this construct is not a deadlock detector.
+            this construct is not a deadlock detector. In particular, acquiring the same
+            non-reentrant mutex again while its guard is live can deadlock. Region nesting
+            guarantees cleanup, not acquisition progress; callers must follow the resource
+            API's reentrancy contract.
 
             Ordinary references, smart-pointer method calls, and temporary native argument
             conversions do not require explicit regions merely because they borrow. Use this

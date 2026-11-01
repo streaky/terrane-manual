@@ -217,6 +217,13 @@ documentation:
             Captures, aggregates, returned references, and asynchronous work preserve lender
             validity and exclusivity rather than extending a borrow's lifetime. Retaining a
             callable never makes its borrowed captures owning.
+
+            Binding another name from a mutable-reference handle transfers that handle;
+            later use of the old binding is a use-after-move error. Returning a mutable
+            reference to an identity-backed field borrows the original field, not an owned
+            snapshot. A locally retained callable keeps its captured loans live through its
+            final dependent use; after release, the original owner becomes accessible again
+            without requiring an explicit `scoped-access` region.
     - id: shared-deadlocks
       title: Checked shared storage and concurrent deadlocks
       blocks:

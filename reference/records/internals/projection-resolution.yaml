@@ -423,6 +423,14 @@ documentation:
             families. Type compatibility compares native representations independently of
             region provenance; destination and escape validation still enforce each loan.
 
+            Borrowed callable environments retain their existing erased runtime carriers.
+            Canonical last-dependent-use metadata selects an explicit release point for a
+            local carrier so its captured loans do not remain live merely because the
+            carrier has drop glue. Transfers follow binding identity, and release points
+            respect enclosing branch and loop boundaries. This is a lifetime repair, not a
+            new unboxed callable representation; eliminating existing callable erasure is a
+            separate optimization, not required to resume access to the original owner.
+
             A concrete invocation-scoped callback result also supplies context for nested
             native expression macros and terminal conversions. Open native families remain
             deferred until that graph is closed; the selected terminal conversion is emitted
