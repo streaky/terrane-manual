@@ -25,10 +25,12 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `ref T` is a non-owning reference to an identity and does not extend the
-            lender's lifetime. `shared ref T` is an explicit shared owner. `move` transfers
-            an owned value. Assignment and calls do not silently convert among these
-            contracts, and a `ref T` cannot be promoted to `shared ref T`.
+            `ref T` grants non-owning, read-only access to an identity and does not extend
+            the lender's lifetime. `mutable ref T` explicitly grants non-owning mutation
+            authority, subject to exclusive-loan rules. `shared ref T` is an explicit shared
+            owner with its existing checked mutation model. `move` transfers an owned value.
+            Calls do not silently upgrade read-only access or turn borrowing into shared
+            ownership, and a `ref T` cannot be promoted to `shared ref T`.
 
             Copying `shared ref T` copies its owning handle, not `T`. A resource-shaped or
             non-Clone native referent therefore does not by itself make a containing class
@@ -107,16 +109,15 @@ documentation:
             an owner in a different value carrier. It currently requires an exact referent
             type; subtype/interface assignability and owner-to-reference-base borrowing are
             not supported. This documents current expressibility only; it does not decide
-            whether future assignability support should be added. Ordinary source references
-            are read-only: direct field, nested field, indexed, compound, and
-            increment/decrement writes through them receive `T0147`, as do mutable
-            source-method calls through such a reference. Mutate an owned receiver or an
-            explicit shared owner instead. Checked shared-storage mutation and inferred
-            projected-native reference mutability remain separate. Returning `ref T` from a
-            function declared to return an owned generic `T` receives `T0015`; declare a
-            `ref T` result when borrowing is intended. Projected Rust borrowed arguments
-            follow their projected signature's conversion contract; invocation-scoped native
-            views retain their separate lifetime rules.
+            whether future assignability support should be added. Plain `ref T` is read-only
+            for both authored and projected native values: direct field, nested field,
+            indexed, compound, and increment/decrement writes receive `T0147`, as do
+            mutation-capable calls. Use an owned receiver, `mutable ref T`, or an explicit
+            shared owner with its checked access model. Returning `ref T` from a function
+            declared to return an owned generic `T` receives `T0015`; declare a reference
+            result when borrowing is intended. Projected Rust borrowed arguments follow
+            their projected signature's conversion contract; invocation-scoped native views
+            retain their separate lifetime rules.
 
             Inferred ordinary-reference bindings retain the same owner provenance and weak
             storage as explicitly typed observers. Copying such an observer copies only its
@@ -167,12 +168,55 @@ documentation:
             runtime contract, guard lifetimes, concurrent limitations and safe structuring
             guidance.
 
-            A projected native reference parameter uses shared access for observation.
-            Mutating native operations, including operations reached through source helper
-            calls, infer a mutable native borrow and require matching caller access. This
-            inference does not copy the referent, transfer ownership, or grant mutation
-            through a shared native input. Authored-class receiver authority remains
-            explicit.
+            Native mutation inference implements declared authority; it does not grant
+            additional authority. Projected Rust mutable parameters surface as
+            `mutable ref T`. Forwarding through helpers, callable values, captures, or
+            reference-returning operations must preserve that requirement. Shared ownership
+            alone is not permission to create an ordinary exclusive native borrow.
+    - id: mutable-references
+      title: Explicit mutable references
+      blocks:
+        - type: markdown
+          markdown: |-
+            A mutable reference writes to the original referent without taking ownership.
+            Assignment through a mutable-reference binding replaces that referent, not the
+            binding's target. A scalar reset therefore changes the caller's scalar; whole
+            value replacement releases the old value according to its normal destruction
+            contract. There is no implicit retargeting operation.
+        - type: example
+          id: mutable-scalar-reset
+          title: Declaration-directed write-through
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            function reset; value mutable ref int
+                value = 8
+            function main;
+                value = 2
+                reset; value
+                print; value
+          response: null
+          diagnostic: null
+          markdown: >-
+            The call borrows according to the parameter declaration. It does not spell a
+            unary reference conversion at the argument.
+        - type: markdown
+          markdown: |-
+            Mutable-reference handles are not copyable ownership values. A reborrow
+            temporarily suspends conflicting access through its parent, and the parent can
+            resume after the child's last dependent use. A read-only reborrow cannot regain
+            mutation authority. Overlapping exclusive loans and conflicting observations
+            reject; proven disjoint field or element paths may be borrowed independently.
+            Simultaneous arguments and a mutation-capable receiver obey the same rules.
+
+            Borrowing does not implicitly acquire a mutex, clone a referent, or create a
+            shared owner. Constants and read-only references cannot supply mutable access;
+            explicitly shared-backed storage retains its own checked access protocol.
+            Captures, aggregates, returned references, and asynchronous work preserve lender
+            validity and exclusivity rather than extending a borrow's lifetime. Retaining a
+            callable never makes its borrowed captures owning.
     - id: shared-deadlocks
       title: Checked shared storage and concurrent deadlocks
       blocks:

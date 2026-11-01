@@ -33,14 +33,16 @@ documentation:
             namespace scope, program-global scope, and finally the selected prelude.
             Namespace lookup includes the current namespace and its parents. The nearest
             matching binding shadows farther bindings; shadowing changes which identity a
-            spelling resolves to rather than merging declarations. Only named and anonymous
-            function bodies create lexical scopes. Conditional, selection, and loop bodies
-            share the surrounding function's declarations. Their variables remain visible
-            afterward. Control flow determines availability separately from the union of
-            reaching value types; uncertain uses check availability using uncertainty
-            represented only for variables that need it. Proven uses need no source-level
-            availability check, though native lowering may safely assert the compiler
-            invariant when the variable needs uncertainty storage elsewhere.
+            spelling resolves to rather than merging declarations. Named and anonymous
+            function bodies create lexical scopes; explicit `with scoped-access` regions
+            additionally bound their acquisition and body-local declarations. Ordinary
+            conditional, selection, and loop bodies share the surrounding function's
+            declarations. Their variables remain visible afterward. Control flow determines
+            availability separately from the union of reaching value types; uncertain uses
+            check availability using uncertainty represented only for variables that need
+            it. Proven uses need no source-level availability check, though native lowering
+            may safely assert the compiler invariant when the variable needs uncertainty
+            storage elsewhere.
 
             A reachable loop back-edge can bring a later body declaration into lookup at an
             earlier body use. This does not make the value available on the first iteration,
@@ -89,6 +91,57 @@ documentation:
             replace one another in source order; across files, normalized relative
             source-path order determines the resulting identity and the earlier import
             binding identified by the warning.
+    - id: scoped-access
+      title: Explicit bounded access
+      blocks:
+        - type: markdown
+          markdown: |-
+            `with scoped-access` bounds an explicitly acquired value and the operations
+            depending on it. The initializer must be grouped separately from the
+            parenthesized statement body, so call arguments cannot be mistaken for the
+            region. The acquisition binding and body-local declarations do not escape.
+            Assignments to already visible outer variables still target those variables.
+        - type: example
+          id: bounded-resource
+          title: A deliberate release boundary
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            with scoped-access guard = (mutex.lock;) (
+                inspect; guard
+            )
+          response: null
+          diagnostic: null
+          markdown: >-
+            The acquisition and inspection APIs are illustrative. The grouped initializer
+            and body show the language's region syntax.
+        - type: markdown
+          markdown: |-
+            Acquisition executes once. A successfully acquired value is released on every
+            exit, including errors, returns, and loop exits. Nested acquisitions unwind in
+            reverse order; if an inner acquisition fails, no nonexistent inner value is
+            released. Independently owned results may leave through an outer assignment, but
+            the acquired value and dependent borrowed views may not escape through returns,
+            aggregates, captures, or retained tasks.
+
+            Native borrowed results retain their actual lenders and lifetime relationships.
+            A region does not extend those lenders, make an invalid acquisition valid, or
+            turn a non-transferable guard into a transferable value. Suspension additionally
+            requires the native transfer and lifetime contracts to hold. Nested acquisition
+            of the same resource follows that resource's locking and reentrancy contract;
+            this construct is not a deadlock detector.
+
+            Ordinary references, smart-pointer method calls, and temporary native argument
+            conversions do not require explicit regions merely because they borrow. Use this
+            construct when choosing a deliberate release boundary matters.
+
+            `with` applications resolve lexically to typed compile-time modifier contracts.
+            Arguments, declaration targets, ordering, and repetition are validated before
+            lowering. `scoped-access` is the supported compiler-defined structural
+            operation; package-defined realization operations are not implemented and are
+            rejected, rather than accepted as inert modifiers.
   see-also: []
 
 provenance:

@@ -183,6 +183,7 @@ documentation:
                 - throws
                 - construct
                 - destruct
+                - with
             - area: Control flow and errors
               words:
                 - if

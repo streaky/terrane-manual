@@ -202,6 +202,28 @@ documentation:
               See [[lang.ownership.value-semantics#value-copy-semantics]],
               [[tool.packages.rust-dependencies#crossed-types]], and
               [[internals.optimization.proof-guided-lowering#borrowed-observations]].
+    - id: changes-2026-10-31
+      title: "2026-10-31"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — explicit mutable borrowing and bounded native access.**
+              `mutable ref T` authorizes mutation of the original value, including
+              write-through replacement, under exclusive-loan rules. Plain `ref T` remains
+              read-only for both source and projected native values: native callers that
+              previously relied on inferred mutable reference authority must state
+              `mutable ref T`. Shared-reference ownership and its checked access model are
+              unchanged. See [[lang.types.references#mutable-references]].
+            - **Added — scoped acquisition regions.** General typed, lexically resolved
+              `with` machinery supports `with scoped-access` with an explicit acquisition
+              binding, deterministic nested cleanup, and dependent-view escape checks.
+              Ordinary borrowing and pointer calls do not require a region. Additional
+              realization operations remain unsupported. See
+              [[lang.namespaces.scopes#scoped-access]].
+            - **Changed — native smart-pointer receivers.** Ordinary member calls can reach
+              proven native dereference targets while retaining the owning pointer's
+              identity and respecting mutable and consuming access. See
+              [[internals.projection.resolution#native-receiver-regions]].
   see-also:
     - manual.changelog
     - lang.types.references

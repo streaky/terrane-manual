@@ -26,22 +26,23 @@ documentation:
       blocks:
         - type: admonition
           kind: important
-          title: Planned syntax
+          title: Additional modifier operations remain planned
           markdown: >-
-            This is a future language design. The selected compiler does not accept a `with`
-            clause, and version one defers custom declaration modifiers and package-defined
-            type constructors.
+            General lexical `with` resolution, typed modifier contracts, and the structural
+            `scoped-access` region are implemented. The realization operations illustrated
+            on this page and package-defined type constructors remain future work. An
+            unsupported operation is rejected, not accepted as a no-op.
     - id: structural-boundary
       title: Structural and decorative boundary
       blocks:
         - type: markdown
           markdown: |-
-            The planned protocol separates compiler-owned structural declaration keywords
-            from package-supplied decorative modifiers. Structural keywords define language
-            semantics: name resolution, visibility, mutability, ownership, or a callable's
-            type contract. They include `global`, `constant`, visibility qualifiers, and
-            callable qualifiers such as `static`, `async`, and `throws`. A modifier must not
-            alter those semantics.
+            The protocol distinguishes compiler-defined structural operations from
+            package-supplied realization properties. Structural operations have explicit
+            compiler-owned semantics: `scoped-access`, for example, bounds acquisition,
+            borrowing, name visibility, and destruction. Arbitrary package modifiers cannot
+            redefine those guarantees or replace structural keywords such as `global`,
+            `constant`, visibility qualifiers, or callable qualifiers.
 
             Decorative modifiers instead describe how an already-understood declaration is
             realized: storage, layout, linkage, ABI, section placement, or alignment. This
@@ -52,7 +53,7 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            A planned `with` clause precedes structural declaration keywords. It begins with
+            A `with` clause precedes structural declaration keywords. It begins with
             `with`, contains comma-separated modifier expressions, and applies them from
             left to right through ordinary lexical resolution. A modifier with arguments
             uses a parenthesized call form; the clause itself has no wrapping parentheses.
@@ -69,8 +70,8 @@ documentation:
           response: null
           diagnostic: null
           markdown: >-
-            These examples describe planned syntax only. They are not accepted by the
-            selected compiler.
+            These realization operations are planned, not currently supported modifier
+            operations. Their syntax uses the general clause machinery.
         - type: markdown
           markdown: |-
             A comma requires another modifier. The declaration begins after the first
@@ -88,10 +89,11 @@ documentation:
             how it composes, and what lowering it requires. `with global` is invalid because
             `global` remains a compiler-owned declaration form.
 
-            The protocol is closed in its guarantees, not in its vocabulary. A package may
-            add a new realization property without extending declaration grammar, but it
-            cannot use a modifier to create hidden changes to visibility, ownership, name
-            resolution, mutability, or callable contracts.
+            The general machinery is closed in its semantic operations, not hard-coded to
+            one source spelling. Modifier identities and typed payloads resolve through
+            their package declarations. Future realization operations must define their
+            lowering and composition contracts before admission; they cannot introduce
+            hidden visibility, ownership, or callable-contract changes.
   see-also: []
 
 provenance:

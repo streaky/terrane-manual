@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b99340273e96ea15ae458c8effbf3de332215aaa7d999044bd4470d41da88608
+  input-sha256: 676aa917753802ee55b4bad56eefeeb9e3639e1c226b85821ecc697ca27eaf77
 format: 1
 generated: true
 symbols:
@@ -1389,6 +1389,10 @@ symbols:
   section: tracking
   declaration: Clone
 - name: Clone
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: Clone
+- name: Clone
   record: lang.functions.callable-types
   section: exact-metadata
   declaration: Clone
@@ -2229,6 +2233,18 @@ symbols:
   record: internals.observability.runtime
   section: dependency-bridge
   declaration: dependency_subscriber
+- name: Deref
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: Deref
+- name: Deref::Target
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: Deref::Target
+- name: DerefMut
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: DerefMut
 - name: describe
   record: book.types
   section: authored-generics
@@ -6769,7 +6785,15 @@ symbols:
   declaration: ref
 - name: ref
   record: internals.projection.resolution
+  section: borrowed-interior-graphs
+  declaration: ref
+- name: ref
+  record: internals.projection.resolution
   section: callbacks
+  declaration: ref
+- name: ref
+  record: internals.projection.resolution
+  section: native-receiver-regions
   declaration: ref
 - name: ref
   record: lang.classes.methods
@@ -6814,10 +6838,6 @@ symbols:
 - name: ref
   record: tool.packages.rust-dependencies
   section: callbacks
-  declaration: ref
-- name: ref
-  record: tool.packages.rust-dependencies
-  section: expression-macros
   declaration: ref
 - name: ref
   record: tool.packages.rust-interop
@@ -7447,6 +7467,14 @@ symbols:
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
   declaration: scope.spawn
+- name: scoped-access
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: scoped-access
+- name: scoped-access
+  record: lang.namespaces.scopes
+  section: scoped-access
+  declaration: scoped-access
 - name: score
   record: book.values-and-names
   section: changing-a-binding
@@ -7539,6 +7567,10 @@ symbols:
   record: internals.projection.resolution
   section: interface-impls
   declaration: self
+- name: Self
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: Self
 - name: self
   record: lang.classes.fields
   section: classes
@@ -9872,8 +9904,20 @@ symbols:
   section: local-scope
   declaration: width
 - name: with
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: with
+- name: with
   record: lang.declarations.annotations
   section: status
+  declaration: with
+- name: with
+  record: lang.namespaces.scopes
+  section: scoped-access
+  declaration: with
+- name: with
+  record: manual.changelog.unreleased
+  section: changes-2026-10-31
   declaration: with
 - name: with-field
   record: std.logging

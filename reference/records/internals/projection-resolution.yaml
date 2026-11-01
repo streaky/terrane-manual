@@ -366,19 +366,84 @@ documentation:
             resolves imported helpers and callable aliases to canonical function spans.
             Parameter write requirements reach a finite fixed point across source-call
             chains and cycles before binding mutability and callback checks are finalized.
-            Ordinary native reference parameter signatures and argument reborrows use that
-            same inferred requirement: shared for observation, mutable when the referent is
-            mutated. Cached imported signatures cannot override the defining contract. Local
-            callable aliases retain the defining function's inferred native borrowing ABI
-            rather than imposing a shared-reference callable annotation.
+            Ordinary native reference parameters retain that selected ABI, but mutation
+            requires explicit `mutable ref` source authority; plain `ref` remains read-only.
+            Inference propagates the implementation requirement without upgrading a written
+            contract. Cached imports and local callable aliases preserve the defining
+            function's authority and exact native borrowing ABI.
+
+            The selected callback input contract also drives its emitted callable ABI.
+            Compatible stored shared-invocation callables are borrowed directly for
+            non-retained synchronous native callbacks. They are not first erased into a
+            tuple-based consuming carrier, which would fix an input lifetime outside its
+            invocation. This adaptation does not add reference variance to ordinary source
+            callable slots or copy exclusive authority.
 
             Lowering evaluates each root once and preserves mutable access to the original
-            interior. Owned results and completed side effects may leave the expression; a
-            borrowed interior cannot be bound, returned, captured, stored, or retained
-            across suspension. This is not a general source-visible reference facility. A
-            constructed lifetime-bearing view may instead use the established exact
-            invocation-scoped callback result contract, whose lender lifetime remains
-            enforced by the native higher-ranked boundary.
+            interior. Owned results and completed side effects may leave an expression. Open
+            joint-inference graphs must still terminate within their expression; they cannot
+            be bound, captured, stored, or retained across suspension. Independently
+            admitted local native loans instead retain their actual lenders and follow the
+            lifetime rules below. Exact invocation-scoped callback results keep their
+            distinct higher-ranked native boundary.
+    - id: native-receiver-regions
+      title: Native owners, receiver views, and bounded regions
+      blocks:
+        - type: markdown
+          markdown: |-
+            Receiver discovery retains the exact owning native type. Generic arguments and
+            canonical Rustdoc `Deref::Target` declarations provide candidate views; rustc
+            must prove the exact `Deref` and, separately, `DerefMut` obligations. Moving a
+            target or forwarding a boxed consuming receiver additionally requires the
+            corresponding native call proof. Pointer names do not grant capabilities. Nested
+            receiver discovery preserves direct-owner member precedence. In particular,
+            cloning a smart-pointer owner retains that owner's identity rather than
+            selecting a pointee's unrelated `Clone` operation.
+
+            Admitted lifetime-bearing nominal results use structured invocation-scoped
+            metadata instead of becoming lifetime-erased foreign values. Producer methods
+            and free functions use the same owner and result machinery. A borrowed view's
+            methods, cloned view, and nested results retain its lenders; a native trait
+            proof is not an outlives proof.
+
+            The compiler records receiver and parameter borrow lifetimes and correlates them
+            with result lifetimes. Named lifetimes must match their actual sources, static
+            storage is distinct, and elided lifetimes follow the native receiver rule rather
+            than an arbitrary argument. Unknown graphs reject instead of choosing a
+            convenient region or inventing static storage. For anonymous-lifetime
+            implementations returning `Self`, the method owner and returned value retain the
+            same nominal binder vocabulary before call-site instantiation. An anonymous impl
+            spelling must not leave a declaration lifetime unmatched in an otherwise valid
+            consuming builder or awaited continuation.
+
+            Open native producers without a proven input lender retain the expression-only
+            joint-inference path; admitting local native loans does not erase those
+            restrictions. Owner discovery follows both free-function and method results,
+            preserving generic substitutions when normalizing their lifetime-bearing source
+            families. Type compatibility compares native representations independently of
+            region provenance; destination and escape validation still enforce each loan.
+
+            A concrete invocation-scoped callback result also supplies context for nested
+            native expression macros and terminal conversions. Open native families remain
+            deferred until that graph is closed; the selected terminal conversion is emitted
+            at the callback return. Signature lifetimes retain their named relationship,
+            while local storage infers its free lifetimes. Macro input borrowing preserves
+            source authority: a plain `ref` operand does not become mutable.
+
+            An explicit `with scoped-access` acquisition and body form a real lexical
+            lifetime boundary. Successful acquisitions unwind in reverse order on normal
+            exit, errors, returns, and loop control. Acquisition failure does not
+            manufacture a value to destroy. Region validation rejects dependent escape and
+            lender invalidation, including through aggregates, captures, or retained tasks.
+            Native suspension and transfer remain subject to exact capability and lifetime
+            constraints in the complete generated Rust graph.
+
+            General `with` applications carry ordered syntax metadata outside executable
+            declaration children. Lexical resolution and the typed compile-time marker
+            schema select a semantic operation and payload. Target and repetition checks run
+            before region validation and lowering. Only `scoped-access` is currently
+            implemented; unsupported operations are errors, not placeholder realizations.
+            This machinery is not a package-specific mutex lowering path.
     - id: destination-results
       title: Destination-result proof
       blocks:

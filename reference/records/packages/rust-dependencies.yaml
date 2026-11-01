@@ -400,9 +400,9 @@ documentation:
             identity-preserving native loan, bind `borrowed = ref value` locally and pass
             `borrowed`; when the argument contract cannot be checked, `T0119` help
             recommends this binding workaround. For mutation, use a typed source helper that
-            explicitly declares a `ref` parameter and performs the mutating operation, so
-            mutable-borrow inference follows the helper's typed native call rather than an
-            untyped macro expansion.
+            explicitly declares a `mutable ref` parameter and performs the mutating
+            operation. Analysis checks that declared authority and retains the exact native
+            borrow rather than inferring authority from an untyped macro expansion.
         - type: example
           id: example.dependencies.expression-macro
           language: terrane
@@ -448,21 +448,21 @@ documentation:
             callback supplies a mutable reference. Passing it through a shared map or
             and_then edge is a source error (T0139), not a deferred Rust backend failure.
             Read-only callbacks remain valid on either receiver. Ordinary source helpers
-            infer mutable native reference inputs when their bodies require mutation,
-            including through an explicit mutable reborrow in an inline Rust block. This
-            also applies to a reference to an optional native value: named helpers,
-            anonymous functions and their stored callable signatures preserve the mutable
-            `Option<T>` carrier without unwrapping it. Forwarding that input to another
-            mutable helper reborrows the same carrier; read-only inputs remain shared. A
-            Rust local shadowing the source parameter name does not change which source
-            input requires mutation. The same inferred requirement governs callback checking
-            and ordinary argument reborrowing; a helper cannot hide mutation from a shared
-            callback boundary. Cross-unit forwarding uses the defining source unit's final
-            mutation contract, not an imported pre-inference copy. Passing a deferred native
-            local to a projected generic reference input borrows its available payload
-            rather than its internal optional storage. Already borrowed native parameters
-            are reborrowed; owned source implementors of native interfaces remain ordinary
-            values and are not dereferenced.
+            require explicit `mutable ref` parameters for native mutation, including through
+            an explicit mutable reborrow in an inline Rust block. This also applies to a
+            reference to an optional native value: named helpers, anonymous functions and
+            their stored callable signatures preserve the mutable `Option<T>` carrier
+            without unwrapping it. Forwarding that input to another mutable helper reborrows
+            the same carrier; read-only inputs remain shared. A Rust local shadowing the
+            source parameter name does not change which source input requires mutation. The
+            selected requirement governs callback checking and ordinary argument
+            reborrowing; a helper cannot hide mutation from a shared callback boundary.
+            Cross-unit forwarding uses the defining source unit's final mutation contract,
+            not an imported pre-inference copy. Passing a deferred native local to a
+            projected generic reference input borrows its available payload rather than its
+            internal optional storage. Already borrowed native parameters are reborrowed;
+            owned source implementors of native interfaces remain ordinary values and are
+            not dereferenced.
 
             A native generic input keeps the exact reference ABI proven by its Rust bounds,
             including when demand specializes the generic to a concrete input. Callers pass
@@ -479,7 +479,7 @@ documentation:
             example, an executor constraint equating its associated database with an owner
             database parameter can select a mutable connection borrow without an undeclared
             type name in the proof. Local native reference bindings used by mutable helpers
-            retain that inferred mutable ABI and keep their owning storage mutable.
+            state `mutable ref`, preserve that ABI, and keep their owning storage mutable.
             Invocation lifetimes and associated owner constraints remain checked in the
             complete native graph; a detached type proof does not extend a lender's
             lifetime. Receiver predicates such as `Self: Contains<T>` are also checked
@@ -782,7 +782,6 @@ documentation:
             - projected-async-runtime-context
             - projected-async-nonsend
             - projected-dyn-declines
-            - projected-box-non-interface
             - projected-boxed-trait-result
             - projected-canonical-drop-import
             - projected-boxed-erased-auto-trait
@@ -897,12 +896,14 @@ documentation:
             the invocation remain unavailable until their complete non-escaping result graph
             can be proven.
 
-            Only an owning `Box<dyn Interface + Send/Sync>` parameter projects as erased
-            interface storage. Every object auto-trait is retained; the dependency shim
+            For erased interface storage, only an owning `Box<dyn Interface + Send/Sync>`
+            parameter is admitted. Every object auto-trait is retained; the dependency shim
             boxes a conforming concrete class or the exact generated Terrane interface
-            wrapper. Bare or borrowed trait objects, non-interface `Box<T>`, multiple
-            principal traits, boxed trait-object results, and wrappers lacking requested
-            auto traits decline before lowering.
+            wrapper. Bare or borrowed trait objects, multiple principal traits, boxed
+            trait-object results, and wrappers lacking requested auto traits decline before
+            lowering. An ordinary non-interface `Box<T>` is instead a native owner when its
+            representation is supported; it does not implicitly box an arbitrary source
+            argument or erase it to an interface.
 
             `Send` and `Sync` are proven independently for each closed foreign type.
             Interface and retained-bound checks recursively traverse the complete effective
