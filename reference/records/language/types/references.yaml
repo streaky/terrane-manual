@@ -219,11 +219,13 @@ documentation:
             callable never makes its borrowed captures owning.
 
             Binding another name from a mutable-reference handle transfers that handle;
-            later use of the old binding is a use-after-move error. Returning a mutable
-            reference to an identity-backed field borrows the original field, not an owned
-            snapshot. A locally retained callable keeps its captured loans live through its
-            final dependent use; after release, the original owner becomes accessible again
-            without requiring an explicit `scoped-access` region.
+            later reads and write-through assignments using the old binding are
+            use-after-move errors. A write through that binding does not reinitialize the
+            moved handle. Returning a mutable reference to an identity-backed field borrows
+            the original field, not an owned snapshot. A locally retained callable keeps
+            captured loans live through its final dependent use; after release, the original
+            owner becomes accessible again without requiring an explicit `scoped-access`
+            region.
     - id: shared-deadlocks
       title: Checked shared storage and concurrent deadlocks
       blocks:

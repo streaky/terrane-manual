@@ -147,6 +147,14 @@ documentation:
             including a repeatable mutable callable. Transferring that callable to another
             binding moves the environment; the original binding cannot be invoked afterward.
 
+            Typed callable parameters currently do not accept environments that retain
+            ordinary borrowed references, for either shared or mutable invocation. This
+            limitation applies to named callables and inline anonymous arguments even when
+            their visible signatures match. Mismatch diagnostics annotate the actual
+            callable with `captures borrowed references` to expose the distinction. Invoke
+            such a callable locally, or capture owning values instead; an inferred local
+            callable may retain its loans subject to ordinary last-dependent-use rules.
+
             A bodyless interface signature is abstract, not an empty implementation. Its
             written throwable bound supplies the dispatch ABI and possible effects for
             interface and generic-bound callers. Concrete implementations retain their own
