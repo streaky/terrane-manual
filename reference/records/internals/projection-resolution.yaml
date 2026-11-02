@@ -732,6 +732,16 @@ documentation:
             conversion. Contextual tuple literals must match that arity too; contextual
             element inference does not replace checking the actual number of elements.
 
+            Other plain-record conversion failures use the canonical fallible constructor
+            contract: a `char` conversion reports `coercion-error`, and an adaptive integer
+            outside the native range reports `integer-conversion-overflow`. These exact
+            effects propagate through source helpers, including recursive optional and
+            collection conversions; absent optional inputs do not manufacture an effect.
+            Direct native methods and expression macros preserve conversion error identity
+            separately from native panics. Source input evaluation stays in the caller's
+            completion region before conversion, while borrowing futures are constructed in
+            their existing loan region.
+
             Owned configuration carriers for borrowed native descriptors retain recursive
             field-conversion recipes, rather than treating every field as a scalar.
             Supported combinations include optional homogeneous tuples, owned path and

@@ -212,6 +212,13 @@ documentation:
                 bounded to 16 MiB.
             - type: markdown
               markdown: |-
+                A consumer may ignore the request and use only its own external inputs. If it
+                exits successfully after closing stdin early, a broken request pipe is benign;
+                its stdout must still satisfy all ordinary protocol validation. Other
+                request-write errors, writer-thread failures, unsuccessful exits, malformed
+                responses and invalid generated sources remain failures.
+            - type: markdown
+              markdown: |-
                 Request preparation validates identity uniqueness within the selected
                 declarations. Legitimate field/static-callable identity collisions elsewhere in
                 the package do not block an unrelated consumer; selecting an ambiguous identity

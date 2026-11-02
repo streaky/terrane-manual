@@ -749,6 +749,13 @@ documentation:
             diagnostics distinguish the required length from a known or unknown source
             length.
 
+            Other plain native record conversions remain fallible at runtime. Invalid
+            Unicode-scalar strings report `coercion-error`, and out-of-range adaptive
+            integers report `integer-conversion-overflow`; ordinary source helpers propagate
+            these same catchable identities. Optional and collection fields preserve the
+            original conversion error. Conversion failures in direct native methods and
+            expression macros likewise remain distinct from native panics.
+
             Private-field, hidden-field, non-exhaustive, tuple, or incompletely convertible
             structs retain opaque foreign projection when they have no lifetime parameters;
             an equivalent lifetime-bearing struct is declined rather than guessed.

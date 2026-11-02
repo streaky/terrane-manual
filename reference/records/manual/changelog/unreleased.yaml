@@ -271,6 +271,13 @@ documentation:
               nested optional and collection fields. Unknown or mismatched lengths report
               `T0012` instead of reaching a native conversion panic. Contextual tuple
               literals also retain actual arity checking in constructors and native calls.
+            - **Fixed — catchable plain native record conversion errors.** Character and
+              integer-range failures now preserve their exact throwable identities through
+              source helpers, optional and collection fields, direct native methods and
+              expression macros instead of aborting or becoming dependency panics.
+            - **Fixed — early consumer stdin closure.** A successful consumer may ignore the
+              request without a scheduling-dependent broken-pipe failure. Exit status and
+              stdout protocol validation still apply.
   see-also:
     - manual.changelog
     - lang.types.references

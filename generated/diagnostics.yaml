@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4ba29271acbf0932b85f5fdce24a9395b6f4507014a7bc672549efd396cf2ac4
+  input-sha256: bd24df64fcef8567cd9988c0a2aefd1b915861c43bfb9e723e596d838856969e
 format: 1
 generated: true
 diagnostics:
@@ -1071,9 +1071,7 @@ diagnostics:
   - src/main.rs
   - "\n        && identity != "
   - duplicate canonical declaration identity
-  - "));\n        std::fs::remove_dir_all(root).unwrap();\n    }\n\n    #[test]\n    fn generated_sources_use_stable_paths_and_reject_traversal()\
-    \ {\n        let (mut package, root) = temporary_package();\n        let mut sources = vec![\n   \
-    \         ("
+  - '{failure:?}'
   - 'in `{}`: {}'
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
@@ -1081,11 +1079,13 @@ diagnostics:
   - path: crates/terrane-compiler/src/consumer_tools.rs
     line: 391
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1083
+    line: 1090
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1166
+    line: 1173
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1243
+    line: 1250
+  - path: crates/terrane-compiler/src/consumers.rs
+    line: 1291
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
     line: 225
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
@@ -1098,11 +1098,11 @@ diagnostics:
     \     executable: "
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 678
+    line: 685
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 708
+    line: 715
   - path: crates/terrane-compiler/src/consumers.rs
-    line: 1218
+    line: 1225
 - code: S2062
   messages:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
@@ -1603,7 +1603,7 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1713
+    line: 1714
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 578
 - code: T0028
@@ -2376,9 +2376,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 384
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1070
+    line: 1067
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1230
+    line: 1227
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 6908
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2390,7 +2390,7 @@ diagnostics:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 711
+    line: 708
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3562
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2453,9 +2453,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/macros.rs
     line: 83
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1322
+    line: 1319
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1335
+    line: 1332
   - path: crates/terrane-compiler/src/semantics/objects/native_associated.rs
     line: 91
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2624,7 +2624,7 @@ diagnostics:
   - explicit native type arguments do not close the projected result representation
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 782
+    line: 779
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3214
   - path: crates/terrane-compiler/src/semantics/objects.rs

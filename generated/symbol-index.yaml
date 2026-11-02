@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 58b8e746111eb4793fa8bebd1ef9ab09f3a07db58b702d0f8416f120feddccf8
+  input-sha256: 0379f77b1a127155dfa926be84c09dc2aa3eabc814985901f3a1eb762fa9faa6
 format: 1
 generated: true
 symbols:
@@ -1256,6 +1256,10 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: typed-fields-and-ordinary-methods
   declaration: chapter.render
+- name: char
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: char
 - name: character
   record: book.decisions-and-repetition
   section: iterating-with-for
@@ -1521,12 +1525,20 @@ symbols:
   section: coercion
   declaration: coercion-error
 - name: coercion-error
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: coercion-error
+- name: coercion-error
   record: lang.numerics.conversion
   section: numeric-arrival
   declaration: coercion-error
 - name: coercion-error
   record: lang.numerics.conversion
   section: numeric-coercion
+  declaration: coercion-error
+- name: coercion-error
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
   declaration: coercion-error
 - name: collect
   record: internals.optimization.proof-guided-lowering
@@ -4374,6 +4386,10 @@ symbols:
   section: coercion
   declaration: integer-conversion-overflow
 - name: integer-conversion-overflow
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: integer-conversion-overflow
+- name: integer-conversion-overflow
   record: lang.numerics.conversion
   section: destinations
   declaration: integer-conversion-overflow
@@ -4388,6 +4404,10 @@ symbols:
 - name: integer-conversion-overflow
   record: lang.types.generics
   section: constructors
+  declaration: integer-conversion-overflow
+- name: integer-conversion-overflow
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
   declaration: integer-conversion-overflow
 - name: integer-power
   record: lang.numerics.floating-point
