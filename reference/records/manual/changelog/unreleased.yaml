@@ -236,6 +236,20 @@ documentation:
               before retaining inferred escaping identities. Repeated reads of narrowed
               optional or union storage no longer move a payload before its final use. See
               [[lang.types.references]] and [[lang.functions.callable-types#compatibility]].
+    - id: changes-2026-11-02
+      title: "2026-11-02"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — supplied associated type contracts and native response selection.**
+              Authored interfaces declare `associated type` slots, implementing classes bind
+              them, and typed dispatch retains the concrete relationship. Explicit
+              `owning interface` declarations support resource-owning implementations with
+              borrowed methods. Native input selection now closes retained associated
+              response equations with exact trait/equality proof, including nested results
+              and non-copyable inputs and responses. See
+              [[lang.classes.interfaces#associated-outputs]] and
+              [[lang.types.generics#native-associated-results]].
   see-also:
     - manual.changelog
     - lang.types.references

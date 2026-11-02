@@ -386,6 +386,45 @@ documentation:
             admitted local native loans instead retain their actual lenders and follow the
             lifetime rules below. Exact invocation-scoped callback results keep their
             distinct higher-ranked native boundary.
+    - id: supplied-associated-results
+      title: Supplied contracts and native associated equations
+      blocks:
+        - type: markdown
+          markdown: |-
+            Authored associated declarations retain declaration identity and bindings in
+            descriptor contracts and exported metadata. Source interface applications carry
+            their complete binding set; ordinary typed implementations connect native calls
+            without a second mapping language. Associated slots do not inherit ordinary
+            source-generic clone bounds merely because lowering represents them as protocol
+            parameters. Owning interface protocols also retain ownership when every method
+            borrows its receiver.
+
+            Projection persists symbolic implementation equations with canonical
+            trait/member identity, an exact owner pattern, trait arguments, and the
+            right-hand-side type. Recipe collection does not recursively resolve an
+            incomplete Rustdoc graph. Call-site normalization substitutes the selected
+            inputs, retains reference versus value owners, and follows finite equation
+            chains with stack-linked recursion guards. Unknown, conflicting, and recursive
+            queries remain explicit failures. Conditional recipes are admitted through the
+            existing rustc oracle's exact associated equation, retaining native predicate
+            selection rather than treating every structural blanket match as applicable.
+            Borrowed associated owners keep their reference depth, mutability and static
+            lifetime in symbolic templates. Only unconstrained declared impl lifetimes are
+            normalized as input binders; restrictive lifetimes are never erased into an
+            ordinary local loan.
+
+            Native proof includes the normalized associated equality, not just membership in
+            the declaring trait. Obligations remain tied to their original input parameter
+            even when more than one binder selects the same concrete type. Native interface
+            adapters bind inherited members using the declaring associated slot's trait, not
+            a derived facade's trait path. Source protocol identities must not be rewritten
+            to their native boxed-trait crossing representation.
+
+            Native chain terminals and operation-owner binders inferred through another
+            input's trait equality retain their joint graph-selection question. Their owner
+            and output can be selected together with an executor or terminal destination, so
+            they are not resolved by a detached input-selected associated query. Ordinary
+            input-selected operations retain their exact associated equality obligations.
     - id: native-receiver-regions
       title: Native owners, receiver views, and bounded regions
       blocks:
@@ -654,10 +693,17 @@ documentation:
             and exact escaping conversion errors. Fresh converted field values are not
             cloned a second time. Private and non-exhaustive record construction remains
             unavailable; absent or conflicting selecting payloads fail before Rust lowering.
-            Generated function headers group applied parameter types so their `of` argument
-            lists cannot consume the following parameter. Keep this grouping contextual: a
-            parenthesized type after a bare class-field name is parsed as a call, not a
-            field declaration.
+            Generated declarations group complete applied and nullable types so an `of`
+            argument cannot consume an enclosing optional marker or the next parameter.
+            Grouped field types are recognized as declarations even without an initializer.
+            Public records containing optional owned collections retain their fields and
+            constructor recipes. Constructor inputs use the source field type, cross the
+            recursive native ABI once, and retain required optional lifting. Optional
+            numeric destinations convert each present payload through the same checked
+            numeric conversion as a scalar destination, preserving absence and leaving the
+            destination unchanged if conversion fails. An explicitly typed inline Rust
+            optional result supplies its complete `Option` carrier; lowering must not wrap
+            that opaque result in another `Some`.
 
             Concrete trait operations retain an explicit qualified native path in projection
             metadata. Projection binds blanket `Self` generics to the concrete owner,

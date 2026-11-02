@@ -227,6 +227,22 @@ documentation:
             snapshot. A locally retained callable keeps captured loans live through its
             final dependent use; after release, the original owner becomes accessible again
             without requiring an explicit `scoped-access` region.
+    - id: optional-observers
+      title: Observing a nullable lender
+      blocks:
+        - type: markdown
+          markdown: |-
+            A named read-only observer of type `ref (T|none)` can be guarded with
+            `observer != none`. Reads inside that guarded block observe the original `T`
+            without copying its payload or granting mutation authority. The nullable lender
+            and the observer keep their original identity and lifetime obligations. This
+            also applies to checked observers of shared storage: the presence test and later
+            reads use the checked access path rather than inspecting a weak handle.
+
+            Refinement changes the permitted read, not the storage representation. Joining
+            guarded and unguarded paths does not invent a union of differently represented
+            reference carriers. Ordinary reassignment and observer invalidation rules still
+            apply.
     - id: shared-deadlocks
       title: Checked shared storage and concurrent deadlocks
       blocks:

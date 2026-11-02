@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 62a2bf813a87795c32f4cdb808e42e27a5db711e2b3542863f1f1e02e8789f17
+  input-sha256: 42139784ab19795ff115b3f1c5e07570eede726644e25907f6ec179cb00b8155
 format: 2
 generated: true
 records:
@@ -74,6 +74,9 @@ records:
     sections: []
   - id: changes-2026-11-01
     title: '2026-11-01'
+    sections: []
+  - id: changes-2026-11-02
+    title: '2026-11-02'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -681,6 +684,9 @@ records:
   - id: mutable-references
     title: Explicit mutable references
     sections: []
+  - id: optional-observers
+    title: Observing a nullable lender
+    sections: []
   - id: shared-deadlocks
     title: Checked shared storage and concurrent deadlocks
     sections:
@@ -807,6 +813,9 @@ records:
   - id: interfaces
     title: Nominal Interfaces and Typed Dispatch
     sections: []
+  - id: associated-outputs
+    title: Supplied associated type contracts
+    sections: []
   declaration-synopsis: []
 - id: lang.types.generics
   title: Generics and native type relationships
@@ -871,6 +880,9 @@ records:
     sections: []
   - id: associated-interfaces
     title: Associated interface types remain explicit contracts
+    sections: []
+  - id: native-associated-results
+    title: Native inputs determine associated results
     sections: []
   - id: limits
     title: What selection does not authorize
@@ -3261,6 +3273,9 @@ records:
     sections: []
   - id: borrowed-interior-graphs
     title: Expression-scoped borrowed interior graphs
+    sections: []
+  - id: supplied-associated-results
+    title: Supplied contracts and native associated equations
     sections: []
   - id: native-receiver-regions
     title: Native owners, receiver views, and bounded regions

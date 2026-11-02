@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 62a2bf813a87795c32f4cdb808e42e27a5db711e2b3542863f1f1e02e8789f17
+  input-sha256: 42139784ab19795ff115b3f1c5e07570eede726644e25907f6ec179cb00b8155
 format: 1
 generated: true
 symbols:
@@ -7847,6 +7847,10 @@ symbols:
   record: internals.projection.resolution
   section: async-sequences
   declaration: Some
+- name: Some
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: Some
 - name: source
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -8274,6 +8278,10 @@ symbols:
 - name: T
   record: lang.types.references
   section: lowering
+  declaration: T
+- name: T
+  record: lang.types.references
+  section: optional-observers
   declaration: T
 - name: T
   record: lang.types.unions
@@ -9322,6 +9330,10 @@ symbols:
 - name: type
   record: internals.collections.lifetime
   section: descriptor-metadata
+  declaration: type
+- name: type
+  record: lang.classes.interfaces
+  section: associated-outputs
   declaration: type
 - name: type
   record: lang.collections.protocols

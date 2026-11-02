@@ -523,6 +523,46 @@ documentation:
             syntax. It names a relationship in the interface contract rather than supplying
             the payload of an object constructor. Constructor selection, generic operation
             selection, and associated-interface application are distinct mechanisms.
+    - id: native-associated-results
+      title: Native inputs determine associated results
+      blocks:
+        - type: markdown
+          markdown: |-
+            Projecting an entire Rust trait as an interface is distinct from invoking a
+            concrete native operation that uses associated types. A retained native
+            operation may correlate an input with its associated response, including
+            optional and collection result shapes, without exposing the whole trait as a
+            source interface.
+
+            The compiler retains the canonical declaring trait, member, owner pattern, trait
+            arguments, and implementation substitutions. Input selection closes that
+            relationship before the result is used as a concrete source type. Cross-crate
+            aliases preserve native identity; similarly named members of different traits
+            are not interchangeable. By-value and borrowed implementations on the same
+            nominal owner likewise remain distinct. Generic owner matching preserves
+            collection constructors and recursively substitutes their elements, keys and
+            values. Named unconstrained impl lifetimes act as binders, not literal lifetime
+            names; static requirements and other restrictive lifetime relationships are not
+            discarded.
+
+            A structural match to a conditional implementation is not sufficient. The
+            existing native proof oracle must select its complete associated equation under
+            Rust's implementation predicates before it contributes a result. This prevents
+            an inapplicable blanket implementation from conflicting with a valid concrete
+            implementation without introducing a second trait solver.
+
+            Normalization is not proof of conformance. The emitted native obligation retains
+            the exact selected associated equality as well as the trait bound, tied to the
+            original input binder. A destination cannot override an input's actual response
+            family. No match, conflicting normalized results, recursive equations, or an
+            unsupported graph reject at source level instead of leaking a backend type
+            error.
+
+            Authored associated contracts use ordinary typed bodies to bind these calls; see
+            [[lang.classes.interfaces#associated-outputs]]. Non-copyable requests and
+            responses are transferred, not cloned to satisfy a generated interface
+            parameter. Generic associated types, higher-kinded trait variables, and
+            arbitrary user-written equality solving are not introduced by this mechanism.
     - id: limits
       title: What selection does not authorize
       blocks:
