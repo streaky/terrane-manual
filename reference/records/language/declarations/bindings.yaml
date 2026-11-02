@@ -75,7 +75,10 @@ documentation:
             not grouped declarations. In these expressions, parentheses group the operand of
             a prefix operator; they do not form a function-call argument list. `move`, `not`
             and `ref` are operators, not functions invoked with parentheses. Function calls
-            use the `;` invocation marker.
+            use the `;` invocation marker. An explicit initializer disambiguates a
+            declaration even when its name is a prefix-operator word:
+            `ref (int | none) = none` declares a binding named `ref`. Without an
+            initializer, `ref (value)` remains an operator expression.
 
             A later declaration in a loop body may reach an earlier use through a reachable
             back-edge. The use is uncertain until an iteration assigns the value, so an

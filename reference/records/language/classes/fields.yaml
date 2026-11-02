@@ -47,6 +47,13 @@ documentation:
             - object-field-owned-snapshot
             - imported-effective-fields
           markdown: |-
+            Class, trait and interface bodies contain member declarations, not executable
+            statement sequences. Standalone calls, assignments and control-flow statements
+            at that level are syntax errors (`S1043`); place executable statements inside a
+            method, including `construct` for construction-time work. Field initializers
+            remain part of their declarations. Enum bodies use variant declarations rather
+            than statement blocks.
+
             A typed class or trait field may omit its initializer when its declared type has
             a canonical default. Boolean fields receive `false`, numeric fields receive
             typed zero, strings and bytes receive empty values, `T|none` receives `none`,
