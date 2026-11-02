@@ -66,7 +66,13 @@ documentation:
             `name (int | none)` has the same declared type as `name int | none`. Grouping
             changes neither availability nor field-defaulting rules: an initializer-free
             local still needs assignment before a provably available read. A grouped nominal
-            name is a type annotation, not a call argument; calls use the `;` marker.
+            name is a type annotation, not a call argument; calls use the `;` marker. Thus
+            `show (Holder)` declares a local named `show` when `Holder` resolves to a type,
+            even if it shadows a visible function. It does not invoke that function, and a
+            later use of the unassigned local reports an availability error. Write
+            `show; (instance Holder;)` to call the function instead. Expression-prefix
+            operators remain expressions: `move (value)`, `not (flag)` and `ref (value)` are
+            not grouped declarations.
 
             A later declaration in a loop body may reach an earlier use through a reachable
             back-edge. The use is uncertain until an iteration assigns the value, so an
