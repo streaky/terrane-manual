@@ -72,7 +72,10 @@ documentation:
             later use of the unassigned local reports an availability error. Write
             `show; (instance Holder;)` to call the function instead. Expression-prefix
             operators remain expressions: `move (value)`, `not (flag)` and `ref (value)` are
-            not grouped declarations.
+            not grouped declarations. In these expressions, parentheses group the operand of
+            a prefix operator; they do not form a function-call argument list. `move`, `not`
+            and `ref` are operators, not functions invoked with parentheses. Function calls
+            use the `;` invocation marker.
 
             A later declaration in a loop body may reach an earlier use through a reachable
             back-edge. The use is uncertain until an iteration assigns the value, so an
