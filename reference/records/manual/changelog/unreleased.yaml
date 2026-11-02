@@ -251,6 +251,15 @@ documentation:
               validate canonical source field arguments and preserve optional native/source
               carrier distinctions. See [[lang.classes.interfaces#associated-outputs]] and
               [[lang.types.generics#native-associated-results]].
+            - **Added — recursive owned native descriptor conversion.** Mixed configuration
+              carriers now compose optional tuples and maps, owned native values, borrowed
+              text/slices and vectors of borrowed text or OS-string views. Shared calls
+              preserve their configuration; consuming calls transfer owned fields, including
+              mixed borrowed/owned container payloads, without an extra payload clone.
+              Temporary views retain backing owners through the call and reject escaping
+              native references. Chromium launch configuration now crosses the projected
+              descriptor API from Terrane source. See
+              [[internals.projection-resolution#native-fields]].
   see-also:
     - manual.changelog
     - lang.types.references

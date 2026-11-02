@@ -726,6 +726,31 @@ documentation:
             preserve that distinction. Optional source arguments receive their declared
             carrier type before recursive native payload conversion.
 
+            Owned configuration carriers for borrowed native descriptors retain recursive
+            field-conversion recipes, rather than treating every field as a scalar.
+            Supported combinations include optional homogeneous tuples, owned path and
+            duration values, optional owned maps, borrowed text and slices of owned
+            elements, and vectors of borrowed text or native OS-string views. Borrowed
+            OS-string fields and elements use owned Terrane strings as UTF-8 backing. The
+            concrete opaque native owners referenced by these fields are importable nominal
+            projection declarations, not source-only placeholders.
+
+            Construction converts source collection carriers to owned backing once. A call
+            then builds its temporary native view while the backing configuration remains
+            alive. Shared calls reconstruct independent owned fields using proven copy or
+            clone contracts; consuming calls transfer those fields without an extra payload
+            clone. Borrowed leaves continue to lend the original backing through the
+            invocation. Free, static and instance calls use the same view reconstruction.
+            Native failures unwind the view and its owners normally. Mutable descriptor
+            views without write-back, static-lender fabrication and native references
+            escaping the temporary view are rejected. Independent owned outputs, including
+            text snapshots, may outlive the configuration.
+
+            This conversion does not introduce source-level borrowed aggregate values.
+            Heterogeneous tuples, indistinguishable nested optional carriers and native
+            borrowed shapes without stable owned backing remain explicit projection declines
+            rather than erased lifetime promises.
+
             Concrete trait operations retain an explicit qualified native path in projection
             metadata. Projection binds blanket `Self` generics to the concrete owner,
             preserves unresolved implementation generics in the rendered trait path, and
