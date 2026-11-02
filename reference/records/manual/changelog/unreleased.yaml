@@ -259,7 +259,13 @@ documentation:
               Temporary views retain backing owners through the call and reject escaping
               native references. Chromium launch configuration now crosses the projected
               descriptor API from Terrane source. See
-              [[internals.projection-resolution#native-fields]].
+              [[tool.packages.rust-dependencies#foreign-value-ownership]].
+            - **Fixed — shared tuple native conversion and descriptor errors.** Reused tuple
+              values and tuples inside copied lists now convert without requiring unique
+              backing, while linear non-Clone tuples retain consuming transfer. Descriptor
+              field conversion failures propagate through source helpers as ordinary
+              catchable errors with precise throwable effects. Native tuple mismatch
+              diagnostics now distinguish required, known and unknown lengths.
   see-also:
     - manual.changelog
     - lang.types.references

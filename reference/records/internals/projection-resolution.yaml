@@ -746,6 +746,18 @@ documentation:
             escaping the temporary view are rejected. Independent owned outputs, including
             text snapshots, may outlive the configuration.
 
+            Cloneable tuple conversion consumes uniquely owned backing directly and clones
+            elements only when another source value shares that storage. A linear, non-Clone
+            tuple still transfers without acquiring a Clone requirement; the canonical
+            semantic capability query selects its unique-storage path. Sharing a cloneable
+            tuple, including one inside a copied list, is not a conversion error. Descriptor
+            constructors use the ordinary fallible call ABI, and implicit constructor
+            effects participate in source caller inference. Effect selection binds actual
+            arguments through the ordinary parameter resolver, preserves exact error
+            families, and omits unreachable optional conversion errors for `none`. Runtime
+            native tuple-shape errors are catchable dependency errors; other field
+            conversion errors preserve their original throwable identity.
+
             This conversion does not introduce source-level borrowed aggregate values.
             Heterogeneous tuples, indistinguishable nested optional carriers and native
             borrowed shapes without stable owned backing remain explicit projection declines

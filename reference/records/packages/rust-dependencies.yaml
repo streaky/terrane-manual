@@ -686,6 +686,13 @@ documentation:
             - consume-nonclone-foreign-list-iteration
             - index-nonclone-foreign-list-item
             - projected-owned-borrowed-struct
+            - projected-recursive-descriptor
+            - projected-descriptor-constructor-effects
+            - projected-recursive-descriptor-methods
+            - projected-recursive-descriptor-methods-shared
+            - projected-recursive-descriptor-methods-escape
+            - projected-tuple-unknown-length
+            - projected-tuple-wrong-length
             - native-field-snapshot
             - native-borrowed-future
             - native-owned-field-snapshot
@@ -717,13 +724,26 @@ documentation:
 
             A lifetime-parameterized Rust struct is admitted only when every public field
             has a complete owned conversion recipe and the struct is neither non-exhaustive
-            nor partially hidden. Borrowed strings, optional borrowed strings, borrowed
-            slices, and optional borrowed slices are stored as owned Terrane strings and
-            lists. Immediately around a shared-borrowed or consuming native call, the
-            generated shim reconstructs the exact Rust struct and borrows from that owned
-            storage. The Terrane class itself is not call-scoped and exposes no Rust
-            lifetime. Mutable borrowed inputs and borrowed results remain unavailable
-            because their ownership cannot be represented by this adapter.
+            nor partially hidden. Borrowed text and OS-string views, optional forms, slices,
+            and vectors of borrowed leaves are stored as owned Terrane strings, paths,
+            lists, and recursively composed optional, tuple, or map values when the field
+            recipes support them (including the scalar-key and scalar-set-item constraints).
+            Around a shared-borrowed or consuming native call, generated code reconstructs
+            the exact Rust struct and temporary views borrowing from that owned storage.
+            This applies to supported free, static, and instance methods; the Terrane class
+            itself is not call-scoped and exposes no Rust lifetime. A shared conversion
+            requires native owned leaves to implement Rust `Clone`, so reusable source
+            values can be preserved. A consuming conversion transfers owned leaves without
+            requiring `Clone`. Native references derived from temporary views cannot escape
+            the call. Mutable borrowed inputs are currently declined because this adapter
+            does not provide write-back; results borrowing from temporary views are declined
+            because their lifetimes cannot be represented. These are current conversion
+            limits, not permanent restrictions on projected APIs. Descriptor construction
+            reports conversion failures through the ordinary throwable channel rather than
+            panicking; a source helper preserves the constructor's throwable effects.
+            Runtime tuple-shape mismatches produce a catchable dependency error. A native
+            tuple call still requires a statically known matching length; mismatch
+            diagnostics distinguish a required length from an unknown source length.
 
             Private-field, hidden-field, non-exhaustive, tuple, or incompletely convertible
             structs retain opaque foreign projection when they have no lifetime parameters;
