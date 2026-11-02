@@ -741,9 +741,13 @@ documentation:
             limits, not permanent restrictions on projected APIs. Descriptor construction
             reports conversion failures through the ordinary throwable channel rather than
             panicking; a source helper preserves the constructor's throwable effects.
-            Runtime tuple-shape mismatches produce a catchable dependency error. A native
-            tuple call still requires a statically known matching length; mismatch
-            diagnostics distinguish a required length from an unknown source length.
+            Runtime tuple-shape mismatches during descriptor construction produce a
+            catchable dependency error. Ordinary native call parameters and plain projected
+            struct fields instead require a statically known matching tuple length,
+            recursively through optional and collection fields. Unknown or mismatched
+            lengths report `T0012` before execution, including mismatched tuple literals;
+            diagnostics distinguish the required length from a known or unknown source
+            length.
 
             Private-field, hidden-field, non-exhaustive, tuple, or incompletely convertible
             structs retain opaque foreign projection when they have no lifetime parameters;

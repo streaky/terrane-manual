@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 22da71319ed95c44d504c3fb000229cb8ba1aa3d45269c73ca933e49b4ce444c
+  input-sha256: 58b8e746111eb4793fa8bebd1ef9ab09f3a07db58b702d0f8416f120feddccf8
 format: 1
 generated: true
 symbols:
@@ -8336,8 +8336,20 @@ symbols:
   section: inline-rust
   declaration: T0006
 - name: T0012
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: T0012
+- name: T0012
   record: lang.errors.contracts
   section: throwable-inference
+  declaration: T0012
+- name: T0012
+  record: manual.changelog.unreleased
+  section: changes-2026-11-02
+  declaration: T0012
+- name: T0012
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
   declaration: T0012
 - name: T0015
   record: lang.functions.declarations

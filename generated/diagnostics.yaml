@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 44af584678ab7461bf3e35f71201e18ae8813bf10aa3599f90f22ef0cd68300b
+  input-sha256: 4ba29271acbf0932b85f5fdce24a9395b6f4507014a7bc672549efd396cf2ac4
 format: 1
 generated: true
 diagnostics:
@@ -1233,9 +1233,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1002
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 235
+    line: 249
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 333
+    line: 347
   - path: crates/terrane-compiler/src/semantics/source_associated.rs
     line: 252
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1391,6 +1391,8 @@ diagnostics:
     line: 1784
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1849
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 218
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 324
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1405,7 +1407,7 @@ diagnostics:
   - '`.{member_name}` requires a floating receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 455
+    line: 469
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1760
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1632,7 +1634,7 @@ diagnostics:
   - '`{receiver_type}` has no member `.{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 481
+    line: 495
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 776
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1710,13 +1712,13 @@ diagnostics:
   - an empty iterator requires an explicit item type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 848
+    line: 862
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 859
+    line: 873
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 868
+    line: 882
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 878
+    line: 892
 - code: T0042
   messages:
   - collection items require a statically known value type
@@ -1729,9 +1731,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 142
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 755
+    line: 769
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 766
+    line: 780
 - code: T0043
   messages:
   - an empty `{collection}` requires an explicit item type
@@ -1741,7 +1743,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 152
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 777
+    line: 791
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 259
 - code: T0044
@@ -1751,11 +1753,11 @@ diagnostics:
   - entry keys must be immutable scalar values
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 698
+    line: 712
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 710
+    line: 724
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 731
+    line: 745
 - code: T0045
   messages:
   - '`entry` requires exactly a key and value'
@@ -1767,23 +1769,23 @@ diagnostics:
   - '`iteration-step` requires exactly one item'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 261
+    line: 275
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 317
+    line: 331
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 447
+    line: 461
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 490
+    line: 504
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 551
+    line: 565
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 567
+    line: 581
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 604
+    line: 618
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 721
+    line: 735
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 793
+    line: 807
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 249
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1800,7 +1802,7 @@ diagnostics:
   - indexed assignment is not supported for `{other}`
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 587
+    line: 601
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 115
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2374,9 +2376,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 384
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1063
+    line: 1070
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1223
+    line: 1230
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 6908
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2388,7 +2390,7 @@ diagnostics:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 704
+    line: 711
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3562
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2451,9 +2453,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/macros.rs
     line: 83
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1315
+    line: 1322
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1328
+    line: 1335
   - path: crates/terrane-compiler/src/semantics/objects/native_associated.rs
     line: 91
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2622,7 +2624,7 @@ diagnostics:
   - explicit native type arguments do not close the projected result representation
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 775
+    line: 782
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3214
   - path: crates/terrane-compiler/src/semantics/objects.rs

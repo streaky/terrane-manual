@@ -266,6 +266,11 @@ documentation:
               field conversion failures propagate through source helpers as ordinary
               catchable errors with precise throwable effects. Native tuple mismatch
               diagnostics now distinguish required, known and unknown lengths.
+            - **Fixed — plain native record tuple-shape validation.** Fixed-arity tuple
+              fields now use the same static length checks as native parameters, including
+              nested optional and collection fields. Unknown or mismatched lengths report
+              `T0012` instead of reaching a native conversion panic. Contextual tuple
+              literals also retain actual arity checking in constructors and native calls.
   see-also:
     - manual.changelog
     - lang.types.references

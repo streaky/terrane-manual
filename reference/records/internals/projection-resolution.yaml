@@ -726,6 +726,12 @@ documentation:
             preserve that distinction. Optional source arguments receive their declared
             carrier type before recursive native payload conversion.
 
+            Plain native record parameters retain fixed native tuple arity recursively
+            through optional and collection fields. Like ordinary native call parameters,
+            they reject unknown or mismatched source lengths with `T0012`, before native
+            conversion. Contextual tuple literals must match that arity too; contextual
+            element inference does not replace checking the actual number of elements.
+
             Owned configuration carriers for borrowed native descriptors retain recursive
             field-conversion recipes, rather than treating every field as a scalar.
             Supported combinations include optional homogeneous tuples, owned path and
@@ -754,9 +760,9 @@ documentation:
             constructors use the ordinary fallible call ABI, and implicit constructor
             effects participate in source caller inference. Effect selection binds actual
             arguments through the ordinary parameter resolver, preserves exact error
-            families, and omits unreachable optional conversion errors for `none`. Runtime
-            native tuple-shape errors are catchable dependency errors; other field
-            conversion errors preserve their original throwable identity.
+            families, and omits unreachable optional conversion errors for `none`.
+            Descriptor runtime tuple-shape errors are catchable dependency errors; other
+            field conversion errors preserve their original throwable identity.
 
             This conversion does not introduce source-level borrowed aggregate values.
             Heterogeneous tuples, indistinguishable nested optional carriers and native
