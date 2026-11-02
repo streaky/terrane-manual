@@ -247,8 +247,9 @@ documentation:
               `owning interface` declarations support resource-owning implementations with
               borrowed methods. Native input selection now closes retained associated
               response equations with exact trait/equality proof, including nested results
-              and non-copyable inputs and responses. See
-              [[lang.classes.interfaces#associated-outputs]] and
+              and non-copyable inputs and responses. Implicit native record constructors
+              validate canonical source field arguments and preserve optional native/source
+              carrier distinctions. See [[lang.classes.interfaces#associated-outputs]] and
               [[lang.types.generics#native-associated-results]].
   see-also:
     - manual.changelog

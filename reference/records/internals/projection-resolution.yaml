@@ -705,6 +705,20 @@ documentation:
             optional result supplies its complete `Option` carrier; lowering must not wrap
             that opaque result in another `Some`.
 
+            Native alias canonicalization does not create new shared storage. An existing
+            shared-reference argument retains its carrier when its canonical referent
+            matches the destination, including native types reached through a re-export.
+
+            Implicit native record constructors share a synthesized source callable contract
+            with argument validation, ownership analysis and lowering. Arguments use
+            projected source field names, including renamed keyword fields; unknown names,
+            duplicates, missing required fields and incompatible values follow ordinary call
+            diagnostics. Native enum-payload constructor helpers consume native field
+            storage even though their records use generated carriers. Borrowed descriptor
+            constructors instead consume source carrier storage; omitted optional fields
+            preserve that distinction. Optional source arguments receive their declared
+            carrier type before recursive native payload conversion.
+
             Concrete trait operations retain an explicit qualified native path in projection
             metadata. Projection binds blanket `Self` generics to the concrete owner,
             preserves unresolved implementation generics in the rendered trait path, and

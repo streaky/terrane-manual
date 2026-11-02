@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a83922d75dd11f16138e75daa7a1b7966419a624fe7fb609b08938aeefeda987
+  input-sha256: e93d543ed0cc29985ccaf3ed0324a49e4cc82ca242c0d20d308480e46ed02ae3
 format: 1
 generated: true
 diagnostics:
@@ -2359,9 +2359,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 384
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 860
+    line: 940
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1020
+    line: 1100
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 6869
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2373,7 +2373,7 @@ diagnostics:
   - 'projected result destination `{destination}` is not supported: {reason}'
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 501
+    line: 581
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3523
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2436,9 +2436,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/macros.rs
     line: 83
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1112
+    line: 1192
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 1125
+    line: 1205
   - path: crates/terrane-compiler/src/semantics/objects/native_associated.rs
     line: 91
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2604,7 +2604,7 @@ diagnostics:
   - explicit native type arguments do not close the projected result representation
   sources:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
-    line: 572
+    line: 652
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3175
   - path: crates/terrane-compiler/src/semantics/objects.rs
