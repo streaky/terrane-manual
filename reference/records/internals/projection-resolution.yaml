@@ -705,6 +705,11 @@ documentation:
             optional result supplies its complete `Option` carrier; lowering must not wrap
             that opaque result in another `Some`.
 
+            Object comparisons retain canonical operand places and their access guards
+            through the comparison, evaluating the left operand before the right. The
+            comparison itself neither consumes an owned operand nor adds a payload snapshot
+            merely to compare it with a borrowed observation.
+
             Native alias canonicalization does not create new shared storage. An existing
             shared-reference argument retains its carrier when its canonical referent
             matches the destination, including native types reached through a re-export.
