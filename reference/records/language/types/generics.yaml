@@ -181,6 +181,14 @@ documentation:
             Same-shaped classes do not acquire nominal conformance, and primitives do not
             automatically implement an authored interface.
 
+            A source binder bound currently names an unapplied interface. Applied bounds,
+            such as `T implements source of int`, are rejected during checking rather than
+            losing their arguments at the native trait boundary. Associated-output
+            interfaces cannot currently serve as source binder bounds: a bare name leaves
+            their slots open, while an applied bound is not supported. Use a closed
+            interface value parameter when that is the intended contract. Native generic
+            bounds and their associated-equality proofs retain their separate rules.
+
             An unconstrained parameter grants no arbitrary methods, arithmetic, equality,
             default construction, or copying. A convenient concrete caller cannot rescue an
             invalid generic body. Callable authority, asynchronous status, throwable

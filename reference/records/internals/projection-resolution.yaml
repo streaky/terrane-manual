@@ -705,10 +705,12 @@ documentation:
             optional result supplies its complete `Option` carrier; lowering must not wrap
             that opaque result in another `Some`.
 
-            Object comparisons retain canonical operand places and their access guards
-            through the comparison, evaluating the left operand before the right. The
-            comparison itself neither consumes an owned operand nor adds a payload snapshot
-            merely to compare it with a borrowed observation.
+            Object comparisons borrow stable canonical operand places without consuming
+            owned operands or adding representation copies for borrowed observations. Reads
+            through checked shared storage instead use bounded value snapshots: each access
+            guard is released before the next operand is evaluated, including when distinct
+            handles alias the same owner. Retaining two field guards from one owner would
+            either outlive a temporary guard or deadlock on reacquisition.
 
             Native alias canonicalization does not create new shared storage. An existing
             shared-reference argument retains its carrier when its canonical referent

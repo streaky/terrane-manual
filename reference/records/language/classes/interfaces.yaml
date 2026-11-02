@@ -106,7 +106,16 @@ documentation:
             the substituted contract, including parameter types, return types, invocation
             mode, and throwable allowance. Missing or duplicate bindings and incompatible
             implementations are source errors. Interfaces declare slots without defaults;
-            classes must bind their associated declarations.
+            classes must bind their associated declarations. When multiple implemented
+            interfaces declare an associated slot with the same name, one class binding
+            satisfies every such slot; the class does not supply separate bindings by
+            interface identity.
+
+            Associated names are supported in interface method signatures and in local
+            bindings within method bodies. They are not currently available as class field
+            types; a field annotation using an associated name does not resolve to a type
+            descriptor. This limit does not reduce the method-signature or local-binding
+            support described here.
 
             A closed interface application retains its supplied types through dispatch,
             fields, inheritance, imports, and exported declaration metadata. Its bindings
