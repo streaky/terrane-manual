@@ -40,6 +40,7 @@ documentation:
             name = value
             name int = 42
             name string
+            name (int | none)
             constant max-size int = 1024
             private cache = map;
             global service = service;
@@ -59,6 +60,13 @@ documentation:
             may retain a safe assertion of the compiler's invariant. A provably unavailable
             use is a source error. Assignment compatibility does not introduce implicit
             cross-type coercions.
+
+            Parentheses may group a binding's type expression in class fields, trait fields
+            and local declarations, with or without an initializer. For example,
+            `name (int | none)` has the same declared type as `name int | none`. Grouping
+            changes neither availability nor field-defaulting rules: an initializer-free
+            local still needs assignment before a provably available read. A grouped nominal
+            name is a type annotation, not a call argument; calls use the `;` marker.
 
             A later declaration in a loop body may reach an earlier use through a reachable
             back-edge. The use is uncertain until an iteration assigns the value, so an
