@@ -547,6 +547,14 @@ documentation:
             - projected-invocation-scoped-auto-trait-guard
             - projected-invocation-scoped-anonymous-callback
             - projected-invocation-scoped-capturing-callback
+            - retained-callback-carriers
+            - retained-callback-borrowed-capture
+            - retained-callback-event-escape
+            - retained-callback-mutable-shared
+            - retained-callback-non-send
+            - retained-callback-non-sync
+            - retained-callback-once-reuse
+            - retained-callback-readonly-write
           markdown: |-
             A concrete Rust `Fn`, `FnMut`, or `FnOnce` bound projects as a shared, mutable,
             or consuming Terrane function contract respectively at either a free-function or
@@ -565,9 +573,10 @@ documentation:
             unsupported structural requirements and declares exactly one required method. A
             safe Rust trait projects as an ordinary Terrane interface; an unsafe Rust trait
             projects as an `unsafe interface`, preserving its implementation obligation
-            rather than erasing it. Auto-trait or other supertrait requirements and
-            multi-method protocols still decline at projection with the unsupported trait
-            shape named in the source diagnostic.
+            rather than erasing it. Supported `Send` and `Sync` marker bounds remain capture
+            obligations. Unsupported structural supertraits, auto-trait principals without a
+            callable method, and multi-method protocols still decline with the unsupported
+            trait shape named in the source diagnostic.
 
             Mutable callbacks retain repeatable owned state, and separating the Terrane
             callable copies its current environment instead of aliasing it. A consuming
@@ -577,6 +586,39 @@ documentation:
             or object receiver. A transferable callback cannot capture a local-only value,
             and an escaping throwable is rejected when the Rust callback result has no
             matching failure representation.
+
+            Supported owning `Box` and `Arc` trait-object inputs compose with direct
+            callable bounds and proven single-method blanket adapters, including aliases
+            imported through another dependency. The native carrier and invocation mode are
+            separate: `Arc` requires shared invocation and never manufactures mutable or
+            consuming authority. An owned class implementing the projected interface can
+            also cross a supported owning interface input.
+
+            Registration tokens remain their actual native values. Copying a weak token
+            preserves its native identity; passing it to removal does not recreate a
+            listener or substitute a numeric identifier. Dropping a weak token does not
+            unsubscribe unless the native API explicitly defines that behavior. Registry
+            destruction, in-flight snapshots and reentrant delivery follow the selected
+            native contract. The compiler neither promises unlocked native callbacks nor
+            inserts synchronization to make an incompatible callback shared.
+
+            Borrowed callback inputs are scoped to each invocation. A mutable input uses the
+            exact native referent, including fixed-width scalars, so writes affect the
+            original value; it cannot be converted through a temporary numeric snapshot.
+            Read-only inputs cannot acquire mutable authority. A callback cannot save its
+            borrowed parameter into captured storage for a later invocation. Stateful
+            mutable and consuming callable storage binds input lifetimes at invocation,
+            rather than pinning them in its stored argument type. Read-only native text may
+            need an owned Terrane text snapshot when the representations differ.
+
+            Owning callback inputs do not imply support for returned native callback
+            carriers; unsupported direct or nested callback results decline during
+            projection rather than reaching backend validation. Native-to-source callback
+            arguments that themselves contain owning callback carriers also decline: they
+            need the reverse adapter, not the owning input adapter described here. Owning
+            blanket recipes with additional unproven obligations, such as a requirement that
+            the generated closure implement `Debug`, are rejected rather than discarding the
+            bound.
 
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A named Terrane function may declare the corresponding parameter by `ref`

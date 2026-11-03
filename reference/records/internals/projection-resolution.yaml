@@ -244,6 +244,25 @@ documentation:
             temporary converted Terrane value for that invocation. `FnMut` records Rust
             invocation multiplicity but adds no mutable Terrane capture cell.
 
+            Owning callback metadata retains `Box` versus `Arc` separately from invocation
+            authority, exact native input spelling, retention and marker bounds. Resolve
+            provider aliases after cross-dependency enrichment, and install the canonical
+            plan in consumer parameters before rendering declarations. `Arc` admits only
+            shared invocation; a carrier is not proof of exclusive access. Returned weak
+            registration tokens stay opaque native values with their original identity.
+
+            Stateful callable erasure with borrowed inputs quantifies their lifetimes at
+            each invocation. Mutable inputs preserve native scalar widths and object
+            identity, never a converted temporary. Runtime carrier discovery covers helper
+            signatures as well as source expressions. Borrowed parameters cannot escape into
+            captured storage. Owning native callback result conversion is not implemented
+            and is rejected recursively at projection. Apply that reverse-conversion
+            restriction to callback parameters too: a native callback passed into source
+            cannot reuse an input-only owning adapter. Owning blanket selection retains or
+            rejects its full requirements; it must not select the callable signature while
+            dropping additional implementor constraints such as `Debug` or conditions on
+            another type parameter.
+
             Projection metadata retains lifetime-bearing producer results, projected inputs,
             nested sequence elements, selected terminal-alias defaults, and original native
             generic argument order recursively when a proven external conversion authorizes

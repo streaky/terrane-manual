@@ -282,6 +282,14 @@ documentation:
             - **Fixed — early consumer stdin closure.** A successful consumer may ignore the
               request without a scheduling-dependent broken-pipe failure. Exit status and
               stdout protocol validation still apply.
+            - **Added — retained native callback carriers.** Supported owning `Box` and
+              `Arc` inputs compose callable blanket adapters, cross-dependency aliases and
+              interface listeners while preserving native registration-token identity.
+              Mutable and consuming callbacks bind borrowed inputs per invocation; mutable
+              events retain original storage and copied mutable callables retain independent
+              environments. Capture lifetime, invocation authority and `Send`/`Sync`
+              violations report source diagnostics. Native lifecycle and reentrancy remain
+              API-defined. See [[tool.packages.rust-dependencies#callbacks]].
   see-also:
     - manual.changelog
     - lang.types.references
