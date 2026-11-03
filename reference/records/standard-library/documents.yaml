@@ -39,6 +39,9 @@ documentation:
             - typed-document-encoding
             - typed-document-decoding
             - typed-document-requires-opt-in
+            - typed-tuple-decode-shapes
+            - typed-serialization-cross-unit-inheritance
+            - typed-float-output
           markdown: |-
             `encode-typed-json` derives class encoding through `document-encodable`;
             `decode-typed-json` derives class decoding through `document-decodable`. The
@@ -57,6 +60,11 @@ documentation:
             `deserializable` codec contract. Encoding includes every selected field;
             optional `none` values become null, not omitted keys. Encoding failures use the
             ordinary typed outcome's diagnostics.
+
+            Inheritance exclusion is package-wide, including subclasses declared in other
+            source units. Decode carries any known tuple arity recursively through container
+            destinations. Explicit `tuple of Item` declarations and homogeneous list item
+            types do not retain an arity; initializers do not impose a new length contract.
         - type: example
           id: example.documents.typed-json
           title: Typed JSON encoding and decoding
@@ -137,12 +145,16 @@ documentation:
 
             JSON parse and stringify honor `json-options.max-depth` and `max-bytes`;
             canonical JSON output is a separate operation. YAML parse options include depth,
-            byte, and alias-node limits. YAML stringify emits JSON-compatible YAML with the
-            default bounded writer. YAML input may support features beyond the portable
+            byte, and alias-node limits. Both `stringify-yaml(value, options)` and
+            `encode-yaml(value, options)` require explicit YAML options and honor their
+            depth and byte budgets, emitting JSON-compatible YAML. Alias-node limits apply
+            only to input expansion. YAML input may support features beyond the portable
             document model; document mapping keys are strings. JSON defaults to depth 256
             and 16 MiB, with an absolute depth ceiling of 512. YAML defaults to depth 128,
             16 MiB and 65,536 alias-expanded nodes; its parser depth ceiling is 255.
-            Duplicate keys and trailing JSON data are rejected before typed conversion.
+            Duplicate keys, an initial JSON byte-order mark and trailing JSON data are
+            rejected before typed conversion. Syntax diagnostics report structured parser
+            locations rather than upstream prose that can misclassify malformed input.
             Limits are errors, not truncation.
     - id: native-boundary
       title: Native Serde boundary
@@ -182,7 +194,14 @@ documentation:
             bounded parsed tree while constructing the known destination. Successful typed
             decoding does not canonicalize JSON, clone document subtrees, or allocate
             diagnostic paths. It transfers owned strings and map keys into the destination.
-            Dynamic document APIs retain observable encoded values.
+            Dynamic document APIs retain eagerly computed observable encoded values. Those
+            snapshots do not impose a second 16 MiB output ceiling on parsing with a raised
+            byte budget or on document construction. Repeated incremental mutation still
+            re-encodes the complete document and can have quadratic cost; no lazy
+            encoded-property redesign is implemented. Use typed streaming encoding when
+            materializing a dynamic tree is unnecessary. Custom document encoding uses the
+            canonical UTF-16 key order, while finite float encoding uses compact,
+            round-tripping notation for extreme magnitudes.
 provenance:
   specification:
     - document: language-spec

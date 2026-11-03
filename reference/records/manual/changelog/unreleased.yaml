@@ -323,6 +323,13 @@ documentation:
               JSON-only raw lexical adapter. JSON `Value` conversions report unsupported
               numeric exactness or range instead of silently narrowing. See
               [[std.documents.typed-decoding#native-boundary]].
+            - **Fixed — serialization review boundaries.** Dynamic result snapshots no
+              longer impose a hidden 16 MiB ceiling. YAML stringify/custom encoding now take
+              explicit options and honor output budgets. Strict JSON rejects an initial BOM
+              and reports reliable syntax locations; its lexical parser dependency is pinned
+              exactly. Custom document maps use UTF-16 key ordering, extreme finite floats
+              use compact round-tripping notation, known nested tuple arities are retained
+              during decoding, and derived inheritance checks span source units.
   see-also:
     - manual.changelog
     - lang.types.references

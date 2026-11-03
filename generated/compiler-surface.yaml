@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ddae79a0b433156301d6671cbee69371d714120b3a4afee670e8dda266044655
+  input-sha256: c9372203d9a82fd6703f544c72ca9a198d93ae7e7d7bf3f700f302e3b067d958
 format: 1
 generated: true
 modules:
@@ -1044,9 +1044,9 @@ modules:
     line: 20
   - declaration: function parse-yaml document-result; input string, options yaml-options
     line: 23
-  - declaration: function stringify-yaml document-result; value document-value
+  - declaration: function stringify-yaml document-result; value document-value, options yaml-options
     line: 27
   - declaration: function decode-yaml document-result; input string, mapping deserializable, options yaml-options
-    line: 33
-  - declaration: function encode-yaml document-result; value serializable
-    line: 39
+    line: 32
+  - declaration: function encode-yaml document-result; value serializable, options yaml-options
+    line: 38

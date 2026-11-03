@@ -260,7 +260,12 @@ documentation:
             principal/auto-trait bounds and cloneability rather than reinterpreting them as
             callable adapters. Canonicalize equivalent alias/direct Rust storage at call,
             return and lowering boundaries; open alias binders are not closed owners and
-            source-only placeholders cannot carry native identity proofs.
+            source-only placeholders cannot carry native identity proofs. Ordinary native
+            argument validation, not only callable signature matching, compares canonical
+            foreign storage when both sides have a closed native application. Opaque
+            chain-only values without such an application retain their existing admission
+            and expression-lifetime rules; the check must not invent a closed representation
+            for them.
 
             Stateful callable erasure with borrowed inputs quantifies their lifetimes at
             each invocation. Mutable inputs preserve native scalar widths and object

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ddae79a0b433156301d6671cbee69371d714120b3a4afee670e8dda266044655
+  input-sha256: c9372203d9a82fd6703f544c72ca9a198d93ae7e7d7bf3f700f302e3b067d958
 format: 1
 generated: true
 diagnostics:
@@ -1536,25 +1536,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1527
+    line: 1528
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1577
+    line: 1578
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1628
+    line: 1629
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1600
+    line: 1601
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1637
+    line: 1638
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -2352,6 +2352,7 @@ diagnostics:
   - field `{}` is secret or has unsupported type `{}` and cannot be document-encoded
   - typed document encoding requires a value and encoder options
   - typed document encoding received incompatible options
+  - derived document codecs exclude inheritance across all package units; use an explicit codec
   sources:
   - path: crates/terrane-compiler/src/semantics/documents.rs
     line: 181
@@ -2387,6 +2388,8 @@ diagnostics:
     line: 429
   - path: crates/terrane-compiler/src/semantics/documents.rs
     line: 439
+  - path: crates/terrane-compiler/src/semantics/documents.rs
+    line: 540
 - code: T0115
   messages:
   - document decode outcome has no member `{member_name}`
@@ -2843,7 +2846,7 @@ diagnostics:
   - awaited destructors require the threaded executor
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1417
+    line: 1418
 - code: T0139
   messages:
   - mutating callback parameter `{}` requires a mutable native reference; the selected callback supplies
