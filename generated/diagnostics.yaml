@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 30d5499bae90c023e2fe5c227f7eae4277c5d4d1f3596f4ba3ca154719e06f6b
+  input-sha256: 45fee055a8b024f3417f6050a998c58e476574dae47764c70a25be14f0819276
 format: 1
 generated: true
 diagnostics:
@@ -1386,11 +1386,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1658
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1747
+    line: 1751
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1784
+    line: 1788
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1849
+    line: 1853
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 218
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1528,9 +1528,9 @@ diagnostics:
   - 'incompatible argument types: expected `{}`, found `{}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1371
+    line: 1381
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1568
+    line: 1578
 - code: T0020
   messages:
   - bare `throw` is only valid inside a catch clause
@@ -2083,37 +2083,40 @@ diagnostics:
   - projected callback requires a transferable callable
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 197
+    line: 207
 - code: T0082
   messages:
   - retained callback cannot borrow an object receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 203
+    line: 213
 - code: T0083
   messages:
   - retained callback cannot capture a borrowed value
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 213
+    line: 223
 - code: T0084
   messages:
   - projected callback requires transferable captured values
+  - owned callable requires transferable captured values (`Send`)
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 108
+    line: 116
+  - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
+    line: 1650
 - code: T0085
   messages:
   - projected callback requires shareable captured values (`Sync`)
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 114
+    line: 124
 - code: T0086
   messages:
   - one-shot projected callback was already consumed
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 231
+    line: 241
 - code: T0087
   messages:
   - iteration step has no member `{member_name}`
@@ -2233,7 +2236,7 @@ diagnostics:
   - conversion callback must return `{destination}`, found `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 308
+    line: 318
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 346
 - code: T0107
@@ -2294,7 +2297,7 @@ diagnostics:
   - channel pair `{}` endpoint `{}` was already moved
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 259
+    line: 269
 - code: T0111
   messages:
   - typed shared cells are unavailable; keep mutable state in one owner task and communicate through bounded
@@ -2307,7 +2310,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1537
+    line: 1547
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -2439,19 +2442,19 @@ diagnostics:
   - cannot establish a native lender's lexical scope
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 154
+    line: 164
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1273
+    line: 1283
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1292
+    line: 1302
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1339
+    line: 1349
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1435
+    line: 1445
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1456
+    line: 1466
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1477
+    line: 1487
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 79
   - path: crates/terrane-compiler/src/semantics/calls.rs
@@ -2819,7 +2822,7 @@ diagnostics:
     a shared reference
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 186
+    line: 196
 - code: T0140
   messages:
   - 'native-mutating callable cannot enter `{name}`: function-typed storage requires shared native references'

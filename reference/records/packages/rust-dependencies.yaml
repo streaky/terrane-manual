@@ -585,14 +585,22 @@ documentation:
             requirements in Terrane. A retained callback cannot capture a borrowed reference
             or object receiver. A transferable callback cannot capture a local-only value,
             and an escaping throwable is rejected when the Rust callback result has no
-            matching failure representation.
+            matching failure representation. Owned callable environments also retain the
+            runtime's `Send` capture requirement, and shared environments retain `Sync`,
+            when the native carrier itself omits those markers. See
+            [[lang.functions.callable-types#exact-metadata]].
 
             Supported owning `Box` and `Arc` trait-object inputs compose with direct
             callable bounds and proven single-method blanket adapters, including aliases
             imported through another dependency. The native carrier and invocation mode are
             separate: `Arc` requires shared invocation and never manufactures mutable or
             consuming authority. An owned class implementing the projected interface can
-            also cross a supported owning interface input.
+            also cross a supported owning interface input. Optional callback carriers
+            preserve the same input contract: both present and `none` values work for
+            supported `Box` and `Arc` shapes, including callable aliases. A present mutable
+            callback still borrows the original event exclusively. Callback carriers nested
+            in collection inputs currently decline at source rather than promising
+            collection-of-listener adaptation.
 
             Registration tokens remain their actual native values. Copying a weak token
             preserves its native identity; passing it to removal does not recreate a
@@ -624,7 +632,10 @@ documentation:
             lifetime-bearing result types, and borrowed representations hidden behind result
             aliases or trait type arguments are not erased into owned snapshots; those
             shapes decline with `S2029`. The existing raw generic higher-ranked callback
-            path remains separate and retains its exact result lifetime.
+            path remains separate and retains its exact result lifetime. Aliases nested in
+            tuple, slice and array results receive the same ownership checks. Qualified
+            associated results without a resolved ownership proof decline rather than
+            assuming that an owned receiver implies an owned result.
 
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A named Terrane function may declare the corresponding parameter by `ref`

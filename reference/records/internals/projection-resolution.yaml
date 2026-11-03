@@ -261,13 +261,20 @@ documentation:
             cannot reuse an input-only owning adapter. Owning blanket selection retains or
             rejects its full requirements; it must not select the callable signature while
             dropping additional implementor constraints such as `Debug` or conditions on
-            another type parameter.
+            another type parameter. Unsupported blanket obligations discard that candidate,
+            not unrelated supported candidates; preserve a targeted decline when no
+            supported candidate remains.
 
             Check owning-adapter result ownership before source type projection erases
             native references. Follow output aliases and reject borrowed trait type
             arguments rather than substituting their referents as owned results. This
             restriction belongs to owning erasure; do not apply it to the existing raw
-            higher-ranked callback graph, which retains the exact native result.
+            higher-ranked callback graph, which retains the exact native result. Inspect
+            aliased payloads recursively through tuple, slice and array shapes. Unnormalized
+            associated results need separate ownership proof and decline conservatively.
+            Ordinary and borrowed-input owned mutable carriers share one code generator for
+            capture bounds, locking and clone-forks-state behavior; borrowed-environment and
+            consuming-only carriers retain their distinct ABIs.
 
             Projection metadata retains lifetime-bearing producer results, projected inputs,
             nested sequence elements, selected terminal-alias defaults, and original native

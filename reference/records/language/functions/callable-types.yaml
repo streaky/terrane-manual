@@ -181,6 +181,13 @@ documentation:
             ownership permits. Supported shared read-only captures and mutations through
             callback parameters remain valid.
 
+            Owned callable environments currently require transferable (`Send`) captured
+            values, and shared callable environments additionally require shareable (`Sync`)
+            captures, even for local invocation or a native destination without those
+            markers. Non-transferable or non-shareable captures report T0084 or T0085 rather
+            than a native backend error. Lexically borrowed local environments use a
+            separate runtime and do not acquire these owned-environment requirements.
+
             An anonymous callable cannot return an ordinary reference borrowed from its
             captured environment. The current native callable ABI has no result lifetime
             lent by that environment, so Terrane reports T0145 before Rust lowering. This

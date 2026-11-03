@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dd781c792b19cc9a7366c27b7c02dbb46e8a379eafc459693c0304eeb6f01316
+  input-sha256: 0ec7cc0b1cb152496f8f91fc296e5649476dcc3a52bf9768c96b0885fa227a66
 format: 1
 generated: true
 symbols:
@@ -5727,6 +5727,10 @@ symbols:
   declaration: none
 - name: none
   record: tool.packages.rust-dependencies
+  section: callbacks
+  declaration: none
+- name: none
+  record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: none
 - name: none
@@ -7720,6 +7724,10 @@ symbols:
   section: transferability
   declaration: Send
 - name: Send
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: Send
+- name: Send
   record: lang.types.generics
   section: native-selections
   declaration: Send
@@ -8246,6 +8254,10 @@ symbols:
 - name: Sync
   record: lang.classes.interfaces
   section: interfaces
+  declaration: Sync
+- name: Sync
+  record: lang.functions.callable-types
+  section: exact-metadata
   declaration: Sync
 - name: Sync
   record: lang.types.generics

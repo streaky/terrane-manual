@@ -293,6 +293,14 @@ documentation:
               adapters reject borrowed results and borrowed trait type arguments rather than
               erasing native lifetimes; exact raw higher-ranked callbacks retain their
               existing separate path.
+            - **Fixed — retained callback review boundaries.** Optional owning callback
+              inputs preserve callable grouping, canonical native identities and
+              trait-object coercion through both present and absent branches. Owned callable
+              environments enforce their runtime capture bounds at source, including local
+              calls. Unsupported blanket candidates no longer mask supported candidates, and
+              owning-result validation follows aliases through nested slice/array payloads.
+              Ordinary and invocation-borrowed owned mutable bodies share one runtime
+              generator without changing copy or locking semantics.
   see-also:
     - manual.changelog
     - lang.types.references
