@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f014f98713d502ec1a9cbeb29135d32cc72d439a88bb0c45ee207a348eef3a5b
+  input-sha256: 16a4af2b417150b688b137dcae9b13dc9959d1b25b36a9dae73df806e8a08b63
 format: 1
 generated: true
 symbols:
@@ -474,6 +474,10 @@ symbols:
   declaration: advance-time
 - name: allow-unknown
   record: std.documents.typed-decoding
+  section: mapping
+  declaration: allow-unknown
+- name: allow-unknown
+  record: std.documents.typed-decoding
   section: opt-in
   declaration: allow-unknown
 - name: and
@@ -560,6 +564,10 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: AR
+- name: arbitrary_precision
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: arbitrary_precision
 - name: Arc
   record: book.identity-and-movement
   section: shared-references-and-ownership
@@ -2177,10 +2185,6 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: decode-typed-json
-- name: decode-typed-yaml
-  record: std.documents.typed-decoding
-  section: opt-in
-  declaration: decode-typed-yaml
 - name: decompose
   record: lang.numerics.floating-point
   section: operations
@@ -2437,17 +2441,29 @@ symbols:
   record: internals.testing.conformance-timing
   section: collection-protocol
   declaration: docs/measure-test-times.py
+- name: Document
+  record: std.documents.typed-decoding
+  section: implementation-notes
+  declaration: Document
+- name: Document
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: Document
 - name: document-decodable
   record: std.documents.typed-decoding
   section: opt-in
   declaration: document-decodable
+- name: document-encodable
+  record: std.documents.typed-decoding
+  section: opt-in
+  declaration: document-encodable
 - name: document-result
   record: app.error-boundaries
   section: documents
   declaration: document-result
 - name: document-validatable
   record: std.documents.typed-decoding
-  section: diagnostics
+  section: mapping
   declaration: document-validatable
 - name: document-value
   record: std.logging
@@ -2625,6 +2641,10 @@ symbols:
   record: std.text-bytes-codecs
   section: compiler-synopsis
   declaration: function encode-hex string; data bytes
+- name: encode-typed-json
+  record: std.documents.typed-decoding
+  section: opt-in
+  declaration: encode-typed-json
 - name: end
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
@@ -2871,7 +2891,7 @@ symbols:
   declaration: failed
 - name: failed
   record: std.documents.typed-decoding
-  section: diagnostics
+  section: mapping
   declaration: failed
 - name: failed
   record: std.filesystem
@@ -4685,6 +4705,18 @@ symbols:
   record: std.paths
   section: examples
   declaration: join-path
+- name: json-options.max-depth
+  record: std.documents.typed-decoding
+  section: dynamic-documents
+  declaration: json-options.max-depth
+- name: json_value_to_document
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: json_value_to_document
+- name: JsonDocument
+  record: manual.changelog.unreleased
+  section: changes-2026-11-03
+  declaration: JsonDocument
 - name: kind
   record: lang.declarations.annotations
   section: docs-and-metadata
@@ -5109,6 +5141,10 @@ symbols:
   record: lang.text.search
   section: string-search
   declaration: matches
+- name: max-bytes
+  record: std.documents.typed-decoding
+  section: dynamic-documents
+  declaration: max-bytes
 - name: maximum
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -5708,6 +5744,10 @@ symbols:
 - name: none
   record: std.collections
   section: lookup
+  declaration: none
+- name: none
+  record: std.documents.typed-decoding
+  section: opt-in
   declaration: none
 - name: none
   record: std.networking.operations
@@ -7775,10 +7815,22 @@ symbols:
   record: std.concurrency.channels
   section: construction
   declaration: sender
+- name: serde_json::Value
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: serde_json::Value
 - name: serializable
   record: std.documents.typed-decoding
   section: opt-in
   declaration: serializable
+- name: Serialize
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: Serialize
+- name: serialize_json_value
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: serialize_json_value
 - name: serve
   record: tool.packages.rust-dependencies
   section: integration-boundaries
@@ -9215,10 +9267,6 @@ symbols:
   record: book.types
   section: function-types
   declaration: to
-- name: to-document
-  record: std.documents.typed-decoding
-  section: opt-in
-  declaration: to-document
 - name: to-string
   record: lang.text.display
   section: scalar-display
@@ -9583,6 +9631,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: Unavailable and unused
+- name: unbounded_depth
+  record: std.documents.typed-decoding
+  section: native-boundary
+  declaration: unbounded_depth
 - name: unique-words
   record: book.text-and-collections
   section: project-word-frequency
@@ -9639,6 +9691,10 @@ symbols:
   record: std.collections
   section: collection-kinds
   declaration: unordered-set
+- name: unorderedmap
+  record: std.documents.typed-decoding
+  section: opt-in
+  declaration: unorderedmap
 - name: unresolved
   record: tool.source-intelligence
   section: queries
@@ -9883,6 +9939,10 @@ symbols:
   record: lang.types.descriptors
   section: type-descriptors
   declaration: value
+- name: Value
+  record: manual.changelog.unreleased
+  section: changes-2026-11-03
+  declaration: Value
 - name: value
   record: std.concurrency.channels
   section: operations

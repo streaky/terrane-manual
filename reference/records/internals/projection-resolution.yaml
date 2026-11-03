@@ -62,6 +62,12 @@ documentation:
             failures remain errors. Writes replace the complete file atomically; a failed
             write or replacement removes its temporary file without altering the old target.
 
+            Each nonempty oracle operation holds an exclusive workspace file lock across
+            cache loading, generated probe replacement, Cargo execution, and cache
+            publication. Cargo's own build lock does not protect generated probe inputs: a
+            concurrent editor or CLI must not remove another batch's sources while its
+            compiler waits, or publish evidence for a different batch.
+
             Sysroot `core` Rustdoc surveys reuse
             `.trn/dependencies/rust-survey/sysroot/core/<target>/core.json` only when the
             adjacent `.artifact-identity` matches the stable build toolchain, Rustdoc
@@ -250,6 +256,11 @@ documentation:
             plan in consumer parameters before rendering declarations. `Arc` admits only
             shared invocation; a carrier is not proof of exclusive access. Returned weak
             registration tokens stay opaque native values with their original identity.
+            Publish closed weak handles as real backing-owner declarations, retaining exact
+            principal/auto-trait bounds and cloneability rather than reinterpreting them as
+            callable adapters. Canonicalize equivalent alias/direct Rust storage at call,
+            return and lowering boundaries; open alias binders are not closed owners and
+            source-only placeholders cannot carry native identity proofs.
 
             Stateful callable erasure with borrowed inputs quantifies their lifetimes at
             each invocation. Mutable inputs preserve native scalar widths and object

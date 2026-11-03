@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f014f98713d502ec1a9cbeb29135d32cc72d439a88bb0c45ee207a348eef3a5b
+  input-sha256: 16a4af2b417150b688b137dcae9b13dc9959d1b25b36a9dae73df806e8a08b63
 format: 2
 generated: true
 records:
@@ -77,6 +77,9 @@ records:
     sections: []
   - id: changes-2026-11-02
     title: '2026-11-02'
+    sections: []
+  - id: changes-2026-11-03
+    title: '2026-11-03'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -1814,9 +1817,9 @@ records:
     sections: []
   declaration-synopsis: []
 - id: std.documents.typed-decoding
-  title: Typed document decoding
-  summary: Decodes bounded JSON and YAML into explicitly opted-in class trees while accumulating typed,
-    source-mapped diagnostics.
+  title: JSON, YAML, and typed documents
+  summary: Parses, constructs, encodes, and decodes bounded dynamic JSON/YAML documents and explicitly
+    opted-in typed class values.
   kind: topic
   manual: reference
   group: Standard library
@@ -1833,16 +1836,22 @@ records:
     compiler: null
   sections:
   - id: opt-in
-    title: Opt-in and supported shapes
+    title: Typed serialization
     sections: []
   - id: mapping
-    title: Mapping and numeric rules
+    title: Decoding and field policy
     sections: []
   - id: diagnostics
     title: Outcomes, diagnostics, and validation
     sections: []
+  - id: dynamic-documents
+    title: Dynamic documents and bounds
+    sections: []
+  - id: native-boundary
+    title: Native Serde boundary
+    sections: []
   - id: implementation-notes
-    title: Implementation, security, and performance
+    title: Costs and diagnostics
     sections: []
   declaration-synopsis: []
 - id: std.logging

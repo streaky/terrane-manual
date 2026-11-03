@@ -14,50 +14,72 @@ lifecycle:
 
 documentation:
   status: complete
-  title: Typed document decoding
+  title: JSON, YAML, and typed documents
   title-style: text
   summary: >-
-    Decodes bounded JSON and YAML into explicitly opted-in class trees while accumulating typed, source-mapped diagnostics.
+    Parses, constructs, encodes, and decodes bounded dynamic JSON/YAML documents and
+    explicitly opted-in typed class values.
   tags:
     - documents
     - json
     - yaml
-    - decoding
+    - serialization
   see-also:
     - lang.classes.fields
+    - tool.packages.rust-dependencies
   sections:
     - id: opt-in
-      title: Opt-in and supported shapes
+      title: Typed serialization
       blocks:
         - type: rule
           id: rule.documents.typed-decoding-opt-in
           level: must
           since: null
           evidence:
+            - typed-document-encoding
             - typed-document-decoding
             - typed-document-requires-opt-in
-            - typed-document-custom-construction
-            - typed-document-unsupported-field
           markdown: |-
-            `decode-typed-json` and `decode-typed-yaml` require source text, a concrete
-            class descriptor implementing `document-decodable`, the matching parser options,
-            and an explicit `allow-unknown` boolean.
+            `encode-typed-json` derives class encoding through `document-encodable`;
+            `decode-typed-json` derives class decoding through `document-decodable`. The
+            YAML operations share this field and codec machinery. Derived support covers
+            scalars, lists, homogeneous tuples, maps and `unorderedmap` values with string
+            keys, optionals, and nested opted-in classes. Decoding accepts a class
+            descriptor or a supported typed fallback value, matching parser options, and an
+            explicit `allow-unknown` boolean. Custom constructors are not used by derived
+            decoding, including nested and fallback destinations; implement `deserializable`
+            for custom construction.
 
-            Derived decoding supports scalars, nested opted-in classes, lists, homogeneous
-            tuples, and maps with string keys. Every nested value must be decodable.
-            Resource-owning, inherited, custom-constructed, recursively sized, and otherwise
-            unsupported classes must implement `deserializable` manually.
-        - type: admonition
-          id: note.documents.no-derived-encoding
-          kind: warning
-          markdown: |-
-            Compiler-derived mapping currently covers document input only. There is no
-            matching derived class-to-document encoder. A class may implement `serializable`
-            with an explicit `to-document` method, but that method is responsible for
-            external field names, nested values, optional policy, finite numeric output, and
-            any secrecy rule.
+            Derived encoding includes only public instance fields and rejects secret or
+            private fields rather than exposing or silently omitting them. Inheritance,
+            resource-owning classes, and callable fields are unsupported. Classes with a
+            different representation can implement the explicit `serializable` or
+            `deserializable` codec contract. Encoding includes every selected field;
+            optional `none` values become null, not omitted keys. Encoding failures use the
+            ordinary typed outcome's diagnostics.
+        - type: example
+          id: example.documents.typed-json
+          title: Typed JSON encoding and decoding
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            class profile implements document-encodable, document-decodable
+                name string = ''
+                age int = 0
+                nickname string|none = none
+
+            person = instance profile;
+            person.name = 'Ada'
+            person.age = 37
+            encoded = encode-typed-json; person, (default-json-options;)
+            decoded = decode-typed-json; encoded.value, profile, (default-json-options;), false
+          response: null
+          diagnostic: null
+          markdown: null
     - id: mapping
-      title: Mapping and numeric rules
+      title: Decoding and field policy
       blocks:
         - type: rule
           id: rule.documents.typed-decoding-mapping
@@ -67,16 +89,18 @@ documentation:
             - typed-document-decoding
             - typed-json-boundaries
           markdown: |-
-            External keys come from the class field descriptor. Missing fields retain their
-            canonical type default or explicit initializer; absent `T|none` fields retain
-            their initialized optional value. Fields without a default diagnose. Unknown
-            fields are recursively rejected or ignored only by the explicit call policy.
+            External keys use canonical external field names. Missing fields retain their
+            canonical type default or explicit initializer; fields without a default
+            diagnose. Explicit null clears an optional field. Unknown fields are rejected by
+            default; the explicit `allow-unknown` argument opts into ignoring them. Decoding
+            returns an initialized destination and a deterministic list of diagnostics;
+            `failed` is true exactly when diagnostics are present.
 
-            Integer conversions are exact and range checked, including integral inputs whose
-            canonical document representation uses scientific notation. Conversion never
-            passes through a binary float. Decimal or integer input to a binary float rounds
-            to the nearest finite destination value, ties-to-even, just as in an ordinary
-            floating destination. Input outside the destination's finite range diagnoses.
+            Integers convert exactly and are range checked. Decimal or integer values
+            converted to binary floats round to the nearest destination value, ties to even;
+            `1e-400` underflows to `0` for a typed float. Out-of-range conversion diagnoses.
+            A class may implement `document-validatable`; validation runs after successful
+            field mapping.
     - id: diagnostics
       title: Outcomes, diagnostics, and validation
       blocks:
@@ -86,42 +110,79 @@ documentation:
           since: null
           evidence:
             - typed-document-decoding
+            - typed-serialization-matrix
+          markdown: |-
+            A failed decode returns an ordinary initialized fallback, not partially decoded
+            success. Diagnostics accumulate deterministically and include path, expected
+            type, actual kind, reason, message, decode-call source, and field declaration
+            source. `validate-document` returns `string|none`; a returned string becomes a
+            validation diagnostic after error-free field mapping.
+    - id: dynamic-documents
+      title: Dynamic documents and bounds
+      blocks:
+        - type: rule
+          id: rule.documents.dynamic-values
+          level: must
+          since: null
+          evidence:
+            - document-json-yaml
             - typed-json-boundaries
           markdown: |-
-            A typed decode outcome carries the concrete initialized destination and a
-            deterministic typed list of all diagnostics. `failed` is true exactly when that
-            list is non-empty. A failure value is an ordinary initialization fallback, not
-            partially decoded success.
+            Dynamic documents preserve exact mathematical numeric values, not lexical
+            spelling or signed floating zero: for example, `1.0` normalizes to `1`, `1e2` to
+            `100`, and `-0.0` to `0`. Non-finite values cannot be encoded. Exact numbers
+            admit at most 4,096 mantissa digits and exponent magnitudes at most 100,000,
+            including the normalized exponent. Integer destination expansion is bounded by
+            the same digit limit.
 
-            Diagnostics carry path, expected type, actual kind, reason, message, decode-call
-            source, and field-declaration source. A class may also implement
-            `document-validatable`; `validate-document` returns `string|none` after
-            error-free field mapping. A returned string is a validation diagnostic.
-    - id: implementation-notes
-      title: Implementation, security, and performance
+            JSON parse and stringify honor `json-options.max-depth` and `max-bytes`;
+            canonical JSON output is a separate operation. YAML parse options include depth,
+            byte, and alias-node limits. YAML stringify emits JSON-compatible YAML with the
+            default bounded writer. YAML input may support features beyond the portable
+            document model; document mapping keys are strings. JSON defaults to depth 256
+            and 16 MiB, with an absolute depth ceiling of 512. YAML defaults to depth 128,
+            16 MiB and 65,536 alias-expanded nodes; its parser depth ceiling is 255.
+            Duplicate keys and trailing JSON data are rejected before typed conversion.
+            Limits are errors, not truncation.
+    - id: native-boundary
+      title: Native Serde boundary
       blocks:
         - type: admonition
-          id: note.documents.typed-decoding-implementation
-          kind: implementation
+          id: note.documents.native-boundary
+          kind: note
           markdown: |-
-            The compiler emits destination-specific Rust construction glue because the
-            selected Terrane class has a statically specialized Rust representation.
-        - type: admonition
-          id: note.documents.typed-decoding-security
-          kind: warning
-          markdown: |-
-            JSON/YAML parser limits and duplicate-key rejection run before typed conversion.
-            Unknown fields require explicit policy.
+            Native `from_document<T>` deserializes borrowed document data directly;
+            `to_document<T: Serialize>` builds the exact native Serde tree without a JSON
+            value or string round trip. `JsonDocument(&document)` is an explicit JSON-only
+            raw lexical adapter (including Serde JSON raw values). `Document` itself does
+            not implement misleading generic `Serialize`. Explicit conversion to or from
+            `serde_json::Value` can fail when native JSON cannot represent the document
+            number exactly or within range.
+
+            Parsing uses a bounded lexical event stream and does not enable Serde JSON's
+            `arbitrary_precision` or `unbounded_depth` features. Another dependency may
+            enable `arbitrary_precision`; generic `Serialize` cannot distinguish Serde
+            JSON's private number marker map from an ordinary user map, so it is not a
+            universal exact adapter for feature-private native-value serialization. Use the
+            explicit `json_value_to_document` / `serialize_json_value` adapter when
+            converting a native JSON Value with feature-private exact numbers. Direct native
+            tuple/array decoding rejects extra elements; string keys support borrowed and
+            transparent newtype destinations. This support boundary does not define a public
+            CDP API.
+    - id: implementation-notes
+      title: Costs and diagnostics
+      blocks:
         - type: admonition
           id: note.documents.typed-decoding-performance
           kind: note
           markdown: |-
-            Typed decoding parses one bounded document tree and borrows its fields and
-            collection items while constructing the known destination, transferring owned
-            strings and map keys into the result rather than copying them. Successful
-            traversal does not canonicalize JSON, clone document subtrees, or allocate
-            diagnostic path strings. The generic document APIs retain their observable
-            canonical encoded values.
+            Typed encoding writes borrowed fields directly into a bounded JSON writer,
+            without first materializing a dynamic document. Explicit custom codecs use a
+            `Document` value. Typed decoding borrows fields and collection items from one
+            bounded parsed tree while constructing the known destination. Successful typed
+            decoding does not canonicalize JSON, clone document subtrees, or allocate
+            diagnostic paths. It transfers owned strings and map keys into the destination.
+            Dynamic document APIs retain observable encoded values.
 provenance:
   specification:
     - document: language-spec

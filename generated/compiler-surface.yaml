@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a5d7f2485fd92b2086b6f826418c05bcca10d8eedc616e6c2f7b6d41741cd96c
+  input-sha256: ddae79a0b433156301d6671cbee69371d714120b3a4afee670e8dda266044655
 format: 1
 generated: true
 modules:
@@ -150,56 +150,56 @@ modules:
   - declaration: function from-document document-result; value document-value
     line: 25
   - declaration: function validate-document string|none
-    line: 30
+    line: 31
   - declaration: class document-value implements serializable
-    line: 32
+    line: 33
   - declaration: function length int
-    line: 50
+    line: 51
   - declaration: function to-document document-value
-    line: 53
+    line: 54
   - declaration: function item document-result; index int
-    line: 56
+    line: 57
   - declaration: function key string; index int
-    line: 60
+    line: 61
   - declaration: function field document-result; name string
-    line: 63
+    line: 64
   - declaration: class document-result
-    line: 67
+    line: 68
   - declaration: class document-mapping implements deserializable
-    line: 81
+    line: 82
   - declaration: function construct; descriptor-name string, expected-kind string, allow-unknown bool
-    line: 90
+    line: 91
   - declaration: function from-document document-result; value document-value
-    line: 96
+    line: 97
   - declaration: function serialize-document document-value; value serializable
-    line: 99
+    line: 100
   - declaration: function deserialize-document document-result; value document-value, destination deserializable
-    line: 102
+    line: 103
   - declaration: function make-document-none document-value
-    line: 109
+    line: 110
   - declaration: function make-document-bool document-value; value bool
-    line: 112
+    line: 113
   - declaration: function make-document-string document-value; value string
-    line: 115
+    line: 116
   - declaration: function make-document-integer document-result; value string
-    line: 118
+    line: 119
   - declaration: function make-document-decimal document-result; value string
-    line: 121
+    line: 122
   - declaration: class document-map-entries
-    line: 123
+    line: 124
   - declaration: function construct
-    line: 126
+    line: 127
   - declaration: function append-document-map-entry document-map-entries; entries document-map-entries,
       key string, value document-value
-    line: 132
+    line: 133
   - declaration: function make-document-list document-result; values list of document-value
-    line: 136
+    line: 137
   - declaration: function make-document-map document-result; entries document-map-entries
-    line: 144
+    line: 145
   - declaration: function mapping-required-fields list of string; mapping document-mapping
-    line: 146
+    line: 147
   - declaration: function decode-document document-result; value document-value, mapping document-mapping
-    line: 171
+    line: 172
 - source: crates/terrane-compiler/src/core/filesystem.trn
   declarations:
   - declaration: class filesystem-operation-result
@@ -1047,6 +1047,6 @@ modules:
   - declaration: function stringify-yaml document-result; value document-value
     line: 27
   - declaration: function decode-yaml document-result; input string, mapping deserializable, options yaml-options
-    line: 32
+    line: 33
   - declaration: function encode-yaml document-result; value serializable
-    line: 38
+    line: 39
