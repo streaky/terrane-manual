@@ -737,10 +737,16 @@ documentation:
             outside the native range reports `integer-conversion-overflow`. These exact
             effects propagate through source helpers, including recursive optional and
             collection conversions; absent optional inputs do not manufacture an effect.
-            Direct native methods and expression macros preserve conversion error identity
-            separately from native panics. Source input evaluation stays in the caller's
-            completion region before conversion, while borrowing futures are constructed in
-            their existing loan region.
+            Constructor effects omit scalar failures proven impossible for the exact
+            argument: integer constant expressions that fit the native destination and
+            string literals decoding to exactly one Unicode scalar. Grouping and a direct
+            optional payload preserve these proofs; runtime values and collection element
+            types alone do not establish them. Explicit throwable contracts therefore need
+            not include impossible literal-field conversion failures. Direct native methods
+            and expression macros preserve conversion error identity separately from native
+            panics. Source input evaluation stays in the caller's completion region before
+            conversion, while borrowing futures are constructed in their existing loan
+            region.
 
             Owned configuration carriers for borrowed native descriptors retain recursive
             field-conversion recipes, rather than treating every field as a scalar.

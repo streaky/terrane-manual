@@ -275,6 +275,10 @@ documentation:
               integer-range failures now preserve their exact throwable identities through
               source helpers, optional and collection fields, direct native methods and
               expression macros instead of aborting or becoming dependency panics.
+            - **Fixed — constant native constructor effects.** Plain record and descriptor
+              constructors no longer require coercion or overflow error families for
+              provably valid scalar constants under an explicit throwable contract. Runtime
+              and invalid constant inputs retain their conversion effects.
             - **Fixed — early consumer stdin closure.** A successful consumer may ignore the
               request without a scheduling-dependent broken-pipe failure. Exit status and
               stdout protocol validation still apply.
