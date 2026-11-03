@@ -600,7 +600,10 @@ documentation:
             supported `Box` and `Arc` shapes, including callable aliases. A present mutable
             callback still borrows the original event exclusively. Callback carriers nested
             in collection inputs currently decline at source rather than promising
-            collection-of-listener adaptation.
+            collection-of-listener adaptation. When rebuilding a collection's native type
+            path cannot represent its nested owning callbacks, S2029 identifies unsupported
+            callback carriers inside native collections rather than reporting a spurious
+            unresolved generic interface bound.
 
             Registration tokens remain their actual native values. Copying a weak token
             preserves its native identity; passing it to removal does not recreate a

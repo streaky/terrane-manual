@@ -301,6 +301,10 @@ documentation:
               owning-result validation follows aliases through nested slice/array payloads.
               Ordinary and invocation-borrowed owned mutable bodies share one runtime
               generator without changing copy or locking semantics.
+            - **Fixed — collection callback diagnostics.** Unsupported owning callback
+              carriers nested in native collections report their actual shape limitation
+              instead of an unresolved generic-interface bound. Supported optional callback
+              inputs remain unchanged.
   see-also:
     - manual.changelog
     - lang.types.references

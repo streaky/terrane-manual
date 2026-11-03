@@ -276,6 +276,12 @@ documentation:
             capture bounds, locking and clone-forks-state behavior; borrowed-environment and
             consuming-only carriers retain their distinct ABIs.
 
+            Collection path reconstruction failures involving already-classified owning
+            callbacks retain a collection-callback decline reason. Reuse recursive callback
+            containment metadata for vectors, maps and sets, including optional payloads; do
+            not infer the diagnostic category from an incidental renderer error string or
+            change admission for successfully reconstructed collection paths.
+
             Projection metadata retains lifetime-bearing producer results, projected inputs,
             nested sequence elements, selected terminal-alias defaults, and original native
             generic argument order recursively when a proven external conversion authorizes
