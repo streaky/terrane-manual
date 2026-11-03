@@ -289,7 +289,10 @@ documentation:
               events retain original storage and copied mutable callables retain independent
               environments. Capture lifetime, invocation authority and `Send`/`Sync`
               violations report source diagnostics. Native lifecycle and reentrancy remain
-              API-defined. See [[tool.packages.rust-dependencies#callbacks]].
+              API-defined. See [[tool.packages.rust-dependencies#callbacks]]. Owning
+              adapters reject borrowed results and borrowed trait type arguments rather than
+              erasing native lifetimes; exact raw higher-ranked callbacks retain their
+              existing separate path.
   see-also:
     - manual.changelog
     - lang.types.references

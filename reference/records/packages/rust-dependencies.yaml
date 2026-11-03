@@ -620,6 +620,12 @@ documentation:
             the generated closure implement `Debug`, are rejected rather than discarding the
             bound.
 
+            Owning adapters require owned callback results. Reference-returning results,
+            lifetime-bearing result types, and borrowed representations hidden behind result
+            aliases or trait type arguments are not erased into owned snapshots; those
+            shapes decline with `S2029`. The existing raw generic higher-ranked callback
+            path remains separate and retains its exact result lifetime.
+
             Higher-ranked callback input borrows are retained as exact native parameter
             types. A named Terrane function may declare the corresponding parameter by `ref`
             and may return one exact lifetime-dependent native producer type. Semantic
