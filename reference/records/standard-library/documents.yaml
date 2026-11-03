@@ -171,6 +171,11 @@ documentation:
             `serde_json::Value` can fail when native JSON cannot represent the document
             number exactly or within range.
 
+            Native `to_document` / `serialize_document` use a fixed 16 MiB (16,777,216-byte)
+            encoding budget; exhaustion returns an error, not truncation. This native Serde
+            boundary budget is separate from caller-configurable JSON/YAML limits and the
+            eager dynamic-document snapshots described below.
+
             Parsing uses a bounded lexical event stream and does not enable Serde JSON's
             `arbitrary_precision` or `unbounded_depth` features. Another dependency may
             enable `arbitrary_precision`; generic `Serialize` cannot distinguish Serde
