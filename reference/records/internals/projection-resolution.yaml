@@ -120,6 +120,12 @@ documentation:
             Failures before this completion point must not replace an existing package lock
             or create an incomplete one. An unchanged complete graph is not rewritten.
 
+            Changed complete locks are written to a temporary file in the package directory
+            and atomically renamed over the published lock. Existing readers retain the old
+            complete snapshot; new readers see the new complete snapshot. Ordinary write or
+            rename failures leave the published target intact and remove the temporary file.
+            This is atomic publication, not an fsync-based power-loss durability guarantee.
+
             The public `projection.rs` surface owns shared metadata and projection queries.
             Implementations live under `rust_interop/projection/`: `resolution.rs` owns this
             transaction; `artifacts.rs` owns artifact validation and cache writes;
