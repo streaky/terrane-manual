@@ -174,7 +174,7 @@ documentation:
             right-hand expression.
 
             Single-field blocks, including the inline form `{ width = 2 }`, are valid but
-            not recommended. Prefer an ordinary member assignment such as
+            usually not recommended. Prefer an ordinary member assignment such as
             `parcel.title = 'revised'` for one field. When constructing an object with only
             one follow-up field write, use ordinary construction followed by that member
             assignment. Use a block when grouping multiple related field writes makes their

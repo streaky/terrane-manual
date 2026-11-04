@@ -272,12 +272,11 @@ documentation:
           markdown: |-
             Constructor arguments come before the block; the constructed object then
             receives ordinary field writes in source order. These structured assignment
-            blocks are intended to group multiple related field writes, not to replace
-            ordinary member assignment for one field. Single-field blocks are valid,
-            including the inline form `{ width = 2 }`, but are not recommended: prefer an
-            ordinary member assignment such as `first.title = 'manifest'`. After
-            construction, use a separate member assignment when only one field needs
-            setting.
+            blocks are primarily intended to group multiple related field writes.
+            Single-field blocks are valid, including the inline form `{ width = 2 }`, but
+            are usually not recommended: prefer an ordinary member assignment such as
+            `first.title = 'manifest'`. After construction, use a separate member assignment
+            when only one field needs setting.
 
             The block is not a general statement sequence: use newline-separated
             `field = expression` operations. Semicolons remain invocation markers.
