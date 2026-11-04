@@ -154,6 +154,14 @@ documentation:
             subsequent resolution from it and regenerates it only through ordinary package
             commands.
 
+            Keep the lock as a regular file: changed publication replaces symlinks and prior
+            file modes, so a read-only file can still be replaced when its directory permits
+            it. Interrupted publication can leave a `.terrane-dependencies.lock.*.tmp`
+            sibling; do not commit it, and delete it only after confirming the writer has
+            exited. See
+            [[internals.projection.resolution#resolution|atomic publication and its tradeoffs]]
+            for the rationale.
+
             The ignored `.trn/projection-cache.json` is disposable generated local
             projection cache/history. It can retain removed-member and replay-mismatch
             evidence while present; clearing it or using a fresh checkout regenerates
