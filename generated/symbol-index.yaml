@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9c2b562983f57ec4ef9fc76100a9dc963dc9ac6a2ff0df0c7631973dc94c25e6
+  input-sha256: 5bb14cb93f9226951b49421e10e9d143a1c1c481cf712ab6181e5fa920cc9beb
 format: 1
 generated: true
 symbols:
@@ -1723,6 +1723,10 @@ symbols:
 - name: constant
   record: lang.declarations.bindings
   section: declarations
+  declaration: constant
+- name: constant
+  record: lang.declarations.globals
+  section: global-initialization
   declaration: constant
 - name: constant
   record: tool.packages.rust-dependencies
@@ -8607,6 +8611,18 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0147
+- name: T0226
+  record: internals.semantics.descriptor-contracts
+  section: model
+  declaration: T0226
+- name: T0226
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: T0226
+- name: T0226
+  record: manual.changelog.unreleased
+  section: changes-2026-11-04
+  declaration: T0226
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -9081,6 +9097,10 @@ symbols:
   declaration: text.split
 - name: this
   record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: this
+- name: this
+  record: book.classes-interfaces-and-traits
   section: reusing-fields-and-methods-with-traits
   declaration: this
 - name: this
@@ -9126,6 +9146,10 @@ symbols:
 - name: this
   record: lang.types.references
   section: shared-deadlocks
+  declaration: this
+- name: this
+  record: manual.changelog.unreleased
+  section: changes-2026-11-04
   declaration: this
 - name: this
   record: tool.packages.rust-dependencies

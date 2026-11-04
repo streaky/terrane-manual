@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e1e85b86a82ff869923da9cb14554b175390f38f4471519b199d6d0693f62818
+  input-sha256: ae550b7ec2a9c37856ce8e5b361cdad0ae0aa7bc8b67a942964bd147b075c36a
 format: 1
 generated: true
 diagnostics:
@@ -9,80 +9,80 @@ diagnostics:
   - invalid source character `{character}`
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 829
+    line: 851
 - code: L0002
   messages:
   - unterminated block comment
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 284
+    line: 306
 - code: L0003
   messages:
   - mixed tabs and spaces in indentation
   - indentation style changes within the file
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 932
+    line: 954
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 939
+    line: 961
 - code: L0004
   messages:
   - inconsistent dedent
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 982
+    line: 1004
 - code: L0005
   messages:
   - identifier joiner cannot introduce a digits-only terminal unit; add spaces for an operator expression
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 525
+    line: 547
 - code: L0006
   messages:
   - operator `{text}` cannot be left-attached; add a space before it
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 818
+    line: 840
 - code: L0007
   messages:
   - unterminated bytes literal
   - unterminated string literal
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 493
+    line: 515
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 734
+    line: 756
 - code: L0008
   messages:
   - block string marker `>>` must be the final content on its line
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 745
+    line: 767
 - code: L0009
   messages:
   - invalid numeric literal `{text}`; version one accepts decimal digits, one `.` fraction, `0x` hexadecimal,
     and `_` between digits
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 555
+    line: 577
 - code: L0010
   messages:
   - '`//` cannot begin a comment inside a namespace path'
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 410
+    line: 432
 - code: L0011
   messages:
   - namespace path separators must not have surrounding whitespace
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 803
+    line: 825
 - code: L0012
   messages:
   - invalid bytes escape; use `\\`, `\'`, `\n`, `\r`, `\t`, `\0`, or `\xHH`
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 474
+    line: 496
 - code: S0005
   messages:
   - duplicate namespace declaration
@@ -786,22 +786,31 @@ diagnostics:
 - code: S1121
   messages:
   - structured updates require an existing simple binding target
+  - multiline field-assignment blocks must start their first field on a new line
   - '`.unset;` is not implemented; structured blocks currently accept field assignments only'
+  - structured blocks accept only unqualified field assignments (`field = expression`)
   - field assignments must be separated by newlines
   - structured assignment blocks require at least one field assignment; omit an empty block
   - expected `}` after structured assignment block
+  - field assignments must be separated by newlines; semicolon invokes a call
   - an update block cannot initialize a declaration; use an existing simple binding
   sources:
   - path: crates/terrane-compiler/src/parser/structured_assignment.rs
     line: 21
   - path: crates/terrane-compiler/src/parser/structured_assignment.rs
-    line: 89
+    line: 94
   - path: crates/terrane-compiler/src/parser/structured_assignment.rs
-    line: 120
+    line: 103
   - path: crates/terrane-compiler/src/parser/structured_assignment.rs
-    line: 127
+    line: 108
   - path: crates/terrane-compiler/src/parser/structured_assignment.rs
-    line: 133
+    line: 139
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 146
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 152
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 175
   - path: crates/terrane-compiler/src/parser.rs
     line: 912
 - code: S2001
@@ -1342,9 +1351,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/lowering/runtime_support.rs
     line: 978
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 205
+    line: 256
   - path: crates/terrane-compiler/src/semantics/bindings.rs
-    line: 222
+    line: 273
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 422
 - code: T0008
@@ -1581,25 +1590,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1528
+    line: 1529
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1578
+    line: 1579
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1629
+    line: 1630
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch clause for `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1601
+    line: 1602
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1638
+    line: 1639
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -1962,7 +1971,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1831
   - path: crates/terrane-compiler/src/tooling.rs
-    line: 4372
+    line: 4482
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -3210,6 +3219,12 @@ diagnostics:
   sources:
   - path: crates/terrane-compiler/src/semantics/generic_recursion.rs
     line: 207
+- code: T0226
+  messages:
+  - namespace storage does not support `{}` values; use a local binding or parameter instead
+  sources:
+  - path: crates/terrane-compiler/src/semantics/bindings.rs
+    line: 148
 - code: T0240
   messages:
   - scoped region requires an acquisition binding or assignment

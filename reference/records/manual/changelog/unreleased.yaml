@@ -346,6 +346,14 @@ documentation:
               member-write checks apply; updates are not transactional. Construction retains
               its mandatory semicolon, and both block forms reject empty blocks. There is no
               `unset` operation. See [[lang.classes.fields#classes]].
+            - **Fixed — structured assignment navigation and diagnostics.** Field names
+              resolve at their first character, malformed layouts report source diagnostics,
+              and ordinary construction expressions execute when used as statements. Mutable
+              instance methods may update `this`; ordinary receiver authority still applies.
+            - **Fixed — unsupported namespace data storage.** Materialized non-scalar
+              program-global and namespace data declarations report `T0226` instead of
+              leaking undefined storage symbols into generated Rust. Use local objects or
+              parameters; see [[lang.declarations.globals#global-initialization]].
   see-also:
     - manual.changelog
     - lang.types.references

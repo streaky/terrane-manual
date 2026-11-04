@@ -295,13 +295,15 @@ documentation:
         - type: markdown
           markdown: |-
             It does not copy, replace, or construct the target; unspecified fields are
-            unchanged. Both construction and update blocks must contain at least one field
-            assignment; omit an empty block instead of writing a no-op. Member/index
-            targets, arbitrary statements, nested update blocks, and implicit receiver
-            references are not supported. Ordinary field-write checks still apply; closed
-            classes gain no dynamic fields. Earlier writes are not rolled back if a later
-            right-hand expression fails. There is no `unset` operation: assigning `none`
-            does not remove a field.
+            unchanged. A simple local or parameter is a valid target, as is `this` inside a
+            mutable instance method; a nonmutable method cannot write through `this`. Both
+            construction and update blocks must contain at least one field assignment; omit
+            an empty block instead of writing a no-op. Member/index targets, arbitrary
+            statements, nested update blocks, and implicit receiver references are not
+            supported. Ordinary field-write checks still apply; closed classes gain no
+            dynamic fields. Earlier writes are not rolled back if a later right-hand
+            expression fails. There is no `unset` operation: assigning `none` does not
+            remove a field.
 
             Ordinary class-value construction is not written as a call to the class name.
             Throwable construction is a deliberate exception within `throw`: a direct class

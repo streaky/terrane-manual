@@ -32,6 +32,15 @@ documentation:
             initializer depends on every program-global binding it reads directly or through
             a called function.
 
+            Materialized data storage for program globals and namespace-level `constant` or
+            ordinary value declarations currently supports scalar types only. Object and
+            other non-scalar data declarations are rejected with `T0226`; use a local
+            binding or parameter instead. Local objects and compiler-resolved descriptor and
+            callable identities are unaffected. Initialization blocks do not add
+            object/composite namespace storage: that would require explicit storage
+            carriers, initialization ordering, ownership/destruction, and shared-mutation
+            contracts, which are not provided by this feature.
+
             A dependency cycle in this graph is invalid and is diagnosed during compilation
             before lowering. Cyclic globals are not assigned an arbitrary initialization
             order.

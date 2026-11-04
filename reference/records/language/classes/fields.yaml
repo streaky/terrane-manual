@@ -166,10 +166,12 @@ documentation:
           markdown: |-
             The constructor arguments precede the block. Construction completes first; block
             fields are then written in source order using ordinary member-write rules. The
-            block contains only newline-separated `field = expression` operations, with an
-            optional one-field inline form such as `{ width = 2 }`. Semicolons remain
-            invocation markers, not statement separators. There is no implicit receiver
-            binding in a right-hand expression.
+            block contains only newline-separated `field = expression` operations. In a
+            multiline block the first field starts on the line after the opening brace; a
+            one-field inline form such as `{ width = 2 }` is also available. Semicolons
+            remain invocation markers, not statement separators: a right-hand call may still
+            have named arguments. There is no implicit receiver binding in a right-hand
+            expression.
 
             An update block uses the same field-operation form on an existing simple
             binding:
@@ -194,12 +196,12 @@ documentation:
             the target, and fields not named in the block remain unchanged. Both
             construction and update blocks must contain at least one field assignment
             (`S1121`); omit an empty block rather than writing a no-op. Targets must be
-            simple bindings; member and index targets, arbitrary statements, and nested
-            update blocks are not supported. Field type, visibility, and ownership checks
-            are the ordinary member-write checks; closed classes do not gain dynamic fields.
-            Writes are not transactional: if a later right-hand expression fails, earlier
-            writes remain. `unset` is not available, and assigning `none` does not remove a
-            field.
+            simple local or parameter bindings, or `this` in a mutable instance method;
+            member and index targets, arbitrary statements, and nested update blocks are not
+            supported. Field type, visibility, and ownership checks are the ordinary
+            member-write checks; closed classes do not gain dynamic fields. Writes are not
+            transactional: if a later right-hand expression fails, earlier writes remain.
+            `unset` is not available, and assigning `none` does not remove a field.
 
             Within an instance method, `this` denotes the current instance. `self` denotes
             the effective late-bound class and can be used in `instance self;`. Separately

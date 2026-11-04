@@ -48,10 +48,18 @@ documentation:
             explicit member writes. Update blocks normalize to ordinary sibling assignments;
             construction blocks use an expression-local temporary and ordinary assignments,
             then yield that temporary without a closure, copy, or extra object allocation.
-            The temporary's lexical boundary also applies in namespace initializers and
-            class field defaults. Compiler-authored receiver names retain distinct per-use
-            source spans so availability, ownership, and lowering facts are not merged
-            between operations.
+            This applies in local initializers, class field defaults, and scalar namespace
+            initializers containing a construction expression. Namespace-level materialized
+            data currently supports scalar storage only, so an object-valued namespace
+            binding (including construction blocks) is rejected with `T0226`. The
+            temporary's lexical boundary applies in each supported initializer context.
+            Compiler-authored receiver names retain distinct per-use source spans so
+            availability, ownership, and lowering facts are not merged between operations.
+
+            No dedicated structured-assignment performance benchmark is maintained.
+            Inline-block emission establishes the lowering shape, not a measured allocation
+            or throughput guarantee. Reassess against equivalent explicit member writes if
+            future lowering introduces wrappers or new storage carriers.
     - id: protocols
       title: Structural queries
       blocks:
