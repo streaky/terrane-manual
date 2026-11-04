@@ -131,9 +131,9 @@ documentation:
           markdown: |-
             With `--lint-unused-functions`, an authored top-level function with no resolved
             references receives `W4005`. Calling, passing, or otherwise referencing the
-            function counts as use. The entrypoint `main`, instance methods, and nested or
-            anonymous functions are not candidates for this top-level inventory. Bundled and
-            projected dependency declarations are excluded.
+            function counts as use. The entrypoint `main`, methods (instance or static), and
+            nested or anonymous functions are not candidates for this top-level inventory.
+            Bundled and projected dependency declarations are excluded.
 
             This is an opt-in inventory advisory, not proof that a function is safe to
             remove from a public API. Library exports and downstream consumers may need
