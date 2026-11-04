@@ -112,6 +112,14 @@ documentation:
             attempted source records a status and reason, and the final projection records
             its resolution outcome.
 
+            Initial Cargo resolution updates only the private
+            `.trn/dependencies/Cargo.lock`. The package's `terrane-dependencies.lock` is
+            published after bound-owner dependencies are resolved, on the exact-cache,
+            published-artifact, and local-rustdoc paths. Publishing the intermediate
+            manifest-only graph would temporarily remove synthetic root dependency edges.
+            Failures before this completion point must not replace an existing package lock
+            or create an incomplete one. An unchanged complete graph is not rewritten.
+
             The public `projection.rs` surface owns shared metadata and projection queries.
             Implementations live under `rust_interop/projection/`: `resolution.rs` owns this
             transaction; `artifacts.rs` owns artifact validation and cache writes;

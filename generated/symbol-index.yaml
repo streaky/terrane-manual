@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2ccb901762a1ca6306836cc19921929400d53e8d1390a0af5e5ebde2b8e57462
+  input-sha256: aba85cf432f69df456ccca6aed4aea43cea3e9128a3baf61175ba3a3bf2956cd
 format: 1
 generated: true
 symbols:
@@ -8878,6 +8878,10 @@ symbols:
 - name: terrane-dependencies.lock
   record: internals.projection.resolution
   section: projection-gap-census
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
+  record: internals.projection.resolution
+  section: resolution
   declaration: terrane-dependencies.lock
 - name: terrane-dependencies.lock
   record: manual.changelog.unreleased
