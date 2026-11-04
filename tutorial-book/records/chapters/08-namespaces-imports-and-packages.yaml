@@ -251,6 +251,14 @@ documentation:
           markdown: |-
             These are selective imports. Only the named objects enter the scope.
 
+            For a long selective list, end the header line immediately after `import` and
+            indent the whole comma-separated list using ordinary Terrane indentation
+            (consistent spaces or consistent tabs). Several names can share a line, and `as`
+            aliases work as usual. Keep commas between items, including across lines, but
+            omit the comma after the final item. Do not start a list on the header and
+            continue it below; that produces `S1026`. See
+            [[lang.namespaces.imports#imports]].
+
             An alias changes the local spelling without changing the imported object's
             identity:
         - type: example

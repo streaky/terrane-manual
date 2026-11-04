@@ -330,6 +330,11 @@ documentation:
               exactly. Custom document maps use UTF-16 key ordering, extreme finite floats
               use compact round-tripping notation, known nested tuple arities are retained
               during decoding, and derived inheritance checks span source units.
+            - **Added — grouped selective imports.** End a `from ... import` header
+              immediately after `import` to place its comma-separated names and optional
+              aliases in an indented group. Inline imports remain single-line; grouped
+              imports end at a dedent or end of file and reject a final trailing comma. See
+              [[lang.namespaces.imports#imports]].
   see-also:
     - manual.changelog
     - lang.types.references

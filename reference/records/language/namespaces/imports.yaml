@@ -50,6 +50,16 @@ documentation:
           diagnostic: null
           markdown: null
 
+        - type: example
+          id: grouped-imports
+          title: Grouped selective imports
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /core/types import
+            	int8 as byte, int16,
+            	int32 as word
+
         - type: markdown
           markdown: |-
             `use` declares a build dependency but does not automatically bind the
@@ -61,8 +71,30 @@ documentation:
             scope produces `S2011`. Reimporting the same object identity is idempotent and
             silent.
 
-            An explicit alias must differ from the imported spelling. Writing
-            `from path import x as x` is an error (`S2063`) at the alias name; use
+            A selective import can keep its complete comma-separated list on the header
+            line, or end that line immediately after `import` and place the complete list in
+            an indented group. Grouped imports follow ordinary Terrane indentation rules:
+            every item line uses the same indentation level, one level deeper than the
+            header. A line may contain one or several items, and each item may have an `as`
+            alias. Names and alias clauses stay on one physical line; a wrapped alias clause
+            produces `S1026` explaining that it must stay with its item. Commas separate
+            items across line breaks; a dedent or end of file ends the group. Blank lines
+            and comments follow the ordinary lexical rules.
+
+            Inline names cannot be continued on indented lines; this produces source error
+            `S1026`, rather than extending the group. The final item must not have a
+            trailing comma (`S1026`), and commas must follow an item rather than begin a
+            line. Over-indented group items produce `S1026`; recovery continues through
+            later items at the group's indentation. Within a group, a malformed name or
+            alias, a repeated `as` clause, or an unexpected token after an item produces
+            `S1026`. Recovery skips the malformed segment to the next outer comma or line
+            boundary rather than issuing cascading errors for its remaining tokens. Commas
+            inside malformed nested delimiters do not split recovery, and a run of stray
+            commas is diagnosed as one malformed separator segment. Distinct mistakes, such
+            as over-indentation or multiple missing separators, remain separately diagnosed.
+            Import grouping does not introduce a lexical scope: all names bind in the scope
+            containing the header. An explicit alias must differ from the imported spelling.
+            Writing `from path import x as x` is an error (`S2063`) at the alias name; use
             `from path import x` instead. This exact-spelling rule applies at every lexical
             depth to Terrane and projected dependency imports alike.
 

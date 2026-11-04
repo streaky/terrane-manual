@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a6b606f75e1ff696b20da4acd8d7e3a52e7562fba2100edb9f16935a802badef
+  input-sha256: aedbefd0c20a805b7bd25634199025d8445db6b6a0330b56c22eb2d8356d1b57
 format: 1
 generated: true
 symbols:
@@ -642,6 +642,10 @@ symbols:
   declaration: as
 - name: as
   record: book.namespaces-imports-and-packages
+  section: imports
+  declaration: as
+- name: as
+  record: lang.namespaces.imports
   section: imports
   declaration: as
 - name: as
@@ -4042,8 +4046,16 @@ symbols:
   section: interfaces
   declaration: implements
 - name: import
+  record: book.namespaces-imports-and-packages
+  section: imports
+  declaration: import
+- name: import
   record: lang.namespaces.imports
   section: imports
+  declaration: import
+- name: import
+  record: manual.changelog.unreleased
+  section: changes-2026-11-03
   declaration: import
 - name: import-export-rename
   record: tool.source-intelligence
@@ -7407,6 +7419,14 @@ symbols:
   record: lang.namespaces.name-resolution
   section: single-name-lookup
   declaration: S1017
+- name: S1026
+  record: book.namespaces-imports-and-packages
+  section: imports
+  declaration: S1026
+- name: S1026
+  record: lang.namespaces.imports
+  section: imports
+  declaration: S1026
 - name: S1043
   record: lang.classes.fields
   section: initialization
