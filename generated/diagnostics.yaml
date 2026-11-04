@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2979be48881659c5ca84379fcad448cfc0c986045d94e91763735010cee14258
+  input-sha256: a172c8e4d1bfd50705599aec204e7f56ad506f8ae6c40d7d7bdaa52685d3202f
 format: 1
 generated: true
 diagnostics:
@@ -944,9 +944,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 283
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 361
+    line: 363
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 369
+    line: 371
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -3292,7 +3292,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 321
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 414
+    line: 416
 - code: W4003
   messages:
   - union arm `{text}` duplicates an earlier arm
@@ -3320,7 +3320,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 201
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 390
+    line: 392
 - code: W4006
   messages:
   - binding `{}` is marked intentionally unused but is read
