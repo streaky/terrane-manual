@@ -22,6 +22,97 @@ DECLARATION_RE = re.compile(
 FENCE_RE = re.compile(r"```terrane\n(.*?)\n```", re.DOTALL)
 INLINE_CODE_RE = re.compile(r"`([^`\n]+)`")
 REFERENCE_RE = re.compile(r"\[\[([^\]#]+)(?:#[^\]]+)?\]\]")
+RUST_STRING_PREFIX_RE = re.compile(r'(?:br|cr|r)(#+)?"|(?:b|c)?"')
+RUST_CHAR_RE = re.compile(r"'(?:\\(?:u\{[0-9a-fA-F_]+\}|x[0-9a-fA-F]{2}|[^\r\n])|[^'\\\r\n])'")
+
+
+def mask_rust_literals_and_comments(text: str) -> str:
+    """Blank Rust strings, chars, and comments while preserving offsets/newlines."""
+    chars = list(text)
+    i = 0
+    length = len(text)
+
+    def blank(start: int, end: int) -> None:
+        for index in range(start, end):
+            if chars[index] not in "\r\n":
+                chars[index] = " "
+
+    while i < length:
+        if text.startswith("//", i):
+            end = text.find("\n", i)
+            end = length if end < 0 else end
+            blank(i, end)
+            i = end
+        elif text.startswith("/*", i):
+            start = i
+            depth = 1
+            i += 2
+            while i < length and depth:
+                if text.startswith("/*", i):
+                    depth += 1
+                    i += 2
+                elif text.startswith("*/", i):
+                    depth -= 1
+                    i += 2
+                else:
+                    i += 1
+            blank(start, i)
+        elif string_prefix := RUST_STRING_PREFIX_RE.match(text, i):
+            start = i
+            prefix = string_prefix.group(0)
+            if prefix.endswith('"') and prefix.startswith(("r", "br", "cr")):
+                hashes = string_prefix.group(1) or ""
+                i = string_prefix.end()
+                closing = '"' + hashes
+                end = text.find(closing, i)
+                i = length if end < 0 else end + len(closing)
+            else:
+                i = string_prefix.end()
+                while i < length:
+                    if text[i] == "\\":
+                        i += 2
+                    elif text[i] == '"':
+                        i += 1
+                        break
+                    else:
+                        i += 1
+            blank(start, min(i, length))
+        elif text[i] == "'" and (character := RUST_CHAR_RE.match(text, i)):
+            # Match exactly one character/escape, not two Rust lifetime labels.
+            end = character.end()
+            blank(i, end)
+            i = end
+        else:
+            i += 1
+    return "".join(chars)
+
+
+def test_masked_rust_text(text: str) -> str:
+    masked = mask_rust_literals_and_comments(text)
+    test_module = re.compile(
+        r"#\s*\[\s*cfg\s*\(\s*test\s*\)\s*\]\s*"
+        r"(?:#\s*\[[^\]]*\]\s*)*"
+        r"(?:(?:pub(?:\s*\([^)]*\))?)\s+)?mod\s+[A-Za-z_][A-Za-z_0-9]*\s*\{"
+    )
+    chars = list(text)
+    for match in test_module.finditer(masked):
+        opening = masked.find("{", match.start(), match.end())
+        depth = 1
+        end = opening + 1
+        while end < len(masked) and depth:
+            if masked[end] == "{":
+                depth += 1
+            elif masked[end] == "}":
+                depth -= 1
+            end += 1
+        for index in range(match.start(), end):
+            if chars[index] not in "\r\n":
+                chars[index] = " "
+    return "".join(chars)
+
+
+def is_test_source(path: Path) -> bool:
+    return path.name == "tests.rs" or "tests" in path.parts
 
 
 
@@ -335,8 +426,13 @@ def diagnostic_inventory(compiler_root: Path) -> dict[str, Any]:
     found: dict[str, dict[str, Any]] = {}
     source_root = compiler_root / "crates/terrane-compiler/src"
     for path in sorted(source_root.rglob("*.rs")):
+        if is_test_source(path.relative_to(source_root)):
+            continue
         text = path.read_text(encoding="utf-8")
+        test_masked = test_masked_rust_text(text)
         for match in CODE_RE.finditer(text):
+            if test_masked[match.start()] == " ":
+                continue
             code = match.group(1)
             line = text.count("\n", 0, match.start()) + 1
             entry = found.setdefault(code, {"code": code, "messages": [], "sources": []})
@@ -346,6 +442,9 @@ def diagnostic_inventory(compiler_root: Path) -> dict[str, Any]:
             following = text[match.end() + 1 : match.end() + 501]
             message_match = re.search(r'"((?:[^"\\]|\\.){8,})"', following)
             if message_match:
+                message_start = match.end() + 1 + message_match.start()
+                if test_masked[message_start] == " ":
+                    continue
                 message = bytes(message_match.group(1), "utf-8").decode("unicode_escape")
                 if message not in entry["messages"]:
                     entry["messages"].append(message)

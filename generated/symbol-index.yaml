@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a00d6becd6b767943527cfe039e52f019084cb96603f4d6a98972b00500123ed
+  input-sha256: a9dead4ec07ef5d3410accb58e1859c222562a5c845f94f27e8693301c84b27d
 format: 1
 generated: true
 symbols:
@@ -5066,6 +5066,10 @@ symbols:
   section: unreferenced
   declaration: main
 - name: main
+  record: tool.diagnostics
+  section: w4005
+  declaration: main
+- name: main
   record: tool.packages.command-line
   section: scripts
   declaration: main
@@ -7495,6 +7499,10 @@ symbols:
   record: lang.namespaces.scopes
   section: scopes
   declaration: S2013
+- name: S2018
+  record: tool.diagnostics
+  section: s2018
+  declaration: S2018
 - name: S2022
   record: lang.namespaces.scopes
   section: scopes
@@ -9023,6 +9031,14 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: testing.unit
+- name: tests.rs
+  record: tool.diagnostics
+  section: generated-index
+  declaration: tests.rs
+- name: tests/
+  record: tool.diagnostics
+  section: generated-index
+  declaration: tests/
 - name: tests/conformance/run/projected-constructor-selected-native
   record: lang.types.generics
   section: constructors
@@ -10110,6 +10126,10 @@ symbols:
 - name: W4005
   record: lang.functions.declarations
   section: unreferenced
+  declaration: W4005
+- name: W4005
+  record: tool.diagnostics
+  section: w4005
   declaration: W4005
 - name: warning
   record: internals.observability.runtime

@@ -9,7 +9,55 @@ from pathlib import Path
 
 import yaml
 
-from generate_manual_catalog import load_yaml
+from generate_manual_catalog import diagnostic_inventory, load_yaml
+
+
+class DiagnosticInventoryTests(unittest.TestCase):
+    def test_ignores_test_sources_and_inline_test_modules(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "tests" / "checkout"
+            source = root / "crates/terrane-compiler/src"
+            source.mkdir(parents=True)
+            (source / "emitter.rs").write_text(
+                'fn emit() { diagnostic("L1234", "Production message retained"); }\n'
+                '/* cfg attribute whitespace */\n'
+                '#[cfg(/* test selector */ test)]\n'
+                '#[allow(dead_code)]\n'
+                '/* comment before declaration */ mod tests {\n'
+                '    const ASSERTION: &str = "L2345";\n'
+                '    #[test] fn assertion() {\n'
+                '        assert_eq!("L3456", "A test fixture message");\n'
+                '        let braces = r#" } { "L4567" "#;\n'
+                '        let byte_braces = br#" } { "L5678" "#;\n'
+                '        let c_braces = cr#" } { "L6789" "#;\n'
+                '        let byte = b"} { \\"L7890\\"";\n'
+                '        let c = c"} { \\"L8901\\"";\n'
+                "    fn helper<'a>(_: &'a str) { let brace = \"}\"; }\n"
+                '        /* nested { /* } */ } */\n'
+                '    }\n'
+                '    mod nested { const ALSO_TEST: &str = "L9012"; }\n'
+                '}\n'
+                'fn after() { diagnostic("L4321", "Production after module"); }\n',
+                encoding="utf-8",
+            )
+            (source / "tests.rs").write_text(
+                'const TEST_FILE: &str = "L6789";\n', encoding="utf-8"
+            )
+            (source / "tests").mkdir()
+            (source / "tests" / "fixture.rs").write_text(
+                'const TEST_DIR: &str = "L7890";\n', encoding="utf-8"
+            )
+
+            inventory = diagnostic_inventory(root)
+
+        diagnostics = {item["code"]: item for item in inventory["diagnostics"]}
+        self.assertEqual(set(diagnostics), {"L1234", "L4321"})
+        self.assertEqual(diagnostics["L1234"]["messages"], ["Production message retained"])
+        self.assertEqual(diagnostics["L4321"]["messages"], ["Production after module"])
+        self.assertEqual(diagnostics["L1234"]["sources"], [
+            {"path": "crates/terrane-compiler/src/emitter.rs", "line": 1}
+        ])
+
 
 
 class ManualYamlValidationTests(unittest.TestCase):

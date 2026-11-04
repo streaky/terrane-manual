@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a172c8e4d1bfd50705599aec204e7f56ad506f8ae6c40d7d7bdaa52685d3202f
+  input-sha256: e9de7b64b325aff9896dace49ee71a42d6033bcaa9e6d8c78ed151ad9b2deae5
 format: 1
 generated: true
 diagnostics:
@@ -630,7 +630,6 @@ diagnostics:
 - code: S1100
   messages:
   - '`select` does not take an expression'
-  - '{source}'
   - declaration annotations require a following declaration on a new line
   - annotations attach only to classes, callables, parameters, and fields
   - expected `[` after `@`
@@ -641,8 +640,6 @@ diagnostics:
   sources:
   - path: crates/terrane-compiler/src/parser/control_flow.rs
     line: 214
-  - path: crates/terrane-compiler/src/parser/documentation.rs
-    line: 248
   - path: crates/terrane-compiler/src/parser.rs
     line: 88
   - path: crates/terrane-compiler/src/parser.rs
@@ -661,14 +658,11 @@ diagnostics:
   messages:
   - a select body may contain only `case` clauses
   - documentation block is not attached to a declaration
-  - "@[tag]\nfunction main;\n    return\n"
   sources:
   - path: crates/terrane-compiler/src/parser/control_flow.rs
     line: 232
   - path: crates/terrane-compiler/src/parser/documentation.rs
     line: 53
-  - path: crates/terrane-compiler/src/parser/documentation.rs
-    line: 230
 - code: S1102
   messages:
   - '`select` requires at least two `case` clauses'
@@ -928,10 +922,6 @@ diagnostics:
   - compiler-owned declaration `{text}` is not kebab-case
   - declared name `{text}` is not kebab-case
   - invalid namespace segment `{component}`; segments must match `[a-z]([a-z0-9]|-[a-z0-9])*`
-  - compiler-owned declaration `NotKebab` is not kebab-case
-  - declared name `Answer` is not kebab-case
-  - authored Answer binding remains a warning
-  - main.trn
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 52
@@ -939,14 +929,6 @@ diagnostics:
     line: 65
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 265
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 283
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 363
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 371
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -1035,14 +1017,10 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 977
 - code: S2029
-  messages:
-  - "\n    );\n}\n\n#[test]\nfn compiler_owned_declarations_require_kebab_case() {\n    let package =\
-    \ Package::implicit(\n        "
+  messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1310
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 247
 - code: S2031
   messages:
   - Rust dependency member `{}` in `{}` was present in a previous projection at dependency version `{}`,
@@ -1116,22 +1094,17 @@ diagnostics:
 - code: S2056
   messages:
   - 'Rust dependency member `{}` in `{}` is ambiguous: {details}'
-  - one::Generic<A>
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 638
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1256
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 83
 - code: S2060
   messages:
   - manifest `{}` configures compile-time consumers {consumers}; enable trusted consumer execution in
     editor tooling to run them
   - src/main.rs
   - "\n        && identity != "
-  - duplicate canonical declaration identity
-  - '{failure:?}'
   - 'in `{}`: {}'
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
@@ -1140,12 +1113,6 @@ diagnostics:
     line: 391
   - path: crates/terrane-compiler/src/consumers.rs
     line: 1090
-  - path: crates/terrane-compiler/src/consumers.rs
-    line: 1173
-  - path: crates/terrane-compiler/src/consumers.rs
-    line: 1250
-  - path: crates/terrane-compiler/src/consumers.rs
-    line: 1291
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
     line: 225
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
@@ -1154,15 +1121,11 @@ diagnostics:
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'
   - called only for a nonempty consumer diagnostics list
-  - ".to_owned(),\n            executable: crate::package::ConsumerExecutable::Command {\n           \
-    \     executable: "
   sources:
   - path: crates/terrane-compiler/src/consumers.rs
     line: 685
   - path: crates/terrane-compiler/src/consumers.rs
     line: 715
-  - path: crates/terrane-compiler/src/consumers.rs
-    line: 1225
 - code: S2062
   messages:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
@@ -1172,12 +1135,9 @@ diagnostics:
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name
-  - alias diagnostic span
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 389
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 67
 - code: S2110
   messages:
   - ",\n        "
@@ -1223,8 +1183,6 @@ diagnostics:
     line: 1107
   - path: crates/terrane-compiler/src/compiler.rs
     line: 1135
-  - path: crates/terrane-compiler/src/compiler.rs
-    line: 1219
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
@@ -1508,7 +1466,6 @@ diagnostics:
   - function `{}` may finish without returning a value
   - function `{}` does not return a value
   - function `{}` must return `{}`
-  - main.trn
   - function `{name}` must return `{expected}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
@@ -1523,8 +1480,6 @@ diagnostics:
     line: 1162
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 1194
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 113
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1901
 - code: T0016
@@ -1968,7 +1923,6 @@ diagnostics:
   - class `{}` must provide a `message string` field to implement `throwable`
   - class `{}` does not implement interface member `throwable.render`
   - class `{}` does not implement interface member `{}.{}`
-  - ", error.message);\n        assert!(error.message.contains("
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1690
@@ -1976,8 +1930,6 @@ diagnostics:
     line: 1702
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1831
-  - path: crates/terrane-compiler/src/tooling.rs
-    line: 4482
 - code: T0063
   messages:
   - class `{}` inherits conflicting member `{member}` from traits {}
@@ -3285,14 +3237,11 @@ diagnostics:
   messages:
   - initial value assigned to `{}` is never read
   - value assigned to `{}` is never read
-  - pending = (value; 2)
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 316
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 321
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 416
 - code: W4003
   messages:
   - union arm `{text}` duplicates an earlier arm
@@ -3311,16 +3260,11 @@ diagnostics:
 - code: W4005
   messages:
   - function `{}` is never referenced
-  - 'namespace task-liveness
-
-    '
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 743
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 201
-  - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 392
 - code: W4006
   messages:
   - binding `{}` is marked intentionally unused but is read

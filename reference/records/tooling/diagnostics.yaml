@@ -26,9 +26,9 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `generated/diagnostics.yaml` is the machine-readable index of every stable
-            diagnostic code found in the compiler sources. Each entry records the code,
-            emitted message templates, and compiler source locations.
+            `generated/diagnostics.yaml` is the machine-readable index of stable diagnostic
+            codes found in production compiler sources. Each entry records the code,
+            candidate emitted message templates, and compiler source locations.
             `tools/generate_manual_catalog.py --check` verifies that it matches the selected
             compiler checkout.
 
@@ -37,6 +37,124 @@ documentation:
             classify a diagnostic as settled semantics or a temporary implementation
             limitation. If a generated entry has no authored guide yet, treat its message
             and source location as lookup data—not as a new language rule.
+
+            Extraction excludes `tests.rs`, `tests/` directories beneath the compiler source
+            root, and conventional `#[cfg(test)]` modules. It is a static lookup, not a Rust
+            macro expander or a general conditional-compilation evaluator. Message
+            extraction uses a nearby-string heuristic, so it can miss alternate message
+            branches; source locations remain the authority for exact behavior.
+    - id: opt-in-checks
+      title: Opt-in compilation checks
+      blocks:
+        - type: markdown
+          markdown: |-
+            Ordinary compilation does not enable the optional name-style or unused-function
+            inventories. Enable them explicitly when reviewing authored source. These
+            advisories are warnings, not compilation failures, and do not rewrite source.
+        - type: table
+          id: optional-check-flags
+          title: Optional checks
+          show-header: true
+          columns:
+            - id: flag
+              title: Flag
+              cell: code
+            - id: effect
+              title: Effect
+              cell: markdown
+          rows:
+            - flag: --lint-name-style
+              effect: Emit `S2018` warnings for authored declaration names that are not kebab-case.
+            - flag: --lint-unused-functions
+              effect: Emit `W4005` warnings for authored top-level functions with no resolved references.
+            - flag: --require-canonical-rust
+              effect: Require generated Rust to match the bundled Rust formatter's canonical output; failure is an `S9004` error, not an advisory.
+        - type: example
+          id: optional-check-commands
+          title: Check a source file
+          language: sh
+          mode: illustrative
+          source: |-
+            terrane check --lint-name-style app.trn
+            terrane check --lint-unused-functions app.trn
+            terrane check --require-canonical-rust app.trn
+        - type: markdown
+          markdown: |-
+            The flags can be combined. Canonical-Rust validation checks compiler output,
+            including the generated artifacts selected for the compilation; it is not the
+            Terrane source formatter. Use `terrane fmt` to format authored Terrane.
+    - id: s2018
+      title: S2018 — declaration name style
+      blocks:
+        - type: markdown
+          markdown: |-
+            With `--lint-name-style`, authored binding, function, and type declaration names
+            are checked for kebab-case. Each declaration is checked in its defining source
+            file, so an imported declaration is not reported again in dependent files.
+            Projected dependency names remain verbatim, and synthesized anonymous-function
+            labels are excluded. Intentionally unused bindings whose names start with `_`
+            are excluded from this style inventory.
+
+            An authored style warning does not make otherwise valid source invalid.
+            Compiler-owned bundled declarations are checked separately and can produce an
+            `S2018` error without enabling this optional authored-source lint. Invalid
+            namespace segments can also produce `S2018` during normal compilation.
+        - type: example
+          id: s2018-warning
+          title: Valid source with a name-style warning
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace app
+            function main;
+                Answer = 42
+                print; Answer
+          response:
+            kind: diagnostic
+            language: text
+            display: shown
+            content: S2018
+        - type: example
+          id: s2018-corrected
+          title: Use a kebab-case name
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace app
+            function main;
+                answer = 42
+                print; answer
+    - id: w4005
+      title: W4005 — unreferenced top-level function
+      blocks:
+        - type: markdown
+          markdown: |-
+            With `--lint-unused-functions`, an authored top-level function with no resolved
+            references receives `W4005`. Calling, passing, or otherwise referencing the
+            function counts as use. The entrypoint `main`, instance methods, and nested or
+            anonymous functions are not candidates for this top-level inventory. Bundled and
+            projected dependency declarations are excluded.
+
+            This is an opt-in inventory advisory, not proof that a function is safe to
+            remove from a public API. Library exports and downstream consumers may need
+            functions that the current compilation does not call.
+        - type: example
+          id: w4005-warning
+          title: An unreferenced helper
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace app
+            function helper;
+                print; 'helper'
+            function main;
+                print; 'main'
+          response:
+            kind: diagnostic
+            language: text
+            display: shown
+            content: W4005
+
     - id: families
       title: Diagnostic families
       blocks:

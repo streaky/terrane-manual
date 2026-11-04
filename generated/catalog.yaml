@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a00d6becd6b767943527cfe039e52f019084cb96603f4d6a98972b00500123ed
+  input-sha256: a9dead4ec07ef5d3410accb58e1859c222562a5c845f94f27e8693301c84b27d
 format: 2
 generated: true
 records:
@@ -2904,6 +2904,15 @@ records:
   sections:
   - id: generated-index
     title: Generated code inventory
+    sections: []
+  - id: opt-in-checks
+    title: Opt-in compilation checks
+    sections: []
+  - id: s2018
+    title: S2018 — declaration name style
+    sections: []
+  - id: w4005
+    title: W4005 — unreferenced top-level function
     sections: []
   - id: families
     title: Diagnostic families
