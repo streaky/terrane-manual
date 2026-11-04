@@ -230,8 +230,8 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Terrane makes construction visible. Use `instance` followed by the class and a
-            call marker:
+            Terrane makes construction visible. Use `instance` followed by the class, the
+            semicolon invocation marker, and any constructor arguments:
         - type: example
           id: legacy-fence-007
           title: null
@@ -249,7 +249,59 @@ documentation:
         - type: markdown
           markdown: |-
             The semicolon belongs to the construction operation, just as it belongs to an
-            ordinary call. It is required even when there are no arguments.
+            ordinary call; it is required even when there are no arguments or a field block
+            follows.
+
+            A construction assignment can initialize fields after construction:
+        - type: example
+          id: structured-construction-assignment
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            first = instance task; {
+              title = 'manifest'
+              completed = true
+            }
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            Constructor arguments come before the block; the constructed object then
+            receives ordinary field writes in source order. The block is not a general
+            statement sequence: use newline-separated `field = expression` operations, with
+            a single field optionally inline as `{ width = 2 }`. Semicolons remain
+            invocation markers.
+
+            An update block writes to an existing simple binding in place:
+        - type: example
+          id: structured-field-update
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            first = {
+              title = 'revised'
+              completed = false
+            }
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            It does not copy, replace, or construct the target; unspecified fields are
+            unchanged. Both construction and update blocks must contain at least one field
+            assignment; omit an empty block instead of writing a no-op. Member/index
+            targets, arbitrary statements, nested update blocks, and implicit receiver
+            references are not supported. Ordinary field-write checks still apply; closed
+            classes gain no dynamic fields. Earlier writes are not rolled back if a later
+            right-hand expression fails. There is no `unset` operation: assigning `none`
+            does not remove a field.
 
             Ordinary class-value construction is not written as a call to the class name.
             Throwable construction is a deliberate exception within `throw`: a direct class

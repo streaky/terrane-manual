@@ -141,9 +141,65 @@ documentation:
         - type: markdown
           markdown: |-
             A class defines typed state and methods. Construction is explicit:
-            `instance class; arguments` creates an instance semantically and invokes its
-            conventional `construct` method. Calling a class directly does not construct an
-            object.
+            `instance class; arguments` creates an instance and invokes its conventional
+            `construct` method. The semicolon is mandatory, including with zero arguments
+            and when an initialization block follows. Calling a class directly does not
+            construct.
+
+            A construction assignment combines construction with field initialization:
+        - type: example
+          id: structured-construction-assignment
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            parcel = instance Parcel; contents, title {
+              title = 'manifest'
+              completed = true
+            }
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            The constructor arguments precede the block. Construction completes first; block
+            fields are then written in source order using ordinary member-write rules. The
+            block contains only newline-separated `field = expression` operations, with an
+            optional one-field inline form such as `{ width = 2 }`. Semicolons remain
+            invocation markers, not statement separators. There is no implicit receiver
+            binding in a right-hand expression.
+
+            An update block uses the same field-operation form on an existing simple
+            binding:
+        - type: example
+          id: structured-field-update
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |2
+            parcel = {
+              title = 'revised'
+              completed = false
+            }
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            This updates the bound object in place: it does not copy, replace, or construct
+            the target, and fields not named in the block remain unchanged. Both
+            construction and update blocks must contain at least one field assignment
+            (`S1121`); omit an empty block rather than writing a no-op. Targets must be
+            simple bindings; member and index targets, arbitrary statements, and nested
+            update blocks are not supported. Field type, visibility, and ownership checks
+            are the ordinary member-write checks; closed classes do not gain dynamic fields.
+            Writes are not transactional: if a later right-hand expression fails, earlier
+            writes remain. `unset` is not available, and assigning `none` does not remove a
+            field.
 
             Within an instance method, `this` denotes the current instance. `self` denotes
             the effective late-bound class and can be used in `instance self;`. Separately

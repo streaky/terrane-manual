@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 85a05f7d5b846241f1b693a33d33a64b56a62bc2ac81c54c5cf42143deb77420
+  input-sha256: e1e85b86a82ff869923da9cb14554b175390f38f4471519b199d6d0693f62818
 format: 1
 generated: true
 diagnostics:
@@ -9,80 +9,80 @@ diagnostics:
   - invalid source character `{character}`
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 815
+    line: 829
 - code: L0002
   messages:
   - unterminated block comment
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 270
+    line: 284
 - code: L0003
   messages:
   - mixed tabs and spaces in indentation
   - indentation style changes within the file
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 918
+    line: 932
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 925
+    line: 939
 - code: L0004
   messages:
   - inconsistent dedent
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 968
+    line: 982
 - code: L0005
   messages:
   - identifier joiner cannot introduce a digits-only terminal unit; add spaces for an operator expression
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 511
+    line: 525
 - code: L0006
   messages:
   - operator `{text}` cannot be left-attached; add a space before it
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 804
+    line: 818
 - code: L0007
   messages:
   - unterminated bytes literal
   - unterminated string literal
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 479
+    line: 493
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 720
+    line: 734
 - code: L0008
   messages:
   - block string marker `>>` must be the final content on its line
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 731
+    line: 745
 - code: L0009
   messages:
   - invalid numeric literal `{text}`; version one accepts decimal digits, one `.` fraction, `0x` hexadecimal,
     and `_` between digits
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 541
+    line: 555
 - code: L0010
   messages:
   - '`//` cannot begin a comment inside a namespace path'
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 396
+    line: 410
 - code: L0011
   messages:
   - namespace path separators must not have surrounding whitespace
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 789
+    line: 803
 - code: L0012
   messages:
   - invalid bytes escape; use `\\`, `\'`, `\n`, `\r`, `\t`, `\0`, or `\xHH`
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 460
+    line: 474
 - code: S0005
   messages:
   - duplicate namespace declaration
@@ -96,11 +96,11 @@ diagnostics:
   - unexpected indentation inside a block
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 64
-  - path: crates/terrane-compiler/src/parser.rs
     line: 67
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2021
+    line: 70
+  - path: crates/terrane-compiler/src/parser.rs
+    line: 2047
 - code: S1002
   messages:
   - expected a namespace component after `/`
@@ -108,70 +108,70 @@ diagnostics:
   - namespace components must be separated by `/`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 292
+    line: 296
   - path: crates/terrane-compiler/src/parser.rs
-    line: 297
+    line: 301
   - path: crates/terrane-compiler/src/parser.rs
-    line: 300
+    line: 304
 - code: S1003
   messages:
   - expected a binding name
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 898
+    line: 902
 - code: S1004
   messages:
   - expected an initializer after `=`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 905
+    line: 909
 - code: S1005
   messages:
   - expected `function`
   - function qualifiers must be followed by `function`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1043
+    line: 1057
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1101
+    line: 1115
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1945
+    line: 1971
 - code: S1006
   messages:
   - unexpected content in function header
   - unexpected content in anonymous function header
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1086
+    line: 1100
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1112
+    line: 1126
 - code: S1007
   messages:
   - expected a parameter name
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1166
+    line: 1180
 - code: S1008
   messages:
   - expected `;` after for initializer
   - expected `;` after for condition
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1276
+    line: 1290
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1282
+    line: 1296
 - code: S1009
   messages:
   - expected `in` in collection for
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1299
+    line: 1313
 - code: S1011
   messages:
   - this statement does not take a value
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1361
+    line: 1375
 - code: S1012
   messages:
   - identity and type-membership expressions do not chain; join tests with `and`
@@ -179,87 +179,87 @@ diagnostics:
   - comparison and identity expressions do not chain; join tests with `and`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1475
+    line: 1492
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1486
+    line: 1503
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1522
+    line: 1539
 - code: S1013
   messages:
   - member access requires no whitespace before the dot; write `value.member`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1678
+    line: 1704
 - code: S1014
   messages:
   - expected a member name after `.`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1692
+    line: 1718
 - code: S1015
   messages:
   - expected `]` after index
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1712
+    line: 1738
 - code: S1016
   messages:
   - calls inside three-clause `for` clauses must be parenthesized
   - nested calls must be parenthesized
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1288
+    line: 1302
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1638
+    line: 1655
 - code: S1017
   messages:
   - member access requires a receiver before `.`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 891
+    line: 895
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1824
+    line: 1850
 - code: S1018
   messages:
   - expected `)` after call arguments
   - expected `)` after grouped expression
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1754
+    line: 1780
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1840
+    line: 1866
 - code: S1019
   messages:
   - expected an expression
   - expected {context}
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1852
+    line: 1878
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2080
+    line: 2107
 - code: S1020
   messages:
   - function type requires `to`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1899
+    line: 1925
 - code: S1021
   messages:
   - expected `)` after type arguments
   - expected `)` after type
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1668
+    line: 1694
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1970
+    line: 1996
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1998
+    line: 2024
 - code: S1022
   messages:
   - expected a type expression
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1978
+    line: 2004
 - code: S1023
   messages:
   - expected a newline before switch cases
@@ -275,9 +275,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/parser/control_flow.rs
     line: 219
   - path: crates/terrane-compiler/src/parser.rs
-    line: 498
+    line: 502
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2011
+    line: 2037
 - code: S1024
   messages:
   - expected the end of the indented switch
@@ -293,15 +293,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/parser/control_flow.rs
     line: 240
   - path: crates/terrane-compiler/src/parser.rs
-    line: 517
+    line: 521
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2033
+    line: 2060
 - code: S1025
   messages:
   - unexpected content after statement
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2051
+    line: 2078
 - code: S1026
   messages:
   - expected `import` after namespace path
@@ -323,54 +323,54 @@ diagnostics:
   - expected an import alias after `as`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 572
+    line: 576
   - path: crates/terrane-compiler/src/parser.rs
-    line: 577
+    line: 581
   - path: crates/terrane-compiler/src/parser.rs
-    line: 588
+    line: 592
   - path: crates/terrane-compiler/src/parser.rs
-    line: 595
+    line: 599
   - path: crates/terrane-compiler/src/parser.rs
-    line: 622
+    line: 626
   - path: crates/terrane-compiler/src/parser.rs
-    line: 644
+    line: 648
   - path: crates/terrane-compiler/src/parser.rs
-    line: 661
+    line: 665
   - path: crates/terrane-compiler/src/parser.rs
-    line: 669
+    line: 673
   - path: crates/terrane-compiler/src/parser.rs
-    line: 690
+    line: 694
   - path: crates/terrane-compiler/src/parser.rs
-    line: 726
+    line: 730
   - path: crates/terrane-compiler/src/parser.rs
-    line: 745
+    line: 749
   - path: crates/terrane-compiler/src/parser.rs
-    line: 773
+    line: 777
   - path: crates/terrane-compiler/src/parser.rs
-    line: 795
+    line: 799
   - path: crates/terrane-compiler/src/parser.rs
-    line: 797
+    line: 801
   - path: crates/terrane-compiler/src/parser.rs
-    line: 800
+    line: 804
   - path: crates/terrane-compiler/src/parser.rs
-    line: 811
+    line: 815
   - path: crates/terrane-compiler/src/parser.rs
-    line: 814
+    line: 818
 - code: S1027
   messages:
   - expected `with` after `import`
   - expected an importer name after `with`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 828
+    line: 832
   - path: crates/terrane-compiler/src/parser.rs
-    line: 829
+    line: 833
 - code: S1028
   messages:
   - expected a name in collection for target
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1313
+    line: 1327
 - code: S1029
   messages:
   - '`{}` cannot modify a function declaration'
@@ -386,116 +386,116 @@ diagnostics:
   - a declaration may have only one visibility
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 274
+    line: 278
   - path: crates/terrane-compiler/src/parser.rs
-    line: 859
-  - path: crates/terrane-compiler/src/parser.rs
-    line: 862
+    line: 863
   - path: crates/terrane-compiler/src/parser.rs
     line: 866
   - path: crates/terrane-compiler/src/parser.rs
-    line: 873
+    line: 870
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1000
+    line: 877
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1006
+    line: 1014
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1013
+    line: 1020
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1029
+    line: 1027
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1040
+    line: 1043
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2111
+    line: 1054
+  - path: crates/terrane-compiler/src/parser.rs
+    line: 2138
 - code: S1030
   messages:
   - '`try` does not take an expression'
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1212
+    line: 1226
 - code: S1032
   messages:
   - expected a binding name after `as`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1227
+    line: 1241
 - code: S1033
   messages:
   - '`try` requires at least one `catch` or `finally` clause'
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1246
+    line: 1260
 - code: S1034
   messages:
   - object declaration requires a name
   - enum declaration requires a name
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 346
+    line: 350
   - path: crates/terrane-compiler/src/parser.rs
-    line: 490
+    line: 494
 - code: S1035
   messages:
   - expected `extends`, `implements`, or `uses` in object declaration
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 359
+    line: 363
 - code: S1036
   messages:
   - an `extends` clause supports only one base name
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 394
+    line: 398
 - code: S1037
   messages:
   - assignment is not allowed in a condition
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2090
+    line: 2117
 - code: S1038
   messages:
   - expected `;` before function parameters
   - expected `;` before anonymous function parameters
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1081
+    line: 1095
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1107
+    line: 1121
 - code: S1039
   messages:
   - '`throws` requires a throwable upper bound'
   - function declaration accepts only one `throws` upper bound
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1056
+    line: 1070
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1071
+    line: 1085
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1909
+    line: 1935
 - code: S1040
   messages:
   - expected `)` after function parameters
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1181
+    line: 1195
 - code: S1041
   messages:
   - object clause requires a declared object name
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 385
+    line: 389
 - code: S1042
   messages:
   - duplicate interface qualifier
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 332
+    line: 336
 - code: S1043
   messages:
   - object bodies require member declarations, not executable statements
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 432
+    line: 436
 - code: S1090
   messages:
   - a match body may contain only `case` clauses
@@ -526,29 +526,29 @@ diagnostics:
   - path: crates/terrane-compiler/src/parser/control_flow.rs
     line: 192
   - path: crates/terrane-compiler/src/parser.rs
-    line: 442
+    line: 446
   - path: crates/terrane-compiler/src/parser.rs
-    line: 445
+    line: 449
   - path: crates/terrane-compiler/src/parser.rs
-    line: 452
+    line: 456
   - path: crates/terrane-compiler/src/parser.rs
-    line: 471
+    line: 475
   - path: crates/terrane-compiler/src/parser.rs
-    line: 510
+    line: 514
   - path: crates/terrane-compiler/src/parser.rs
-    line: 532
+    line: 536
   - path: crates/terrane-compiler/src/parser.rs
-    line: 539
+    line: 543
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1371
+    line: 1385
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1388
+    line: 1402
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1393
+    line: 1407
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1425
+    line: 1439
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1542
+    line: 1559
 - code: S1091
   messages:
   - unsafe Rust requires an explicit `unsafe rust` block
@@ -556,11 +556,11 @@ diagnostics:
   - static member selection requires no whitespace around `::`; write `class::member`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1418
+    line: 1432
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1500
+    line: 1517
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1696
+    line: 1722
 - code: S1092
   messages:
   - expected a static member name after `::`
@@ -568,35 +568,35 @@ diagnostics:
   - angle-bracket generic syntax is unsupported
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1708
+    line: 1734
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1791
+    line: 1817
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1957
+    line: 1983
 - code: S1093
   messages:
   - class construction requires `;`, including with zero arguments
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1646
+    line: 1663
 - code: S1094
   messages:
   - expected a class or enum designator after `instance`
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1776
+    line: 1802
 - code: S1095
   messages:
   - '`{}` is reserved and cannot be declared'
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 2101
+    line: 2128
 - code: S1096
   messages:
   - member and index operations cannot attach before construction is invoked
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1611
+    line: 1628
 - code: S1097
   messages:
   - field metadata is only valid on class fields
@@ -607,26 +607,26 @@ diagnostics:
   - expected `)` after field metadata
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 924
+    line: 938
   - path: crates/terrane-compiler/src/parser.rs
-    line: 936
+    line: 950
   - path: crates/terrane-compiler/src/parser.rs
-    line: 943
+    line: 957
   - path: crates/terrane-compiler/src/parser.rs
-    line: 948
+    line: 962
   - path: crates/terrane-compiler/src/parser.rs
-    line: 959
+    line: 973
   - path: crates/terrane-compiler/src/parser.rs
-    line: 974
+    line: 988
 - code: S1098
   messages:
   - '`_` discard bindings cannot have visibility or storage qualifiers'
   - '`_` discard bindings require an initializer'
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 881
+    line: 885
   - path: crates/terrane-compiler/src/parser.rs
-    line: 917
+    line: 931
 - code: S1100
   messages:
   - '`select` does not take an expression'
@@ -644,19 +644,19 @@ diagnostics:
   - path: crates/terrane-compiler/src/parser/documentation.rs
     line: 248
   - path: crates/terrane-compiler/src/parser.rs
-    line: 84
+    line: 88
   - path: crates/terrane-compiler/src/parser.rs
-    line: 99
-  - path: crates/terrane-compiler/src/parser.rs
-    line: 110
-  - path: crates/terrane-compiler/src/parser.rs
-    line: 111
+    line: 103
   - path: crates/terrane-compiler/src/parser.rs
     line: 114
   - path: crates/terrane-compiler/src/parser.rs
-    line: 129
+    line: 115
   - path: crates/terrane-compiler/src/parser.rs
-    line: 147
+    line: 118
+  - path: crates/terrane-compiler/src/parser.rs
+    line: 133
+  - path: crates/terrane-compiler/src/parser.rs
+    line: 151
 - code: S1101
   messages:
   - a select body may contain only `case` clauses
@@ -713,7 +713,7 @@ diagnostics:
   - '`select` is a statement and cannot be used as an expression'
   sources:
   - path: crates/terrane-compiler/src/parser.rs
-    line: 1804
+    line: 1830
 - code: S1110
   messages:
   - a switch body may contain only `case` clauses
@@ -783,6 +783,27 @@ diagnostics:
     line: 134
   - path: crates/terrane-compiler/src/parser/modifiers.rs
     line: 140
+- code: S1121
+  messages:
+  - structured updates require an existing simple binding target
+  - '`.unset;` is not implemented; structured blocks currently accept field assignments only'
+  - field assignments must be separated by newlines
+  - structured assignment blocks require at least one field assignment; omit an empty block
+  - expected `}` after structured assignment block
+  - an update block cannot initialize a declaration; use an existing simple binding
+  sources:
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 21
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 89
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 120
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 127
+  - path: crates/terrane-compiler/src/parser/structured_assignment.rs
+    line: 133
+  - path: crates/terrane-compiler/src/parser.rs
+    line: 912
 - code: S2001
   messages: []
   sources:
@@ -857,13 +878,13 @@ diagnostics:
   - duplicate binding `{}` in the same lexical scope
   sources:
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 194
+    line: 210
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 285
+    line: 297
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 409
+    line: 411
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 660
+    line: 662
 - code: S2013
   messages:
   - unresolved name `{name}`
@@ -931,7 +952,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 3718
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 532
+    line: 534
 - code: S2022
   messages:
   - constant binding `{name}` cannot be reassigned
@@ -943,9 +964,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 75
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 490
+    line: 492
   - path: crates/terrane-compiler/src/semantics/scopes.rs
-    line: 520
+    line: 522
 - code: S2023
   messages:
   - binding `{}` cannot reference itself in its initializer
@@ -1019,7 +1040,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1271
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1937
+    line: 1943
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 656
 - code: S2032
@@ -1231,21 +1252,21 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 8848
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 506
+    line: 510
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 624
+    line: 628
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 682
+    line: 686
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 704
+    line: 708
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 786
+    line: 790
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 906
+    line: 910
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1056
+    line: 1060
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1072
+    line: 1076
 - code: T0002
   messages:
   - '{label} value'
@@ -1263,15 +1284,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/source_associated.rs
     line: 252
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 186
+    line: 190
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 197
+    line: 201
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 367
+    line: 371
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1130
+    line: 1134
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1136
+    line: 1140
 - code: T0003
   messages:
   - constant `{text}` is not an exact `{destination}` value
@@ -1289,7 +1310,7 @@ diagnostics:
   - function requires a name
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 442
+    line: 473
 - code: T0005
   messages:
   - a variadic parameter cannot declare a default
@@ -1297,22 +1318,22 @@ diagnostics:
   - required parameters must precede optional parameters
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 492
+    line: 523
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 500
+    line: 531
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 510
+    line: 541
 - code: T0006
   messages:
   - parameter default has no value
   - inline Rust values require a declared destination type; write `name T = rust`
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 520
+    line: 551
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 532
+    line: 563
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 316
+    line: 320
 - code: T0007
   messages:
   - ");\n    std::process::exit(1);\n}\n"
@@ -1418,11 +1439,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 218
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 324
+    line: 330
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 351
+    line: 357
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1894
+    line: 1898
 - code: T0013
   messages:
   - '`.{method}` requires a list of non-optional integers, floats, or strings'
@@ -1433,9 +1454,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 469
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1764
+    line: 1770
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1781
+    line: 1787
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 794
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1490,7 +1511,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 113
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1897
+    line: 1901
 - code: T0016
   messages:
   - collection iteration requires an iterable value
@@ -1507,7 +1528,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 526
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 250
+    line: 267
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 349
   - path: crates/terrane-compiler/src/semantics/model.rs
@@ -1627,9 +1648,9 @@ diagnostics:
   - callable `throws` upper bound must be a throwable object type
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 1714
+    line: 1745
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 578
+    line: 582
 - code: T0028
   messages:
   - '`await` is valid only inside an async callable'
@@ -1692,7 +1713,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 223
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1743
+    line: 1749
 - code: T0036
   messages:
   - '`.{}` requires an integer receiver'
@@ -1721,13 +1742,13 @@ diagnostics:
   - '`{callee_type}` value cannot be called'
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1017
+    line: 1023
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1807
+    line: 1813
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1900
+    line: 1906
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1918
+    line: 1924
 - code: T0041
   messages:
   - iterator items require a statically known value type
@@ -1769,7 +1790,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 791
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 259
+    line: 263
 - code: T0044
   messages:
   - set keys must be immutable scalar values
@@ -1811,14 +1832,14 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 807
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 249
+    line: 253
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 272
+    line: 276
 - code: T0046
   messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 138
+    line: 142
 - code: T0048
   messages:
   - tuple items and length are fixed at construction
@@ -1828,9 +1849,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 601
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 115
+    line: 119
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 123
+    line: 127
 - code: T0050
   messages:
   - bytes require an integer index or range, found `{other}`
@@ -1840,23 +1861,23 @@ diagnostics:
   - indexing requires a receiver with a statically known collection type
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 563
-  - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 569
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 576
+    line: 575
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 582
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 588
+  - path: crates/terrane-compiler/src/semantics/expressions.rs
+    line: 594
 - code: T0052
   messages:
   - stored function parameters require explicit types
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 221
+    line: 227
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 366
+    line: 372
 - code: T0053
   messages:
   - object declaration requires a name
@@ -2011,7 +2032,7 @@ diagnostics:
   - member `{}` is read-only and cannot be assigned
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 80
+    line: 84
 - code: T0073
   messages:
   - non-owning reference `{}` remains live across `await`; end its use before suspension or transfer owned
@@ -2037,31 +2058,31 @@ diagnostics:
   - task outcome has no member `{member_name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1125
+    line: 1131
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1140
+    line: 1146
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1149
+    line: 1155
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1170
+    line: 1176
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1569
+    line: 1575
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1588
+    line: 1594
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1608
+    line: 1614
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1627
+    line: 1633
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1640
+    line: 1646
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1650
+    line: 1656
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1663
+    line: 1669
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1674
+    line: 1680
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1688
+    line: 1694
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 573
 - code: T0076
@@ -2095,13 +2116,13 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 96
+    line: 100
 - code: T0078
   messages:
   - program entrypoint `main` cannot declare parameters
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 551
+    line: 582
 - code: T0081
   messages:
   - projected callback requires a transferable callable
@@ -2210,7 +2231,7 @@ diagnostics:
   - caller-supplied conversion destination must be a concrete type descriptor
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1830
+    line: 1836
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 310
 - code: T0103
@@ -2220,9 +2241,9 @@ diagnostics:
   - caller-supplied conversion callback must be a callable value
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 698
+    line: 704
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 823
+    line: 829
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 329
 - code: T0104
@@ -2237,9 +2258,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
     line: 764
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 617
+    line: 623
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 938
+    line: 944
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 321
 - code: T0105
@@ -2251,7 +2272,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 875
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1947
+    line: 1953
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 338
 - code: T0106
@@ -2273,17 +2294,17 @@ diagnostics:
   - zero-capacity channels require the `channel-block` rendezvous policy
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1056
+    line: 1062
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1066
+    line: 1072
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1075
+    line: 1081
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1085
+    line: 1091
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1095
+    line: 1101
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1106
+    line: 1112
 - code: T0108
   messages:
   - channel pair has no member `{member_name}`
@@ -2309,13 +2330,13 @@ diagnostics:
   - invalid channel `{operation}` invocation
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1512
+    line: 1518
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1520
+    line: 1526
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1532
+    line: 1538
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1553
+    line: 1559
 - code: T0110
   messages:
   - channel pair `{}` endpoint `{}` was already moved
@@ -2328,7 +2349,7 @@ diagnostics:
     typed channels
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1039
+    line: 1045
 - code: T0112
   messages:
   - chain-only dependency value must terminate within one expression
@@ -2659,7 +2680,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 2633
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 232
+    line: 236
 - code: T0128
   messages:
   - mutating collection method `.{member}` cannot discard a temporary receiver
@@ -2757,7 +2778,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 173
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 500
+    line: 506
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 639
   - path: crates/terrane-compiler/src/semantics/selection.rs
@@ -2767,7 +2788,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/source_associated.rs
     line: 57
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 493
+    line: 497
 - code: T0131
   messages:
   - select case expression must produce a task, found {found}
@@ -2783,7 +2804,7 @@ diagnostics:
   - '`{}` has no unsafe interface declaration'
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 298
+    line: 315
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 504
   - path: crates/terrane-compiler/src/semantics/objects.rs
@@ -2801,9 +2822,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/source_associated.rs
     line: 94
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 442
+    line: 446
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 459
+    line: 463
 - code: T0132
   messages:
   - select cases cannot hold overlapping incompatible borrows of `{name}`
@@ -2829,11 +2850,11 @@ diagnostics:
   - ticker intervals must be greater than zero
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 689
+    line: 695
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 960
+    line: 966
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 979
+    line: 985
 - code: T0134
   messages:
   - inline Rust cannot directly access non-copyable binding `{}`; use a typed Terrane adapter
@@ -2849,7 +2870,7 @@ diagnostics:
   - borrowing an inline field of an async receiver requires an unsupported scoped lender
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 546
+    line: 552
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 382
   - path: crates/terrane-compiler/src/semantics/ownership.rs
@@ -2862,9 +2883,9 @@ diagnostics:
   - '`destruct` is implicitly consuming and cannot declare `{qualifier_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 590
+    line: 621
   - path: crates/terrane-compiler/src/semantics/contracts.rs
-    line: 605
+    line: 636
 - code: T0137
   messages:
   - awaited destructors require the threaded executor
@@ -2885,9 +2906,9 @@ diagnostics:
     references'
   sources:
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1406
+    line: 1410
   - path: crates/terrane-compiler/src/semantics/types.rs
-    line: 1436
+    line: 1440
 - code: T0141
   messages:
   - a non-owning observer of shared storage cannot be passed to plain `ref` parameter `{destination}`;
@@ -2977,7 +2998,7 @@ diagnostics:
     explicit reference parameters
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 260
+    line: 266
 - code: T0151
   messages:
   - a callable that captures borrowed references cannot escape its lexical scope
@@ -3003,7 +3024,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/enums.rs
     line: 1095
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 909
+    line: 915
 - code: T0211
   messages:
   - '`else` cannot bind a variant payload'
@@ -3127,11 +3148,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/enums.rs
     line: 1125
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 761
+    line: 767
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 789
+    line: 795
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 896
+    line: 902
 - code: T0219
   messages:
   - native enum variant `{variant_name}` has payload metadata unavailable for semantic matching

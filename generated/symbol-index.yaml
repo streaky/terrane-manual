@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: aedbefd0c20a805b7bd25634199025d8445db6b6a0330b56c22eb2d8356d1b57
+  input-sha256: 9c2b562983f57ec4ef9fc76100a9dc963dc9ac6a2ff0df0c7631973dc94c25e6
 format: 1
 generated: true
 symbols:
@@ -7439,6 +7439,10 @@ symbols:
   record: lang.lexical-structure.literals
   section: comments-literals
   declaration: S1101
+- name: S1121
+  record: lang.classes.fields
+  section: classes
+  declaration: S1121
 - name: S2002
   record: internals.projection.resolution
   section: projection-gap-census
@@ -9747,6 +9751,18 @@ symbols:
   record: internals.build.toolchain-profiles
   section: native-artifact-kind
   declaration: unsafe_code
+- name: unset
+  record: book.classes-interfaces-and-traits
+  section: constructing-an-instance
+  declaration: unset
+- name: unset
+  record: lang.classes.fields
+  section: classes
+  declaration: unset
+- name: unset
+  record: manual.changelog.unreleased
+  section: changes-2026-11-04
+  declaration: unset
 - name: unsigned-fixed-integer
   record: lang.types.descriptors
   section: type-descriptors

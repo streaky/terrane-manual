@@ -335,6 +335,17 @@ documentation:
               aliases in an indented group. Inline imports remain single-line; grouped
               imports end at a dedent or end of file and reject a final trailing comma. See
               [[lang.namespaces.imports#imports]].
+    - id: changes-2026-11-04
+      title: "2026-11-04"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — structured class assignment blocks.** Construction assignments can
+              initialize fields after constructor arguments, and update blocks can write
+              fields of an existing simple binding in place without replacing it. Ordinary
+              member-write checks apply; updates are not transactional. Construction retains
+              its mandatory semicolon, and both block forms reject empty blocks. There is no
+              `unset` operation. See [[lang.classes.fields#classes]].
   see-also:
     - manual.changelog
     - lang.types.references

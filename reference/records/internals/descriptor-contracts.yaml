@@ -43,6 +43,15 @@ documentation:
             deduplication also applies without persistent compilation caches; written type
             occurrences, source spans, bound checks, and contract propagation remain
             unit-specific and are still processed.
+
+            Structured assignment blocks reuse the same resolved member contracts as
+            explicit member writes. Update blocks normalize to ordinary sibling assignments;
+            construction blocks use an expression-local temporary and ordinary assignments,
+            then yield that temporary without a closure, copy, or extra object allocation.
+            The temporary's lexical boundary also applies in namespace initializers and
+            class field defaults. Compiler-authored receiver names retain distinct per-use
+            source spans so availability, ownership, and lowering facts are not merged
+            between operations.
     - id: protocols
       title: Structural queries
       blocks:
