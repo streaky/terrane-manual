@@ -146,7 +146,8 @@ documentation:
             and when an initialization block follows. Calling a class directly does not
             construct.
 
-            A construction assignment combines construction with field initialization:
+            Structured assignment blocks group multiple related field writes. A construction
+            assignment combines construction with field initialization:
         - type: example
           id: structured-construction-assignment
           title: null
@@ -167,11 +168,17 @@ documentation:
             The constructor arguments precede the block. Construction completes first; block
             fields are then written in source order using ordinary member-write rules. The
             block contains only newline-separated `field = expression` operations. In a
-            multiline block the first field starts on the line after the opening brace; a
-            one-field inline form such as `{ width = 2 }` is also available. Semicolons
-            remain invocation markers, not statement separators: a right-hand call may still
-            have named arguments. There is no implicit receiver binding in a right-hand
-            expression.
+            multiline block the first field starts on the line after the opening brace.
+            Semicolons remain invocation markers, not statement separators: a right-hand
+            call may still have named arguments. There is no implicit receiver binding in a
+            right-hand expression.
+
+            Single-field blocks, including the inline form `{ width = 2 }`, are valid but
+            not recommended. Prefer an ordinary member assignment such as
+            `parcel.title = 'revised'` for one field. When constructing an object with only
+            one follow-up field write, use ordinary construction followed by that member
+            assignment. Use a block when grouping multiple related field writes makes their
+            intent clearer.
 
             An update block uses the same field-operation form on an existing simple
             binding:
