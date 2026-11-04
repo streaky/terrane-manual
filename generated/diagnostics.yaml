@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6423c9e169f46aabbaa5366d064923448fafac274f28697b2fc4943c78c4b4be
+  input-sha256: 2979be48881659c5ca84379fcad448cfc0c986045d94e91763735010cee14258
 format: 1
 generated: true
 diagnostics:
@@ -930,17 +930,23 @@ diagnostics:
   - invalid namespace segment `{component}`; segments must match `[a-z]([a-z0-9]|-[a-z0-9])*`
   - compiler-owned declaration `NotKebab` is not kebab-case
   - declared name `Answer` is not kebab-case
+  - authored Answer binding remains a warning
+  - main.trn
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 50
+    line: 52
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 63
+    line: 65
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 80
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 265
   - path: crates/terrane-compiler/src/semantics/tests.rs
     line: 283
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 361
+  - path: crates/terrane-compiler/src/semantics/tests.rs
+    line: 369
 - code: S2019
   messages:
   - namespace segment `{component}` is reserved
@@ -2695,7 +2701,7 @@ diagnostics:
   - mutating collection method `.{member}` cannot discard a temporary receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 428
+    line: 430
 - code: T0129
   messages:
   - 'constructor payload cannot select a native representation: {error}'
@@ -3274,7 +3280,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 743
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 311
+    line: 313
 - code: W4002
   messages:
   - initial value assigned to `{}` is never read
@@ -3282,17 +3288,17 @@ diagnostics:
   - pending = (value; 2)
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 314
+    line: 316
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 319
+    line: 321
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 328
+    line: 414
 - code: W4003
   messages:
   - union arm `{text}` duplicates an earlier arm
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 120
+    line: 122
 - code: W4004
   messages:
   - namespace-wide import overwrites `{name}` from `{}` with `{}`
@@ -3312,15 +3318,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 743
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 199
+    line: 201
   - path: crates/terrane-compiler/src/semantics/tests.rs
-    line: 304
+    line: 390
 - code: W4006
   messages:
   - binding `{}` is marked intentionally unused but is read
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 236
+    line: 238
 - code: W4999
   messages:
   - new warning
