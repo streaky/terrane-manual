@@ -123,8 +123,24 @@ documentation:
             Changed complete locks are written to a temporary file in the package directory
             and atomically renamed over the published lock. Existing readers retain the old
             complete snapshot; new readers see the new complete snapshot. Ordinary write or
-            rename failures leave the published target intact and remove the temporary file.
-            This is atomic publication, not an fsync-based power-loss durability guarantee.
+            rename failures leave the published target intact and attempt to remove the
+            temporary file. This is atomic publication, not an fsync-based power-loss
+            durability guarantee.
+
+            Publication replaces the lock's directory entry with a regular file. A changed
+            lock replaces a symlink rather than updating its target, and the previous file
+            mode is not preserved. The new file uses normal creation permissions
+            (`0666 & umask` on POSIX); directory permissions govern replacement, so a
+            read-only file can still be replaced when its directory permits it. Keep the
+            published package lock as a regular file rather than using symlink or file-mode
+            preservation as a publication contract.
+
+            Abrupt termination before rename can leave a sibling named
+            `.terrane-dependencies.lock.<pid>.<sequence>.tmp`. It is not a published lock
+            and is not used to seed later resolution. After ensuring the writer has exited,
+            the leftover file can be deleted. Terrane does not automatically prune these
+            files: PID reuse and concurrent publishers make age or PID checks insufficient
+            proof that a temporary file is abandoned. Do not commit such residue.
 
             The public `projection.rs` surface owns shared metadata and projection queries.
             Implementations live under `rust_interop/projection/`: `resolution.rs` owns this
