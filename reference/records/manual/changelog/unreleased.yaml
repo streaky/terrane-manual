@@ -354,6 +354,11 @@ documentation:
               program-global and namespace data declarations report `T0226` instead of
               leaking undefined storage symbols into generated Rust. Use local objects or
               parameters; see [[lang.declarations.globals#global-initialization]].
+            - **Added — grouped catch descriptors.** A single catch can list several
+              comma-separated throwable types and share one body and optional `as` binding.
+              Every alternative is validated, duplicates and unreachable alternatives are
+              rejected, and all listed types participate in escaping-throwable inference.
+              See [[lang.errors.handling#structured-errors]].
   see-also:
     - manual.changelog
     - lang.types.references

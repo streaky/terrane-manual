@@ -70,6 +70,17 @@ documentation:
           diagnostic: null
           markdown: null
 
+        - type: example
+          id: grouped-catch
+          title: Shared recovery for several throwable types
+          language: terrane
+          mode: illustrative
+          source: |-
+            try
+                perform-work;
+            catch dependency-error, integer-conversion-overflow, coercion-error as error
+                print; error.message
+
         - type: markdown
           markdown: |-
             `throw expression` throws an existing instance. When the operand names a
@@ -86,11 +97,19 @@ documentation:
             descriptor identity.
 
             Within `try`, `catch` clauses are tested in source order against compatible
-            classes or interfaces. A later clause made unreachable by an earlier clause is a
-            compile-time diagnostic. Typed and catch-all clauses may bind the caught runtime
-            throwable envelope and inspect its `message`, optional `cause`, and non-throwing
-            `render` operation. Throwing that bound value again preserves its kind and cause
-            chain.
+            classes or interfaces. A comma-separated descriptor list matches any listed type
+            and runs one shared handler. The optional `as` binding follows the whole list;
+            it exposes the same runtime throwable envelope for every alternative. The list
+            is single-line, requires a descriptor after every comma, and does not permit a
+            trailing comma. Each descriptor must be throwable. Duplicate or unreachable
+            entries, including entries already handled by an earlier clause, are
+            compile-time diagnostics.
+
+            Typed and catch-all clauses may bind the caught runtime throwable envelope and
+            inspect its `message`, optional `cause`, and non-throwing `render` operation.
+            Throwing that bound value again preserves its kind and cause chain. Only errors
+            from the `try` body are matched: errors thrown by a handler escape the entire
+            `try` rather than entering a later catch.
 
             The binding is an envelope-only throwable value, not a typed view of the
             original class instance. Arbitrary fields and methods from that source object
@@ -138,6 +157,15 @@ provenance:
     - reject-throwable-self-arguments
     - reject-throwable-self-outside-class
     - reject-nonthrowable-self
+    - grouped-catch
+    - grouped-catch-invalid
+    - grouped-catch-duplicate
+    - grouped-catch-prior
+    - grouped-catch-following
+    - grouped-catch-after-all
+    - grouped-catch-throwable
+    - grouped-catch-unlisted
+    - grouped-catch-handler-escape
   compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

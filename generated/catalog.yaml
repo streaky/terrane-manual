@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fb16cffa2f8f7982a33579df3d038d76d0f99e6c50c10c1493d1595866e231ac
+  input-sha256: 66c1bad4eb09d0dc82a64a03639326586f967c9be6bfa21ee558d888d60691e9
 format: 2
 generated: true
 records:
@@ -1119,6 +1119,15 @@ records:
     - reject-throwable-self-arguments
     - reject-throwable-self-outside-class
     - reject-nonthrowable-self
+    - grouped-catch
+    - grouped-catch-invalid
+    - grouped-catch-duplicate
+    - grouped-catch-prior
+    - grouped-catch-following
+    - grouped-catch-after-all
+    - grouped-catch-throwable
+    - grouped-catch-unlisted
+    - grouped-catch-handler-escape
     compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

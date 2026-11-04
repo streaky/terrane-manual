@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fb16cffa2f8f7982a33579df3d038d76d0f99e6c50c10c1493d1595866e231ac
+  input-sha256: 66c1bad4eb09d0dc82a64a03639326586f967c9be6bfa21ee558d888d60691e9
 format: 1
 generated: true
 symbols:
@@ -645,12 +645,20 @@ symbols:
   section: imports
   declaration: as
 - name: as
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: as
+- name: as
   record: lang.namespaces.imports
   section: imports
   declaration: as
 - name: as
   record: lang.namespaces.scopes
   section: scopes
+  declaration: as
+- name: as
+  record: manual.changelog.unreleased
+  section: changes-2026-11-04
   declaration: as
 - name: as
   record: tool.source-intelligence

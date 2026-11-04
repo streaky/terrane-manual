@@ -277,6 +277,12 @@ documentation:
             Human wording may improve, be translated, or include more context. The error's
             type remains the program-facing contract.
 
+            When several error types need the same recovery, list their descriptors with
+            commas in one catch header, followed by one optional `as` binding. The handler
+            runs once when any listed type matches, and the binding has the same common
+            throwable surface for every alternative. Keep the list on one line without a
+            trailing comma; see [[lang.errors.handling#structured-errors]] for an example.
+
             Multiple catches are tried in source order. Put narrower types before broader
             interfaces. If an earlier catch already accepts everything a later catch could
             receive, the compiler diagnoses the later clause as unreachable rather than
