@@ -59,5 +59,11 @@ provenance:
     - global-initialization-direct-cycle
     - global-initialization-mediated-cycle
     - global-initialization-function-read
+    - namespace-object-storage-global
+    - namespace-object-storage-constant
+    - namespace-object-storage-global-block
+    - namespace-object-storage-nested
+    - global-enum-match-unassigned
   compiler:
     - crates/terrane-compiler/src/semantics/ownership.rs
+    - crates/terrane-compiler/src/semantics/bindings.rs

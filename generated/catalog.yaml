@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5bb14cb93f9226951b49421e10e9d143a1c1c481cf712ab6181e5fa920cc9beb
+  input-sha256: 124c35502bd4e4da8fcfc5dd804ee61df603f5395d9ddb43f3bf391ab26314ce
 format: 2
 generated: true
 records:
@@ -409,8 +409,21 @@ records:
       section: '12.3'
     - document: language-scoreboard
       section: classes
-    conformance: []
-    compiler: null
+    conformance:
+    - structured-assignment-blocks
+    - structured-assignment-initializers
+    - structured-assignment-this
+    - structured-assignment-this-nonmutable
+    - structured-assignment-statements
+    - structured-assignment-semicolon-separator
+    - structured-assignment-mixed-layout
+    - structured-assignment-empty-construction
+    - structured-assignment-empty-update
+    - structured-assignment-missing-marker
+    compiler:
+    - crates/terrane-compiler/src/parser/structured_assignment.rs
+    - crates/terrane-compiler/src/semantics/types.rs
+    - crates/terrane-compiler/src/lowering/emitter/expressions.rs
   sections:
   - id: initialization
     title: Initializing fields
@@ -1032,8 +1045,14 @@ records:
     - global-initialization-direct-cycle
     - global-initialization-mediated-cycle
     - global-initialization-function-read
+    - namespace-object-storage-global
+    - namespace-object-storage-constant
+    - namespace-object-storage-global-block
+    - namespace-object-storage-nested
+    - global-enum-match-unassigned
     compiler:
     - crates/terrane-compiler/src/semantics/ownership.rs
+    - crates/terrane-compiler/src/semantics/bindings.rs
   sections:
   - id: global-initialization
     title: Program-Global Initialization

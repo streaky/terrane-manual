@@ -285,5 +285,18 @@ provenance:
       section: "12.3"
     - document: language-scoreboard
       section: classes
-  conformance: []
-  compiler: null
+  conformance:
+    - structured-assignment-blocks
+    - structured-assignment-initializers
+    - structured-assignment-this
+    - structured-assignment-this-nonmutable
+    - structured-assignment-statements
+    - structured-assignment-semicolon-separator
+    - structured-assignment-mixed-layout
+    - structured-assignment-empty-construction
+    - structured-assignment-empty-update
+    - structured-assignment-missing-marker
+  compiler:
+    - crates/terrane-compiler/src/parser/structured_assignment.rs
+    - crates/terrane-compiler/src/semantics/types.rs
+    - crates/terrane-compiler/src/lowering/emitter/expressions.rs
