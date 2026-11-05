@@ -581,6 +581,25 @@ documentation:
             payload access must not extend aliased receiver guards across sibling formatting
             operands or replace shared-async handles with `self`.
 
+            Live lender checks compare canonical owner-and-projection paths for field/index
+            replacement, explicit field moves and mutating member calls. A distinct sibling
+            field is not an overlapping loan, and direct field writes after the borrowed
+            value's last dependent use are permitted. Fluent continuations retain the
+            original lender paths as well as the immediate native receiver, so transferring
+            a view does not hide a conflicting write to the field or element from which it
+            originally borrowed.
+
+            A shared-reference field may be protected by an operand-local receiver guard. A
+            lifetime-bearing native result borrowed from such a field is rejected with T0119
+            for both stored and inline use: its native borrow would outlive that guard. An
+            owned scalar result from the same receiver remains valid.
+
+            Lifetime-bearing native values cannot be stored in source class fields,
+            including optional or nested field types. This is checked with T0101 even when
+            the class is never constructed. Owned projected record storage that lends a
+            native view only for an individual call is not itself a stored invocation-scoped
+            view.
+
             Current storage limits remain narrower than direct Rust borrowing. A native
             result borrowing a literal can be consumed inline, but retaining that result in
             a local binding is not supported; first bind the literal to a named string and
@@ -1242,6 +1261,31 @@ documentation:
             members exist. The isolated `projected-source-result-*` cases each demand their
             own native member: a working generic call in one program must not mask missing
             demand from another call in the same program.
+
+            When a generic appears inside an applied parameter, demand matches the
+            corresponding actual type argument rather than forwarding the enclosing
+            argument's owner. An owning `Box<T>` input that returns `T` therefore follows
+            the payload type, not `Box`; a literal construction and a preceding named
+            binding are both supported. Constructor names are resolved in their source
+            namespaces, and unrelated type arguments do not become result owners.
+
+            Early demand discovery is not yet a complete higher-order type inference system.
+            Results selected through function-typed parameters, class-level generic
+            receivers, interface-bounded generic receivers, and implicit loop-item bindings
+            can still need a concrete destination annotation or a helper with a concrete
+            parameter type. The isolated `projected-source-demand-*` cases preserve those
+            current limits and their supported annotation or typed-adapter alternatives.
+            T0055 distinguishes an admitted projected instance member that was not demanded
+            from a genuinely missing member, using the full canonical owner/member
+            inventory. This inventory is shared across semantic units; static and declined
+            operations are not presented as undemanded instance members.
+
+            Separately, copying an indexed unbounded type parameter from a list or map is
+            not a permission supplied by a convenient concrete caller. Such a body reports
+            T0135 before Rust emission instead of leaking a missing Rust `Clone` bound. Use
+            a concrete typed getter when a value copy is intended, or a declared shared
+            handle element type when copying the handle is the intended operation; no hidden
+            bound or payload copy is introduced.
 
             The separate projection-census runner reads a versioned declarative package list
             and preserves each package's priority, target, feature configuration, deadline,

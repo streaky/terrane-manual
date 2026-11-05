@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 344bbe72c95d12aa72eb63cfbadd37248906c02207e1f4b42fef12d471b848df
+  input-sha256: 42d2b7189e9925ce13d32a5305efbd1fd097768a2884e6b5434ec53424ef0290
 format: 1
 generated: true
 symbols:
@@ -932,6 +932,10 @@ symbols:
   record: internals.projection.resolution
   section: callbacks
   declaration: Box
+- name: Box
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: Box
 - name: box
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
@@ -971,6 +975,10 @@ symbols:
 - name: break
   record: lang.functions.asynchronous
   section: selection
+  declaration: break
+- name: break
+  record: lang.ownership.movement
+  section: move-semantics
   declaration: break
 - name: budget
   record: book.values-and-names
@@ -1457,8 +1465,16 @@ symbols:
   section: native-receiver-regions
   declaration: Clone
 - name: Clone
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: Clone
+- name: Clone
   record: lang.functions.callable-types
   section: exact-metadata
+  declaration: Clone
+- name: Clone
+  record: lang.types.generics
+  section: authored-bounds
   declaration: Clone
 - name: Clone
   record: lang.types.generics
@@ -1933,6 +1949,10 @@ symbols:
   record: lang.functions.asynchronous
   section: selection
   declaration: continue
+- name: continue
+  record: lang.ownership.movement
+  section: move-semantics
+  declaration: continue
 - name: contracts
   record: lang.functions.callable-types
   section: exact-metadata
@@ -1957,6 +1977,10 @@ symbols:
   record: book.text-and-collections
   section: assignment-and-copy-on-write-value-behavior
   declaration: copy
+- name: Copy
+  record: lang.ownership.movement
+  section: move-semantics
+  declaration: Copy
 - name: copy-sign
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -7347,6 +7371,10 @@ symbols:
   record: lang.lexical-structure.text-blocks
   section: placement
   declaration: return
+- name: return
+  record: lang.ownership.movement
+  section: move-semantics
+  declaration: return
 - name: returned
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -7546,6 +7574,10 @@ symbols:
 - name: S1095
   record: lang.lexical-structure.keywords
   section: always-reserved
+  declaration: S1095
+- name: S1095
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
   declaration: S1095
 - name: S1101
   record: lang.lexical-structure.literals
@@ -8536,6 +8568,10 @@ symbols:
   section: authored-generics
   declaration: T
 - name: T
+  record: internals.projection.resolution
+  section: projection-gap-census
+  declaration: T
+- name: T
   record: internals.semantics.return-validation
   section: initialized-static-optional
   declaration: T
@@ -8663,6 +8699,10 @@ symbols:
   record: book.types
   section: refinement-after-a-check
   declaration: T0031
+- name: T0055
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
+  declaration: T0055
 - name: T0058
   record: internals.execution.runtime-selection
   section: task-ownership-lowering
@@ -8684,6 +8724,10 @@ symbols:
   section: provenance
   declaration: T0068
 - name: T0101
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
+  declaration: T0101
+- name: T0101
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: T0101
@@ -8691,6 +8735,10 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: T0111
+- name: T0119
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
+  declaration: T0119
 - name: T0119
   record: tool.packages.rust-dependencies
   section: borrowed-interiors
@@ -8706,6 +8754,14 @@ symbols:
 - name: T0135
   record: internals.semantics.reference-provenance
   section: lowering
+  declaration: T0135
+- name: T0135
+  record: lang.types.generics
+  section: authored-bounds
+  declaration: T0135
+- name: T0135
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
   declaration: T0135
 - name: T0135
   record: tool.packages.rust-dependencies
@@ -8759,6 +8815,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-04
   declaration: T0226
+- name: T0240
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
+  declaration: T0240
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies

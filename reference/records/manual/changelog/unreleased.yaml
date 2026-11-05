@@ -381,6 +381,26 @@ documentation:
               through a borrowed throwable uses the runtime accessors for both borrowed
               observations and owned snapshots. See
               [[lang.errors.handling#structured-errors]].
+            - **Fixed — source result demand through applied generics.** Returning a payload
+              type from an owning applied argument follows its actual type argument rather
+              than the outer container. Remaining higher-order, class-generic and loop-item
+              demand limits have explicit typed workarounds, and `T0055` distinguishes an
+              undemanded projected instance member from an absent one. See
+              [[internals.projection.resolution#projection-gap-census]].
+            - **Fixed — native ownership and lender diagnostics.** Loop exits no longer
+              fabricate a second consumption; real back edges and post-break reuse retain
+              move checks. Field/index loan overlaps report `T0240`, guard-backed borrowed
+              native results report `T0119`, and lifetime-bearing native class fields report
+              `T0101` before Rust lowering. Non-Clone native enums transfer ownership, while
+              proven Copy receiver calls do not make source callables consuming.
+            - **Fixed — invalid inferred bindings and generic copies.** Reserved inferred
+              targets report `S1095` instead of reaching receiver-only lowering. Indexed
+              copies of an unconstrained generic parameter report `T0135` instead of a Rust
+              Clone-bound error. See [[lang.lexical-structure.keywords]] and
+              [[lang.types.generics]].
+            - **Fixed — optional native byte metadata.** Absent byte-extraction recipes are
+              omitted again, and projection caches rebuild for the canonical serialization
+              change without disabling replay validation.
   see-also:
     - manual.changelog
     - lang.types.references

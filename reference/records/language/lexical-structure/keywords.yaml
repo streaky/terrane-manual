@@ -57,6 +57,10 @@ documentation:
           evidence:
             - contextual-class-name-binding
             - contextual-this-binding
+            - reserved-self-inferred
+            - reserved-self-object
+            - reserved-this-inferred
+            - reserved-this-field
           markdown: |-
             The names `function`, `instance`, `self`, and `this` must not be declared.
         - type: table
@@ -83,7 +87,9 @@ documentation:
         - type: markdown
           markdown: |-
             The compiler reports `S1095` when one of these spellings is used as a
-            declaration name.
+            declaration name, including an inferred binding such as `self = 1`. Updating the
+            existing `this` receiver inside an instance method is a receiver operation, not
+            a declaration of a new binding.
         - type: example
           id: rejected-instance-binding
           title: A reserved name cannot declare a binding

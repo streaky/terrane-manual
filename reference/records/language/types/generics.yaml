@@ -194,6 +194,12 @@ documentation:
             invalid generic body. Callable authority, asynchronous status, throwable
             contracts, and reference provenance retain their ordinary rules.
 
+            In particular, indexing a list or map to copy a bare unbounded `T` reports
+            `T0135`; a concrete instantiation does not add a hidden Rust `Clone` bound. A
+            getter with a concrete copyable element type is supported. A generic getter
+            whose declared elements and result are `shared ref T` copies only that declared
+            handle and does not require the payload `T` to be cloneable.
+
             Closed applications preserve transitive resource classification. A container
             with a resource payload owns that resource; a copyable application does not
             become resource-owning merely because another application is. By-value resource

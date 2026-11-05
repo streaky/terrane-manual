@@ -66,6 +66,18 @@ documentation:
             `destruct` once, ordered from the most-derived class to the root base.
             Copy-on-write representation clones cannot multiply this cleanup; separating a
             value copy creates a fresh lineage.
+
+            A consuming operation in a loop is checked against paths that can actually reach
+            another iteration. An unconditional `break` or `return` is not a back edge;
+            normal fallthrough and `continue` are. A value consumed on a `break` path
+            remains unavailable after the loop, while a `return` path leaves the enclosing
+            function.
+
+            For a projected native by-value receiver, proven Rust `Copy` permits repeated
+            calls without making a source method or captured callable consuming. It does not
+            relax native-view capture or lender restrictions. A non-Clone, non-Copy native
+            enum transfers ownership on consumption, just like another statically
+            noncopyable native value.
   see-also: []
 
 provenance:
