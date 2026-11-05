@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 70043b30c41d492b32d739a7277ecd8a112f1385f73013f4a1b369c4491b34ef
+  input-sha256: 3ac5898d71e5dabfccbe8f087c5c9c7b75a55497b984df8a227bc1561cde3fb1
 format: 1
 generated: true
 symbols:
@@ -2324,6 +2324,10 @@ symbols:
 - name: descriptor
   record: lang.declarations.annotations
   section: model
+  declaration: descriptor
+- name: descriptor
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
   declaration: descriptor
 - name: descriptor_protocol_method
   record: internals.semantics.descriptor-contracts
@@ -5226,6 +5230,10 @@ symbols:
   section: structured-errors
   declaration: message
 - name: message
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
+  declaration: message
+- name: message
   record: std.filesystem
   section: whole-file-synopsis
   declaration: message
@@ -5921,6 +5929,10 @@ symbols:
   record: lang.types.descriptors
   section: type-descriptors
   declaration: object
+- name: observe
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function observe string; error ref throwable
 - name: observe-prefix
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -7795,6 +7807,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: overview
   declaration: self
+- name: Self
+  record: manual.changelog.unreleased
+  section: changes-2026-11-05
+  declaration: Self
 - name: self
   record: tool.packages.rust-dependencies
   section: interfaces

@@ -142,6 +142,12 @@ documentation:
             files: PID reuse and concurrent publishers make age or PID checks insufficient
             proof that a temporary file is abandoned. Do not commit such residue.
 
+            Complete instance and static member inventories are canonicalized before hashing
+            and publication, including operations recovered from external trait
+            implementations. Rustdoc map iteration order must not change same-input cache
+            content; actual signature changes still participate in the hash and replay
+            validation.
+
             The public `projection.rs` surface owns shared metadata and projection queries.
             Implementations live under `rust_interop/projection/`: `resolution.rs` owns this
             transaction; `artifacts.rs` owns artifact validation and cache writes;
@@ -528,6 +534,19 @@ documentation:
             and free functions use the same owner and result machinery. A borrowed view's
             methods, cloned view, and nested results retain its lenders; a native trait
             proof is not an outlives proof.
+
+            Apply projected method contracts after collecting declarations and before
+            initial source-binding inference. Scoped native results retain their nominal
+            family at that provisional stage so a consuming `Self` continuation can expose
+            its next method, including an async terminal with an associated result. The
+            provisional template is not a concrete storage or escape permission; native
+            selection and lifetime validation still close the call.
+
+            A family may be shared by lender-rooted views and expression-only producers. The
+            actual producer graph determines expression-only continuation, independently of
+            which path first published the shared family. Retain the complete fluent graph
+            for joint native inference rather than inventing a lender for an open producer
+            or weakening the restrictions on independently stored views.
 
             The compiler records receiver and parameter borrow lifetimes and correlates them
             with result lifetimes. Named lifetimes must match their actual sources, static

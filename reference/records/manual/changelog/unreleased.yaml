@@ -362,6 +362,25 @@ documentation:
               type, matching runtime behavior for grouped and single-type clauses.
               Previously accepted narrow `throws` contracts that relied on the old unsound
               inference may now be rejected. See [[lang.errors.handling#structured-errors]].
+    - id: changes-2026-11-05
+      title: "2026-11-05"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Fixed — lifetime-bearing native fluent calls.** Consuming builder methods
+              returning `Self` retain their native family through chained async terminals,
+              including executor-selected associated results. This restores ordinary SQLx
+              non-persistent query execution without erasing lifetimes or permitting scoped
+              values to escape. See
+              [[internals.projection-resolution#native-receiver-regions]].
+            - **Fixed — projection-cache replay stability.** Recovered native instance and
+              static members are ordered canonically before hashing, preventing Rustdoc
+              iteration order from causing same-input cache-drift failures. Existing
+              projection caches rebuild automatically; replay validation remains enabled.
+            - **Fixed — referenced throwable text.** Reading `message` and `descriptor`
+              through a borrowed throwable uses the runtime accessors for both borrowed
+              observations and owned snapshots. See
+              [[lang.errors.handling#structured-errors]].
   see-also:
     - manual.changelog
     - lang.types.references
