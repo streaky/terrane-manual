@@ -564,12 +564,17 @@ documentation:
             spelling must not leave a declaration lifetime unmatched in an otherwise valid
             consuming builder or awaited continuation.
 
-            Lender provenance distinguishes stable named storage and reference-returning
-            helpers from owned helper results that are only temporary storage. A temporary
-            cannot be promoted to the enclosing function's lifetime merely because a native
-            result mentions a matching lifetime. Awaited fluent graphs with such an unproven
-            lender receive a source-level lifetime diagnostic; ownership must be established
-            before the borrowing operation.
+            Lender provenance distinguishes stable named storage, static literal backing,
+            and reference-returning helpers from temporary owned expressions. Computed
+            expressions and awaited owned results must be bound before lending them to a
+            native result whose lifetime depends on that input. They receive source-level
+            T0119 rather than a Rust backend lifetime error. An inline await passed to an
+            ordinary synchronous native operation with an owned result remains supported.
+
+            A selected consuming method moves a named invocation-scoped native receiver,
+            just as a consuming free-function argument does. A later use of that binding
+            receives T0058; scoped native values do not need an ordinary resource-object
+            descriptor to participate in move tracking.
 
             `projected-query-chain` exercises stored local-loan continuations.
             `native-query-with-arguments` pins provisional-family inference with a moved
@@ -1198,6 +1203,16 @@ documentation:
             expression, not the result binding's subsequent members. Where an expression has
             supported alternative result owners, retain those alternatives instead of
             choosing the first sorted identity.
+
+            Authored source callees participate through header-only canonical callable
+            contracts, including declared method returns, imported aliases, and async
+            helpers. A generic-parameter return follows the arguments bound to that
+            parameter, using the same named/positional argument mapping as ordinary source
+            calls; unrelated parameters cannot add owners to the result. Default expressions
+            and bodies are still validated in the normal semantic phase, after projected
+            members have been materialized. `projected-source-result-owner` covers
+            unannotated authored helpers and methods separately from the projected result
+            and executor witnesses.
 
             The separate projection-census runner reads a versioned declarative package list
             and preserves each package's priority, target, feature configuration, deadline,
