@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 80c3138fd44fba54c5b89f75b92a07343785fc18548c63b7b0e1b519d9599b03
+  input-sha256: ff1cb4b79beffd502c5b592d42ffd4a3a09d525b7f8c94ebf6724f52875d336a
 format: 1
 generated: true
 diagnostics:

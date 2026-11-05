@@ -195,6 +195,16 @@ documentation:
             canonical intrinsic member metadata, so stream decoding borrows its input buffer
             without copying it merely to obtain a reference.
 
+            Throwable envelope message and descriptor members expose borrowed text views to
+            immediate printing, string builtins, comparisons, and composition. Their
+            canonical read-place setup keeps temporary envelope owners and bounded read
+            guards alive until the consumer finishes. Member names are mapped to the runtime
+            accessors, not fabricated as fields. Owned source destinations still materialize
+            strings. A sibling mutation or competing guarded read takes a text snapshot
+            before that sibling runs; a borrowed view must not extend the source loan or
+            lock across those effects. Comparison operands and print arguments are staged in
+            source order when using these views.
+
             Projected parameters record whether their input representation can preserve
             source storage. The same decision selects generated facade signatures and call
             operands. String slices remain distinct from references to `String`;
@@ -262,6 +272,7 @@ provenance:
     - guarded-checked-arithmetic
     - native-read-storage
     - borrowed-text-observations
+    - borrowed-throwable-text
   compiler: null
 implementation:
   compiler:
@@ -276,3 +287,4 @@ implementation:
     - tests/conformance/run/guarded-checked-arithmetic/case.trn
     - tests/conformance/run/native-read-storage/src/main.trn
     - tests/conformance/run/borrowed-text-observations/case.trn
+    - tests/conformance/run/borrowed-throwable-text/case.trn

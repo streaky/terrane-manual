@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f223201b6c1d53246ec4855985e9cffc7e0fff3b7d6a1e753c3c8e7aa9c24b80
+  input-sha256: 70043b30c41d492b32d739a7277ecd8a112f1385f73013f4a1b369c4491b34ef
 format: 1
 generated: true
 symbols:
@@ -5089,6 +5089,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: main
+- name: make-error
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function make-error throwable; replacement bool
 - name: make-event
   record: book.async
   section: carrying-log-events-through-typed-channels
@@ -6039,6 +6043,10 @@ symbols:
   record: book.text-and-collections
   section: assignment-and-copy-on-write-value-behavior
   declaration: original
+- name: original-error
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class original-error implements throwable
 - name: OsString
   record: tool.debugging
   section: commands
@@ -7096,6 +7104,10 @@ symbols:
   section: rust-lowering
   declaration: render
 - name: render
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function render string
+- name: render
   record: lang.errors.contracts
   section: throwable-inference
   declaration: render
@@ -7116,6 +7128,10 @@ symbols:
   section: model
   declaration: repeatable
 - name: replace
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function replace string; error mutable ref throwable
+- name: replace
   record: lang.text.transformation
   section: string-transform
   declaration: replace
@@ -7135,6 +7151,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function replace-shared string; owner shared ref holder
+- name: replacement-error
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class replacement-error implements throwable
 - name: report.trn
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree

@@ -128,10 +128,14 @@ documentation:
             Generated handlers retain an independent owned snapshot for the catch binding.
             Reassigning or retaining that binding does not replace the original error used
             as the cause of a new handler-thrown error. Synchronous envelope observations
-            borrow the stored envelope and materialize only their returned values; an owned
-            string result still needs its own text storage. A retained `render` callable
-            captures an owned envelope snapshot so later binding reassignment does not
-            change what it renders.
+            borrow the stored envelope. Message and descriptor text can be lent directly to
+            printing, string operations, comparisons, and string composition instead of
+            constructing a temporary string. Owned returns and assignments still need their
+            own text storage. When sibling evaluation can replace the source or reenter its
+            guarded storage, the observation takes a text snapshot before evaluating that
+            sibling, preserving receiver-before-argument behavior. A retained `render`
+            callable captures an owned envelope snapshot so later binding reassignment does
+            not change what it renders.
 
             A `finally` block always executes. Normal completion of the block leaves the
             pending result, return, or throw unchanged. It replaces that outcome only by
@@ -185,6 +189,7 @@ provenance:
     - grouped-catch-unlisted
     - grouped-catch-handler-escape
     - catch-envelope-observation
+    - borrowed-throwable-text
   compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

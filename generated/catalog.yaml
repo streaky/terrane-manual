@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f223201b6c1d53246ec4855985e9cffc7e0fff3b7d6a1e753c3c8e7aa9c24b80
+  input-sha256: 70043b30c41d492b32d739a7277ecd8a112f1385f73013f4a1b369c4491b34ef
 format: 2
 generated: true
 records:
@@ -1129,6 +1129,7 @@ records:
     - grouped-catch-unlisted
     - grouped-catch-handler-escape
     - catch-envelope-observation
+    - borrowed-throwable-text
     compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs
@@ -3574,6 +3575,7 @@ records:
     - guarded-checked-arithmetic
     - native-read-storage
     - borrowed-text-observations
+    - borrowed-throwable-text
     compiler: null
   sections:
   - id: optimization-contract
@@ -3626,6 +3628,13 @@ records:
   - function counted-key string; owner shared ref holder, key string
   - function decode-input string; source ref bytes
   - function scan-input int; source ref string
+  - class original-error implements throwable
+  - function render string
+  - class replacement-error implements throwable
+  - function render string
+  - function make-error throwable; replacement bool
+  - function replace string; error mutable ref throwable
+  - function main
 - id: internals.diagnostics.source-projection
   title: Source-projected backend diagnostics
   summary: Cargo and `rustc` failures are projected through generated-Rust spans into source-oriented
