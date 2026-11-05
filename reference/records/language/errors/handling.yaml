@@ -96,14 +96,16 @@ documentation:
             another application of that same class. Import aliases do not change that
             descriptor identity.
 
-            Within `try`, `catch` clauses are tested in source order against compatible
-            classes or interfaces. A comma-separated descriptor list matches any listed type
-            and runs one shared handler. The optional `as` binding follows the whole list;
-            it exposes the same runtime throwable envelope for every alternative. The list
-            is single-line, requires a descriptor after every comma, and does not permit a
-            trailing comma. Each descriptor must be throwable. Duplicate or unreachable
-            entries, including entries already handled by an earlier clause, are
-            compile-time diagnostics.
+            Within `try`, `catch` clauses are tested in source order by exact throwable
+            class identity; `throwable` itself matches every throwable. Other interface
+            descriptors are not supported as catch alternatives today, even when their
+            implementors are throwable classes. A comma-separated descriptor list matches
+            any listed class and runs one shared handler. The optional `as` binding follows
+            the whole list; it exposes the same runtime throwable envelope for every
+            alternative. The list is single-line, requires a descriptor after every comma,
+            and does not permit a trailing comma. Each descriptor must be throwable.
+            Duplicate or unreachable entries, including entries already handled by an
+            earlier clause, are compile-time diagnostics.
 
             Typed and catch-all clauses may bind the caught runtime throwable envelope and
             inspect its `message`, optional `cause`, and non-throwing `render` operation.
@@ -114,6 +116,22 @@ documentation:
             The binding is an envelope-only throwable value, not a typed view of the
             original class instance. Arbitrary fields and methods from that source object
             are not retained or exposed by a catch binding today.
+
+            Rethrowing a catch binding currently has the static escaping effect `throwable`,
+            including in a single-class or grouped clause. Its runtime kind remains
+            unchanged, but inference does not narrow that effect to the matching
+            alternatives. A narrower `throws` contract can therefore reject the rethrow with
+            `T0027`; omit the bound or use `throws throwable` where this broad effect is
+            appropriate. Precise caught-kind typing and interface matching remain planned
+            language work, not behavior provided by grouped catches.
+
+            Generated handlers retain an independent owned snapshot for the catch binding.
+            Reassigning or retaining that binding does not replace the original error used
+            as the cause of a new handler-thrown error. Synchronous envelope observations
+            borrow the stored envelope and materialize only their returned values; an owned
+            string result still needs its own text storage. A retained `render` callable
+            captures an owned envelope snapshot so later binding reassignment does not
+            change what it renders.
 
             A `finally` block always executes. Normal completion of the block leaves the
             pending result, return, or throw unchanged. It replaces that outcome only by
@@ -166,6 +184,7 @@ provenance:
     - grouped-catch-throwable
     - grouped-catch-unlisted
     - grouped-catch-handler-escape
+    - catch-envelope-observation
   compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 66c1bad4eb09d0dc82a64a03639326586f967c9be6bfa21ee558d888d60691e9
+  input-sha256: f223201b6c1d53246ec4855985e9cffc7e0fff3b7d6a1e753c3c8e7aa9c24b80
 format: 1
 generated: true
 symbols:
@@ -8539,6 +8539,10 @@ symbols:
   record: lang.errors.contracts
   section: throwable-inference
   declaration: T0021
+- name: T0027
+  record: lang.errors.handling
+  section: structured-errors
+  declaration: T0027
 - name: T0031
   record: book.types
   section: refinement-after-a-check
@@ -9285,6 +9289,10 @@ symbols:
   declaration: throwable-contract
 - name: throws
   record: book.errors
+  section: handling-errors-with-try-and-catch
+  declaration: throws
+- name: throws
+  record: book.errors
   section: letting-an-error-travel-to-the-right-layer
   declaration: throws
 - name: throws
@@ -9298,6 +9306,10 @@ symbols:
 - name: throws
   record: lang.errors.contracts
   section: throwable-inference
+  declaration: throws
+- name: throws
+  record: lang.errors.handling
+  section: structured-errors
   declaration: throws
 - name: throws
   record: lang.functions.callable-types
@@ -9314,6 +9326,10 @@ symbols:
 - name: throws
   record: lang.functions.declarations
   section: declaration
+  declaration: throws
+- name: throws
+  record: manual.changelog.unreleased
+  section: changes-2026-11-04
   declaration: throws
 - name: throws
   record: tool.packages.native-interop

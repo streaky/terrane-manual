@@ -60,6 +60,13 @@ documentation:
             remain on that path. A final block that can fall through retains the pending
             outcome.
 
+            Catch bindings currently retain only the static `throwable` envelope type.
+            Throwing such a binding contributes `throwable` to the escaping set, even when a
+            single-class or grouped catch established a narrower runtime kind. Runtime
+            identity and cause are preserved, but precise rethrow effects are a current
+            limitation; a narrow `throws` bound can reject this broad inferred effect. See
+            [[lang.errors.handling#structured-errors]].
+
             Generic throwable applications contribute their canonical base class descriptor
             to the escaping set. Construction still checks the applied class type, but
             matching a catch or checking a declared throwable upper bound uses the same

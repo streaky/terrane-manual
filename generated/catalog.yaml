@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 66c1bad4eb09d0dc82a64a03639326586f967c9be6bfa21ee558d888d60691e9
+  input-sha256: f223201b6c1d53246ec4855985e9cffc7e0fff3b7d6a1e753c3c8e7aa9c24b80
 format: 2
 generated: true
 records:
@@ -1128,6 +1128,7 @@ records:
     - grouped-catch-throwable
     - grouped-catch-unlisted
     - grouped-catch-handler-escape
+    - catch-envelope-observation
     compiler:
     - crates/terrane-compiler/src/semantics/throw_construction.rs
     - crates/terrane-compiler/src/semantics/analysis.rs

@@ -358,7 +358,10 @@ documentation:
               comma-separated throwable types and share one body and optional `as` binding.
               Every alternative is validated, duplicates and unreachable alternatives are
               rejected, and all listed types participate in escaping-throwable inference.
-              See [[lang.errors.handling#structured-errors]].
+              Handler-thrown errors now remain escaping even when a later catch names their
+              type, matching runtime behavior for grouped and single-type clauses.
+              Previously accepted narrow `throws` contracts that relied on the old unsound
+              inference may now be rejected. See [[lang.errors.handling#structured-errors]].
   see-also:
     - manual.changelog
     - lang.types.references

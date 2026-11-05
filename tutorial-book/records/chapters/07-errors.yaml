@@ -283,10 +283,11 @@ documentation:
             throwable surface for every alternative. Keep the list on one line without a
             trailing comma; see [[lang.errors.handling#structured-errors]] for an example.
 
-            Multiple catches are tried in source order. Put narrower types before broader
-            interfaces. If an earlier catch already accepts everything a later catch could
-            receive, the compiler diagnoses the later clause as unreachable rather than
-            silently retaining dead recovery code.
+            Multiple catches are tried in source order. Class alternatives match exact
+            throwable identities; put them before a broad `catch throwable` or untyped
+            catch-all. Other interface descriptors cannot be used for catch matching today.
+            A duplicate or already-handled descriptor is rejected rather than silently
+            retaining dead recovery code.
 
             A catch without a type is a catch-all:
         - type: example
@@ -331,11 +332,17 @@ documentation:
 
         - type: markdown
           markdown: |-
-            The binding exists only inside that catch body. Every caught value exposes the
+            The binding names the caught runtime envelope. Every caught value exposes the
             common `throwable` surface: `message` provides its explanation, `cause` is the
             displaced lower-level failure or `none`, and `render;` produces the complete
             human-facing error with its source context. The type named after `catch` still
             controls matching; `as failure` gives the handler the value that matched.
+
+            Rethrowing that binding preserves its kind at runtime, but its inferred static
+            effect is currently the broad `throwable`, not the class or alternatives named
+            by the catch. A function with a narrower `throws` contract may therefore reject
+            the rethrow. See [[lang.errors.handling#structured-errors]] for this current
+            limitation.
 
             A catch-all can bind the same common surface when the application boundary needs
             to report any recoverable source-language failure:
