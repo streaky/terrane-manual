@@ -575,7 +575,11 @@ documentation:
             follow its stable root through nested fields, indices, grouping, and explicit
             references. A computed owner such as `(make-config;).sql` remains temporary;
             selecting a field or element does not extend that owner's lifetime. The same
-            root classification applies when correlating borrowed callback results.
+            root classification applies when correlating borrowed callback results. Native
+            field borrowing must also retain the receiver's physical storage authority.
+            Guard-backed fields use the canonical operand-local read plan; direct guard-free
+            payload access must not extend aliased receiver guards across sibling formatting
+            operands or replace shared-async handles with `self`.
 
             Current storage limits remain narrower than direct Rust borrowing. A native
             result borrowing a literal can be consumed inline, but retaining that result in
