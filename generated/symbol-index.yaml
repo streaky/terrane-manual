@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 48496817ba79532d359d08069f65b06f41f4879f2b81cc764d51693a781cfb1b
+  input-sha256: e58cbef37c51445790a085fa3581bdb88e7288c1feeab42967ee4431f515d3d7
 format: 1
 generated: true
 symbols:
@@ -6783,10 +6783,6 @@ symbols:
   record: internals.projection.resolution
   section: native-receiver-regions
   declaration: projected-query-chain
-- name: projected-source-result-owner
-  record: internals.projection.resolution
-  section: projection-gap-census
-  declaration: projected-source-result-owner
 - name: projection.rs
   record: internals.projection.resolution
   section: resolution
@@ -9274,6 +9270,10 @@ symbols:
 - name: this
   record: internals.optimization.proof-guided-lowering
   section: borrowed-observations
+  declaration: this
+- name: this
+  record: internals.projection.resolution
+  section: native-receiver-regions
   declaration: this
 - name: this
   record: internals.semantics.reference-provenance

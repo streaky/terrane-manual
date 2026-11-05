@@ -571,10 +571,28 @@ documentation:
             T0119 rather than a Rust backend lifetime error. An inline await passed to an
             ordinary synchronous native operation with an owned result remains supported.
 
-            A selected consuming method moves a named invocation-scoped native receiver,
-            just as a consuming free-function argument does. A later use of that binding
-            receives T0058; scoped native values do not need an ordinary resource-object
-            descriptor to participate in move tracking.
+            A named field or indexed element is a lender place, not a temporary value:
+            follow its stable root through nested fields, indices, grouping, and explicit
+            references. A computed owner such as `(make-config;).sql` remains temporary;
+            selecting a field or element does not extend that owner's lifetime. The same
+            root classification applies when correlating borrowed callback results.
+
+            Current storage limits remain narrower than direct Rust borrowing. A native
+            result borrowing a literal can be consumed inline, but retaining that result in
+            a local binding is not supported; first bind the literal to a named string and
+            borrow that local instead. Stored native results rooted in the implicit `this`
+            receiver or its fields also remain unsupported and receive T0119. These are
+            provenance limitations, not a claim that a literal or `this` is a temporary
+            owner. An explicit borrowed-parameter helper can supply a supported external
+            lender for field access.
+
+            A selected consuming method moves a named non-Copy invocation-scoped native
+            receiver, just as a consuming free-function argument does. Grouping the receiver
+            does not hide that binding. A later use receives T0058; scoped values do not
+            need an ordinary resource-object descriptor for move tracking. Canonical native
+            Copy evidence permits Rust's implicit receiver copy, but Clone alone does not.
+            Copy duplicates the view, not its lender or lifetime: escape, capture,
+            suspension, and conflicting-mutation restrictions still apply.
 
             `projected-query-chain` exercises stored local-loan continuations.
             `native-query-with-arguments` pins provisional-family inference with a moved
@@ -605,6 +623,11 @@ documentation:
             at the callback return. Signature lifetimes retain their named relationship,
             while local storage infers its free lifetimes. Macro input borrowing preserves
             source authority: a plain `ref` operand does not become mutable.
+
+            Native generic callback helpers retain their exact Rust callable bounds,
+            including higher-ranked input/output lifetime relationships. Runtime callable
+            support is requested only for parameters whose physical helper signature uses an
+            erased carrier, not merely because the source contract describes a function.
 
             An explicit `with scoped-access` acquisition and body form a real lexical
             lifetime boundary. Successful acquisitions unwind in reverse order on normal
@@ -1204,15 +1227,17 @@ documentation:
             supported alternative result owners, retain those alternatives instead of
             choosing the first sorted identity.
 
-            Authored source callees participate through header-only canonical callable
-            contracts, including declared method returns, imported aliases, and async
-            helpers. A generic-parameter return follows the arguments bound to that
-            parameter, using the same named/positional argument mapping as ordinary source
-            calls; unrelated parameters cannot add owners to the result. Default expressions
-            and bodies are still validated in the normal semantic phase, after projected
-            members have been materialized. `projected-source-result-owner` covers
-            unannotated authored helpers and methods separately from the projected result
-            and executor witnesses.
+            Authored source callees contribute result demand through their parsed headers,
+            including declared method returns, imported aliases, and async helpers.
+            Projected types do not yet exist in semantic declaration tables at this stage,
+            so discovery must not require a successfully analyzed callable contract. A
+            generic-parameter return follows arguments bound to that parameter, including
+            reference and optional wrappers, using canonical named/positional argument
+            mapping. Unrelated parameters cannot add result owners. Semantic
+            header/default/body validation remains in the normal phase after projected
+            members exist. The isolated `projected-source-result-*` cases each demand their
+            own native member: a working generic call in one program must not mask missing
+            demand from another call in the same program.
 
             The separate projection-census runner reads a versioned declarative package list
             and preserves each package's priority, target, feature configuration, deadline,
