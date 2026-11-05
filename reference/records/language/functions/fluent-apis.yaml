@@ -372,9 +372,14 @@ documentation:
 
             A written terminal result type can supply context for a native generic or
             associated result, but does not make a chain-only intermediate storable.
-            Conversely, not every fluent native API is chain-only: ordinary owned projected
-            values can use named stages just as the Terrane examples do. The exact projected
-            result and lifetime contract determine which case applies. See
+            Conversely, not every fluent native API is chain-only. Ordinary owned projected
+            values can use named stages just as the Terrane examples do. An admitted
+            lender-rooted native view may also use local named stages while its lender stays
+            stable and satisfies the required lifetime and transfer contracts. Adding
+            another fluent stage does not change which kind of result it is. Bind an owned
+            helper result before lending it to an asynchronous native chain; grouping a
+            temporary does not establish a stable lender. The exact projected result and
+            lifetime contract determine which case applies. See
             [[tool.packages.rust-dependencies#chain-only-values]],
             [[tool.packages.rust-dependencies#async-projected-calls]], and
             [[lang.types.generics#destinations]].

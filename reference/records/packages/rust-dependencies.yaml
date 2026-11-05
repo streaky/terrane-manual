@@ -1116,9 +1116,11 @@ documentation:
 
             Fluent calls use ordinary grouped semicolon calls, not a dependency-specific
             chaining syntax. [[lang.functions.fluent-apis]] explains that syntax and shows
-            how to create fluent APIs in authored Terrane. Ordinary owned builder values may
-            use named intermediate stages; this rule applies only when the projection marks
-            an intermediate as non-escaping.
+            how to create fluent APIs in authored Terrane. Ordinary owned builder values,
+            and admitted lender-rooted views with stable local lenders, may use named
+            intermediate stages. The number of fluent settings does not itself change a
+            lender-rooted view into a chain-only value; this rule applies only when the
+            projection marks an intermediate as non-escaping.
 
             When rustdoc names a public bound through a transitive crates.io package, that
             owner is pinned at its lock-resolved version, recorded in projection-history

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1af67ce87509ea34ee3cb75876301ad7f5ce458efff2816a58e0ae5dfa9a5865
+  input-sha256: 90bd8e8e759951fc355ab1cabfd403a76946429c4614bf0c27ef8dacd1bf6cc0
 format: 1
 generated: true
 symbols:
@@ -5509,6 +5509,10 @@ symbols:
   record: tool.debugging
   section: provenance
   declaration: native
+- name: native-deferred-executor
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: native-deferred-executor
 - name: native-interop/rust-proc-macro-extension-entry
   record: internals.integration-boundaries
   section: tracking
@@ -5529,6 +5533,10 @@ symbols:
   record: book.native-program
   section: exercises
   declaration: native-path.trn
+- name: native-query-with-arguments
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: native-query-with-arguments
 - name: native-raw
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -6771,6 +6779,10 @@ symbols:
   record: tool.rust-package-integrations.godot
   section: verification
   declaration: projected-generated-api-reexport
+- name: projected-query-chain
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: projected-query-chain
 - name: projection.rs
   record: internals.projection.resolution
   section: resolution

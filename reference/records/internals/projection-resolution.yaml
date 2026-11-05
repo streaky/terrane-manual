@@ -542,6 +542,12 @@ documentation:
             provisional template is not a concrete storage or escape permission; native
             selection and lifetime validation still close the call.
 
+            Provisional families resolve members but do not finalize stored result types. A
+            lender-rooted continuation waits for its producer's concrete owner and lifetime
+            facts before its own selection is cached. One-stage and multi-stage named chains
+            therefore retain the same declared lender contract; chain depth does not create
+            an expression-only restriction.
+
             A family may be shared by lender-rooted views and expression-only producers. The
             actual producer graph determines expression-only continuation, independently of
             which path first published the shared family. Retain the complete fluent graph
@@ -557,6 +563,19 @@ documentation:
             same nominal binder vocabulary before call-site instantiation. An anonymous impl
             spelling must not leave a declaration lifetime unmatched in an otherwise valid
             consuming builder or awaited continuation.
+
+            Lender provenance distinguishes stable named storage and reference-returning
+            helpers from owned helper results that are only temporary storage. A temporary
+            cannot be promoted to the enclosing function's lifetime merely because a native
+            result mentions a matching lifetime. Awaited fluent graphs with such an unproven
+            lender receive a source-level lifetime diagnostic; ownership must be established
+            before the borrowing operation.
+
+            `projected-query-chain` exercises stored local-loan continuations.
+            `native-query-with-arguments` pins provisional-family inference with a moved
+            native argument, an owned producer, and an asynchronously suspended terminal.
+            `native-deferred-executor` remains the complementary real-dependency guard for
+            open owner and associated-result selection.
 
             Open native producers without a proven input lender retain the expression-only
             joint-inference path; admitting local native loans does not erase those
@@ -1172,6 +1191,13 @@ documentation:
             remains inventory evidence only; semantic analysis fails at a source location
             only when that application demands the entry. Rebuilding deterministically
             replaces demand annotations.
+
+            Member demand for an inferred call result follows its callee's result owner,
+            through grouping and awaiting, rather than collecting the owners of its
+            arguments. An executor or other argument still contributes demands for its own
+            expression, not the result binding's subsequent members. Where an expression has
+            supported alternative result owners, retain those alternatives instead of
+            choosing the first sorted identity.
 
             The separate projection-census runner reads a versioned declarative package list
             and preserves each package's priority, target, feature configuration, deadline,
