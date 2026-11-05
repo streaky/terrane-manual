@@ -3634,6 +3634,8 @@ records:
   - function render string
   - function make-error throwable; replacement bool
   - function replace string; error mutable ref throwable
+  - class error-holder
+  - function construct; current throwable
   - function main
 - id: internals.diagnostics.source-projection
   title: Source-projected backend diagnostics

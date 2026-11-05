@@ -1769,6 +1769,10 @@ symbols:
   section: rust-lowering
   declaration: construct
 - name: construct
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function construct; current throwable
+- name: construct
   record: lang.classes.fields
   section: classes
   declaration: construct
@@ -2769,6 +2773,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-projected-calls
   declaration: Error
+- name: error-holder
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class error-holder
 - name: 'ERROR:'
   record: tool.rust-package-integrations.godot
   section: verification
