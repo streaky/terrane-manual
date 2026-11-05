@@ -1,0 +1,396 @@
+format: 1
+id: lang.functions.fluent-apis
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Calling and designing fluent APIs
+  title-style: text
+  summary:
+    Explains semicolon-call grouping, designing value-returning and consuming builders in Terrane,
+    mutable receiver alternatives, asynchronous terminals, and non-escaping projected chains.
+  tags:
+    - functions
+    - methods
+    - fluent-apis
+    - builders
+    - ownership
+    - asynchronous
+    - rust-dependencies
+  blocks:
+    - type: markdown
+      markdown:
+        A fluent API returns a value on which the caller selects the next operation. Each stage
+        may return the same builder type, another configuration type, or the final result. Fluent APIs
+        use ordinary Terrane calls and receiver contracts; there is no special chain operator or builder
+        declaration.
+  sections:
+    - id: calling
+      title: Group each completed call before the next member
+      blocks:
+        - type: markdown
+          markdown: |-
+            A call begins with `;`, including a call with no arguments. Parentheses group a
+            completed call so the next `.` selects a member of its result. They do not
+            invoke the method: `receiver.method` selects a callable, whereas
+            `receiver.method;` invokes it. A property such as `length` is read without a
+            call marker.
+
+            The argument list belongs to the call that introduced it. Close that call before
+            selecting the next stage; otherwise a following member can attach to an argument
+            rather than to the earlier result. The following example completes `trim`, then
+            `replace`, then `upper`. These text operations return new values, so the
+            original text is unchanged.
+        - type: example
+          id: call-grouping
+          title: Compose ordinary text operations
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace fluent-examples/calling
+
+            function main;
+                text = '  hello world  '
+                result = ((text.trim;).replace; 'world', 'Terrane').upper;
+                print; result
+                print; text == '  hello world  '
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              HELLO TERRANE
+              true
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown:
+            Use the same grouping when passing a completed chain as an argument to another call.
+            For longer compositions, named intermediate values can improve readability when the API returns
+            ordinary storable values. A projected chain-only value is an exception, described below; a
+            newline is not a replacement for the grouping that closes a call. See [[lang.functions.declarations#references]]
+            and [[lang.expressions.operators#operators-precedence]].
+    - id: receiver-design
+      title: Choose the receiver contract before the notation
+      blocks:
+        - type: markdown
+          markdown:
+            The result type makes chaining possible; the receiver contract determines what happens
+            to the input. Choose that behavior deliberately rather than returning the receiver merely
+            to enable dots. Method names such as `with-prefix`, `append`, or `finish` do not grant receiver
+            authority.
+        - type: table
+          id: fluent-receiver-designs
+          title: Common API designs
+          show-header: true
+          columns:
+            - id: intent
+              title: Intent
+              cell: text
+            - id: receiver
+              title: Declaration
+              cell: code
+            - id: result
+              title: Result and caller behavior
+              cell: text
+          rows:
+            - intent: Derive a new configured value
+              receiver: function
+              result: Return an independently owned value; keep the original unchanged.
+            - intent: Transfer a builder to its next stage
+              receiver: consuming function
+              result:
+                Return the transferred builder or final product; rebind the result if continuing through
+                a variable.
+            - intent: Update one existing value
+              receiver: mutable function
+              result:
+                Mutate the receiver; separate statements are appropriate when no continuation value
+                is returned.
+        - type: markdown
+          markdown:
+            An ordinary by-value return is not a reference to the original receiver. In particular,
+            `return this` from a copyable object does not promise Rust-style `&mut Self` aliasing. Use
+            explicit reference or shared-ownership contracts only when the API genuinely needs that identity
+            and lifetime relationship, not to force fluent notation. See [[lang.ownership.value-semantics#value-copy-semantics]],
+            [[lang.classes.methods#receiver-mutability]], and [[lang.types.references]].
+    - id: value-builders
+      title: Return a newly configured Terrane value
+      blocks:
+        - type: markdown
+          markdown:
+            For copyable configuration data, a shared method can construct and return a new instance.
+            Each `with-` method below returns `greeting`, so the next method is selected on that new value.
+            Neither method mutates its receiver. The terminal `render` returns a string instead of another
+            builder.
+        - type: example
+          id: value-transforming-builder
+          title: Create a value-transforming fluent API
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace fluent-examples/value-builder
+
+            class greeting
+                prefix string = 'Hello'
+                recipient string = 'world'
+
+                function construct; prefix string = 'Hello', recipient string = 'world'
+                    this.prefix = prefix
+                    this.recipient = recipient
+
+                function with-prefix greeting; prefix string
+                    return instance greeting; prefix, this.recipient
+
+                function with-recipient greeting; recipient string
+                    return instance greeting; this.prefix, recipient
+
+                function render string;
+                    return this.prefix + ', ' + this.recipient + '!'
+
+            function main;
+                original = instance greeting;
+                customized = (original.with-prefix; 'Welcome').with-recipient; 'Ada'
+                print; (original.render;)
+                print; (customized.render;)
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              Hello, world!
+              Welcome, Ada!
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown:
+            Spell the declared Terrane result type explicitly, here `greeting`. Do not copy Rust's
+            `Self` spelling into the declaration. Terrane's instance receiver is `this`; `self` is the
+            class receiver used for class-level selection, not a replacement for `this`. Returning a new
+            value is also different from mutating an existing variable and then returning an independent
+            snapshot.
+    - id: consuming-builders
+      title: Transfer an owned builder through the chain
+      blocks:
+        - type: markdown
+          markdown:
+            Use `consuming function` when a stage takes ownership of the builder. It can update
+            its owned state and return `move this` to transfer the same value to the next stage. A final
+            consuming method can instead transfer the completed payload. This pattern also fits builders
+            that own non-copyable resources; it does not require an implicit copy or shared-reference
+            wrapper.
+        - type: example
+          id: consuming-builder
+          title: Create a consuming builder and terminal operation
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace fluent-examples/consuming-builder
+
+            class text-builder
+                private text string = ''
+
+                consuming function append text-builder; suffix string
+                    this.text = this.text + suffix
+                    return move this
+
+                consuming function finish string;
+                    return move this.text
+
+            function main;
+                builder = instance text-builder;
+                text = ((builder.append; 'Hello').append; ', Ada!').finish;
+                print; text
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: Hello, Ada!
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown:
+            The original `builder` has been transferred by the chain and must not be reused afterward.
+            To continue through a named variable, assign each returned builder back to that variable.
+            The following is an alternative body using the same `text-builder` class, not a different
+            ownership model.
+        - type: example
+          id: rebound-consuming-builder
+          title: Rebind each returned builder
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            builder = instance text-builder;
+            builder = builder.append; 'Hello'
+            builder = builder.append; ', Ada!'
+            text = builder.finish;
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown:
+            "Explicit `move this` in the method body makes the transfer of the receiver clear.
+            The final `move this.text` transfers the payload instead. Ordinary move and resource-lifetime
+            rules still apply: a fluent return does not revive a consumed receiver. See [[lang.ownership.movement]]
+            and [[lang.classes.lifecycle]]."
+    - id: in-place-updates
+      title: Keep in-place mutation distinct from value chaining
+      blocks:
+        - type: markdown
+          markdown:
+            "When callers want to retain one existing object and update it repeatedly, declare
+            mutable methods. Returning no value is often the clearest interface: these calls are intentionally
+            separate statements, not a chain. A method that returns `none` cannot be used as though it
+            returned the buffer."
+        - type: example
+          id: mutable-receiver
+          title: Update a buffer without pretending to return an alias
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace fluent-examples/mutable-builder
+
+            class text-buffer
+                private text string = ''
+
+                mutable function append; suffix string
+                    this.text = this.text + suffix
+
+                function render string;
+                    return this.text
+
+            function main;
+                buffer = instance text-buffer;
+                buffer.append; 'Hello'
+                buffer.append; ', Ada!'
+                print; (buffer.render;)
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: Hello, Ada!
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown:
+            A fluent mutable API may return an explicit reference or a separate continuation type
+            if its declared ownership and lender contracts support that design. Returning an owned `text-buffer`
+            is a different contract; it does not automatically make the next call mutate the original
+            buffer. Do not introduce `shared ref` solely to obtain chain-like syntax.
+    - id: async-terminals
+      title: Await the asynchronous operation, not its synchronous settings
+      blocks:
+        - type: markdown
+          markdown:
+            Configuration stages can remain synchronous while the terminal operation is asynchronous.
+            Declare that terminal with the required receiver authority followed by `async`. Its call produces
+            a task; `await` obtains the completed result. The scheduled-message example performs a real
+            timed wait in its consuming terminal and returns the configured text afterward.
+        - type: example
+          id: async-terminal
+          title: Configure a message and await its terminal operation
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace fluent-examples/async-terminal
+            from /core/time import clock, duration
+
+            class scheduled-message
+                private text string = ''
+                private wait-time duration = (duration::milliseconds; 0)
+
+                consuming function with-text scheduled-message; text string
+                    this.text = text
+                    return move this
+
+                consuming function after scheduled-message; wait-time duration
+                    this.wait-time = wait-time
+                    return move this
+
+                consuming async function wait string;
+                    await clock::sleep; this.wait-time
+                    return move this.text
+
+            async function main;
+                message = instance scheduled-message;
+                text string = await ((message.with-text; 'ready').after; (duration::milliseconds; 1)).wait;
+                print; text
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: ready
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown:
+            Here both `with-text` and `after` return `scheduled-message`; neither is awaited.
+            The final `wait` produces the task consumed by `await`. If a stage itself is asynchronous,
+            obtain its result before selecting the next ordinary method, grouping that awaited result
+            where needed. Do not select a builder method on the task object as though it were the completed
+            builder. A written destination such as `text string` constrains the completed result; it is
+            not a cast or permission to store an otherwise non-escaping value. See [[lang.functions.asynchronous#invocation]].
+    - id: projected-apis
+      title: Apply the same syntax to projected native APIs
+      blocks:
+        - type: markdown
+          markdown: |-
+            Projected Rust methods use the same semicolon calls, grouping, receiver
+            authority, and terminal-result distinctions. Use the admitted projected
+            signature rather than translating a Rust call mechanically. A consuming native
+            builder stage transfers its receiver; a borrowed result retains its actual
+            lender rather than becoming an owned copy. Inspect
+            `.trn/terrane-projection.generated.trn` for the admitted methods and
+            required-declaration gaps.
+
+            Some native producers return expression-only intermediates whose concrete type
+            or lifetime can be closed only together with the terminal operation. Keep that
+            producer, its fluent settings, and the terminal in one nested expression. Do not
+            bind the intermediate, return it, capture it, or pass it to an ordinary source
+            helper. Await an admitted asynchronous terminal immediately when it borrows its
+            receiver or inputs, and retain those lenders until completion or cancellation.
+            This is not permission to hold an intermediate across an unrelated suspension.
+
+            A written terminal result type can supply context for a native generic or
+            associated result, but does not make a chain-only intermediate storable.
+            Conversely, not every fluent native API is chain-only: ordinary owned projected
+            values can use named stages just as the Terrane examples do. The exact projected
+            result and lifetime contract determine which case applies. See
+            [[tool.packages.rust-dependencies#chain-only-values]],
+            [[tool.packages.rust-dependencies#async-projected-calls]], and
+            [[lang.types.generics#destinations]].
+  see-also:
+    - lang.functions.declarations
+    - lang.classes.methods
+    - lang.types.authority-in-practice
+    - lang.ownership.value-semantics
+    - lang.ownership.movement
+    - lang.functions.asynchronous
+    - tool.packages.rust-dependencies
+provenance:
+  specification: []
+  conformance:
+    - callable-invocation-modes
+    - class-instance-independence
+    - source-method-builtin-name-dispatch
+    - native-deferred-executor
+  compiler: null

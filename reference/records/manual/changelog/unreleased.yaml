@@ -372,7 +372,7 @@ documentation:
               including executor-selected associated results. This restores ordinary SQLx
               non-persistent query execution without erasing lifetimes or permitting scoped
               values to escape. See
-              [[internals.projection-resolution#native-receiver-regions]].
+              [[internals.projection.resolution#native-receiver-regions]].
             - **Fixed — projection-cache replay stability.** Recovered native instance and
               static members are ordered canonically before hashing, preventing Rustdoc
               iteration order from causing same-input cache-drift failures. Existing

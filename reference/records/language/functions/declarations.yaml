@@ -159,6 +159,11 @@ documentation:
             Declaring a function does not execute it. A call uses `;` after the callable
             expression. Writing the function name without that call marker refers to the
             callable value instead.
+
+            To select another member on a call's result, group the completed call before
+            continuing with `.`. See [[lang.functions.fluent-apis#calling]] for examples and
+            [[lang.functions.fluent-apis#receiver-design]] for authoring fluent methods
+            without confusing value returns, mutation, and ownership transfer.
     - id: unreferenced
       title: Unreferenced top-level functions
       blocks:
@@ -260,6 +265,7 @@ documentation:
             source functions, methods, closures, and projected callable contracts.
   see-also:
     - lang.functions.callable-types
+    - lang.functions.fluent-apis
     - lang.lexical-structure.text-blocks
 
 provenance:

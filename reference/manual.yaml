@@ -12,6 +12,7 @@ navigation:
       - source: records/language/lexical-structure/keywords.yaml
       - source: records/language/lexical-structure/text-blocks.yaml
       - source: records/language/functions/declarations.yaml
+      - source: records/language/functions/fluent-apis.yaml
       - source: records/language/functions/callable-types.yaml
       - source: records/language/numerics/conversion.yaml
       - source: records/language/numerics/floating-point.yaml

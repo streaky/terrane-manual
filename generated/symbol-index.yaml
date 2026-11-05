@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3ac5898d71e5dabfccbe8f087c5c9c7b75a55497b984df8a227bc1561cde3fb1
+  input-sha256: 1af67ce87509ea34ee3cb75876301ad7f5ce458efff2816a58e0ae5dfa9a5865
 format: 1
 generated: true
 symbols:
@@ -472,6 +472,10 @@ symbols:
   record: book.testing-and-debugging
   section: make-time-and-context-deterministic
   declaration: advance-time
+- name: after
+  record: lang.functions.fluent-apis
+  section: async-terminals
+  declaration: after
 - name: allow-unknown
   record: std.documents.typed-decoding
   section: mapping
@@ -523,6 +527,10 @@ symbols:
 - name: append
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
+  declaration: append
+- name: append
+  record: lang.functions.fluent-apis
+  section: receiver-design
   declaration: append
 - name: append
   record: lang.text.search
@@ -701,6 +709,10 @@ symbols:
   section: declaration
   declaration: async
 - name: async
+  record: lang.functions.fluent-apis
+  section: async-terminals
+  declaration: async
+- name: async
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: async
@@ -809,6 +821,10 @@ symbols:
   section: transferability
   declaration: await
 - name: await
+  record: lang.functions.fluent-apis
+  section: async-terminals
+  declaration: await
+- name: await
   record: lang.types.references
   section: lifetime
   declaration: await
@@ -819,10 +835,6 @@ symbols:
 - name: await
   record: tool.packages.rust-dependencies
   section: async-members
-  declaration: await
-- name: await
-  record: tool.packages.rust-dependencies
-  section: chain-only-values
   declaration: await
 - name: b
   record: lang.numerics.arithmetic
@@ -1008,6 +1020,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: build.target
+- name: builder
+  record: lang.functions.fluent-apis
+  section: consuming-builders
+  declaration: builder
 - name: byte-reader
   record: std.streams
   section: byte-text-streams
@@ -1723,10 +1739,6 @@ symbols:
 - name: constant
   record: internals.projection.resolution
   section: projection-gap-census
-  declaration: constant
-- name: constant
-  record: lang.classes.methods
-  section: receiver-mutability
   declaration: constant
 - name: constant
   record: lang.declarations.bindings
@@ -3345,6 +3357,10 @@ symbols:
   record: lang.text.search
   section: string-search
   declaration: find.count
+- name: finish
+  record: lang.functions.fluent-apis
+  section: receiver-design
+  declaration: finish
 - name: finished
   record: book.values-and-names
   section: giving-a-value-a-name
@@ -3706,6 +3722,10 @@ symbols:
   section: defining-and-calling-a-function
   declaration: function
 - name: function
+  record: lang.classes.methods
+  section: receiver-mutability
+  declaration: function
+- name: function
   record: lang.classes.protocols
   section: invocation-authority
   declaration: function
@@ -3873,6 +3893,10 @@ symbols:
   record: book.text-and-collections
   section: bytes-unicode-scalars-and-grapheme-clusters
   declaration: graphemes
+- name: greeting
+  record: lang.functions.fluent-apis
+  section: value-builders
+  declaration: greeting
 - name: gzip
   record: std.compression
   section: compression
@@ -4818,6 +4842,10 @@ symbols:
   section: compiler-produced-read-only-lists
   declaration: length
 - name: length
+  record: lang.functions.fluent-apis
+  section: calling
+  declaration: length
+- name: length
   record: lang.text.bytes
   section: bytes
   declaration: length
@@ -5756,6 +5784,10 @@ symbols:
 - name: none
   record: lang.functions.declarations
   section: parameters-and-arguments
+  declaration: none
+- name: none
+  record: lang.functions.fluent-apis
+  section: in-place-updates
   declaration: none
 - name: none
   record: lang.lexical-structure.literals
@@ -6903,6 +6935,10 @@ symbols:
   record: std.concurrency.channels
   section: construction
   declaration: receiver
+- name: receiver.method
+  record: lang.functions.fluent-apis
+  section: calling
+  declaration: receiver.method
 - name: reexports.rs
   record: internals.projection.resolution
   section: resolution
@@ -7135,6 +7171,10 @@ symbols:
   record: lang.errors.handling
   section: structured-errors
   declaration: render
+- name: render
+  record: lang.functions.fluent-apis
+  section: value-builders
+  declaration: render
 - name: render-category
   record: book.classes-interfaces-and-traits
   section: exercises
@@ -7151,6 +7191,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function replace string; error mutable ref throwable
+- name: replace
+  record: lang.functions.fluent-apis
+  section: calling
+  declaration: replace
 - name: replace
   record: lang.text.transformation
   section: string-transform
@@ -7663,6 +7707,10 @@ symbols:
   record: std.time
   section: tickers
   declaration: scheduled
+- name: scheduled-message
+  record: lang.functions.fluent-apis
+  section: async-terminals
+  declaration: scheduled-message
 - name: schema_version
   record: tool.source-intelligence
   section: protocol
@@ -7798,6 +7846,14 @@ symbols:
 - name: self
   record: lang.classes.methods
   section: receiver-mutability
+  declaration: self
+- name: Self
+  record: lang.functions.fluent-apis
+  section: value-builders
+  declaration: Self
+- name: self
+  record: lang.functions.fluent-apis
+  section: value-builders
   declaration: self
 - name: self
   record: lang.lexical-structure.keywords
@@ -9123,6 +9179,14 @@ symbols:
   record: tool.packages.testing
   section: discovery
   declaration: tests/unit
+- name: text-buffer
+  record: lang.functions.fluent-apis
+  section: in-place-updates
+  declaration: text-buffer
+- name: text-builder
+  record: lang.functions.fluent-apis
+  section: consuming-builders
+  declaration: text-builder
 - name: text-range
   record: lang.text.search
   section: string-search
@@ -9210,6 +9274,10 @@ symbols:
 - name: this
   record: lang.classes.methods
   section: receiver-mutability
+  declaration: this
+- name: this
+  record: lang.functions.fluent-apis
+  section: value-builders
   declaration: this
 - name: this
   record: lang.lexical-structure.keywords
@@ -9518,6 +9586,10 @@ symbols:
 - name: trim
   record: book.values-and-names
   section: why-terrane-why-calls-use-semicolon
+  declaration: trim
+- name: trim
+  record: lang.functions.fluent-apis
+  section: calling
   declaration: trim
 - name: trim
   record: lang.text.transformation
@@ -9900,6 +9972,10 @@ symbols:
   section: async-projected-calls
   declaration: UnwindSafe
 - name: upper
+  record: lang.functions.fluent-apis
+  section: calling
+  declaration: upper
+- name: upper
   record: lang.text.transformation
   section: string-transform
   declaration: upper
@@ -10203,6 +10279,10 @@ symbols:
   record: tool.diagnostics
   section: w4005
   declaration: W4005
+- name: wait
+  record: lang.functions.fluent-apis
+  section: async-terminals
+  declaration: wait
 - name: warning
   record: internals.observability.runtime
   section: ownership
@@ -10275,14 +10355,26 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-10-31
   declaration: with
+- name: with-
+  record: lang.functions.fluent-apis
+  section: value-builders
+  declaration: with-
 - name: with-field
   record: std.logging
   section: events
   declaration: with-field
+- name: with-prefix
+  record: lang.functions.fluent-apis
+  section: receiver-design
+  declaration: with-prefix
 - name: with-span
   record: std.logging
   section: events
   declaration: with-span
+- name: with-text
+  record: lang.functions.fluent-apis
+  section: async-terminals
+  declaration: with-text
 - name: with_capacity
   record: book.namespaces-imports-and-packages
   section: dependencies

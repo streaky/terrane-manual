@@ -14,30 +14,31 @@ lifecycle:
 
 documentation:
   status: complete
-  title: "Mutable and immutable receivers"
+  title: "Method receiver authority"
   title-style: text
   summary: >-
-    Method contracts distinguish mutable from immutable receivers. Compatibility between method declarations and implementations
-    is enforced.
+    Distinguishes shared, mutable, and consuming method receivers, their implementation
+    contracts, and value-returning fluent API design.
   tags:
     - "objects"
     - "methods"
     - "receiver-mutability"
   sections:
     - id: receiver-mutability
-      title: "Mutable and Immutable Receivers"
+      title: "Shared, mutable, and consuming receivers"
       blocks:
         - type: markdown
           markdown: |-
-            Method contracts distinguish whether invocation may mutate the receiver.
-            Mutation is visible by default for ordinary object state; immutable behavior
-            must be made explicit through `constant` or an applicable contract.
+            Plain `function` declares shared receiver authority. Use `mutable function` when
+            a method updates the existing receiver, or `consuming function` when it takes
+            ownership of the receiver. A method body may use less authority than its
+            declaration, never more. Constructors have their own initialization authority.
 
-            A method declaration and its implementation must have compatible
-            receiver-mutation contracts. In particular, an implementation cannot require
-            mutable receiver access when its declared contract permits invocation through an
-            immutable receiver. A contract that permits mutation exposes that possibility to
-            callers even when a particular invocation does not change the receiver.
+            A method declaration and its implementation must have compatible receiver
+            contracts. In particular, an implementation cannot require mutable or consuming
+            receiver access when its declared contract permits only shared access. A mutable
+            contract exposes possible mutation even when one invocation does not change the
+            receiver.
 
             Source methods retain their declared identity on plain objects and through `ref`
             or `shared ref` receivers, including inherited methods. Names such as `add`,
@@ -55,7 +56,16 @@ documentation:
             instance state. Select authored-class static fields with `::`, never
             instance-selection `.`. Builtin descriptor constants retain their documented
             property syntax.
-  see-also: []
+
+            Returning the receiver's class type can make an API fluent, but the return
+            remains an ordinary value contract rather than an implicit reference to the
+            receiver. See [[lang.functions.fluent-apis]] for complete examples of
+            value-transforming builders, consuming builders, mutable alternatives, and
+            asynchronous terminals.
+  see-also:
+    - lang.functions.fluent-apis
+    - lang.functions.callable-types
+    - lang.types.authority-in-practice
 
 provenance:
   specification:

@@ -1091,6 +1091,7 @@ documentation:
             - projected-chain-capture
             - projected-chain-suspension
             - projected-owned-opaque-result
+            - native-deferred-executor
           markdown: |-
             A projected root may return a chain-only intermediate when a receiver member or
             another projected operation can consume that same concrete value in one nested
@@ -1100,8 +1101,9 @@ documentation:
             retained opaque bounds.
 
             A chain-only value cannot be bound, returned, captured, passed to Terrane code,
-            or held across `await`. Complete the composition at once. Generated Rust keeps
-            the intermediate inside one expression and applies conversion, dependency
+            or retained across an unrelated suspension. Complete the composition at once; an
+            admitted asynchronous terminal can be awaited immediately. Generated Rust keeps
+            the intermediate inside the expression and applies conversion, dependency
             failure, panic, and asynchronous boundaries at the terminal operation. A
             concrete adapter may run an open generic API internally; that does not make the
             open generic directly projectable.
@@ -1111,6 +1113,12 @@ documentation:
             not make a chain-only intermediate storable. See
             [[lang.types.generics#destinations]] for the complete destination-selection
             contract and examples.
+
+            Fluent calls use ordinary grouped semicolon calls, not a dependency-specific
+            chaining syntax. [[lang.functions.fluent-apis]] explains that syntax and shows
+            how to create fluent APIs in authored Terrane. Ordinary owned builder values may
+            use named intermediate stages; this rule applies only when the projection marks
+            an intermediate as non-escaping.
 
             When rustdoc names a public bound through a transitive crates.io package, that
             owner is pinned at its lock-resolved version, recorded in projection-history
