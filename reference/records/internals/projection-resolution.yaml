@@ -591,6 +591,21 @@ documentation:
             source. Distinct sibling fields and whole-lender moves, replacements or mutation
             after the last dependent use remain permitted.
 
+            Every loan-carrying reassignment establishes a fresh producer and lender set;
+            killing the previous value does not leave the new lender unprotected. Predicate
+            switches evaluate their case predicates in order without an implicit selector.
+
+            Current `try` lowering captures its body and catch clauses in one closure.
+            Native loans therefore keep captured lenders stable across that whole boundary,
+            including a catch whose body is statically unreachable and loans created inside
+            the try. Conflicting body/catch accesses report T0240 rather than leaking a Rust
+            borrow error. Acquire and consume the loan within one non-conflicting boundary,
+            or move the lender mutation outside it. A repeating try/finally that consumes an
+            outer non-Copy native value and rebinds it within the closure is also
+            unsupported: it reports T0058. Copy values and non-conflicting last-use/finally
+            paths retain their ordinary behavior; this is a current closure-lowering limit,
+            not a claim that Rust could never express the operation.
+
             A shared-reference name or field may be protected by an operand-local receiver
             guard. A lifetime-bearing native result or borrowed native text from such a
             receiver is rejected with T0119 for both stored and inline use: its native
@@ -1273,17 +1288,21 @@ documentation:
             Constructor names are resolved in their source namespaces, and unrelated type
             arguments do not become result owners. The isolated `projected-applied-*` cases
             keep these shapes separate so one demanded member cannot hide another's failure.
+            Inferred plain-class receivers and grouped constructor designators preserve the
+            same headers as explicitly typed receivers. Source methods on closed generic
+            classes substitute the receiver's class arguments as well as the method's own
+            parameters, including direct method-result demand.
 
             Early demand discovery is not yet a complete higher-order type inference system.
-            Results selected through function-typed parameters, class-level generic
-            receivers, interface-bounded generic receivers, and implicit loop-item bindings
-            can still need a concrete destination annotation or a helper with a concrete
-            parameter type. The isolated `projected-source-demand-*` cases preserve those
-            current limits and their supported annotation or typed-adapter alternatives.
-            T0055 distinguishes an admitted projected instance member that was not demanded
-            from a genuinely missing member, using the full canonical owner/member
-            inventory. This inventory is shared across semantic units; static and declined
-            operations are not presented as undemanded instance members.
+            Results selected through function-typed parameters, interface-bounded generic
+            receivers, and implicit loop-item bindings can still need a concrete destination
+            annotation or a helper with a concrete parameter type. The isolated
+            `projected-source-demand-*` cases preserve those current limits and their
+            supported annotation or typed-adapter alternatives. T0055 distinguishes an
+            admitted projected instance member that was not demanded from a genuinely
+            missing member, using the full canonical owner/member inventory. This inventory
+            is shared across semantic units; static and declined operations are not
+            presented as undemanded instance members.
 
             Separately, copying an indexed or field-projected unbounded type parameter is
             not a permission supplied by a convenient concrete caller. This applies to owned

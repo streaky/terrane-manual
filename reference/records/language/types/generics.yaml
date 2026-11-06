@@ -204,6 +204,11 @@ documentation:
             and when a source field containing unbounded `T` is returned by value. Borrowing
             for a `ref T` parameter or invoking a bound's shared method on an indexed value
             does not copy `T`; consuming source methods may explicitly move their field.
+            Bounded shared methods borrow indexed elements directly. Mutable methods are
+            supported through `mutable ref T`, and consuming methods transfer an owned `T`;
+            later reuse is rejected with `T0058`. Indexed bounded receivers requiring
+            mutation or ownership are not currently supported and receive `T0135` rather
+            than acquiring a hidden `Clone` bound or leaking a backend error.
 
             Closed applications preserve transitive resource classification. A container
             with a resource payload owns that resource; a copyable application does not

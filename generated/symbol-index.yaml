@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2f5c93a62ea66631d4b1e970374bef679c5c2d3632da22f9a7c6e55827fc4b10
+  input-sha256: 176fa9fced624d4114deb2b9044703a873023979b668421235e9f8be79dc3881
 format: 1
 generated: true
 symbols:
@@ -3866,6 +3866,10 @@ symbols:
   section: declarations
   declaration: global
 - name: global
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: global
+- name: global
   record: lang.namespaces.name-resolution
   section: single-name-lookup
   declaration: global
@@ -7588,6 +7592,10 @@ symbols:
   section: projection-gap-census
   declaration: S2002
 - name: S2005
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: S2005
+- name: S2005
   record: lang.namespaces.scopes
   section: scopes
   declaration: S2005
@@ -8716,6 +8724,10 @@ symbols:
   section: task-ownership-lowering
   declaration: T0058
 - name: T0058
+  record: lang.types.generics
+  section: authored-bounds
+  declaration: T0058
+- name: T0058
   record: lang.types.references
   section: mutable-references
   declaration: T0058
@@ -9750,6 +9762,10 @@ symbols:
 - name: try
   record: internals.execution.runtime-selection
   section: strategy
+  declaration: try
+- name: try
+  record: internals.projection.resolution
+  section: native-receiver-regions
   declaration: try
 - name: try
   record: lang.classes.lifecycle

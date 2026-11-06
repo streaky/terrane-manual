@@ -51,6 +51,13 @@ documentation:
             type, writes are checked against it, and all namespaces access the same
             initialized storage.
 
+            A program-global name has exactly one top-level declaration across all
+            namespaces. A second declaration is rejected with `S2005`, even when its type
+            and initializer match; it never silently replaces the original storage.
+            Function-body `global` updates still refer to that one declaration. Unused-value
+            warnings account for reads across the whole program, while an unrelated local
+            binding with the same spelling retains its own unused-value checks.
+
             Initialization ordering does not by itself make mutable global state safe to
             share. A mutable global used across threads must satisfy the shared-thread-safe
             protocol. State that belongs to one thread should use the standard thread-local
