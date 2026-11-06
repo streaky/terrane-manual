@@ -595,16 +595,24 @@ documentation:
             killing the previous value does not leave the new lender unprotected. Predicate
             switches evaluate their case predicates in order without an implicit selector.
 
+            Current Rust storage still uses one binding across assignments. If that binding
+            flows into an alias, the alias conservatively retains lenders from subsequent
+            reachable assignments too; conflicting writes to those newer lenders report
+            T0240 while the alias is live. This does not revive a value killed before the
+            alias was created, and post-last-use mutation remains valid.
+
             Current `try` lowering captures its body and catch clauses in one closure.
             Native loans therefore keep captured lenders stable across that whole boundary,
             including a catch whose body is statically unreachable and loans created inside
             the try. Conflicting body/catch accesses report T0240 rather than leaking a Rust
             borrow error. Acquire and consume the loan within one non-conflicting boundary,
-            or move the lender mutation outside it. A repeating try/finally that consumes an
-            outer non-Copy native value and rebinds it within the closure is also
-            unsupported: it reports T0058. Copy values and non-conflicting last-use/finally
-            paths retain their ordinary behavior; this is a current closure-lowering limit,
-            not a claim that Rust could never express the operation.
+            or move the lender mutation outside it. A non-Copy value acquired inside the
+            boundary is consumed from its owned availability slot, not by copying a
+            reference. Consuming and rebinding an outer non-Copy native value cannot restore
+            the caller's binding: repeating forms and later reads after a non-repeating try
+            report T0058. Copy values and non-conflicting last-use/finally paths retain
+            their ordinary behavior. These are current closure-lowering limits, not a claim
+            that Rust could never express the operation.
 
             A shared-reference name or field may be protected by an operand-local receiver
             guard. A lifetime-bearing native result or borrowed native text from such a
@@ -617,6 +625,11 @@ documentation:
             the class is never constructed. Owned projected record storage that lends a
             native view only for an individual call is not itself a stored invocation-scoped
             view.
+
+            Reassigning a native view from a source helper requires compatible scoped
+            lifetime and region representations, not merely the same Terrane family name.
+            Unsupported representation changes report T0119 with lifetime/region detail.
+            Bind the helper result to a fresh local when it cannot replace existing storage.
 
             Current storage limits remain narrower than direct Rust borrowing. A native
             result borrowing a literal can be consumed inline, but retaining that result in

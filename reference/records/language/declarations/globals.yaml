@@ -51,10 +51,16 @@ documentation:
             type, writes are checked against it, and all namespaces access the same
             initialized storage.
 
-            A program-global name has exactly one top-level declaration across all
+            A program-global name has at most one top-level declaration across all
             namespaces. A second declaration is rejected with `S2005`, even when its type
             and initializer match; it never silently replaces the original storage.
-            Function-body `global` updates still refer to that one declaration. Unused-value
+            Top-level declarations are collected before function-body `global` updates, so
+            namespace order cannot turn an update into a competing declaration. All update
+            values are checked against that declaring binding's scalar type. An explicit,
+            matching type on an update is permitted; a conflicting type is not.
+
+            Without a top-level declaration, a function-body `global` retains its existing
+            declaration behavior and supplies the storage's scalar type. Unused-value
             warnings account for reads across the whole program, while an unrelated local
             binding with the same spelling retains its own unused-value checks.
 

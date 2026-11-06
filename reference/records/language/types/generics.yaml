@@ -181,6 +181,11 @@ documentation:
             Same-shaped classes do not acquire nominal conformance, and primitives do not
             automatically implement an authored interface.
 
+            An enclosing function or class binder can forward its type parameter to another
+            generic function requiring the same interface, with inferred or explicit
+            arguments. A different or missing bound does not establish conformance. Members
+            declared by that bound take precedence over same-named numeric built-ins.
+
             A source binder bound currently names an unapplied interface. Applied bounds,
             such as `T implements source of int`, are rejected during checking rather than
             losing their arguments at the native trait boundary. Associated-output
@@ -198,23 +203,33 @@ documentation:
             `T0135`; a concrete instantiation does not add a hidden Rust `Clone` bound. A
             getter with a concrete copyable element type is supported. A generic getter
             whose declared elements and result are `shared ref T` copies only that declared
-            handle and does not require the payload `T` to be cloneable.
+            handle and does not require the payload `T` to be cloneable. Value iteration
+            over a list of bare `T` has the same `T0135` restriction: iterate through
+            `ref list of T` when elements should be borrowed.
 
             The same copy rule applies when an indexed value is passed to an owned parameter
             and when a source field containing unbounded `T` is returned by value. Borrowing
             for a `ref T` parameter or invoking a bound's shared method on an indexed value
-            does not copy `T`; consuming source methods may explicitly move their field.
-            Bounded shared methods borrow indexed elements directly. Mutable methods are
-            supported through `mutable ref T`, and consuming methods transfer an owned `T`;
-            later reuse is rejected with `T0058`. Indexed bounded receivers requiring
-            mutation or ownership are not currently supported and receive `T0135` rather
-            than acquiring a hidden `Clone` bound or leaking a backend error.
+            does not copy `T`; consuming source methods may transfer their field, including
+            by invoking the field's consuming method directly. Bounded shared methods borrow
+            indexed elements directly. Mutable methods are supported through
+            `mutable ref T`, and consuming methods transfer an owned `T`; later reuse is
+            rejected with `T0058`, including through grouped receivers. A consuming method
+            cannot move out of `ref T` or `mutable ref T`. Indexed bounded receivers
+            requiring mutation or ownership are not currently supported and receive `T0135`
+            rather than acquiring a hidden `Clone` bound or leaking a backend error.
 
             Closed applications preserve transitive resource classification. A container
             with a resource payload owns that resource; a copyable application does not
             become resource-owning merely because another application is. By-value resource
             parameters transfer, unused owners clean up, and shared receivers do not permit
             moving out payloads. No hidden Clone bound or placeholder value is introduced.
+
+            A source generic class's derived `Clone` capability also depends on its selected
+            type arguments, including phantom parameters, matching Rust's derived
+            implementation. A field containing a non-Clone application does not make its
+            enclosing class Clone. Method-generic arguments substitute throughout nested
+            result types, including explicitly applied instance calls.
 
             Every recursive cycle must retain a finite set of concrete applications.
             Semantic analysis rejects an expanding binder substitution, such as a call cycle
