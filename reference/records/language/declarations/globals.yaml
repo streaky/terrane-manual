@@ -45,6 +45,12 @@ documentation:
             before lowering. Cyclic globals are not assigned an arbitrary initialization
             order.
 
+            Program-global identity and scalar type belong to the declaring binding, not the
+            namespace that happens to read or update it. Other namespaces can use that same
+            program-global name without importing a second declaration. Reads retain its
+            type, writes are checked against it, and all namespaces access the same
+            initialized storage.
+
             Initialization ordering does not by itself make mutable global state safe to
             share. A mutable global used across threads must satisfy the shared-thread-safe
             protocol. State that belongs to one thread should use the standard thread-local

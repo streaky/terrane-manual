@@ -114,6 +114,13 @@ documentation:
             configuration, or runner requirement; explain that requirement in the fixture or
             its associated contract documentation.
 
+            Unsafe scenarios belong in a separate suite marked `unsafe-tests = true` at the
+            package root. `unsafe-protocols` is the explicit current category; ordinary
+            suites reject unsafe declarations instead of silently removing their unsafe-code
+            prohibition. The driver validates the complete suite inventory before filtering:
+            every discovered test must have exactly one run manifest, and every selection
+            must resolve to an existing scenario.
+
             Likewise, inspect `tests/fixtures/native-conformance` and existing linked
             registries before creating a native Rust witness crate. Reuse compatible
             maintained libraries rather than copying them, but preserve deliberately
@@ -134,11 +141,13 @@ documentation:
             errors that pin entrypoint names, source frames, or process exit behavior must
             not be wrapped as native test functions.
 
-            The `shared-object-field-comparisons` and `static-call-throw-inference` duration
-            scenarios currently remain standalone. Their native-test compilation emits
-            temporal helpers referencing undeclared `TERRANE_TEST_TIME_NANOS`. Revisit that
-            boundary only after native-test temporal support compiles without injecting
-            unrelated clock use or weakening either scenario.
+            Native test builds own their controlled clock independently of process support.
+            Temporal scenarios can share a suite without an unrelated process import or
+            extra clock call. `shared-object-field-comparisons` and
+            `static-call-throw-inference` now live in the object and control-flow suites;
+            their original outputs and case identities remain unchanged. Compatible native
+            loan-flow scenarios share the `native-lifetimes` suite and its existing native
+            fixture graph, while demand-sensitive and rejection programs remain isolated.
 
             Consolidation must retain every original observable check and filterable case
             identity. Audit the migration by mapping original sources and expectations to

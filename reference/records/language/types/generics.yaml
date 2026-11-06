@@ -200,6 +200,11 @@ documentation:
             whose declared elements and result are `shared ref T` copies only that declared
             handle and does not require the payload `T` to be cloneable.
 
+            The same copy rule applies when an indexed value is passed to an owned parameter
+            and when a source field containing unbounded `T` is returned by value. Borrowing
+            for a `ref T` parameter or invoking a bound's shared method on an indexed value
+            does not copy `T`; consuming source methods may explicitly move their field.
+
             Closed applications preserve transitive resource classification. A container
             with a resource payload owns that resource; a copyable application does not
             become resource-owning merely because another application is. By-value resource

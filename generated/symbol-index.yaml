@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 30c8d0570dd266d11fa4a863d974d43a36a00c9a93ee1eecf8d7f45c5706a1bd
+  input-sha256: 2f5c93a62ea66631d4b1e970374bef679c5c2d3632da22f9a7c6e55827fc4b10
 format: 1
 generated: true
 symbols:
@@ -916,10 +916,6 @@ symbols:
   record: tool.packages.rust-dependencies
   section: expression-macros
   declaration: borrowed
-- name: both-affine
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function both-affine int8; input int8
 - name: bottles-each
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -1463,10 +1459,6 @@ symbols:
 - name: Clone
   record: internals.projection.resolution
   section: native-receiver-regions
-  declaration: Clone
-- name: Clone
-  record: internals.projection.resolution
-  section: projection-gap-census
   declaration: Clone
 - name: Clone
   record: lang.functions.callable-types
@@ -3362,6 +3354,10 @@ symbols:
   section: task-groups
   declaration: finally
 - name: finally
+  record: manual.changelog.unreleased
+  section: changes-2026-11-06
+  declaration: finally
+- name: finally
   record: tool.packages.rust-dependencies
   section: async-members
   declaration: finally
@@ -3877,10 +3873,6 @@ symbols:
   record: lang.namespaces.scopes
   section: scopes
   declaration: global
-- name: global-condition
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function global-condition int8; input int8
 - name: godot
   record: tool.rust-package-integrations.godot
   section: dependency-and-imports
@@ -5545,6 +5537,10 @@ symbols:
   record: internals.integration-boundaries
   section: tracking
   declaration: native-interop/rust-proc-macro-extension-entry
+- name: native-lifetimes
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: native-lifetimes
 - name: native-path
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
@@ -5629,10 +5625,6 @@ symbols:
   record: lang.numerics.floating-point
   section: values
   declaration: negative-sign
-- name: nested-conditional
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function nested-conditional int8; input int8
 - name: net.core.somaxconn
   record: std.networking.operations
   section: listener-backlog
@@ -6511,10 +6503,6 @@ symbols:
   record: internals.projection.resolution
   section: projection-gap-census
   declaration: Point
-- name: positive-lower-bound
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function positive-lower-bound; input int8
 - name: power
   record: lang.numerics.floating-point
   section: operations
@@ -8760,6 +8748,10 @@ symbols:
   section: changes-2026-11-05
   declaration: T0119
 - name: T0119
+  record: manual.changelog.unreleased
+  section: changes-2026-11-06
+  declaration: T0119
+- name: T0119
   record: tool.packages.rust-dependencies
   section: borrowed-interiors
   declaration: T0119
@@ -9191,10 +9183,6 @@ symbols:
   record: internals.testing.conformance-timing
   section: collection-protocol
   declaration: TERRANE_SCORECARD_JOBS
-- name: TERRANE_TEST_TIME_NANOS
-  record: internals.testing.conformance-timing
-  section: consolidation-boundaries
-  declaration: TERRANE_TEST_TIME_NANOS
 - name: TERRANE_TEST_TIMING_FILE
   record: internals.testing.conformance-timing
   section: collection-protocol
@@ -9223,10 +9211,6 @@ symbols:
   record: tool.packages.command-line
   section: generated-package-state
   declaration: test
-- name: test-scenario
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function test-scenario
 - name: test-value
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
@@ -9659,34 +9643,6 @@ symbols:
   record: book.identity-and-movement
   section: when-a-value-is-no-longer-available
   declaration: transferred
-- name: transition
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition int8; input int8
-- name: transition-int128
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition-int128 int128; input int128
-- name: transition-int64
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition-int64 int64; input int64
-- name: transition-negative-coefficient
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition-negative-coefficient int8; input int8
-- name: transition-remainder
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition-remainder int8; input int8
-- name: transition-then
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition-then int8; input int8
-- name: transition-uint8
-  record: internals.optimization.proof-guided-lowering
-  section: compiler-synopsis
-  declaration: function transition-uint8 uint8; input uint8
 - name: travellers
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -10047,6 +10003,10 @@ symbols:
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: unsafe
+- name: unsafe-protocols
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: unsafe-protocols
 - name: unsafe_code
   record: internals.build.toolchain-profiles
   section: native-artifact-kind

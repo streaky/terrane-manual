@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 30c8d0570dd266d11fa4a863d974d43a36a00c9a93ee1eecf8d7f45c5706a1bd
+  input-sha256: 2f5c93a62ea66631d4b1e970374bef679c5c2d3632da22f9a7c6e55827fc4b10
 format: 2
 generated: true
 records:
@@ -86,6 +86,9 @@ records:
     sections: []
   - id: changes-2026-11-05
     title: '2026-11-05'
+    sections: []
+  - id: changes-2026-11-06
+    title: '2026-11-06'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -3656,18 +3659,6 @@ records:
   - function validate-throw
   - function observe-prefix int64; value int64
   - function main
-  - function transition int8; input int8
-  - function transition-uint8 uint8; input uint8
-  - function transition-then int8; input int8
-  - function transition-remainder int8; input int8
-  - function transition-negative-coefficient int8; input int8
-  - function transition-int64 int64; input int64
-  - function transition-int128 int128; input int128
-  - function both-affine int8; input int8
-  - function nested-conditional int8; input int8
-  - function positive-lower-bound; input int8
-  - function global-condition int8; input int8
-  - function test-scenario
   - class holder
   - class inspector implements Inspect
   - function marker bool

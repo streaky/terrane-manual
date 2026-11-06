@@ -582,17 +582,20 @@ documentation:
             operands or replace shared-async handles with `self`.
 
             Live lender checks compare canonical owner-and-projection paths for field/index
-            replacement, explicit field moves and mutating member calls. A distinct sibling
-            field is not an overlapping loan, and direct field writes after the borrowed
-            value's last dependent use are permitted. Fluent continuations retain the
-            original lender paths as well as the immediate native receiver, so transferring
-            a view does not hide a conflicting write to the field or element from which it
-            originally borrowed.
+            replacement, explicit field moves and mutating member calls. Reaching values and
+            backwards liveness follow execution edges, not lexical offsets: mutually
+            exclusive branches, terminating paths and observer rebindings do not retain an
+            old loan. Dependent aliases and fluent continuations retain the original lender
+            paths until their own last reachable use, including through loop back edges.
+            Conflicting writes report T0240 even when the next use appears earlier in the
+            source. Distinct sibling fields and whole-lender moves, replacements or mutation
+            after the last dependent use remain permitted.
 
-            A shared-reference field may be protected by an operand-local receiver guard. A
-            lifetime-bearing native result borrowed from such a field is rejected with T0119
-            for both stored and inline use: its native borrow would outlive that guard. An
-            owned scalar result from the same receiver remains valid.
+            A shared-reference name or field may be protected by an operand-local receiver
+            guard. A lifetime-bearing native result or borrowed native text from such a
+            receiver is rejected with T0119 for both stored and inline use: its native
+            borrow would outlive that guard. Ordinary `ref` receivers and owned scalar
+            results from shared receivers remain valid.
 
             Lifetime-bearing native values cannot be stored in source class fields,
             including optional or nested field types. This is checked with T0101 even when
@@ -1264,10 +1267,12 @@ documentation:
 
             When a generic appears inside an applied parameter, demand matches the
             corresponding actual type argument rather than forwarding the enclosing
-            argument's owner. An owning `Box<T>` input that returns `T` therefore follows
-            the payload type, not `Box`; a literal construction and a preceding named
-            binding are both supported. Constructor names are resolved in their source
-            namespaces, and unrelated type arguments do not become result owners.
+            argument's owner. Header-only type substitution follows owning aliases, declared
+            fields and generic factory returns, including bound and inline calls. An owning
+            `Box<T>` input that returns `T` therefore follows the payload type, not `Box`.
+            Constructor names are resolved in their source namespaces, and unrelated type
+            arguments do not become result owners. The isolated `projected-applied-*` cases
+            keep these shapes separate so one demanded member cannot hide another's failure.
 
             Early demand discovery is not yet a complete higher-order type inference system.
             Results selected through function-typed parameters, class-level generic
@@ -1280,12 +1285,15 @@ documentation:
             inventory. This inventory is shared across semantic units; static and declined
             operations are not presented as undemanded instance members.
 
-            Separately, copying an indexed unbounded type parameter from a list or map is
-            not a permission supplied by a convenient concrete caller. Such a body reports
-            T0135 before Rust emission instead of leaking a missing Rust `Clone` bound. Use
-            a concrete typed getter when a value copy is intended, or a declared shared
-            handle element type when copying the handle is the intended operation; no hidden
-            bound or payload copy is introduced.
+            Separately, copying an indexed or field-projected unbounded type parameter is
+            not a permission supplied by a convenient concrete caller. This applies to owned
+            call arguments and source field returns as well as binding and return snapshots:
+            unsupported copies report T0135 before Rust emission. Borrowing an indexed value
+            for a reference parameter or a bounded shared receiver does not copy its
+            payload. Use a concrete typed getter when a value copy is intended, an
+            explicitly moved field through a consuming receiver when transfer is intended,
+            or a declared shared handle element type when only the handle should be copied.
+            No hidden bound or payload copy is introduced.
 
             The separate projection-census runner reads a versioned declarative package list
             and preserves each package's priority, target, feature configuration, deadline,

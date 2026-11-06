@@ -401,6 +401,26 @@ documentation:
             - **Fixed — optional native byte metadata.** Absent byte-extraction recipes are
               omitted again, and projection caches rebuild for the canonical serialization
               change without disabling replay validation.
+    - id: changes-2026-11-06
+      title: "2026-11-06"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Fixed — flow-sensitive native loans and applied source demand.** Native
+              lender checks follow reachable uses across branches, rebindings and loop back
+              edges; post-last-use owner operations remain valid. Applied generic results
+              retain their payload owner through aliases, source fields and factory calls.
+            - **Fixed — source ownership and lowering boundaries.** Guard-backed native text
+              borrows report `T0119`; non-Clone enum-field consumption, unconstrained
+              generic copies and reserved loop targets receive source diagnostics. Loop
+              conditions and `finally` preserve consuming ownership, mutable receivers can
+              replace their value, and program-global reads and writes retain one declaring
+              type and storage across namespaces.
+            - **Fixed — conformance suite boundaries and native test time.** Unsafe cases
+              have an explicitly marked suite, complete scenario registration is checked
+              before filtering, and globals remain separate programs. Native test clocks no
+              longer depend on process support. Fixture inventory checks reject dangling
+              registry links and unregistered suite packages.
   see-also:
     - manual.changelog
     - lang.types.references
