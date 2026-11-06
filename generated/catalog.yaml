@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 42d2b7189e9925ce13d32a5305efbd1fd097768a2884e6b5434ec53424ef0290
+  input-sha256: 6a87a99e88b36c906777c664816bbcdee3fb0d3679ff88ad2a9f2b22337242f2
 format: 2
 generated: true
 records:
@@ -3283,6 +3283,7 @@ records:
     - docs/measure-test-times.py
     - crates/terrane-cli/tests/cli.rs
     - crates/terrane-compiler/tests/conformance.rs
+    - crates/terrane-compiler/tests/conformance/native_fixtures.rs
   sections:
   - id: collection-protocol
     title: Collection protocol
@@ -3292,6 +3293,9 @@ records:
     sections: []
   - id: generated-crate-isolation
     title: Generated-crate isolation
+    sections: []
+  - id: consolidation-boundaries
+    title: Compilation sharing without coverage loss
     sections: []
   - id: bounded-expected-runtime-failures
     title: Bounded expected runtime failures

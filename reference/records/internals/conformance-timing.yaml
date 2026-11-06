@@ -63,14 +63,28 @@ documentation:
             built together, allowing Cargo to schedule their independent rustc and linker
             work in parallel. Cases with projected Rust dependencies retain separate
             serialized manifests and builds because their dependency graphs may conflict.
-            The driver removes fixture-specific Cargo configuration before the shared
-            dependency-free build, while all builds retain one Cargo target directory for
-            dependency reuse. The driver executes each exact case-specific artifact; no case
-            can reuse another case's executable when Cargo decides that a target is fresh.
-            Package fixtures are staged outside the corpus. Projection history is disposable
-            local cache data and is not reviewed as a tracked package lock; the deliberate
-            format-3 compatibility fixture remains data under the projection-history fixture
-            path.
+            Byte-identical native fixture libraries have shared maintained sources;
+            deliberately different APIs with the same package name and version remain
+            distinct variants. Staging publishes immutable, content-identified registry
+            graphs under the shared target directory. Case-local Cargo configurations remain
+            independent, while equivalent native path dependencies resolve to the same
+            shared source rather than repeatedly copied package identities. Sharing is
+            graph-scoped: an identical package present in different registry graphs can
+            retain distinct compiled identities. This preserves sibling path dependencies
+            and graph-local build inputs rather than assuming package bytes alone establish
+            equivalence. Staged Cargo patches refer directly to the immutable graph paths.
+            Merely linking a replaceable case-local registry is insufficient: Cargo package
+            identities retain logical path aliases, which can reuse the wrong
+            same-name/version API after a workspace changes graphs. Local registry staging
+            still uses links on Unix and portable copies elsewhere; both use the explicit
+            shared patch paths. The driver removes fixture-specific Cargo configuration
+            before the shared dependency-free build, while all builds retain one Cargo
+            target directory for dependency reuse. The driver executes each exact
+            case-specific artifact; no case can reuse another case's executable when Cargo
+            decides that a target is fresh. Package fixtures are staged outside the corpus.
+            Projection history is disposable local cache data and is not reviewed as a
+            tracked package lock; the deliberate format-3 compatibility fixture remains data
+            under the projection-history fixture path.
 
             There is deliberately no corpus-wide reviewed baseline for admitted or declined
             projection inventories. Used surface is checked by actual conformance consumers,
@@ -78,6 +92,65 @@ documentation:
             those checks. This is an accepted coverage tradeoff of disposable inventory
             state, not a claim that existing behavior tests replace full inventory
             comparison.
+    - id: consolidation-boundaries
+      title: Compilation sharing without coverage loss
+      blocks:
+        - type: markdown
+          markdown: >-
+            A coverage case is not necessarily a compilation unit. Compatible positive
+            scenarios can share an explicitly authored Terrane test package, while retaining
+            separate corpus identities, expected output, exit behavior, and fresh process
+            execution. Use cohesive semantic families rather than one monolithic corpus
+            program. Shared source must not turn a failing shape into a passing shape by
+            supplying declarations, projected member demand, generic constraints, runtime
+            support, or imports from another scenario.
+
+            Rejection cases remain independent programs so each expected diagnostic is
+            actually reached. Keep demand-sensitive positive witnesses independent too:
+            another use of the same native owner/member can mask a missing-demand regression
+            even when the calls live in different functions or source files. Likewise,
+            absence-of-support, unused-declaration, standalone entrypoint, and
+            package-resolution boundaries require their own compiler inputs. Sharing an
+            unchanged native dependency library does not imply sharing Terrane semantic
+            analysis.
+
+            Consolidation must retain every original observable check and filterable case
+            identity. Audit the migration by mapping original sources and expectations to
+            their suite scenarios, not by comparing the aggregate number of binaries or
+            passing tests. A shared compilation failure should identify the suite and its
+            selected cases; an execution failure should still name the individual case.
+        - type: markdown
+          markdown: >-
+            Accepted run cases opt in with `suite` and the canonical `test` identity,
+            including its leading namespace slash. The suite is a native test package under
+            `tests/fixtures/conformance-suites/<suite>` with exactly one test tier. The
+            driver compiles that package once, always enables canonical-Rust validation,
+            rejects unexpected warnings, and persists one lowering artifact set beside the
+            suite package. Per-case compiler configuration is not mixed into a shared unit;
+            such cases remain standalone.
+
+            Existing case directories retain their runtime expectations and filters. The
+            driver dispatches the selected native test in a fresh process with its test
+            identity, tier, deterministic seed, result path, and temporary directory.
+            Filtering one case still compiles its suite, but executes only that case.
+            Compilation time has its own `conformance/shared-suite/<suite>/compile` row;
+            each original case keeps its own execution row. A shared compilation failure
+            fails that compilation row and leaves unexecuted cases ignored, rather than
+            falsely reporting them as individually failed.
+
+            Fewer compilation units do not by themselves prove lower elapsed time. Sharing
+            can trade parallel front-end preparation for a larger serial compile, and native
+            test-runner setup has a cost. Measure the affected workload with comparable
+            compiler, dependency-cache, and backend-cache conditions; report compilation
+            reuse separately from any wall-time improvement.
+        - type: example
+          language: toml
+          mode: illustrative
+          source: |
+            phase = "run"
+            status = "accept"
+            suite = "value-protocols"
+            test = "/string-display-generic::test-generic"
     - id: bounded-expected-runtime-failures
       title: Bounded expected runtime failures
       blocks:
@@ -167,3 +240,4 @@ provenance:
     - docs/measure-test-times.py
     - crates/terrane-cli/tests/cli.rs
     - crates/terrane-compiler/tests/conformance.rs
+    - crates/terrane-compiler/tests/conformance/native_fixtures.rs

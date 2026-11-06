@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 42d2b7189e9925ce13d32a5305efbd1fd097768a2884e6b5434ec53424ef0290
+  input-sha256: 6a87a99e88b36c906777c664816bbcdee3fb0d3679ff88ad2a9f2b22337242f2
 format: 1
 generated: true
 symbols:
@@ -8455,6 +8455,10 @@ symbols:
   record: std.time
   section: values
   declaration: subtract.checked
+- name: suite
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: suite
 - name: summarize
   record: book.testing-and-debugging
   section: choose-the-test-boundary-deliberately
@@ -9186,6 +9190,10 @@ symbols:
 - name: test
   record: internals.build.toolchain-profiles
   section: workspace-artifact-size
+  declaration: test
+- name: test
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
   declaration: test
 - name: test
   record: internals.testing.conformance-timing
