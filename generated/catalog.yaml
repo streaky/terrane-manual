@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6a87a99e88b36c906777c664816bbcdee3fb0d3679ff88ad2a9f2b22337242f2
+  input-sha256: 611a95d76ba849da33bda5c58374bf21d1038535717aa6fa8005d5d60ac75630
 format: 2
 generated: true
 records:
@@ -3667,7 +3667,7 @@ records:
   - function nested-conditional int8; input int8
   - function positive-lower-bound; input int8
   - function global-condition int8; input int8
-  - function main
+  - function test-scenario
   - class holder
   - class inspector implements Inspect
   - function marker bool

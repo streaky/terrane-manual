@@ -284,7 +284,7 @@ implementation:
     - crates/terrane-compiler/src/lowering/emitter/native_callable.rs
     - crates/terrane-compiler/src/lowering/emitter/native_arguments.rs
     - tests/conformance/run/list-append-bulk-mutation/case.trn
-    - tests/conformance/run/guarded-checked-arithmetic/case.trn
+    - tests/fixtures/conformance-suites/value-protocols/tests/integration/guarded-checked-arithmetic/case.trn
     - tests/conformance/run/native-read-storage/src/main.trn
     - tests/conformance/run/borrowed-text-observations/case.trn
     - tests/conformance/run/borrowed-throwable-text/case.trn

@@ -114,6 +114,17 @@ documentation:
             unchanged native dependency library does not imply sharing Terrane semantic
             analysis.
 
+            Program-global declarations also require independent inputs: a global name from
+            one scenario can change another namespace's assignment resolution. Uncaught
+            errors that pin entrypoint names, source frames, or process exit behavior must
+            not be wrapped as native test functions.
+
+            The `shared-object-field-comparisons` and `static-call-throw-inference` duration
+            scenarios currently remain standalone. Their native-test compilation emits
+            temporal helpers referencing undeclared `TERRANE_TEST_TIME_NANOS`. Revisit that
+            boundary only after native-test temporal support compiles without injecting
+            unrelated clock use or weakening either scenario.
+
             Consolidation must retain every original observable check and filterable case
             identity. Audit the migration by mapping original sources and expectations to
             their suite scenarios, not by comparing the aggregate number of binaries or
@@ -129,6 +140,10 @@ documentation:
             suite package. Per-case compiler configuration is not mixed into a shared unit;
             such cases remain standalone.
 
+            Independent suite front ends are prepared in parallel under the normal
+            conformance job limit. Backend staging and execution retain their existing
+            per-suite order and per-case process boundaries.
+
             Existing case directories retain their runtime expectations and filters. The
             driver dispatches the selected native test in a fresh process with its test
             identity, tier, deterministic seed, result path, and temporary directory.
@@ -143,6 +158,13 @@ documentation:
             test-runner setup has a cost. Measure the affected workload with comparable
             compiler, dependency-cache, and backend-cache conditions; report compilation
             reuse separately from any wall-time improvement.
+
+            The primary rebuild workload is warm dependencies with cold generated programs
+            after a lowering change. Verify that measured generated targets are non-fresh,
+            hold dependency versions fixed, and disable compiler-wrapper cache hits. Measure
+            aggregate compilation CPU as well as elapsed time: reducing repeated Rust work
+            leaves CPU available to other applications even when parallel independent builds
+            have similar wall time.
         - type: example
           language: toml
           mode: illustrative

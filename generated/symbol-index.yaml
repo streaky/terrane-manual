@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6a87a99e88b36c906777c664816bbcdee3fb0d3679ff88ad2a9f2b22337242f2
+  input-sha256: 611a95d76ba849da33bda5c58374bf21d1038535717aa6fa8005d5d60ac75630
 format: 1
 generated: true
 symbols:
@@ -8075,6 +8075,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: naming-guidance
   declaration: shared-item
+- name: shared-object-field-comparisons
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: shared-object-field-comparisons
 - name: shared-storage
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -8271,6 +8275,10 @@ symbols:
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: static
+- name: static-call-throw-inference
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: static-call-throw-inference
 - name: std
   record: app.error-boundaries
   section: projected-dependencies
@@ -9175,6 +9183,10 @@ symbols:
   record: internals.testing.conformance-timing
   section: collection-protocol
   declaration: TERRANE_SCORECARD_JOBS
+- name: TERRANE_TEST_TIME_NANOS
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: TERRANE_TEST_TIME_NANOS
 - name: TERRANE_TEST_TIMING_FILE
   record: internals.testing.conformance-timing
   section: collection-protocol
@@ -9203,6 +9215,10 @@ symbols:
   record: tool.packages.command-line
   section: generated-package-state
   declaration: test
+- name: test-scenario
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function test-scenario
 - name: test-value
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
