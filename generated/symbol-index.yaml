@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 611a95d76ba849da33bda5c58374bf21d1038535717aa6fa8005d5d60ac75630
+  input-sha256: 30c8d0570dd266d11fa4a863d974d43a36a00c9a93ee1eecf8d7f45c5706a1bd
 format: 1
 generated: true
 symbols:
@@ -1957,6 +1957,10 @@ symbols:
   record: lang.functions.callable-types
   section: exact-metadata
   declaration: contracts
+- name: control-flow
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: control-flow
 - name: converter
   record: lang.numerics.conversion
   section: callback
@@ -5993,6 +5997,10 @@ symbols:
   record: lang.types.descriptors
   section: type-descriptors
   declaration: object
+- name: object-protocols
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: object-protocols
 - name: observe
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -9263,6 +9271,10 @@ symbols:
   record: tool.packages.testing
   section: discovery
   declaration: tests/end-to-end
+- name: tests/fixtures/native-conformance
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: tests/fixtures/native-conformance
 - name: tests/integration
   record: book.testing-and-debugging
   section: choose-the-test-boundary-deliberately
@@ -10291,6 +10303,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sequences
   declaration: value
+- name: value-protocols
+  record: internals.testing.conformance-timing
+  section: consolidation-boundaries
+  declaration: value-protocols
 - name: value.coerce.default
   record: lang.numerics.conversion
   section: numeric-coercion

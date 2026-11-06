@@ -105,6 +105,21 @@ documentation:
             supplying declarations, projected member demand, generic constraints, runtime
             support, or imports from another scenario.
 
+            When adding a compatible positive scenario, first extend an existing cohesive
+            suite rather than creating another standalone program. The current families
+            include `value-protocols`, `object-protocols`, and `control-flow`. Retain a
+            separate scenario source file and named corpus manifest; neither requires
+            another compilation unit. Create a new suite only when no existing family fits.
+            A new standalone positive witness needs a concrete isolation, compiler
+            configuration, or runner requirement; explain that requirement in the fixture or
+            its associated contract documentation.
+
+            Likewise, inspect `tests/fixtures/native-conformance` and existing linked
+            registries before creating a native Rust witness crate. Reuse compatible
+            maintained libraries rather than copying them, but preserve deliberately
+            different API and dependency-graph variants. Review dependent rejection cases
+            when changing a shared library.
+
             Rejection cases remain independent programs so each expected diagnostic is
             actually reached. Keep demand-sensitive positive witnesses independent too:
             another use of the same native owner/member can mask a missing-demand regression
