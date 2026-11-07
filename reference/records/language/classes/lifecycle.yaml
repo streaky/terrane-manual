@@ -97,10 +97,11 @@ documentation:
             when that conversion is available. This does not create an extra authored-class
             lifecycle lineage.
 
-            This conversion can also borrow an ordinary `ref` receiver or a projected field
-            reached through it when the foreign value has the required Clone capability. It
-            does not permit consuming a borrowed authored class, and Clone alone does not
-            grant the Copy capability required to duplicate a scoped native view.
+            This conversion also applies to native fields of owned source objects and to
+            ordinary `ref` or `mutable ref` receivers, including projected fields reached
+            through them, when the foreign value has the required Clone capability. It does
+            not permit consuming a borrowed authored class, and Clone alone does not grant
+            the Copy capability required to duplicate a scoped native view.
   see-also: []
 
 provenance:

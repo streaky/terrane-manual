@@ -31,6 +31,15 @@ documentation:
             explicitly with `implements`; merely exposing members with a compatible shape
             does not give the class that interface identity.
 
+            An interface may inherit another interface with `implements`. A class must
+            satisfy the full transitive inherited method set, including substituted generic
+            arguments. Missing inherited members report `T0062`; incompatible method
+            signatures report `T0067`, before Rust emission. Shared, mutable and consuming
+            inherited members retain their declared invocation modes, and a child-interface
+            bound may be forwarded where its parent-interface bound is required. Safe and
+            unsafe interfaces with the same spelling remain distinct nominal owners; their
+            inherited methods are collected independently.
+
             Interfaces differ from unnamed structural protocols, which describe operation
             shapes without introducing declarations, nominal types, or dispatch objects.
             Traits are different as well: a trait contributes source fields and method

@@ -182,9 +182,11 @@ documentation:
             automatically implement an authored interface.
 
             An enclosing function or class binder can forward its type parameter to another
-            generic function requiring the same interface, with inferred or explicit
-            arguments. A different or missing bound does not establish conformance. Members
-            declared by that bound take precedence over same-named numeric built-ins.
+            generic function requiring the same interface or an inherited parent interface,
+            with inferred or explicit arguments. A different or missing bound does not
+            establish conformance. The same checks apply to written field and parameter
+            types. Members declared by that bound take precedence over same-named numeric
+            built-ins, and explicit type arguments do not grant mutation authority.
 
             A source binder bound currently names an unapplied interface. Applied bounds,
             such as `T implements source of int`, are rejected during checking rather than
@@ -241,6 +243,13 @@ documentation:
             includes direct and mutual function calls, explicit and result-selected
             applications, and generic method-owner selections. Ordinary recursion that
             retains the same application remains valid.
+
+            Class-field applications are checked too: growing recursive class applications
+            and infinitely sized inline layouts report `T0140`, including direct, mutual and
+            optional self-fields. Collection indirection remains valid. An optional generic
+            argument does not make its enclosing class optional: `Bx of int|none` means
+            `Bx of (int|none)`, so a `none` field default requires `(Bx of int)|none`
+            instead.
 
             Generic interfaces can retain an output relationship before any output exists:
             `interface source of (T)` can declare `mutable function next T|none;`, and a

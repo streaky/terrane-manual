@@ -612,12 +612,12 @@ documentation:
             or move the lender mutation outside it. A non-Copy value acquired inside the
             boundary is consumed from its owned availability slot, not by copying a
             reference. Consuming and rebinding an outer non-Copy value cannot restore the
-            caller's binding for a read in a catch or separate finally boundary, or for a
-            later reachable use without an intervening outside rewrite; these forms report
-            T0058. The rule includes consuming source-class receivers and Clone-only scoped
-            natives. An unconditional outside rewrite before every later use establishes a
+            caller's binding for a later use without an intervening dominating rewrite;
+            these forms report T0058. The rule includes consuming source-class receivers and
+            Clone-only scoped natives. An unconditional rewrite before every later use,
+            including a rewrite within the receiving catch or finally clause, establishes a
             new value; a conditional rewrite does not discharge the other path. A rewrite
-            and subsequent read within the same non-repeating body or finally retain
+            and subsequent read within the same non-repeating body, catch or finally retain
             ordinary local ownership behavior, as do proven Copy values and non-conflicting
             last-use/finally paths. These are current closure-lowering limits, not a claim
             that Rust could never express the operation.
@@ -1314,11 +1314,13 @@ documentation:
             classes substitute the receiver's class arguments as well as the method's own
             parameters, including direct method-result demand.
 
-            Indexing a declared local collection follows its element header, including an
-            inferred local bound to that indexed result and each layer of nested indexing.
-            Lists select their element argument; maps and unordered maps select their value
-            argument, not the key. An isolated indexed call does not require a second call
-            elsewhere to demand its native member.
+            Indexing a local collection follows its element header, including an inferred
+            list or tuple constructor, an inferred local bound to that indexed result and
+            each layer of nested indexing. Lists and homogeneous tuples select their element
+            argument; maps and unordered maps select their value argument, not the key.
+            Transparent argument and grouping nodes do not introduce distinct recursion
+            identities. An isolated indexed call does not require a second call elsewhere to
+            demand its native member.
 
             Early demand discovery is not yet a complete higher-order type inference system.
             Results selected through function-typed parameters, interface-bounded generic

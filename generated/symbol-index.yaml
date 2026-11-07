@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fe26b50250ec772b0c4d483912ea9347c28b553c7f94ec64566d68eb0b3fc29b
+  input-sha256: f338c0e4296b67ab146d01cb1e2faf01b11629d818a7c0cf1514ae175e34a763
 format: 1
 generated: true
 symbols:
@@ -5862,6 +5862,10 @@ symbols:
   section: scalar-display
   declaration: none
 - name: none
+  record: lang.types.generics
+  section: authored-bounds
+  declaration: none
+- name: none
   record: lang.types.optional-refinement
   section: overview
   declaration: none
@@ -8712,6 +8716,10 @@ symbols:
   section: interfaces
   declaration: T0012
 - name: T0012
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: T0012
+- name: T0012
   record: lang.errors.contracts
   section: throwable-inference
   declaration: T0012
@@ -8767,6 +8775,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-07
   declaration: T0058
+- name: T0062
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: T0062
 - name: T0064
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -8775,6 +8787,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0064
+- name: T0067
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: T0067
 - name: T0068
   record: lang.types.references
   section: provenance
@@ -8831,6 +8847,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: T0135
+- name: T0140
+  record: lang.types.generics
+  section: authored-bounds
+  declaration: T0140
 - name: T0141
   record: lang.types.references
   section: lowering

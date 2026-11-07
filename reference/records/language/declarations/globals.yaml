@@ -69,6 +69,11 @@ documentation:
             warnings account for reads across the whole program, while an unrelated local
             binding with the same spelling retains its own unused-value checks.
 
+            Closures read the same canonical global storage, including after a function-body
+            update; they do not capture a nonexistent local copy of that update.
+            Function-valued program-global storage is not currently supported and reports
+            `T0012`. Use a named function or a function-local callable instead.
+
             Initialization ordering does not by itself make mutable global state safe to
             share. A mutable global used across threads must satisfy the shared-thread-safe
             protocol. State that belongs to one thread should use the standard thread-local
