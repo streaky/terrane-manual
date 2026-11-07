@@ -248,7 +248,11 @@ documentation:
             that replaces `T` with a container of `T`, before Rust lowering. This proof
             includes direct and mutual function calls, explicit and result-selected
             applications, and generic method-owner selections. Ordinary recursion that
-            retains the same application remains valid.
+            retains the same application remains valid. Parameters used only through
+            recursive class fields retain a non-recursive zero-sized marker in the generated
+            representation, including mutual recursion. Explicit method type arguments on
+            static calls and callable references retain the separately selected class-owner
+            arguments.
 
             Class-field applications are checked too: growing recursive class applications
             and infinitely sized inline layouts report `T0140`, including direct, mutual and

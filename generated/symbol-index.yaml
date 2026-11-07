@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 57f79a1cf46f95ff40900bc7a1b26468e6efe9a52cce10c9ad691e7f9311fad1
+  input-sha256: 92d5879e71c0c2f3569934044927762f8913923be8494297c6b934e32e8a1714
 format: 1
 generated: true
 symbols:
@@ -4426,10 +4426,6 @@ symbols:
   section: native-enums
   declaration: int
 - name: int
-  record: lang.types.unions
-  section: unions
-  declaration: int
-- name: int
   record: tool.packages.rust-dependencies
   section: payload-enums
   declaration: int
@@ -8468,10 +8464,6 @@ symbols:
   section: scalar-types
   declaration: string
 - name: string
-  record: lang.types.unions
-  section: unions
-  declaration: string
-- name: string
   record: std.text-bytes-codecs
   section: text-and-bytes
   declaration: string
@@ -8704,6 +8696,14 @@ symbols:
   section: crossed-types
   declaration: T
 - name: T0002
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: T0002
+- name: T0002
+  record: manual.changelog.unreleased
+  section: changes-2026-11-07
+  declaration: T0002
+- name: T0002
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: T0002
@@ -8923,6 +8923,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-04
   declaration: T0226
+- name: T0240
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0240
 - name: T0240
   record: manual.changelog.unreleased
   section: changes-2026-11-05
@@ -10674,10 +10678,6 @@ symbols:
 - name: x
   record: lang.types.relations
   section: type-tests
-  declaration: x
-- name: x
-  record: lang.types.unions
-  section: unions
   declaration: x
 - name: x
   record: tool.source-intelligence

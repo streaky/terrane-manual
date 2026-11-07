@@ -52,7 +52,9 @@ documentation:
             Borrowed interface parameters require the actual interface wrapper, not a
             concrete implementer or a different child wrapper. First construct an
             interface-typed local, then borrow that local. Unsupported container or
-            borrowed-wrapper conversions report `T0012`, not a backend type mismatch.
+            borrowed-wrapper conversions report a source type diagnostic rather than a
+            backend type mismatch: `T0012` for argument destinations and `T0002` for
+            incompatible local binding or assignment types.
 
             Interfaces differ from unnamed structural protocols, which describe operation
             shapes without introducing declarations, nominal types, or dispatch objects.

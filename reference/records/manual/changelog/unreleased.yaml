@@ -455,14 +455,27 @@ documentation:
             - **Fixed — inherited and declared-type boundaries.** Class/interface cycles
               report `T0054`; cross-namespace inherited lookup retains generic substitutions
               and mutation modes. Owned interface upcasts work, while unsupported borrowed
-              wrapper and container conversions report `T0012`. Field defaults use their
+              wrapper and container conversions report source type diagnostics (`T0012` for
+              arguments, `T0002` for incompatible local types). Field defaults use their
               declared destination, explicit unused generic arguments survive lowering, and
               collection type expressions cannot stand in for values.
             - **Clarified — heterogeneous scalar-union declarations.** General scalar-union
-              parameters, results, fields and enum payloads lack a declared runtime carrier
-              and now report `T0012` rather than selecting the first arm. Local flow unions,
-              ordinary optionals and canonical aliases remain supported. Use an explicit
-              enum for heterogeneous declared boundaries. See [[lang.types.unions]].
+              parameters, results, fields, globals and enum payloads lack a declared runtime
+              carrier and now report `T0012` rather than selecting the first arm. Local flow
+              unions, ordinary optionals and canonical aliases remain supported. Use an
+              explicit enum for heterogeneous declared boundaries. See
+              [[lang.types.unions]].
+            - **Fixed — completion storage and native view loans.** Later reads retain
+              completion slots across accepted finally-only rewrites; reusable callables
+              remain callable. Written and inferred native references share canonical
+              identity, and local view collections keep their lenders protected through
+              aliases. Indexed non-Copy consumption remains a diagnosed restriction.
+            - **Fixed — value and destination boundaries.** Remaining owned snapshot
+              positions reject illegal field copies. Recursive generic class markers and
+              explicit generic static calls lower correctly. Applied class types used as
+              values, incompatible local-union boundaries and unsupported callable result
+              upcasts receive source diagnostics. Empty list constructors retain return,
+              constructor-argument and optional-field destinations.
   see-also:
     - manual.changelog
     - lang.types.references

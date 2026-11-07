@@ -116,6 +116,12 @@ documentation:
             Omitting `throws` declares an infallible callable type. Every source callable
             has either exact inferred metadata or an explicit written storage contract; the
             compiler does not introduce a broad fallback.
+
+            Callable parameter and result storage must match; ordinary source-class upcasts
+            do not adapt a callable returning a subclass into one returning its base. Such a
+            conversion reports a source type diagnostic. Use an explicit wrapper function
+            that performs the result conversion. This restriction does not remove
+            invocation-mode or throwable-bound compatibility.
     - id: exact-metadata
       title: Exact values, invocation, and reflection
       blocks:

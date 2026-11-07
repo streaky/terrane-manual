@@ -37,27 +37,27 @@ documentation:
             return types.
 
             Current declared storage and callable boundaries do not implement a general
-            heterogeneous scalar-union representation. Parameters, results, fields and enum
-            payloads containing distinct non-`none` scalar alternatives report `T0012`,
-            including nested occurrences, rather than silently selecting the first arm. Use
-            an explicit enum for such boundaries. This restriction does not remove local
-            flow unions, ordinary `T|none` optionals or aliases that normalize to one
-            canonical arm.
+            heterogeneous scalar-union representation. Parameters, results, fields, globals
+            and enum payloads containing distinct non-`none` scalar alternatives report
+            `T0012`, including nested occurrences, rather than silently selecting the first
+            arm. Use an explicit enum for such boundaries. Local flow unions remain usable
+            for observation and narrowing, but cannot implicitly cross scalar, generic or
+            collection-element boundaries. Ordinary `T|none` optionals and aliases that
+            normalize to one canonical arm remain supported.
 
             Repeated arms are normalized by canonical semantic identity. Each authored
             duplicate reports warning `W4003`, including duplicates written through
             different aliases of the same descriptor. Different source spellings therefore
             cannot create distinct alternatives when they denote one canonical type.
 
-            Flow joins also form ordinary finite unions. If one reaching path leaves `x` as
-            `int` and another leaves it as `string`, its type after the join is
-            `int|string`. Loop entry and iteration paths participate in the same rule. There
-            is no error at the join itself: each use must accept every reaching alternative,
-            or first narrow the union. Availability is independent of that type: an
-            unassigned path does not add a `none` arm or make the variable implicitly
-            nullable. Only uncertain variables represent runtime uncertainty; uncertain uses
-            check that a value exists, while proven-available uses need no availability
-            check.
+            An inferred binding retains the type established by its initializer: assigning a
+            different type on another control-flow path does not widen it into a union.
+            Independently typed declarations on separate branches can form a local flow
+            union. Each later use must accept every reaching alternative or first narrow the
+            union. Availability is independent of that type: an unassigned path does not add
+            a `none` arm or make the variable implicitly nullable. Only uncertain variables
+            represent runtime uncertainty; uncertain uses check that a value exists, while
+            proven-available uses need no availability check.
 
             When a value reaches a union destination, Terrane first looks for an arm that
             exactly matches the value’s semantic type. If there is no exact match, it

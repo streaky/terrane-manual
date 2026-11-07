@@ -622,15 +622,28 @@ documentation:
             last-use/finally paths. These are current closure-lowering limits, not a claim
             that Rust could never express the operation.
 
+            Inferred local lists of native views retain their elements' lender provenance,
+            including through collection aliases. Moving or mutating the lender before the
+            collection's last use reports `T0240`; using the lender after that last use
+            remains valid. Inferred scoped families and written native types compare by
+            canonical native identity and type arguments without weakening reference
+            exclusivity or lifetime checks.
+
             Completion storage is selected from the same transfer facts as validation. A
             dominating rewrite solely in `finally` establishes the value observed after
             completion, not only rewrites in the try body. Non-Copy by-value captures
             include strings, collections, tuples and optionals as well as source classes; a
             body-only rewrite does not restore availability for a separate finally closure's
             read. Ordinary non-consuming observations do not force ownership-slot storage.
-            Canonical native Copy evidence also applies to inferred scoped-view locals,
-            indexed reads and arguments; an indexed Copy read does not consume its
-            containing collection.
+            Completion storage also accounts for reads after the whole `try`, not only reads
+            inside a handler. Accepted dominating rewrites restore the same slot used for
+            later reads, including finally-only rewrites and generic values. Reusable
+            function values are not treated as consumed merely by being called. Canonical
+            native Copy evidence also applies to inferred scoped-view locals, indexed reads
+            and arguments; an indexed Copy read does not consume its containing collection.
+            Consuming a non-Copy native value directly from an indexed collection place
+            reports T0101. Obtain a named view from its lender before invoking its consuming
+            operation; indexed observations and proven Copy consumption remain supported.
 
             A shared-reference name or field may be protected by an operand-local receiver
             guard. A lifetime-bearing native result or borrowed native text from such a
