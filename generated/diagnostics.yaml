@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c7f4f313bbd8ff1ffb864c31888344ff9d44d16373dd90f5ad2f43b9c6ddb607
+  input-sha256: 0c72a6e91381a6019047954e8a1b3c7287c2e0a635ed8c412ebf69a437aeaf51
 format: 1
 generated: true
 diagnostics:
@@ -1261,9 +1261,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1091
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 321
+    line: 324
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 701
+    line: 704
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 190
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
@@ -1440,7 +1440,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1990
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 290
+    line: 293
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 46
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1477,7 +1477,7 @@ diagnostics:
   - '`.{member_name}` requires a floating receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 823
+    line: 826
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1958
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1701,7 +1701,7 @@ diagnostics:
   - '`{receiver_type}` has no member `.{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 849
+    line: 852
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 836
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1779,13 +1779,13 @@ diagnostics:
   - an empty iterator requires an explicit item type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1213
+    line: 1216
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1224
+    line: 1227
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1233
+    line: 1236
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1243
+    line: 1246
 - code: T0042
   messages:
   - collection items require a statically known value type
@@ -1795,15 +1795,15 @@ diagnostics:
   - map values must have one statically known type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 154
+    line: 157
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 179
+    line: 182
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 210
+    line: 213
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1120
+    line: 1123
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1131
+    line: 1134
 - code: T0043
   messages:
   - an empty `{collection}` requires an explicit item type
@@ -1811,9 +1811,9 @@ diagnostics:
   - '/core/collections::'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 220
+    line: 223
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1142
+    line: 1145
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 273
 - code: T0044
@@ -1823,11 +1823,11 @@ diagnostics:
   - entry keys must be immutable scalar values
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1063
+    line: 1066
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1075
+    line: 1078
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1096
+    line: 1099
 - code: T0045
   messages:
   - '`entry` requires exactly a key and value'
@@ -1839,23 +1839,23 @@ diagnostics:
   - '`iteration-step` requires exactly one item'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 347
+    line: 350
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 679
+    line: 682
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 815
+    line: 818
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 858
+    line: 861
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 927
+    line: 930
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 943
+    line: 946
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 980
+    line: 983
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1086
+    line: 1089
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1158
+    line: 1161
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 263
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1872,7 +1872,7 @@ diagnostics:
   - indexed assignment is not supported for `{other}`
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 963
+    line: 966
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 120
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2933,7 +2933,7 @@ diagnostics:
   - value iteration requires Clone items; iterate through `ref` to borrow non-Clone or unconstrained items
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1271
+    line: 1274
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 693
   - path: crates/terrane-compiler/src/semantics/model.rs
