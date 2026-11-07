@@ -467,12 +467,13 @@ documentation:
               [[lang.types.unions]].
             - **Fixed — completion storage and native view loans.** Locals and parameters
               retain completion slots across accepted finally-only rewrites, including
-              restoration before an outer catch. Anonymous callable bodies have independent
-              completion state. Written and inferred native references share canonical
-              identity; local view lists and tuples protect their lenders through aliases
-              and appends without falsely consuming independent Copy views. Native members
-              remain available through value and reference iteration. Indexed non-Copy
-              consumption remains a diagnosed restriction.
+              restoration before an outer catch. Clone-preserving arguments are not treated
+              as moves. Anonymous callable bodies have independent completion state. Written
+              and inferred native references share canonical identity; local view
+              collections protect their lenders through aliases, appends and map insertion.
+              Native members remain available through nested value and reference iteration,
+              and value loops preserve reusable collections. Indexed non-Copy consumption
+              remains a diagnosed restriction.
             - **Fixed — value and destination boundaries.** Remaining owned snapshot
               positions reject illegal field copies. Recursive generic class markers and
               applied static-owner calls and references lower correctly. Applied class types
@@ -480,8 +481,9 @@ documentation:
               diagnostics. Generic collection arguments substitute selected types before
               contextual validation; filled literals retain inference, and empty literals
               require a known destination. Local union boundaries use the proven reaching
-              arm, while unsupported mixed-carrier conversions remain diagnosed. Optional
-              presence guards preserve optional storage for both locals and parameters.
+              arm and admit compatible union assignments; unsupported mixed-carrier
+              conversions remain diagnosed. Optional presence guards preserve storage for
+              locals and parameters, including owned generic payload returns.
   see-also:
     - manual.changelog
     - lang.types.references

@@ -622,46 +622,67 @@ documentation:
             last-use/finally paths. These are current closure-lowering limits, not a claim
             that Rust could never express the operation.
 
+            These checks apply to actual transfers. An ordinary argument whose canonical
+            Clone conversion preserves the original binding does not consume it, including
+            after a rewrite in a body, catch or finally clause. Explicit moves still require
+            restoration before later reads, including when a replacement expression throws.
+
             Inferred and declared local lists and tuples of native views retain their
-            elements' lender provenance, including through aliases and list append
+            elements' lender provenance, including through aliases, list append and map set
             operations. Copying a Copy view into a collection protects its original lender,
             not the independent local holding that copy. A non-Copy view transfers once;
             reusing that moved local reports `T0058`. Moving or mutating the lender before
             the collection's last use reports `T0240`; using it afterwards remains valid.
-            Inferred scoped families and written native types compare by canonical native
-            identity and type arguments without weakening reference exclusivity or lifetime
-            checks. Declared collection storage also retains inferred native lifetime
-            metadata rather than materializing a static projection alias. Native method
-            lookup also recognizes the canonical expansion of a recorded alias while
-            retaining its selected forwarding target and error conversion; normalizing a
-            wrapper alias does not turn its methods into source methods. Generic aliases
-            retain their native constructor's methods after expansion, while argument
-            compatibility remains checked separately. Throwing-effect inference follows the
-            selected callable contract too: a forwarded native error remains catchable
-            through a source wrapper around an alias.
+            Straight-line rebinding of an independent Copy-view local uses separate reaching
+            storage, preserving RHS evaluation without tying an earlier snapshot to the
+            replacement lender. Captured, address-observable and control-flow-joined storage
+            retains its existing stable storage contract. Inferred scoped families and
+            written native types compare by canonical native identity and type arguments
+            without weakening reference exclusivity or lifetime checks. Declared collection
+            storage also retains inferred native lifetime metadata rather than materializing
+            a static projection alias. Native method lookup also recognizes the canonical
+            expansion of a recorded alias while retaining its selected forwarding target and
+            error conversion; normalizing a wrapper alias does not turn its methods into
+            source methods. Generic aliases retain their native constructor's methods after
+            expansion, while argument compatibility remains checked separately.
+            Throwing-effect inference follows the selected callable contract too: a
+            forwarded native error remains catchable through a source wrapper around an
+            alias.
 
-            Native element demand follows value and reference loop bindings, not only direct
-            member calls elsewhere. Value iteration copies proven Copy views; reference
-            iteration preserves the native receiver's borrow, and mutable-reference
+            Native element demand follows nested value and reference loop bindings, not only
+            direct member calls elsewhere. Value iteration copies proven Copy views and
+            preserves the collection for later reads or another loop. Stable collection
+            storage is borrowed; a value-loop body that changes the collection uses an
+            independent snapshot of its elements. Reference iteration preserves the native
+            receiver's borrow: mutating its collection reports `T0059`. Mutable-reference
             iteration acquires its loan before the element binding becomes live. Accessing
-            the collection independently while that exclusive element loan remains live is
-            still rejected. Returning a collection of views borrowed from a local reports
-            `T0240`. General source-helper returns of native-view collections remain
-            unsupported, including parameter-rooted collections (`T0119`); keep the
-            collection in the caller rather than treating it as a declared lifetime API.
+            the collection independently while that exclusive element loan remains live
+            reports `T0149`. Each loop binder has its own declaration identity while live
+            function-owned post-loop values retain their reaching joins. A live join of
+            incompatible native borrow/storage forms reports `T0119`, rather than generating
+            an invalid carrier. Lender mutations remain prohibited while a dependent element
+            is live.
+
+            Returning a collection of views borrowed from a local reports `T0240`.
+            Constructing a returned collection from a lender parameter is not currently
+            supported (`T0119`). This is not a blanket prohibition on source-helper returns:
+            passing through an existing view or view collection remains supported, as does
+            returning a single view borrowed from a reference parameter. The result retains
+            its lender obligations at the call site.
 
             Completion storage is selected from the same transfer facts as validation. A
             dominating rewrite solely in `finally` establishes the value observed after
-            completion, not only rewrites in the try body. Non-Copy by-value captures
-            include strings, collections, tuples and optionals as well as source classes; a
-            body-only rewrite does not restore availability for a separate finally closure's
-            read. Ordinary non-consuming observations do not force ownership-slot storage.
-            Completion storage also accounts for reads after the whole `try`, not only reads
-            inside a handler. Accepted dominating rewrites restore the same slot used for
-            later reads, including finally-only rewrites and generic values. Reusable
-            function values are not treated as consumed merely by being called. Canonical
-            native Copy evidence also applies to inferred scoped-view locals, indexed reads
-            and arguments; an indexed Copy read does not consume its containing collection.
+            completion, not only rewrites in the try body. Actually transferred by-value
+            captures can include strings, collections, tuples and optionals as well as
+            source classes; a body-only rewrite does not restore a genuinely consumed value
+            for a separate finally closure's read. Clone-preserving conversions and ordinary
+            non-consuming observations do not force ownership-slot storage. Completion
+            storage also accounts for reads after the whole `try`, not only reads inside a
+            handler. Accepted dominating rewrites restore the same slot used for later
+            reads, including finally-only rewrites and generic values. Reusable function
+            values are not treated as consumed merely by being called. Canonical native Copy
+            evidence also applies to inferred scoped-view locals, indexed reads and
+            arguments; an indexed Copy read does not consume its containing collection.
             Selected parameters enter the same completion-slot representation as locals.
             Anonymous callable bodies start with independent return and loop-control state
             even when declared inside try/catch/finally. A guaranteed inner finally rewrite

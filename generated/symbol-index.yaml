@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3cdddeb4ba41bd47e0b2a6434abc877e4b1877cd252b9e83b20847828c45d6bd
+  input-sha256: b21266b4b1474cdfe69592a7aada0b11f8956bd98713e58cccd5010740f1c54b
 format: 1
 generated: true
 symbols:
@@ -8799,6 +8799,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-07
   declaration: T0058
+- name: T0059
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0059
 - name: T0060
   record: lang.classes.fields
   section: initialization
@@ -8919,6 +8923,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: T0147
+- name: T0149
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0149
 - name: T0226
   record: internals.semantics.descriptor-contracts
   section: model

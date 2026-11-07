@@ -45,6 +45,8 @@ documentation:
             narrowing. A proven reaching arm can cross a compatible scalar or generic
             boundary; a still-mixed value receives a source diagnostic instead of an
             implicit carrier conversion. Local aliases retain an independent carrier.
+            Assignment between local unions is supported when every reaching source arm is
+            admitted by the destination; a missing arm receives a source diagnostic.
             Ordinary `T|none` optionals and aliases that normalize to one canonical arm
             remain supported.
 
@@ -102,6 +104,10 @@ documentation:
             binding invalidates it. Member, index, and call expressions are not narrowing
             subjects because repeated evaluation may produce a different result. Bind the
             expression once, then guard and use that stable name.
+
+            Returning a present generic optional transfers its owned payload when no later
+            use requires it, including non-Clone native values. Narrowing does not introduce
+            a hidden Clone bound or turn the owned result into a reference.
 
             A separate static return rule applies when a function or method declares a
             concrete return type `T`. An exact static `T|none` member may be returned after

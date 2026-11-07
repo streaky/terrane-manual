@@ -98,7 +98,9 @@ documentation:
             member on a generic source class requires an applied owner, such as
             `(envelope of int)::make`; the owner application survives both direct calls and
             callable references even when the method has no type parameters of its own.
-            Projected native constructors retain their own inference and default rules.
+            Owner parameters substitute through method inputs and results, including static
+            factories returning the applied class. Projected native constructors retain
+            their own inference and default rules.
         - type: example
           id: authored-generic-container
           title: A payload relationship declared once
