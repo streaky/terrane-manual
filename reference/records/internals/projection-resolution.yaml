@@ -633,6 +633,10 @@ documentation:
             not the independent local holding that copy. A non-Copy view transfers once;
             reusing that moved local reports `T0058`. Moving or mutating the lender before
             the collection's last use reports `T0240`; using it afterwards remains valid.
+            The moved-from view variable can receive a new view without changing the
+            transferred value's lenders. A catch alias retains all body-reaching producers
+            that its generated completion storage can observe, including a rebinding before
+            a throwing tail; it cannot erase the replacement lender's obligation.
             Straight-line rebinding and unread nested stores of an independent Copy-view
             local use separate reaching storage, preserving RHS evaluation without tying an
             earlier snapshot to the replacement lender. Passing a view by value carries its
@@ -657,13 +661,16 @@ documentation:
             storage is borrowed; a value-loop body that changes the collection uses an
             independent snapshot of its elements. Reference iteration preserves the native
             receiver's borrow: mutating its collection reports `T0059`. Mutable-reference
-            iteration acquires its loan before the element binding becomes live. Accessing
-            the collection independently while that exclusive element loan remains live
-            reports `T0149`. Each loop binder has its own declaration identity while live
-            function-owned post-loop values retain their reaching joins. A live join of
-            incompatible native borrow/storage forms reports `T0119`, rather than generating
-            an invalid carrier. Lender mutations remain prohibited while a dependent element
-            is live.
+            iteration acquires its loan before the element binding becomes live and retains
+            it throughout the loop body, even after the element's last use or if it is
+            unused. Independent collection access in that body reports `T0149`. Each loop
+            binder has its own declaration identity while live function-owned post-loop
+            values retain their reaching joins. A live join of incompatible native
+            borrow/storage forms reports `T0119`, rather than generating an invalid carrier.
+            Lender mutations remain prohibited while a dependent element is live. Ordered
+            and unordered map entry iteration retains local native lifetimes, including
+            nested maps; iteration does not require a static lender. Its ordinary snapshot
+            semantics and lender-mutation checks remain unchanged.
 
             Returning a collection of views borrowed from a local reports `T0240`.
             Constructing a returned collection from a lender parameter is not currently
@@ -688,12 +695,12 @@ documentation:
             Selected parameters enter the same completion-slot representation as locals.
             Anonymous callable bodies start with independent return and loop-control state
             even when declared inside try/catch/finally. A guaranteed inner finally rewrite
-            is visible to an outer catch; a conditional rewrite or a read before restoration
-            still reports `T0058`. A throwing replacement expression does not establish a
-            restored value on its failing path. Consuming a non-Copy native value directly
-            from an indexed collection place reports T0101. Obtain a named view from its
-            lender before invoking its consuming operation; indexed observations and proven
-            Copy consumption remain supported.
+            is visible to an outer catch; for an actually transferred value, a conditional
+            rewrite or a read before restoration still reports `T0058`. A throwing
+            replacement expression does not establish a restored value on its failing path.
+            Consuming a non-Copy native value directly from an indexed collection place
+            reports T0101. Obtain a named view from its lender before invoking its consuming
+            operation; indexed observations and proven Copy consumption remain supported.
 
             A shared-reference name or field may be protected by an operand-local receiver
             guard. A lifetime-bearing native result or borrowed native text from such a

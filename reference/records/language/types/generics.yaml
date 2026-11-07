@@ -255,6 +255,13 @@ documentation:
             concrete component to be cloneable and does not make a resource-owning or
             non-Clone selected application copyable.
 
+            Returning a narrowed `T|none` payload can transfer its owned value, including
+            from inside a loop: that return does not introduce another loop iteration. If a
+            `finally` body still observes the value, the return must preserve it. A concrete
+            Clone value can be copied for that purpose; a non-Clone or unconstrained generic
+            value reports `T0135` rather than transferring storage that the finalizer still
+            needs. Callable bodies have independent return boundaries.
+
             Every recursive cycle must retain a finite set of concrete applications.
             Semantic analysis rejects an expanding binder substitution, such as a call cycle
             that replaces `T` with a container of `T`, before Rust lowering. This proof
