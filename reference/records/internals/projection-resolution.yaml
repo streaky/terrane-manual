@@ -597,9 +597,12 @@ documentation:
 
             Current Rust storage still uses one binding across assignments. If that binding
             flows into an alias, the alias conservatively retains lenders from subsequent
-            reachable assignments too; conflicting writes to those newer lenders report
-            T0240 while the alias is live. This does not revive a value killed before the
-            alias was created, and post-last-use mutation remains valid.
+            reachable assignments too, including assignments through another local and
+            aliases created on branches or through native helper calls. The flow analysis
+            retains transitive alias-to-storage dependencies rather than only the current
+            producer's roots. Conflicting writes to those newer lenders report T0240 while
+            the alias is live. This does not revive a value killed before the alias was
+            created, and post-last-use mutation remains valid.
 
             Current `try` lowering captures its body and catch clauses in one closure.
             Native loans therefore keep captured lenders stable across that whole boundary,
@@ -608,10 +611,15 @@ documentation:
             borrow error. Acquire and consume the loan within one non-conflicting boundary,
             or move the lender mutation outside it. A non-Copy value acquired inside the
             boundary is consumed from its owned availability slot, not by copying a
-            reference. Consuming and rebinding an outer non-Copy native value cannot restore
-            the caller's binding: repeating forms and later reads after a non-repeating try
-            report T0058. Copy values and non-conflicting last-use/finally paths retain
-            their ordinary behavior. These are current closure-lowering limits, not a claim
+            reference. Consuming and rebinding an outer non-Copy value cannot restore the
+            caller's binding for a read in a catch or separate finally boundary, or for a
+            later reachable use without an intervening outside rewrite; these forms report
+            T0058. The rule includes consuming source-class receivers and Clone-only scoped
+            natives. An unconditional outside rewrite before every later use establishes a
+            new value; a conditional rewrite does not discharge the other path. A rewrite
+            and subsequent read within the same non-repeating body or finally retain
+            ordinary local ownership behavior, as do proven Copy values and non-conflicting
+            last-use/finally paths. These are current closure-lowering limits, not a claim
             that Rust could never express the operation.
 
             A shared-reference name or field may be protected by an operand-local receiver
@@ -1305,6 +1313,12 @@ documentation:
             same headers as explicitly typed receivers. Source methods on closed generic
             classes substitute the receiver's class arguments as well as the method's own
             parameters, including direct method-result demand.
+
+            Indexing a declared local collection follows its element header, including an
+            inferred local bound to that indexed result and each layer of nested indexing.
+            Lists select their element argument; maps and unordered maps select their value
+            argument, not the key. An isolated indexed call does not require a second call
+            elsewhere to demand its native member.
 
             Early demand discovery is not yet a complete higher-order type inference system.
             Results selected through function-typed parameters, interface-bounded generic

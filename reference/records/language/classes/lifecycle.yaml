@@ -85,10 +85,22 @@ documentation:
             original for scope-exit destruction. Parenthesizing the receiver and storing the
             binding across a `try`/`finally` boundary do not change this rule.
 
+            The same transfer rule applies to owned source fields, including grouped field
+            receivers. A consumed field is unavailable until it is initialized again;
+            reading or consuming it again reports T0101 rather than copying a fresh lineage.
+            A source field reached through a borrowed owner cannot be moved out: take an
+            owned intermediate value when ownership is available, or use a non-consuming
+            operation.
+
             Projected Rust value receivers retain their separately proven clone-conversion
             contract: a copyable projected value may be reused after a native consuming call
             when that conversion is available. This does not create an extra authored-class
             lifecycle lineage.
+
+            This conversion can also borrow an ordinary `ref` receiver or a projected field
+            reached through it when the foreign value has the required Clone capability. It
+            does not permit consuming a borrowed authored class, and Clone alone does not
+            grant the Copy capability required to duplicate a scoped native view.
   see-also: []
 
 provenance:
@@ -98,4 +110,9 @@ provenance:
   conformance:
     - awaited-destructor
     - awaited-destructor-native
+    - grouped-field-consuming-reuse
+    - field-concrete-grouped-consuming-reuse
+    - field-grouped-consuming-once
+    - field-borrowed-nested-consuming
+    - projected-native-alias-identity
   compiler: null

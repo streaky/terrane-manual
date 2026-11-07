@@ -37,6 +37,12 @@ documentation:
             implementations through `uses`, but is not itself a type or a subtyping
             relation.
 
+            A source interface cannot currently declare a method with its own generic
+            parameters. Such declarations report `T0012` before Rust lowering because the
+            generated dynamically dispatched protocol cannot represent them. Use a
+            non-generic interface method with a closed result type, or a generic method on
+            the concrete class instead. Interface-level type parameters remain supported.
+
             A declared interface may be prefixed with `unsafe` when implementing that
             interface asserts a contract beyond Terrane's static model. Safety is part of
             nominal interface identity: safe and unsafe same-name interfaces may coexist,

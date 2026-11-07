@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6dbef695f3adfc37c9fa012276427f6954000b3f518a4a0560d73a24c8821c9c
+  input-sha256: fe26b50250ec772b0c4d483912ea9347c28b553c7f94ec64566d68eb0b3fc29b
 format: 1
 generated: true
 symbols:
@@ -3414,6 +3414,10 @@ symbols:
   section: process
   declaration: 'flag:'
 - name: float
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: float
+- name: float
   record: lang.namespaces.name-resolution
   section: single-name-lookup
   declaration: float
@@ -3485,6 +3489,10 @@ symbols:
   record: tool.rust-package-integrations.godot
   section: gdextension-boundary
   declaration: float32
+- name: float64
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: float64
 - name: float64
   record: lang.namespaces.name-resolution
   section: single-name-lookup
@@ -4354,6 +4362,10 @@ symbols:
   section: declarations
   declaration: int
 - name: int
+  record: lang.declarations.globals
+  section: global-initialization
+  declaration: int
+- name: int
   record: lang.expressions.operators
   section: operators-precedence
   declaration: int
@@ -4464,6 +4476,10 @@ symbols:
 - name: int64
   record: internals.projection.resolution
   section: destination-results
+  declaration: int64
+- name: int64
+  record: lang.declarations.globals
+  section: global-initialization
   declaration: int64
 - name: int64
   record: lang.numerics.integers
@@ -5408,6 +5424,10 @@ symbols:
 - name: move
   record: lang.types.unions
   section: enums
+  declaration: move
+- name: move
+  record: std.collections
+  section: lookup
   declaration: move
 - name: ms
   record: tool.packages.testing
@@ -7038,6 +7058,10 @@ symbols:
 - name: ref
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: ref
+- name: ref
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: ref
 - name: ref
   record: lang.classes.methods
@@ -8684,12 +8708,20 @@ symbols:
   section: destination-results
   declaration: T0012
 - name: T0012
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: T0012
+- name: T0012
   record: lang.errors.contracts
   section: throwable-inference
   declaration: T0012
 - name: T0012
   record: manual.changelog.unreleased
   section: changes-2026-11-02
+  declaration: T0012
+- name: T0012
+  record: manual.changelog.unreleased
+  section: changes-2026-11-07
   declaration: T0012
 - name: T0012
   record: tool.packages.rust-dependencies
@@ -8730,6 +8762,10 @@ symbols:
 - name: T0058
   record: lang.types.references
   section: mutable-references
+  declaration: T0058
+- name: T0058
+  record: manual.changelog.unreleased
+  section: changes-2026-11-07
   declaration: T0058
 - name: T0064
   record: book.identity-and-movement
@@ -8786,6 +8822,10 @@ symbols:
 - name: T0135
   record: manual.changelog.unreleased
   section: changes-2026-11-05
+  declaration: T0135
+- name: T0135
+  record: manual.changelog.unreleased
+  section: changes-2026-11-07
   declaration: T0135
 - name: T0135
   record: tool.packages.rust-dependencies

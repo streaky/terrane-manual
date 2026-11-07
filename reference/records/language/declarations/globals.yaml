@@ -59,6 +59,11 @@ documentation:
             values are checked against that declaring binding's scalar type. An explicit,
             matching type on an update is permitted; a conflicting type is not.
 
+            This comparison uses the declared type, not whether one literal fits both
+            numeric ranges. `int64` is a fixed-width type distinct from arbitrary-precision
+            `int`; changing between them on an update is a conflict. The spellings `float`
+            and `float64` currently resolve to the same canonical type and may be mixed.
+
             Without a top-level declaration, a function-body `global` retains its existing
             declaration behavior and supplies the storage's scalar type. Unused-value
             warnings account for reads across the whole program, while an unrelated local

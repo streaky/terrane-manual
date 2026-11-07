@@ -149,17 +149,24 @@ documentation:
             - collection-lookup-errors
             - checked-map-int-refinement
           markdown: |-
-            `items[index]` and `items.get.checked; index` read lists and tuples. Default
-            indexing throws `index-error` when the integer is negative, unrepresentable, or
-            outside the collection. The checked form returns `Item|none`.
+            `items[index]`, `items.get; index`, and `items.get.checked; index` read lists
+            and tuples. Default indexing and `.get` throw `index-error` when the integer is
+            negative, unrepresentable, or outside the collection. The checked form returns
+            `Item|none`.
 
-            `mapping[key]` and `mapping.get.checked; key` read maps and unordered maps.
-            Default lookup throws `missing-key`; the checked form returns `Value|none`.
-            Absence is always requested through the `checked` child: the default operation
-            never silently returns `none`.
+            `mapping[key]`, `mapping.get; key`, and `mapping.get.checked; key` read maps and
+            unordered maps. Default lookup throws `missing-key`; the checked form returns
+            `Value|none`. Absence is always requested through the `checked` child: the
+            default operation never silently returns `none`.
 
             Index assignment and `.set` mutate their receiver and perform copy-on-write
             separation when another logical collection value retains the previous contents.
+
+            Copying an unconstrained generic element, including through indexed field
+            access, or mutating copy-on-write storage without the required element-copy
+            capability reports T0135. An explicit `move` of the newly inserted argument
+            alone does not establish that existing elements can be copied during separation.
+            Borrow elements when a snapshot is not required.
     - id: lists-and-tuples
       title: Lists and tuples
       blocks:
@@ -208,6 +215,9 @@ documentation:
             leaves storage unmodified. Set returns the resulting map. Keys, values, and
             entries return typed lists in the map's iteration order. An entry exposes cloned
             `.key` and `.value` properties.
+
+            Enumerating `.keys;` does not copy the values and therefore does not require the
+            map's value parameter to be cloneable.
 
             Iterating a map yields `entry of Key, Value`. A `for` loop may bind that entry
             as one value or destructure it directly as `for key, value in mapping`. The loop

@@ -229,7 +229,11 @@ documentation:
             type arguments, including phantom parameters, matching Rust's derived
             implementation. A field containing a non-Clone application does not make its
             enclosing class Clone. Method-generic arguments substitute throughout nested
-            result types, including explicitly applied instance calls.
+            result types, including explicitly applied instance calls. This conditional
+            capability follows generic parameters through applied and nested field types and
+            collections, not only through a bare parameter field. It still requires every
+            concrete component to be cloneable and does not make a resource-owning or
+            non-Clone selected application copyable.
 
             Every recursive cycle must retain a finite set of concrete applications.
             Semantic analysis rejects an expanding binder substitution, such as a call cycle
