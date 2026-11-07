@@ -89,6 +89,16 @@ documentation:
             `of (int, string)`. Parenthesize an applied construction designator:
             `instance (envelope of int); 41`. A function application remains an ordinary
             callee: `(identity of int); 41`.
+
+            Collection arguments substitute explicit callable and owner arguments before
+            contextual element validation. Filled constructors can infer an otherwise
+            unresolved element parameter; an empty constructor still needs a selected
+            destination and reports a source diagnostic when none exists. Lexical type
+            parameters already in scope remain valid contextual destinations. A static
+            member on a generic source class requires an applied owner, such as
+            `(envelope of int)::make`; the owner application survives both direct calls and
+            callable references even when the method has no type parameters of its own.
+            Projected native constructors retain their own inference and default rules.
         - type: example
           id: authored-generic-container
           title: A payload relationship declared once

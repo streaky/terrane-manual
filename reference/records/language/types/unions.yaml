@@ -40,10 +40,13 @@ documentation:
             heterogeneous scalar-union representation. Parameters, results, fields, globals
             and enum payloads containing distinct non-`none` scalar alternatives report
             `T0012`, including nested occurrences, rather than silently selecting the first
-            arm. Use an explicit enum for such boundaries. Local flow unions remain usable
-            for observation and narrowing, but cannot implicitly cross scalar, generic or
-            collection-element boundaries. Ordinary `T|none` optionals and aliases that
-            normalize to one canonical arm remain supported.
+            arm. Use an explicit enum for such boundaries. Local declared and branch-flow
+            unions remain usable for observation, reassignment within declared arms, and
+            narrowing. A proven reaching arm can cross a compatible scalar or generic
+            boundary; a still-mixed value receives a source diagnostic instead of an
+            implicit carrier conversion. Local aliases retain an independent carrier.
+            Ordinary `T|none` optionals and aliases that normalize to one canonical arm
+            remain supported.
 
             Repeated arms are normalized by canonical semantic identity. Each authored
             duplicate reports warning `W4003`, including duplicates written through
@@ -91,10 +94,14 @@ documentation:
         - type: markdown
           markdown: |-
             Within the guarded block, such a test narrows a named `T|none` binding to `T`.
-            Combining tests with `and` or `or` does not establish the narrowing fact, and
-            assigning to the binding invalidates it. Member, index, and call expressions are
-            not narrowing subjects because repeated evaluation may produce a different
-            result. Bind the expression once, then guard and use that stable name.
+            Conversely, `value is a none` selects the absent branch; its `else`, or the
+            continuation after that branch returns, can use the present value. These tests
+            inspect the same optional storage for parameters and locals, including optional
+            lists, rather than constructing a separate flow-union carrier. Combining tests
+            with `and` or `or` does not establish the narrowing fact, and assigning to the
+            binding invalidates it. Member, index, and call expressions are not narrowing
+            subjects because repeated evaluation may produce a different result. Bind the
+            expression once, then guard and use that stable name.
 
             A separate static return rule applies when a function or method declares a
             concrete return type `T`. An exact static `T|none` member may be returned after

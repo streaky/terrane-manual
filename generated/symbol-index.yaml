@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 92d5879e71c0c2f3569934044927762f8913923be8494297c6b934e32e8a1714
+  input-sha256: 9a1f9d8f606fb7a361cef2ab6cf626c54031b1f3fd77e13dc5feb019000ad963
 format: 1
 generated: true
 symbols:
@@ -8784,6 +8784,10 @@ symbols:
   section: task-ownership-lowering
   declaration: T0058
 - name: T0058
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0058
+- name: T0058
   record: lang.types.generics
   section: authored-bounds
   declaration: T0058
@@ -8831,6 +8835,10 @@ symbols:
   record: std.concurrency.shared-state
   section: unavailable-cells
   declaration: T0111
+- name: T0119
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0119
 - name: T0119
   record: manual.changelog.unreleased
   section: changes-2026-11-05

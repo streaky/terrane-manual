@@ -465,17 +465,23 @@ documentation:
               unions, ordinary optionals and canonical aliases remain supported. Use an
               explicit enum for heterogeneous declared boundaries. See
               [[lang.types.unions]].
-            - **Fixed — completion storage and native view loans.** Later reads retain
-              completion slots across accepted finally-only rewrites; reusable callables
-              remain callable. Written and inferred native references share canonical
-              identity, and local view collections keep their lenders protected through
-              aliases. Indexed non-Copy consumption remains a diagnosed restriction.
+            - **Fixed — completion storage and native view loans.** Locals and parameters
+              retain completion slots across accepted finally-only rewrites, including
+              restoration before an outer catch. Anonymous callable bodies have independent
+              completion state. Written and inferred native references share canonical
+              identity; local view lists and tuples protect their lenders through aliases
+              and appends without falsely consuming independent Copy views. Native members
+              remain available through value and reference iteration. Indexed non-Copy
+              consumption remains a diagnosed restriction.
             - **Fixed — value and destination boundaries.** Remaining owned snapshot
               positions reject illegal field copies. Recursive generic class markers and
-              explicit generic static calls lower correctly. Applied class types used as
-              values, incompatible local-union boundaries and unsupported callable result
-              upcasts receive source diagnostics. Empty list constructors retain return,
-              constructor-argument and optional-field destinations.
+              applied static-owner calls and references lower correctly. Applied class types
+              used as values and unsupported callable result upcasts receive source
+              diagnostics. Generic collection arguments substitute selected types before
+              contextual validation; filled literals retain inference, and empty literals
+              require a known destination. Local union boundaries use the proven reaching
+              arm, while unsupported mixed-carrier conversions remain diagnosed. Optional
+              presence guards preserve optional storage for both locals and parameters.
   see-also:
     - manual.changelog
     - lang.types.references

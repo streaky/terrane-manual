@@ -622,12 +622,29 @@ documentation:
             last-use/finally paths. These are current closure-lowering limits, not a claim
             that Rust could never express the operation.
 
-            Inferred local lists of native views retain their elements' lender provenance,
-            including through collection aliases. Moving or mutating the lender before the
-            collection's last use reports `T0240`; using the lender after that last use
-            remains valid. Inferred scoped families and written native types compare by
-            canonical native identity and type arguments without weakening reference
-            exclusivity or lifetime checks.
+            Inferred and declared local lists and tuples of native views retain their
+            elements' lender provenance, including through aliases and list append
+            operations. Copying a Copy view into a collection protects its original lender,
+            not the independent local holding that copy. A non-Copy view transfers once;
+            reusing that moved local reports `T0058`. Moving or mutating the lender before
+            the collection's last use reports `T0240`; using it afterwards remains valid.
+            Inferred scoped families and written native types compare by canonical native
+            identity and type arguments without weakening reference exclusivity or lifetime
+            checks. Declared collection storage also retains inferred native lifetime
+            metadata rather than materializing a static projection alias. Native method
+            lookup also recognizes the canonical expansion of a recorded alias while
+            retaining its selected forwarding target and error conversion; normalizing a
+            wrapper alias does not turn its methods into source methods.
+
+            Native element demand follows value and reference loop bindings, not only direct
+            member calls elsewhere. Value iteration copies proven Copy views; reference
+            iteration preserves the native receiver's borrow, and mutable-reference
+            iteration acquires its loan before the element binding becomes live. Accessing
+            the collection independently while that exclusive element loan remains live is
+            still rejected. Returning a collection of views borrowed from a local reports
+            `T0240`. General source-helper returns of native-view collections remain
+            unsupported, including parameter-rooted collections (`T0119`); keep the
+            collection in the caller rather than treating it as a declared lifetime API.
 
             Completion storage is selected from the same transfer facts as validation. A
             dominating rewrite solely in `finally` establishes the value observed after
@@ -641,9 +658,15 @@ documentation:
             function values are not treated as consumed merely by being called. Canonical
             native Copy evidence also applies to inferred scoped-view locals, indexed reads
             and arguments; an indexed Copy read does not consume its containing collection.
-            Consuming a non-Copy native value directly from an indexed collection place
-            reports T0101. Obtain a named view from its lender before invoking its consuming
-            operation; indexed observations and proven Copy consumption remain supported.
+            Selected parameters enter the same completion-slot representation as locals.
+            Anonymous callable bodies start with independent return and loop-control state
+            even when declared inside try/catch/finally. A guaranteed inner finally rewrite
+            is visible to an outer catch; a conditional rewrite or a read before restoration
+            still reports `T0058`. A throwing replacement expression does not establish a
+            restored value on its failing path. Consuming a non-Copy native value directly
+            from an indexed collection place reports T0101. Obtain a named view from its
+            lender before invoking its consuming operation; indexed observations and proven
+            Copy consumption remain supported.
 
             A shared-reference name or field may be protected by an operand-local receiver
             guard. A lifetime-bearing native result or borrowed native text from such a
@@ -657,10 +680,11 @@ documentation:
             native view only for an individual call is not itself a stored invocation-scoped
             view.
 
-            Reassigning a native view from a source helper requires compatible scoped
-            lifetime and region representations, not merely the same Terrane family name.
-            Unsupported representation changes report T0119 with lifetime/region detail.
-            Bind the helper result to a fresh local when it cannot replace existing storage.
+            Reassigning a native view from a source helper preserves canonical native
+            identity and the actual lender origins. A compatible helper result can replace a
+            prior view even when its inferred scoped region differs; later lender moves and
+            mutations remain subject to the ordinary loan checks. This is not a general
+            conversion between distinct native families or native payload arguments.
 
             Current storage limits remain narrower than direct Rust borrowing. A native
             result borrowing a literal can be consumed inline, but retaining that result in
