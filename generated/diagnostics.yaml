@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8ae387d543d5b71dffdfa695edf6211855b1c68572de4788d72f63bdb9e467ca
+  input-sha256: d16e0e9678492e110edc8a6bc76bac4552ba8cc362a809ffed3a41ce5288d07c
 format: 1
 generated: true
 diagnostics:
@@ -2265,7 +2265,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 1047
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 115
+    line: 97
 - code: T0102
   messages:
   - class `{name}` is not callable; construct it with `instance {name};`
@@ -2639,9 +2639,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scoped_regions/native_loans.rs
     line: 319
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 251
+    line: 233
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 449
+    line: 431
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 1616
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -3327,27 +3327,27 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 695
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 251
+    line: 233
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 273
+    line: 255
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 303
+    line: 285
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 435
+    line: 417
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 460
+    line: 442
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 731
+    line: 713
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 1330
+    line: 1312
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 1341
+    line: 1323
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 1371
+    line: 1353
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 1390
+    line: 1372
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
-    line: 1424
+    line: 1406
 - code: W4001
   messages:
   - binding `{}` is never read

@@ -633,17 +633,19 @@ documentation:
             not the independent local holding that copy. A non-Copy view transfers once;
             reusing that moved local reports `T0058`. Moving or mutating the lender before
             the collection's last use reports `T0240`; using it afterwards remains valid.
-            Straight-line rebinding of an independent Copy-view local uses separate reaching
-            storage, preserving RHS evaluation without tying an earlier snapshot to the
-            replacement lender. Captured, address-observable and control-flow-joined storage
-            retains its existing stable storage contract. Inferred scoped families and
-            written native types compare by canonical native identity and type arguments
-            without weakening reference exclusivity or lifetime checks. Declared collection
-            storage also retains inferred native lifetime metadata rather than materializing
-            a static projection alias. Native method lookup also recognizes the canonical
-            expansion of a recorded alias while retaining its selected forwarding target and
-            error conversion; normalizing a wrapper alias does not turn its methods into
-            source methods. Generic aliases retain their native constructor's methods after
+            Straight-line rebinding and unread nested stores of an independent Copy-view
+            local use separate reaching storage, preserving RHS evaluation without tying an
+            earlier snapshot to the replacement lender. Passing a view by value carries its
+            lender lifetime but does not borrow the local's address. Captured,
+            address-observable and live control-flow-joined storage retains its existing
+            stable storage contract. Inferred scoped families and written native types
+            compare by canonical native identity and type arguments without weakening
+            reference exclusivity or lifetime checks. Declared collection storage also
+            retains inferred native lifetime metadata rather than materializing a static
+            projection alias. Native method lookup also recognizes the canonical expansion
+            of a recorded alias while retaining its selected forwarding target and error
+            conversion; normalizing a wrapper alias does not turn its methods into source
+            methods. Generic aliases retain their native constructor's methods after
             expansion, while argument compatibility remains checked separately.
             Throwing-effect inference follows the selected callable contract too: a
             forwarded native error remains catchable through a source wrapper around an
