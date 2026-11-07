@@ -634,7 +634,11 @@ documentation:
             metadata rather than materializing a static projection alias. Native method
             lookup also recognizes the canonical expansion of a recorded alias while
             retaining its selected forwarding target and error conversion; normalizing a
-            wrapper alias does not turn its methods into source methods.
+            wrapper alias does not turn its methods into source methods. Generic aliases
+            retain their native constructor's methods after expansion, while argument
+            compatibility remains checked separately. Throwing-effect inference follows the
+            selected callable contract too: a forwarded native error remains catchable
+            through a source wrapper around an alias.
 
             Native element demand follows value and reference loop bindings, not only direct
             member calls elsewhere. Value iteration copies proven Copy views; reference
