@@ -40,6 +40,20 @@ documentation:
             unsafe interfaces with the same spelling remain distinct nominal owners; their
             inherited methods are collected independently.
 
+            Class and interface inheritance cycles, including cycles across namespaces,
+            report `T0054` before recursive member lookup. Inherited lookup retains the
+            declaring identity and substituted arguments without requiring the caller to
+            import every ancestor. Multiple import aliases do not create additional runtime
+            descendant variants; those variants are unique by canonical class identity.
+
+            An owned child-interface value can convert to its parent interface. Collections
+            remain invariant: `list of Child` does not convert wholesale to
+            `list of Parent`; convert elements when building the destination collection.
+            Borrowed interface parameters require the actual interface wrapper, not a
+            concrete implementer or a different child wrapper. First construct an
+            interface-typed local, then borrow that local. Unsupported container or
+            borrowed-wrapper conversions report `T0012`, not a backend type mismatch.
+
             Interfaces differ from unnamed structural protocols, which describe operation
             shapes without introducing declarations, nominal types, or dispatch objects.
             Traits are different as well: a trait contributes source fields and method

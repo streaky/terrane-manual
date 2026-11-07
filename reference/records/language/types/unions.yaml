@@ -36,6 +36,14 @@ documentation:
             accepted anywhere a source type is accepted, including bindings, parameters, and
             return types.
 
+            Current declared storage and callable boundaries do not implement a general
+            heterogeneous scalar-union representation. Parameters, results, fields and enum
+            payloads containing distinct non-`none` scalar alternatives report `T0012`,
+            including nested occurrences, rather than silently selecting the first arm. Use
+            an explicit enum for such boundaries. This restriction does not remove local
+            flow unions, ordinary `T|none` optionals or aliases that normalize to one
+            canonical arm.
+
             Repeated arms are normalized by canonical semantic identity. Each authored
             duplicate reports warning `W4003`, including duplicates written through
             different aliases of the same descriptor. Different source spellings therefore

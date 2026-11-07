@@ -90,7 +90,9 @@ documentation:
             reading or consuming it again reports T0101 rather than copying a fresh lineage.
             A source field reached through a borrowed owner cannot be moved out: take an
             owned intermediate value when ownership is available, or use a non-consuming
-            operation.
+            operation. Required non-Clone enum fields use the same one-time extraction,
+            including nested and consuming-`this` receivers. Repeated extraction remains an
+            error.
 
             Projected Rust value receivers retain their separately proven clone-conversion
             contract: a copyable projected value may be reused after a native consuming call
@@ -101,7 +103,9 @@ documentation:
             ordinary `ref` or `mutable ref` receivers, including projected fields reached
             through them, when the foreign value has the required Clone capability. It does
             not permit consuming a borrowed authored class, and Clone alone does not grant
-            the Copy capability required to duplicate a scoped native view.
+            the Copy capability required to duplicate a scoped native view. A successful
+            Clone conversion through `mutable ref` does not consume the reference:
+            subsequent conversion and ordinary observation remain valid.
   see-also: []
 
 provenance:

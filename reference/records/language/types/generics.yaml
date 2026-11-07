@@ -186,7 +186,10 @@ documentation:
             with inferred or explicit arguments. A different or missing bound does not
             establish conformance. The same checks apply to written field and parameter
             types. Members declared by that bound take precedence over same-named numeric
-            built-ins, and explicit type arguments do not grant mutation authority.
+            built-ins, and explicit type arguments do not grant mutation authority. This
+            includes arguments nested in explicit callable applications and applied
+            `implements` relations. An explicitly selected type parameter is retained even
+            when no runtime parameter mentions it.
 
             A source binder bound currently names an unapplied interface. Applied bounds,
             such as `T implements source of int`, are rejected during checking rather than
@@ -194,7 +197,10 @@ documentation:
             interfaces cannot currently serve as source binder bounds: a bare name leaves
             their slots open, while an applied bound is not supported. Use a closed
             interface value parameter when that is the intended contract. Native generic
-            bounds and their associated-equality proofs retain their separate rules.
+            bounds and their associated-equality proofs retain their separate rules. A
+            non-generic child interface may close a generic ancestor's arguments and supply
+            a usable bound; its inherited members retain that substitution. A bare generic
+            ancestor does not erase those arguments for bound forwarding.
 
             An unconstrained parameter grants no arbitrary methods, arithmetic, equality,
             default construction, or copying. A convenient concrete caller cannot rescue an

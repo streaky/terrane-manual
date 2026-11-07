@@ -622,6 +622,16 @@ documentation:
             last-use/finally paths. These are current closure-lowering limits, not a claim
             that Rust could never express the operation.
 
+            Completion storage is selected from the same transfer facts as validation. A
+            dominating rewrite solely in `finally` establishes the value observed after
+            completion, not only rewrites in the try body. Non-Copy by-value captures
+            include strings, collections, tuples and optionals as well as source classes; a
+            body-only rewrite does not restore availability for a separate finally closure's
+            read. Ordinary non-consuming observations do not force ownership-slot storage.
+            Canonical native Copy evidence also applies to inferred scoped-view locals,
+            indexed reads and arguments; an indexed Copy read does not consume its
+            containing collection.
+
             A shared-reference name or field may be protected by an operand-local receiver
             guard. A lifetime-bearing native result or borrowed native text from such a
             receiver is rejected with T0119 for both stored and inline use: its native

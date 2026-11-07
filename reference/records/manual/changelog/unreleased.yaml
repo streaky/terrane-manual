@@ -447,6 +447,22 @@ documentation:
               declared type, and global reads after updates no longer produce false
               never-read warnings. See [[lang.types.generics]] and
               [[lang.declarations.globals]].
+            - **Fixed — completion and field-transfer consistency.** Finally-only dominating
+              rewrites restore usable storage; by-value capture checks cover strings,
+              collections, tuples and optionals. Required non-Clone enum fields transfer
+              once, inferred native Copy views remain observable, and native Clone
+              conversion preserves mutable-reference availability.
+            - **Fixed — inherited and declared-type boundaries.** Class/interface cycles
+              report `T0054`; cross-namespace inherited lookup retains generic substitutions
+              and mutation modes. Owned interface upcasts work, while unsupported borrowed
+              wrapper and container conversions report `T0012`. Field defaults use their
+              declared destination, explicit unused generic arguments survive lowering, and
+              collection type expressions cannot stand in for values.
+            - **Clarified — heterogeneous scalar-union declarations.** General scalar-union
+              parameters, results, fields and enum payloads lack a declared runtime carrier
+              and now report `T0012` rather than selecting the first arm. Local flow unions,
+              ordinary optionals and canonical aliases remain supported. Use an explicit
+              enum for heterogeneous declared boundaries. See [[lang.types.unions]].
   see-also:
     - manual.changelog
     - lang.types.references

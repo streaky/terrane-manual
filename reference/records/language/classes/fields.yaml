@@ -60,6 +60,13 @@ documentation:
             and list, map, set, unordered-map, and unordered-set fields receive empty
             collections.
 
+            Explicit instance and static defaults are checked against their declared field
+            type in the declaring context. Incompatible defaults report `T0060` or the more
+            specific contextual literal diagnostic. A field declared `none` may explicitly
+            initialize to `none`. A typed collection field supplies the destination for its
+            empty constructor, including `list;` and `map;`; a type application such as
+            `list of int` is not itself a value constructor.
+
             Plain `none`, tuples, source objects, references, callables, resources, and
             unconstrained type parameters do not acquire a canonical default. A field
             without a canonical or explicit default is a required-construction field. The

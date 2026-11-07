@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f338c0e4296b67ab146d01cb1e2faf01b11629d818a7c0cf1514ae175e34a763
+  input-sha256: 57f79a1cf46f95ff40900bc7a1b26468e6efe9a52cce10c9ad691e7f9311fad1
 format: 1
 generated: true
 symbols:
@@ -3330,6 +3330,10 @@ symbols:
   section: strategy
   declaration: finally
 - name: finally
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: finally
+- name: finally
   record: lang.classes.lifecycle
   section: lifecycle
   declaration: finally
@@ -4120,6 +4124,10 @@ symbols:
 - name: implements
   record: lang.types.generics
   section: associated-interfaces
+  declaration: implements
+- name: implements
+  record: lang.types.generics
+  section: authored-bounds
   declaration: implements
 - name: implements
   record: tool.packages.rust-dependencies
@@ -8724,6 +8732,10 @@ symbols:
   section: throwable-inference
   declaration: T0012
 - name: T0012
+  record: lang.types.unions
+  section: unions
+  declaration: T0012
+- name: T0012
   record: manual.changelog.unreleased
   section: changes-2026-11-02
   declaration: T0012
@@ -8755,6 +8767,14 @@ symbols:
   record: book.types
   section: refinement-after-a-check
   declaration: T0031
+- name: T0054
+  record: lang.classes.interfaces
+  section: interfaces
+  declaration: T0054
+- name: T0054
+  record: manual.changelog.unreleased
+  section: changes-2026-11-07
+  declaration: T0054
 - name: T0055
   record: manual.changelog.unreleased
   section: changes-2026-11-05
@@ -8775,6 +8795,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-07
   declaration: T0058
+- name: T0060
+  record: lang.classes.fields
+  section: initialization
+  declaration: T0060
 - name: T0062
   record: lang.classes.interfaces
   section: interfaces
@@ -9442,6 +9466,10 @@ symbols:
 - name: this
   record: lang.classes.inheritance
   section: inheritance
+  declaration: this
+- name: this
+  record: lang.classes.lifecycle
+  section: lifecycle
   declaration: this
 - name: this
   record: lang.classes.methods
