@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8c3c66455187f5e3f210089d3a78c57ef0d9ead9c84828dd05f201019931c149
+  input-sha256: 76f4a5cf1b19a237a7633e862e787e7296cb3b069ec2389f6ef06af7db2abb7a
 format: 1
 generated: true
 symbols:
@@ -8796,6 +8796,10 @@ symbols:
   section: native-receiver-regions
   declaration: T0058
 - name: T0058
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: T0058
+- name: T0058
   record: lang.functions.declarations
   section: parameters-and-arguments
   declaration: T0058
@@ -8843,6 +8847,10 @@ symbols:
   record: lang.types.references
   section: provenance
   declaration: T0068
+- name: T0084
+  record: lang.functions.callable-types
+  section: exact-metadata
+  declaration: T0084
 - name: T0101
   record: internals.projection.resolution
   section: native-receiver-regions

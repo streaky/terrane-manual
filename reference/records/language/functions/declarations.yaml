@@ -247,6 +247,12 @@ documentation:
             exclusive borrow cannot be preserved this way: overlapping access reports
             `T0149`. Unrelated owners still transfer normally.
 
+            The receiver participates in the same call loan window when its invocation mode
+            borrows it. Earlier loans also remain active while evaluating nested owned call
+            arguments. Consuming receivers transfer ownership rather than introducing a
+            receiver loan. These rules preserve source evaluation order; a nested ref-only
+            observation does not require an owned snapshot.
+
             A final `name T ...` parameter captures zero or more remaining positional
             arguments as an ordinary `list of T`. It cannot have a default and cannot be
             bound by name. Fixed required and optional parameters may precede it:

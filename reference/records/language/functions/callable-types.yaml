@@ -202,6 +202,20 @@ documentation:
             generic parameter is not a capture, and a captured callable carrier's
             argument/result types do not themselves define its transferability.
 
+            Transferability is separate from environment lifetime. Consuming, mutable and
+            asynchronous owned carriers, returned shared callables and other escaping
+            callable destinations require a proven `'static` environment. An interface bound
+            proving `Send` or `Sync` does not prove `'static`; capturing such an otherwise
+            unconstrained generic in an escaping carrier reports `T0084`. The compiler does
+            not add an implicit lifetime bound to the enclosing generic function. Local
+            shared callables can retain a shorter inferred lifetime, including local aliases
+            and collections.
+
+            Creating an owned closure transfers a captured non-Clone binding when no Clone
+            conversion is available. A later closure cannot capture that same moved binding
+            again (`T0058`). One shared closure may still be invoked repeatedly; concrete
+            Clone captures can be preserved for multiple closures.
+
             An anonymous callable cannot return an ordinary reference borrowed from its
             captured environment. The current native callable ABI has no result lifetime
             lent by that environment, so Terrane reports T0145 before Rust lowering. This
