@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ff5c55d8890e7aaaa3ca187250a3dc0e5a940e5bf0020e847bb64e2233c041d6
+  input-sha256: 8bbbd200d31008a6e573c75153cbc3f2c17d1d735903ce8902b0bd3f7818aa85
 format: 1
 generated: true
 diagnostics:
@@ -1605,25 +1605,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1280
+    line: 1299
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1330
+    line: 1349
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1386
+    line: 1405
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch descriptor `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1354
+    line: 1373
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1395
+    line: 1414
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -3310,6 +3310,8 @@ diagnostics:
   - a loop cannot initialize a required field more than once
   - required field `{field}` must be initialized exactly once during construction
   sources:
+  - path: crates/terrane-compiler/src/semantics/analysis.rs
+    line: 1200
   - path: crates/terrane-compiler/src/semantics/initialization.rs
     line: 261
   - path: crates/terrane-compiler/src/semantics/initialization.rs
