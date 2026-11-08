@@ -904,6 +904,15 @@ documentation:
             direct invocation validation: a real consuming-method reference constructs a
             bound callable instead and must not be classified as a field snapshot.
 
+            Callable runtime demand follows the complete declared type graph, including
+            optional payloads in locals, fields, parameters and results. A mutable or
+            consuming callable initialized only with none still requires its carrier's
+            definition; constructing a closure elsewhere is not a prerequisite. The same
+            recursive traversal serves native helper ABI registration. Support remains
+            demand-driven: shared-only and callable-free programs do not gain mutable or
+            consuming carriers. Regression programs for absent closure construction stay
+            isolated so another scenario cannot supply the missing support.
+
             Runtime dependency features and crate spelling are separate obligations. When
             the resolved Tokio package is available under a Cargo alias, shared Rust IR
             binds that exact alias to the runtime's crate name for both applications and
