@@ -260,7 +260,10 @@ documentation:
             `finally` body still observes the value, the return must preserve it. A concrete
             Clone value can be copied for that purpose; a non-Clone or unconstrained generic
             value reports `T0135` rather than transferring storage that the finalizer still
-            needs. Callable bodies have independent return boundaries.
+            needs. Earlier observations or reads on non-returning loop paths do not
+            themselves require preserving a returned payload. Callable bodies have
+            independent return boundaries: a reusable callable cannot transfer a captured
+            unconstrained value, while its own owned parameter can be returned.
 
             Every recursive cycle must retain a finite set of concrete applications.
             Semantic analysis rejects an expanding binder substitution, such as a call cycle

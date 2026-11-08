@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: be0ab4db233ba8d6abb4d2d99e02db617c18f208527ac38d6f368cd90ea9c9dc
+  input-sha256: 8b1320be64bdd3ae5a9648f719c97224892e4522c3745cf655001b64552d38a9
 format: 1
 generated: true
 symbols:
@@ -8699,6 +8699,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: crossed-types
   declaration: T
+- name: T0001
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0001
 - name: T0002
   record: lang.classes.interfaces
   section: interfaces
@@ -8831,6 +8835,10 @@ symbols:
   record: lang.types.references
   section: provenance
   declaration: T0068
+- name: T0101
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: T0101
 - name: T0101
   record: manual.changelog.unreleased
   section: changes-2026-11-05

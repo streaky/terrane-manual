@@ -636,7 +636,13 @@ documentation:
             The moved-from view variable can receive a new view without changing the
             transferred value's lenders. A catch alias retains all body-reaching producers
             that its generated completion storage can observe, including a rebinding before
-            a throwing tail; it cannot erase the replacement lender's obligation.
+            a throwing tail; it cannot erase the replacement lender's obligation. Consuming
+            fluent calls and nested list constructors preserve that transfer distinction; a
+            genuinely borrowed receiver still pins its view storage. Ordered/unordered maps
+            require Clone-capable native elements and report `T0101` for non-Clone scoped
+            elements. Sets retain their scalar-element restriction (`T0001`), which rejects
+            native-view elements earlier. Lists retain their non-Clone storage path,
+            including ordinary per-iteration append without Clone-only bulk mutation.
             Straight-line rebinding and unread nested stores of an independent Copy-view
             local use separate reaching storage, preserving RHS evaluation without tying an
             earlier snapshot to the replacement lender. Passing a view by value carries its
@@ -670,7 +676,11 @@ documentation:
             Lender mutations remain prohibited while a dependent element is live. Ordered
             and unordered map entry iteration retains local native lifetimes, including
             nested maps; iteration does not require a static lender. Its ordinary snapshot
-            semantics and lender-mutation checks remain unchanged.
+            semantics and lender-mutation checks remain unchanged. Unordered maps protect
+            their value lenders before, during and after entry iteration until the dependent
+            collection or element's last use. Reusing a reference-loop binder name after
+            replacing the collection does not extend the previous loop's loan; live
+            references still prohibit owner replacement.
 
             Returning a collection of views borrowed from a local reports `T0240`.
             Constructing a returned collection from a lender parameter is not currently
