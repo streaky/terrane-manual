@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 88e6506c4bb6b09ffb4beb1dd87c0b070731cf26cfdbd26e42f2eef7d59e4ca1
+  input-sha256: aab4b0a7590fea3f2238d24e60181f1380be25273c417ac351c856d77bbaa39f
 format: 1
 generated: true
 symbols:
@@ -7679,6 +7679,10 @@ symbols:
   record: tool.diagnostics
   section: s2018
   declaration: S2018
+- name: S2021
+  record: lang.namespaces.scopes
+  section: scopes
+  declaration: S2021
 - name: S2022
   record: lang.namespaces.scopes
   section: scopes
@@ -8863,6 +8867,10 @@ symbols:
   record: lang.types.references
   section: provenance
   declaration: T0068
+- name: T0072
+  record: lang.classes.fields
+  section: initialization
+  declaration: T0072
 - name: T0084
   record: lang.functions.callable-types
   section: exact-metadata
@@ -8879,6 +8887,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: T0101
+- name: T0105
+  record: lang.classes.fields
+  section: initialization
+  declaration: T0105
 - name: T0111
   record: std.concurrency.shared-state
   section: unavailable-cells

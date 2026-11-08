@@ -62,6 +62,11 @@ documentation:
             right. Arithmetic, shift, bitwise, `and`, and `or` operators associate to the
             left. Unary `+` is not defined.
 
+            Grouping a call used as a statement does not discard its execution: nested
+            parentheses preserve its side effects and ordinary statement behavior, including
+            collection mutation, awaiting and throwing. Grouping changes neither assignment
+            destination identity nor replacement permissions.
+
             Binary `+` also concatenates when either operand has type `string` and the other
             supports text display. This uses the same additive precedence and left
             association as numeric addition. A later string or a string destination never

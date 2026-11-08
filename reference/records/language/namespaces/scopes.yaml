@@ -77,6 +77,13 @@ documentation:
             produces `S2022`; initializer self-reference produces `S2023`; and a namespace
             initialization cycle produces `S2024`.
 
+            Parentheses around an assignment place preserve the same binding identity and
+            restrictions. A plain function-body replacement of a namespace or program-global
+            binding reports `S2021`; parentheses do not substitute for an explicit `global`
+            write. Grouped replacements of constants still report `S2022`. Local grouped
+            replacements retain the same availability, ownership and write-event bookkeeping
+            as bare-name replacements.
+
             A duplicate lexical binding produces `S2012`, while an unresolved source name
             produces `S2013`. A duplicate namespace declaration produces `S2005`. Import
             failures remain distinct: `S2009` identifies an unresolved imported name,

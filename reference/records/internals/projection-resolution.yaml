@@ -907,20 +907,29 @@ documentation:
             check and report T0135, including optional presence observations, direct calls
             and explicit moves. Static-slot take and borrowed presence lowering are current
             gaps, not implicit operations. Binding and assignment consumers share canonical
-            target selection: an Assignment writes its first child; a Binding declares its
-            own name. A bare RHS name is never a destination, declaration or skipped
-            ownership read. A required field's repeated-write error takes precedence over an
-            ownership error in the same assignment's operand. Unrelated initialization
-            validation retains its phase after call and availability checks. Static
-            destinations validate the RHS against the declared field type and remain
-            capture-escape roots. Grouped targets preserve the static write through
-            ownership validation and lowering. RHS evaluation precedes slot acquisition. A
-            write through a mutable reference still uses its handle and must validate
-            moved-handle ownership; the static-place exemption does not apply to it. Shared
-            and mutable static callable fields use the existing guarded owned snapshot
-            expression before invocation, with the guard released before the call or await;
-            they never synthesize a static method. Mutable snapshot invocation changes only
-            that snapshot's environment, not the stored callable.
+            target selection: an Assignment writes its first child after transparent group
+            normalization; a Binding declares its own name. A bare RHS name is never a
+            destination, declaration or skipped ownership read. A required field's
+            repeated-write error takes precedence over an ownership error in the same
+            assignment's operand. Unrelated initialization validation retains its phase
+            after call and availability checks. Static destinations validate the RHS against
+            the declared field type and remain capture-escape roots. Grouped targets
+            preserve the static write through ownership validation and lowering. RHS
+            evaluation precedes slot acquisition. A write through a mutable reference still
+            uses its handle and must validate moved-handle ownership; the static-place
+            exemption does not apply to it. Shared and mutable static callable fields use
+            the existing guarded owned snapshot expression before invocation, with the guard
+            released before the call or await; they never synthesize a static method.
+            Mutable snapshot invocation changes only that snapshot's environment, not the
+            stored callable. Static assignment validation first uses canonical static-member
+            resolution, preserving T0105 for missing or instance-only members and T0072 for
+            read-only static methods. Staged replacements retain the complete declared
+            destination type so Rust can coerce optional callable payloads to their erased
+            ABI. Snapshot expressions are parenthesized as callees even in discarded-result
+            statements. Statement dispatch unwraps transparent groups while retaining the
+            original statement span for callable-drop bookkeeping; grouped calls execute
+            rather than disappearing. Grouped name places share declaration, constant,
+            availability, mutation and write-event analysis with ungrouped places.
 
             Callable runtime demand follows the complete declared type graph, including
             optional payloads in locals, fields, parameters and results. A mutable or

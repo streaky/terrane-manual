@@ -132,14 +132,19 @@ documentation:
             right-hand side is a bare function name or `none`. Parentheses around the
             destination preserve the write. Storing an owned consuming closure transfers it;
             subsequent reuse of that local reports `T0058`. The right-hand side is evaluated
-            once, before acquiring the destination slot.
+            once, before acquiring the destination slot. Missing static members and
+            instance-only members used through `::` report `T0105`; attempting to assign an
+            existing static method reports the distinct read-only-member diagnostic `T0072`.
+            Replacement keeps the field's complete declared type, including optional
+            callable erasure, while staging the new value before locking the slot.
 
             Direct calls of shared or mutable callable static fields first take an owned
             snapshot and release the slot guard, then invoke that snapshot with its declared
             async and throwing contract. Unlike an instance mutable callable field, each
             direct static call therefore uses a fresh copy of its environment. A local
             snapshot retains its own state across repeated calls. Real static methods
-            continue to use method dispatch.
+            continue to use method dispatch. The same invocation rules apply when the result
+            is discarded in a statement, including calls with arguments.
 
             Static slots containing consuming callables currently cannot be read, including
             optional presence comparisons and explicit moves out of the slot (`T0135`).
