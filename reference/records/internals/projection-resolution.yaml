@@ -908,7 +908,9 @@ documentation:
             and explicit moves. Static-slot take and borrowed presence lowering are current
             gaps, not implicit operations. The ownership visitor distinguishes assignment
             places from value operands so writes remain valid without exempting their RHS
-            reads.
+            reads. A write through a mutable reference still uses its handle and must
+            validate moved-handle ownership; the static-place exemption does not apply to
+            it.
 
             Callable runtime demand follows the complete declared type graph, including
             optional payloads in locals, fields, parameters and results. A mutable or
