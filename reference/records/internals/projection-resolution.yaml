@@ -911,7 +911,11 @@ documentation:
             recursive traversal serves native helper ABI registration. Support remains
             demand-driven: shared-only and callable-free programs do not gain mutable or
             consuming carriers. Regression programs for absent closure construction stay
-            isolated so another scenario cannot supply the missing support.
+            isolated so another scenario cannot supply the missing support. Owned mutable
+            and consuming carriers expose public construction and invocation operations
+            alongside their public types, including when only a declaration requires a
+            carrier. Type-only programs remain warning-free without creating a dummy closure
+            or suppressing dead-code diagnostics.
 
             Runtime dependency features and crate spelling are separate obligations. When
             the resolved Tokio package is available under a Cargo alias, shared Rust IR
