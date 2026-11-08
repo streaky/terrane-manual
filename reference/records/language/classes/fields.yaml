@@ -103,10 +103,10 @@ documentation:
             `T0135`. Snapshot reads include local aliases, unused reads and method return
             values: the consuming carrier cannot be cloned. This also applies through a
             nullable field type and to asynchronous consuming callables. When ownership
-            permits, explicitly move the field into a local binding or out of a consuming
-            method, then invoke the resulting callable once. There is no implicit field-take
-            operation. A reference to a real consuming method still constructs an owned
-            bound callable rather than snapshotting a field.
+            permits, explicitly move an instance field into a local binding or out of a
+            consuming method, then invoke the resulting callable once. There is no implicit
+            field-take operation. A reference to a real consuming method still constructs an
+            owned bound callable rather than snapshotting a field.
 
             A field and a real method cannot share a name within the same effective instance
             or static member namespace (`T0063`). This includes inheritance and trait
@@ -127,6 +127,14 @@ documentation:
             checked storage without an object-handle allocation. Mutable calls and nested
             writes use live storage rather than snapshots. Separate source operations are
             not a transaction. Explicit native synchronization retains its own contract.
+
+            Static slots containing consuming callables currently cannot be read, including
+            optional presence comparisons and explicit moves out of the slot (`T0135`).
+            Declaring such a slot or assigning an owned callable into it remains supported.
+            Static-slot reads require Clone snapshots; guarded presence borrowing and static
+            ownership transfer are not yet supported. Use local or instance storage when the
+            consuming callable must be observed or transferred. Shared and mutable callable
+            static slots retain their existing snapshot behavior.
     - id: declaration
       title: Declaring field metadata
       blocks:

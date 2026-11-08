@@ -902,7 +902,13 @@ documentation:
             non-copyable field-snapshot diagnostic, not a Rust reference clone or an
             implicit take. This classification reuses effective instance-field lookup with
             direct invocation validation: a real consuming-method reference constructs a
-            bound callable instead and must not be classified as a field snapshot.
+            bound callable instead and must not be classified as a field snapshot. Static
+            consuming-callable reads use a separate class-designator/effective-static-field
+            check and report T0135, including optional presence observations, direct calls
+            and explicit moves. Static-slot take and borrowed presence lowering are current
+            gaps, not implicit operations. The ownership visitor distinguishes assignment
+            places from value operands so writes remain valid without exempting their RHS
+            reads.
 
             Callable runtime demand follows the complete declared type graph, including
             optional payloads in locals, fields, parameters and results. A mutable or
