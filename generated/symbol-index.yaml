@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3058d9d9808bfb7faf39551f87a4777ede0d6af4ab256d768c9b061adad3e1ae
+  input-sha256: 8c3c66455187f5e3f210089d3a78c57ef0d9ead9c84828dd05f201019931c149
 format: 1
 generated: true
 symbols:
@@ -8796,6 +8796,10 @@ symbols:
   section: native-receiver-regions
   declaration: T0058
 - name: T0058
+  record: lang.functions.declarations
+  section: parameters-and-arguments
+  declaration: T0058
+- name: T0058
   record: lang.types.generics
   section: authored-bounds
   declaration: T0058
@@ -8884,6 +8888,10 @@ symbols:
   section: lowering
   declaration: T0135
 - name: T0135
+  record: lang.functions.declarations
+  section: parameters-and-arguments
+  declaration: T0135
+- name: T0135
   record: lang.types.generics
   section: authored-bounds
   declaration: T0135
@@ -8942,6 +8950,10 @@ symbols:
 - name: T0149
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: T0149
+- name: T0149
+  record: lang.functions.declarations
+  section: parameters-and-arguments
   declaration: T0149
 - name: T0226
   record: internals.semantics.descriptor-contracts

@@ -239,6 +239,14 @@ documentation:
             source-class parameters. Omitting it supplies `none`; it does not remove the
             parameter from the call. The same rule applies to class constructors.
 
+            Arguments borrow their source places until the call completes. When an earlier
+            read-only argument borrows a value and a later argument takes that same value by
+            ownership, a proven Clone conversion preserves the borrowed place. This includes
+            calls through function values and aliases. A generic value without a Clone proof
+            reports `T0135`; an explicit overlapping move reports `T0058`. An earlier
+            exclusive borrow cannot be preserved this way: overlapping access reports
+            `T0149`. Unrelated owners still transfer normally.
+
             A final `name T ...` parameter captures zero or more remaining positional
             arguments as an ordinary `list of T`. It cannot have a default and cannot be
             bound by name. Fixed required and optional parameters may precede it:
