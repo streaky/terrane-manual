@@ -896,7 +896,13 @@ documentation:
             initialization slots. Callable name-call inference, argument validation and
             consuming-move tracking use the canonical reaching read type rather than the
             binding's declared nullable carrier. A narrowed consuming callable is extracted
-            through owned storage, not borrowed from its Option representation.
+            through owned storage, not borrowed from its Option representation. Consuming
+            callable field payloads are non-Clone, including asynchronous and optional
+            carriers. Owned aliases and return operands therefore use the existing
+            non-copyable field-snapshot diagnostic, not a Rust reference clone or an
+            implicit take. This classification reuses effective instance-field lookup with
+            direct invocation validation: a real consuming-method reference constructs a
+            bound callable instead and must not be classified as a field snapshot.
 
             Runtime dependency features and crate spelling are separate obligations. When
             the resolved Tokio package is available under a Cargo alias, shared Rust IR

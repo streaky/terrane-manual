@@ -99,11 +99,14 @@ documentation:
             Required fields retain their declared async and throwing callable contracts;
             their internal initialization slots never become callable or optional values.
 
-            An implicit call through a consuming callable field reports `T0135`. When
-            ownership permits, explicitly move the field into a local binding, then invoke
-            that local; the callable can be consumed only once. This applies to synchronous
-            and asynchronous consuming callable fields without introducing an implicit
-            field-take operation.
+            An implicit call or owned snapshot of a consuming callable field reports
+            `T0135`. Snapshot reads include local aliases, unused reads and method return
+            values: the consuming carrier cannot be cloned. This also applies through a
+            nullable field type and to asynchronous consuming callables. When ownership
+            permits, explicitly move the field into a local binding or out of a consuming
+            method, then invoke the resulting callable once. There is no implicit field-take
+            operation. A reference to a real consuming method still constructs an owned
+            bound callable rather than snapshotting a field.
 
             A field and a real method cannot share a name within the same effective instance
             or static member namespace (`T0063`). This includes inheritance and trait
