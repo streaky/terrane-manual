@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a4c40841681194d5ba497f53e0e32dd90b916493f28da6bee674538b5c792ce6
+  input-sha256: 4c775114b1ba4aeee337da808d5f43488550840bcaac6f7db44a132ade3ade3d
 format: 1
 generated: true
 diagnostics:
@@ -1259,7 +1259,7 @@ diagnostics:
   - numeric destination is ambiguous between {}
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1103
+    line: 1110
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 331
   - path: crates/terrane-compiler/src/semantics/collections.rs
@@ -1412,35 +1412,35 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 121
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 314
+    line: 321
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 327
+    line: 334
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 404
+    line: 411
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 501
+    line: 508
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 522
+    line: 529
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1088
+    line: 1095
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1443
+    line: 1450
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1454
+    line: 1461
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1467
+    line: 1474
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1481
+    line: 1488
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1784
+    line: 1791
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1804
+    line: 1811
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1898
+    line: 1905
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1935
+    line: 1942
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 2002
+    line: 2009
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 300
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1550,7 +1550,7 @@ diagnostics:
   - iteration item of type `{other}` does not support {}-target destructuring
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 585
+    line: 592
   - path: crates/terrane-compiler/src/semantics/contracts.rs
     line: 267
   - path: crates/terrane-compiler/src/semantics/model.rs
@@ -1588,7 +1588,7 @@ diagnostics:
   - '`.coerce` and its policy members are not storable values before bound methods exist'
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 954
+    line: 961
   - path: crates/terrane-compiler/src/semantics/descriptors.rs
     line: 725
 - code: T0019
@@ -1767,7 +1767,7 @@ diagnostics:
   - '`{callee_type}` value cannot be called'
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 292
+    line: 299
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1211
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -2519,7 +2519,7 @@ diagnostics:
   - "\n                    },\n                    format!(\n                        "
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 443
+    line: 450
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 1122
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
@@ -2676,21 +2676,21 @@ diagnostics:
   - interface-typed values cannot select a projected source generic bound
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 692
+    line: 699
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 720
+    line: 727
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 730
+    line: 737
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 763
+    line: 770
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 810
+    line: 817
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 836
+    line: 843
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 844
+    line: 851
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 858
+    line: 865
 - code: T0122
   messages:
   - class `{}` cannot implement authored interface `{}` because field `{}` does not satisfy the {requirement}
@@ -2730,9 +2730,9 @@ diagnostics:
     obligation
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 877
+    line: 884
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 922
+    line: 929
 - code: T0127
   messages:
   - projected interface `{}` requires all associated types to be closed
@@ -3029,7 +3029,7 @@ diagnostics:
     pass the owning shared reference to a `shared ref` parameter instead
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1599
+    line: 1606
 - code: T0142
   messages:
   - an ordinary observer cannot be reassigned between plain and shared-backed storage; use a separate
@@ -3085,9 +3085,9 @@ diagnostics:
   - mutable reference requires a mutable owned place or an existing mutable reference
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 704
+    line: 711
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1624
+    line: 1631
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 3186
   - path: crates/terrane-compiler/src/semantics/reference_validation.rs
@@ -3100,9 +3100,9 @@ diagnostics:
   - cannot access owner `{owner_name}` while an exclusive mutable reference is live
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1065
+    line: 1072
   - path: crates/terrane-compiler/src/semantics/calls.rs
-    line: 1754
+    line: 1761
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 2262
   - path: crates/terrane-compiler/src/semantics/ownership.rs
