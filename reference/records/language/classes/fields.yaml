@@ -91,6 +91,14 @@ documentation:
             its field. Inherited initializers retain their declaring source and object
             context. Omission never infers a type or invokes an arbitrary constructor.
 
+            A callable field is a value, not a method reference. Direct invocation calls its
+            initialized payload, including through `this`, inheritance and reference
+            receivers. Reading it into a local follows the callable's value-separation
+            contract. Invoking a mutable callable field updates its stored environment;
+            invoking an independent local copy does not change that field's environment.
+            Required fields retain their declared async and throwing callable contracts;
+            their internal initialization slots never become callable or optional values.
+
             Authored static fields share one lazily initialized slot per effective class. An
             object-valued slot owns a shared handle to its current object. A method call
             captures that handle before evaluating arguments; replacing the slot installs a

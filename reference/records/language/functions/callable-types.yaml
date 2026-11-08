@@ -211,6 +211,13 @@ documentation:
             shared callables can retain a shorter inferred lifetime, including local aliases
             and collections.
 
+            Storing a callable through a collection reference parameter, including a
+            reference alias or nested collection destination, is an escape. Collection
+            parameter and class-field declarations also fix their callable payloads to the
+            declared owned ABI, so stores there require the same lifetime proof. An
+            independent local collection copy may still infer a shorter lifetime; copying it
+            does not change the caller's collection.
+
             Creating an owned closure transfers a captured non-Clone binding when no Clone
             conversion is available. A later closure cannot capture that same moved binding
             again (`T0058`). One shared closure may still be invoked repeatedly; concrete

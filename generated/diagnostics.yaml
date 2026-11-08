@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ba7dcfba40c9183452bb7116768ddf26acc16a04ec101a63fb49b0caaac6a05a
+  input-sha256: ee8491393b4ef06a55952ff0df37e01eac56cce86641111b452ffa015e2f5b75
 format: 1
 generated: true
 diagnostics:
@@ -2196,7 +2196,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 1751
   - path: crates/terrane-compiler/src/semantics/bindings/capture_lifetimes.rs
-    line: 274
+    line: 296
 - code: T0085
   messages:
   - projected callback requires shareable captured values (`Sync`)

@@ -881,9 +881,14 @@ documentation:
             representation and transition into plain initialized fields, not unchecked
             access to storage that may still be absent on a failing construction path.
             Projected native fields retain native storage and construction recipes instead.
-            Cached construction types may specialize only the same nominal owner selected in
-            the current lowering context. An inherited static body that constructs self must
-            retain the derived owner, not the original body's cached base owner.
+            Callable field selection precedes bound-method adaptation: direct invocation
+            reads the initialized payload, while a value alias uses ordinary field snapshot
+            conversion. Mutable owned carriers synchronize their environment through a
+            shared Rust reference, so calling one borrows its live payload without cloning
+            its state or mutably borrowing its initialization slot. Cached construction
+            types may specialize only the same nominal owner selected in the current
+            lowering context. An inherited static body that constructs self must retain the
+            derived owner, not the original body's cached base owner.
 
             Runtime dependency features and crate spelling are separate obligations. When
             the resolved Tokio package is available under a Cargo alias, shared Rust IR
