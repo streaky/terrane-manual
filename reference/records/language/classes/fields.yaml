@@ -128,6 +128,19 @@ documentation:
             writes use live storage rather than snapshots. Separate source operations are
             not a transaction. Explicit native synchronization retains its own contract.
 
+            Static assignments use the field's declared destination type, including when the
+            right-hand side is a bare function name or `none`. Parentheses around the
+            destination preserve the write. Storing an owned consuming closure transfers it;
+            subsequent reuse of that local reports `T0058`. The right-hand side is evaluated
+            once, before acquiring the destination slot.
+
+            Direct calls of shared or mutable callable static fields first take an owned
+            snapshot and release the slot guard, then invoke that snapshot with its declared
+            async and throwing contract. Unlike an instance mutable callable field, each
+            direct static call therefore uses a fresh copy of its environment. A local
+            snapshot retains its own state across repeated calls. Real static methods
+            continue to use method dispatch.
+
             Static slots containing consuming callables currently cannot be read, including
             optional presence comparisons and explicit moves out of the slot (`T0135`).
             Declaring such a slot or assigning an owned callable into it remains supported.

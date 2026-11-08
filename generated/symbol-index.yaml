@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ce174fe91fe53f1eee54d43a66e0556bfb627c9d674f11b1a10237d11466ab0b
+  input-sha256: 382983918c2ce09fa67f06f4cc4f4cbb3f549103c4383b4b0a3a2065fd0be69e
 format: 1
 generated: true
 symbols:
@@ -8798,6 +8798,10 @@ symbols:
 - name: T0058
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: T0058
+- name: T0058
+  record: lang.classes.fields
+  section: initialization
   declaration: T0058
 - name: T0058
   record: lang.functions.callable-types
