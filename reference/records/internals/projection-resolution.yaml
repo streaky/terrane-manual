@@ -883,8 +883,10 @@ documentation:
             Projected native fields retain native storage and construction recipes instead.
             Callable field selection precedes bound-method adaptation: direct invocation
             reads the initialized payload, while a value alias uses ordinary field snapshot
-            conversion. Mutable owned carriers synchronize their environment through a
-            shared Rust reference, so calling one borrows its live payload without cloning
+            conversion. A default function may contribute callable contract metadata without
+            making the field a method; calls still read the current field value, including
+            after reassignment. Mutable owned carriers synchronize their environment through
+            a shared Rust reference, so calling one borrows its live payload without cloning
             its state or mutably borrowing its initialization slot. Cached construction
             types may specialize only the same nominal owner selected in the current
             lowering context. An inherited static body that constructs self must retain the
