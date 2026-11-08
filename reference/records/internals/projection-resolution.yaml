@@ -643,10 +643,18 @@ documentation:
             elements. Sets retain their scalar-element restriction (`T0001`), which rejects
             native-view elements earlier. Lists retain their non-Clone storage path,
             including ordinary per-iteration append without Clone-only bulk mutation.
-            Straight-line rebinding and unread nested stores of an independent Copy-view
-            local use separate reaching storage, preserving RHS evaluation without tying an
-            earlier snapshot to the replacement lender. Passing a view by value carries its
-            lender lifetime but does not borrow the local's address. Captured,
+            Storing a local view through a mutable-reference list or map parameter reports
+            `T0240`: the destination belongs to the caller even when its parameter or alias
+            is declared in the current function. The check follows the actual collection
+            owner and stored value through nested ordered/unordered maps and local aliases;
+            a local collection within the lender's region remains valid. These checks do not
+            infer a lifetime relationship between a separate native view parameter and a
+            collection parameter. Missing native source-lifetime evidence still reports
+            `T0119`; broader parameter-lifetime inference is not part of this storage
+            contract. Straight-line rebinding and unread nested stores of an independent
+            Copy-view local use separate reaching storage, preserving RHS evaluation without
+            tying an earlier snapshot to the replacement lender. Passing a view by value
+            carries its lender lifetime but does not borrow the local's address. Captured,
             address-observable and live control-flow-joined storage retains its existing
             stable storage contract. Inferred scoped families and written native types
             compare by canonical native identity and type arguments without weakening

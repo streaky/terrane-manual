@@ -192,7 +192,13 @@ documentation:
             captures, even for local invocation or a native destination without those
             markers. Non-transferable or non-shareable captures report T0084 or T0085 rather
             than a native backend error. Lexically borrowed local environments use a
-            separate runtime and do not acquire these owned-environment requirements.
+            separate runtime and do not acquire these owned-environment requirements. This
+            includes unresolved generic captures and generic payloads nested in owned
+            collections or class fields. A consuming callable does not waive these
+            requirements: all executor modes use the same owned carrier. The compiler
+            reports the missing capability rather than adding an implicit generic bound. A
+            callable's own generic parameter is not a capture, and a captured callable
+            carrier's argument/result types do not themselves define its transferability.
 
             An anonymous callable cannot return an ordinary reference borrowed from its
             captured environment. The current native callable ABI has no result lifetime

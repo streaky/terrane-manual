@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8b1320be64bdd3ae5a9648f719c97224892e4522c3745cf655001b64552d38a9
+  input-sha256: 3058d9d9808bfb7faf39551f87a4777ede0d6af4ab256d768c9b061adad3e1ae
 format: 1
 generated: true
 symbols:
@@ -8811,6 +8811,10 @@ symbols:
   record: internals.projection.resolution
   section: native-receiver-regions
   declaration: T0059
+- name: T0059
+  record: lang.types.references
+  section: provenance
+  declaration: T0059
 - name: T0060
   record: lang.classes.fields
   section: initialization
@@ -9894,6 +9898,10 @@ symbols:
 - name: try
   record: lang.errors.handling
   section: structured-errors
+  declaration: try
+- name: try
+  record: lang.types.generics
+  section: authored-bounds
   declaration: try
 - name: try
   record: tool.packages.rust-dependencies

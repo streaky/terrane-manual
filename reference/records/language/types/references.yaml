@@ -58,6 +58,14 @@ documentation:
             copies shared ownership instead; it does not require an external reference
             lender.
 
+            Reassigning an ordinary read-only reference selects the new reaching lender
+            without changing the provenance of earlier reads. Aliases retain every possible
+            lender at a control-flow join; mutation of a still-observed lender reports
+            `T0059`. A later return may select the new parameter lender after a
+            straight-line reassignment, including after reading the old reference. A return
+            joining distinct parameter lenders remains unsupported (`T0068`); reassignment
+            does not widen either lifetime.
+
             Anonymous callables returning an ordinary reference into their captured
             environment are currently unsupported and receive `T0145` before native
             lowering. Return a reference lent by an explicit reference parameter, or an

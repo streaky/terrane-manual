@@ -265,6 +265,11 @@ documentation:
             independent return boundaries: a reusable callable cannot transfer a captured
             unconstrained value, while its own owned parameter can be returned.
 
+            Catch handlers and reads after a `try` also require preserving the original
+            value when a throwing return operand can take those paths. Later owned arguments
+            within the same returned call require the same Clone capability; borrowed
+            arguments and a single final owned transfer do not.
+
             Every recursive cycle must retain a finite set of concrete applications.
             Semantic analysis rejects an expanding binder substitution, such as a call cycle
             that replaces `T` with a container of `T`, before Rust lowering. This proof
