@@ -909,15 +909,18 @@ documentation:
             gaps, not implicit operations. Binding and assignment consumers share canonical
             target selection: an Assignment writes its first child; a Binding declares its
             own name. A bare RHS name is never a destination, declaration or skipped
-            ownership read. Static destinations validate the RHS against the declared field
-            type and remain capture-escape roots. Grouped targets preserve the static write
-            through ownership validation and lowering. RHS evaluation precedes slot
-            acquisition. A write through a mutable reference still uses its handle and must
-            validate moved-handle ownership; the static-place exemption does not apply to
-            it. Shared and mutable static callable fields use the existing guarded owned
-            snapshot expression before invocation, with the guard released before the call
-            or await; they never synthesize a static method. Mutable snapshot invocation
-            changes only that snapshot's environment, not the stored callable.
+            ownership read. Required-field constructor initialization is validated before
+            ownership transfers, so an invalid repeated destination write retains T0222
+            rather than being masked by a moved RHS. Static destinations validate the RHS
+            against the declared field type and remain capture-escape roots. Grouped targets
+            preserve the static write through ownership validation and lowering. RHS
+            evaluation precedes slot acquisition. A write through a mutable reference still
+            uses its handle and must validate moved-handle ownership; the static-place
+            exemption does not apply to it. Shared and mutable static callable fields use
+            the existing guarded owned snapshot expression before invocation, with the guard
+            released before the call or await; they never synthesize a static method.
+            Mutable snapshot invocation changes only that snapshot's environment, not the
+            stored callable.
 
             Callable runtime demand follows the complete declared type graph, including
             optional payloads in locals, fields, parameters and results. A mutable or
