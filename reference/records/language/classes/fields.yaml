@@ -99,6 +99,18 @@ documentation:
             Required fields retain their declared async and throwing callable contracts;
             their internal initialization slots never become callable or optional values.
 
+            An implicit call through a consuming callable field reports `T0135`. When
+            ownership permits, explicitly move the field into a local binding, then invoke
+            that local; the callable can be consumed only once. This applies to synchronous
+            and asynchronous consuming callable fields without introducing an implicit
+            field-take operation.
+
+            A field and a real method cannot share a name within the same effective instance
+            or static member namespace (`T0063`). This includes inheritance and trait
+            composition, whether the field or the method is introduced by the class. An
+            instance field and a static method may share a spelling. Function metadata
+            contributed by a field initializer is not a method declaration.
+
             Authored static fields share one lazily initialized slot per effective class. An
             object-valued slot owns a shared handle to its current object. A method call
             captures that handle before evaluating arguments; replacing the slot installs a

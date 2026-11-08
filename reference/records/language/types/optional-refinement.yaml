@@ -51,6 +51,15 @@ documentation:
             A direct `value != none`, `none != value`, or `not (value is a none)` guard
             narrows the named `T|none` binding to `T` within the guarded block. Assignment
             to the name invalidates the refinement from that assignment onward.
+
+            This also applies when `T` is a callable: local, parameter and field-derived
+            bindings use the proven callable signature within a direct presence guard.
+            Argument checks and shared, mutable, consuming, asynchronous and throwing
+            invocation retain that signature's ordinary contracts. A consuming invocation
+            takes the payload once; later reuse reports `T0058`. Unguarded calls or calls
+            after reassignment invalidates their presence proof report `T0039`. Bind an
+            optional field read to a name before guarding and invoking it; repeated field
+            reads are not narrowing subjects.
         - type: example
           id: guarded-optional-throwable
           title: Guard a stable optional binding

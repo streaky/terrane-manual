@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 89232d2a91208843122fb9dcf97a18735330f0f1c27b41122c97e9167a01ea61
+  input-sha256: 647486e48d2eddd6e860cf8787d230aa79dc7bba6196a0a1578ff044c53d7115
 format: 1
 generated: true
 symbols:
@@ -8775,6 +8775,10 @@ symbols:
   record: book.types
   section: refinement-after-a-check
   declaration: T0031
+- name: T0039
+  record: lang.types.optional-refinement
+  section: direct-presence-guards
+  declaration: T0039
 - name: T0054
   record: lang.classes.interfaces
   section: interfaces
@@ -8808,6 +8812,10 @@ symbols:
   section: authored-bounds
   declaration: T0058
 - name: T0058
+  record: lang.types.optional-refinement
+  section: direct-presence-guards
+  declaration: T0058
+- name: T0058
   record: lang.types.references
   section: mutable-references
   declaration: T0058
@@ -8831,6 +8839,10 @@ symbols:
   record: lang.classes.interfaces
   section: interfaces
   declaration: T0062
+- name: T0063
+  record: lang.classes.fields
+  section: initialization
+  declaration: T0063
 - name: T0064
   record: book.identity-and-movement
   section: sharing-identity-explicitly-with-ref
@@ -8894,6 +8906,10 @@ symbols:
 - name: T0135
   record: internals.semantics.reference-provenance
   section: lowering
+  declaration: T0135
+- name: T0135
+  record: lang.classes.fields
+  section: initialization
   declaration: T0135
 - name: T0135
   record: lang.functions.declarations

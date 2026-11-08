@@ -216,7 +216,12 @@ documentation:
             parameter and class-field declarations also fix their callable payloads to the
             declared owned ABI, so stores there require the same lifetime proof. An
             independent local collection copy may still infer a shorter lifetime; copying it
-            does not change the caller's collection.
+            does not change the caller's collection. Loop element bindings retain the
+            capture provenance of their iterable. Extracting a callback in a loop, aliasing
+            it, and then returning or storing it in an escaping destination does not
+            establish a fresh environment lifetime. Local-only iteration over generic
+            captures and escaping concrete captures retain their ordinary supported
+            behavior.
 
             Creating an owned closure transfers a captured non-Clone binding when no Clone
             conversion is available. A later closure cannot capture that same moved binding

@@ -890,7 +890,13 @@ documentation:
             its state or mutably borrowing its initialization slot. Cached construction
             types may specialize only the same nominal owner selected in the current
             lowering context. An inherited static body that constructs self must retain the
-            derived owner, not the original body's cached base owner.
+            derived owner, not the original body's cached base owner. Staged source-field
+            replacements carry the declared destination Rust type before committing the
+            write, preserving callable erasure through optional wrappers as well as required
+            initialization slots. Callable name-call inference, argument validation and
+            consuming-move tracking use the canonical reaching read type rather than the
+            binding's declared nullable carrier. A narrowed consuming callable is extracted
+            through owned storage, not borrowed from its Option representation.
 
             Runtime dependency features and crate spelling are separate obligations. When
             the resolved Tokio package is available under a Cargo alias, shared Rust IR
