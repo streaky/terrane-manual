@@ -1,0 +1,127 @@
+format: 1
+id: internals.parser.call-layout
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Lexer and parser contract for call layout
+  title-style: text
+  summary: >-
+    Records how physical-line indentation activates call arguments and member-chain parsing without changing normalized expression semantics.
+  tags:
+    - compiler-internals
+    - lexer
+    - parser
+    - layout
+    - calls
+  sections:
+    - id: lexer-activation
+      title: Lexer activation and delimiter scope
+      blocks:
+        - type: rule
+          id: rule.internals.parser.call-layout-lexer
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            The lexer preserves its ordinary layout-free behavior inside parentheses until a
+            continuation form activates layout in that parenthesis scope. For each ordinary
+            parenthesis scope it records the opener line's indentation-prefix byte count,
+            current indentation-stack depth, previous substantive line's indentation, and
+            whether the opening tokens are a function parameter header. Parameter-header
+            parentheses cannot activate call layout. The scope also tracks its active state,
+            the latest call-marker line indentation, and whether it has an implicit
+            baseline.
+
+            A substantive line can activate layout only when it is deeper than the opener
+            baseline. A leading-dot continuation additionally must be deeper than the
+            previous substantive line in that scope; comments before the dot are skipped
+            when identifying its first code character. An argument continuation must be
+            deeper than the preceding substantive line's semicolon call-marker indentation.
+            The semicolon state is scoped to the parenthesis containing it. The
+            previous-line indentation advances on each substantive line, so an equal-indent
+            dot is not a continuation.
+
+            At activation, the previous substantive line's indentation becomes the scoped
+            layout baseline. When it is deeper than the existing indentation stack, the
+            lexer tracks it as an implicit baseline without emitting an `INDENT`; only an
+            actual deeper child line emits the structural `INDENT`. Activation emits the
+            deferred logical newline before that transition. Once active, layout tokens are
+            emitted for substantive continuation lines, except that indentation on a
+            closing-delimiter line does not pop enclosing statement scopes. Blank and
+            comment-only lines do not activate a scope or alter its indentation. Text
+            markers and their literal contents remain opaque to layout recognition. The
+            matching `)` drains levels introduced in its scope and removes any implicit
+            baseline without emitting a spurious outer `DEDENT`. Existing prefix consistency
+            and dedent rules continue to apply: indentation counts leading bytes, mixed or
+            file-style-switched tabs and spaces are rejected, and a dedent must match an
+            established level.
+    - id: parser-normalization
+      title: Parser block recognition and normalization
+      blocks:
+        - type: rule
+          id: rule.internals.parser.call-layout-normalization
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            The parser recognizes a layout block only after the completed expression's
+            newline(s) and `INDENT`. A first substantive `.` selects the chain-block parser;
+            otherwise a layout block following a call marker is an argument block. Argument
+            parsing consumes one complete argument expression per logical line; commas allow
+            multiple arguments on a line. An argument-line root may be a nested call, whose
+            own deeper arguments or chain are recursively parsed. Inline nested call
+            arguments retain the existing grouping requirement.
+
+            Chain parsing requires each sibling continuation to begin with `.` and builds
+            ordinary `MemberExpression` nodes, followed by ordinary postfix/call parsing.
+            Argument blocks attach to the call that introduced them. Parsing a chain creates
+            no intermediate bindings or special chain node; the result is the same nested
+            member/call expression shape as its explicitly grouped equivalent. Prefix
+            `await` continues to own its full parsed operand, including its layout chain.
+
+            Block-bearing statement headers suppress unparenthesized expression layout,
+            preserving the following indentation for their statement bodies. The parser's
+            `layout_header` context covers `if`, `while`, `for`, `switch`, `match`, and
+            `select`; explicit expression/argument parentheses reopen expression layout.
+            Each nested body statement establishes its own context so a header cannot
+            suppress layout in its body.
+
+            In parentheses, the lexer activates layout only under the contextual rules
+            above; a parenthesis close bounds recursive argument and chain parsing.
+            Parentheses without an activated continuation retain free-form expression
+            wrapping. This is not general operator continuation: an indented binary operator
+            does not acquire meaning through call-layout parsing.
+    - id: malformed-boundaries
+      title: Malformed layout recovery
+      blocks:
+        - type: markdown
+          markdown: |-
+            `S1122` reports an invalid argument-block boundary: a missing newline or comma
+            between arguments, a comma without a following argument, or a missing argument
+            block terminator. `S1123` reports a sibling in a chain block that does not begin
+            with `.` or a missing chain-block terminator. Recovery advances to a line
+            boundary and resumes within the owning block where possible. Existing member
+            diagnostics still apply, including `S1014` when `.` is not followed by a member
+            name and `S1013` when whitespace separates `.` from that name. The parser does
+            not reinterpret malformed layout as implicit invocation or operator
+            continuation.
+  see-also:
+    - lang.functions.call-layout
+    - lang.lexical-structure.source-layout
+provenance:
+  specification: []
+  conformance:
+    - layout-calls
+  compiler: null
+implementation:
+  compiler:
+    - crates/terrane-compiler/src/lexer.rs
+    - crates/terrane-compiler/src/parser/call_layout.rs

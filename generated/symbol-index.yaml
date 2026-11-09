@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 58f6dc849fbbef9e2b1719dfc810ab05b396447989b3fedde23c0f3ea7a8f551
+  input-sha256: 918700f84bf822a7c56ba64be2e2c7ad20d884867271c384e9484c56f9771385
 format: 1
 generated: true
 symbols:
@@ -497,6 +497,10 @@ symbols:
   section: operators-precedence
   declaration: and
 - name: and
+  record: lang.functions.call-layout
+  section: parenthesized-mixing
+  declaration: and
+- name: and
   record: lang.types.unions
   section: unions
   declaration: and
@@ -809,6 +813,10 @@ symbols:
   section: strategy
   declaration: await
 - name: await
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: await
+- name: await
   record: lang.functions.asynchronous
   section: invocation
   declaration: await
@@ -819,6 +827,10 @@ symbols:
 - name: await
   record: lang.functions.asynchronous
   section: transferability
+  declaration: await
+- name: await
+  record: lang.functions.call-layout
+  section: await-comments-and-markers
   declaration: await
 - name: await
   record: lang.functions.fluent-apis
@@ -2241,6 +2253,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: decompose
+- name: DEDENT
+  record: internals.parser.call-layout
+  section: lexer-activation
+  declaration: DEDENT
 - name: DEDENT
   record: lang.lexical-structure.source-layout
   section: utf8-layout
@@ -3686,6 +3702,10 @@ symbols:
   section: borrowed-result-iteration
   declaration: for
 - name: for
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: for
+- name: for
   record: lang.collections.protocols
   section: compiler-produced-read-only-lists
   declaration: for
@@ -3700,6 +3720,10 @@ symbols:
 - name: for
   record: lang.declarations.bindings
   section: declarations
+  declaration: for
+- name: for
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
   declaration: for
 - name: for
   record: lang.text.unicode
@@ -4094,6 +4118,10 @@ symbols:
   section: checked-arithmetic-regions
   declaration: if
 - name: if
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: if
+- name: if
   record: lang.classes.protocols
   section: truth
   declaration: if
@@ -4104,6 +4132,10 @@ symbols:
 - name: if
   record: lang.declarations.bindings
   section: declarations
+  declaration: if
+- name: if
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
   declaration: if
 - name: if
   record: lang.types.unions
@@ -4157,6 +4189,14 @@ symbols:
   record: tool.source-intelligence
   section: language-server
   declaration: import-export-rename
+- name: INDENT
+  record: internals.parser.call-layout
+  section: lexer-activation
+  declaration: INDENT
+- name: INDENT
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: INDENT
 - name: INDENT
   record: lang.lexical-structure.source-layout
   section: utf8-layout
@@ -4853,6 +4893,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: overview
   declaration: label
+- name: layout_header
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: layout_header
 - name: left
   record: book.functions
   section: parameters-and-results
@@ -4888,10 +4932,6 @@ symbols:
 - name: length
   record: lang.collections.protocols
   section: compiler-produced-read-only-lists
-  declaration: length
-- name: length
-  record: lang.functions.fluent-apis
-  section: calling
   declaration: length
 - name: length
   record: lang.text.bytes
@@ -5238,8 +5278,16 @@ symbols:
   section: compiler-synopsis
   declaration: function marker bool
 - name: match
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: match
+- name: match
   record: lang.control-flow.branching-and-loops
   section: if-while-for
+  declaration: match
+- name: match
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
   declaration: match
 - name: match
   record: lang.text.search
@@ -5273,6 +5321,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: maximum
+- name: MemberExpression
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: MemberExpression
 - name: message
   record: book.errors
   section: designing-useful-error-values
@@ -6144,6 +6196,10 @@ symbols:
   section: operators-precedence
   declaration: or
 - name: or
+  record: lang.functions.call-layout
+  section: parenthesized-mixing
+  declaration: or
+- name: or
   record: lang.types.unions
   section: unions
   declaration: or
@@ -7003,10 +7059,6 @@ symbols:
   record: std.concurrency.channels
   section: construction
   declaration: receiver
-- name: receiver.method
-  record: lang.functions.fluent-apis
-  section: calling
-  declaration: receiver.method
 - name: reexports.rs
   record: internals.projection.resolution
   section: resolution
@@ -7591,6 +7643,14 @@ symbols:
   record: tool.packages.testing
   section: framework
   declaration: s
+- name: S1013
+  record: internals.parser.call-layout
+  section: malformed-boundaries
+  declaration: S1013
+- name: S1014
+  record: internals.parser.call-layout
+  section: malformed-boundaries
+  declaration: S1014
 - name: S1017
   record: lang.namespaces.name-resolution
   section: single-name-lookup
@@ -7623,6 +7683,14 @@ symbols:
   record: lang.classes.fields
   section: classes
   declaration: S1121
+- name: S1122
+  record: internals.parser.call-layout
+  section: malformed-boundaries
+  declaration: S1122
+- name: S1123
+  record: internals.parser.call-layout
+  section: malformed-boundaries
+  declaration: S1123
 - name: S2002
   record: internals.projection.resolution
   section: projection-gap-census
@@ -7880,12 +7948,20 @@ symbols:
   section: heterogeneous-selection
   declaration: select
 - name: select
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: select
+- name: select
   record: lang.declarations.bindings
   section: declarations
   declaration: select
 - name: select
   record: lang.functions.asynchronous
   section: selection
+  declaration: select
+- name: select
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
   declaration: select
 - name: select
   record: std.time
@@ -8532,8 +8608,16 @@ symbols:
   section: mutation-release-points
   declaration: swap_remove
 - name: switch
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: switch
+- name: switch
   record: lang.control-flow.branching-and-loops
   section: if-while-for
+  declaration: switch
+- name: switch
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
   declaration: switch
 - name: switch
   record: manual.changelog.unreleased
@@ -10600,6 +10684,10 @@ symbols:
   section: bulk-collection-producers
   declaration: while
 - name: while
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: while
+- name: while
   record: lang.classes.protocols
   section: truth
   declaration: while
@@ -10610,6 +10698,10 @@ symbols:
 - name: while
   record: lang.declarations.bindings
   section: declarations
+  declaration: while
+- name: while
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
   declaration: while
 - name: widget
   record: lang.types.relations

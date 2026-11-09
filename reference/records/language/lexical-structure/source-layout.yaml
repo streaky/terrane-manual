@@ -43,8 +43,10 @@ documentation:
 
             Terrane uses indentation-delimited blocks, represented by `NEWLINE`, `INDENT`,
             and `DEDENT` tokens. A newline normally ends a statement; continuation occurs
-            only where the grammar permits it. Within a parenthesized continuation, physical
-            newlines and indentation remain non-structural until the matching `)`.
+            only where the grammar permits it. Parentheses generally suppress statement
+            layout until their matching `)`, except when a contextual call/chain
+            continuation activates layout. See [[lang.functions.call-layout]] for that
+            exception and [[internals.parser.call-layout]] for its lexer/parser contract.
 
             Only lines containing source outside comments participate in indentation. Blank
             lines, comment-only lines, and lines that only terminate a multiline comment do

@@ -33,21 +33,25 @@ documentation:
         declaration.
   sections:
     - id: calling
-      title: Group each completed call before the next member
+      title: Write fluent stages with grouping or layout
       blocks:
         - type: markdown
           markdown: |-
             A call begins with `;`, including a call with no arguments. Parentheses group a
-            completed call so the next `.` selects a member of its result. They do not
-            invoke the method: `receiver.method` selects a callable, whereas
-            `receiver.method;` invokes it. A property such as `length` is read without a
-            call marker.
+            completed call so the next `.` selects a member of its result. In addition,
+            layout can place chain stages and call arguments on deeper sibling lines; these
+            normalize to the same ordinary call/member expressions and do not change
+            receiver ownership or invocation semantics. Within parentheses, layout activates
+            only for the contextual chain and argument continuations described in
+            [[lang.functions.call-layout#activation-and-boundaries]]; ordinary wrapped
+            expressions remain layout-free.
 
-            The argument list belongs to the call that introduced it. Close that call before
-            selecting the next stage; otherwise a following member can attach to an argument
-            rather than to the earlier result. The following example completes `trim`, then
-            `replace`, then `upper`. These text operations return new values, so the
-            original text is unchanged.
+            The argument list belongs to the call that introduced it. A deeper line
+            beginning with `.` continues from that call's completed result; a deeper non-dot
+            argument line belongs to the current call. Keep nested inline calls
+            parenthesized, or put the nested call at the root of an indented argument line.
+            The examples below complete `trim`, then `replace`, then `upper`. These text
+            operations return new values, so the original text is unchanged.
         - type: example
           id: call-grouping
           title: Compose ordinary text operations
@@ -72,12 +76,40 @@ documentation:
               true
           diagnostic: null
           markdown: null
+        - type: example
+          id: layout-text-chain
+          title: Continue text calls on deeper lines
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace fluent-examples/layout-chain
+
+            function main;
+                text = '  hello world  '
+                result = text
+                    .trim;
+                    .replace;
+                        'world', 'Terrane'
+                    .upper;
+                print; result
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: HELLO TERRANE
+          diagnostic: null
+          markdown: null
         - type: markdown
-          markdown:
-            Use the same grouping when passing a completed chain as an argument to another call.
-            For longer compositions, named intermediate values can improve readability when the API returns
-            ordinary storable values. A projected chain-only value is an exception, described below; a
-            newline is not a replacement for the grouping that closes a call. See [[lang.functions.declarations#references]]
+          markdown: |-
+            Layout is useful when each call stage or argument deserves its own line. Use
+            explicit grouping for a nested call written inline as an argument, or place that
+            nested call at the root of a deeper argument line. Parentheses remain the
+            explicit boundary for ordinary wrapped expressions. For longer compositions,
+            named intermediate values can improve readability when the API returns ordinary
+            storable values. A projected chain-only value is an exception, described below.
+            See [[lang.functions.call-layout]], [[lang.functions.declarations#references]],
             and [[lang.expressions.operators#operators-precedence]].
     - id: receiver-design
       title: Choose the receiver contract before the notation
@@ -332,7 +364,12 @@ documentation:
 
             async function main;
                 message = instance scheduled-message;
-                text string = await ((message.with-text; 'ready').after; (duration::milliseconds; 1)).wait;
+                text string = await message
+                    .with-text;
+                        'ready'
+                    .after;
+                        (duration::milliseconds; 1)
+                    .wait;
                 print; text
           response:
             kind: stdout
@@ -342,13 +379,17 @@ documentation:
           diagnostic: null
           markdown: null
         - type: markdown
-          markdown:
-            Here both `with-text` and `after` return `scheduled-message`; neither is awaited.
-            The final `wait` produces the task consumed by `await`. If a stage itself is asynchronous,
-            obtain its result before selecting the next ordinary method, grouping that awaited result
-            where needed. Do not select a builder method on the task object as though it were the completed
-            builder. A written destination such as `text string` constrains the completed result; it is
-            not a cast or permission to store an otherwise non-escaping value. See [[lang.functions.asynchronous#invocation]].
+          markdown: |-
+            Here both `with-text` and `after` return `scheduled-message`; neither is
+            awaited. The final `wait` produces the task consumed by `await`. The deeper dot
+            lines continue the completed result, while each deeper argument line belongs to
+            the immediately preceding call stage. The grouping and layout rules are
+            specified in [[lang.functions.call-layout]]. If a stage itself is asynchronous,
+            obtain its result before selecting the next ordinary method; do not select a
+            builder method on the task object as though it were the completed builder. A
+            written destination such as `text string` constrains the completed result; it is
+            not a cast or permission to store an otherwise non-escaping value. See
+            [[lang.functions.asynchronous#invocation]].
     - id: projected-apis
       title: Apply the same syntax to projected native APIs
       blocks:
@@ -384,6 +425,7 @@ documentation:
             [[tool.packages.rust-dependencies#async-projected-calls]], and
             [[lang.types.generics#destinations]].
   see-also:
+    - lang.functions.call-layout
     - lang.functions.declarations
     - lang.classes.methods
     - lang.types.authority-in-practice
@@ -398,4 +440,5 @@ provenance:
     - class-instance-independence
     - source-method-builtin-name-dispatch
     - native-deferred-executor
+    - layout-calls
   compiler: null

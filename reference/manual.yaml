@@ -13,6 +13,7 @@ navigation:
       - source: records/language/lexical-structure/text-blocks.yaml
       - source: records/language/functions/declarations.yaml
       - source: records/language/functions/fluent-apis.yaml
+      - source: records/language/functions/call-layout.yaml
       - source: records/language/functions/callable-types.yaml
       - source: records/language/numerics/conversion.yaml
       - source: records/language/numerics/floating-point.yaml
@@ -122,5 +123,6 @@ navigation:
       - source: records/internals/semantic-return-validation.yaml
       - source: records/internals/collection-lifetime.yaml
       - source: records/internals/proof-guided-lowering.yaml
+      - source: records/internals/call-layout.yaml
       - source: records/internals/diagnostics/source-projection.yaml
       - source: records/internals/lowering/rust-output.yaml

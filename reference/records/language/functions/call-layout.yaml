@@ -1,0 +1,214 @@
+format: 1
+id: lang.functions.call-layout
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: Parentheses and indentation grouping
+  title-style: text
+  summary: >-
+    Defines indentation-based argument and fluent-chain continuation, its interaction with parentheses, and its unchanged call semantics.
+  tags:
+    - syntax
+    - functions
+    - calls
+    - layout
+  blocks:
+    - type: markdown
+      markdown: >-
+        Layout is an alternate way to write ordinary calls and member chains. It
+        normalizes to the same call and member expressions as semicolon calls; it does
+        not change ownership, evaluation, invocation, or lowering. A semicolon remains
+        the call marker. This page is authoritative for choosing and mixing layout and
+        parenthesized forms.
+  sections:
+    - id: activation-and-boundaries
+      title: Activating call layout
+      blocks:
+        - type: rule
+          id: rule.calls.layout-activation
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            A deeper sibling line after a call marker supplies another complete argument to
+            that call; each logical line contributes one argument, with comma-separated
+            arguments permitted on one line. Named arguments retain their ordinary
+            `name = value` spelling. Inline arguments may be followed by deeper argument
+            lines. A nested call may be written at the root of an indented argument line and
+            may itself have a deeper argument block. A nested call written inline as an
+            argument must remain parenthesized. Dedenting ends the argument block.
+
+            A deeper sibling line beginning with `.` continues a receiver chain from the
+            completed preceding result. The receiver may occupy its own first line. Inside
+            otherwise layout-free parentheses, the first leading-dot line must be deeper
+            than the preceding receiver line to activate layout; later sibling stages align
+            at the active chain level after their argument blocks dedent. Each stage is an
+            ordinary member selection or semicolon call; the dot does not invoke a method. A
+            call stage still requires `;`, including a zero-argument call.
+
+            Parentheses bound active layout at their matching `)`. Within parentheses,
+            layout activates contextually for a leading-dot chain continuation or for deeper
+            argument lines following a call marker at that layout level. Otherwise,
+            parenthesized expressions and delimited argument lists retain free-form
+            wrapping: their ordinary newlines and indentation do not create argument blocks.
+
+            A block-bearing statement header keeps its following indentation for the
+            statement body. In `if`, `while`, `for`, `switch`, `match`, and `select`
+            headers, put layout calls or chains inside parentheses to distinguish their
+            argument/chain blocks from the statement body. An ordinary inline condition such
+            as `while progress.pending;` retains its existing meaning.
+        - type: example
+          id: layout-chain-and-arguments
+          title: Read a fluent chain and its arguments by stage
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            layout-result = message
+                .with-text;
+                    'ready'
+                .after;
+                    (duration::milliseconds; 1)
+                .wait;
+
+            grouped-result = ((other-message.with-text; 'ready').after; (duration::milliseconds; 1)).wait;
+
+            layout-arguments = outer;
+                inner;
+                    'first'
+                    label = 'second'
+                final = 3
+            grouped-arguments = outer; (inner; 'first', label = 'second'), final = 3
+          response: null
+          diagnostic: null
+          markdown: null
+    - id: parenthesized-mixing
+      title: Mixing layout and explicit grouping
+      blocks:
+        - type: markdown
+          markdown: |-
+            Use parentheses when an expression must be delimited explicitly, including a
+            nested call written inline in an argument list. Layout may begin after inline
+            arguments and continue the same call; dedent closes its argument block. A
+            parenthesized call can be a receiver, and a chain stage can have its own
+            indented arguments. Within parentheses, only the contextual continuation forms
+            described above activate layout; ordinary wrapped expressions remain unchanged.
+
+            Operators keep their ordinary precedence and association. Layout continuation is
+            expression structure, not implicit Boolean conjunction, a pipeline operator, or
+            an ORM/query convention. It does not change how `and`, `or`, or any other
+            operator combines expressions.
+        - type: example
+          id: parenthesized-chain
+          title: Continue a chain inside a parenthesized expression
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            wrapped = (message
+                .with-text;
+                    ('ready')
+                .wait;)
+          response: null
+          diagnostic: null
+          markdown: null
+    - id: await-comments-and-markers
+      title: Await, comments, and text markers
+      blocks:
+        - type: markdown
+          markdown: |-
+            `await` applies to the completed chain expression, not merely its first physical
+            line. Blank and comment-only lines are neutral: they neither start nor close an
+            argument block or chain continuation. Existing `>` and `>>` text-marker forms
+            retain their lexical meaning and contents; layout interpretation does not scan
+            or rewrite literal text.
+
+            Indentation uses the lexer's established consistent-file policy. Prefix
+            indentation is measured by its byte count rather than editor tab stops; tabs and
+            spaces may not be mixed in one prefix or switched between code-bearing lines.
+            Ordinary parenthesized wrapping remains layout-free.
+        - type: example
+          id: awaited-layout-chain
+          title: Await the terminal result of a layout chain
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            text string = await message
+                .with-text;
+                    'ready'
+                .after;
+                    (duration::milliseconds; 1)
+                .wait;
+            other-text string = await ((other-message.with-text; 'ready').after; (duration::milliseconds; 1)).wait;
+          response: null
+          diagnostic: null
+          markdown: null
+    - id: indentation-levels
+      title: Tabs and indentation levels
+      blocks:
+        - type: markdown
+          markdown: |-
+            One tab is one prefix byte, not a jump to a display column. In the following
+            example the function statements have one tab and the chain stages have two. A
+            space-indented file may use four and eight spaces for the same structure;
+            neither spelling may mix indentation styles within the file. A deeper prefix
+            establishes a level, and sibling stages return to that exact prefix length.
+        - type: example
+          id: tab-indented-chain
+          title: Use tabs consistently for both blocks and chains
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace grouping/tab-layout
+            function main;
+            	text = '  ready  '
+            	result = text
+            		.trim;
+            		.upper;
+            	print; result
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: READY
+          diagnostic: null
+          markdown: null
+    - id: malformed-boundaries
+      title: Malformed and ambiguous boundaries
+      blocks:
+        - type: markdown
+          markdown: |-
+            Every indented argument line must form a complete argument expression. An
+            incomplete argument, invalid continuation, or malformed parenthesis remains a
+            syntax error; the parser must not silently reinterpret it as a different call,
+            operator expression, or invocation. A dedent closes the active argument block; a
+            parenthesis close bounds it sooner. A chain continuation belongs to the
+            preceding receiver/result, while a line that does not satisfy the continuation
+            shape is parsed under ordinary statement and expression rules. Existing
+            semicolon-call grouping and newline rules continue to apply outside activated
+            contexts.
+  see-also:
+    - lang.functions.fluent-apis
+    - lang.functions.asynchronous
+    - lang.expressions.operators
+    - lang.lexical-structure.source-layout
+    - internals.parser.call-layout
+provenance:
+  specification: []
+  conformance:
+    - layout-calls
+  compiler: null
