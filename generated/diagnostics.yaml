@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 93ea608f7e0649f551077e527b54f3f7027e07a174729dcd37f2abd333db55b8
+  input-sha256: 5ac07e10118923a3a3cf8fa325e6af6386e662a34b6fb15292ba0eacfbced6f2
 format: 1
 generated: true
 diagnostics:
@@ -190,7 +190,7 @@ diagnostics:
   - member access requires no whitespace before the dot; write `value.member`
   sources:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 325
+    line: 332
   - path: crates/terrane-compiler/src/parser.rs
     line: 1764
 - code: S1014
@@ -198,7 +198,7 @@ diagnostics:
   - expected a member name after `.`
   sources:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 354
+    line: 361
   - path: crates/terrane-compiler/src/parser.rs
     line: 1778
 - code: S1015
@@ -828,13 +828,13 @@ diagnostics:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
     line: 58
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 74
+    line: 81
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 244
+    line: 251
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 281
+    line: 288
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 300
+    line: 307
 - code: S1123
   messages:
   - a chain continuation must begin with `.`
@@ -842,11 +842,11 @@ diagnostics:
   - expected the end of the chain indentation block
   sources:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 329
+    line: 336
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 365
+    line: 372
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 375
+    line: 382
 - code: S2001
   messages: []
   sources:
