@@ -83,7 +83,12 @@ documentation:
 
             Semantic highlighting, definition navigation, and editor diagnostics use
             compiler-derived source information. The diagnostics displayed by the editor are
-            therefore the compiler's diagnostics.
+            therefore the compiler's diagnostics. Parameter inlay hints qualify each
+            parameter label with its owning callee (for example `opt.value:`), including
+            nested calls. Signature help maps named arguments by name and positional
+            arguments by position; after a separator, it follows the call that owns that
+            separator rather than assuming the innermost syntactic call. Optional document
+            highlight is not implemented and is not required for these editor capabilities.
 
             Workspace trust controls execution of package-defined build-time tools during
             editor preparation. Generated-source navigation and the separation between

@@ -492,9 +492,11 @@ documentation:
             - **Added — indentation-based call and chain layout.** Deeper argument lines and
               leading-dot chain stages provide a readable alternative to explicitly grouped
               calls while preserving ordinary semicolon invocation and expression semantics.
-              Parentheses remain layout-free except for contextual argument and chain
-              continuations. See [[lang.functions.call-layout]] and
-              [[lang.functions.fluent-apis#calling]].
+              Commas separate arguments; nested inline calls use explicit column boundaries
+              unless parenthesized. Parameter inlay hints name the owning call, signature
+              help follows the actual separator owner, and formatting preserves call
+              structure. See [[lang.functions.call-layout]],
+              [[lang.functions.fluent-apis#calling]], and [[tool.editor-support]].
   see-also:
     - manual.changelog
     - lang.types.references

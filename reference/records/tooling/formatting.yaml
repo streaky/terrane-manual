@@ -56,8 +56,10 @@ documentation:
 
             Canonical source formatting can be built from this recovered, lossless structure
             without treating malformed or unsupported syntax as valid. Syntax diagnostics
-            remain authoritative; formatting must preserve the parser’s structural
-            interpretation rather than guess at semantic intent.
+            remain authoritative; formatting must preserve the parser's structural
+            interpretation rather than guess at semantic intent. In particular, formatting
+            preserves call structure and argument ownership; it must not reindent a nested
+            layout call across its column boundary.
 
             Native Rust block bodies are preserved byte-for-byte, including their operator
             spacing, comments, raw strings, and trailing whitespace. This applies to Rust

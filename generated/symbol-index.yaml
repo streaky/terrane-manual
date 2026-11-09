@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dcb4ebce1a198cf493e2b6a54f4aa4d5f0a54af7dd256cc266ba718f7462a2f0
+  input-sha256: cfa0f63a5a35e3f9f1d6842985b1f609ce04b122f7a70d287a44a7139c3c074b
 format: 1
 generated: true
 symbols:
@@ -848,6 +848,14 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-members
   declaration: await
+- name: b
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: b
+- name: b
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
+  declaration: b
 - name: b
   record: lang.numerics.arithmetic
   section: integer-operators
@@ -6151,6 +6159,26 @@ symbols:
   record: book.errors
   section: designing-useful-error-values
   declaration: operation-error
+- name: opt
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: opt
+- name: opt
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
+  declaration: opt
+- name: opt
+  record: lang.functions.call-layout
+  section: column-ownership
+  declaration: opt
+- name: 'opt.value:'
+  record: tool.editor-support
+  section: editor-support
+  declaration: 'opt.value:'
+- name: 'opt.w:'
+  record: lang.functions.call-layout
+  section: column-ownership
+  declaration: 'opt.w:'
 - name: Option
   record: internals.projection.resolution
   section: destination-results
@@ -7659,6 +7687,14 @@ symbols:
   record: internals.parser.call-layout
   section: malformed-boundaries
   declaration: S1014
+- name: S1016
+  record: internals.parser.call-layout
+  section: parser-normalization
+  declaration: S1016
+- name: S1016
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
+  declaration: S1016
 - name: S1017
   record: lang.namespaces.name-resolution
   section: single-name-lookup
@@ -10832,6 +10868,10 @@ symbols:
   section: organizing-the-source-tree
   declaration: work-report/reporting/format
 - name: wrap
+  record: lang.functions.call-layout
+  section: column-ownership
+  declaration: wrap
+- name: wrap
   record: lang.numerics.arithmetic
   section: integer-operators
   declaration: wrap
@@ -10851,6 +10891,10 @@ symbols:
   record: lang.numerics.integers
   section: fixed-integers
   declaration: wrap
+- name: 'wrap.b:'
+  record: lang.functions.call-layout
+  section: column-ownership
+  declaration: 'wrap.b:'
 - name: wrapping-coerce
   record: lang.numerics.conversion
   section: numeric-coercion

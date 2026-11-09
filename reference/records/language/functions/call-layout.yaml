@@ -50,9 +50,20 @@ documentation:
             invalid in every call form, including inline, layout, and grouped calls. These
             rules do not change comma-separated parameter lists. Named arguments retain
             `name = value` spelling. A nested call at the root of an indented argument line
-            may have its own deeper argument block. An inline nested call must be
-            parenthesized when it is followed by another outer argument, since its comma
-            would otherwise belong to the innermost call.
+            may have its own deeper argument block. An inline argument list on that line
+            owns same-line arguments and deeper continuation lines, but is sealed before the
+            first following substantive line whose indentation is less than or equal to the
+            call's own line. An end-of-line comma there belongs to the outer call:
+            `opt; 'a',` followed by an aligned `'b'` means `wrap(opt('a'), 'b')`. Same-line
+            `opt; 'a', 'b'` keeps both arguments inside `opt`; a deeper `b` after
+            `opt; 'a',` also remains inner. Parentheses suppress this column rule and
+            explicitly bound the inline list. Existing nested argument blocks still end by
+            dedent; a comma written inside such a block may not cross that dedent. Ordinary
+            inline nested calls remain `S1016`; use parentheses in that form. Missing
+            separators and trailing/cross-dedent commas remain `S1122`.
+
+            This deliberately makes reindentation meaningful while retaining mixed layout
+            and parenthesized syntax; there is no strict alternative.
 
             A deeper sibling line beginning with `.` continues a receiver chain from the
             completed preceding result. The receiver may occupy its own first line. Inside
@@ -161,6 +172,56 @@ documentation:
             content: |-
               ready
               ready
+          diagnostic: null
+          markdown: null
+    - id: column-ownership
+      title: Seeing which call owns an argument
+      blocks:
+        - type: markdown
+          markdown: |-
+            The first call below gives `opt` one argument and `wrap` two. Keeping both
+            values on `opt`'s line, or indenting the second more deeply, instead gives `opt`
+            both values. Explicit parentheses make that inner grouping independent of
+            columns. Editor parameter hints expose the distinction: the first call's second
+            string is labelled `wrap.b:`, while the next two label it `opt.w:`.
+        - type: example
+          id: nested-inline-column-ownership
+          title: Compare aligned, same-line, deeper and grouped arguments
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace grouping/column-ownership
+            function wrap string; a string, b string = '-'
+                return '[' + a + '|' + b + ']'
+            function opt string; v string, w string = ''
+                return v + w
+            function main;
+                aligned = wrap;
+                    opt; 'a',
+                    'b'
+                print; aligned
+                same-line = wrap;
+                    opt; 'a', 'b'
+                print; same-line
+                deeper = wrap;
+                    opt; 'a',
+                        'b'
+                print; deeper
+                grouped = wrap;
+                    (opt; 'a', 'b'),
+                    'c'
+                print; grouped
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              [a|b]
+              [ab|-]
+              [ab|-]
+              [ab|c]
           diagnostic: null
           markdown: null
     - id: parenthesized-mixing

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dcb4ebce1a198cf493e2b6a54f4aa4d5f0a54af7dd256cc266ba718f7462a2f0
+  input-sha256: cfa0f63a5a35e3f9f1d6842985b1f609ce04b122f7a70d287a44a7139c3c074b
 format: 2
 generated: true
 records:
@@ -333,6 +333,9 @@ records:
   sections:
   - id: activation-and-boundaries
     title: Activating call layout
+    sections: []
+  - id: column-ownership
+    title: Seeing which call owns an argument
     sections: []
   - id: parenthesized-mixing
     title: Mixing layout and explicit grouping
