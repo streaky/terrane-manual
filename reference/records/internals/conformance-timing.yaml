@@ -56,13 +56,14 @@ documentation:
       blocks:
         - type: markdown
           markdown: >-
-            Every sorted accepted manifest receives its own deterministic binary name and
-            source path. Compiler-only preparation uses a bounded worker pool and returns
-            results to corpus order before mutating the shared generated workspace.
-            Dependency-free binaries are then declared in one generated Cargo manifest and
-            built together, allowing Cargo to schedule their independent rustc and linker
-            work in parallel. Cases with projected Rust dependencies retain separate
-            serialized manifests and builds because their dependency graphs may conflict.
+            Accepted manifests receive deterministic binary names derived from their
+            corpus-relative identities, independent of filtering and execution order.
+            Compiler-only preparation uses a bounded worker pool and returns results to
+            corpus order before backend builds. Dependency-free binaries retain a shared
+            generated Cargo workspace under the corpus's `.trn/conformance` directory and
+            build together, allowing Cargo to schedule independent rustc and linker work.
+            Dependency-bearing cases and shared suites retain separate fixture-local
+            `.trn/conformance` workspaces and manifests because their graphs may conflict.
             Byte-identical native fixture libraries have shared maintained sources;
             deliberately different APIs with the same package name and version remain
             distinct variants. Staging publishes immutable, content-identified registry
@@ -77,14 +78,21 @@ documentation:
             identities retain logical path aliases, which can reuse the wrong
             same-name/version API after a workspace changes graphs. Local registry staging
             still uses links on Unix and portable copies elsewhere; both use the explicit
-            shared patch paths. The driver removes fixture-specific Cargo configuration
-            before the shared dependency-free build, while all builds retain one Cargo
-            target directory for dependency reuse. The driver executes each exact
-            case-specific artifact; no case can reuse another case's executable when Cargo
-            decides that a target is fresh. Package fixtures are staged outside the corpus.
-            Projection history is disposable local cache data and is not reviewed as a
-            tracked package lock; the deliberate format-3 compatibility fixture remains data
-            under the projection-history fixture path.
+            shared patch paths. Builds retain one Cargo target directory and one stable
+            support-crate source tree for dependency reuse, rather than duplicating
+            dependency targets beneath every fixture. Generated sources, support sources and
+            manifests are written only when their contents change. Cargo freshness and
+            incremental compilation therefore survive successive test invocations and
+            compiler edits; the Terrane front end still checks and lowers the selected cases
+            on every run. The driver executes each exact case-specific artifact. Ordinary
+            package fixtures are compiled in place, retaining their `.trn` state. Root
+            dependency lockfiles remain fixture inputs: the driver restores their original
+            contents or absence after compilation while retaining resolved Cargo locks under
+            `.trn`. Fixtures that explicitly seed projection history still use disposable
+            package copies so each invocation exercises the specified history. Projection
+            history is local cache data, not a reviewed package lock; the deliberate
+            format-3 compatibility fixture remains data under the projection-history fixture
+            path.
 
             There is deliberately no corpus-wide reviewed baseline for admitted or declined
             projection inventories. Used surface is checked by actual conformance consumers,
@@ -225,16 +233,20 @@ documentation:
             empty match fails rather than reporting a vacuous pass. The preparation pool
             defaults to available parallelism capped at eight workers; set
             `TERRANE_CONFORMANCE_JOBS=1..8` to lower the bound for a constrained machine or
-            a focused diagnostic run. Do not invoke `terrane run` directly inside a tracked
-            conformance case directory for focused checking. The ordinary CLI correctly
-            creates its project-local `.trn/cache/target`, but doing that across many
-            fixtures duplicates the same dependency graph under every case. CLI integration
-            tests that exercise this project-local behavior stage the source in a temporary
-            directory; the tracked corpus must remain free of `.trn` build caches. The
-            generated conformance workspace defines line-table-only `dev` and `test`
-            profiles with incremental compilation enabled. Its shared Cargo target therefore
-            retains reusable dependencies and binaries without a full local-variable
-            debug-information copy for every generated case.
+            a focused diagnostic run. The harness compiles ordinary packages in place and
+            retains fixture-local `.trn` state. Use this harness for focused checking: it
+            preserves shared dependency targets, manifest options, lowering artifacts and
+            runtime expectations. Running the ordinary CLI separately uses its project-local
+            target instead. The generated conformance workspaces define line-table-only
+            `dev` and `test` profiles with incremental compilation enabled.
+
+            A filesystem lock serializes corpus invocations before they prepare inputs or
+            replace shared executables. Retained workspaces also hold role-specific build
+            locks. Runtime working directories and native-test temporary files remain
+            disposable; no passing verdict is cached, and selected assertions execute again
+            even when Cargo reuses every compiled artifact. Tests whose purpose requires a
+            fresh package or mutates authored fixture inputs must keep explicit disposable
+            copies rather than adopting in-place execution.
     - id: reviewed-lowering-artifacts
       title: Reviewed lowering artifacts
       blocks:
@@ -287,3 +299,4 @@ provenance:
     - crates/terrane-cli/tests/cli.rs
     - crates/terrane-compiler/tests/conformance.rs
     - crates/terrane-compiler/tests/conformance/native_fixtures.rs
+    - crates/terrane-compiler/tests/conformance/build_workspace.rs
