@@ -36,15 +36,23 @@ documentation:
           id: rule.calls.layout-activation
           level: must
           since: null
-          evidence: []
           markdown: |-
-            A deeper sibling line after a call marker supplies another complete argument to
-            that call; each logical line contributes one argument, with comma-separated
-            arguments permitted on one line. Named arguments retain their ordinary
-            `name = value` spelling. Inline arguments may be followed by deeper argument
-            lines. A nested call may be written at the root of an indented argument line and
-            may itself have a deeper argument block. A nested call written inline as an
-            argument must remain parenthesized. Dedenting ends the argument block.
+            A deeper sibling line after a call marker starts an argument block. Arguments
+            are comma-separated throughout that block; newlines and indentation within it
+            are whitespace, so multiple complete arguments may share a line or span lines. A
+            dedent closing a nested call's argument block or a chain opened beneath an
+            argument implicitly ends that argument, allowing the next outer sibling argument
+            without a comma.
+
+            A comma belongs to the argument block where it appears. The next argument must
+            begin in that same block; a comma followed by dedent, `)`, end of statement, or
+            end of input is invalid and reports `S1122` at the comma. Trailing commas are
+            invalid in every call form, including inline, layout, and grouped calls. These
+            rules do not change comma-separated parameter lists. Named arguments retain
+            `name = value` spelling. A nested call at the root of an indented argument line
+            may have its own deeper argument block. An inline nested call must be
+            parenthesized when it is followed by another outer argument, since its comma
+            would otherwise belong to the innermost call.
 
             A deeper sibling line beginning with `.` continues a receiver chain from the
             completed preceding result. The receiver may occupy its own first line. Inside
@@ -54,14 +62,11 @@ documentation:
             ordinary member selection or semicolon call; the dot does not invoke a method. A
             call stage still requires `;`, including a zero-argument call.
 
-            Parentheses bound active layout at their matching `)`. Within parentheses,
-            layout activates contextually for a leading-dot chain continuation or for deeper
-            complete argument lines following a call marker at that layout level. An
-            incomplete line ending in an operator, comma, or opening delimiter, or a deeper
-            line beginning with an infix operator or comma, remains free-form wrapping and
-            does not activate argument layout. Otherwise, parenthesized expressions and
-            delimited argument lists retain free-form wrapping: their ordinary newlines and
-            indentation do not create argument blocks.
+            Parentheses bound active layout at their matching `)`. Neither adding nor
+            removing call parentheses makes a line break an argument separator. Operator
+            expressions may wrap within an argument block, including at extra indentation,
+            with the same precedence in both spellings. Ordinary parenthesized expressions
+            outside an argument block retain their existing free-form wrapping.
 
             A chain after inline arguments continues from the completed call result, while a
             chain indented beneath an argument-line root continues from that argument. Thus
@@ -100,13 +105,17 @@ documentation:
                 .wait;
 
             grouped-result = ((other-message.with-text; 'ready').after; (duration::milliseconds; 1)).wait;
-
             layout-arguments = outer;
                 inner;
-                    'first'
-                    label = 'second'
+                    'first', label = 'second'
                 final = 3
             grouped-arguments = outer; (inner; 'first', label = 'second'), final = 3
+            comma-arguments = outer;
+                'first',
+                'second'
+            grouped-comma-arguments = outer; ('first', 'second')
+            # Inline nested calls need grouping before another outer argument.
+            nested-arguments = outer; (inner; 1), 2
           response: null
           diagnostic: null
           markdown: null
@@ -159,17 +168,78 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Use parentheses when an expression must be delimited explicitly, including a
-            nested call written inline in an argument list. Layout may begin after inline
-            arguments and continue the same call; dedent closes its argument block. A
-            parenthesized call can be a receiver, and a chain stage can have its own
-            indented arguments. Within parentheses, only the contextual continuation forms
-            described above activate layout; ordinary wrapped expressions remain unchanged.
+            Use parentheses to delimit a nested inline call before another outer argument.
+            Commas separate arguments in all call forms; newlines and indentation are
+            whitespace within an argument block. The dedent closing a nested argument or
+            chain block implicitly ends its containing argument, but a comma cannot cross
+            that boundary. Parameter-list rules are unchanged.
+
+            A negative value and a text marker start arguments after a call marker or a
+            comma, in both spellings. Without a comma, a following `-` continues subtraction
+            and `>` is a comparison rather than a text marker. Two complete expressions
+            without a comma are invalid; line breaks do not disambiguate them. A closing
+            parenthesis after tail text must be on a later line, outside the literal.
+
+            Operator wrapping inside an argument block works with and without parentheses.
+            Outside an argument block, use ordinary parentheses for a multiline expression.
+            A parenthesized call can be a receiver, and a chain stage can have its own
+            indented arguments.
 
             Operators keep their ordinary precedence and association. Layout continuation is
             expression structure, not implicit Boolean conjunction, a pipeline operator, or
             an ORM/query convention. It does not change how `and`, `or`, or any other
             operator combines expressions.
+        - type: example
+          id: commas-and-wrapped-arguments
+          title: Keep negative values, text, and wrapped operands equivalent
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace grouping/comma-layout
+            function subtract int; left int, right int
+                return left - right
+            function join string; left string, right string
+                return left + ':' + right
+            function number int; value int
+                return value
+            function main;
+                plain = subtract;
+                    5,
+                    -2
+                grouped = (subtract;
+                    5,
+                    -2)
+                print; plain
+                print; grouped
+                first = join;
+                    'a' +
+                        'b',
+                    >b text
+                second = (join;
+                    'a' +
+                        'b',
+                    >b text
+                )
+                print; first
+                print; second
+                print;
+                    number;
+                        5
+                        -2
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              7
+              7
+              ab:b text
+              ab:b text
+              3
+          diagnostic: null
+          markdown: null
         - type: example
           id: parenthesized-chain
           title: Continue a chain inside a parenthesized expression
@@ -255,15 +325,18 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Every indented argument line must form a complete argument expression. An
-            incomplete argument, invalid continuation, or malformed parenthesis remains a
-            syntax error; the parser must not silently reinterpret it as a different call,
-            operator expression, or invocation. A dedent closes the active argument block; a
-            parenthesis close bounds it sooner. A chain continuation belongs to the
-            preceding receiver/result, while a line that does not satisfy the continuation
-            shape is parsed under ordinary statement and expression rules. Existing
-            semicolon-call grouping and newline rules continue to apply outside activated
-            contexts.
+            Every argument block uses commas between sibling arguments; physical lines and
+            indentation do not separate arguments. A dedent closing layout opened within one
+            argument implicitly ends it, so the next outer sibling may follow without a
+            comma. A comma is owned by its current block and cannot be followed by dedent,
+            `)`, end of statement, or end of input; `S1122` points at that comma. Trailing
+            commas are invalid in inline, layout, and grouped calls, but parameter lists are
+            unchanged. Missing separators, incomplete arguments, invalid continuations, or
+            malformed parentheses are syntax errors; the parser must not silently
+            reinterpret them as a different call, operator expression, or invocation. A
+            parenthesis close bounds its block sooner. Chain continuation belongs to the
+            preceding receiver/result. Existing semicolon-call grouping and newline rules
+            continue to apply outside activated contexts.
   see-also:
     - lang.functions.fluent-apis
     - lang.functions.asynchronous
@@ -277,4 +350,5 @@ provenance:
     - layout-calls-async
     - layout-arguments-missing-separator
     - layout-chain-invalid-sibling
+    - layout-call-trailing-comma
   compiler: null

@@ -49,7 +49,7 @@ documentation:
             inferred binding and returned by its enclosing function. Returns inside a nested
             named or anonymous function neither satisfy nor replace the enclosing function's
             result contract. Loop control likewise belongs to the current callable: a
-            closure cannot break or continue its enclosing function's loop.
+            closure cannot break or continue its enclosing function.
 
             Named local functions are visible throughout their declaring function, including
             before their declaration and within later sibling functions. They can recurse
@@ -233,7 +233,14 @@ documentation:
             call site after supplied arguments, in parameter order. Positional arguments
             must precede named arguments. A named argument binds through the parameter's
             stable exposed name; missing, duplicate, unknown, and positionally invalid
-            bindings are diagnostics.
+            bindings are diagnostics. Every call form uses commas to separate arguments:
+            inline, grouped, and indentation-layout calls alike. In an active argument
+            block, line breaks and indentation are whitespace rather than separators. Dedent
+            closing a nested call-argument or chain block implicitly ends its argument.
+            Commas belong to the block where written; they cannot be followed by a dedent,
+            closing `)`, end of statement, or end of input. Trailing commas are invalid in
+            calls, while parameter-list comma rules are unchanged. See
+            [[lang.functions.call-layout]] for layout boundaries and wrapping.
 
             A declared `none` default is still an argument value, including for optional
             source-class parameters. Omitting it supplies `none`; it does not remove the

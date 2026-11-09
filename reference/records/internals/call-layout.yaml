@@ -45,31 +45,32 @@ documentation:
             A substantive line can activate layout only when it is deeper than the opener
             baseline. A leading-dot continuation additionally must be deeper than the
             previous substantive line in that scope; comments before the dot are skipped
-            when identifying its first code character. An argument continuation must be
-            deeper than the preceding substantive line's semicolon call-marker indentation.
-            It must also be complete at the line boundary: a line ending in an infix
-            operator, comma, or opening delimiter, or a deeper line beginning with an infix
-            operator or comma, preserves free-form wrapping and does not activate argument
-            layout. The semicolon state is scoped to the parenthesis containing it. The
-            previous-line indentation advances on each substantive line, so an equal-indent
-            dot is not a continuation.
+            when identifying its first code character. An argument continuation follows a
+            bare semicolon at the end of the preceding substantive line and is deeper than
+            that line. A callable header retains its body marker through its parameter list,
+            including grouped/default parameters; function types are not body headers.
+            Parentheses with ordinary inline arguments retain free-form wrapping. The state
+            is scoped to its parenthesis. Previous-line indentation advances on substantive
+            lines, so an equal-indent dot is not a continuation.
 
             At activation, the previous substantive line's indentation becomes the scoped
             layout baseline. When it is deeper than the existing indentation stack, the
             lexer tracks it as an implicit baseline without emitting an `INDENT`; only an
             actual deeper child line emits the structural `INDENT`. Activation emits the
             deferred logical newline before that transition. Once active, layout tokens are
-            emitted at complete expression boundaries; infix/comma wrapping remains
-            non-structural. Indentation on a closing-delimiter line does not pop enclosing
-            statement scopes. Blank and comment-only lines do not activate a scope or alter
-            its indentation. Unary negative arguments and text markers immediately after a
-            bare call semicolon retain their expression-start meaning; an operator after a
-            completed operand remains a continuation instead. Text markers and their literal
-            contents remain opaque to layout recognition. The matching `)` drains levels
-            introduced in its scope and removes any implicit baseline without emitting a
-            spurious outer `DEDENT`. Existing prefix consistency and dedent rules continue
-            to apply: indentation counts leading bytes, mixed or file-style-switched tabs
-            and spaces are rejected, and a dedent must match an established level.
+            emitted for physical layout boundaries. A parallel block-kind stack
+            distinguishes statement bodies, argument blocks, chain blocks, and
+            operand-wrapping indentation. In argument blocks, expression-start
+            classification ignores layout trivia: commas and call markers permit negative
+            values and text markers, while an operand followed by `>` remains a comparison.
+            Dedent ending a nested argument or chain block establishes a fresh outer
+            argument boundary; a wrapping dedent does not. Blank/comment-only lines do not
+            change nesting. Text markers and their literal contents remain opaque to layout
+            recognition. The matching `)` drains levels introduced in its scope and removes
+            any implicit baseline without emitting a spurious outer `DEDENT`. Existing
+            prefix consistency and dedent rules continue to apply: indentation counts
+            leading bytes, mixed or file-style-switched tabs and spaces are rejected, and a
+            dedent must match an established level.
     - id: parser-normalization
       title: Parser block recognition and normalization
       blocks:
@@ -81,11 +82,15 @@ documentation:
           markdown: |-
             The parser recognizes a layout block only after the completed expression's
             newline(s) and `INDENT`. A first substantive `.` selects the chain-block parser;
-            otherwise a layout block following a call marker is an argument block. Argument
-            parsing consumes one complete argument expression per logical line; commas allow
-            multiple arguments on a line. An argument-line root may be a nested call, whose
-            own deeper arguments or chain are recursively parsed. Inline nested call
-            arguments retain the existing grouping requirement.
+            otherwise a layout block following a call marker is an argument block. Commas
+            separate sibling arguments in every call form; line breaks and indentation
+            within an active block are whitespace. Dedent closing layout opened within an
+            argument implicitly ends that argument. A comma belongs to the block where it
+            appears; if its next argument would begin after dedent or a closing/end
+            boundary, report `S1122` at the comma. Trailing commas are rejected in inline,
+            layout, and grouped calls, but parameter lists are unaffected. A nested call at
+            the argument-line root may itself have a deeper argument block. An inline nested
+            call must be parenthesized when a later comma-separated outer argument follows.
 
             Chain parsing requires each sibling continuation to begin with `.` and builds
             ordinary `MemberExpression` nodes, followed by ordinary postfix/call parsing.
@@ -104,22 +109,34 @@ documentation:
             In parentheses, the lexer activates layout only under the contextual rules
             above; a parenthesis close bounds recursive argument and chain parsing.
             Parentheses without an activated continuation retain free-form expression
-            wrapping. This is not general operator continuation: an indented binary operator
-            does not acquire meaning through call-layout parsing.
+            wrapping. Operator continuations within one argument remain non-structural
+            whether the call is parenthesized or not; this is not general operator
+            continuation.
     - id: malformed-boundaries
       title: Malformed layout recovery
       blocks:
         - type: markdown
           markdown: |-
-            `S1122` reports an invalid argument-block boundary: a missing newline or comma
-            between arguments, a comma without a following argument, or a missing argument
-            block terminator. `S1123` reports a sibling in a chain block that does not begin
-            with `.` or a missing chain-block terminator. Recovery advances to a line
-            boundary and resumes within the owning block where possible. Existing member
-            diagnostics still apply, including `S1014` when `.` is not followed by a member
-            name and `S1013` when whitespace separates `.` from that name. The parser does
-            not reinterpret malformed layout as implicit invocation or operator
-            continuation.
+            `S1122` reports an invalid argument boundary: a missing comma between arguments,
+            a comma without a following argument, a trailing comma, or a comma whose next
+            argument would begin after dedent, `)`, end of statement, or end of input. For
+            block-boundary commas, the diagnostic points at the comma. Dedent closing layout
+            opened within an argument implicitly ends that argument and is not itself an
+            error. `S1123` reports a sibling in a chain block that does not begin with `.`
+            or a missing chain-block terminator. Recovery advances to a line boundary and
+            resumes within the owning block where possible. Existing member diagnostics
+            still apply, including `S1014` when `.` is not followed by a member name and
+            `S1013` when whitespace separates `.` from that name. The parser does not
+            reinterpret malformed layout as implicit invocation or operator continuation.
+
+            The trailing-comma ban intentionally tightens the previously accepted inline and
+            grouped call syntax as well as new layout calls. It is chosen before release:
+            relaxing an error later preserves accepted programs, whereas adding a
+            restriction after callers adopt it would break them. Parameter-list trailing
+            commas are a separate permission and remain unchanged. Argument newlines no
+            longer decide whether a leading minus or text marker starts another argument;
+            only a comma or a completed nested layout boundary can establish that argument
+            position.
   see-also:
     - lang.functions.call-layout
     - lang.lexical-structure.source-layout
@@ -130,6 +147,7 @@ provenance:
     - layout-calls-async
     - layout-arguments-missing-separator
     - layout-chain-invalid-sibling
+    - layout-call-trailing-comma
   compiler: null
 implementation:
   compiler:

@@ -48,10 +48,14 @@ documentation:
 
             The argument list belongs to the call that introduced it. A deeper line
             beginning with `.` continues from that call's completed result; a deeper non-dot
-            argument line belongs to the current call. Keep nested inline calls
-            parenthesized, or put the nested call at the root of an indented argument line.
-            The examples below complete `trim`, then `replace`, then `upper`. These text
-            operations return new values, so the original text is unchanged.
+            line belongs to its argument block. Commas separate sibling arguments across
+            lines; newline/indentation alone does not. A dedent ending layout opened within
+            an argument implicitly ends it and permits the next outer sibling. Commas cannot
+            cross that dedent, and trailing commas are invalid in all call forms. Keep
+            nested inline calls parenthesized when another outer argument follows, or put
+            the nested call at the root of an indented argument line. The examples below
+            complete `trim`, then `replace`, then `upper`. These text operations return new
+            values, so the original text is unchanged.
         - type: example
           id: call-grouping
           title: Compose ordinary text operations

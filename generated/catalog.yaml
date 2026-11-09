@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: adb200bb20a7bc3e929cc02a5d5ba35cec4a89cc75426388510dbc2f30cc8970
+  input-sha256: dcb4ebce1a198cf493e2b6a54f4aa4d5f0a54af7dd256cc266ba718f7462a2f0
 format: 2
 generated: true
 records:
@@ -328,6 +328,7 @@ records:
     - layout-calls-async
     - layout-arguments-missing-separator
     - layout-chain-invalid-sibling
+    - layout-call-trailing-comma
     compiler: null
   sections:
   - id: activation-and-boundaries
@@ -3748,6 +3749,7 @@ records:
     - layout-calls-async
     - layout-arguments-missing-separator
     - layout-chain-invalid-sibling
+    - layout-call-trailing-comma
     compiler: null
   sections:
   - id: lexer-activation
