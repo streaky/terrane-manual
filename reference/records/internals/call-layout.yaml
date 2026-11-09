@@ -40,7 +40,7 @@ documentation:
             cannot activate call layout; a function type earlier in an annotation does not
             make unrelated parentheses parameter headers. The scope also tracks its active
             state, the latest call-marker line indentation, and whether it has an implicit
-            baseline.
+            indentation baseline.
 
             A substantive line can activate layout only when it is deeper than the opener
             baseline. A leading-dot continuation additionally must be deeper than the
@@ -82,28 +82,39 @@ documentation:
           markdown: |-
             The parser recognizes a layout block only after the completed expression's
             newline(s) and `INDENT`. A first substantive `.` selects the chain-block parser;
-            otherwise a layout block following a call marker is an argument block. Commas
-            separate sibling arguments in every call form; line breaks and indentation
-            within an active block are whitespace. Dedent closing layout opened within an
-            argument implicitly ends that argument. A comma belongs to the block where it
-            appears; if its next argument would begin after dedent or a closing/end
-            boundary, report `S1122` at the comma. Trailing commas are rejected in inline,
-            layout, and grouped calls, but parameter lists are unaffected. A nested inline
-            call at an argument-line root owns same-line arguments and deeper continuation
-            lines, but its inline extent ends before the first following substantive line
-            whose indentation is less than or equal to the nested call's own line. An
-            end-of-line comma on that call line belongs to the outer call when the next line
-            is not deeper. Thus `opt; 'a',` followed by an aligned `'b'` is
-            `wrap(opt('a'), 'b')`; same-line `opt; 'a', 'b'` keeps both arguments in `opt`,
-            as does a deeper `b` after `opt; 'a',`. Explicit parentheses suppress this
-            column rule. Structural nested argument blocks retain their dedent boundaries: a
-            comma written inside such a block cannot cross its closing dedent.
+            otherwise a layout block following a call marker is an argument block. Each
+            argument layout records the parser's grouping depth when it opens. Column
+            sealing applies at that depth; grouping opened inside this layout suppresses
+            sealing only for its contents. Enclosing parentheses therefore preserve
+            statement-layout ownership. This grouping depth is distinct from the lexer's
+            indentation baseline. Commas separate sibling arguments in every call form; line
+            breaks and indentation within an active block are whitespace. Dedent closing
+            layout opened within an argument implicitly ends that argument. A comma belongs
+            to the block where it appears; if its next argument would begin after dedent or
+            a closing/end boundary, report `S1122` at the comma. Dedent already ends the
+            list, so remove a comma before a deeper inline continuation dedents. Trailing
+            commas are rejected in inline, layout, and grouped calls, but parameter lists
+            are unaffected. A nested inline call at an argument-line root owns same-line
+            arguments and deeper continuation lines, but its inline extent ends before the
+            first following substantive line whose indentation is less than or equal to the
+            nested call's own line. An end-of-line comma on that call line belongs to the
+            outer call when the next line is not deeper. Thus `opt; 'a',` followed by an
+            aligned `'b'` is `wrap(opt('a'), 'b')`; same-line `opt; 'a', 'b'` keeps both
+            arguments in `opt`, as does a deeper `b` after `opt; 'a',`. Outer parentheses
+            around active layout preserve its column ownership. Only parentheses opened
+            within that layout, around nested calls/lists or operands, suppress the rule
+            within their grouping. Structural nested argument blocks retain their dedent
+            boundaries; a comma inside such a block cannot cross its closing dedent.
 
             This rule intentionally makes reindentation meaningful and preserves mixed
             layout/parenthesized syntax; there is no strict alternative syntax. An inline
             nested call followed by another outer argument on the same line remains
-            ambiguous and reports `S1016`; parenthesize that inline form. Missing separators
-            and trailing or cross-dedent commas continue to report `S1122`.
+            ambiguous and reports `S1016`; parenthesize that inline form. A dangling binary
+            operator after an inline nested call cannot take an operand from the same or a
+            shallower column: report one `S1122`, with help to indent the continuation or
+            parenthesize its operand, and do not emit a secondary separator diagnostic.
+            Missing separators and trailing or cross-dedent commas continue to report
+            `S1122`.
 
             Chain parsing requires each sibling continuation to begin with `.` and builds
             ordinary `MemberExpression` nodes, followed by ordinary postfix/call parsing.

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: cfa0f63a5a35e3f9f1d6842985b1f609ce04b122f7a70d287a44a7139c3c074b
+  input-sha256: 690c6b21da1f0fabfe5711b9465a2096a9bb60732191384dfa38b33acc9cbfed
 format: 1
 generated: true
 symbols:
@@ -7742,6 +7742,10 @@ symbols:
 - name: S1122
   record: lang.functions.call-layout
   section: malformed-boundaries
+  declaration: S1122
+- name: S1122
+  record: lang.functions.call-layout
+  section: parenthesized-mixing
   declaration: S1122
 - name: S1123
   record: internals.parser.call-layout

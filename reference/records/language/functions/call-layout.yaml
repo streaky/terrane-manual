@@ -55,12 +55,16 @@ documentation:
             first following substantive line whose indentation is less than or equal to the
             call's own line. An end-of-line comma there belongs to the outer call:
             `opt; 'a',` followed by an aligned `'b'` means `wrap(opt('a'), 'b')`. Same-line
-            `opt; 'a', 'b'` keeps both arguments inside `opt`; a deeper `b` after
-            `opt; 'a',` also remains inner. Parentheses suppress this column rule and
-            explicitly bound the inline list. Existing nested argument blocks still end by
-            dedent; a comma written inside such a block may not cross that dedent. Ordinary
-            inline nested calls remain `S1016`; use parentheses in that form. Missing
-            separators and trailing/cross-dedent commas remain `S1122`.
+            `opt; 'a', 'b'` keeps both arguments inside `opt`, as does a deeper `b` after
+            `opt; 'a',`. Outer parentheses around an active layout call preserve that call's
+            column ownership. Only parentheses opened inside the active layout—around a
+            nested call/list or an operand—suppress column sealing for their own contents.
+            Existing structural argument blocks still end by dedent; a comma inside such a
+            block may not cross that dedent. Ordinary inline nested calls remain `S1016`;
+            use parentheses in that form. Missing separators and trailing/cross-dedent
+            commas remain `S1122`. A dangling binary operator whose operand starts at the
+            same or a shallower column after an inline nested call is rejected with `S1122`;
+            indent the operand more deeply or parenthesize it.
 
             This deliberately makes reindentation meaningful while retaining mixed layout
             and parenthesized syntax; there is no strict alternative.
@@ -181,9 +185,11 @@ documentation:
           markdown: |-
             The first call below gives `opt` one argument and `wrap` two. Keeping both
             values on `opt`'s line, or indenting the second more deeply, instead gives `opt`
-            both values. Explicit parentheses make that inner grouping independent of
-            columns. Editor parameter hints expose the distinction: the first call's second
-            string is labelled `wrap.b:`, while the next two label it `opt.w:`.
+            both values. Outer parentheses around the active `wrap` layout preserve its
+            column ownership; parentheses opened inside that layout around `opt` suppress
+            sealing for `opt`'s contents. The paired C05 examples distinguish those cases.
+            Editor parameter hints expose the distinction: the aligned form's second string
+            is labelled `wrap.b:`, while internally grouped values belong to `opt.w:`.
         - type: example
           id: nested-inline-column-ownership
           title: Compare aligned, same-line, deeper and grouped arguments
@@ -202,6 +208,11 @@ documentation:
                     opt; 'a',
                     'b'
                 print; aligned
+                # Grouping the active call does not disable its column ownership.
+                outer-grouped = (wrap;
+                    opt; 'a',
+                    'b')
+                print; outer-grouped
                 same-line = wrap;
                     opt; 'a', 'b'
                 print; same-line
@@ -209,15 +220,17 @@ documentation:
                     opt; 'a',
                         'b'
                 print; deeper
-                grouped = wrap;
+                # Grouping opened inside the active layout suppresses sealing.
+                inner-grouped = wrap;
                     (opt; 'a', 'b'),
                     'c'
-                print; grouped
+                print; inner-grouped
           response:
             kind: stdout
             language: text
             display: on-run
             content: |-
+              [a|b]
               [a|b]
               [ab|-]
               [ab|-]
@@ -232,8 +245,10 @@ documentation:
             Use parentheses to delimit a nested inline call before another outer argument.
             Commas separate arguments in all call forms; newlines and indentation are
             whitespace within an argument block. The dedent closing a nested argument or
-            chain block implicitly ends its containing argument, but a comma cannot cross
-            that boundary. Parameter-list rules are unchanged.
+            chain block implicitly ends that argument. A comma belongs to the block where it
+            appears and cannot cross the dedent because the dedent already ends the list;
+            remove a comma before a deeper inline continuation dedents. Parameter-list rules
+            are unchanged.
 
             A negative value and a text marker start arguments after a call marker or a
             comma, in both spellings. Without a comma, a following `-` continues subtraction
@@ -241,10 +256,13 @@ documentation:
             without a comma are invalid; line breaks do not disambiguate them. A closing
             parenthesis after tail text must be on a later line, outside the literal.
 
-            Operator wrapping inside an argument block works with and without parentheses.
-            Outside an argument block, use ordinary parentheses for a multiline expression.
-            A parenthesized call can be a receiver, and a chain stage can have its own
-            indented arguments.
+            Operator wrapping inside an argument block works with and without parentheses. A
+            dangling binary operator after an inline nested call cannot take an operand from
+            a same-column or shallower line: it is rejected with `S1122`, without a
+            secondary separator diagnostic. Put the operand on a deeper line or parenthesize
+            it. Outside an argument block, use ordinary parentheses for a multiline
+            expression. A parenthesized call can be a receiver, and a chain stage can have
+            its own indented arguments.
 
             Operators keep their ordinary precedence and association. Layout continuation is
             expression structure, not implicit Boolean conjunction, a pipeline operator, or
