@@ -61,6 +61,46 @@ documentation:
             use is a source error. Assignment compatibility does not introduce implicit
             cross-type coercions.
 
+            Parentheses around the name are transparent to plain inferred assignment:
+            `(name) = value` and `((name)) = value` follow the same declaration and
+            replacement rules as `name = value`. If the ungrouped form would introduce a
+            local, the parenthesized form introduces that same kind of local and infers its
+            type from the initializer. If the name already denotes a mutable local, it
+            updates that local instead. This is not tuple destructuring or a separate
+            declaration form.
+
+            The rule also applies inside named and anonymous functions and inside their
+            control-flow bodies. A local introduced by a grouped assignment inside a branch
+            belongs to the enclosing function and remains visible after the branch; its
+            availability still depends on whether an assignment path reached the use.
+            Parentheses create no additional scope and bypass no constant, namespace,
+            ownership or type restriction.
+        - type: example
+          id: grouped-name-bindings
+          title: First assignment and replacement through a grouped name
+          language: terrane
+          mode: run
+          source: |-
+            namespace reference-examples/grouped-name-bindings
+
+            function main;
+                (count) = 4
+                print; count
+                ((count)) = 5
+                print; count
+                if true
+                    (branch-count) = 7
+                print; branch-count
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              4
+              5
+              7
+        - type: markdown
+          markdown: |-
             Parentheses may group a binding's type expression in class fields, trait fields
             and local declarations, with or without an initializer. For example,
             `name (int | none)` has the same declared type as `name int | none`. Grouping

@@ -84,6 +84,14 @@ documentation:
             replacements retain the same availability, ownership and write-event bookkeeping
             as bare-name replacements.
 
+            This transparency includes first assignment, not only replacement. Wherever
+            `name = value` would introduce a function-local variable, `(name) = value` and
+            nested grouping introduce the same local with the same inferred type. A branch
+            does not give it a narrower scope: the name remains function-visible, while
+            ordinary control-flow availability determines whether it can be read. See
+            [[lang.declarations.bindings#declarations|Bindings and declaration modifiers]]
+            for a complete example and the distinction from grouping a type annotation.
+
             A duplicate lexical binding produces `S2012`, while an unresolved source name
             produces `S2013`. A duplicate namespace declaration produces `S2005`. Import
             failures remain distinct: `S2009` identifies an unresolved imported name,
