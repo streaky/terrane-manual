@@ -88,11 +88,18 @@ documentation:
             package fixtures are compiled in place, retaining their `.trn` state. Root
             dependency lockfiles remain fixture inputs: the driver restores their original
             contents or absence after compilation while retaining resolved Cargo locks under
-            `.trn`. Fixtures that explicitly seed projection history still use disposable
-            package copies so each invocation exercises the specified history. Projection
-            history is local cache data, not a reviewed package lock; the deliberate
-            format-3 compatibility fixture remains data under the projection-history fixture
-            path.
+            `.trn`. Before compiling an ordinary in-place fixture, shared suite, or fixture
+            tool, the harness discards only `.trn/projection-cache.json`: its removed-member
+            history changes diagnostics and must not become an implicit test input. Resolved
+            Cargo locks, dependency targets, shared support sources, and retained generated
+            build workspaces remain available for compilation reuse. This reset happens on
+            every ordinary invocation, not merely on compiler-version changes, because
+            source and dependency edits can also leave verdict-bearing history under the
+            same compiler identity. Fixtures that explicitly seed `projection-history` still
+            use disposable package copies so each invocation exercises exactly the specified
+            history. Production package history semantics are unchanged. Projection history
+            is local cache data, not a reviewed package lock; the deliberate format-3
+            compatibility fixture remains data under the projection-history fixture path.
 
             There is deliberately no corpus-wide reviewed baseline for admitted or declined
             projection inventories. Used surface is checked by actual conformance consumers,

@@ -35,9 +35,11 @@ documentation:
             continuation form activates layout in that parenthesis scope. For each ordinary
             parenthesis scope it records the opener line's indentation-prefix byte count,
             current indentation-stack depth, previous substantive line's indentation, and
-            whether the opening tokens are a function parameter header. Parameter-header
-            parentheses cannot activate call layout. The scope also tracks its active state,
-            the latest call-marker line indentation, and whether it has an implicit
+            whether the opening `(` is immediately after the header semicolon of a function
+            declaration or anonymous-function header. Only that parameter-header parenthesis
+            cannot activate call layout; a function type earlier in an annotation does not
+            make unrelated parentheses parameter headers. The scope also tracks its active
+            state, the latest call-marker line indentation, and whether it has an implicit
             baseline.
 
             A substantive line can activate layout only when it is deeper than the opener
@@ -45,7 +47,10 @@ documentation:
             previous substantive line in that scope; comments before the dot are skipped
             when identifying its first code character. An argument continuation must be
             deeper than the preceding substantive line's semicolon call-marker indentation.
-            The semicolon state is scoped to the parenthesis containing it. The
+            It must also be complete at the line boundary: a line ending in an infix
+            operator, comma, or opening delimiter, or a deeper line beginning with an infix
+            operator or comma, preserves free-form wrapping and does not activate argument
+            layout. The semicolon state is scoped to the parenthesis containing it. The
             previous-line indentation advances on each substantive line, so an equal-indent
             dot is not a continuation.
 
@@ -54,15 +59,17 @@ documentation:
             lexer tracks it as an implicit baseline without emitting an `INDENT`; only an
             actual deeper child line emits the structural `INDENT`. Activation emits the
             deferred logical newline before that transition. Once active, layout tokens are
-            emitted for substantive continuation lines, except that indentation on a
-            closing-delimiter line does not pop enclosing statement scopes. Blank and
-            comment-only lines do not activate a scope or alter its indentation. Text
-            markers and their literal contents remain opaque to layout recognition. The
-            matching `)` drains levels introduced in its scope and removes any implicit
-            baseline without emitting a spurious outer `DEDENT`. Existing prefix consistency
-            and dedent rules continue to apply: indentation counts leading bytes, mixed or
-            file-style-switched tabs and spaces are rejected, and a dedent must match an
-            established level.
+            emitted at complete expression boundaries; infix/comma wrapping remains
+            non-structural. Indentation on a closing-delimiter line does not pop enclosing
+            statement scopes. Blank and comment-only lines do not activate a scope or alter
+            its indentation. Unary negative arguments and text markers immediately after a
+            bare call semicolon retain their expression-start meaning; an operator after a
+            completed operand remains a continuation instead. Text markers and their literal
+            contents remain opaque to layout recognition. The matching `)` drains levels
+            introduced in its scope and removes any implicit baseline without emitting a
+            spurious outer `DEDENT`. Existing prefix consistency and dedent rules continue
+            to apply: indentation counts leading bytes, mixed or file-style-switched tabs
+            and spaces are rejected, and a dedent must match an established level.
     - id: parser-normalization
       title: Parser block recognition and normalization
       blocks:
@@ -120,6 +127,9 @@ provenance:
   specification: []
   conformance:
     - layout-calls
+    - layout-calls-async
+    - layout-arguments-missing-separator
+    - layout-chain-invalid-sibling
   compiler: null
 implementation:
   compiler:

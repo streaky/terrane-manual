@@ -56,9 +56,28 @@ documentation:
 
             Parentheses bound active layout at their matching `)`. Within parentheses,
             layout activates contextually for a leading-dot chain continuation or for deeper
-            argument lines following a call marker at that layout level. Otherwise,
-            parenthesized expressions and delimited argument lists retain free-form
-            wrapping: their ordinary newlines and indentation do not create argument blocks.
+            complete argument lines following a call marker at that layout level. An
+            incomplete line ending in an operator, comma, or opening delimiter, or a deeper
+            line beginning with an infix operator or comma, remains free-form wrapping and
+            does not activate argument layout. Otherwise, parenthesized expressions and
+            delimited argument lists retain free-form wrapping: their ordinary newlines and
+            indentation do not create argument blocks.
+
+            A chain after inline arguments continues from the completed call result, while a
+            chain indented beneath an argument-line root continues from that argument. Thus
+            `print; '  x  '` followed by an indented `.trim;` applies the stage to `print`'s
+            result; `deferred;` followed by an indented `'  ready  '` and a more-indented
+            `.trim;` applies it to the argument.
+
+            An anonymous function's indented body remains an ordinary callable block scope,
+            including when the function expression is parenthesized in an activated argument
+            layout. For example, `print; (apply; (function string;` followed by an indented
+            `return 'ready'))` passes the anonymous function as the argument.
+
+            In a function declaration or anonymous-function header, only the opening `(`
+            immediately after its header semicolon is a parameter-header delimiter.
+            Parentheses elsewhere on the line, including those in a function-type
+            annotation, retain ordinary contextual layout behavior.
 
             A block-bearing statement header keeps its following indentation for the
             statement body. In `if`, `while`, `for`, `switch`, `match`, and `select`
@@ -89,6 +108,50 @@ documentation:
                 final = 3
             grouped-arguments = outer; (inner; 'first', label = 'second'), final = 3
           response: null
+          diagnostic: null
+          markdown: null
+        - type: example
+          id: inline-result-versus-argument-chain
+          title: Distinguish the call result from an argument
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            # Finish the result returned by configure.
+            result = configure; '  ready  '
+                .finish;
+
+            # Trim the argument before passing it to configure.
+            result = configure;
+                '  ready  '
+                    .trim;
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: example
+          id: parenthesized-anonymous-body
+          title: Pass anonymous functions with indented bodies
+          language: terrane
+          mode: run
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace grouping/callable-body
+            function apply string; operation function to string
+                return operation;
+            function main;
+                print; (apply; (function string;
+                    return 'ready'))
+                print; (apply; function string;
+                    return 'ready')
+          response:
+            kind: stdout
+            language: text
+            display: on-run
+            content: |-
+              ready
+              ready
           diagnostic: null
           markdown: null
     - id: parenthesized-mixing
@@ -211,4 +274,7 @@ provenance:
   specification: []
   conformance:
     - layout-calls
+    - layout-calls-async
+    - layout-arguments-missing-separator
+    - layout-chain-invalid-sibling
   compiler: null

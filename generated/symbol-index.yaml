@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 918700f84bf822a7c56ba64be2e2c7ad20d884867271c384e9484c56f9771385
+  input-sha256: adb200bb20a7bc3e929cc02a5d5ba35cec4a89cc75426388510dbc2f30cc8970
 format: 1
 generated: true
 symbols:
@@ -6704,6 +6704,10 @@ symbols:
   section: project-calculate-a-small-purchase
   declaration: print
 - name: print
+  record: lang.functions.call-layout
+  section: activation-and-boundaries
+  declaration: print
+- name: print
   record: lang.text.display
   section: scalar-display
   declaration: print
@@ -6895,6 +6899,10 @@ symbols:
   record: internals.projection.resolution
   section: native-receiver-regions
   declaration: projected-query-chain
+- name: projection-history
+  record: internals.testing.conformance-timing
+  section: generated-crate-isolation
+  declaration: projection-history
 - name: projection.rs
   record: internals.projection.resolution
   section: resolution

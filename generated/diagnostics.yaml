@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e9c17435bde60ab85350849ea6d3976ff206981add4ed31d1db4e4b56c2e8199
+  input-sha256: 3d169d28d722ae5e509da42edeb44a2b27190f57ed565dc98a394dc08842f6cf
 format: 1
 generated: true
 diagnostics:
@@ -9,80 +9,80 @@ diagnostics:
   - invalid source character `{character}`
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 961
+    line: 1066
 - code: L0002
   messages:
   - unterminated block comment
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 416
+    line: 421
 - code: L0003
   messages:
   - mixed tabs and spaces in indentation
   - indentation style changes within the file
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 1064
+    line: 1169
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 1071
+    line: 1176
 - code: L0004
   messages:
   - inconsistent dedent
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 1114
+    line: 1219
 - code: L0005
   messages:
   - identifier joiner cannot introduce a digits-only terminal unit; add spaces for an operator expression
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 657
+    line: 762
 - code: L0006
   messages:
   - operator `{text}` cannot be left-attached; add a space before it
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 950
+    line: 1055
 - code: L0007
   messages:
   - unterminated bytes literal
   - unterminated string literal
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 625
+    line: 730
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 866
+    line: 971
 - code: L0008
   messages:
   - block string marker `>>` must be the final content on its line
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 877
+    line: 982
 - code: L0009
   messages:
   - invalid numeric literal `{text}`; version one accepts decimal digits, one `.` fraction, `0x` hexadecimal,
     and `_` between digits
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 687
+    line: 792
 - code: L0010
   messages:
   - '`//` cannot begin a comment inside a namespace path'
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 542
+    line: 647
 - code: L0011
   messages:
   - namespace path separators must not have surrounding whitespace
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 935
+    line: 1040
 - code: L0012
   messages:
   - invalid bytes escape; use `\\`, `\'`, `\n`, `\r`, `\t`, `\0`, or `\xHH`
   sources:
   - path: crates/terrane-compiler/src/lexer.rs
-    line: 606
+    line: 711
 - code: S0005
   messages:
   - duplicate namespace declaration
@@ -190,7 +190,7 @@ diagnostics:
   - member access requires no whitespace before the dot; write `value.member`
   sources:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 89
+    line: 90
   - path: crates/terrane-compiler/src/parser.rs
     line: 1727
 - code: S1014
@@ -198,7 +198,7 @@ diagnostics:
   - expected a member name after `.`
   sources:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 116
+    line: 117
   - path: crates/terrane-compiler/src/parser.rs
     line: 1741
 - code: S1015
@@ -837,11 +837,11 @@ diagnostics:
   - expected the end of the chain indentation block
   sources:
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 93
+    line: 94
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 127
+    line: 128
   - path: crates/terrane-compiler/src/parser/call_layout.rs
-    line: 137
+    line: 138
 - code: S2001
   messages: []
   sources:
