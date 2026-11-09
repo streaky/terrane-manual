@@ -61,20 +61,21 @@ documentation:
             use is a source error. Assignment compatibility does not introduce implicit
             cross-type coercions.
 
-            Parentheses around the name are transparent to plain inferred assignment:
-            `(name) = value` and `((name)) = value` follow the same declaration and
-            replacement rules as `name = value`. If the ungrouped form would introduce a
-            local, the parenthesized form introduces that same kind of local and infers its
-            type from the initializer. If the name already denotes a mutable local, it
-            updates that local instead. This is not tuple destructuring or a separate
-            declaration form.
+            `name = value`, `(name) = value` and `((name)) = value` are semantically
+            equivalent. The parentheses only group the assignment target: they change
+            neither whether the assignment introduces or updates a variable, nor its
+            identity, inferred or declared type, scope, availability or ownership rules. If
+            the ungrouped form would introduce a local, every grouped form introduces the
+            same kind of local; if it would update an existing mutable local, every form
+            updates that local. This is not tuple destructuring or a separate declaration
+            form.
 
-            The rule also applies inside named and anonymous functions and inside their
-            control-flow bodies. A local introduced by a grouped assignment inside a branch
+            In named and anonymous functions, both grouped and ungrouped assignments follow
+            the same function-wide variable rules. A local introduced inside a branch
             belongs to the enclosing function and remains visible after the branch; its
             availability still depends on whether an assignment path reached the use.
-            Parentheses create no additional scope and bypass no constant, namespace,
-            ownership or type restriction.
+            Neither a branch nor parentheses create an additional local scope. Grouping
+            bypasses no constant, namespace, ownership or type restriction.
         - type: example
           id: grouped-name-bindings
           title: First assignment and replacement through a grouped name
