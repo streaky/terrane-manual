@@ -855,12 +855,28 @@ documentation:
             Destination discovery separates recursive syntax traversal from non-recursive
             native call specialization. Specialization temporaries are released before
             descending into child expressions, so their debug-build stack frame does not
-            multiply with ordinary expression depth. Ownership traversal likewise separates
-            node-read validation and child traversal from branch and call bookkeeping. Call
-            validation releases per-node contract copies before ordinary child traversal
-            while retaining function and iteration binding scopes. These are compiler
-            stack-footprint boundaries, not larger editor worker stacks or additional
-            generated-program allocation.
+            multiply with ordinary expression depth. Typed-binding discovery also keeps
+            scope-specific construction outside the ordinary child walk. Ownership traversal
+            uses one ordered operation dispatcher, without a separate syntax-kind allowlist,
+            and isolates call reads, transfers, deferred bodies, and control-flow joins in
+            separate frames. Call validation releases per-node contract copies before
+            traversing macro or print arguments; each print argument is validated once.
+            These are compiler stack-footprint boundaries, not larger editor worker stacks
+            or additional generated-program allocation. Projected call-result refinement and
+            escaping-error collection likewise release node-local temporary state before
+            ordinary child traversal.
+
+            Repeated receiver inference within one synchronous root inference call reuses
+            successful call and member results, including unresolved results. Reuse is
+            limited to the same immutably borrowed semantic unit and exact live binding
+            slice. Nested temporary binding scopes bypass that memo, and root completion or
+            unwinding destroys it. No inference result survives an analysis call or editor
+            update; equal source spans do not imply equal binding contexts. Receiver
+            dependencies are evaluated from the innermost prefix outward, without retaining
+            one large inference frame per chain stage. Selected native result facts are
+            barriers to that walk, preserving their existing validation order. Early
+            projected-demand probes also share a receiver's owner result with their member
+            fallback, including wrapped callees, rather than rewalking the prefix.
 
             Projection-history format 4 records those exact bound-owner edges. Their
             deliberate manifest rewrite resolves offline without Cargo's `--locked` flag;
