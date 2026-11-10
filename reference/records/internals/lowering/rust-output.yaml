@@ -250,7 +250,12 @@ documentation:
             key, so collisions do not emit both a plain name and a qualified alias for one
             native identity. Item imports exclude inferred Rust type arguments (`_`) in
             every pass; anonymous native arguments remain inferred at their expression use
-            sites.
+            sites. A declared generic family's import is its native constructor, not an
+            opaque rendering containing free binder names. Every owner-selection pass
+            normalizes that target identically, and replacing a selected target also
+            replaces its generic-parameter list. This preserves native defaults and prevents
+            stale bindings when a qualified name unifies previously separate import
+            candidates.
 
             Native/platform-result fields and document-result fields already return an owned
             converted value. Matching destination-directed reads reuse that value rather
