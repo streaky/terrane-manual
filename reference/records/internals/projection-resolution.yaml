@@ -264,6 +264,7 @@ documentation:
             - rust-dependency-callbacks
             - projected-callback-open-bound
             - projected-generic-call-mismatch
+            - projected-native-alias-identity
           markdown: |-
             Projection metadata represents a concrete Rust callback with its monomorphic or
             correlated generic inputs and output, `Fn`/`FnMut`/`FnOnce` multiplicity,
@@ -302,6 +303,11 @@ documentation:
             chain-only values without such an application retain their existing admission
             and expression-lifetime rules; the check must not invent a closed representation
             for them.
+
+            Canonicalization traverses ordinary, mutable, and shared reference wrappers. A
+            defaulted native alias and the matching explicitly applied owner identify the
+            same referenced storage. Different closed payload types remain incompatible, and
+            alias normalization does not upgrade read-only borrow authority.
 
             Stateful callable erasure with borrowed inputs quantifies their lifetimes at
             each invocation. Mutable inputs preserve native scalar widths and object
@@ -1271,6 +1277,7 @@ documentation:
             - projected-chain-capture
             - projected-chain-suspension
             - projected-owned-opaque-result
+            - projected-borrowed-interior-graphs
           markdown: |-
             Projection metadata marks chain roots, continuing members, and owned terminals
             explicitly. Semantic validation permits an intermediate only as the receiver
@@ -1284,6 +1291,12 @@ documentation:
             an independent type probe. Retained producer bounds count as independent proof
             only when they exactly match the consumer obligation. Every escape form receives
             one source diagnostic.
+
+            Receiver ancestry normalizes grouped and explicitly type-applied callees to
+            their member head. An explicit native method type argument does not sever the
+            immediate receiver chain, whether the expression uses parentheses or indented
+            call layout. The intermediate still cannot escape, be captured, or survive
+            suspension independently of its terminal.
 
             Lowering emits the complete producer-to-consumer expression once, without naming
             or storing the native intermediate. Rust therefore jointly selects hidden

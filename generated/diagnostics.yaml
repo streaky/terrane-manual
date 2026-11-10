@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5ac07e10118923a3a3cf8fa325e6af6386e662a34b6fb15292ba0eacfbced6f2
+  input-sha256: 0301c2a4ba52e658865ce1c0795a0a4dbf123522e3fd7f02738dd84ecdbfe509
 format: 1
 generated: true
 diagnostics:
@@ -1266,7 +1266,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3292
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9476
+    line: 9477
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 599
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1631,9 +1631,9 @@ diagnostics:
   - 'incompatible argument types: expected `{}`, found `{}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1482
+    line: 1478
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1679
+    line: 1675
 - code: T0020
   messages:
   - bare `throw` is only valid inside a catch clause
@@ -2104,7 +2104,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9494
+    line: 9495
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -2125,7 +2125,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 699
+    line: 702
 - code: T0074
   messages:
   - '`task-group` requires one child result type descriptor'
@@ -2183,9 +2183,9 @@ diagnostics:
   - task group cannot be copied, moved, borrowed, or returned; use its operations in the owning scope
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 801
+    line: 804
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 815
+    line: 818
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
     line: 31
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
@@ -2238,7 +2238,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 117
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1751
+    line: 1747
   - path: crates/terrane-compiler/src/semantics/bindings/capture_lifetimes.rs
     line: 307
 - code: T0085
@@ -2348,9 +2348,9 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 874
+    line: 877
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 888
+    line: 891
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 764
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -2449,7 +2449,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1648
+    line: 1644
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -2626,19 +2626,19 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 171
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1094
+    line: 1090
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1383
+    line: 1379
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1403
+    line: 1399
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1450
+    line: 1446
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1546
+    line: 1542
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1567
+    line: 1563
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1588
+    line: 1584
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 100
   - path: crates/terrane-compiler/src/semantics/calls.rs

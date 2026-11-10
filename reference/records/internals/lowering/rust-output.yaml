@@ -228,6 +228,26 @@ documentation:
             recursive mutex or general deadlock detector is added. See
             [Checked shared storage](lang.types.references#shared-deadlocks).
 
+            Native field writes stage their converted value using the destination's
+            canonical Rust representation. Source-facade names are not ABI annotations: an
+            optional native enum retains its fully qualified owner even when that enum was
+            not explicitly imported, and a converted character uses Rust `char`, not source
+            text storage. Source-authored fields retain their declared source ABI, including
+            callable erasure.
+
+            Native-name and type-reference discovery visits ordinary, mutable, and shared
+            reference wrappers. A native alias used only by a mutable-reference parameter
+            still receives its collision-safe name when a source class has the same Rust
+            name stem.
+
+            Source-selected native storage types retain their nominal declaration imports
+            even when the generic family has opaque parameters or only scoped-return
+            methods. This is ABI naming demand, not permission to store intermediate views:
+            chain-only expression values still use inferred native binders. Declaration-only
+            aliases need that demand without a closed inferred native application. Their
+            imports use canonical collision-safe declaration names, preserving the native
+            family's generic defaults.
+
             Native/platform-result fields and document-result fields already return an owned
             converted value. Matching destination-directed reads reuse that value rather
             than copying it again. Proven reads of uncertain-binding storage likewise
@@ -242,6 +262,12 @@ documentation:
             copied at the borrow boundary, and shared async callbacks retain the
             per-invocation handle copy needed by each future. These are ownership-specific
             decisions, not rewriting or trimming generated clone suffixes.
+
+            Owned destinations materialize flow-refined native `Copy` payloads using native
+            capability facts, not only the structural copy rules for source primitives.
+            Canonically equivalent native aliases identify the same payload storage for this
+            adaptation. Borrowed observations still lend the original guarded payload rather
+            than an owned temporary.
 
             Adaptive integer comparisons borrow stable, unshared local storage, including
             flow-refined optional and union payloads, rather than cloning it for an
