@@ -852,6 +852,16 @@ documentation:
             set, so the injected edge cannot widen it; ambiguous or non-registry owners
             decline explicitly.
 
+            Destination discovery separates recursive syntax traversal from non-recursive
+            native call specialization. Specialization temporaries are released before
+            descending into child expressions, so their debug-build stack frame does not
+            multiply with ordinary expression depth. Ownership traversal likewise separates
+            node-read validation and child traversal from branch and call bookkeeping. Call
+            validation releases per-node contract copies before ordinary child traversal
+            while retaining function and iteration binding scopes. These are compiler
+            stack-footprint boundaries, not larger editor worker stacks or additional
+            generated-program allocation.
+
             Projection-history format 4 records those exact bound-owner edges. Their
             deliberate manifest rewrite resolves offline without Cargo's `--locked` flag;
             integrity comes from the pre-injection manifest and lock in the projection
