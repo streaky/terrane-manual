@@ -124,6 +124,33 @@ documentation:
             function main;
                 answer = 42
                 print; answer
+    - id: unread-bindings
+      title: W4001 and W4002 — unread bindings and stores
+      blocks:
+        - type: markdown
+          markdown: |-
+            `W4001` reports an unread binding. `W4002` reports an unread initial or
+            subsequently assigned value. Reading a later value does not make an earlier
+            overwritten value used.
+
+            Reusing a local name within the same function is permitted, including in
+            different control-flow branches. Declaration writes and reads follow the
+            canonical flow storage identity; separate declaration spans do not make a later,
+            read value an unused binding. Warning locations still identify the source store
+            whose value is unread.
+        - type: example
+          id: read-redeclarations
+          title: Both declared values are read
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace app
+            function main;
+                value int64 = 7
+                print; value
+                value int64 = 8
+                print; value
+
     - id: w4005
       title: W4005 — unreferenced top-level function
       blocks:

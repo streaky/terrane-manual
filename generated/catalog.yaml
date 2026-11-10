@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2f1b492b78e2098af517220a153415fcc81b7234f7d8987de95b061190af199c
+  input-sha256: 35f4442797f0b29335dae9558090d1484b2ece5ced976ea87a853be9703b144a
 format: 2
 generated: true
 records:
@@ -3023,6 +3023,9 @@ records:
     sections: []
   - id: s2018
     title: S2018 — declaration name style
+    sections: []
+  - id: unread-bindings
+    title: W4001 and W4002 — unread bindings and stores
     sections: []
   - id: w4005
     title: W4005 — unreferenced top-level function

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 2f1b492b78e2098af517220a153415fcc81b7234f7d8987de95b061190af199c
+  input-sha256: 35f4442797f0b29335dae9558090d1484b2ece5ced976ea87a853be9703b144a
 format: 1
 generated: true
 symbols:
@@ -10683,6 +10683,14 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: W
+- name: W4001
+  record: tool.diagnostics
+  section: unread-bindings
+  declaration: W4001
+- name: W4002
+  record: tool.diagnostics
+  section: unread-bindings
+  declaration: W4002
 - name: W4003
   record: lang.types.descriptors
   section: type-descriptors
