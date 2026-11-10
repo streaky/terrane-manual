@@ -866,6 +866,12 @@ documentation:
             escaping-error collection likewise release node-local temporary state before
             ordinary child traversal.
 
+            The combined default-stack debug regression deliberately remains sensitive to
+            modest semantic frame growth. Its operand and call depths stay combined;
+            splitting them solely to gain headroom would conceal regressions in their shared
+            recursive path. This is a regression-detection policy, not a portable language
+            nesting guarantee or a larger worker-stack requirement.
+
             Repeated receiver inference within one synchronous root inference call reuses
             successful call and member results, including unresolved results. Reuse is
             limited to the same immutably borrowed semantic unit and exact live binding
@@ -877,6 +883,9 @@ documentation:
             barriers to that walk, preserving their existing validation order. Early
             projected-demand probes also share a receiver's owner result with their member
             fallback, including wrapped callees, rather than rewalking the prefix.
+            Node-address keys require queried syntax nodes to remain alive until root
+            completion as well; temporary-node synthesis inside inference must preserve that
+            lifetime or revisit the node-key strategy.
 
             Projection-history format 4 records those exact bound-owner edges. Their
             deliberate manifest rewrite resolves offline without Cargo's `--locked` flag;

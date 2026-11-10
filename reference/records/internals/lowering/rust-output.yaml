@@ -235,6 +235,15 @@ documentation:
             text storage. Source-authored fields retain their declared source ABI, including
             callable erasure.
 
+            Call lowering chooses its argument ABI before emitting operand subtrees.
+            Contract-directed source/native calls and callable-value calls lower arguments
+            directly with their selected destination types. Only macro and ordinary
+            destination-free paths materialize generic argument expressions; byte
+            concatenation owns its separate argument list. An unused preliminary argument
+            rendering must not recursively emit the same subtree before ABI-directed
+            lowering. This keeps nested-call emission proportional to the source tree
+            without changing generated-program evaluation order or adding runtime storage.
+
             Native-name and type-reference discovery visits ordinary, mutable, and shared
             reference wrappers. A native alias used only by a mutable-reference parameter
             still receives its collision-safe name when a source class has the same Rust
