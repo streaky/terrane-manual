@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 0301c2a4ba52e658865ce1c0795a0a4dbf123522e3fd7f02738dd84ecdbfe509
+  input-sha256: b2d2d0a5d0db31fe3c992bacca7d4fc7a421f7137ff8c26919f649177ae00c82
 format: 1
 generated: true
 diagnostics:
@@ -1631,9 +1631,9 @@ diagnostics:
   - 'incompatible argument types: expected `{}`, found `{}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1478
+    line: 1479
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1675
+    line: 1676
 - code: T0020
   messages:
   - bare `throw` is only valid inside a catch clause
@@ -2125,7 +2125,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 702
+    line: 711
 - code: T0074
   messages:
   - '`task-group` requires one child result type descriptor'
@@ -2183,9 +2183,9 @@ diagnostics:
   - task group cannot be copied, moved, borrowed, or returned; use its operations in the owning scope
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 804
+    line: 813
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 818
+    line: 827
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
     line: 31
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
@@ -2216,19 +2216,19 @@ diagnostics:
   - projected callback requires a transferable callable
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 214
+    line: 215
 - code: T0082
   messages:
   - retained callback cannot borrow an object receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 220
+    line: 221
 - code: T0083
   messages:
   - retained callback cannot capture a borrowed value
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 230
+    line: 231
 - code: T0084
   messages:
   - projected callback requires transferable captured values
@@ -2238,7 +2238,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 117
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1747
+    line: 1748
   - path: crates/terrane-compiler/src/semantics/bindings/capture_lifetimes.rs
     line: 307
 - code: T0085
@@ -2246,13 +2246,13 @@ diagnostics:
   - projected callback requires shareable captured values (`Sync`)
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 125
+    line: 126
 - code: T0086
   messages:
   - one-shot projected callback was already consumed
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 248
+    line: 249
 - code: T0087
   messages:
   - iteration step has no member `{member_name}`
@@ -2348,9 +2348,9 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 877
+    line: 886
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 891
+    line: 900
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 764
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -2375,7 +2375,7 @@ diagnostics:
   - conversion callback must return `{destination}`, found `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 325
+    line: 326
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 354
 - code: T0107
@@ -2436,7 +2436,7 @@ diagnostics:
   - channel pair `{}` endpoint `{}` was already moved
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 276
+    line: 277
 - code: T0111
   messages:
   - typed shared cells are unavailable; keep mutable state in one owner task and communicate through bounded
@@ -2449,7 +2449,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1644
+    line: 1645
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -2624,21 +2624,21 @@ diagnostics:
     a new local instead'
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 171
+    line: 172
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1090
+    line: 1091
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1379
+    line: 1380
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1399
+    line: 1400
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1446
+    line: 1447
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1542
+    line: 1543
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1563
+    line: 1564
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1584
+    line: 1585
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 100
   - path: crates/terrane-compiler/src/semantics/calls.rs
@@ -3046,7 +3046,7 @@ diagnostics:
     a shared reference
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 203
+    line: 204
 - code: T0140
   messages:
   - class `{name}` has an infinitely sized inline recursive field; use a collection or another supported

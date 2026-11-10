@@ -200,10 +200,13 @@ documentation:
             executor modes use the same owned carrier. The compiler reports the missing
             capability rather than adding an implicit generic bound. A callable's own
             generic parameter is not a capture, and a captured callable carrier's
-            argument/result types do not themselves define its transferability. An owned
-            async callable retains the carrier's `Send` and `Sync` guarantees independently
-            of whether its produced future is local or non-`Sync`. Borrowed environments
-            keep their distinct lexical carrier requirements.
+            argument/result types do not themselves define its transferability. Shared and
+            mutex-backed mutable owned callable carriers are `Send` and `Sync`; consuming
+            owned carriers are `Send` but not `Sync`. The same rule applies to synchronous
+            and asynchronous callables, independently of whether a produced future is local
+            or non-`Sync`. Capturing a consuming callable in a shared environment therefore
+            reports T0085. Borrowed environments keep their distinct lexical carrier
+            requirements.
 
             Transferability is separate from environment lifetime. Consuming, mutable and
             asynchronous owned carriers, returned shared callables and other escaping

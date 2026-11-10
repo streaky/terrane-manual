@@ -246,7 +246,11 @@ documentation:
             chain-only expression values still use inferred native binders. Declaration-only
             aliases need that demand without a closed inferred native application. Their
             imports use canonical collision-safe declaration names, preserving the native
-            family's generic defaults.
+            family's generic defaults. All import-owner passes use that same declaration
+            key, so collisions do not emit both a plain name and a qualified alias for one
+            native identity. Item imports exclude inferred Rust type arguments (`_`) in
+            every pass; anonymous native arguments remain inferred at their expression use
+            sites.
 
             Native/platform-result fields and document-result fields already return an owned
             converted value. Matching destination-directed reads reuse that value rather
@@ -267,7 +271,11 @@ documentation:
             capability facts, not only the structural copy rules for source primitives.
             Canonically equivalent native aliases identify the same payload storage for this
             adaptation. Borrowed observations still lend the original guarded payload rather
-            than an owned temporary.
+            than an owned temporary. Choosing an owned native `Copy` match instead of
+            borrowing the match and dereferencing its result is a representation cleanup,
+            not an additional source-level capability. Correctness evidence for destination
+            adaptation comes from places that otherwise pass a borrowed payload to an owned
+            input.
 
             Adaptive integer comparisons borrow stable, unshared local storage, including
             flow-refined optional and union payloads, rather than cloning it for an
