@@ -138,6 +138,14 @@ documentation:
             canonical flow storage identity; separate declaration spans do not make a later,
             read value an unused binding. Warning locations still identify the source store
             whose value is unread.
+
+            Reads inside `rust` and `unsafe rust` blocks follow the same storage identity as
+            ordinary source reads.
+
+            An unused iteration target remains quiet when another loop reuses its name. A
+            later iteration-target initialization is not treated as an explicit overwrite
+            for this advisory. An ordinary assignment that replaces an unread iteration
+            value can still receive `W4002`.
         - type: example
           id: read-redeclarations
           title: Both declared values are read

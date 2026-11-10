@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f742c8734ae390541be5c4be6fc0356d6302456f8b38df05e2ff0b441ff27253
+  input-sha256: 288150c1b98f51e11e74cd89e4b356d45216f267f9e0272dadfacdf9e8d0f50d
 format: 1
 generated: true
 diagnostics:
@@ -2804,7 +2804,7 @@ diagnostics:
   - mutating collection method `.{member}` cannot discard a temporary receiver
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 453
+    line: 467
 - code: T0129
   messages:
   - 'constructor payload cannot select a native representation: {error}'
@@ -3426,16 +3426,18 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 743
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 361
+    line: 375
 - code: W4002
   messages:
   - initial value assigned to `{}` is never read
   - value assigned to `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 364
+    line: 344
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
-    line: 369
+    line: 378
+  - path: crates/terrane-compiler/src/semantics/diagnostics.rs
+    line: 383
 - code: W4003
   messages:
   - union arm `{text}` duplicates an earlier arm
