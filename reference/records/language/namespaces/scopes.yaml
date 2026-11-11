@@ -156,12 +156,12 @@ documentation:
             conversions do not require explicit regions merely because they borrow. Use this
             construct when choosing a deliberate release boundary matters.
 
-            `with` applications resolve lexically to typed compile-time modifier contracts.
-            Arguments, declaration targets, ordering, and repetition are validated before
-            lowering. `scoped-access` is the supported compiler-defined structural
-            operation; package-defined realization operations are not implemented and are
-            rejected, rather than accepted as inert modifiers.
-  see-also: []
+            For clause grammar, lexical resolution, typed modifier contracts, target
+            admission, repetition, and implemented operation selection, see
+            [[lang.declarations.modifiers]]. `scoped-access` is the only supported
+            operation; package-defined realization operations remain unsupported.
+  see-also:
+    - lang.declarations.modifiers
 
 provenance:
   specification:

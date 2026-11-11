@@ -1,0 +1,268 @@
+format: 1
+id: lang.declarations.modifiers
+kind: topic
+surface: null
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+documentation:
+  status: complete
+  title: "Declaration modifiers: with"
+  title-style: text
+  summary: >-
+    Defines the implemented with clause, lexical modifier contracts, compile-time
+    arguments, target and composition checks, and scoped-access lowering.
+  tags: [syntax, declarations, modifiers, scopes]
+  sections:
+    - id: purpose
+      title: Purpose and current support
+      blocks:
+        - type: markdown
+          markdown: |-
+            A `with` clause selects a typed compile-time modifier for a declaration. It is
+            not a runtime decorator call, a general context-manager protocol, or an
+            alternative spelling for structural keywords. A supported modifier requests a
+            compiler-understood operation; its source name resolves through ordinary lexical
+            lookup rather than a reserved vocabulary of modifier names.
+
+            The clause parser, schema binding, target checks, repetition checks, and ordered
+            operation selection are implemented. The only implemented operation is
+            `scoped-access`, which gives an acquired local value a deliberate release
+            boundary. Storage, alignment, linkage, ABI, and other package-defined
+            realization operations remain unsupported. A well-typed definition of an
+            unsupported operation still fails compilation; it never becomes an inert
+            modifier. See [[internals.future.decorative-modifiers]] for that future design.
+    - id: syntax
+      title: Clause grammar and declaration boundaries
+      blocks:
+        - type: grammar
+          id: with-clause
+          notation: terrane-ebnf
+          grammar: |-
+            ModifiedDeclaration = WithClause, Declaration ;
+            ModifiedRegion = WithClause, Acquisition, "(", Block, ")" ;
+            WithClause = "with", ModifierApplication, { ",", ModifierApplication } ;
+            ModifierApplication = Identifier
+                                | "(", Identifier, [ ";", [ ModifierArguments ] ], ")" ;
+            ModifierArguments = ModifierArgument, { ",", ModifierArgument }, [ "," ] ;
+            ModifierArgument = Expression | Identifier, "=", Expression ;
+            Acquisition = Identifier, [ TypeExpression ], "=", "(", Expression, ")" ;
+        - type: markdown
+          markdown: |-
+            `Declaration`, `Block`, `Expression`, and `TypeExpression` use the ordinary
+            language productions. Here `Declaration` is a binding or assignment, function,
+            class, interface, trait, or enum declaration. This describes the parser's
+            admitted targets, not a promise that an implemented operation supports every
+            one. A region additionally requires a fresh, non-discard local binding inside a
+            function.
+
+            The clause precedes structural declaration keywords. Its modifier list has no
+            enclosing parentheses. A bare name supplies no arguments; `(name)` and `(name;)`
+            also represent empty applications. Arguments require the grouped
+            `(name; arguments)` form. Positional arguments must precede named arguments. The
+            current grouped modifier argument parser permits a final comma inside that
+            group; this does not permit a trailing comma in the clause itself.
+
+            After a modifier not followed by a comma, parsing resumes with the declaration.
+            A comma always requires another modifier: in `with scoped-access, global x = 1`,
+            `global` occupies the modifier position and is rejected. Structural words such
+            as `global` and `constant` are not modifiers. Modifier names in this grammar are
+            single identifiers; use selective imports and aliases to select an object from
+            another namespace.
+
+            Region syntax has two separate parenthesized parts: the acquisition expression
+            and the statement body. Grouping the acquisition keeps its call arguments
+            distinct from the region body. Merely writing `with scoped-access value = 1` has
+            no region and is rejected.
+        - type: example
+          id: modifier-alias
+          title: An imported alias selects the same modifier
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace with-example
+
+            from /core/modifiers import scoped-access as access
+
+            class message
+                text string
+                function construct; text string
+                    this.text = text
+                consuming function destruct;
+                    print; 'release'
+
+            function main;
+                result string = ''
+                with (access;) guard = (instance message; 'ready') (
+                    result = guard.text
+                )
+                print; result
+          response: null
+          diagnostic: null
+          markdown: >-
+            This prints release before ready: the guard is destroyed at the region boundary,
+            while its independently owned text snapshot remains available. Returning or
+            assigning the acquired guard itself out of the region is forbidden, even when
+            its type otherwise supports copying. The region does not invent acquisition or
+            release methods.
+    - id: resolution
+      title: Lexical resolution and typed compile-time contracts
+      blocks:
+        - type: markdown
+          markdown: |-
+            At each application the compiler resolves the name at that source position
+            through normal lexical lookup. Imports, aliases, and shadowing therefore select
+            the declaration identity. A matching spelling alone grants no modifier
+            authority: the resolved symbol must be a class carrying the annotation whose
+            canonical identity is `/core/modifiers::modifier`.
+
+            The application arguments bind to that class's data-field schema using the
+            compile-time payload machinery shared with
+            [[lang.declarations.annotations#model|declaration annotations]]. Field types,
+            defaults, positional order, and named fields determine the payload. Binding
+            constructs immutable compile-time data; it does not invoke the class's runtime
+            constructor, execute arbitrary package code, or perform effects. Runtime
+            expressions are not an extension mechanism for modifier behavior.
+
+            There are two distinct payloads: the definition annotation selects an operation
+            and its admission policy; the application supplies the selected class's typed
+            configuration fields. A valid application schema does not by itself provide an
+            implementation of the requested operation.
+        - type: example
+          id: core-contract
+          title: The existing core modifier definitions
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            namespace core/modifiers
+
+            from /core/annotations import annotation, annotation-target
+            from /core/collections import list
+
+            @[annotation; targets = (list; (instance annotation-target::class;))]
+            class modifier
+                operation string
+                targets list of string = (list; 'binding')
+                structural bool = false
+                repeatable bool = false
+
+            @[modifier; operation = 'scoped-access', structural = true]
+            class scoped-access
+          response: null
+          diagnostic: null
+          markdown: >-
+            These are the bundled definitions in core/modifiers.trn, not an invitation to
+            redeclare core objects. scoped-access has no configuration fields and inherits
+            the binding-only, nonrepeatable policy of its definition annotation.
+    - id: validation
+      title: Targets, ordering, repetition, and conflicts
+      blocks:
+        - type: markdown
+          markdown: |-
+            The compiler processes applications in written left-to-right order and retains
+            that order in the resolved modifier plan. For each application it resolves the
+            class and definition contract, checks repetition and target admission, binds the
+            typed application payload, and selects the implemented operation. It rejects
+            conflicting operation selections before lowering. Left-to-right processing is
+            not a runtime callback order.
+
+            The definition's `targets` list uses `binding` for bindings, assignments, and
+            bound regions; `callable` for function declarations; and `class`, `interface`,
+            `trait`, or `enum` for their respective declarations. A target must be
+            explicitly present in that list. Target admission is only the first boundary:
+            `scoped-access` additionally requires an explicitly delimited region, not an
+            ordinary binding declaration.
+
+            `repeatable` defaults to false. Repetition is checked by canonical class
+            identity, so importing one modifier under two aliases cannot apply it twice.
+            Different classes selecting the same structural operation also conflict.
+            Consequently a current scoped-access region must resolve exactly one
+            scoped-access operation; setting repeatable on a custom definition does not
+            permit stacking that operation on one region. Nest separate regions instead.
+
+            Operation admission is closed. Currently the operation string must be
+            `scoped-access` and `structural` must be true. The application payload must be
+            an empty map: no scoped-access configuration fields are supported. A separately
+            declared, correctly marked schema can select that same operation, but it
+            receives exactly the compiler's existing region semantics, not package-defined
+            structural behavior. A same-named unmarked class cannot.
+
+            Malformed clause syntax reports `S1120`. Invalid modifier definitions,
+            unsupported operations, target/repetition violations, and conflicting operation
+            selections report `S2120`; schema errors retain their own compile-time payload
+            diagnostics, such as `S2113` for an incompatible argument. Region ownership and
+            escape violations report `T0240`.
+    - id: scoped-access
+      title: The implemented scoped-access operation
+      blocks:
+        - type: markdown
+          markdown: |-
+            `scoped-access` is supplied by `/core/modifiers` and is also available through
+            the default prelude. An explicit import remains useful for an alias or when the
+            prelude is disabled. It can bound an owned source resource, an ordinary
+            reference, or an admitted projected native guard; it is not specific to mutexes.
+
+            Acquisition runs once. The acquired local and declarations introduced inside the
+            body are region-local, while assignments to existing outer variables still
+            update those variables. Cleanup follows the acquired value's ordinary
+            destruction semantics on normal and abrupt exits. Independently owned results
+            may leave; the acquired value and dependent loans may not escape. The region
+            cannot extend a native lender's lifetime, authorize an otherwise invalid borrow,
+            change task transferability, or guarantee reentrant acquisition.
+
+            The full acquisition, escape, nesting, suspension, and reentrancy contract is
+            [[lang.namespaces.scopes#scoped-access|Explicit bounded access]].
+    - id: implementation
+      title: How the compiler implements with today
+      blocks:
+        - type: markdown
+          markdown: |-
+            The parser in `parser/modifiers.rs` records modifier applications separately
+            from declaration children. A bounded acquisition and body become a `WithRegion`
+            node. This preserves the declaration's ordinary structure rather than rewriting
+            it into a decorator call.
+
+            `semantics/modifiers.rs` resolves each application to its canonical class
+            identity, source span, typed payload, and `ModifierOperation`. The current
+            operation enum contains only `ScopedAccess`. These compiler-owned plans, not the
+            application's source spelling, authorize subsequent region processing.
+
+            `semantics/scoped_regions.rs` validates the fresh acquisition binding, lender
+            stability, dependent references, and escape paths, including outer stores,
+            collection stores, returns, and callable captures. Ordinary native lifetime and
+            asynchronous transfer checks still apply. This is more than simply inserting a
+            block around otherwise unchecked source.
+
+            The statement emitter lowers a validated region to a Rust lexical block,
+            emitting the acquisition once followed by the body. Normal generated ownership
+            and destruction machinery releases its locals on exit. There is no generic
+            runtime modifier dispatcher or implicit enter/exit-method lookup. The source
+            resource's destructor or native guard's destruction supplies the actual release
+            behavior.
+  see-also:
+    - lang.namespaces.scopes
+    - lang.declarations.annotations
+    - lang.declarations.bindings
+    - internals.future.decorative-modifiers
+provenance:
+  specification: null
+  conformance:
+    - modifier-scoped-resource
+    - native-deref-receivers
+    - scoped-access-guard-escape
+    - scoped-access-nested-guard-escape
+    - native-guard-suspension
+  compiler:
+    - crates/terrane-compiler/src/core/modifiers.trn
+    - crates/terrane-compiler/src/parser/modifiers.rs
+    - crates/terrane-compiler/src/semantics/modifiers.rs
+    - crates/terrane-compiler/src/semantics/scoped_regions.rs
+    - crates/terrane-compiler/src/lowering/emitter/statements.rs

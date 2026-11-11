@@ -28,9 +28,10 @@ documentation:
           kind: important
           title: Additional modifier operations remain planned
           markdown: >-
-            General lexical `with` resolution, typed modifier contracts, and the structural
-            `scoped-access` region are implemented. The realization operations illustrated
-            on this page and package-defined type constructors remain future work. An
+            The current clause grammar, lexical resolution, typed modifier contracts, and
+            structural `scoped-access` operation are documented in
+            [[lang.declarations.modifiers]]. Only the additional realization operations
+            illustrated here and package-defined type constructors remain future work. An
             unsupported operation is rejected, not accepted as a no-op.
     - id: structural-boundary
       title: Structural and decorative boundary
@@ -49,14 +50,14 @@ documentation:
             makes the modifier vocabulary open to packages without making Terrane's
             structural declaration grammar or semantic guarantees replaceable.
     - id: syntax
-      title: Planned clause syntax
+      title: Clause syntax used by the planned operations
       blocks:
         - type: markdown
           markdown: |-
-            A `with` clause precedes structural declaration keywords. It begins with
-            `with`, contains comma-separated modifier expressions, and applies them from
-            left to right through ordinary lexical resolution. A modifier with arguments
-            uses a parenthesized call form; the clause itself has no wrapping parentheses.
+            A `with` clause precedes structural declaration keywords. It begins with `with`,
+            contains comma-separated modifier expressions, and applies them from left to
+            right through ordinary lexical resolution. A modifier with arguments uses a
+            parenthesized call form; the clause itself has no wrapping parentheses.
         - type: example
           id: planned-with-modifiers
           title: Planned declaration realization modifiers
@@ -94,7 +95,8 @@ documentation:
             their package declarations. Future realization operations must define their
             lowering and composition contracts before admission; they cannot introduce
             hidden visibility, ownership, or callable-contract changes.
-  see-also: []
+  see-also:
+    - lang.declarations.modifiers
 
 provenance:
   specification:

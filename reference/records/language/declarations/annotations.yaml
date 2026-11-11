@@ -29,9 +29,10 @@ documentation:
           markdown: >-
             General declaration annotations, documentation metadata, and source-free
             declaration interfaces are implemented and verified through compiler unit and
-            end-to-end conformance tests. This capability is distinct from the deferred
-            package-defined `with` declaration-realization protocol, which is not part of
-            the published compiler surface.
+            end-to-end conformance tests. This capability is distinct from
+            [[lang.declarations.modifiers|with declaration modifiers]], whose current
+            operation is scoped-access. Package-defined declaration-realization operations
+            remain deferred.
     - id: model
       title: Annotation types and application
       blocks:
@@ -222,9 +223,10 @@ documentation:
             Compile-time metadata consumption does not require runtime reflection storage.
             Annotation blocks are not realization modifiers and cannot request storage
             layout, linkage, ABI, or alignment; those remain the separate concern of the
-            deferred decorative-modifier design.
+            [[internals.future.decorative-modifiers|future decorative-modifier design]].
   see-also:
     - tool.build-time-tools
+    - lang.declarations.modifiers
 
 provenance:
   specification:

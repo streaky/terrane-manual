@@ -33,6 +33,7 @@ navigation:
       - source: records/language/classes/traits.yaml
       - source: records/language/control-flow/branching-and-loops.yaml
       - source: records/language/declarations/bindings.yaml
+      - source: records/language/declarations/modifiers.yaml
       - source: records/language/declarations/globals.yaml
       - source: records/language/errors/contracts.yaml
       - source: records/language/errors/handling.yaml
@@ -126,3 +127,6 @@ navigation:
       - source: records/internals/call-layout.yaml
       - source: records/internals/diagnostics/source-projection.yaml
       - source: records/internals/lowering/rust-output.yaml
+  - group: Future designs
+    children:
+      - source: records/internals/future/decorative-modifiers.yaml
