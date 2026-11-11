@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 04b23271cdbe102d7ecc20c3636ec164c7d7e9455a29ba336ff09e2ad361a8a6
+  input-sha256: 6e6646b4636b15f6654323eaa82e882928d7358c54e514a59bdba6fd0b5b0e44
 format: 1
 generated: true
 symbols:
@@ -180,6 +180,14 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: /core/logging/async
+- name: /core/modifiers
+  record: lang.declarations.modifiers
+  section: scoped-access
+  declaration: /core/modifiers
+- name: /core/modifiers::modifier
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: /core/modifiers::modifier
 - name: /core/networking
   record: internals.execution.runtime-selection
   section: readiness-io
@@ -896,6 +904,14 @@ symbols:
   record: std.networking.operations
   section: native-transport
   declaration: bind-tcp
+- name: binding
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: binding
+- name: Block
+  record: lang.declarations.modifiers
+  section: syntax
+  declaration: Block
 - name: bool
   record: book.classes-interfaces-and-traits
   section: defining-a-class
@@ -1148,6 +1164,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: cache_identity
+- name: callable
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: callable
 - name: callable.rs
   record: internals.projection.resolution
   section: resolution
@@ -1435,6 +1455,10 @@ symbols:
 - name: class
   record: book.classes-interfaces-and-traits
   section: defining-a-class
+  declaration: class
+- name: class
+  record: lang.declarations.modifiers
+  section: validation
   declaration: class
 - name: class
   record: lang.lexical-structure.keywords
@@ -1769,6 +1793,10 @@ symbols:
   section: declarations
   declaration: const
 - name: constant
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: constant
+- name: constant
   record: internals.projection.resolution
   section: projection-gap-census
   declaration: constant
@@ -1779,6 +1807,10 @@ symbols:
 - name: constant
   record: lang.declarations.globals
   section: global-initialization
+  declaration: constant
+- name: constant
+  record: lang.declarations.modifiers
+  section: syntax
   declaration: constant
 - name: constant
   record: tool.packages.rust-dependencies
@@ -2201,6 +2233,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: decimal-log
+- name: Declaration
+  record: lang.declarations.modifiers
+  section: syntax
+  declaration: Declaration
 - name: DeclarationInterface
   record: lang.declarations.annotations
   section: docs-and-metadata
@@ -2793,6 +2829,10 @@ symbols:
   record: std.collections
   section: ordering-iteration-and-lifetime
   declaration: entry.value
+- name: enum
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: enum
 - name: Envelope
   record: lang.types.generics
   section: constructors
@@ -2953,6 +2993,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: exponential-minus-one
+- name: Expression
+  record: lang.declarations.modifiers
+  section: syntax
+  declaration: Expression
 - name: external-name
   record: lang.classes.fields
   section: classes
@@ -3922,12 +3966,28 @@ symbols:
   section: package-manifest
   declaration: git
 - name: global
+  record: internals.future.decorative-modifiers
+  section: semantic-boundary
+  declaration: global
+- name: global
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: global
+- name: global
+  record: internals.future.decorative-modifiers
+  section: syntax
+  declaration: global
+- name: global
   record: lang.declarations.bindings
   section: declarations
   declaration: global
 - name: global
   record: lang.declarations.globals
   section: global-initialization
+  declaration: global
+- name: global
+  record: lang.declarations.modifiers
+  section: syntax
   declaration: global
 - name: global
   record: lang.namespaces.name-resolution
@@ -4641,6 +4701,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: integration
+- name: interface
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: interface
 - name: interface
   record: lang.lexical-structure.keywords
   section: structural-words
@@ -5429,6 +5493,10 @@ symbols:
   record: std.collections
   section: maps-and-entries
   declaration: missing-key
+- name: ModifierOperation
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: ModifierOperation
 - name: monotonic-instant
   record: std.time
   section: values
@@ -6491,6 +6559,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
   declaration: parser-input
+- name: parser/modifiers.rs
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: parser/modifiers.rs
 - name: part-one.trn
   record: book.namespaces-imports-and-packages
   section: from-one-file-to-a-project
@@ -7359,6 +7431,10 @@ symbols:
   record: lang.declarations.annotations
   section: model
   declaration: repeatable
+- name: repeatable
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: repeatable
 - name: replace
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -7739,6 +7815,10 @@ symbols:
   record: lang.lexical-structure.literals
   section: comments-literals
   declaration: S1101
+- name: S1120
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: S1120
 - name: S1121
   record: lang.classes.fields
   section: classes
@@ -7895,10 +7975,18 @@ symbols:
   record: lang.declarations.annotations
   section: grammar-and-targets
   declaration: S2113
+- name: S2113
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: S2113
 - name: S2114
   record: lang.declarations.annotations
   section: grammar-and-targets
   declaration: S2114
+- name: S2120
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: S2120
 - name: S9004
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -7956,8 +8044,28 @@ symbols:
   section: task-ownership-lowering
   declaration: scope.spawn
 - name: scoped-access
+  record: internals.future.decorative-modifiers
+  section: status
+  declaration: scoped-access
+- name: scoped-access
+  record: internals.future.decorative-modifiers
+  section: structural-boundary
+  declaration: scoped-access
+- name: scoped-access
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: scoped-access
+- name: scoped-access
+  record: lang.declarations.modifiers
+  section: purpose
+  declaration: scoped-access
+- name: scoped-access
+  record: lang.declarations.modifiers
+  section: scoped-access
+  declaration: scoped-access
+- name: scoped-access
+  record: lang.declarations.modifiers
+  section: validation
   declaration: scoped-access
 - name: scoped-access
   record: lang.namespaces.scopes
@@ -7967,6 +8075,10 @@ symbols:
   record: lang.types.references
   section: mutable-references
   declaration: scoped-access
+- name: ScopedAccess
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: ScopedAccess
 - name: score
   record: book.values-and-names
   section: changing-a-binding
@@ -8131,6 +8243,14 @@ symbols:
   record: internals.execution.runtime-selection
   section: async-analysis-boundaries
   declaration: semantics/contracts.rs
+- name: semantics/modifiers.rs
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: semantics/modifiers.rs
+- name: semantics/scoped_regions.rs
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: semantics/scoped_regions.rs
 - name: SemanticUnit::local_functions
   record: internals.semantics.reference-provenance
   section: representation
@@ -8639,6 +8759,10 @@ symbols:
   record: lang.collections.protocols
   section: compiler-produced-read-only-lists
   declaration: string.split
+- name: structural
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: structural
 - name: subnormal
   record: lang.numerics.floating-point
   section: values
@@ -9172,6 +9296,10 @@ symbols:
   section: native-receiver-regions
   declaration: T0240
 - name: T0240
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: T0240
+- name: T0240
   record: manual.changelog.unreleased
   section: changes-2026-11-05
   declaration: T0240
@@ -9226,6 +9354,10 @@ symbols:
 - name: targets
   record: lang.declarations.annotations
   section: model
+  declaration: targets
+- name: targets
+  record: lang.declarations.modifiers
+  section: validation
   declaration: targets
 - name: task
   record: book.classes-interfaces-and-traits
@@ -9988,6 +10120,10 @@ symbols:
   section: dependency-bridge
   declaration: tracing
 - name: trait
+  record: lang.declarations.modifiers
+  section: validation
+  declaration: trait
+- name: trait
   record: lang.lexical-structure.keywords
   section: structural-words
   declaration: trait
@@ -10183,6 +10319,10 @@ symbols:
   record: book.types
   section: project-strengthen-the-task-list-program-with-types
   declaration: typed-task-list.trn
+- name: TypeExpression
+  record: lang.declarations.modifiers
+  section: syntax
+  declaration: TypeExpression
 - name: typeof
   record: lang.lexical-structure.keywords
   section: implementation-language-keywords
@@ -10796,16 +10936,20 @@ symbols:
   section: local-scope
   declaration: width
 - name: with
+  record: internals.future.decorative-modifiers
+  section: semantic-boundary
+  declaration: with
+- name: with
+  record: internals.future.decorative-modifiers
+  section: syntax
+  declaration: with
+- name: with
   record: internals.projection.resolution
   section: native-receiver-regions
   declaration: with
 - name: with
-  record: lang.declarations.annotations
-  section: status
-  declaration: with
-- name: with
-  record: lang.namespaces.scopes
-  section: scoped-access
+  record: lang.declarations.modifiers
+  section: purpose
   declaration: with
 - name: with
   record: manual.changelog.unreleased
@@ -10839,6 +10983,10 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: with_compilation_cache
+- name: WithRegion
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: WithRegion
 - name: word-frequency.trn
   record: book.text-and-collections
   section: project-word-frequency
