@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5315e76bc0b22256e6d27df09d2a0e446039ff45a6d4424e02d95cf483dc54aa
+  input-sha256: 016963f11d4a8040fba7e9835ee66708a14968559e052c1d2bf43ca68d276c3c
 format: 1
 generated: true
 diagnostics:
@@ -1266,7 +1266,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3292
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9545
+    line: 9646
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 599
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2104,7 +2104,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9563
+    line: 9664
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`

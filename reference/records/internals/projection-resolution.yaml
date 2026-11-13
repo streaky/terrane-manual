@@ -885,7 +885,12 @@ documentation:
             constructors such as `Duration::from_secs`. The fixture pins this ordering.
             Signature-only source names are not necessarily actual Rust facade exports;
             primary signatures and later fragment materialization both retain their recorded
-            physical native owners.
+            physical native owners. Independently numbered copies of the same defining
+            document are compared by canonical identities, not raw Rustdoc IDs. Ordinary
+            nominal output aliases retain their advertised facade and generic defaults.
+            Semantic compatibility expands their native definitions, while generated storage
+            retains the public alias with its selected native arguments: the underlying
+            nominal owner may be private and therefore unusable as a generated Rust type.
 
             A Rustdoc impl list can include an implementation where a nominal class is a
             trait argument rather than `Self`, such as `ColumnIndex<Row>` for `&str`.
