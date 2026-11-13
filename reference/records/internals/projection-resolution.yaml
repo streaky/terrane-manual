@@ -878,7 +878,14 @@ documentation:
             ambiguous defining alias produces a precise admission decline, never a
             nominal-looking result or a short-name guess. Ordinary structs and enums named
             `Result` or `Option` remain nominal. The facade fixture also covers these
-            cross-crate success, absence, typed-error, and generic-error paths.
+            cross-crate success, absence, typed-error, and generic-error paths. Owner
+            discovery retains defining paths until expanded output owners are known; only
+            then are their public facade aliases applied. Applying aliases before that
+            discovery would lose inferred signature-only exports, including native
+            constructors such as `Duration::from_secs`. The fixture pins this ordering.
+            Signature-only source names are not necessarily actual Rust facade exports;
+            primary signatures and later fragment materialization both retain their recorded
+            physical native owners.
 
             Changes to this boundary policy advance the projection schema so local and
             published artifacts cannot retain the previous admission semantics. Rebuilding

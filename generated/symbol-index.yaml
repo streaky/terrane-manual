@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 761c522eabe3ff83acc249c39150a5e3b5c6913d34d7e3efa4043f4bf43d4090
+  input-sha256: 0081e8df1228da21d1edef3df82b8d73d7e52e5e960bb1c98c1e1c88a1b851ae
 format: 1
 generated: true
 symbols:
@@ -2673,6 +2673,10 @@ symbols:
   record: std.time
   section: values
   declaration: duration-until
+- name: Duration::from_secs
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: Duration::from_secs
 - name: duration::seconds
   record: std.time
   section: values
