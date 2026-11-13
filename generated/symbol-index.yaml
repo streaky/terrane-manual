@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6e6646b4636b15f6654323eaa82e882928d7358c54e514a59bdba6fd0b5b0e44
+  input-sha256: a6ed9cbf6c8fd955e3ed049c9d17acd8fdfe70a3b21ab4f48d4b377cc412b60f
 format: 1
 generated: true
 symbols:
@@ -4841,6 +4841,10 @@ symbols:
   record: internals.projection.resolution
   section: resolved-graph-survey
   declaration: is_stripped
+- name: isize
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: isize
 - name: item
   record: book.values-and-names
   section: exercises
@@ -5948,6 +5952,10 @@ symbols:
 - name: None
   record: internals.projection.resolution
   section: async-sequences
+  declaration: None
+- name: None
+  record: internals.projection.resolution
+  section: destination-results
   declaration: None
 - name: none
   record: internals.projection.resolution
@@ -7367,6 +7375,10 @@ symbols:
   record: tool.source-intelligence
   section: edits
   declaration: rename-capture
+- name: renamed_outputs_keep_boundaries
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: renamed_outputs_keep_boundaries
 - name: render
   record: book.classes-interfaces-and-traits
   section: describing-shared-behavior-with-an-interface
@@ -7519,6 +7531,10 @@ symbols:
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
   declaration: result
+- name: Result
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: Result
 - name: Result
   record: internals.projection.resolution
   section: interface-impls
@@ -10627,6 +10643,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: uses
+- name: usize
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: usize
 - name: utf16-be
   record: lang.text.bytes
   section: bytes

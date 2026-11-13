@@ -852,6 +852,20 @@ documentation:
             set, so the injected edge cannot widen it; ambiguous or non-registry owners
             decline explicitly.
 
+            Native output-container classification retains the constructor spelling from the
+            Rustdoc type reference independently of the chosen public facade path. Renaming
+            a public `Result` or `Option` export cannot erase its boundary: `Result<T, E>`
+            still exposes the success value and error separately, and `Option<Result<T, E>>`
+            retains its optional success and nested error carrier. Admitting other closed
+            instantiations cannot change that classification. This does not reinterpret
+            arbitrary stored native values or other nominal wrappers. The focused
+            `renamed_outputs_keep_boundaries` projection test compares defining and renamed
+            paths for all three output shapes.
+
+            Changes to this boundary policy advance the projection schema so local and
+            published artifacts cannot retain the previous admission semantics. Rebuilding
+            the CLI alone is not an invalidation of a schema-compatible projection artifact.
+
             Destination discovery separates recursive syntax traversal from non-recursive
             native call specialization. Specialization temporaries are released before
             descending into child expressions, so their debug-build stack frame does not
@@ -1115,6 +1129,14 @@ documentation:
             destination unchanged if conversion fails. An explicitly typed inline Rust
             optional result supplies its complete `Option` carrier; lowering must not wrap
             that opaque result in another `Some`.
+
+            Native `usize` and `isize` fields retain the adaptive `int` source facade rather
+            than inventing a fixed-width source descriptor. Their native ABI remains
+            pointer-sized, including optional and collection payloads; record construction
+            and assignment use checked integer conversion. Before a non-identity field
+            conversion, lowering types the source carrier explicitly, so assigning absence
+            does not leave an untyped Rust `None`. Scalar text rendering accepts the
+            retained native integer representation directly.
 
             Object comparisons borrow stable canonical operand places without consuming
             owned operands or adding representation copies for borrowed observations. Reads

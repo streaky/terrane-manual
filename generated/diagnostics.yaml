@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7416c8e27b7ddb4883dc629a2139082a0aa5fa02d803b6cd7542a108c7b43d49
+  input-sha256: 13101431dd0fca9c090c29d31d8e61e5a614b822ad5da36ff8fff9f2ed42d3ef
 format: 1
 generated: true
 diagnostics:
@@ -1095,9 +1095,9 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/testing.rs
-    line: 424
+    line: 418
   - path: crates/terrane-compiler/src/testing.rs
-    line: 434
+    line: 428
 - code: S2051
   messages:
   - test function `{}` must be parameterless and return `none`
@@ -1266,7 +1266,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3292
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9542
+    line: 9545
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 599
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2104,7 +2104,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9560
+    line: 9563
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
