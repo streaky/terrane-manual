@@ -887,6 +887,13 @@ documentation:
             primary signatures and later fragment materialization both retain their recorded
             physical native owners.
 
+            A Rustdoc impl list can include an implementation where a nominal class is a
+            trait argument rather than `Self`, such as `ColumnIndex<Row>` for `&str`.
+            Non-nominal `Self` implementations do not contribute methods to that class;
+            admission records an ownership decline rather than inventing a foreign class for
+            the borrowed builtin. Borrowed nominal receivers and generic blanket
+            implementations retain their existing member projection.
+
             Changes to this boundary policy advance the projection schema so local and
             published artifacts cannot retain the previous admission semantics. Rebuilding
             the CLI alone is not an invalidation of a schema-compatible projection artifact.
