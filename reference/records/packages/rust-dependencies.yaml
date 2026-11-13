@@ -78,8 +78,8 @@ documentation:
                selection and lowering. Universal panic translation is implicit and omitted
                from generated declarations. Projected `Result` failures use the admitted,
                displayable error's throwable identity where available; supported
-               standard-library errors without an admitted descriptor retain
-               `dependency-error`. Admitted classes include every already-projectable
+               standard-library and opaque external errors without an admitted descriptor
+               retain `dependency-error`. Admitted classes include every already-projectable
                method, associated constant, and enum constructor. Associated constants
                appear as `constant` members and are selected with `Type::CONSTANT`;
                constants without an exactly translatable Terrane initializer still lower
@@ -1336,8 +1336,14 @@ documentation:
             its projected object identity, not by display text. `Option<Result<T,E>>` and
             `Result<Option<T>,E>` both have the Terrane shape `T|none throws E`, but their
             distinct Rust wrapper order is retained so absence, success, and failure remain
-            distinct. A non-standard error type that cannot be projected causes the call to
-            be declined rather than converted to text or an optional sentinel.
+            distinct. Public error types still require an admitted representation and
+            display contract. Supported opaque external errors without a publicly reachable
+            descriptor instead retain `dependency-error` and its dependency/member context,
+            without making the function unavailable. This applies equally to direct `Result`
+            outputs and aliases, including functions re-exported through an implementation
+            crate. Publicly re-exported errors use their canonical facade identity, never
+            another error with the same short name. Neither channel replaces failure with an
+            optional sentinel.
 
             Explicit public IO `Error` and `ErrorKind` reexports are admitted independently
             of the sysroot defining crate. Signature-only references do not create facade

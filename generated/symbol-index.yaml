@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 57eaadd6ca7f4fc97715fb793efe406c71a84218a9b2ac51639701b2fb081ed2
+  input-sha256: e479541b6a59d3c18a42926829677cb3ef07bf132a5e3cb7204a767e92dcd6e9
 format: 1
 generated: true
 symbols:
@@ -7610,6 +7610,10 @@ symbols:
 - name: Result
   record: lang.errors.handling
   section: structured-errors
+  declaration: Result
+- name: Result
+  record: tool.packages.rust-dependencies
+  section: async-projected-calls
   declaration: Result
 - name: Result
   record: tool.packages.rust-dependencies
