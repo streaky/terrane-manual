@@ -892,6 +892,20 @@ documentation:
             retains the public alias with its selected native arguments: the underlying
             nominal owner may be private and therefore unusable as a generated Rust type.
 
+            Defining Cargo package identities, including the resolved version and source,
+            qualify alias documents and imported crate identities. Resolution follows the
+            referencing package's dependency graph; Cargo artifact provenance distinguishes
+            renamed dependencies whose library targets share a name. A document for another
+            version cannot supply the alias's target or default error.
+
+            Standard-library aliases without indexed defining metadata currently decline
+            explicitly. For example, `std::os::fd::RawFd` does not yet expose its `int32`
+            facade and is not admitted as an opaque nominal substitute. The standard
+            `Result`/`Option` boundary inventory is not a general standard-alias resolver.
+            General recovery remains unimplemented and requires target-correct sysroot
+            defining alias metadata; guessing representations from alias names would not
+            establish that contract.
+
             A Rustdoc impl list can include an implementation where a nominal class is a
             trait argument rather than `Self`, such as `ColumnIndex<Row>` for `&str`.
             Non-nominal `Self` implementations do not contribute methods to that class;

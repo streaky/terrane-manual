@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5dd494dbcf4470cff58c7541678912f17971ea5855492350f43a2b0e14c9886c
+  input-sha256: 57eaadd6ca7f4fc97715fb793efe406c71a84218a9b2ac51639701b2fb081ed2
 format: 1
 generated: true
 symbols:
@@ -4602,6 +4602,10 @@ symbols:
   section: scalar-types
   declaration: int16
 - name: int32
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: int32
+- name: int32
   record: lang.numerics.floating-point
   section: operations
   declaration: int32
@@ -8699,6 +8703,10 @@ symbols:
   record: internals.projection.resolution
   section: destination-results
   declaration: std::io::ErrorKind
+- name: std::os::fd::RawFd
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: std::os::fd::RawFd
 - name: stdout.txt
   record: internals.testing.conformance-timing
   section: bounded-expected-runtime-failures
