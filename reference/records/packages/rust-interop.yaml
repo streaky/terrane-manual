@@ -57,6 +57,18 @@ documentation:
             into the Rust boundary without a snapshot; an input read again afterward or
             retained by a repeatable callback keeps its ordinary value-separation behavior.
 
+            Native Rust support adapters may borrow a parsed dynamic document through
+            `terrane_document_support::DataResult::value()`: success returns a read-only
+            `&Document` tied to the result borrow, and failure returns `None`. This avoids
+            reparsing the `encoded` compatibility snapshot or cloning the tree. Adapters may
+            inspect `Document` variants, including `List` and `Map`; integer and decimal
+            payloads are text, not floating-point approximations. Adapters must not retain
+            references beyond the result borrow. This is an explicitly supported native
+            adapter surface, not permission to depend on private parsed-tree storage or
+            generated Rust layout. Like Terrane's other experimental support APIs, it must
+            be used with the matching compiler/runtime version, not treated as an
+            independently versioned stable Rust API.
+
             An outer value read only inside an anonymous function's native Rust body is
             still a closure capture. Its ordinary value snapshot is established before
             constructing the closure, so later outer reads and reassignment remain

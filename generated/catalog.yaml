@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a6ed9cbf6c8fd955e3ed049c9d17acd8fdfe70a3b21ab4f48d4b377cc412b60f
+  input-sha256: b0715ce68d93d4bb54febb35933c7aeb7e017f85e4d9a20cb4d1b0b99bb8f5a6
 format: 2
 generated: true
 records:
@@ -95,6 +95,9 @@ records:
     sections: []
   - id: changes-2026-11-09
     title: '2026-11-09'
+    sections: []
+  - id: changes-2026-11-13
+    title: '2026-11-13'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations

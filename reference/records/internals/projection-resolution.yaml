@@ -852,15 +852,16 @@ documentation:
             set, so the injected edge cannot widen it; ambiguous or non-registry owners
             decline explicitly.
 
-            Native output-container classification retains the constructor spelling from the
-            Rustdoc type reference independently of the chosen public facade path. Renaming
-            a public `Result` or `Option` export cannot erase its boundary: `Result<T, E>`
-            still exposes the success value and error separately, and `Option<Result<T, E>>`
-            retains its optional success and nested error carrier. Admitting other closed
-            instantiations cannot change that classification. This does not reinterpret
-            arbitrary stored native values or other nominal wrappers. The focused
-            `renamed_outputs_keep_boundaries` projection test compares defining and renamed
-            paths for all three output shapes.
+            Native output-container classification uses the defining `core`/`std`
+            `result::Result` and `option::Option` identities, not a use-site short name.
+            Facade-fragment alias rewriting preserves those semantic wrapper identities
+            while continuing to rewrite nominal payload owners. Renaming a public export
+            therefore cannot erase its success/error or optional boundary, and a custom enum
+            re-exported as `Result` remains nominal. Admitting other closed instantiations
+            cannot change that classification. The real `projected-core-result-facade`
+            dependency fixture exercises renamed exports, re-exported upstream functions,
+            and an unrelated nominal `Result`. `output_alias_boundaries` covers all three
+            nested output shapes.
 
             Changes to this boundary policy advance the projection schema so local and
             published artifacts cannot retain the previous admission semantics. Rebuilding

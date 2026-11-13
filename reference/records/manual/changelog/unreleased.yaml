@@ -497,6 +497,16 @@ documentation:
               help follows the actual separator owner, and formatting preserves call
               structure. See [[lang.functions.call-layout]],
               [[lang.functions.fluent-apis#calling]], and [[tool.editor-support]].
+    - id: changes-2026-11-13
+      title: "2026-11-13"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — pointer-sized native record fields.** Rust `usize` and `isize`
+              fields now expose adaptive `int` rather than an unresolved source type,
+              including optional and collection fields and owned slots of borrowed
+              descriptors. Writes retain checked native-range conversion. See
+              [[tool.packages.rust-dependencies#foreign-value-ownership]].
   see-also:
     - manual.changelog
     - lang.types.references

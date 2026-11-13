@@ -793,6 +793,15 @@ documentation:
             fields. Construction lowers directly to the native Rust struct when its native
             fields are owned.
 
+            Native `usize` and `isize` record fields expose adaptive `int`, including owned
+            slots of borrowed descriptors and fields nested inside optional or collection
+            carriers. Fixed-width native integers retain their corresponding fixed-width
+            source facades. Reads preserve the native integer value; construction and writes
+            check the platform's native destination range and raise
+            `integer-conversion-overflow` if the value does not fit. Such diagnostics name
+            `native usize` or `native isize`; these are Rust destinations, not additional
+            Terrane source types.
+
             A lifetime-parameterized Rust struct is admitted only when every public field
             has a complete owned conversion recipe and the struct is neither non-exhaustive
             nor partially hidden. Borrowed text and OS-string views, optional forms, slices,

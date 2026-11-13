@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a6ed9cbf6c8fd955e3ed049c9d17acd8fdfe70a3b21ab4f48d4b377cc412b60f
+  input-sha256: b0715ce68d93d4bb54febb35933c7aeb7e017f85e4d9a20cb4d1b0b99bb8f5a6
 format: 1
 generated: true
 symbols:
@@ -2577,6 +2577,10 @@ symbols:
   record: std.documents.typed-decoding
   section: native-boundary
   declaration: Document
+- name: Document
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: Document
 - name: document-decodable
   record: std.documents.typed-decoding
   section: opt-in
@@ -2773,6 +2777,10 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: encode-typed-json
+- name: encoded
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: encoded
 - name: end
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
@@ -4550,6 +4558,14 @@ symbols:
   section: native-enums
   declaration: int
 - name: int
+  record: manual.changelog.unreleased
+  section: changes-2026-11-13
+  declaration: int
+- name: int
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
+  declaration: int
+- name: int
   record: tool.packages.rust-dependencies
   section: payload-enums
   declaration: int
@@ -4845,6 +4861,14 @@ symbols:
   record: internals.projection.resolution
   section: destination-results
   declaration: isize
+- name: isize
+  record: manual.changelog.unreleased
+  section: changes-2026-11-13
+  declaration: isize
+- name: isize
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
+  declaration: isize
 - name: item
   record: book.values-and-names
   section: exercises
@@ -5081,6 +5105,10 @@ symbols:
   record: std.collections
   section: construction-and-types
   declaration: list
+- name: List
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: List
 - name: listen-tcp
   record: std.networking.operations
   section: native-transport
@@ -5353,6 +5381,10 @@ symbols:
   record: std.collections
   section: collection-kinds
   declaration: map
+- name: Map
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: Map
 - name: mark-complete
   record: book.classes-interfaces-and-traits
   section: objects-as-behavior
@@ -6069,6 +6101,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: payload-enums
   declaration: none
+- name: None
+  record: tool.packages.rust-interop
+  section: inline-rust
+  declaration: None
 - name: none
   record: tool.packages.testing
   section: discovery
@@ -6279,6 +6315,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: Option
+- name: option::Option
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: option::Option
 - name: optional
   record: lang.classes.fields
   section: classes
@@ -6371,6 +6411,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: interfaces
   declaration: Output
+- name: output_alias_boundaries
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: output_alias_boundaries
 - name: overflowed
   record: lang.numerics.arithmetic-policies
   section: bounded-arithmetic
@@ -7007,6 +7051,10 @@ symbols:
   record: internals.projection.resolution
   section: public-paths
   declaration: project_rustdoc
+- name: projected-core-result-facade
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: projected-core-result-facade
 - name: projected-destination-results
   record: lang.types.generics
   section: destinations
@@ -7375,10 +7423,6 @@ symbols:
   record: tool.source-intelligence
   section: edits
   declaration: rename-capture
-- name: renamed_outputs_keep_boundaries
-  record: internals.projection.resolution
-  section: destination-results
-  declaration: renamed_outputs_keep_boundaries
 - name: render
   record: book.classes-interfaces-and-traits
   section: describing-shared-behavior-with-an-interface
@@ -7555,6 +7599,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: Result
+- name: result::Result
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: result::Result
 - name: resume
   record: std.streams
   section: byte-text-streams
@@ -10646,6 +10694,14 @@ symbols:
 - name: usize
   record: internals.projection.resolution
   section: destination-results
+  declaration: usize
+- name: usize
+  record: manual.changelog.unreleased
+  section: changes-2026-11-13
+  declaration: usize
+- name: usize
+  record: tool.packages.rust-dependencies
+  section: foreign-value-ownership
   declaration: usize
 - name: utf16-be
   record: lang.text.bytes
