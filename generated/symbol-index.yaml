@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b0715ce68d93d4bb54febb35933c7aeb7e017f85e4d9a20cb4d1b0b99bb8f5a6
+  input-sha256: 3809f98f01057d3f83e691508abc845ba1f9ed8e3a75754875b7ba3a7aa5ac42
 format: 1
 generated: true
 symbols:
@@ -4813,6 +4813,14 @@ symbols:
   record: std.networking.operations
   section: cancellation
   declaration: io-operation-result
+- name: io::error::Result
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: io::error::Result
+- name: io::Result
+  record: internals.projection.resolution
+  section: destination-results
+  declaration: io::Result
 - name: IP_TTL
   record: std.networking.operations
   section: native-transport

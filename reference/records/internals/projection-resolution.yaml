@@ -853,15 +853,19 @@ documentation:
             decline explicitly.
 
             Native output-container classification uses the defining `core`/`std`
-            `result::Result` and `option::Option` identities, not a use-site short name.
-            Facade-fragment alias rewriting preserves those semantic wrapper identities
-            while continuing to rewrite nominal payload owners. Renaming a public export
-            therefore cannot erase its success/error or optional boundary, and a custom enum
-            re-exported as `Result` remains nominal. Admitting other closed instantiations
-            cannot change that classification. The real `projected-core-result-facade`
-            dependency fixture exercises renamed exports, re-exported upstream functions,
-            and an unrelated nominal `Result`. `output_alias_boundaries` covers all three
-            nested output shapes.
+            `result::Result` and `option::Option` identities, not a use-site short name. The
+            standard `core`/`std` IO `Result<T>` aliases retain the same fallible boundary
+            when external Rustdoc omits their alias definition; both public `io::Result` and
+            defining `io::error::Result` paths are recognized. Alias preservation and
+            classification share this exact standard identity inventory. Facade-fragment
+            alias rewriting preserves those semantic wrapper identities while continuing to
+            rewrite nominal payload owners. Renaming a public export therefore cannot erase
+            its success/error or optional boundary, and a custom enum re-exported as
+            `Result` remains nominal. Admitting other closed instantiations cannot change
+            that classification. The real `projected-core-result-facade` dependency fixture
+            exercises renamed exports, re-exported upstream functions, and an unrelated
+            nominal `Result`. `output_alias_boundaries` covers all three nested output
+            shapes.
 
             Changes to this boundary policy advance the projection schema so local and
             published artifacts cannot retain the previous admission semantics. Rebuilding
