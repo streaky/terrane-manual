@@ -867,6 +867,19 @@ documentation:
             nominal `Result`. `output_alias_boundaries` covers all three nested output
             shapes.
 
+            Output aliases referenced by free functions and inherent methods are resolved
+            through their unique locked defining Rustdoc document before boundary
+            classification. Imported alias targets, defaults, and bounds rebind every type
+            identity into the receiving document; document-local Rustdoc IDs are never
+            shared across indexes. Alias chains and aliases inside optional result outputs
+            use the same substitution path as local aliases, including async methods. Public
+            facade identities are retained for projected concrete error defaults; opaque
+            external defaults retain the generic `dependency-error` channel. A missing or
+            ambiguous defining alias produces a precise admission decline, never a
+            nominal-looking result or a short-name guess. Ordinary structs and enums named
+            `Result` or `Option` remain nominal. The facade fixture also covers these
+            cross-crate success, absence, typed-error, and generic-error paths.
+
             Changes to this boundary policy advance the projection schema so local and
             published artifacts cannot retain the previous admission semantics. Rebuilding
             the CLI alone is not an invalidation of a schema-compatible projection artifact.
