@@ -1143,6 +1143,14 @@ documentation:
             does not leave an untyped Rust `None`. Scalar text rendering accepts the
             retained native integer representation directly.
 
+            Generated owned enum payload classes retain native field storage. Their source
+            arguments cross the native ABI before the generated payload constructor, whose
+            parameters must therefore match that storage recursively, including optional
+            native integers. This differs from an owned borrowed-record descriptor
+            constructor, which accepts source carriers and performs its conversion inside
+            the constructor. Reusing that descriptor input ABI for an enum payload would mix
+            adaptive integer inputs with fixed native storage.
+
             Object comparisons borrow stable canonical operand places without consuming
             owned operands or adding representation copies for borrowed observations. Reads
             through checked shared storage instead use bounded value snapshots: each access
