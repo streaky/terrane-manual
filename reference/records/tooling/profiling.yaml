@@ -183,6 +183,202 @@ documentation:
             dependency code generation. Verify the entire optimized build as well as
             held-out behavior; a successful generated-application trial does not establish
             that compiler-wide feedback is ready for adoption.
+    - id: sample-profile-application-example
+      title: "Worked example: optimize a generated application"
+      blocks:
+        - type: markdown
+          markdown: |-
+            This fictional command-line application counts Collatz steps. It is a small
+            workflow example, not a representative application benchmark or a promised
+            speedup. Only its generated executable receives feedback; the installed Terrane
+            compiler is not rebuilt or optimized.
+
+            Run these Bash commands from a Terrane repository checkout, with a current
+            `terrane` on `PATH`, Python 3, stable Rust 1.100, Linux perf recording
+            permission, and a compatible LLVM profile validator/converter. Start without
+            inherited instrumentation or profile-use flags. Keep the same target, features
+            and release settings throughout. Store the source and sensitive capture data in
+            a private scratch directory excluded from source hashing.
+        - type: example
+          id: sample-app-setup
+          title: Create private scratch space
+          language: bash
+          mode: illustrative
+          source: |-
+            set -euo pipefail
+            umask 077
+            helper="$PWD/tools/sample-profile.py"
+            mkdir -p "$PWD/.trn"
+            demo="$(mktemp -d "$PWD/.trn/sample-profile-demo.XXXXXX")"
+        - type: markdown
+          markdown: |-
+            Save the following source as `$demo/main.trn`; it accepts one positive integer
+            and prints a deterministic checksum.
+        - type: example
+          id: sample-app-source
+          title: main.trn
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace sample-profile-demo
+            from /core/process import native-string, arguments, exit, make-exit-status
+
+            function main;
+                supplied = (arguments;)
+                if supplied.length != 1
+                    exit; (make-exit-status; 2)
+                limit int64 = (supplied[0].text.radix; 10)
+                if limit <= 0
+                    exit; (make-exit-status; 2)
+                total int64 = 0
+                start int64 = 1
+                while start <= limit
+                    value int64 = start
+                    while value != 1
+                        if value % 2 == 0
+                            value = value / 2
+                        else
+                            value = 3 * value + 1
+                        total++
+                    start++
+                print; total
+        - type: markdown
+          markdown: |-
+            First prepare a release executable with retained function/line metadata and
+            freeze a baseline copy. `terrane build` prints the executable path on stdout;
+            the helper forwards it. Do not assume a Cargo-internal output path. A later
+            build replaces the role's public artifact, so train the frozen executable.
+        - type: example
+          id: sample-app-prepare
+          title: Prepare and preserve the baseline
+          language: bash
+          mode: illustrative
+          source: |-
+            prepared="$(python "$helper" prepare -- terrane build --release "$demo/main.trn")"
+            cp "$prepared" "$demo/baseline"
+        - type: markdown
+          markdown: |-
+            Choose one conversion route. The default needs working branch-stack/LBR sampling
+            and `llvm-profgen` on `PATH`. On a non-LBR host, instead select the alternative
+            below, which needs a compatible AutoFDO `create_llvm_prof` on `PATH`. Neither
+            route uses GCC feedback files or `.trnprof` diagnostics.
+        - type: example
+          id: sample-app-lbr
+          title: Default LBR route
+          language: bash
+          mode: illustrative
+          source: |-
+            converter_args=()
+        - type: example
+          id: sample-app-no-lbr
+          title: Alternative for a non-LBR host
+          language: bash
+          mode: illustrative
+          source: |-
+            converter_args=(--converter autofdo --no-lbr)
+        - type: markdown
+          markdown: |-
+            Train on limit 5,000,000. Recording runs the application, saves raw perf data
+            and provenance beside the converted profile, and rejects failed conversion or
+            profiles without positive source-location counts. Investigate mapping loss and
+            converter diagnostics; a parseable profile alone is not evidence of useful
+            feedback. Stop if recording fails rather than consuming a stale profile.
+        - type: example
+          id: sample-app-record
+          title: Record training feedback
+          language: bash
+          mode: illustrative
+          source: |-
+            python "$helper" record --binary "$demo/baseline" \
+              --output "$demo/training.prof" "${converter_args[@]}" -- 5000000
+        - type: markdown
+          markdown: |-
+            Rebuild the same source with that profile and freeze the optimized executable.
+            The helper validates and snapshots the profile under an immutable digest-named
+            path. New profile bytes select a new build input even when `training.prof` is
+            overwritten. This opt-in applies only to the wrapped build.
+        - type: example
+          id: sample-app-use
+          title: Consume the profile
+          language: bash
+          mode: illustrative
+          source: |-
+            optimized="$(python "$helper" use --profile "$demo/training.prof" \
+              --cache-dir "$demo/snapshots" -- terrane build --release "$demo/main.trn")"
+            cp "$optimized" "$demo/optimized"
+        - type: markdown
+          markdown: |-
+            Validate behavior before measuring speed. These inputs are distinct from the
+            training limit and compare exact stdout; failed commands also stop this shell.
+            For a real application, run its normal correctness tests, including errors and
+            less frequent paths. A checksum comparison is only sufficient for this toy.
+        - type: example
+          id: sample-app-correctness
+          title: Compare held-out results
+          language: bash
+          mode: illustrative
+          source: |-
+            for limit in 1 2 27 1000 3000000; do
+              "$demo/baseline" "$limit" > "$demo/baseline.out"
+              "$demo/optimized" "$limit" > "$demo/optimized.out"
+              cmp "$demo/baseline.out" "$demo/optimized.out"
+            done
+        - type: markdown
+          markdown: |-
+            Time frozen executables directly, not `terrane run` or a rebuild. The following
+            comparison pins execution to one allowed logical CPU, warms both executables,
+            alternates execution order, checks the held-out checksum, and prints median
+            elapsed milliseconds. Stop other builds and competing CPU-heavy work first.
+            Elapsed time is not a direct CPU-counter measurement.
+        - type: example
+          id: sample-app-timing
+          title: Measure a held-out workload
+          language: bash
+          mode: illustrative
+          source: |-
+            python - "$demo" <<'PY'
+            from pathlib import Path
+            import os, statistics, subprocess, sys, time
+
+            root = Path(sys.argv[1])
+            os.sched_setaffinity(0, {min(os.sched_getaffinity(0))})
+            samples = {"baseline": [], "optimized": []}
+            for iteration in range(18):
+                order = list(samples)
+                if iteration % 2:
+                    order.reverse()
+                for name in order:
+                    start = time.perf_counter_ns()
+                    result = subprocess.run(
+                        [str(root / name), "3000000"],
+                        check=True, capture_output=True,
+                    )
+                    elapsed_ms = (time.perf_counter_ns() - start) / 1_000_000
+                    assert result.stdout == b"428343467\n" and not result.stderr
+                    if iteration >= 3:
+                        samples[name].append(elapsed_ms)
+            for name, values in samples.items():
+                print(f"{name}: {statistics.median(values):.3f} ms median")
+            PY
+        - type: markdown
+          markdown: |-
+            Repeat the comparison to assess variability. For a noise control, repeat with
+            both measured paths containing the same baseline binary. Retain feedback only if
+            correctness and representative held-out gains justify it; retrain when code,
+            dependencies or workload materially change. Keep the baseline and capture
+            provenance with any reported result, without publishing sensitive raw data.
+
+            To return to the ordinary untrained release artifact, rebuild without the helper
+            or profile-use flags. Merely stopping recording does not undo feedback already
+            compiled into an executable. The frozen comparison copies are not overwritten by
+            this ordinary build.
+        - type: example
+          id: sample-app-reset
+          title: Return to an ordinary release build
+          language: bash
+          mode: illustrative
+          source: |-
+            terrane build --release "$demo/main.trn"
     - id: privacy-limitations
       title: Privacy and current limits
       blocks:

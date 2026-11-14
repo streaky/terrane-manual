@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: a737fea18f5ea32c5387e9ade9540138caa5a40016e92e109db1865b0c863759
+  input-sha256: 1ab87035eeddd07e4678b9ad7d962b7450d405378422eb01f7486a585c9d9e71
 format: 2
 generated: true
 records:
@@ -3048,6 +3048,9 @@ records:
     sections: []
   - id: sample-profile-feedback
     title: Sample-profile optimization feedback
+    sections: []
+  - id: sample-profile-application-example
+    title: 'Worked example: optimize a generated application'
     sections: []
   - id: privacy-limitations
     title: Privacy and current limits
