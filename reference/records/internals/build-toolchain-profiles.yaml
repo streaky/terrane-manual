@@ -44,17 +44,18 @@ documentation:
             release. Direct generated lowering and vendored support therefore share one Rust
             compatibility target.
 
-            The current stable selection is Rust 1.99.0. Dependency projection and native
-            surveys separately select `nightly-2026-08-01`, paired with `rustdoc-types`
+            The current stable selection is Rust 1.100.0. Dependency projection and native
+            surveys separately select `nightly-2026-10-02`, paired with `rustdoc-types`
             0.61.0 and JSON format 61. The producer must accept the generated manifests'
             Rust minimum and dependency syntax; matching its release number alone does not
             establish JSON compatibility. Exact toolchain and format identities invalidate
             older projection and native proof caches.
 
             Unicode behavior is a separate compiler-owned part of the toolchain profile.
-            Version one selects Unicode 16.0.0 for full case folding, normalization, Unicode
-            word segmentation, and extended grapheme segmentation. Pinned and system Rust
-            builds use the same Unicode profile.
+            Version one selects Unicode 18.0.0 for locale-independent case mapping and
+            folding, Unicode whitespace, normalization, default word segmentation, and
+            extended grapheme segmentation. Pinned and system Rust builds share this
+            profile.
     - id: generated-artifacts
       title: Generated artifacts
       blocks:
@@ -62,15 +63,13 @@ documentation:
           id: description.internals.build.generated-artifacts
           kind: implementation
           markdown: |-
-            Every generated program manifest records `unicode-data-version = "16.0.0"` under
-            `[package.metadata.terrane]`. Generated support manifests use exact dependency
-            versions whose embedded tables all implement that profile.
+            Every generated program manifest records `unicode-data-version = "18.0.0"` under
+            `[package.metadata.terrane]`. Generated string and collection support pin ICU4X
+            2.4.0, whose embedded Unicode data is version 18.0.0.
 
-            String and collection support each expose their selected Unicode version and
-            assert the versions embedded by their table providers. The compiler test suite
-            mechanically compares both support versions with the compiler profile constant.
-            Updating any one provider or component alone therefore fails the build rather
-            than silently producing mixed Unicode semantics.
+            Both support crates expose their selected Unicode profile, and compiler tests
+            compare those constants with the compiler profile. The ICU version pins and
+            Unicode 18 behavior regressions keep generated and in-process support aligned.
 
             Generated workspaces use stable role-specific directories:
             `.trn/build/application` for ordinary builds, `.trn/build/application-debug` for

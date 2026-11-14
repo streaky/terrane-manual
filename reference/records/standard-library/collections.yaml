@@ -106,7 +106,8 @@ documentation:
             values, not stored collections. `bytes` is a distinct immutable byte-sequence
             value: it exposes `.length`, integer and range indexing, and `uint8` iteration,
             but it is not `list of uint8`. Strings are text values with explicit byte,
-            scalar, and grapheme views rather than general collections.
+            scalar, and grapheme views rather than general collections. Their grapheme view
+            and iteration follow the Unicode 18.0.0 profile described in the text reference.
     - id: construction-and-types
       title: Construction and applied types
       blocks:

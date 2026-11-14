@@ -529,6 +529,18 @@ documentation:
               publicly admitted type where available, or the generic fallback otherwise. See
               [[tool.packages.rust-dependencies#async-projected-calls]] and
               [[internals.projection.resolution]].
+
+            - **Breaking — Unicode 18 text profile and Rust 1.100.** Compiler-owned text and
+              string-iteration behavior now use pinned Unicode 18 data for root-locale
+              casing, full case folding, whitespace, normalization, default word boundaries
+              and extended grapheme boundaries. The source API is unchanged, but newly
+              assigned characters and changed mappings can alter transformed keys and
+              grapheme-based limits. Rebuild persisted folded/normalized indexes from
+              original text and review stored length assumptions. Pinned and compatible
+              system Rust builds share this profile rather than inheriting std casing
+              tables. Generated Rust now requires Rust 1.100.0. See
+              [[lang.text.unicode#unicode-version]] and
+              [[internals.build.toolchain-profiles#selected-inputs]].
   see-also:
     - manual.changelog
     - lang.types.references

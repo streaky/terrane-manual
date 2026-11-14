@@ -60,19 +60,18 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Terrane’s version-one Unicode profile is Unicode 16.0.0. The compiler and text-
-            and collection-support providers use that single embedded version, and table
-            providers expose the version they contain.
+            Terrane’s version-one Unicode profile is Unicode 18.0.0. String and collection
+            support pin ICU4X 2.4.0, whose embedded data uses Unicode 18.0.0; their exported
+            profile constants are checked against the compiler’s selected version.
 
-            The profile covers compiler-owned Unicode tables, including case folding,
-            normalization, word segmentation, and grapheme segmentation. Unicode-dependent
-            operations therefore use a coherent release rather than independently selected
-            dependency data.
+            The profile covers full locale-independent case mapping and folding, Unicode
+            whitespace, normalization, default word segmentation, and extended grapheme
+            segmentation. Unicode-dependent behavior is independent of the installed Rust
+            standard library and is updated through the pinned support-data providers.
 
-            Generated manifests record the selected Unicode profile. Choosing a pinned or
-            system Rust installation does not change Terrane’s Unicode semantics. When the
-            language selects a new Unicode profile, case, normalization, word-segmentation,
-            grapheme-segmentation, and other affected support data update together.
+            `upper.words` uses Unicode 18 default word boundaries without locale-specific
+            dictionary segmentation for complex scripts. Text and collection string
+            iteration use Unicode 18 extended grapheme boundaries.
   see-also: []
 
 provenance:

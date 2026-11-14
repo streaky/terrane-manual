@@ -44,9 +44,13 @@ documentation:
             Case operations are explicit, locale-independent Unicode transformations.
             Terrane provides `upper` and `lower`, their `.first` forms, and `upper.words`.
             Full locale-independent folding is the separate `case-fold` operation. For
-            case-insensitive searching, apply `case-fold` explicitly to both operands.
-            Normalization is available through `normalise.nfc`, `normalise.nfd`,
-            `normalise.nfkc`, and `normalise.nfkd`.
+            case-insensitive searching, apply `case-fold` explicitly to both operands. Case
+            mapping, folding, Unicode whitespace, and normalization use Unicode 18.0.0
+            through the pinned ICU4X 2.4.0 data. Whole-string upper/lower apply Unicode full
+            casing in the root locale, including contextual mappings such as Greek final
+            sigma; `.first` maps only the first cased scalar. Normalization is available
+            through `normalise.nfc`, `normalise.nfd`, `normalise.nfkc`, and
+            `normalise.nfkd`.
 
             `split` and scalar `replace` use literal, left-to-right, non-overlapping
             matching. Splitting on an empty pattern returns the graphemes without synthetic

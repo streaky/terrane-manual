@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d3bf9271a261ab2a20bd9bb045994e7a76ea37f739a640f6701b5726607820b2
+  input-sha256: f55ed97b742ad70e9ce552a9212392bccc3fad20b6e50ea82506b82e43815e01
 format: 1
 generated: true
 symbols:
@@ -5945,10 +5945,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: next-up
-- name: nightly-2026-08-01
+- name: nightly-2026-10-02
   record: internals.build.toolchain-profiles
   section: selected-inputs
-  declaration: nightly-2026-08-01
+  declaration: nightly-2026-10-02
 - name: 'no'
   record: lang.types.generics
   section: destinations
@@ -10690,6 +10690,10 @@ symbols:
 - name: upper.words
   record: lang.text.transformation
   section: string-transform
+  declaration: upper.words
+- name: upper.words
+  record: lang.text.unicode
+  section: unicode-version
   declaration: upper.words
 - name: Upstream public member
   record: tool.packages.rust-dependencies
