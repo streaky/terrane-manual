@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 9c043854e53da7c2b24f571b9663b1044961aa96f5bdad4d50eb914f37ccad45
+  input-sha256: 772cab12b4072e597847ce53258960806ce165559e93fd345618e85187cb92cc
 format: 1
 generated: true
 symbols:
@@ -4201,6 +4201,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: payload-enums
   declaration: i64
+- name: ICU4X_VERSION
+  record: internals.build.toolchain-profiles
+  section: generated-artifacts
+  declaration: ICU4X_VERSION
 - name: Id
   record: internals.projection.resolution
   section: resolution

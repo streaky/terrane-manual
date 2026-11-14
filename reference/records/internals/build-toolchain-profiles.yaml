@@ -73,8 +73,12 @@ documentation:
             2.4.0, whose embedded Unicode data is version 18.0.0.
 
             Both support crates expose their selected Unicode profile, and compiler tests
-            compare those constants with the compiler profile. The ICU version pins and
-            Unicode 18 behavior regressions keep generated and in-process support aligned.
+            compare those constants with the compiler profile and their actual manifest
+            dependencies with the exact `ICU4X_VERSION` pin. Generated application and
+            conformance support share the same manifest writers. ICU4X does not expose a
+            compiled-data Unicode version constant: changing the provider pin requires
+            re-deriving its data version and reviewing the Unicode behavior witnesses, not
+            merely updating a dependency or assuming old witnesses detect an upgrade.
 
             Generated workspaces use stable role-specific directories:
             `.trn/build/application` for ordinary builds, `.trn/build/application-debug` for

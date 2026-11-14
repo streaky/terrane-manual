@@ -541,6 +541,11 @@ documentation:
               tables. Generated Rust now requires Rust 1.100.0. See
               [[lang.text.unicode#unicode-version]] and
               [[internals.build.toolchain-profiles#selected-inputs]].
+            - **Unicode text fast paths.** ASCII case mapping, first-cased-character
+              operations and whitespace boundaries bypass Unicode-table lookups without
+              changing the Unicode 18 profile. Word casing retains Unicode word boundaries.
+              Generated application and conformance support share exact provider pins and
+              use locale-core rather than unused locale data.
   see-also:
     - manual.changelog
     - lang.types.references
