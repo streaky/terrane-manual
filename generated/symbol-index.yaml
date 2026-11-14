@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 54285924f5b07a05376619f791f40604a3532c3e6b6fda2479cba780df9dbb9e
+  input-sha256: a737fea18f5ea32c5387e9ade9540138caa5a40016e92e109db1865b0c863759
 format: 1
 generated: true
 symbols:
@@ -2209,6 +2209,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: async-analysis-boundaries
   declaration: crates/terrane-compiler/src/semantics/task_groups.rs
+- name: create_llvm_prof
+  record: tool.profiling
+  section: sample-profile-feedback
+  declaration: create_llvm_prof
 - name: created-item
   record: lang.lexical-structure.keywords
   section: always-reserved
@@ -2221,6 +2225,10 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: CXX
+- name: cycles:u
+  record: tool.profiling
+  section: sample-profile-feedback
+  declaration: cycles:u
 - name: data
   record: std.filesystem
   section: whole-file-synopsis
@@ -5181,6 +5189,10 @@ symbols:
   record: tool.debugging
   section: lifecycle
   declaration: lldb_lookup.py
+- name: llvm-profgen
+  record: tool.profiling
+  section: sample-profile-feedback
+  declaration: llvm-profgen
 - name: Local
   record: internals.execution.runtime-selection
   section: strategy
@@ -10252,6 +10264,14 @@ symbols:
   record: std.paths
   section: synopsis
   declaration: tools/generate_manual_catalog.py
+- name: tools/sample-profile.py
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: tools/sample-profile.py
+- name: tools/sample-profile.py
+  record: tool.profiling
+  section: sample-profile-feedback
+  declaration: tools/sample-profile.py
 - name: total
   record: book.decisions-and-repetition
   section: exercises

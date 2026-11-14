@@ -552,6 +552,12 @@ documentation:
               existing owned staging; receiver identity, RHS order and guard scopes are
               unchanged. See
               [[internals.optimization.proof-guided-lowering#statement-owner-loans]].
+            - **Opt-in sample-profile build feedback.** The repository helper
+              `tools/sample-profile.py` prepares stable Rust release builds, records and
+              converts external samples, and consumes immutable LLVM profile snapshots for
+              both the compiler and generated applications. It does not change ordinary
+              build defaults or replace `.trnprof` diagnostics. See
+              [[tool.profiling#sample-profile-feedback]].
   see-also:
     - manual.changelog
     - lang.types.references

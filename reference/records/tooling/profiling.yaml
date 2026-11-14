@@ -141,6 +141,48 @@ documentation:
             archived binary. Embedded generated source, and authored source selected with
             `--embed-sources`, remain verifiable independently; replacing the executable
             does not discard captured samples or their embedded source evidence.
+    - id: sample-profile-feedback
+      title: Sample-profile optimization feedback
+      blocks:
+        - type: admonition
+          id: note.profiling.sample-profile-feedback
+          kind: note
+          markdown: |-
+            Stable Rust sample-profile use is opt-in and adds no Terrane CLI flags or
+            language changes. Repository helper `tools/sample-profile.py` exposes prepare,
+            record and use operations. It prepares either a compiler Cargo release build or
+            a generated application built with the normal `terrane build --release` command,
+            records representative executions, then consumes the resulting LLVM profile in
+            an explicit optimized build. `terrane profile record` and `terrane profile show`
+            use `.trnprof` diagnostic artifacts; they do not create or consume LLVM
+            optimization profiles.
+
+            Stable Rust function-and-line debug information (`debuginfo=limited`) is
+            retained; the helper explicitly disables stripping. Line-table-only information
+            can omit declaration locations needed by converters and yield unusable location
+            counts. Nightly `-Zdebuginfo-for-profiling` is not required or used. Consumed
+            profiles use immutable digest-named paths because cache identity hashes encoded
+            rustflag text, not the profile bytes. Keep profiles private to each trained
+            program and workload; compiler profiles are not application profiles, and one
+            application's profile is not a shared profile for other applications. Provenance
+            JSON omits workload arguments, but raw perf data may retain command lines.
+            Captures and profiles can also reveal symbols, paths and workload structure;
+            treat them as sensitive.
+
+            Standard `llvm-profgen` conversion requires perf branch-stack/LBR data. The
+            branchless route uses AutoFDO `create_llvm_prof` with LBR disabled to write LLVM
+            text profiles directly. GCC feedback encodings are not interchangeable with LLVM
+            sample profiles. User-space `cycles:u` sampling alone does not establish LBR
+            support. Hardware, perf permissions, and converter availability constrain which
+            route works. This remains an opt-in experimental workflow; neither host
+            conversion nor a performance improvement is claimed without actual training and
+            held-out validation.
+
+            A parseable profile with real counts does not establish practical compiler build
+            cost. Feedback can trigger pathological optimization time in Rust/LLVM
+            dependency code generation. Verify the entire optimized build as well as
+            held-out behavior; a successful generated-application trial does not establish
+            that compiler-wide feedback is ready for adoption.
     - id: privacy-limitations
       title: Privacy and current limits
       blocks:
