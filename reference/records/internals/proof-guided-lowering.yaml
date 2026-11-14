@@ -257,9 +257,16 @@ documentation:
             The proof uses resolved binding/storage identities, lexical owner lifetime,
             capture and lender facts, completion-slot requirements, and recorded evaluation
             effects. The current bounded continuation admits validated scalar reads and
-            scalar operations, including aliases and grouped local receivers. Calls,
-            construction, member/index access, writes, moves, captures, native code and
-            suspension do not establish this continuation proof.
+            scalar operations, including reassigned scalar locals and loop counters. Owner
+            aliases and grouped local receivers are supported. Calls, construction,
+            member/index access, writes, moves, captures, native code and suspension do not
+            establish this continuation proof.
+
+            In particular, read-modify-write of the same owner's field retains owned
+            staging, as does a right-hand side invoking even a scalar-returning helper.
+            Separate read/write guards alone do not establish boundedness. Admitting these
+            shapes would require an additional canonical effect/lifetime proof; they are
+            current precision limits, not a promise that such optimisations are unsafe.
 
             Global, captured, weak, temporary, native, guard-backed and otherwise unproved
             owners retain independently owned staging. Complex receiver projections and
