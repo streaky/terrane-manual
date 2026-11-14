@@ -243,6 +243,31 @@ documentation:
             Stage native receiver references outside the task body so `async move` does not
             accidentally consume their owners. Shared-backed copyable inputs retain bounded
             snapshots rather than carrying a guard across suspension.
+    - id: statement-owner-loans
+      title: Statement-local shared owner loans
+      blocks:
+        - type: markdown
+          markdown: |-
+            A shared field write still selects its owning handle before evaluating the
+            right-hand side and acquires the payload guard only after value evaluation.
+            Canonical semantic IR can prove that this handle may be lent for that statement
+            instead of incrementing and decrementing its reference count. The loan does not
+            lend a payload across effects or fuse separate locks.
+
+            The proof uses resolved binding/storage identities, lexical owner lifetime,
+            capture and lender facts, completion-slot requirements, and recorded evaluation
+            effects. The current bounded continuation admits validated scalar reads and
+            scalar operations, including aliases and grouped local receivers. Calls,
+            construction, member/index access, writes, moves, captures, native code and
+            suspension do not establish this continuation proof.
+
+            Global, captured, weak, temporary, native, guard-backed and otherwise unproved
+            owners retain independently owned staging. Complex receiver projections and
+            unknown continuations likewise keep the clone-based lowering. This fallback
+            preserves the already-selected identity if later evaluation replaces or consumes
+            another handle. Availability-aware storage reads and existing guard release
+            boundaries remain unchanged. This optimisation neither weakens source sharing
+            nor introduces a non-atomic reference-counted representation.
     - id: backend-handoff
       title: Backend handoff and performance claims
       blocks:
@@ -273,6 +298,7 @@ provenance:
     - native-read-storage
     - borrowed-text-observations
     - borrowed-throwable-text
+    - shared-statement-owner
   compiler: null
 implementation:
   compiler:
@@ -283,8 +309,11 @@ implementation:
     - crates/terrane-compiler/src/lowering/emitter/read_access.rs
     - crates/terrane-compiler/src/lowering/emitter/native_callable.rs
     - crates/terrane-compiler/src/lowering/emitter/native_arguments.rs
+    - crates/terrane-compiler/src/semantics/statement_owners.rs
+    - crates/terrane-compiler/src/lowering/emitter/members.rs
     - tests/conformance/run/list-append-bulk-mutation/case.trn
     - tests/fixtures/conformance-suites/value-protocols/tests/integration/guarded-checked-arithmetic/case.trn
     - tests/conformance/run/native-read-storage/src/main.trn
     - tests/conformance/run/borrowed-text-observations/case.trn
     - tests/conformance/run/borrowed-throwable-text/case.trn
+    - tests/conformance/run/shared-statement-owner/case.trn

@@ -546,6 +546,12 @@ documentation:
               changing the Unicode 18 profile. Word casing retains Unicode word boundaries.
               Generated application and conformance support share exact provider pins and
               use locale-core rather than unused locale data.
+            - **Shared statement-owner borrowing.** Canonical ownership, lifetime and
+              evaluation facts can lend a stable field-write owner for one statement,
+              avoiding a temporary shared-handle clone. Unproved/effectful cases keep the
+              existing owned staging; receiver identity, RHS order and guard scopes are
+              unchanged. See
+              [[internals.optimization.proof-guided-lowering#statement-owner-loans]].
   see-also:
     - manual.changelog
     - lang.types.references

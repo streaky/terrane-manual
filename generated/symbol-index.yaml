@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 772cab12b4072e597847ce53258960806ce165559e93fd345618e85187cb92cc
+  input-sha256: 022a9828af91286dbc501e7fba0f9097a56956fceb2739a9d8c8939fa853749a
 format: 1
 generated: true
 symbols:
@@ -712,6 +712,10 @@ symbols:
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
   declaration: assert-throws
+- name: assign
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function assign; owner shared ref counter, value int
 - name: async
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -1909,6 +1913,10 @@ symbols:
   record: std.text-bytes-codecs
   section: compiler-synopsis
   declaration: function construct; url-safe bool
+- name: consume
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function consume int; owner shared ref counter
 - name: consume-events
   record: book.async
   section: carrying-log-events-through-typed-channels
@@ -2117,6 +2125,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function counted-key string; owner shared ref holder, key string
+- name: counter
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class counter
 - name: counts
   record: book.text-and-collections
   section: exercises
@@ -6491,6 +6503,10 @@ symbols:
   record: book.async
   section: sharing-mutable-state-by-giving-it-one-owner
   declaration: own-state
+- name: owned-copy
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function owned-copy int; item counter
 - name: owner
   record: book.identity-and-movement
   section: shared-references-and-ownership
@@ -7551,6 +7567,11 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: function replace string; error mutable ref throwable
+- name: replace
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function replace int; owners mutable ref (list of (shared ref counter)), next shared ref
+    counter
 - name: replace
   record: lang.functions.fluent-apis
   section: calling
@@ -10251,6 +10272,10 @@ symbols:
   record: std.time
   section: values
   declaration: total-nanoseconds
+- name: touch
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function touch int; owner shared ref counter
 - name: tracing
   record: internals.observability.runtime
   section: dependency-bridge

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 772cab12b4072e597847ce53258960806ce165559e93fd345618e85187cb92cc
+  input-sha256: 022a9828af91286dbc501e7fba0f9097a56956fceb2739a9d8c8939fa853749a
 format: 2
 generated: true
 records:
@@ -3738,6 +3738,7 @@ records:
     - native-read-storage
     - borrowed-text-observations
     - borrowed-throwable-text
+    - shared-statement-owner
     compiler: null
   sections:
   - id: optimization-contract
@@ -3757,6 +3758,9 @@ records:
     sections: []
   - id: borrowed-observations
     title: Borrowed observations and native boundaries
+    sections: []
+  - id: statement-owner-loans
+    title: Statement-local shared owner loans
     sections: []
   - id: backend-handoff
     title: Backend handoff and performance claims
@@ -3788,6 +3792,12 @@ records:
   - function construct; current throwable
   - function observe string; error ref throwable
   - function main
+  - class counter
+  - function owned-copy int; item counter
+  - function assign; owner shared ref counter, value int
+  - function replace int; owners mutable ref (list of (shared ref counter)), next shared ref counter
+  - function touch int; owner shared ref counter
+  - function consume int; owner shared ref counter
 - id: internals.parser.call-layout
   title: Lexer and parser contract for call layout
   summary: Records how physical-line indentation activates call arguments and member-chain parsing without
