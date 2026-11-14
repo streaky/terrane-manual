@@ -180,6 +180,13 @@ documentation:
             unchanged. Never edit the dependency lock or generated inventory to manufacture
             availability; regenerate them through the compiler.
 
+            The generated nominal-source inventory currently summarizes every fallible
+            native member as `throws dependency-error`; that text does not identify its
+            actual typed or fallback error channel. Inspect the function `error` fields in
+            `.trn/dependencies/projection.json` and verify authored `throws`/catch contracts
+            when reviewing channel changes. Improving this display is separate from the
+            error-selection policy.
+
             Custom JSON target specifications are currently unsupported for dependency
             projection. The pinned nightly Cargo requires the unstable `-Zjson-target-spec`
             gate, which projection does not enable. Resolving a relative JSON `build.target`
@@ -1344,6 +1351,12 @@ documentation:
             crate. Publicly re-exported errors use their canonical facade identity, never
             another error with the same short name. Neither channel replaces failure with an
             optional sentinel.
+
+            A source value class inferred only from a helper signature is not proof of that
+            public error export. Such a class may remain useful as a value view, while
+            fallible calls using its otherwise opaque type retain `dependency-error`.
+            Generated private dependency bindings make the type nameable for Rust lowering,
+            not a stable typed-error contract through the declared facade.
 
             Explicit public IO `Error` and `ErrorKind` reexports are admitted independently
             of the sysroot defining crate. Signature-only references do not create facade

@@ -910,6 +910,19 @@ documentation:
             typed-error display checks and ordinary value-owner reachability remain
             enforced.
 
+            Public error eligibility is established from authored public Rustdoc bindings,
+            not from the presence of a projected value class. Capture that export evidence
+            before signature inference and namespace overlays can disguise its origin;
+            preserve it through declared and generated private owner-root rewrites. A
+            helper's signature-inferred class remains a usable value view, but cannot change
+            an opaque error channel into a typed effect. Conversely, an explicit public
+            error export remains typed and keeps its physical facade binding even when
+            helper signatures also mention it. Inferred value bindings instead recover their
+            real native owner under both the defining Rustdoc crate spelling and the
+            declared dependency alias; they must not emit a Rust import of an invented
+            facade member. Resolved metadata stores the selected channel, so cached and
+            fresh consumers share the policy.
+
             Standard-library aliases without indexed defining metadata currently decline
             explicitly. For example, `std::os::fd::RawFd` does not yet expose its `int32`
             facade and is not admitted as an opaque nominal substitute. The standard

@@ -507,6 +507,28 @@ documentation:
               including optional and collection fields and owned slots of borrowed
               descriptors. Writes retain checked native-range conversion. See
               [[tool.packages.rust-dependencies#foreign-value-ownership]].
+    - id: changes-2026-11-14
+      title: "2026-11-14"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Changed — native alias boundaries and error identity.** Supported
+              `Result`/`Option` aliases now retain their defining crate's success, absence
+              and failure semantics through facade re-exports and resolved two-version
+              dependency graphs. Supported opaque external errors no longer make an
+              otherwise usable function unavailable: they retain contextual
+              `dependency-error`, including when helper signatures infer a value class for
+              their private owner. Explicit public error exports retain typed catches.
+
+              Typed catches now require the actual public error identity, not a matching
+              short name. For example, a standard `IpAddr::from_str` failure no longer
+              matches the unrelated `AddrParseError` imported from `/deps/ipnet`; without an
+              admitted descriptor for the standard error, catch `dependency-error`. Code
+              relying on that former dispatch may stop catching without a new compile-time
+              diagnostic. Review typed catch lists and `throws` contracts: use the actual
+              publicly admitted type where available, or the generic fallback otherwise. See
+              [[tool.packages.rust-dependencies#async-projected-calls]] and
+              [[internals.projection.resolution]].
   see-also:
     - manual.changelog
     - lang.types.references

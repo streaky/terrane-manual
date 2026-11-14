@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e479541b6a59d3c18a42926829677cb3ef07bf132a5e3cb7204a767e92dcd6e9
+  input-sha256: d3bf9271a261ab2a20bd9bb045994e7a76ea37f739a640f6701b5726607820b2
 format: 1
 generated: true
 symbols:
@@ -372,6 +372,10 @@ symbols:
   record: internals.projection.resolution
   section: projection-gap-census
   declaration: /deps/iced/application
+- name: /deps/ipnet
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: /deps/ipnet
 - name: /deps/std
   record: tool.packages.rust-dependencies
   section: transitive-owners
@@ -472,6 +476,10 @@ symbols:
   record: std.time
   section: values
   declaration: add
+- name: AddrParseError
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: AddrParseError
 - name: advance-time
   record: book.testing-and-debugging
   section: chapter-summary
@@ -2378,6 +2386,10 @@ symbols:
   section: throwable-inference
   declaration: dependency-error
 - name: dependency-error
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: dependency-error
+- name: dependency-error
   record: tool.packages.rust-dependencies
   section: async-projected-calls
   declaration: dependency-error
@@ -2901,6 +2913,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-projected-calls
   declaration: Error
+- name: error
+  record: tool.packages.rust-dependencies
+  section: workflow
+  declaration: error
 - name: error-holder
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -4841,6 +4857,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: IpAddr
+- name: IpAddr::from_str
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: IpAddr::from_str
 - name: ipnet
   record: tool.packages.rust-dependencies
   section: workflow
@@ -6335,6 +6355,10 @@ symbols:
   record: lang.types.references
   section: lowering
   declaration: Option
+- name: Option
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: Option
 - name: option::Option
   record: internals.projection.resolution
   section: destination-results
@@ -7610,6 +7634,10 @@ symbols:
 - name: Result
   record: lang.errors.handling
   section: structured-errors
+  declaration: Result
+- name: Result
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
   declaration: Result
 - name: Result
   record: tool.packages.rust-dependencies
@@ -10120,8 +10148,16 @@ symbols:
   section: changes-2026-11-04
   declaration: throws
 - name: throws
+  record: manual.changelog.unreleased
+  section: changes-2026-11-14
+  declaration: throws
+- name: throws
   record: tool.packages.native-interop
   section: system-c-interop
+  declaration: throws
+- name: throws
+  record: tool.packages.rust-dependencies
+  section: workflow
   declaration: throws
 - name: tick
   record: std.time
