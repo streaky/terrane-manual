@@ -132,7 +132,7 @@ documentation:
             toolchain. The generated Cargo manifest records the Unicode version so an
             inspected build states which tables define its text behavior.
 
-            From the root of the Terrane repository, build the command-line compiler:
+            From the root of the Terrane repository, install the command-line compiler:
         - type: example
           id: legacy-fence-003
           title: null
@@ -141,30 +141,15 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            cargo build --release -p terrane-cli
+            cargo install --path crates/terrane-cli
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            The resulting executable is:
-        - type: example
-          id: legacy-fence-004
-          title: null
-          language: text
-          mode: illustrative
-          target: null
-          timeout-ms: null
-          source: |2
-            target/release/terrane
-          response: null
-          diagnostic: null
-          markdown: null
-
-        - type: markdown
-          markdown: |-
-            Check it directly:
+            Ensure Cargo's executable directory (normally `$HOME/.cargo/bin`) is on your
+            shell's `PATH`, then check the installed command:
         - type: example
           id: legacy-fence-005
           title: null
@@ -173,7 +158,7 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            ./target/release/terrane --version
+            terrane --version
           response: null
           diagnostic: null
           markdown: null
@@ -198,9 +183,8 @@ documentation:
           markdown: |-
             The exact version will change as Terrane develops.
 
-            The examples below write commands as `terrane`. You may add `target/release` to
-            your shell's `PATH`, install or link the built executable somewhere already on
-            that path, or substitute the repository-relative command each time:
+            Throughout the documentation, examples assume `terrane` is installed and
+            available on `PATH`, so the same command works from any directory:
         - type: example
           id: legacy-fence-007
           title: null
@@ -209,17 +193,15 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            ./target/release/terrane run hello.trn
+            terrane run hello.trn
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            Choose whichever approach makes it obvious which compiler you are running.
-            During active compiler development, using the repository-relative path can
-            prevent an older installed executable from being mistaken for the one you just
-            built.
+            After rebuilding the compiler during development, reinstall it before using
+            these commands so your shell runs the updated version.
 
             The small programs in this chapter need only Cargo and the stable toolchain
             Terrane requests. Some later projects that import Rust dependencies have
@@ -471,8 +453,9 @@ documentation:
           blocks:
             - type: markdown
               markdown: |-
-                If your shell reports that `terrane` does not exist, but the repository build
-                succeeded, invoke the binary by its path:
+                If your shell reports that `terrane` does not exist, install it as described
+                above and ensure Cargo's executable directory is on that shell's `PATH`. Verify
+                the command is available before trying to run your program:
             - type: example
               id: legacy-fence-015
               title: null
@@ -481,7 +464,7 @@ documentation:
               target: null
               timeout-ms: null
               source: |2
-                /path/to/terrane/target/release/terrane run hello.trn
+                terrane --version
               response: null
               diagnostic: null
               markdown: null

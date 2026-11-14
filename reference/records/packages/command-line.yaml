@@ -223,13 +223,13 @@ documentation:
           target: null
           timeout-ms: null
           source: |-
-            target/debug/terrane declaration-interface tests/conformance/run/declaration-annotations/case.trn --output tests/conformance/run/annotation-source-free/library.interface.json
+            terrane declaration-interface tests/conformance/run/declaration-annotations/case.trn --output tests/conformance/run/annotation-source-free/library.interface.json
           response: null
           diagnostic: null
           markdown: >-
-            Run from the compiler repository after building `terrane`. The consumer fixture
-            loads only this exported interface; it does not load the tracked producer
-            source.
+            Run from the compiler repository with `terrane` installed on `PATH`. The
+            consumer fixture loads only this exported interface; it does not load the
+            tracked producer source.
     - id: package-management
       title: Hashing and installing Terrane libraries
       blocks:
