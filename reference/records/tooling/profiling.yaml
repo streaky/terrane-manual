@@ -153,36 +153,62 @@ documentation:
             record and use operations. It prepares either a compiler Cargo release build or
             a generated application built with the normal `terrane build --release` command,
             records representative executions, then consumes the resulting LLVM profile in
-            an explicit optimized build. `terrane profile record` and `terrane profile show`
-            use `.trnprof` diagnostic artifacts; they do not create or consume LLVM
-            optimization profiles.
+            an explicit optimized build. Run `python -m unittest tools.test_sample_profile`
+            to test the helper. `terrane profile record` and `terrane profile show` use
+            `.trnprof` diagnostic artifacts; they do not create or consume LLVM optimization
+            profiles.
+
+            Prepare and use require the caller to explicitly set `RUSTFLAGS` or
+            `CARGO_ENCODED_RUSTFLAGS`; the helper does not silently replace unresolved Cargo
+            configuration flags. Supply the effective baseline flags that the build needs.
+            An empty `RUSTFLAGS` is an explicit choice only when no baseline flags are
+            needed. Keep this environment identical across ordinary, training and optimized
+            builds. Cargo builds without explicit `--target` also apply environment
+            rustflags to host-side build scripts and proc macros, so instrumentation can
+            leak into them. For direct compiler Cargo builds, `--target <host>` can exclude
+            those host-side units from target rustflags. Declaration-consumer tool builds
+            still inherit application flags; no consumer-tool filtering is currently
+            provided.
 
             Stable Rust function-and-line debug information (`debuginfo=limited`) is
             retained; the helper explicitly disables stripping. Line-table-only information
             can omit declaration locations needed by converters and yield unusable location
             counts. Nightly `-Zdebuginfo-for-profiling` is not required or used. Consumed
             profiles use immutable digest-named paths because cache identity hashes encoded
-            rustflag text, not the profile bytes. Keep profiles private to each trained
-            program and workload; compiler profiles are not application profiles, and one
-            application's profile is not a shared profile for other applications. Provenance
-            JSON omits workload arguments, but raw perf data may retain command lines.
-            Captures and profiles can also reveal symbols, paths and workload structure;
-            treat them as sensitive.
+            rustflag text, not profile bytes. Recording requires a fresh raw capture and a
+            valid converted profile. By default nonzero perf status is rejected. A negative
+            perf subprocess status (signal termination) is rejected even with
+            `--allow-workload-failure`; permitting positive nonzero status records perf's
+            status in `capture.exit_status`, not an independently verified workload status.
+            The opt-in does not waive capture freshness or profile validation. Provenance is
+            staged and atomically replaced with hashes identifying the profile and raw
+            capture. Old metadata is removed before those artifacts are replaced and new
+            metadata is published last. Interruption can leave metadata missing; this is not
+            an atomic two-file transaction. Keep profiles private to each trained program
+            and workload; compiler profiles are not application profiles, and different
+            applications' profiles are not interchangeable. Provenance JSON omits workload
+            arguments, but raw perf data may retain command lines. Captures and profiles can
+            reveal symbols, paths and workload structure; treat them as sensitive.
 
             Standard `llvm-profgen` conversion requires perf branch-stack/LBR data. The
-            branchless route uses AutoFDO `create_llvm_prof` with LBR disabled to write LLVM
-            text profiles directly. GCC feedback encodings are not interchangeable with LLVM
-            sample profiles. User-space `cycles:u` sampling alone does not establish LBR
-            support. Hardware, perf permissions, and converter availability constrain which
-            route works. This remains an opt-in experimental workflow; neither host
-            conversion nor a performance improvement is claimed without actual training and
-            held-out validation.
+            default LBR route has no end-to-end evidence on the tested non-LBR host; the
+            AutoFDO route was exercised there. Install Rust's matching validator with
+            `rustup component add llvm-tools`; the helper prefers the sysroot tool, but a
+            `PATH` fallback may be a different version. The host's `PATH` validator and
+            private AutoFDO build used LLVM 23.1.4 while rustc consumed the text feedback
+            with LLVM 23.1.5; that is not a universal compatibility promise. AutoFDO
+            `create_llvm_prof` writes LLVM text profiles directly. GCC feedback encodings
+            are not interchangeable with LLVM sample profiles. User-space `cycles:u`
+            sampling alone does not establish LBR support. Hardware, perf permissions, and
+            converter availability constrain which route works. This remains an opt-in
+            experimental workflow; neither host conversion nor a performance improvement is
+            claimed without actual training and held-out validation.
 
             A parseable profile with real counts does not establish practical compiler build
             cost. Feedback can trigger pathological optimization time in Rust/LLVM
             dependency code generation. Verify the entire optimized build as well as
             held-out behavior; a successful generated-application trial does not establish
-            that compiler-wide feedback is ready for adoption.
+            compiler-wide readiness.
     - id: sample-profile-application-example
       title: "Worked example: optimize a generated application"
       blocks:
@@ -195,10 +221,16 @@ documentation:
 
             Run these Bash commands from a Terrane repository checkout, with a current
             `terrane` on `PATH`, Python 3, stable Rust 1.100, Linux perf recording
-            permission, and a compatible LLVM profile validator/converter. Start without
-            inherited instrumentation or profile-use flags. Keep the same target, features
-            and release settings throughout. Store the source and sensitive capture data in
-            a private scratch directory excluded from source hashing.
+            permission, and a compatible LLVM profile validator/converter. Set the same
+            effective baseline `RUSTFLAGS` (or `CARGO_ENCODED_RUSTFLAGS`) explicitly for
+            every command below; ordinary, training and optimized builds must inherit the
+            identical environment. The helper will not replace unresolved Cargo flags:
+            supply all effective flags your build requires. Empty `RUSTFLAGS` is appropriate
+            only if no baseline flags are needed. Store source and sensitive capture data in
+            a private scratch directory excluded from source hashing. Prepare, use, and any
+            ordinary build used as a baseline require the explicit flags described above;
+            training runs the prepared executable directly and does not build with Cargo
+            rustflags.
         - type: example
           id: sample-app-setup
           title: Create private scratch space
@@ -207,6 +239,9 @@ documentation:
           source: |-
             set -euo pipefail
             umask 077
+            # This toy uses no extra baseline flags. Replace this value if your
+            # Cargo configuration or build requires flags; preserve them in full.
+            export RUSTFLAGS=""
             helper="$PWD/tools/sample-profile.py"
             mkdir -p "$PWD/.trn"
             demo="$(mktemp -d "$PWD/.trn/sample-profile-demo.XXXXXX")"
@@ -282,7 +317,11 @@ documentation:
             and provenance beside the converted profile, and rejects failed conversion or
             profiles without positive source-location counts. Investigate mapping loss and
             converter diagnostics; a parseable profile alone is not evidence of useful
-            feedback. Stop if recording fails rather than consuming a stale profile.
+            feedback. Stop if recording fails rather than consuming a stale profile. Nonzero
+            perf/workload status is rejected by default. For an expected nonzero result, add
+            `--allow-workload-failure`; `capture.exit_status` retains perf's status, which
+            is not independent proof of the workload's exit status. This permission still
+            requires fresh raw data and a valid converted profile.
         - type: example
           id: sample-app-record
           title: Record training feedback
