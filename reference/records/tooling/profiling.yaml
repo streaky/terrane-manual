@@ -177,9 +177,12 @@ documentation:
             profiles use immutable digest-named paths because cache identity hashes encoded
             rustflag text, not profile bytes. Recording requires a fresh raw capture and a
             valid converted profile. By default nonzero perf status is rejected. A negative
-            perf subprocess status (signal termination) is rejected even with
-            `--allow-workload-failure`; permitting positive nonzero status records perf's
-            status in `capture.exit_status`, not an independently verified workload status.
+            perf subprocess status (perf itself terminated by a signal) is rejected even
+            with `--allow-workload-failure`; permitting positive nonzero status records
+            perf's status in `capture.exit_status`, not an independently verified workload
+            status. A workload terminated by a signal appears as positive perf status
+            `128+n` and is accepted under the opt-in like other positive statuses; this
+            cannot be distinguished from a workload explicitly exiting with the same code.
             The opt-in does not waive capture freshness or profile validation. Provenance is
             staged and atomically replaced with hashes identifying the profile and raw
             capture. Old metadata is removed before those artifacts are replaced and new
