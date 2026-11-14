@@ -51,6 +51,11 @@ documentation:
             establish JSON compatibility. Exact toolchain and format identities invalidate
             older projection and native proof caches.
 
+            Producer implementation-module paths are not source contracts. Shared-owner
+            identities and emitted Rust paths normalize `Arc`, `Rc` and weak handles to
+            their public owners. A stable wire format alone does not establish callback,
+            dereference or native-default compatibility; consumer witnesses remain required.
+
             Unicode behavior is a separate compiler-owned part of the toolchain profile.
             Version one selects Unicode 18.0.0 for locale-independent case mapping and
             folding, Unicode whitespace, normalization, default word segmentation, and

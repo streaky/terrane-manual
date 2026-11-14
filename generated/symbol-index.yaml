@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f55ed97b742ad70e9ce552a9212392bccc3fad20b6e50ea82506b82e43815e01
+  input-sha256: 9c043854e53da7c2b24f571b9663b1044961aa96f5bdad4d50eb914f37ccad45
 format: 1
 generated: true
 symbols:
@@ -599,6 +599,10 @@ symbols:
 - name: Arc
   record: book.identity-and-movement
   section: shared-references-and-ownership
+  declaration: Arc
+- name: Arc
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
   declaration: Arc
 - name: Arc
   record: internals.collections.lifetime
@@ -7250,6 +7254,10 @@ symbols:
 - name: Rc
   record: book.identity-and-movement
   section: shared-references-and-ownership
+  declaration: Rc
+- name: Rc
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
   declaration: Rc
 - name: read-exact
   record: std.streams
