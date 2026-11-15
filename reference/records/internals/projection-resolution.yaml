@@ -295,7 +295,10 @@ documentation:
             directly in their projected representation; they do not require a new public
             source identity for the default type. Generic default payloads receive the same
             declared/bound Cargo owner-root rewriting as parameter and result types before
-            they are instantiated.
+            they are instantiated. Nested calls retain closed native parameter destinations
+            after receiver-owner substitution, including cached specializations, so
+            contextual selections take precedence over nominal defaults even when the source
+            facade omits a native slot.
 
             The lowering boundary constructs the exact Rust callback adapter and converts
             inputs and results at free-function and projected-method calls. Exact native

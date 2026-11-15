@@ -1397,11 +1397,11 @@ documentation:
             omitted and generated Cargo configuration uses abort semantics. Deferring future
             construction until first poll does not change these result or panic boundaries.
 
-            Contained native panics use Cargo package metadata for declared and bound native
-            dependencies, independently of Terrane import aliases or Rust crate spelling.
-            Standard-library and otherwise unmapped native owners retain their Rust-origin
-            labels. Free functions and projected methods retain their qualified native
-            member identity and original panic payload.
+            Native panics and generic dependency errors use Cargo package metadata for
+            declared and bound dependencies, independently of Terrane import aliases or Rust
+            crate spelling. Standard-library and otherwise unmapped native owners retain
+            their Rust-origin labels. Free functions and projected methods retain their
+            qualified native member identity and original panic payload.
     - id: async-projected-endpoints
       title: "Projected Async Sequences and Sinks"
       blocks:
