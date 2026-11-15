@@ -83,7 +83,9 @@ documentation:
             including operators and opening brackets/braces but excluding pipe and colon
             delimiters. Inline comments in marker headers stop at their first closing
             delimiter, avoiding ambiguous matching across repeated comments while retaining
-            quoted arguments and ordinary expression prefixes.
+            quoted arguments and ordinary expression prefixes. Tail text can immediately
+            follow a separate operator (`a +>tail`), while a joined identifier such as
+            `a+>tail` remains an identifier rather than text.
 
             In Terrane editors, embedded Rust headers and bodies have a subtle full-line
             background and left border. The regions follow the same TextMate grammar as
