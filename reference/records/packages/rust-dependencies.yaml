@@ -585,6 +585,13 @@ documentation:
             the concrete shape. Conflicting callback signatures are rejected before Rust
             lowering.
 
+            A raw generic callable entrypoint can reuse its native blanket implementation
+            even when the trait also declares auxiliary methods, associated items or
+            supertraits. This does not synthesize a Terrane implementation of the complete
+            trait: the native operation still checks the generated closure against its full
+            contract. Owning trait-object adapters and invocation-scoped callback results
+            retain the stricter shape requirements below.
+
             A custom higher-ranked callable blanket recipe is admitted when its trait has no
             unsupported structural requirements and declares exactly one required method. A
             safe Rust trait projects as an ordinary Terrane interface; an unsafe Rust trait

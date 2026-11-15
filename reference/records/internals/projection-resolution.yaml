@@ -280,6 +280,15 @@ documentation:
             incompatible correlations as a Terrane diagnostic rather than a Rust backend
             failure.
 
+            Raw generic callable inputs reuse the dependency's native blanket
+            implementation. An owned-result callable entrypoint may therefore retain
+            auxiliary methods, associated items and supertraits without requiring a
+            synthesized source implementation of that complete trait. The generated closure
+            still satisfies the native operation's complete bounds. Methodless marker traits
+            retain ordinary generic input inference; owning trait-object adapters and
+            invocation-scoped callback results retain their stricter structural admission
+            checks.
+
             The lowering boundary constructs the exact Rust callback adapter and converts
             inputs and results at free-function and projected-method calls. Exact native
             callback parameter spellings retain higher-ranked borrows through
