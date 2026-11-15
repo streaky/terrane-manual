@@ -64,6 +64,23 @@ documentation:
             extension. Comparing their hashes is a direct way to establish whether VS Code
             is executing the build under investigation.
 
+            The extension also supplies TextMate highlighting before semantic analysis is
+            available. It recognizes current declaration qualifiers, enum and annotation
+            syntax, modifier headers, and Terrane's indentation-delimited text forms. Inline
+            `rust` and `unsafe rust` bodies use VS Code's Rust grammar, including typed
+            binding initializers and `return rust` / `return unsafe rust`. Dedentation
+            restores Terrane highlighting. These bodies are registered as embedded Rust for
+            basic editor behavior such as bracket matching and comments; this does not
+            provide rust-analyzer completion or diagnostics inside Terrane.
+
+            In Terrane editors, embedded Rust headers and bodies have a subtle full-line
+            background and left border. The regions follow the same TextMate grammar as
+            highlighting, update while editing, and remain attached when folded. Disable
+            them with `terrane.rustBlocks.decorate`. Themes and
+            `workbench.colorCustomizations` can set `terrane.rustBlockBackground` and
+            `terrane.rustBlockBorder`; high-contrast themes use a transparent background and
+            the theme's contrast border.
+
             For manifest-declared Rust dependencies, completion, signature help, and hover
             use the same lock-resolved projection as compilation. The projection is derived
             from the resolved package, selected features, target, and rustdoc data. It

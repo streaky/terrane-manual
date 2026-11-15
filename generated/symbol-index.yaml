@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4fb9df116730a545a489b74c6ed78ce9bfb683c0cff5beb0b908843ef68bc28a
+  input-sha256: 709cb7404700037e88c133dd6b2e0d8d57abefac12f4d631e181396ee919dce7
 format: 1
 generated: true
 symbols:
@@ -7997,6 +7997,10 @@ symbols:
   section: unread-bindings
   declaration: rust
 - name: rust
+  record: tool.editor-support
+  section: editor-support
+  declaration: rust
+- name: rust
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: rust
@@ -9980,6 +9984,18 @@ symbols:
   record: internals.projection.resolution
   section: resolved-graph-survey
   declaration: terrane-rust-survey
+- name: terrane.rustBlockBackground
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.rustBlockBackground
+- name: terrane.rustBlockBorder
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.rustBlockBorder
+- name: terrane.rustBlocks.decorate
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.rustBlocks.decorate
 - name: terrane.server.path
   record: tool.editor-support
   section: editor-support
@@ -11460,6 +11476,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
   declaration: work-report/reporting/format
+- name: workbench.colorCustomizations
+  record: tool.editor-support
+  section: editor-support
+  declaration: workbench.colorCustomizations
 - name: wrap
   record: lang.functions.call-layout
   section: column-ownership
