@@ -570,6 +570,12 @@ documentation:
               short-circuits at each take limit. Callback errors retain ordinary effect and
               catch behavior. Parallel and vectorized strategies are not implemented. See
               [[lang.collections.protocols#sequential-pipelines]].
+            - **Refined — pipeline ownership lowering.** Stored shared callbacks borrow
+              stable places, dead callback carriers move, and observing an adaptive integer
+              take count avoids copying its backing value. Native `Copy` elements copy
+              without calling `Clone`; reused mutable callbacks retain independent captured
+              state. Generated Rust and observable clone-counter regressions cover these
+              paths.
   see-also:
     - manual.changelog
     - lang.types.references

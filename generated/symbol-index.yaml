@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 55e6e42371f80e1c2e7421c5c5583d0e202a5fce31a3ce6aa5799d5ca1c94537
+  input-sha256: 1ae752e84cba82d64096a60c625ed8113fa3d859a1a90dfc420ff15160151518
 format: 1
 generated: true
 symbols:
@@ -1557,6 +1557,10 @@ symbols:
   section: native-receiver-regions
   declaration: Clone
 - name: Clone
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: Clone
+- name: Clone
   record: lang.functions.callable-types
   section: exact-metadata
   declaration: Clone
@@ -1567,6 +1571,10 @@ symbols:
 - name: Clone
   record: lang.types.generics
   section: native-selections
+  declaration: Clone
+- name: Clone
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
   declaration: Clone
 - name: Clone
   record: tool.packages.rust-dependencies
@@ -2094,8 +2102,20 @@ symbols:
   section: rust-lowering
   declaration: Copy
 - name: Copy
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: Copy
+- name: Copy
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: Copy
+- name: Copy
   record: lang.ownership.movement
   section: move-semantics
+  declaration: Copy
+- name: Copy
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
   declaration: Copy
 - name: copy-sign
   record: lang.numerics.floating-point

@@ -96,6 +96,7 @@ documentation:
             - sequential-pipeline-non-list-source
             - sequential-pipeline-filter-result
             - sequential-pipeline-callback-argument
+            - sequential-pipeline-native-copy
           markdown: |-
             Import `pipeline-sequential` from `/core/modifiers` and apply it with `with` to
             a local binding or assignment whose initializer ends in `.collect;`. The
@@ -123,6 +124,14 @@ documentation:
             callbacks copy elements when necessary to preserve the source or a filtered
             element; those copies require the ordinary cloneability proof. Mapped owned
             values transfer to subsequent mapping stages or the final list.
+
+            Native `Copy` elements use their canonical copy capability, without invoking
+            `Clone`. Callback values retain ordinary value semantics: copying a mutable
+            callable forks its captured state rather than sharing it. A callable's dead
+            final use may transfer its carrier; stable shared-callable places may be
+            borrowed. Reused mutable callables, repeated loop uses and reusable captures
+            retain the required independent copies. Integer take counts are observed without
+            copying adaptive integer storage when a place can be borrowed.
 
             Callbacks are synchronous, repeatable, single-argument callables with an exact
             current-element parameter type or `ref` to that type. Shared and mutable

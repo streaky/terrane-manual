@@ -145,6 +145,15 @@ documentation:
             element copies; owned map results transfer to the output. Plain named source
             callbacks can remain function items rather than allocated callable carriers.
 
+            Callback materialization reuses canonical binding liveness, capture and
+            stable-read proofs: dead carriers move, while stable shared carriers borrow.
+            Mutable callable copies intentionally fork captured state; retain them when the
+            original survives, a loop repeats, or a reusable closure captures the callable.
+            Element transfer also consults canonical native `Copy` evidence, not only Rust
+            primitive-copy classification. Take-count conversion uses a bounded read scope
+            so observing an adaptive integer need not clone its backing storage or hold a
+            guard across the next stage operand.
+
             Each take uses a bounded host counter. Nonpositive limits suppress traversal;
             positive counts beyond the host range saturate only the private counter, since a
             list cannot contain more than a host-indexable number of elements. Filter
