@@ -236,6 +236,14 @@ documentation:
             rather than a backend borrow error. Consuming captures retain their
             ownership-transfer semantics.
 
+            Inline pipeline callback operands retain their captured loans through the
+            pipeline expression; they do not need a named callable binding to participate in
+            loan validation. A list-valued result binding is not their carrier. Canonical
+            return-lender provenance also identifies a source alias behind a
+            reference-producing function. Earlier observations whose borrows have already
+            ended remain valid, while later conflicting operand accesses or capture
+            formation report `T0149`.
+
             Binding another name from a mutable-reference handle transfers that handle;
             later reads and write-through assignments using the old binding are
             use-after-move errors. A write through that binding does not reinitialize the

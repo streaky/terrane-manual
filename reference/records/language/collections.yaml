@@ -97,6 +97,14 @@ documentation:
             - sequential-pipeline-filter-result
             - sequential-pipeline-callback-argument
             - sequential-pipeline-native-copy
+            - pipeline-borrowed-callbacks
+            - pipeline-borrowed-callback-repeat
+            - pipeline-inline-capture-alias
+            - pipeline-inline-capture-read
+            - pipeline-inline-capture-return
+            - pipeline-inline-capture-later
+            - pipeline-inline-pair-shared
+            - pipeline-inline-pair-mutable
           markdown: |-
             Import `pipeline-sequential` from `/core/modifiers` and apply it with `with` to
             a local binding or assignment whose initializer ends in `.collect;`. The
@@ -126,16 +134,29 @@ documentation:
             values transfer to subsequent mapping stages or the final list.
 
             Native `Copy` elements use their canonical copy capability, without invoking
-            `Clone`. Callback values retain ordinary value semantics: copying a mutable
-            callable forks its captured state rather than sharing it. A callable's dead
-            final use may transfer its carrier; stable shared-callable places may be
-            borrowed. Reused mutable callables, repeated loop uses and reusable captures
-            retain the required independent copies. Integer take counts are observed without
-            copying adaptive integer storage when a place can be borrowed. All stage
-            operands stay live until traversal ends. Repeating a shared callable in several
-            stages therefore cannot move a carrier borrowed by an earlier stage. Repeating a
-            mutable callable gives each stage an independent captured-state snapshot;
-            explicitly shared captures retain their shared referents.
+            `Clone`. Owning-environment callback values retain ordinary value semantics:
+            copying a mutable callable forks its captured state rather than sharing it. A
+            dead final use may transfer its carrier; stable shared-callable places may be
+            borrowed. Reused owning mutable callables, repeated loop uses and reusable
+            captures retain the required independent copies. All stage operands stay live
+            until traversal ends, so a later stage cannot move a carrier borrowed by an
+            earlier stage. Explicitly shared captures retain their shared referents.
+
+            Borrowed-environment callbacks are loaned instead of copied. A named mutable
+            carrier is reborrowed exclusively and keeps its planned last-use cleanup; an
+            inline mutable carrier has mutable stage-local storage. This does not make
+            borrowed environments owning or admit them to ordinary callable-argument roles.
+            The same borrowed mutable carrier can serve successive pipelines and retain
+            state, but cannot be loaned to two simultaneous stages (`S2122`). Shared
+            borrowed carriers can be observed by several stages.
+
+            An inline callback's captured lenders remain live through the enclosing
+            pipeline, not through the result list's binding. Source aliases, later operand
+            accesses and conflicting captures remain subject to `T0149`, including aliases
+            returned by a reference-producing function. Earlier by-value observations and
+            producers returning independent owned lists do not extend those earlier loans.
+            Integer take counts are observed without copying adaptive storage when a place
+            can be borrowed.
 
             Callbacks are synchronous, repeatable, single-argument callables with an exact
             current-element parameter type or `ref` to that type. Shared and mutable

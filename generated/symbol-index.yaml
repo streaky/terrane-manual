@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4d95ddbfaa8aeb9fea04554c76f81741632af12da22ab424071649091d213b22
+  input-sha256: 4fb9df116730a545a489b74c6ed78ce9bfb683c0cff5beb0b908843ef68bc28a
 format: 1
 generated: true
 symbols:
@@ -1192,6 +1192,10 @@ symbols:
   record: lang.collections.protocols
   section: sequential-pipelines
   declaration: calculate-capacity
+- name: call
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: call
 - name: callable
   record: lang.declarations.modifiers
   section: validation
@@ -6631,6 +6635,10 @@ symbols:
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
   declaration: owner/package
+- name: ownership/callable_captures.rs
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: ownership/callable_captures.rs
 - name: package
   record: book.namespaces-imports-and-packages
   section: the-package-manifest
@@ -9615,6 +9623,10 @@ symbols:
 - name: T0149
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: T0149
+- name: T0149
+  record: lang.collections.protocols
+  section: sequential-pipelines
   declaration: T0149
 - name: T0149
   record: lang.functions.declarations
