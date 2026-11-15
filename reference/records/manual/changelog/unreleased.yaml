@@ -590,6 +590,12 @@ documentation:
               validation preserves captured loan exclusivity through last-use cleanup.
               General shared-reference captures require mutable Rust handle storage only
               when the closure replaces that handle, not merely when it writes through it.
+            - **Fixed — native callable blanket entrypoints.** Raw generic callbacks retain
+              their native blanket implementation when the trait also has auxiliary methods,
+              associated items or supertraits. This restores Axum-style handler registration
+              without package-specific Rust adapters. Owning and invocation-scoped callback
+              restrictions remain unchanged. See
+              [[tool.packages.rust-dependencies#callbacks]].
   see-also:
     - manual.changelog
     - lang.types.references

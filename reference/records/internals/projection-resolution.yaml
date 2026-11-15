@@ -287,7 +287,10 @@ documentation:
             still satisfies the native operation's complete bounds. Methodless marker traits
             retain ordinary generic input inference; owning trait-object adapters and
             invocation-scoped callback results retain their stricter structural admission
-            checks.
+            checks. When compatible blanket implementations differ in callable arity, the
+            typed source callable selects the parameter list for ordinary owned results as
+            well as invocation-scoped results; a placeholder empty parameter list is not a
+            zero-argument requirement.
 
             The lowering boundary constructs the exact Rust callback adapter and converts
             inputs and results at free-function and projected-method calls. Exact native
