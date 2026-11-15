@@ -162,6 +162,11 @@ documentation:
             [[internals.projection.resolution#resolution|atomic publication and its tradeoffs]]
             for the rationale.
 
+            Complete declaration and member inventories are canonicalized after late native
+            recovery, before hashing and publication. Equivalent recovery order alone does
+            not change the projection contract; genuine metadata changes remain visible to
+            replay validation.
+
             The ignored `.trn/projection-cache.json` is disposable generated local
             projection cache/history. It can retain removed-member and replay-mismatch
             evidence while present; clearing it or using a fresh checkout regenerates

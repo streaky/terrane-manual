@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3201643c07b4ca406942ed068b5b3a5cacd668e0e17e3cbbd02a5eb329927d71
+  input-sha256: 76b36065e8a8787d593beb4114a98188ff5d874e614c3f1d4d0acfa857eb6e53
 format: 1
 generated: true
 diagnostics:
@@ -1095,9 +1095,9 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/testing.rs
-    line: 418
+    line: 421
   - path: crates/terrane-compiler/src/testing.rs
-    line: 428
+    line: 431
 - code: S2051
   messages:
   - test function `{}` must be parameterless and return `none`

@@ -34,12 +34,16 @@ documentation:
           since: null
           evidence:
             - native_test_command_reports_isolated_cases_deterministically
+            - test_discovery_ignores_nested_compiler_inventory
           markdown: |-
             `terrane test <package>` discovers top-level, parameterless `test-*` functions
             returning `none` below `tests/unit`, `tests/integration`, and
             `tests/end-to-end`. Functions remain ordinary Terrane declarations and may be
             synchronous, asynchronous, or throwing. Discovery order is tier,
-            package-relative source path, source order, and function name.
+            package-relative source path, source order, and function name. Recursive
+            discovery skips compiler-owned `.trn` entries at every depth, including caches
+            inside native integration fixtures. Their generated inventories are not authored
+            test units and do not need to be deleted before running tests.
 
             `[testing]` may override each relative root. `[testing.profile]` explicitly
             selects a test profile name, capability allowlist, and panic policy; omitted
