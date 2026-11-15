@@ -79,10 +79,11 @@ documentation:
             literal scopes. TextMate highlighting is recovery-oriented, not syntax
             validation; compiler diagnostics remain authoritative.
 
-            Block-text highlighting follows lexer token kinds: pipe and colon delimiters do
-            not introduce a block string. Inline comments in marker headers stop at their
-            first closing delimiter, avoiding ambiguous matching across repeated comments
-            while retaining quoted arguments and ordinary expression prefixes.
+            Tail- and block-text highlighting follow lexer expression-start boundaries,
+            including operators and opening brackets/braces but excluding pipe and colon
+            delimiters. Inline comments in marker headers stop at their first closing
+            delimiter, avoiding ambiguous matching across repeated comments while retaining
+            quoted arguments and ordinary expression prefixes.
 
             In Terrane editors, embedded Rust headers and bodies have a subtle full-line
             background and left border. The regions follow the same TextMate grammar as
