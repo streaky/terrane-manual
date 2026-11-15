@@ -71,7 +71,13 @@ documentation:
             binding initializers and `return rust` / `return unsafe rust`. Dedentation
             restores Terrane highlighting. These bodies are registered as embedded Rust for
             basic editor behavior such as bracket matching and comments; this does not
-            provide rust-analyzer completion or diagnostics inside Terrane.
+            provide rust-analyzer completion or diagnostics inside Terrane. Rust marker
+            headers recognize inline block comments and quoted annotation arguments.
+            Unterminated single-quoted Terrane text ends at the physical line boundary so a
+            typing error does not hide later native sections. Contextual declaration words
+            are highlighted in their declaration roles, while booleans and `none` use
+            literal scopes. TextMate highlighting is recovery-oriented, not syntax
+            validation; compiler diagnostics remain authoritative.
 
             In Terrane editors, embedded Rust headers and bodies have a subtle full-line
             background and left border. The regions follow the same TextMate grammar as
@@ -80,6 +86,21 @@ documentation:
             `workbench.colorCustomizations` can set `terrane.rustBlockBackground` and
             `terrane.rustBlockBorder`; high-contrast themes use a transparent background and
             the theme's contrast border.
+
+            Decoration setup runs independently of language-server startup. Missing or
+            broken decoration assets are reported in the Terrane output channel without
+            disabling language-server features; a missing server still reports its error
+            without preventing independently available decorations.
+
+            Region scans cache per-line grammar states per document. After an edit,
+            unchanged prefixes are reused and tokenization stops when the unchanged tail has
+            the same incoming grammar state, including after line insertions and deletions.
+            Comparing text and assembling section ranges still requires a linear pass; the
+            expensive grammar tokenization is incremental.
+
+            Extension verification runs `npm run check` from `editors/vscode`; it includes
+            `npm test` for real TextMate token scopes, region boundaries, and incremental
+            updates. Cargo-only workspace verification does not cover these checks.
 
             For manifest-declared Rust dependencies, completion, signature help, and hover
             use the same lock-resolved projection as compilation. The projection is derived
