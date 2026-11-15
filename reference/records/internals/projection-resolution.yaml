@@ -293,7 +293,9 @@ documentation:
             a placeholder empty parameter list is not a zero-argument requirement. Defaulted
             native result destinations retain admitted signature-only generic defaults
             directly in their projected representation; they do not require a new public
-            source identity for the default type.
+            source identity for the default type. Generic default payloads receive the same
+            declared/bound Cargo owner-root rewriting as parameter and result types before
+            they are instantiated.
 
             The lowering boundary constructs the exact Rust callback adapter and converts
             inputs and results at free-function and projected-method calls. Exact native
