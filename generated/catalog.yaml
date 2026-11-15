@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5e376aaeb12a13ce27bc14a4b82824e92b0f3552c729946cea5e01f7b0e260bb
+  input-sha256: 55e6e42371f80e1c2e7421c5c5583d0e202a5fce31a3ce6aa5799d5ca1c94537
 format: 2
 generated: true
 records:
@@ -101,6 +101,9 @@ records:
     sections: []
   - id: changes-2026-11-14
     title: '2026-11-14'
+    sections: []
+  - id: changes-2026-11-15
+    title: '2026-11-15'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -879,6 +882,9 @@ records:
     sections: []
   - id: source-iteration
     title: Source-defined iteration
+    sections: []
+  - id: sequential-pipelines
+    title: Ordered sequential pipelines
     sections: []
   - id: contextual-collection-initializers
     title: Contextual collection initializers
@@ -3755,6 +3761,9 @@ records:
     sections: []
   - id: bulk-collection-producers
     title: Bulk collection producers
+    sections: []
+  - id: sequential-pipelines
+    title: Explicit ordered pipeline realization
     sections: []
   - id: checked-arithmetic-regions
     title: Checked arithmetic regions

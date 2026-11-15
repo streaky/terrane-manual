@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5e376aaeb12a13ce27bc14a4b82824e92b0f3552c729946cea5e01f7b0e260bb
+  input-sha256: 55e6e42371f80e1c2e7421c5c5583d0e202a5fce31a3ce6aa5799d5ca1c94537
 format: 1
 generated: true
 symbols:
@@ -180,6 +180,10 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: /core/logging/async
+- name: /core/modifiers
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: /core/modifiers
 - name: /core/modifiers
   record: lang.declarations.modifiers
   section: scoped-access
@@ -953,6 +957,10 @@ symbols:
   section: traits
   declaration: bool
 - name: bool
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: bool
+- name: bool
   record: lang.text.search
   section: string-search
   declaration: bool
@@ -1180,6 +1188,10 @@ symbols:
   record: internals.projection.resolution
   section: identity
   declaration: cache_identity
+- name: calculate-capacity
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: calculate-capacity
 - name: callable
   record: lang.declarations.modifiers
   section: validation
@@ -1279,6 +1291,10 @@ symbols:
 - name: catch
   record: book.errors
   section: what-we-learned
+  declaration: catch
+- name: catch
+  record: lang.collections.protocols
+  section: sequential-pipelines
   declaration: catch
 - name: catch
   record: lang.errors.handling
@@ -1691,6 +1707,14 @@ symbols:
 - name: collect
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers
+  declaration: collect
+- name: collect
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: collect
+- name: collect
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
   declaration: collect
 - name: collections/consume-non-clone-foreign-items
   record: internals.integration-boundaries
@@ -3433,6 +3457,18 @@ symbols:
   record: std.filesystem
   section: whole-file-synopsis
   declaration: filesystem-write-atomic
+- name: filter
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: filter
+- name: filter
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: filter
+- name: filter
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
+  declaration: filter
 - name: final
   record: book.values-and-names
   section: giving-a-value-a-name
@@ -4566,6 +4602,10 @@ symbols:
   section: destination-results
   declaration: int
 - name: int
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: int
+- name: int
   record: lang.declarations.annotations
   section: model
   declaration: int
@@ -4937,6 +4977,10 @@ symbols:
   record: lang.types.scalars
   section: scalar-types
   declaration: is
+- name: is-available
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: is-available
 - name: is-text
   record: std.process
   section: process
@@ -5458,6 +5502,10 @@ symbols:
   section: imports
   declaration: map
 - name: map
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: map
+- name: map
   record: lang.classes.fields
   section: classes
   declaration: map
@@ -5466,12 +5514,20 @@ symbols:
   section: traits
   declaration: map
 - name: map
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: map
+- name: map
   record: lang.namespaces.prelude
   section: prelude
   declaration: map
 - name: map
   record: lang.types.generics
   section: native-selections
+  declaration: map
+- name: map
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
   declaration: map
 - name: map
   record: std.collections
@@ -6859,6 +6915,34 @@ symbols:
   record: tool.profiling
   section: commands
   declaration: perf
+- name: pipeline-sequential
+  record: book.text-and-collections
+  section: building-collections-from-existing-values
+  declaration: pipeline-sequential
+- name: pipeline-sequential
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: pipeline-sequential
+- name: pipeline-sequential
+  record: lang.declarations.modifiers
+  section: purpose
+  declaration: pipeline-sequential
+- name: pipeline-sequential
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
+  declaration: pipeline-sequential
+- name: PipelineExpression
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: PipelineExpression
+- name: PipelineSequential
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: PipelineSequential
+- name: PipelineStage
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: PipelineStage
 - name: PKG_CONFIG_PATH
   record: tool.packages.command-line
   section: compilation-reuse
@@ -7426,6 +7510,10 @@ symbols:
 - name: ref
   record: lang.classes.methods
   section: receiver-mutability
+  declaration: ref
+- name: ref
+  record: lang.collections.protocols
+  section: sequential-pipelines
   declaration: ref
 - name: ref
   record: lang.declarations.bindings
@@ -8192,6 +8280,14 @@ symbols:
   record: lang.declarations.modifiers
   section: validation
   declaration: S2120
+- name: S2121
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: S2121
+- name: S2122
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: S2122
 - name: S9004
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -8452,6 +8548,14 @@ symbols:
   record: lang.declarations.modifiers
   section: implementation
   declaration: semantics/modifiers.rs
+- name: semantics/pipeline_syntax.rs
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: semantics/pipeline_syntax.rs
+- name: semantics/pipelines.rs
+  record: lang.declarations.modifiers
+  section: implementation
+  declaration: semantics/pipelines.rs
 - name: semantics/scoped_regions.rs
   record: lang.declarations.modifiers
   section: implementation
@@ -8560,6 +8664,10 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: server/terrane-language-server.exe
+- name: servers
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: servers
 - name: set
   record: book.text-and-collections
   section: creating-and-updating-maps
@@ -9528,6 +9636,14 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: tag
+- name: take
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: take
+- name: take
+  record: manual.changelog.unreleased
+  section: changes-2026-11-15
+  declaration: take
 - name: tangent
   record: lang.numerics.floating-point
   section: operations
@@ -10207,6 +10323,10 @@ symbols:
 - name: throws
   record: book.errors
   section: what-we-learned
+  declaration: throws
+- name: throws
+  record: lang.collections.protocols
+  section: sequential-pipelines
   declaration: throws
 - name: throws
   record: lang.errors.contracts
@@ -11056,6 +11176,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers
   declaration: Vec
+- name: Vec
+  record: internals.optimization.proof-guided-lowering
+  section: sequential-pipelines
+  declaration: Vec
 - name: Vec::push
   record: internals.optimization.proof-guided-lowering
   section: bulk-collection-producers
@@ -11195,6 +11319,10 @@ symbols:
 - name: with
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: with
+- name: with
+  record: lang.collections.protocols
+  section: sequential-pipelines
   declaration: with
 - name: with
   record: lang.declarations.modifiers

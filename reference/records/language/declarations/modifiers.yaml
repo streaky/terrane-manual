@@ -30,12 +30,14 @@ documentation:
             lookup rather than a reserved vocabulary of modifier names.
 
             The clause parser, schema binding, target checks, repetition checks, and ordered
-            operation selection are implemented. The only implemented operation is
-            `scoped-access`, which gives an acquired local value a deliberate release
-            boundary. Storage, alignment, linkage, ABI, and other package-defined
-            realization operations remain unsupported. A well-typed definition of an
-            unsupported operation still fails compilation; it never becomes an inert
-            modifier. See [[internals.future.decorative-modifiers]] for that future design.
+            operation selection are implemented. `scoped-access` gives an acquired local
+            value a deliberate release boundary. `pipeline-sequential` selects ordered,
+            fused list processing with a terminal collection; see
+            [[lang.collections.protocols#sequential-pipelines]]. Storage, alignment,
+            linkage, ABI, and other package-defined realization operations remain
+            unsupported. A well-typed definition of an unsupported operation still fails
+            compilation; it never becomes an inert modifier. See
+            [[internals.future.decorative-modifiers]] for that future design.
     - id: syntax
       title: Clause grammar and declaration boundaries
       blocks:
@@ -232,8 +234,8 @@ documentation:
 
             `semantics/modifiers.rs` resolves each application to its canonical class
             identity, source span, typed payload, and `ModifierOperation`. The current
-            operation enum contains only `ScopedAccess`. These compiler-owned plans, not the
-            application's source spelling, authorize subsequent region processing.
+            operations include `ScopedAccess` and `PipelineSequential`. These compiler-owned
+            plans, not the application's source spelling, authorize subsequent processing.
 
             `semantics/scoped_regions.rs` validates the fresh acquisition binding, lender
             stability, dependent references, and escape paths, including outer stores,
@@ -247,6 +249,13 @@ documentation:
             runtime modifier dispatcher or implicit enter/exit-method lookup. The source
             resource's destructor or native guard's destruction supplies the actual release
             behavior.
+
+            For pipelines, `semantics/pipeline_syntax.rs` normalizes only an initializer
+            selected by the resolved operation. Dedicated pipeline and operation nodes keep
+            stage selectors out of ordinary method and lexical-name lookup.
+            `semantics/pipelines.rs` supplies the typed stage plan, and ordinary effect
+            inference includes implicit callback invocations. The pipeline emitter realizes
+            that validated plan as one sequential traversal and a fresh output vector.
   see-also:
     - lang.namespaces.scopes
     - lang.declarations.annotations

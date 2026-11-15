@@ -121,6 +121,36 @@ documentation:
             producer as an exact-size Rust range, mapping closure, and `collect` into the
             unique list backing. This exposes whole-producer information that an explicit
             `while` plus `Vec::push` loop may conceal from LLVM.
+    - id: sequential-pipelines
+      title: Explicit ordered pipeline realization
+      blocks:
+        - type: markdown
+          markdown: |-
+            `with pipeline-sequential` selects streaming semantics explicitly. It is not a
+            proof-guided rewrite of arbitrary eager `filter` or `map` methods: changing
+            callback interleaving or skipping callbacks would otherwise change observable
+            effects. Unsupported selected pipelines diagnose rather than use an eager
+            fallback. See [[lang.collections.protocols#sequential-pipelines]].
+
+            Modifier resolution precedes normalization of the selected initializer into
+            `PipelineExpression` and `PipelineStage` nodes. Operation selectors have their
+            own non-lexical node kind. The typed plan tracks source and intermediate element
+            types, callback parameters and effects, and ordered take limits. Callback
+            invocation contributes to the canonical throwable fixed point; evaluating a
+            callback value alone is not an invocation.
+
+            Lowering evaluates source and stage operands once, then borrows a stable list
+            slice and grows one fresh `Vec`. Guard-backed or potentially mutated sources use
+            the existing snapshot planner instead. Read-only reference callbacks avoid
+            element copies; owned map results transfer to the output. Plain named source
+            callbacks can remain function items rather than allocated callable carriers.
+
+            Each take uses a bounded host counter. Nonpositive limits suppress traversal;
+            positive counts beyond the host range saturate only the private counter, since a
+            list cannot contain more than a host-indexable number of elements. Filter
+            rejection exits an element-local block before the exhaustion check, rather than
+            continuing past an upstream take's final element. The output is wrapped once as
+            an ordinary Terrane list, without per-push copy-on-write checks.
     - id: checked-arithmetic-regions
       title: Checked arithmetic regions
       blocks:

@@ -82,6 +82,77 @@ documentation:
             unavailable. `for` invokes authored protocol methods directly, including across
             package namespaces. Missing, effectful, parameterized, or wrongly typed protocol
             methods produce targeted source diagnostics.
+    - id: sequential-pipelines
+      title: Ordered sequential pipelines
+      blocks:
+        - type: rule
+          id: rule.collections.sequential-pipelines
+          level: must
+          since: null
+          evidence:
+            - sequential-pipeline
+            - sequential-pipeline-unsupported-stage
+            - sequential-pipeline-missing-collect
+            - sequential-pipeline-non-list-source
+            - sequential-pipeline-filter-result
+            - sequential-pipeline-callback-argument
+          markdown: |-
+            Import `pipeline-sequential` from `/core/modifiers` and apply it with `with` to
+            a local binding or assignment whose initializer ends in `.collect;`. The
+            modifier selects compiler-owned streaming operations, not ordinary methods on a
+            list. Lexical aliases of the modifier retain the same operation.
+
+            The source is evaluated once, followed by every stage's callback or count
+            expression once in written order. Traversal then visits list elements in source
+            order, applying stages on demand without intermediate collections. `filter`
+            retains elements whose callback returns `bool`; `map` replaces each element with
+            its callback result and may change the element type. `take` counts elements
+            reaching its position, not source elements or final collected elements. Stages
+            may repeat. `collect` takes no arguments and produces an ordinary list.
+
+            A nonpositive `take` count produces an empty result without invoking callbacks,
+            even callbacks preceding that stage. Source and stage-argument evaluation still
+            occurs. Reaching any positive limit stops traversal after that element's
+            downstream processing, including when a later filter rejects it. Counts beyond
+            the host index range do not overflow or truncate the requested prefix.
+
+            Sources are currently lists and references to lists, not arbitrary structural
+            iterables. Stable sources are borrowed; guard-backed or potentially mutated
+            sources retain a value snapshot under the ordinary copy-on-write rules.
+            Read-only reference callback parameters borrow individual elements. By-value
+            callbacks copy elements when necessary to preserve the source or a filtered
+            element; those copies require the ordinary cloneability proof. Mapped owned
+            values transfer to subsequent mapping stages or the final list.
+
+            Callbacks are synchronous, repeatable, single-argument callables with an exact
+            current-element parameter type or `ref` to that type. Shared and mutable
+            callables are supported; consuming, variadic and mutable-reference inputs are
+            not. Filter results must be `bool`. Mapper results cannot be borrowed or
+            invocation-scoped values; owning shared-reference results remain values.
+            Callback errors participate in ordinary inferred effects, `throws` bounds,
+            `catch` and cleanup. Errors beyond a satisfied limit are not evaluated.
+
+            Unsupported stages, arities, terminals and declaration targets report `S2121`;
+            incompatible source-stage types, callbacks, counts and required copies report
+            `S2122`, except that a non-list source reports `S2121`. Unsupported pipelines
+            never silently fall back to eager intermediate lists. Parallel and vectorized
+            pipeline operations are not implemented.
+        - type: example
+          id: sequential-server-prefix
+          title: Borrow servers and collect the first available capacities
+          language: terrane
+          mode: illustrative
+          source: |-
+            with pipeline-sequential result = servers; values
+                .filter; is-available
+                .map; calculate-capacity
+                .take; 2
+                .collect;
+          markdown: |-
+            Here `servers` returns `ref list of server`, `is-available` accepts `ref server`
+            and returns `bool`, and `calculate-capacity` accepts `ref server` and returns
+            `int`. Only the first two available servers are mapped; the source list remains
+            usable afterward.
     - id: contextual-collection-initializers
       title: Contextual collection initializers
       blocks:

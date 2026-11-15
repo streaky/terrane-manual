@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 45c2107c94c51d633ca5f8bbdc8b336455218978fbdf985666c9b7940a3b028a
+  input-sha256: 58fcbeb283a54c3c9c43ee2c4aea90219255c39906a3bd34f8661650723b83db
 format: 1
 generated: true
 modules:
@@ -436,6 +436,8 @@ modules:
     line: 8
   - declaration: class scoped-access
     line: 16
+  - declaration: class pipeline-sequential
+    line: 20
 - source: crates/terrane-compiler/src/core/networking.trn
   declarations:
   - declaration: class network-error implements throwable

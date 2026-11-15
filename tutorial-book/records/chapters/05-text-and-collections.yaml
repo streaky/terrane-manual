@@ -1297,6 +1297,14 @@ documentation:
 
             A production tokenizer may need richer rules, but those rules should be explicit
             rather than concealed behind the vague instruction “split into words.”
+        - type: markdown
+          markdown: |-
+            For an ordered list transformation made of filtering, mapping and a bounded
+            prefix, the explicit `pipeline-sequential` modifier can express one fused
+            traversal without intermediate lists. It is distinct from arbitrary fluent
+            methods and from the stateful tokenizer above. See
+            [[lang.collections.protocols#sequential-pipelines]] for the syntax, evaluation
+            order, callback contracts and current list-only boundary.
       sections:
         - id: building-collections-from-existing-values-building-ordered-unique-values
           title: Building ordered unique values

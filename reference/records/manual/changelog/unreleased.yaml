@@ -558,6 +558,18 @@ documentation:
               both the compiler and generated applications. It does not change ordinary
               build defaults or replace `.trnprof` diagnostics. See
               [[tool.profiling#sample-profile-feedback]].
+    - id: changes-2026-11-15
+      title: "2026-11-15"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — ordered sequential collection pipelines.** The typed
+              `pipeline-sequential` modifier selects fused `filter`, `map`, `take` and
+              terminal `collect` processing over lists and list references. It preserves
+              source order, borrows stable input, creates no intermediate collections and
+              short-circuits at each take limit. Callback errors retain ordinary effect and
+              catch behavior. Parallel and vectorized strategies are not implemented. See
+              [[lang.collections.protocols#sequential-pipelines]].
   see-also:
     - manual.changelog
     - lang.types.references
