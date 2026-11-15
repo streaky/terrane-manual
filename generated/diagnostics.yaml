@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 20a7d58f3c734cf36f406321660b20c9947cc07c6ff7a46d3d1961d2a9f4f632
+  input-sha256: 3201643c07b4ca406942ed068b5b3a5cacd668e0e17e3cbbd02a5eb329927d71
 format: 1
 generated: true
 diagnostics:
@@ -1339,7 +1339,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3292
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9677
+    line: 9714
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 599
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2177,7 +2177,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9695
+    line: 9732
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -2636,11 +2636,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 1282
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7822
+    line: 7830
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7823
+    line: 7831
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7845
+    line: 7853
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 866
 - code: T0118
@@ -2652,9 +2652,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 4205
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7734
+    line: 7742
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7808
+    line: 7816
 - code: T0119
   messages:
   - mutable callback inputs require an identity-preserving native representation
@@ -2755,9 +2755,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 6623
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7351
+    line: 7359
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7875
+    line: 7883
   - path: crates/terrane-compiler/src/semantics/scope_flow.rs
     line: 844
   - path: crates/terrane-compiler/src/semantics/scoped_regions/native_loans.rs
@@ -2932,33 +2932,33 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 6951
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6962
+    line: 6970
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6997
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7018
+    line: 7005
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 7026
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7111
+    line: 7034
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7137
+    line: 7119
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7372
+    line: 7145
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7421
+    line: 7380
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7756
+    line: 7429
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7774
+    line: 7764
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7777
+    line: 7782
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7801
+    line: 7785
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7837
+    line: 7809
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7973
+    line: 7845
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 7981
 - code: T0130
   messages:
   - unsafe function `{name}` cannot be used as a function value; invoke it directly with `unsafe`

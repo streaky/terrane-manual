@@ -592,7 +592,9 @@ documentation:
             contract. Owning trait-object adapters and invocation-scoped callback results
             retain the stricter shape requirements below. Compatible native blankets with
             different callable arities use the typed source callable's parameter list,
-            rather than requiring a zero-argument callback.
+            rather than requiring a zero-argument callback. An admitted native generic
+            default can close the result destination without making that default type
+            separately importable from Terrane source.
 
             A custom higher-ranked callable blanket recipe is admitted when its trait has no
             unsupported structural requirements and declares exactly one required method. A

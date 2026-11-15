@@ -290,7 +290,9 @@ documentation:
             checks. When compatible blanket implementations differ in callable arity, the
             typed source callable selects the parameter list for ordinary owned results as
             well as invocation-scoped results; a placeholder empty parameter list is not a
-            zero-argument requirement.
+            zero-argument requirement. Defaulted native result destinations retain admitted
+            signature-only generic defaults directly in their projected representation; they
+            do not require a new public source identity for the default type.
 
             The lowering boundary constructs the exact Rust callback adapter and converts
             inputs and results at free-function and projected-method calls. Exact native
