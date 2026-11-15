@@ -590,16 +590,20 @@ documentation:
             the concrete shape. Conflicting callback signatures are rejected before Rust
             lowering.
 
-            A raw generic callable entrypoint can reuse its native blanket implementation
-            even when the trait also declares auxiliary methods, associated items or
-            supertraits. This does not synthesize a Terrane implementation of the complete
-            trait: the native operation still checks the generated closure against its full
-            contract. Owning trait-object adapters and invocation-scoped callback results
-            retain the stricter shape requirements below. Compatible native blankets with
-            different callable arities use the typed source callable's parameter list,
-            rather than requiring a zero-argument callback. An admitted native generic
-            default can close the result destination without making that default type
-            separately importable from Terrane source.
+            The supplied source callable must match an admitted parameter list and its
+            synchronous or asynchronous contract. An unmatched arity or parameter type is a
+            source error naming the available callback shapes, not a generated-Rust failure.
+
+            A raw generic callable entrypoint with exactly one required operation can reuse
+            its native blanket implementation even when the trait also declares provided
+            auxiliary methods, associated items or supertraits. This does not synthesize a
+            Terrane implementation of the complete trait: the native operation still checks
+            the generated closure against its full contract. Owning trait-object adapters
+            and invocation-scoped callback results retain the stricter shape requirements
+            below. Compatible native blankets with different callable arities use the typed
+            source callable's parameter list, rather than requiring a zero-argument
+            callback. An admitted native generic default can close the result destination
+            without making that default type separately importable from Terrane source.
 
             A custom higher-ranked callable blanket recipe is admitted when its trait has no
             unsupported structural requirements and declares exactly one required method. A
@@ -1392,6 +1396,12 @@ documentation:
             logical-invariant unwind assertion. Under an abort profile, unwind conversion is
             omitted and generated Cargo configuration uses abort semantics. Deferring future
             construction until first poll does not change these result or panic boundaries.
+
+            Contained native panics use Cargo package metadata for declared and bound native
+            dependencies, independently of Terrane import aliases or Rust crate spelling.
+            Standard-library and otherwise unmapped native owners retain their Rust-origin
+            labels. Free functions and projected methods retain their qualified native
+            member identity and original panic payload.
     - id: async-projected-endpoints
       title: "Projected Async Sequences and Sinks"
       blocks:

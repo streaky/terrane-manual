@@ -590,22 +590,11 @@ documentation:
               validation preserves captured loan exclusivity through last-use cleanup.
               General shared-reference captures require mutable Rust handle storage only
               when the closure replaces that handle, not merely when it writes through it.
-            - **Fixed — native callable blanket entrypoints.** Raw generic callbacks retain
-              their native blanket implementation when the trait also has auxiliary methods,
-              associated items or supertraits. This restores Axum-style handler registration
-              without package-specific Rust adapters. Call sites select compatible callback
-              arities and retain admitted signature-only native defaults in their result
-              destinations. Owning and invocation-scoped callback restrictions remain
+            - **Fixed — native callback interoperability.** Native async handlers retain
+              their callable blanket contract, including admissible callback shapes and
+              native generic defaults. This restores library routing without
+              package-specific adapters; owning and invocation-scoped restrictions remain
               unchanged. See [[tool.packages.rust-dependencies#callbacks]].
-            - **Fixed — native projection replay order.** Late-recovered declarations and
-              nested operation inventories are canonicalized before caching and hashing.
-              Equivalent recovery order no longer creates a false replay mismatch; genuine
-              contract drift remains an error. See
-              [[tool.packages.rust-dependencies#workflow]].
-            - **Fixed — nested test caches.** Test-source discovery skips compiler-owned
-              `.trn` entries recursively, including generated inventories inside native
-              integration fixtures. Ordinary nested authored tests remain discoverable. See
-              [[tool.packages.testing#discovery]].
   see-also:
     - manual.changelog
     - lang.types.references
