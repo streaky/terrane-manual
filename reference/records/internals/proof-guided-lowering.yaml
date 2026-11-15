@@ -139,6 +139,12 @@ documentation:
             invocation contributes to the canonical throwable fixed point; evaluating a
             callback value alone is not an invocation.
 
+            Early schema metadata/resolution is needed only for packages using modifier
+            applications. The late metadata refresh remains necessary after inferred
+            result/field types, escaping throwables and exact invocation modes settle.
+            Re-resolving modifier payloads also restores their constant-read dependencies
+            after metadata refresh replaces that read inventory.
+
             Lowering evaluates source and stage operands once, then borrows a stable list
             slice and grows one fresh `Vec`. Guard-backed or potentially mutated sources use
             the existing snapshot planner instead. Read-only reference callbacks avoid
@@ -147,6 +153,8 @@ documentation:
 
             Callback materialization reuses canonical binding liveness, capture and
             stable-read proofs: dead carriers move, while stable shared carriers borrow.
+            Earlier callback borrows remain live through traversal; setup tracks their
+            canonical binding identities before deciding whether a later stage can move.
             Mutable callable copies intentionally fork captured state; retain them when the
             original survives, a loop repeats, or a reusable closure captures the callable.
             Element transfer also consults canonical native `Copy` evidence, not only Rust
@@ -159,7 +167,10 @@ documentation:
             list cannot contain more than a host-indexable number of elements. Filter
             rejection exits an element-local block before the exhaustion check, rather than
             continuing past an upstream take's final element. The output is wrapped once as
-            an ordinary Terrane list, without per-push copy-on-write checks.
+            an ordinary Terrane list, without per-push copy-on-write checks. Without
+            filters, the successful output length is exactly the source length bounded by
+            every take limit, so the vector reserves that capacity once. Filtering retains
+            incremental growth because the surviving length is unknown.
     - id: checked-arithmetic-regions
       title: Checked arithmetic regions
       blocks:

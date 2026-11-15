@@ -226,6 +226,16 @@ documentation:
             validity and exclusivity rather than extending a borrow's lifetime. Retaining a
             callable never makes its borrowed captures owning.
 
+            A repeatable closure capturing a mutable-reference parameter reborrows it:
+            shared invocation retains a read-only reborrow, while mutable invocation retains
+            an exclusive reborrow. It does not move the parent's handle. The parent's
+            permitted access resumes after the callable's planned last-use cleanup. Until
+            then, shared captures permit overlapping reads but not writes; mutable captures
+            exclude overlapping observations too. A pipeline cannot read its source through
+            a parent that a live callback captures exclusively; such overlap reports `T0149`
+            rather than a backend borrow error. Consuming captures retain their
+            ownership-transfer semantics.
+
             Binding another name from a mutable-reference handle transfers that handle;
             later reads and write-through assignments using the old binding are
             use-after-move errors. A write through that binding does not reinitialize the

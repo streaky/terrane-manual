@@ -576,6 +576,20 @@ documentation:
               without calling `Clone`; reused mutable callbacks retain independent captured
               state. Generated Rust and observable clone-counter regressions cover these
               paths.
+            - **Fixed — simultaneous pipeline callback operands.** A repeated shared
+              callable no longer moves a carrier still borrowed by an earlier stage.
+              Non-filtering pipelines reserve their exact bounded output size once; repeated
+              mutable callable operands retain independent state snapshots. Modifier
+              target/repetition diagnostics and generic-callback restrictions are documented
+              explicitly.
+            - **Fixed — scalar-reference comparisons.** Numeric comparisons now observe
+              ordinary, mutable and shared scalar references through their proper
+              representations, including fixed-width inputs and bounded shared snapshots.
+            - **Fixed — captured-reference lowering.** Repeatable closures reborrow
+              mutable-reference parameters rather than moving their handles, and source
+              validation preserves captured loan exclusivity through last-use cleanup.
+              General shared-reference captures require mutable Rust handle storage only
+              when the closure replaces that handle, not merely when it writes through it.
   see-also:
     - manual.changelog
     - lang.types.references

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: bcf844c471bf99c4c9a5d5085abe4cefa9e614de3c1b874286a7ab4f1d5f3573
+  input-sha256: 07048c2643e0274a43d570aa848b621521071023a389083fe454ee8f4404dca3
 format: 1
 generated: true
 diagnostics:
@@ -936,7 +936,7 @@ diagnostics:
   - unresolved name `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4898
+    line: 4996
 - code: S2015
   messages:
   - package has no `main` function
@@ -990,7 +990,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5462
+    line: 5560
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 535
 - code: S2022
@@ -1012,15 +1012,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5366
+    line: 5464
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5429
+    line: 5527
 - code: S2024
   messages:
   - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5500
+    line: 5598
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -1033,9 +1033,9 @@ diagnostics:
   - namespace variable `{name}` cannot be imported outside its namespace
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5180
+    line: 5278
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5200
+    line: 5298
 - code: S2027
   messages:
   - Rust dependency `{dependency}` is not declared in `package.toml`
@@ -1174,7 +1174,7 @@ diagnostics:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4812
+    line: 4910
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name
@@ -1219,7 +1219,8 @@ diagnostics:
     line: 22
 - code: S2121
   messages:
-  - pipeline-sequential requires a local binding and cannot compose with another modifier operation
+  - pipeline-sequential requires a local named binding or assignment
+  - pipeline-sequential cannot compose with another modifier operation
   - pipeline must end with `.collect;`
   - '`.collect;` must be the final pipeline stage'
   - unsupported sequential pipeline stage
@@ -1232,17 +1233,19 @@ diagnostics:
   - pipeline stage requires one argument
   sources:
   - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
-    line: 43
+    line: 42
   - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
-    line: 106
+    line: 50
   - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
-    line: 120
+    line: 113
   - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
-    line: 128
+    line: 127
   - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
-    line: 138
+    line: 135
   - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
-    line: 148
+    line: 145
+  - path: crates/terrane-compiler/src/semantics/pipeline_syntax.rs
+    line: 155
   - path: crates/terrane-compiler/src/semantics/pipelines.rs
     line: 104
   - path: crates/terrane-compiler/src/semantics/pipelines.rs
@@ -1706,25 +1709,25 @@ diagnostics:
   - bare `throw` is only valid inside a catch clause
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1306
+    line: 1315
 - code: T0021
   messages:
   - thrown values must implement `throwable`
   - '`{name}` is not a throwable descriptor'
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1356
+    line: 1365
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1412
+    line: 1421
 - code: T0022
   messages:
   - catch-all clause is unreachable
   - catch descriptor `{name}` is unreachable
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1380
+    line: 1389
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1421
+    line: 1430
 - code: T0023
   messages:
   - '`.{member_name}` requires exactly {} argument{}'
@@ -2165,7 +2168,7 @@ diagnostics:
     use ordinary `ref` for a non-owning back-edge
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4768
+    line: 4866
 - code: T0070
   messages:
   - the selected minimal profile does not retain reflection metadata
@@ -3106,7 +3109,7 @@ diagnostics:
   - awaited destructors require the threaded executor
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1169
+    line: 1174
 - code: T0139
   messages:
   - mutating callback parameter `{}` requires a mutable native reference; the selected callback supplies
@@ -3159,11 +3162,11 @@ diagnostics:
     consuming callable when ownership permits
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5119
+    line: 5217
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5133
+    line: 5231
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5158
+    line: 5256
 - code: T0145
   messages:
   - returning a reference borrowed from a callable's captured environment is not supported
@@ -3206,6 +3209,7 @@ diagnostics:
   - call arguments contain overlapping places while one requires an exclusive mutable reference
   - cannot access a value while an earlier call argument borrows it exclusively
   - cannot access owner `{owner_name}` while an exclusive mutable reference is live
+  - cannot access owner `{owner_name}` while a captured reference is live
   sources:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1161
@@ -3216,7 +3220,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 4483
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4641
+    line: 4666
+  - path: crates/terrane-compiler/src/semantics/ownership.rs
+    line: 4739
 - code: T0150
   messages:
   - repeatable async callables cannot retain borrowed environments; use a consuming async function or
@@ -3412,7 +3418,7 @@ diagnostics:
   - required field `{field}` must be initialized exactly once during construction
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
-    line: 1206
+    line: 1211
   - path: crates/terrane-compiler/src/semantics/initialization.rs
     line: 261
   - path: crates/terrane-compiler/src/semantics/initialization.rs

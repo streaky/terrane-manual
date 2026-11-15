@@ -131,7 +131,11 @@ documentation:
             final use may transfer its carrier; stable shared-callable places may be
             borrowed. Reused mutable callables, repeated loop uses and reusable captures
             retain the required independent copies. Integer take counts are observed without
-            copying adaptive integer storage when a place can be borrowed.
+            copying adaptive integer storage when a place can be borrowed. All stage
+            operands stay live until traversal ends. Repeating a shared callable in several
+            stages therefore cannot move a carrier borrowed by an earlier stage. Repeating a
+            mutable callable gives each stage an independent captured-state snapshot;
+            explicitly shared captures retain their shared referents.
 
             Callbacks are synchronous, repeatable, single-argument callables with an exact
             current-element parameter type or `ref` to that type. Shared and mutable
@@ -139,13 +143,17 @@ documentation:
             not. Filter results must be `bool`. Mapper results cannot be borrowed or
             invocation-scoped values; owning shared-reference results remain values.
             Callback errors participate in ordinary inferred effects, `throws` bounds,
-            `catch` and cleanup. Errors beyond a satisfied limit are not evaluated.
+            `catch` and cleanup. Errors beyond a satisfied limit are not evaluated. Callback
+            types must already be concrete: the pipeline does not infer type arguments for
+            an unapplied generic function value from its element type.
 
-            Unsupported stages, arities, terminals and declaration targets report `S2121`;
-            incompatible source-stage types, callbacks, counts and required copies report
-            `S2122`, except that a non-list source reports `S2121`. Unsupported pipelines
-            never silently fall back to eager intermediate lists. Parallel and vectorized
-            pipeline operations are not implemented.
+            Generic modifier admission reports `S2120` for non-binding targets or repeated
+            non-repeatable modifiers. Pipeline-specific invalid non-local or non-name
+            binding/assignment targets, unsupported stages, arities and terminals report
+            `S2121`. Incompatible source-stage types, callbacks, counts and required copies
+            report `S2122`, except that a non-list source reports `S2121`. Unsupported
+            pipelines never silently fall back to eager intermediate lists. Parallel and
+            vectorized pipeline operations are not implemented.
         - type: example
           id: sequential-server-prefix
           title: Borrow servers and collect the first available capacities

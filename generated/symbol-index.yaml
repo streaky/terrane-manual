@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1ae752e84cba82d64096a60c625ed8113fa3d859a1a90dfc420ff15160151518
+  input-sha256: 4d95ddbfaa8aeb9fea04554c76f81741632af12da22ab424071649091d213b22
 format: 1
 generated: true
 symbols:
@@ -8297,6 +8297,10 @@ symbols:
   section: grammar-and-targets
   declaration: S2114
 - name: S2120
+  record: lang.collections.protocols
+  section: sequential-pipelines
+  declaration: S2120
+- name: S2120
   record: lang.declarations.modifiers
   section: validation
   declaration: S2120
@@ -9615,6 +9619,10 @@ symbols:
 - name: T0149
   record: lang.functions.declarations
   section: parameters-and-arguments
+  declaration: T0149
+- name: T0149
+  record: lang.types.references
+  section: mutable-references
   declaration: T0149
 - name: T0226
   record: internals.semantics.descriptor-contracts
