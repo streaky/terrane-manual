@@ -298,7 +298,13 @@ documentation:
             they are instantiated. Nested calls retain closed native parameter destinations
             after receiver-owner substitution, including cached specializations, so
             contextual selections take precedence over nominal defaults even when the source
-            facade omits a native slot.
+            facade omits a native slot. Unsupported result-destination diagnostics name the
+            requested source type when available, otherwise its retained native projection,
+            alongside the conversion failure reason. Owner-root normalization uses resolved
+            Cargo library targets, not normalized package-name guesses, for both declared
+            dependencies and supplemental bound owners. Custom library names retain their
+            package attribution through alias rewriting; ambiguous supplemental target roots
+            are not arbitrarily bound.
 
             The lowering boundary constructs the exact Rust callback adapter and converts
             inputs and results at free-function and projected-method calls. Exact native
