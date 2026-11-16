@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 08c8ef1501d6505cf029aa229c72fb1deaa51ea30027460d8a73d1a45ffcc823
+  input-sha256: 5ad13716e02b5d4b288fa9e019602563018e4ea0dbd41c460b7661a64cfd9e39
 format: 1
 generated: true
 symbols:
@@ -7351,6 +7351,10 @@ symbols:
   record: lang.declarations.bindings
   section: declarations
   declaration: protected
+- name: psm
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
+  declaration: psm
 - name: public
   record: book.classes-interfaces-and-traits
   section: encapsulation-and-visibility
@@ -7379,6 +7383,10 @@ symbols:
   record: internals.projection.resolution
   section: resolved-graph-survey
   declaration: public-bindings-with-hidden-definitions
+- name: public_api::Builder::from_rustdoc_json
+  record: internals.projection.resolution
+  section: identity
+  declaration: public_api::Builder::from_rustdoc_json
 - name: public_surface
   record: internals.projection.resolution
   section: public-paths
@@ -8680,6 +8688,10 @@ symbols:
   record: std.documents.typed-decoding
   section: native-boundary
   declaration: serde_json::Value
+- name: serde_stacker
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
+  declaration: serde_stacker
 - name: serializable
   record: std.documents.typed-decoding
   section: opt-in
@@ -8940,6 +8952,10 @@ symbols:
   record: internals.lowering.rust-output
   section: rust-lowering
   declaration: src/main.rs
+- name: stacker
+  record: internals.build.toolchain-profiles
+  section: selected-inputs
+  declaration: stacker
 - name: start
   record: std.text-bytes-codecs
   section: string-operations

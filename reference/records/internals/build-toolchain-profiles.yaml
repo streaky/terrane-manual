@@ -56,6 +56,13 @@ documentation:
             their public owners. A stable wire format alone does not establish callback,
             dereference or native-default compatibility; consumer witnesses remain required.
 
+            Building the compiler also builds `serde_stacker` and its `stacker`/`psm`
+            dependencies. Their target-specific native stack-switching code requires the
+            C/assembler build tools supported by those dependencies where applicable.
+            Compiler-host build prerequisites are distinct from the Rust toolchains selected
+            for generated applications; cross-host and cross-target support must not be
+            inferred from a successful build on one workstation.
+
             Unicode behavior is a separate compiler-owned part of the toolchain profile.
             Version one selects Unicode 18.0.0 for locale-independent case mapping and
             folding, Unicode whitespace, normalization, default word segmentation, and

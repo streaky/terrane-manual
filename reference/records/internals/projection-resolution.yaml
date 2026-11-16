@@ -37,6 +37,7 @@ documentation:
           evidence:
             - rust-dependency-deferred-surface
             - rust-dependency-reqwest
+            - projected-deep-rustdoc
           markdown: |-
             A projection cache identity covers the package manifest,
             `terrane-dependencies.lock` complete resolved graph, effective compilation
@@ -83,12 +84,51 @@ documentation:
             same lock. Fresh generation and decoding failures remain errors; filesystem
             permission and other I/O failures are not treated as cache misses.
 
-            Raw Rustdoc JSON for declared crates, supplemental owners, and sysroot surveys
-            uses one stack-growing typed deserializer. Deep generic type trees are not
-            rejected by a general-purpose JSON nesting limit. Complete-input and pinned
-            format validation remain mandatory; trailing data and unsupported formats are
-            still errors. This does not relax JSON limits for source document values or
+            The shared typed parser for raw Rustdoc JSON used by dependency projection and
+            sysroot surveys grows its deserialization stack, allowing ordinary deeply nested
+            generic metadata beyond the default JSON nesting limit. Complete-input and
+            pinned format validation remain mandatory; trailing data and unsupported formats
+            are still errors. This does not relax JSON limits for source document values or
             other cache formats.
+
+            This parser behavior is not an arbitrary-depth or whole-pipeline stack-safety
+            guarantee. Typed metadata cloning, destruction, serialization, and projection
+            traversal remain recursive on their ordinary thread stacks; pathological trees
+            can still exhaust those stacks. No numeric supported nesting ceiling is
+            promised.
+
+            Semantic object identities use copy-on-write shared payloads so ordered type
+            arguments and named native selections do not duplicate entire nested identities.
+            Comparison-key formatting does not recursively embed cached key strings or
+            repeated selections. Serialized bindings can refer to ordered argument positions
+            only when their full payloads, including non-identity metadata, match; this
+            representation is independent of allocation history. The typed phase-cache
+            envelope version is advanced when this wire representation changes. Semantic
+            type traversal likewise avoids revisiting named selections already represented
+            by ordered arguments or an application. Capability collection, dependency
+            discovery and native selection checks share this policy while still inspecting
+            distinct hidden native selections. Canonicalization reuses transformed mirrored
+            arguments only when their full payload metadata matches, not merely their
+            semantic identity. Closing projected generic arguments retains the
+            already-selected projected values, including ordered dependent defaults, instead
+            of recursively reconstructing them from newly built semantic identities.
+
+            Direct native argument validation uses the resolved parameter's borrow and
+            storage-preservation facts when lending source references. This does not relax
+            owned Rust inputs or change the declared first-class callable facade.
+
+            This sharing is compiler metadata, not generated application storage. Native
+            values still use their ordinary Rust representations and borrow/transfer rules;
+            the compiler does not introduce runtime shared pointers to implement this
+            repair.
+
+            Complete public-API extraction is a separate boundary: package surveys that
+            request it also invoke `public_api::Builder::from_rustdoc_json`, which reparses
+            the artifact using the upstream library's own decoder. The shared parser's depth
+            behavior does not extend to that second parse or to every survey consumer. The
+            pinned public-api 0.52.2 decoder disables its JSON recursion limit without
+            growing the deserialization stack; that complete-surface path remains subject to
+            ordinary fixed-stack recursion limits.
 
             Manifest, lock, target, and toolchain identity construction lives in
             `crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs` under
@@ -1806,8 +1846,11 @@ provenance:
     - removed-rust-dependency-member
     - removed-rust-dependency-instance-member
     - rust-dependency-reqwest
+    - projected-deep-rustdoc
   compiler:
     - crates/terrane-compiler/src/rust_interop/mod.rs
+    - crates/terrane-compiler/src/semantics/model/object_identity.rs
+    - crates/terrane-compiler/src/compiler/cache.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
     - crates/terrane-compiler/src/rust_interop/projection/resolution.rs
     - crates/terrane-compiler/src/rust_interop/projection/artifacts.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 08c8ef1501d6505cf029aa229c72fb1deaa51ea30027460d8a73d1a45ffcc823
+  input-sha256: 5ad13716e02b5d4b288fa9e019602563018e4ea0dbd41c460b7661a64cfd9e39
 format: 2
 generated: true
 records:
@@ -3455,8 +3455,11 @@ records:
     - removed-rust-dependency-member
     - removed-rust-dependency-instance-member
     - rust-dependency-reqwest
+    - projected-deep-rustdoc
     compiler:
     - crates/terrane-compiler/src/rust_interop/mod.rs
+    - crates/terrane-compiler/src/semantics/model/object_identity.rs
+    - crates/terrane-compiler/src/compiler/cache.rs
     - crates/terrane-compiler/src/rust_interop/projection.rs
     - crates/terrane-compiler/src/rust_interop/projection/resolution.rs
     - crates/terrane-compiler/src/rust_interop/projection/artifacts.rs
