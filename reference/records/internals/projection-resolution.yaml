@@ -83,6 +83,13 @@ documentation:
             same lock. Fresh generation and decoding failures remain errors; filesystem
             permission and other I/O failures are not treated as cache misses.
 
+            Raw Rustdoc JSON for declared crates, supplemental owners, and sysroot surveys
+            uses one stack-growing typed deserializer. Deep generic type trees are not
+            rejected by a general-purpose JSON nesting limit. Complete-input and pinned
+            format validation remain mandatory; trailing data and unsupported formats are
+            still errors. This does not relax JSON limits for source document values or
+            other cache formats.
+
             Manifest, lock, target, and toolchain identity construction lives in
             `crates/terrane-compiler/src/rust_interop/projection/cache_identity.rs` under
             `cache_identity` and `selected_target`. The resolution transaction combines that
