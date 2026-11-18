@@ -17,7 +17,7 @@ documentation:
   title: "Text display, conversion, and print"
   title-style: text
   summary: >-
-    Scalars render canonically, and classes opt into text display through `to-string`. String composition and printing share this protocol; arbitrary bytes have no display conversion.
+    Scalars render canonically. Ordinary display and interpolation are distinct: classes opt into display through `to-string` and interpolation through `/core/display::interpolatable`. Arbitrary bytes have no display or interpolation conversion.
   tags:
     - "text-data"
     - "display"
@@ -63,11 +63,57 @@ documentation:
 
             Each argument uses canonical text display. Locale, styling, field width,
             precision, and other presentation policies require imported formatting
-            facilities.
+            facilities. Interpolation has a separate explicit conversion contract.
+            `/core/display` declares the `interpolatable` interface, whose synchronous
+            method is `interpolate string; key string`. A class opts in with
+            `implements interpolatable`; plain interpolation passes the empty key `''`,
+            while `expr !: key` passes the selected string key.
+        - type: example
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /core/display import interpolatable
 
-            String `+`, `concat`, and `join` use this same protocol. A string operand makes
-            binary `+` concatenation; the other operand must support text display. Pure
-            numeric addition remains arithmetic, and an unsupported pair is a compile-time
+            class person implements interpolatable
+                name string = 'Ada'
+                function interpolate string; key string
+                    if key == 'formal'
+                        return 'Ms. ' + this.name
+                    return this.name
+
+            function main;
+                person = instance person;
+                print; "Hello, {person}"
+                print; "Hello, {person !: formal}"
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            A matching `interpolation-renderer` registration takes priority over the
+            interface implementation and receives the original value. The expression is
+            evaluated once before the selected function-local slot is loaded. Shadowing a
+            registered slot in a nested scope is rejected with `T0250`; unshadowed slots
+            follow ordinary lexical capture rules.
+
+            Built-in `bool`, `int`, fixed-width integers, `float32`, `float64`, `string`,
+            and `none` implement the interface intrinsically. Their plain interpolation uses
+            canonical scalar text. A statically primitive keyed interpolation without a
+            registration is an error. When reached through a generic type parameter bounded
+            by `interpolatable`, built-in implementations return canonical text for every
+            key. A statically known optional or union containing a built-in arm such as
+            `none` or `int` likewise requires a registration for keyed interpolation, even
+            when another arm is a key-aware class. Every union or optional alternative must
+            conform, including `none`; `bytes` and catch envelopes do not. A throwable class
+            may independently implement `interpolatable`.
+
+            `interpolate` is an ordinary interface call: its effects, including throwing
+            effects, are retained and handled by ordinary call rules. There is no fallback
+            to `.to-string;`, `render`, or general display. A selected callback must return
+            `string`. Ordinary `print`, concatenation, and `.to-string;` continue to use
+            general display; interpolation does not alter their behavior. A string operand
+            makes binary `+` concatenation; the other operand must support text display.
+            Numeric addition remains arithmetic, and an unsupported pair is a compile-time
             error. Display and operand evaluation retain source order. Concatenation chains
             write into one result buffer where grouping permits, preserving numeric
             subexpressions and invoking each required representation exactly once.

@@ -268,6 +268,15 @@ documentation:
             lock across those effects. Comparison operands and print arguments are staged in
             source order when using these views.
 
+            Borrowed interpolation keys remain text views for immediate display,
+            interpolation writes, concatenation operands, and join separators, including
+            transparently grouped key names. These consumers must not obtain an owned string
+            merely to borrow it again. Owned destinations, returned string values, and
+            closure captures retain their ordinary string snapshots. Implementations
+            requiring an addressable key still materialize one canonical string owner before
+            lending source references. Freshly materialized owned key snapshots are not
+            cloned again merely because the source key is reused.
+
             Projected parameters record whether their input representation can preserve
             source storage. The same decision selects generated facade signatures and call
             operands. String slices remain distinct from references to `String`;
@@ -373,6 +382,8 @@ provenance:
 implementation:
   compiler:
     - crates/terrane-compiler/src/lowering/emitter/context.rs
+    - crates/terrane-compiler/src/lowering/emitter/display.rs
+    - crates/terrane-compiler/src/lowering/emitter/interpolation.rs
     - crates/terrane-compiler/src/lowering/emitter/expressions.rs
     - crates/terrane-compiler/src/lowering/emitter/guarded_arithmetic.rs
     - crates/terrane-compiler/src/lowering/emitter/statements.rs
@@ -387,3 +398,4 @@ implementation:
     - tests/conformance/run/borrowed-text-observations/case.trn
     - tests/conformance/run/borrowed-throwable-text/case.trn
     - tests/conformance/run/shared-statement-owner/case.trn
+    - tests/fixtures/conformance-suites/value-protocols/tests/integration/interpolation-key-reference-destinations/case.trn

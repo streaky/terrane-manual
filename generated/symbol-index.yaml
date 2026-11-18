@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5ad13716e02b5d4b288fa9e019602563018e4ea0dbd41c460b7661a64cfd9e39
+  input-sha256: 43b80f17718914c945c10b81648f79e554544902e973afa469c14855daca038e
 format: 1
 generated: true
 symbols:
@@ -104,6 +104,26 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/concurrency
+- name: /core/display
+  record: lang.text.display
+  section: scalar-display
+  declaration: /core/display
+- name: /core/display
+  record: std.core-display
+  section: ''
+  declaration: /core/display
+- name: /core/display
+  record: std.core-display
+  section: interpolation
+  declaration: /core/display
+- name: /core/display::interpolatable
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: /core/display::interpolatable
+- name: /core/display::interpolatable
+  record: manual.changelog.unreleased
+  section: changes-2026-11-18
+  declaration: /core/display::interpolatable
 - name: /core/encodings
   record: std.text-bytes-codecs
   section: encodings
@@ -961,6 +981,10 @@ symbols:
   section: sequential-pipelines
   declaration: bool
 - name: bool
+  record: lang.text.display
+  section: scalar-display
+  declaration: bool
+- name: bool
   record: lang.text.search
   section: string-search
   declaration: bool
@@ -972,10 +996,18 @@ symbols:
   record: std.collections
   section: sets
   declaration: bool
+- name: bool
+  record: std.core-display
+  section: interpolation
+  declaration: bool
 - name: borrowed
   record: tool.packages.rust-dependencies
   section: expression-macros
   declaration: borrowed
+- name: borrowed-key
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class borrowed-key implements interpolatable
 - name: bottles-each
   record: book.first-taste
   section: a-slightly-more-useful-program
@@ -1147,6 +1179,10 @@ symbols:
 - name: bytes
   record: std.collections
   section: collection-kinds
+  declaration: bytes
+- name: bytes
+  record: std.core-display
+  section: interpolation
   declaration: bytes
 - name: bytes
   record: std.text-bytes-codecs
@@ -1819,10 +1855,6 @@ symbols:
 - name: concat
   record: book.values-and-names
   section: everything-is-an-object-semantically
-  declaration: concat
-- name: concat
-  record: lang.text.display
-  section: scalar-display
   declaration: concat
 - name: concat
   record: lang.text.transformation
@@ -3698,6 +3730,10 @@ symbols:
   section: values
   declaration: float32
 - name: float32
+  record: lang.text.display
+  section: scalar-display
+  declaration: float32
+- name: float32
   record: lang.types.descriptors
   section: type-descriptors
   declaration: float32
@@ -3712,6 +3748,10 @@ symbols:
 - name: float32
   record: lang.types.scalars
   section: scalar-types
+  declaration: float32
+- name: float32
+  record: std.core-display
+  section: interpolation
   declaration: float32
 - name: float32
   record: tool.rust-package-integrations.godot
@@ -3742,6 +3782,10 @@ symbols:
   section: values
   declaration: float64
 - name: float64
+  record: lang.text.display
+  section: scalar-display
+  declaration: float64
+- name: float64
   record: lang.types.descriptors
   section: type-descriptors
   declaration: float64
@@ -3756,6 +3800,10 @@ symbols:
 - name: float64
   record: lang.types.scalars
   section: scalar-types
+  declaration: float64
+- name: float64
+  record: std.core-display
+  section: interpolation
   declaration: float64
 - name: float64
   record: tool.rust-package-integrations.godot
@@ -3949,6 +3997,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: organizing-the-source-tree
   declaration: format/text.trn
+- name: forward-key
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function forward-key ref string; value ref string
 - name: fractional-part
   record: lang.numerics.floating-point
   section: ieee-boundaries
@@ -4085,6 +4137,10 @@ symbols:
   record: tool.diagnostics
   section: generated-index
   declaration: generated/diagnostics.yaml
+- name: generic-reference
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function generic-reference of (T) ref T; value ref T
 - name: get.checked
   record: book.text-and-collections
   section: exercises
@@ -4265,6 +4321,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: host-invocation-scoped-native
+- name: html
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: html
 - name: http-server
   record: tool.packages.rust-dependencies
   section: integration-boundaries
@@ -4678,6 +4738,10 @@ symbols:
   section: move-semantics
   declaration: int
 - name: int
+  record: lang.text.display
+  section: scalar-display
+  declaration: int
+- name: int
   record: lang.text.search
   section: string-search
   declaration: int
@@ -4700,6 +4764,10 @@ symbols:
 - name: int
   record: manual.changelog.unreleased
   section: changes-2026-11-13
+  declaration: int
+- name: int
+  record: std.core-display
+  section: interpolation
   declaration: int
 - name: int
   record: tool.packages.rust-dependencies
@@ -4877,6 +4945,38 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: interfaces.rs
+- name: interpolatable
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: interpolatable
+- name: interpolatable
+  record: lang.text.display
+  section: scalar-display
+  declaration: interpolatable
+- name: interpolatable
+  record: std.core-display
+  section: interpolation
+  declaration: interpolatable
+- name: interpolate
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function interpolate string; key string
+- name: interpolate
+  record: lang.text.display
+  section: scalar-display
+  declaration: interpolate
+- name: interpolation-renderer
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: interpolation-renderer
+- name: interpolation-renderer
+  record: lang.text.display
+  section: scalar-display
+  declaration: interpolation-renderer
+- name: interpolation-renderer
+  record: std.core-display
+  section: interpolation
+  declaration: interpolation-renderer
 - name: into-native
   record: internals.execution.runtime-selection
   section: readiness-io
@@ -5098,10 +5198,6 @@ symbols:
   section: structured-concurrency
   declaration: join
 - name: join
-  record: lang.text.display
-  section: scalar-display
-  declaration: join
-- name: join
   record: lang.text.transformation
   section: string-transform
   declaration: join
@@ -5137,6 +5233,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-03
   declaration: JsonDocument
+- name: key-length
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function key-length int; value ref string
 - name: kind
   record: lang.declarations.annotations
   section: docs-and-metadata
@@ -5149,6 +5249,10 @@ symbols:
   record: tool.diagnostics
   section: families
   declaration: L
+- name: L0015
+  record: lang.lexical-structure.literals
+  section: comments-literals
+  declaration: L0015
 - name: label
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
@@ -5854,6 +5958,10 @@ symbols:
   section: defining-and-calling-a-function
   declaration: name
 - name: name
+  record: book.text-and-collections
+  section: quoted-tail-and-block-text
+  declaration: name
+- name: name
   record: book.types
   section: type-inference
   declaration: name
@@ -6248,6 +6356,10 @@ symbols:
 - name: none
   record: std.collections
   section: lookup
+  declaration: none
+- name: none
+  record: std.core-display
+  section: interpolation
   declaration: none
 - name: none
   record: std.documents.typed-decoding
@@ -7119,6 +7231,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-10-12
   declaration: print
+- name: print
+  record: manual.changelog.unreleased
+  section: changes-2026-11-18
+  declaration: print
 - name: print-entry
   record: book.complete-program
   section: keeping-decisions-separate-from-presentation
@@ -7603,6 +7719,10 @@ symbols:
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: ref
+- name: reference-key
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class reference-key implements interpolatable
 - name: reference_owner_spans
   record: internals.semantics.reference-provenance
   section: lowering
@@ -7726,6 +7846,14 @@ symbols:
 - name: render
   record: lang.functions.fluent-apis
   section: value-builders
+  declaration: render
+- name: render
+  record: lang.text.display
+  section: scalar-display
+  declaration: render
+- name: render
+  record: std.core-display
+  section: interpolation
   declaration: render
 - name: render-category
   record: book.classes-interfaces-and-traits
@@ -8760,6 +8888,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: naming-guidance
   declaration: shared-item
+- name: shared-key
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: class shared-key implements interpolatable
 - name: shared-object-field-comparisons
   record: internals.testing.conformance-timing
   section: consolidation-boundaries
@@ -9089,6 +9221,10 @@ symbols:
   section: declarations
   declaration: string
 - name: string
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: string
+- name: string
   record: lang.expressions.operators
   section: operators-precedence
   declaration: string
@@ -9119,6 +9255,10 @@ symbols:
 - name: string
   record: lang.types.scalars
   section: scalar-types
+  declaration: string
+- name: string
+  record: std.core-display
+  section: interpolation
   declaration: string
 - name: string
   record: std.text-bytes-codecs
@@ -9688,6 +9828,18 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-05
   declaration: T0240
+- name: T0250
+  record: lang.declarations.modifiers
+  section: resolution
+  declaration: T0250
+- name: T0250
+  record: lang.text.display
+  section: scalar-display
+  declaration: T0250
+- name: T0250
+  record: std.core-display
+  section: interpolation
+  declaration: T0250
 - name: tag
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -10092,6 +10244,10 @@ symbols:
   record: tool.packages.command-line
   section: generated-package-state
   declaration: test
+- name: test-scenario
+  record: internals.optimization.proof-guided-lowering
+  section: compiler-synopsis
+  declaration: function test-scenario
 - name: test-value
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
@@ -10483,6 +10639,10 @@ symbols:
 - name: to-string
   record: manual.changelog.unreleased
   section: changes-2026-10-12
+  declaration: to-string
+- name: to-string
+  record: std.core-display
+  section: interpolation
   declaration: to-string
 - name: to_document
   record: std.documents.typed-decoding

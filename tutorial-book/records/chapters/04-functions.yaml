@@ -642,9 +642,9 @@ documentation:
 
         - type: markdown
           markdown: |-
-            The first function returns `ready`. The second returns the two content lines
-            joined by `\n`, with no implicit final newline. Neither form needs parentheses
-            or an intermediate binding.
+            The first function returns `ready`; the second returns its two content lines
+            joined by a newline, with no implicit final newline. Neither form needs
+            parentheses or an intermediate binding.
 
             Early returns are useful when a special case has a complete answer:
         - type: example

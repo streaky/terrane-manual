@@ -64,8 +64,8 @@ documentation:
 
         - type: markdown
           markdown: |-
-            A quoted string begins and ends with `'`. Escape sequences represent characters
-            that would otherwise interfere with the literal:
+            Single-quoted strings are raw Unicode text, except `\'` for an apostrophe and
+            `\\` for a backslash; other backslash sequences remain literal:
         - type: example
           id: legacy-fence-002
           title: null
@@ -76,16 +76,19 @@ documentation:
           source: |2
             apostrophe = 'It\'s ready.'
             path = 'one\\two'
-            lines = 'first\nsecond'
+            lines = "first\nsecond"
           response: null
           diagnostic: null
           markdown: null
 
         - type: markdown
           markdown: |-
-            The source spelling and resulting text are not always identical. `\'`
-            contributes one apostrophe, `\\` contributes one backslash, and `\n` contributes
-            a newline.
+            `\'` contributes one apostrophe and `\\` contributes one backslash. For escapes
+            that represent characters, use double quotes: `\n`, `\r`, `\t`, `\0`, and
+            `\u{1F600}` are supported there; unknown escapes are errors. Double-quoted
+            strings also interpolate ordinary expressions inside `{...}`. For example,
+            `"Hello {name}"` inserts `name`, while `"Hello {{name}}"` produces literal
+            braces. Use `>` or `>>` when a whole line or block should remain literal.
 
             Terrane also provides text forms that avoid escape punctuation when the source
             already has the shape we want.

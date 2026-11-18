@@ -595,6 +595,35 @@ documentation:
               native generic defaults. This restores library routing without
               package-specific adapters; owning and invocation-scoped restrictions remain
               unchanged. See [[tool.packages.rust-dependencies#callbacks]].
+    - id: changes-2026-11-18
+      title: "2026-11-18"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — quoted-string interpolation.** Double-quoted strings support
+              interpolation, literal doubled braces, and the documented escape set.
+              Interpolations use expression-level selectors and explicit renderer
+              registrations, or an implementation of `/core/display::interpolatable`.
+              Ordinary display, `print`, and string composition retain their existing
+              conversion contract. See
+              [[lang.lexical-structure.literals#comments-literals]],
+              [[lang.text.display#scalar-display]], [[std.core-display#interpolation]], and
+              [[lang.declarations.modifiers]].
+            - **Fixed — interpolation key references and diagnostics.** Implementations
+              materialize an addressable string once when their key must lend a source
+              reference; ordinary borrowed-key implementations keep their allocation-free
+              key ABI. Keyed optional/union errors identify the unsupported built-in arm,
+              and catch bindings cannot shadow registered renderer slots.
+            - **Fixed — scalar parser callbacks.** Imported callbacks retain their
+              collision-qualified function identities. Forwarding a scalar receiver follows
+              ordinary owned-argument semantics, preserving later reads and eliding a copy
+              at its final use.
+            - **Breaking — single-quoted string escapes.** Only `\'` and `\\` are
+              interpreted in single-quoted strings. Previously decoded control characters,
+              double quotes, and Unicode escapes now remain literal backslash sequences. Use
+              double quotes when escape interpretation is intended. This is an intentional
+              literal semantic change, not a deprecated spelling; no migration warning is
+              emitted.
   see-also:
     - manual.changelog
     - lang.types.references

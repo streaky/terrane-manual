@@ -1,0 +1,87 @@
+format: 1
+id: std.core-display
+kind: topic
+
+surface: /core/display
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-in: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Core display protocols
+  title-style: text
+  summary: >-
+    Defines explicit interpolation conformance separately from ordinary text display,
+    including built-in scalar behavior and keyed dispatch.
+  tags: [standard-library, display, interpolation, interface]
+  sections:
+    - id: interpolation
+      title: Explicit interpolation protocol
+      blocks:
+        - type: markdown
+          markdown: |-
+            `/core/display` declares the opt-in `interpolatable` interface. Its synchronous
+            method is `interpolate string; key string`; it has no default parameter. Plain
+            interpolation passes the empty key `''`, and `expr !: key` passes the selected
+            string key. The interface permits `throws throwable`; implementations may be
+            narrower, and callers retain ordinary interface effects.
+
+            A matching function-local `interpolation-renderer` registration takes priority
+            over interface dispatch and receives the original value. The expression is
+            evaluated before loading the selected callback slot. Shadowing a registered
+            function-local slot in a nested scope is rejected with `T0250`; an unshadowed
+            slot follows ordinary lexical capture rules.
+
+            `bool`, `int`, all fixed-width signed and unsigned integers, `float32`,
+            `float64`, `string`, and `none` conform intrinsically. Their unregistered plain
+            interpolation uses canonical scalar text. A direct statically primitive keyed
+            interpolation without a registration is an error. Through a generic parameter
+            bounded by `interpolatable`, built-in scalar implementations return canonical
+            text for any key. A statically known optional or union containing a built-in arm
+            such as `none` or `int` likewise requires a registration for keyed
+            interpolation, even when another arm is a key-aware class. Every union or
+            optional arm must conform, including `none`; `bytes` and catch envelopes do not.
+            A throwable class may separately implement `interpolatable`. Interface bounds
+            describe an owned generic representation; to borrow a conforming value, declare
+            a `ref T` parameter with `T implements interpolatable`, following ordinary
+            interface-bound ownership rules.
+
+            Interpolation does not fall back to `to-string`, `render`, or general display.
+            Interface implementations and registrations must return `string`; calls retain
+            ordinary effects and ownership behavior. Plain primitive interpolation retains
+            direct scalar output, and string interpolation retains its direct string path.
+        - type: example
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /core/display import interpolatable
+
+            class account implements interpolatable
+                owner string = 'Ada'
+                function interpolate string; key string
+                    if key == 'label'
+                        return 'Account: ' + this.owner
+                    return this.owner
+
+            function main;
+                account = instance account;
+                print; "{account}"
+                print; "{account !: label}"
+          response: null
+          diagnostic: null
+          markdown: null
+  see-also:
+    - lang.text.display
+    - lang.declarations.modifiers
+
+provenance:
+  specification: null
+  conformance:
+    - tests/fixtures/conformance-suites/value-protocols/tests/integration/quoted-interpolation/case.trn
+  compiler: null

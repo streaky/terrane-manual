@@ -80,6 +80,7 @@ navigation:
       - source: records/standard-library/process-signals.yaml
       - source: records/standard-library/time.yaml
       - source: records/standard-library/randomness.yaml
+      - source: records/standard-library/core-display.yaml
       - source: records/standard-library/streams.yaml
       - source: records/standard-library/urls.yaml
       - source: records/standard-library/uuid.yaml

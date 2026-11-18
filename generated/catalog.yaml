@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5ad13716e02b5d4b288fa9e019602563018e4ea0dbd41c460b7661a64cfd9e39
+  input-sha256: 43b80f17718914c945c10b81648f79e554544902e973afa469c14855daca038e
 format: 2
 generated: true
 records:
@@ -104,6 +104,9 @@ records:
     sections: []
   - id: changes-2026-11-15
     title: '2026-11-15'
+    sections: []
+  - id: changes-2026-11-18
+    title: '2026-11-18'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -1654,8 +1657,9 @@ records:
   declaration-synopsis: []
 - id: lang.text.display
   title: Text display, conversion, and print
-  summary: Scalars render canonically, and classes opt into text display through `to-string`. String composition
-    and printing share this protocol; arbitrary bytes have no display conversion.
+  summary: 'Scalars render canonically. Ordinary display and interpolation are distinct: classes opt into
+    display through `to-string` and interpolation through `/core/display::interpolatable`. Arbitrary bytes
+    have no display or interpolation conversion.'
   kind: topic
   manual: reference
   group: Language
@@ -2458,6 +2462,28 @@ records:
     title: Secure and Deterministic Randomness
     sections: []
   declaration-synopsis: []
+- id: std.core-display
+  title: Core display protocols
+  summary: Defines explicit interpolation conformance separately from ordinary text display, including
+    built-in scalar behavior and keyed dispatch.
+  kind: topic
+  manual: reference
+  group: Standard library
+  position: 73
+  source: reference/records/standard-library/core-display.yaml
+  lifecycle-status: current
+  documentation-status: complete
+  surface: /core/display
+  provenance:
+    specification: null
+    conformance:
+    - tests/fixtures/conformance-suites/value-protocols/tests/integration/quoted-interpolation/case.trn
+    compiler: null
+  sections:
+  - id: interpolation
+    title: Explicit interpolation protocol
+    sections: []
+  declaration-synopsis: []
 - id: std.streams
   title: Byte and text streams
   summary: Byte and text streams provide owning asynchronous reader and writer protocols, encoded adapters,
@@ -2465,7 +2491,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 73
+  position: 74
   source: reference/records/standard-library/streams.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2488,7 +2514,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 74
+  position: 75
   source: reference/records/standard-library/urls.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2511,7 +2537,7 @@ records:
   kind: topic
   manual: reference
   group: Standard library
-  position: 75
+  position: 76
   source: reference/records/standard-library/uuid.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2534,7 +2560,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 76
+  position: 77
   source: reference/records/packages/package-manifest.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2574,7 +2600,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 77
+  position: 78
   source: reference/records/packages/rust-dependencies.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2666,7 +2692,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 78
+  position: 79
   source: reference/records/packages/command-line.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2713,7 +2739,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 79
+  position: 80
   source: reference/records/packages/testing.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2742,7 +2768,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 80
+  position: 81
   source: reference/records/packages/error-boundaries.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2778,7 +2804,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 81
+  position: 82
   source: reference/records/packages/native-interop.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2801,7 +2827,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 82
+  position: 83
   source: reference/records/packages/rust-interop.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2828,7 +2854,7 @@ records:
   kind: topic
   manual: reference
   group: Packages
-  position: 83
+  position: 84
   source: reference/records/packages/terrane-packages.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2851,7 +2877,7 @@ records:
   kind: topic
   manual: reference
   group: Rust package integrations
-  position: 84
+  position: 85
   source: reference/records/rust-package-integrations/godot.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2889,7 +2915,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 85
+  position: 86
   source: reference/records/tooling/build-time-tools.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2958,7 +2984,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 86
+  position: 87
   source: reference/records/tooling/source-intelligence.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -2996,7 +3022,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 87
+  position: 88
   source: reference/records/tooling/debugging.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3031,7 +3057,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 88
+  position: 89
   source: reference/records/tooling/profiling.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3069,7 +3095,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 89
+  position: 90
   source: reference/records/tooling/diagnostics.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3108,7 +3134,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 90
+  position: 91
   source: reference/records/tooling/current-limitations.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3138,7 +3164,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 91
+  position: 92
   source: reference/records/tooling/editor-support.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3161,7 +3187,7 @@ records:
   kind: topic
   manual: reference
   group: Tooling
-  position: 92
+  position: 93
   source: reference/records/tooling/formatting.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3184,7 +3210,7 @@ records:
   kind: topic
   manual: reference
   group: Application development
-  position: 93
+  position: 94
   source: reference/records/manual/application-development-map.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3208,7 +3234,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 94
+  position: 95
   source: reference/records/internals/execution-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3279,7 +3305,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 95
+  position: 96
   source: reference/records/internals/conversion-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3305,7 +3331,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 96
+  position: 97
   source: reference/records/internals/descriptor-contracts.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3343,7 +3369,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 97
+  position: 98
   source: reference/records/internals/reference-provenance.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3394,7 +3420,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 98
+  position: 99
   source: reference/records/internals/conformance-timing.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3441,7 +3467,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 99
+  position: 100
   source: reference/records/internals/projection-resolution.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3544,7 +3570,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 100
+  position: 101
   source: reference/records/internals/projection-namespace-overlays.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3577,7 +3603,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 101
+  position: 102
   source: reference/records/internals/integration-boundaries.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3624,7 +3650,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 102
+  position: 103
   source: reference/records/internals/observability-runtime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3651,7 +3677,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 103
+  position: 104
   source: reference/records/internals/build-toolchain-profiles.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3685,7 +3711,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 104
+  position: 105
   source: reference/records/internals/semantic-return-validation.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3709,7 +3735,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 105
+  position: 106
   source: reference/records/internals/collection-lifetime.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3740,7 +3766,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 106
+  position: 107
   source: reference/records/internals/proof-guided-lowering.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3816,6 +3842,16 @@ records:
   - function replace int; owners mutable ref (list of (shared ref counter)), next shared ref counter
   - function touch int; owner shared ref counter
   - function consume int; owner shared ref counter
+  - function key-length int; value ref string
+  - function forward-key ref string; value ref string
+  - function generic-reference of (T) ref T; value ref T
+  - class reference-key implements interpolatable
+  - function interpolate string; key string
+  - class shared-key implements interpolatable
+  - function interpolate string; key string
+  - class borrowed-key implements interpolatable
+  - function interpolate string; key string
+  - function test-scenario
 - id: internals.parser.call-layout
   title: Lexer and parser contract for call layout
   summary: Records how physical-line indentation activates call arguments and member-chain parsing without
@@ -3823,7 +3859,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 107
+  position: 108
   source: reference/records/internals/call-layout.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3855,7 +3891,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 108
+  position: 109
   source: reference/records/internals/diagnostics/source-projection.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3878,7 +3914,7 @@ records:
   kind: topic
   manual: reference
   group: Compiler internals
-  position: 109
+  position: 110
   source: reference/records/internals/lowering/rust-output.yaml
   lifecycle-status: current
   documentation-status: complete
@@ -3918,7 +3954,7 @@ records:
   kind: topic
   manual: reference
   group: Future designs
-  position: 110
+  position: 111
   source: reference/records/internals/future/decorative-modifiers.yaml
   lifecycle-status: planned
   documentation-status: complete

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 42001c3d0bc7117fac1a599fe5453ca055582400f96357359268f8c3a08c03b4
+  input-sha256: 3e8b15e59325aaea1758d32c5053d80f8369ba693a09c34196d5f20d19145fdc
 format: 1
 generated: true
 modules:
@@ -135,6 +135,10 @@ modules:
     line: 133
   - declaration: function write concurrency-operation-result; value int
     line: 137
+- source: crates/terrane-compiler/src/core/display.trn
+  declarations:
+  - declaration: function interpolate string throws throwable; key string
+    line: 7
 - source: crates/terrane-compiler/src/core/documents.trn
   declarations:
   - declaration: class document-integer
@@ -438,6 +442,8 @@ modules:
     line: 16
   - declaration: class pipeline-sequential
     line: 20
+  - declaration: class interpolation-renderer
+    line: 24
 - source: crates/terrane-compiler/src/core/networking.trn
   declarations:
   - declaration: class network-error implements throwable

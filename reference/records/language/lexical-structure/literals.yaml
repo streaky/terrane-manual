@@ -53,20 +53,35 @@ documentation:
             without removing meaningful content indentation. Formatting preserves the
             original documentation comment bytes.
 
-            Text has three source forms:
+            Quoted strings have two forms. Single-quoted strings are raw Unicode text,
+            except `\'` for an apostrophe and `\\` for a backslash; every other backslash
+            sequence remains literal (including `\n`), and no compatibility warning is
+            emitted for this intentional change. Use double quotes for control-character
+            escapes. Double-quoted strings support interpolation and the escapes `\\`, `\'`,
+            `\"`, `\n`, `\r`, `\t`, `\0`, and `\u{1F600}` (a Unicode scalar escape). Unknown
+            double-quoted escapes are errors. Only double-quoted strings interpret doubled
+            braces: `{{` and `}}` produce literal `{` and `}`; single-quoted braces remain
+            literal as written. A lone `}` in a double-quoted string is rejected.
+
+            In a double-quoted string, `{ expression }` evaluates an ordinary Terrane
+            expression; inline calls and their inner quoted strings follow normal expression
+            rules. For example, `"Outer: {format; "Hello {name}"}"` permits one nested
+            interpolating string. `"Hello {{name}}"` yields `Hello {name}`. A single-quoted
+            string inside interpolation remains raw. At most two interpolating string levels
+            may be active (the outer string and one nested string); a third is rejected with
+            `L0015`. A string with no interpolation does not consume a level, and ordinary
+            parenthesized expression nesting is unrestricted.
+
+            Selectors follow the expression, separated by whitespace: `expr !: key`. The
+            selector is available only at the interpolation expression's top level; `!:`
+            inside nested expressions is rejected as a parse error.
         - type: example
-          id: legacy-fence-001
-          title: null
           language: terrane
           mode: illustrative
-          target: null
-          timeout-ms: null
-          source: |2
-            'single quoted default'
-            >rest of physical line is literal text
-            >>
-              indentation-delimited multiline text
-              common structural indentation removed
+          source: |-
+            function render; value string
+                return "Outer: {format; "Hello {name}"}"
+            greeting = "Hello {{name}}"
           response: null
           diagnostic: null
           markdown: null

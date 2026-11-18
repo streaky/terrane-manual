@@ -164,6 +164,57 @@ documentation:
             These are the bundled definitions in core/modifiers.trn, not an invitation to
             redeclare core objects. scoped-access has no configuration fields and inherits
             the binding-only, nonrepeatable policy of its definition annotation.
+        - type: markdown
+          markdown: |-
+            The bundled `interpolation-renderer` modifier registers function-local callable
+            slots for an explicit key inventory. For example:
+        - type: example
+          language: terrane
+          mode: illustrative
+          source: |-
+            namespace example
+
+            from /core/modifiers import interpolation-renderer
+            from /core/display import interpolatable
+
+            class server implements interpolatable
+                name string = 'primary'
+                function interpolate string; key string
+                    if key == 'overview'
+                        return 'overview:' + this.name
+                    return this.name
+
+            function overview-renderer string; value server
+                return 'app overview:' + value.name
+
+            function fallback-renderer string; value server
+                return 'fallback:' + value.name
+
+            function main;
+                server = instance server;
+                with (interpolation-renderer; key = 'overview') renderer function from server to string = overview-renderer
+                print; "{server !: overview}"
+                renderer = fallback-renderer
+                print; "{server !: overview}"
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            The declaration modifier initializes a local callable slot for its key; ordinary
+            assignment may replace it, including in branches. A key may be registered once
+            per function, and the registration's function must return `string`. The
+            interpolation passes its original value to the selected callback. The expression
+            is evaluated once before loading the selected callback slot. Shadowing that
+            registered slot in a nested scope is rejected with `T0250`; unshadowed slots
+            follow ordinary lexical capture rules. There is no global callable storage. A
+            matching registration takes precedence over the value's own
+            `/core/display::interpolatable` implementation. Without a registration,
+            `interpolate; key` is called, with `''` for plain interpolation. Primitive keyed
+            interpolation without a registration is an error; primitives reached through a
+            generic `interpolatable` bound return canonical text for any key. There is no
+            built-in `html` binding: applications register helpers expressing their own
+            policy.
     - id: validation
       title: Targets, ordering, repetition, and conflicts
       blocks:
