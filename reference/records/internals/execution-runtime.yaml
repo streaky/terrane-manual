@@ -345,6 +345,18 @@ documentation:
             therefore wake blocked tasks directly; native scope execution does not poll
             cancellation with a periodic timer.
 
+            Native cancellation retains an atomic sticky request flag and uses a Tokio
+            broadcast notification for suspended waiters. Each notification future owns its
+            registration: repolling updates that waiter's waker without scanning all tasks,
+            and dropping the future unlinks it rather than retaining completed task wakers
+            until scope cancellation. Waiter nodes live inside pinned futures, without a
+            separate per-waiter heap allocation. Creating the notification future before
+            checking the request flag closes the check/subscribe race: a broadcast reaches
+            an already-created future even before its first poll. Requests wake every
+            current waiter, and waiters created after cancellation complete from the sticky
+            flag. Existing ready-result precedence, deadline propagation, finalizer
+            shielding, and the yields before and after source `await` remain unchanged.
+
             Lowered asynchronous `try` regions with `finally` install nested finalization
             guards. Only the innermost active guard may observe the request; it drops the
             pending Rust future, including operation-only foreign owners, before generated
