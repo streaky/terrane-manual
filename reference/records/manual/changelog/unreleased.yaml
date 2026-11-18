@@ -624,6 +624,10 @@ documentation:
               double quotes when escape interpretation is intended. This is an intentional
               literal semantic change, not a deprecated spelling; no migration warning is
               emitted.
+            - **Added — VS Code source debugging.** The Terrane extension can launch the
+              LLDB-backed source debugger from F5 with source breakpoints. Launches build
+              the selected source file or package manifest automatically; trusted workspace,
+              `terrane`, and `lldb-dap` are required. See [[tool.debugging#commands]].
   see-also:
     - manual.changelog
     - lang.types.references

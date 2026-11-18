@@ -1127,6 +1127,14 @@ documentation:
             smallest source correction, and repeat the same observation before broad
             testing.
 
+            In VS Code, install the Terrane extension, make `terrane` and `lldb-dap`
+            available, and trust the workspace. Place a gutter breakpoint in the Terrane
+            source and press F5, selecting Terrane. The default launch builds the current
+            source file before debugging. For a multi-file application, set `program` in its
+            Terrane launch configuration to the package manifest instead. Use the Variables
+            and Call Stack views for the same source-level investigation described above;
+            see [[tool.debugging#commands]] for launch settings.
+
             The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1.
             Linux x86-64 with LLDB 22 is exercised end to end, including standard DAP
             step-in/step-out, recursive step-over, fatal native stops, disconnect during

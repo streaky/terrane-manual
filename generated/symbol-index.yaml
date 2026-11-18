@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 43b80f17718914c945c10b81648f79e554544902e973afa469c14855daca038e
+  input-sha256: 7a3fe9d6809c9b31aff7e87abecdbd4d1c69cbac31af0e37be1a00d8babec37a
 format: 1
 generated: true
 symbols:
@@ -672,6 +672,10 @@ symbols:
   record: book.namespaces-imports-and-packages
   section: dependencies
   declaration: archive/refs/tags/v1.2.3.zip
+- name: args
+  record: tool.debugging
+  section: commands
+  declaration: args
 - name: arithmetic-overflow
   record: book.errors
   section: designing-useful-error-values
@@ -3281,6 +3285,10 @@ symbols:
   record: std.logging
   section: async-transport
   declaration: 'false'
+- name: 'false'
+  record: tool.debugging
+  section: commands
+  declaration: 'false'
 - name: fetch_one
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -5378,6 +5386,14 @@ symbols:
   section: native-transport
   declaration: listen-tcp
 - name: lldb-dap
+  record: book.testing-and-debugging
+  section: debug-from-the-terrane-boundary-inward
+  declaration: lldb-dap
+- name: lldb-dap
+  record: manual.changelog.unreleased
+  section: changes-2026-11-18
+  declaration: lldb-dap
+- name: lldb-dap
   record: tool.debugging
   section: commands
   declaration: lldb-dap
@@ -6968,6 +6984,10 @@ symbols:
   section: paths
   declaration: path
 - name: PATH
+  record: tool.debugging
+  section: commands
+  declaration: PATH
+- name: PATH
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: PATH
@@ -7387,6 +7407,14 @@ symbols:
   record: tool.profiling
   section: commands
   declaration: profile.trnprof
+- name: program
+  record: book.testing-and-debugging
+  section: debug-from-the-terrane-boundary-inward
+  declaration: program
+- name: program
+  record: tool.debugging
+  section: commands
+  declaration: program
 - name: progress-label
   record: book.complete-program
   section: dividing-the-program-into-functions
@@ -9152,6 +9180,10 @@ symbols:
   record: tool.debugging
   section: breakpoints-stepping
   declaration: stepOut
+- name: stopOnEntry
+  record: tool.debugging
+  section: commands
+  declaration: stopOnEntry
 - name: str
   record: tool.packages.rust-dependencies
   section: async-members
@@ -10045,6 +10077,18 @@ symbols:
   section: namespaces-and-paths
   declaration: terrane
 - name: terrane
+  record: book.testing-and-debugging
+  section: debug-from-the-terrane-boundary-inward
+  declaration: terrane
+- name: terrane
+  record: manual.changelog.unreleased
+  section: changes-2026-11-18
+  declaration: terrane
+- name: terrane
+  record: tool.debugging
+  section: commands
+  declaration: terrane
+- name: terrane
   record: tool.packages.command-line
   section: declaration-interface
   declaration: terrane
@@ -10160,6 +10204,10 @@ symbols:
   record: internals.projection.resolution
   section: resolved-graph-survey
   declaration: terrane-rust-survey
+- name: terrane.debugger.path
+  record: tool.debugging
+  section: commands
+  declaration: terrane.debugger.path
 - name: terrane.rustBlockBackground
   record: tool.editor-support
   section: editor-support

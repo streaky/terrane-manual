@@ -53,12 +53,64 @@ documentation:
             `terrane debug-adapter --stdio` serves the same translation engine as a Debug
             Adapter Protocol endpoint. Protocol frames are the only adapter stdout content;
             backend and adapter diagnostics use stderr or framed output events.
+        - type: rule
+          id: rule.debugging.vscode
+          level: must
+          since: null
+          evidence: []
+          markdown: |-
+            The Terrane VS Code extension provides source debugging through F5 and gutter
+            breakpoints. Install the extension and make `terrane` available on `PATH`, or
+            set `terrane.debugger.path` to its executable; install LLDB with `lldb-dap`
+            available as the backend. Each launch builds the selected source file or package
+            manifest with the exact debug profile before starting the adapter. Workspace
+            trust is required because launch executes a build.
 
-            Program arguments after `--` cross the LLDB DAP boundary as JSON strings,
-            preserving UTF-8 text, spaces, and argument boundaries. Non-UTF-8 native
-            arguments are rejected explicitly rather than replaced lossily or encoded as
-            platform-specific `OsString` serialization objects.
+            Configure a launch with `type: terrane` and `request: launch`. `program` names a
+            source file or manifest (commonly `${file}`), `args` is a string array, and
+            `stopOnEntry` defaults to `false`. For example:
+        - type: example
+          id: vscode-debug-launch
+          title: Launch the current Terrane file
+          language: json
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            {
+              "version": "0.2.0",
+              "configurations": [
+                {
+                  "type": "terrane",
+                  "request": "launch",
+                  "name": "Debug current Terrane file",
+                  "program": "${file}",
+                  "args": [],
+                  "stopOnEntry": false
+                }
+              ]
+            }
+          files: null
+          entry: null
+          annotations: []
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            `terrane debug --build-only <file-or-manifest>` builds the normal exact debug
+            profile and provenance without starting LLDB or the program. It writes one JSON
+            object to stdout,
+            `{"program":"<absolute executable path>","terraneProvenance":"<absolute sidecar path>"}`;
+            ordinary diagnostics go to stderr. Build-only mode rejects program arguments.
 
+            For an ordinary debug launch, program arguments after `--` cross the LLDB DAP
+            boundary as JSON strings, preserving UTF-8 text, spaces, and argument
+            boundaries. Non-UTF-8 native arguments are rejected explicitly rather than
+            replaced lossily or encoded as platform-specific `OsString` serialization
+            objects.
+        - type: markdown
+          markdown: |-
             The selected implementation is `lldb-dap`. Linux x86-64 with LLDB 22 is
             exercised end to end. Launch is supported there. Attach is experimental and
             forwarded only where the selected LLDB and host process policy permit it. Other
