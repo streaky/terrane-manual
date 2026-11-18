@@ -61,14 +61,28 @@ documentation:
           markdown: |-
             The Terrane VS Code extension provides source debugging through F5 and gutter
             breakpoints. Install the extension and make `terrane` available on `PATH`, or
-            set `terrane.debugger.path` to its executable; install LLDB with `lldb-dap`
-            available as the backend. Each launch builds the selected source file or package
-            manifest with the exact debug profile before starting the adapter. Workspace
-            trust is required because launch executes a build.
+            set `terrane.debugger.path` to its executable. Bare names use `PATH`; relative
+            executable paths resolve against the workspace folder, or the selected source
+            file's directory without a workspace, for both the build and adapter. Install
+            `lldb-dap`; Linux x86-64 with LLDB 22 is the exercised configuration. Each
+            launch builds the selected source file or package manifest with the exact debug
+            profile before starting the adapter. Workspace trust is required.
+
+            Saving follows VS Code's `debug.saveBeforeStart` policy. When saving is
+            disabled, the build uses on-disk sources rather than unsaved editor buffers.
+            Canceling a build or disposing the extension terminates its build process group
+            on POSIX. Abrupt extension-host termination can bypass disposal; build cleanup
+            after a host crash or forced kill is not guaranteed.
 
             Configure a launch with `type: terrane` and `request: launch`. `program` names a
             source file or manifest (commonly `${file}`), `args` is a string array, and
-            `stopOnEntry` defaults to `false`. For example:
+            `stopOnEntry` defaults to `false`. Optional `cwd` sets the program's working
+            directory; VS Code resolves a relative value against the workspace folder or
+            selected source-file directory. An explicit value is honored in both source and
+            native fidelity. Without `cwd`, exact-build source launches use the provenance
+            package source root. Native fallback without valid provenance inherits the
+            backend's working directory; set `cwd` when a fixed directory is required
+            independently of metadata availability. For example:
         - type: example
           id: vscode-debug-launch
           title: Launch the current Terrane file
@@ -106,9 +120,9 @@ documentation:
 
             For an ordinary debug launch, program arguments after `--` cross the LLDB DAP
             boundary as JSON strings, preserving UTF-8 text, spaces, and argument
-            boundaries. Non-UTF-8 native arguments are rejected explicitly rather than
-            replaced lossily or encoded as platform-specific `OsString` serialization
-            objects.
+            boundaries. Non-UTF-8 native arguments and JSON artifact paths are rejected
+            explicitly at the protocol boundary rather than replaced lossily or encoded as
+            platform-specific `OsString` serialization objects.
         - type: markdown
           markdown: |-
             The selected implementation is `lldb-dap`. Linux x86-64 with LLDB 22 is
@@ -254,12 +268,14 @@ documentation:
             attach results are retained and validated after configuration. `initialize`
             receives exactly one immediate `initialized` event. Disconnect terminates a
             launched debuggee by default and detaches from an attached process by default;
-            clients may explicitly choose the DAP `terminateDebuggee` policy. Variable
-            handles are invalidated on resume. Request ingress is serialized, so
-            cancellation is not advertised. Debuggee exit status is returned by the
-            interactive CLI. Debuggee stdout and stderr are framed DAP output events and
-            cannot corrupt adapter protocol stdout. Terrane imports `lldb_lookup.py` only
-            from the Rust sysroot recorded in provenance, before client initialization
+            clients may explicitly choose the DAP `terminateDebuggee` policy. A separate
+            `terminate` request is not advertised because the selected LLDB backend does not
+            implement it; VS Code Stop therefore uses `disconnect` and these ownership
+            defaults. Variable handles are invalidated on resume. Request ingress is
+            serialized, so cancellation is not advertised. Debuggee exit status is returned
+            by the interactive CLI. Debuggee stdout and stderr are framed DAP output events
+            and cannot corrupt adapter protocol stdout. Terrane imports `lldb_lookup.py`
+            only from the Rust sysroot recorded in provenance, before client initialization
             commands; its absence does not prevent debugging.
   see-also:
     - tool.source-intelligence

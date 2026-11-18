@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7a3fe9d6809c9b31aff7e87abecdbd4d1c69cbac31af0e37be1a00d8babec37a
+  input-sha256: 4faaf38694f01cb94355937a897c70994f2579fe45a4dc541896956954f74c62
 format: 1
 generated: true
 symbols:
@@ -2325,6 +2325,10 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: cube-root
+- name: cwd
+  record: tool.debugging
+  section: commands
+  declaration: cwd
 - name: CXX
   record: tool.packages.command-line
   section: compilation-reuse
@@ -2365,6 +2369,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: Debug
+- name: debug.saveBeforeStart
+  record: tool.debugging
+  section: commands
+  declaration: debug.saveBeforeStart
 - name: decimal-log
   record: lang.numerics.floating-point
   section: operations
@@ -2657,6 +2665,10 @@ symbols:
   record: std.logging
   section: construction
   declaration: discarded-count
+- name: disconnect
+  record: tool.debugging
+  section: lifecycle
+  declaration: disconnect
 - name: discount
   record: book.values-and-names
   section: exercises
@@ -10064,6 +10076,10 @@ symbols:
   record: std.networking.operations
   section: native-transport
   declaration: tcp-stream.into-native
+- name: terminate
+  record: tool.debugging
+  section: lifecycle
+  declaration: terminate
 - name: terminateDebuggee
   record: tool.debugging
   section: lifecycle
