@@ -79,10 +79,13 @@ documentation:
             `stopOnEntry` defaults to `false`. Optional `cwd` sets the program's working
             directory; VS Code resolves a relative value against the workspace folder or
             selected source-file directory. An explicit value is honored in both source and
-            native fidelity. Without `cwd`, exact-build source launches use the provenance
-            package source root. Native fallback without valid provenance inherits the
-            backend's working directory; set `cwd` when a fixed directory is required
-            independently of metadata availability. For example:
+            native fidelity. An omitted or null DAP `cwd` uses the same default: exact-build
+            source launches use the provenance package source root. The VS Code schema
+            intentionally supplies no suggested `cwd` value, so it does not introduce an
+            unavailable workspace variable in folderless sessions or imply that a workspace
+            root is always the package root. Native fallback without valid provenance
+            inherits the backend's working directory; set `cwd` when a fixed directory is
+            required independently of metadata availability. For example:
         - type: example
           id: vscode-debug-launch
           title: Launch the current Terrane file
