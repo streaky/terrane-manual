@@ -628,6 +628,18 @@ documentation:
               LLDB-backed source debugger from F5 with source breakpoints. Launches build
               the selected source file or package manifest automatically; trusted workspace,
               `terrane`, and `lldb-dap` are required. See [[tool.debugging#commands]].
+    - id: changes-2026-11-19
+      title: "2026-11-19"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — filesystem management.** Core can create, list, and remove
+              directories, create symbolic and hard links, and open files for exclusive
+              creation or append. Filesystem results now expose portable error kinds
+              alongside their diagnostic messages. See [[std.filesystem]].
+            - **Added — child processes.** Use `/core/process/child` for shell-free
+              executable and argument handling, bounded byte capture, streaming standard
+              I/O, and child lifecycle observation. See [[std.process#child-processes]].
   see-also:
     - manual.changelog
     - lang.types.references

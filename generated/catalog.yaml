@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1759f76a1ea26c2674e5a28fe00ab5148d7f2f2d1309f3981b615bcf78a1d917
+  input-sha256: dfe18e85c8b32c7b0d30782a08b623ee7b7019b3053c61b0da1a5d4a14ace09e
 format: 2
 generated: true
 records:
@@ -107,6 +107,9 @@ records:
     sections: []
   - id: changes-2026-11-18
     title: '2026-11-18'
+    sections: []
+  - id: changes-2026-11-19
+    title: '2026-11-19'
     sections: []
   declaration-synopsis: []
 - id: lang.declarations.annotations
@@ -2086,8 +2089,8 @@ records:
   declaration-synopsis: []
 - id: std.filesystem
   title: Filesystem access
-  summary: Acquires explicit filesystem authority and performs bounded byte reads, atomic writes, metadata
-    queries, and handle-based I/O through result objects.
+  summary: Acquires explicit filesystem authority for file and directory operations, link management,
+    bounded reads, atomic writes, metadata queries, and handle-based I/O.
   kind: topic
   manual: reference
   group: Standard library
@@ -2111,8 +2114,14 @@ records:
   - id: whole-file-synopsis
     title: Bounded reads and atomic writes
     sections: []
+  - id: directories-and-links
+    title: Directory and link management
+    sections: []
   - id: handles
     title: Handle-based I/O
+    sections: []
+  - id: error-kinds
+    title: Portable error kinds
     sections: []
   - id: example
     title: Read bounded UTF-8 and write atomically
@@ -2122,20 +2131,22 @@ records:
     sections: []
   declaration-synopsis:
   - class filesystem-operation-result
-  - function construct; failure bool, detail string
+  - function construct; failure bool, detail string, category string|none = none
   - class existence-result
-  - function construct; exists bool, failure bool, detail string
+  - function construct; exists bool, failure bool, detail string, category string|none = none
   - class path-result
-  - function construct; target path, failure bool, detail string
+  - function construct; target path, failure bool, detail string, category string|none = none
   - class file-metadata
   - function construct; kind string, size int, readonly bool, permission-detail string, failure bool,
-    detail string
+    detail string, category string|none = none
   - class file-data
-  - function construct; data bytes, completed int, end bool, failure bool, detail string
+  - function construct; data bytes, completed int, end bool, failure bool, detail string, category string|none
+    = none
+  - class directory-listing
   - class file-handle
   - class directory-handle
   - function open-file file-handle; capability filesystem, target path, readable bool, writable bool,
-    create bool = false, truncate bool = false
+    create bool = false, truncate bool = false, exclusive bool = false, append bool = false
   - function file-read file-data; capability filesystem, file ref file-handle, limit int
   - function file-write file-data; capability filesystem, file ref file-handle, data bytes, offset int
     = 0
@@ -2154,13 +2165,25 @@ records:
   - function filesystem-open-beneath directory-handle; capability filesystem, directory path, relative
     path, cross-filesystem bool = false
   - function open-file-beneath file-handle; capability filesystem, directory ref directory-handle, relative
-    path, readable bool, writable bool, create bool = false, truncate bool = false
+    path, readable bool, writable bool, create bool = false, truncate bool = false, exclusive bool = false,
+    append bool = false
   - function filesystem-read-bounded file-data; capability filesystem, target path, limit int
   - function filesystem-write-atomic filesystem-operation-result; capability filesystem, target path,
     data bytes
   - function filesystem-rename filesystem-operation-result; capability filesystem, source path, destination
     path
   - function filesystem-remove filesystem-operation-result; capability filesystem, target path
+  - function filesystem-create-directory filesystem-operation-result; capability filesystem, target path
+  - function filesystem-create-directories filesystem-operation-result; capability filesystem, target
+    path
+  - function filesystem-list-directory directory-listing; capability filesystem, target path, limit int
+  - function filesystem-remove-directory filesystem-operation-result; capability filesystem, target path
+  - function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem, target
+    path
+  - function filesystem-create-symlink filesystem-operation-result; capability filesystem, target path,
+    link path, directory bool = false
+  - function filesystem-create-hard-link filesystem-operation-result; capability filesystem, target path,
+    link path
 - id: std.paths
   title: Paths
   summary: Represents filesystem paths as explicit values and provides lexical component, normalization,
@@ -2364,9 +2387,10 @@ records:
     sections: []
   declaration-synopsis: []
 - id: std.process
-  title: Process arguments environment and exit
+  title: Process arguments, child processes, and exit
   summary: Arguments and environment are exposed as snapshots using lossless native strings. Command-line
-    handling is schema-driven, host-name access is provided, and exit status is explicit.
+    handling is schema-driven, host-name access is provided, and exit status is explicit. Child processes
+    support direct execution, streaming standard I/O, lifecycle observation, and bounded capture.
   kind: topic
   manual: reference
   group: Standard library
@@ -2384,6 +2408,15 @@ records:
   sections:
   - id: process
     title: Process Arguments, Environment, and Exit
+    sections: []
+  - id: child-processes
+    title: Launching and watching child processes
+    sections: []
+  - id: capture
+    title: Bounded capture
+    sections: []
+  - id: child-streams
+    title: Streaming child I/O
     sections: []
   declaration-synopsis: []
 - id: std.process-signals

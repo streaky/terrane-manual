@@ -17,8 +17,8 @@ documentation:
   title: Filesystem access
   title-style: text
   summary: >-
-    Acquires explicit filesystem authority and performs bounded byte reads, atomic writes, metadata queries, and handle-based
-    I/O through result objects.
+    Acquires explicit filesystem authority for file and directory operations, link management,
+    bounded reads, atomic writes, metadata queries, and handle-based I/O.
   tags: [standard-library, filesystem, capabilities, bytes, io]
   sections:
     - id: authority
@@ -117,6 +117,56 @@ documentation:
             The target's parent must already exist. Success means the destination was
             replaced atomically according to the host operation; inspect `failed` and
             `message` before treating the write as complete.
+    - id: directories-and-links
+      title: Directory and link management
+      blocks:
+        - type: example
+          id: directory-and-link-synopsis
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            function filesystem-create-directory filesystem-operation-result; capability filesystem, target path
+            function filesystem-create-directories filesystem-operation-result; capability filesystem, target path
+            function filesystem-list-directory directory-listing; capability filesystem, target path, limit int
+            function filesystem-remove-directory filesystem-operation-result; capability filesystem, target path
+            function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem, target path
+            function filesystem-create-symlink filesystem-operation-result; capability filesystem, target path, link path, directory bool = false
+            function filesystem-create-hard-link filesystem-operation-result; capability filesystem, target path, link path
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            `filesystem-create-directory` creates one directory and fails if the target
+            already exists. `filesystem-create-directories` creates missing parents and
+            succeeds when the target is already a directory. A failure can leave parents
+            that were created before the failure.
+
+            `filesystem-list-directory` returns immediate child names in
+            `directory-listing.entries`, not full paths or metadata. Order is unspecified
+            and the result is not a snapshot of a changing directory. The nonnegative
+            `limit` bounds the entry count, not bytes. Exceeding it produces
+            `file-too-large`. A non-UTF-8 name produces `invalid-data` rather than a lossy
+            name. Failure returns no partial entries.
+
+            `filesystem-remove` remains file removal. `filesystem-remove-directory` removes
+            only empty directories. `filesystem-remove-directory-tree` is the explicit
+            recursive operation; failures may leave a partially removed tree. The host
+            operation does not traverse encountered symlinks; a final symlink may be removed
+            as a link or rejected according to host behavior.
+
+            A symbolic link stores the supplied target, which need not exist. Relative
+            target paths resolve from the link's parent. Set `directory = true` when
+            creating a directory symlink on Windows; Unix ignores this flag. Symlink
+            creation is subject to host support and privileges. Hard links are subject to
+            native filesystem constraints and do not copy file contents.
+
+            These operations use ordinary host path resolution, not the directory-handle
+            confinement policy. In particular, recursive removal does not constrain
+            resolution of the supplied path's parents or forbid crossing mount points.
     - id: handles
       title: Handle-based I/O
       blocks:
@@ -128,7 +178,8 @@ documentation:
           target: null
           timeout-ms: null
           source: |2
-            function open-file file-handle; capability filesystem, target path, readable bool, writable bool, create bool = false, truncate bool = false
+            function open-file file-handle; capability filesystem, target path, readable bool, writable bool, create bool = false, truncate bool = false, exclusive bool = false, append bool = false
+            function open-file-beneath file-handle; capability filesystem, directory ref directory-handle, relative path, readable bool, writable bool, create bool = false, truncate bool = false, exclusive bool = false, append bool = false
             function file-read file-data; capability filesystem, file ref file-handle, limit int
             function file-write file-data; capability filesystem, file ref file-handle, data bytes, offset int = 0
             function file-flush filesystem-operation-result; capability filesystem, file ref file-handle
@@ -145,6 +196,28 @@ documentation:
             `file-write.completed` is the number of input bytes written. Flush and sync
             operations borrow the handle; close consumes it. Every operation reports host
             failure through result fields rather than a throwable.
+
+            `exclusive = true` atomically creates a new file or fails if an entry already
+            exists. Do not combine it with `create` or `truncate`. `append = true` uses the
+            host's append mode: each write starts at the current end of the file, without a
+            separate seek. Append may be used with `create` or `exclusive`, but not
+            `truncate`. Creating, truncating, and appending require write access. Confined
+            opens keep the same traversal policy in every mode.
+    - id: error-kinds
+      title: Portable error kinds
+      blocks:
+        - type: markdown
+          markdown: |-
+            Filesystem results and handles expose `error-kind` as a string independently of
+            `message`. Check `failed`, then branch on `error-kind` rather than parsing the
+            host's diagnostic message. Successful operations report `none`. Named failures
+            include `not-found`, `permission-denied`, `already-exists`, `not-a-directory`,
+            `is-a-directory`, `directory-not-empty`, `read-only-filesystem`, `storage-full`,
+            `file-too-large`, `crosses-devices`, `invalid-input`, `invalid-data`,
+            `timed-out`, `would-block`, `interrupted`, `unexpected-eof`, `write-zero`,
+            `broken-pipe`, `too-many-links`, `unsupported`, and `out-of-memory`.
+            Unclassified failures report `other`. Which host failures occur for an operation
+            can vary by platform.
     - id: example
       title: Read bounded UTF-8 and write atomically
       blocks:
@@ -188,9 +261,9 @@ documentation:
             accesses the host filesystem, including every filesystem-handle method, requires
             the unforgeable authority obtained through `filesystem-capability`. This applies
             to metadata and symlink-metadata queries, existence checks, native path
-            resolution, link reading, bounded reads, atomic replacement, rename, removal,
-            file handles, and directory-relative traversal. Lexical path operations are
-            separate and require no filesystem authority.
+            resolution, link reading and creation, bounded reads, atomic replacement,
+            rename, directory management, file handles, and directory-relative traversal.
+            Lexical path operations are separate and require no filesystem authority.
 
             File and directory handles are resource-owning linear values: ownership is
             transferred rather than duplicated. Releasing the underlying host resource is

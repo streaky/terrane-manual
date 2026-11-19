@@ -14,11 +14,12 @@ lifecycle:
 
 documentation:
   status: complete
-  title: "Process arguments environment and exit"
+  title: "Process arguments, child processes, and exit"
   title-style: text
   summary: >-
     Arguments and environment are exposed as snapshots using lossless native strings. Command-line handling is schema-driven,
-    host-name access is provided, and exit status is explicit.
+    host-name access is provided, and exit status is explicit. Child processes support direct execution,
+    streaming standard I/O, lifecycle observation, and bounded capture.
   tags:
     - "stdlib"
     - "process"
@@ -57,6 +58,114 @@ documentation:
             inclusive range `0..=255`. An invalid construction does not terminate the
             process; it returns `valid=false` with the sentinel status `255`. Validation and
             termination are separate: `exit` is the only terminating operation.
+    - id: child-processes
+      title: Launching and watching child processes
+      blocks:
+        - type: markdown
+          markdown: |-
+            `/core/process/child` requires the `process` capability. Give `run-process`,
+            `run-process-async`, or `spawn-process` an executable and a list of argument
+            strings. The list defaults to empty. Each element is one argument, including an
+            empty string. Do not add shell quoting or escape spaces and metacharacters:
+            Terrane does not split command lines or perform globbing, expansion, pipelines,
+            or redirection.
+
+            This does not make arbitrary programs safe to run. Select a trusted executable
+            and environment; a bare executable name uses host search rules. The invoked
+            program still interprets its own options and inputs. Use its `--` option
+            terminator when supported and appropriate. Windows programs with nonstandard
+            command-line parsers can interpret arguments differently; `.bat` and `.cmd`
+            targets are rejected rather than invoking the command interpreter implicitly.
+
+            An optional `process-options` value sets `directory` (empty inherits the
+            parent's working directory), `inherit-environment` (default `true`), explicit
+            `environment` entries, and `remove-environment` names. Use `environment-pair`
+            and `native-text` from `/core/process` for ordinary text values. Removals are
+            applied after overrides. Overrides are child-local; starting a child never
+            changes the parent's working directory or environment.
+        - type: example
+          id: capture-literal-arguments
+          title: Pass input as a literal argument
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /core/collections import list
+            from /core/process/child import process-error, run-process
+
+            function show-status throws process-error; value string
+                result = run-process; 'printf', (list; '%s', value)
+                code = result.status.exit-code
+                if code != none
+                    if code == 0 and not result.stdout-truncated
+                        print; result.stdout.length
+          response: null
+          diagnostic: null
+          markdown: null
+    - id: capture
+      title: Bounded capture
+      blocks:
+        - type: markdown
+          markdown: |-
+            `run-process` blocks the calling thread; use `await run-process-async` in async
+            code. Both accept optional input bytes and close stdin after writing them. They
+            drain stdout and stderr concurrently, return raw bytes, and expose independent
+            truncation flags. The default retained limit is 1 MiB per stream. Data beyond a
+            limit is discarded, not buffered.
+
+            The default deadline is 30 seconds. A deadline terminates the direct child, not
+            its process tree. `status.timed-out` distinguishes timeouts; a child's nonzero
+            exit is a returned observation, not a `process-error`. Launch and I/O failures
+            throw `process-error`. Check the status and truncation flags before using
+            captured output.
+    - id: child-streams
+      title: Streaming child I/O
+      blocks:
+        - type: markdown
+          markdown: |-
+            `await spawn-process` gives the caller an owning `child-process` with piped
+            stdin, stdout, and stderr. `write-input` reports bytes written; retry the
+            unwritten suffix if it reports a partial write. `close-input` delivers EOF to
+            the child. `read-stdout` and `read-stderr` each return a byte chunk and an `end`
+            flag. Read both outputs concurrently when a child can fill either pipe. Waiting
+            for exit does not drain the pipes. `input`, `output`, and `errors` on the child
+            give separately passable views of the corresponding pipes. They share the same
+            underlying lanes as the direct methods and do not transfer ownership of the
+            child. Read sizes are upper bounds, not exact counts. A zero-byte read does not
+            probe for EOF. The API does not decode chunks; decode text incrementally when a
+            code point may span reads.
+
+            `poll` observes the child without waiting. `await child.wait` observes exit or
+            returns `timed-out` without terminating the child; its timeout can be set to
+            zero. `terminate` requests forced termination; use `wait` to observe completion.
+            `exit-code` is absent when the host reports no numeric exit code. Dropping the
+            owning handle requests termination of a still-running child. The API does not
+            manage descendants.
+        - type: example
+          id: read-child-output
+          title: Read bounded chunks from a child
+          language: terrane
+          mode: illustrative
+          source: |-
+            from /core/collections import list
+            from /core/process/child import process-error, spawn-process
+
+            async function count-output int throws process-error; value string
+                child = await spawn-process; 'printf', (list; '%s', value)
+                await child.close-input;
+                reader = child.output;
+                total int = 0
+                while true
+                    chunk = await reader.read; 4096
+                    if chunk.end
+                        break
+                    total = total + chunk.data.length
+                status = await child.wait;
+                if status.timed-out
+                    child.terminate;
+                return total
+          response: null
+          diagnostic: null
+          markdown: This example uses a program that does not produce a large stderr stream.
   see-also: []
 
 provenance:

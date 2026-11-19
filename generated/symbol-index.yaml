@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1759f76a1ea26c2674e5a28fe00ab5148d7f2f2d1309f3981b615bcf78a1d917
+  input-sha256: dfe18e85c8b32c7b0d30782a08b623ee7b7019b3053c61b0da1a5d4a14ace09e
 format: 1
 generated: true
 symbols:
@@ -238,6 +238,10 @@ symbols:
   declaration: /core/networking/tls
 - name: /core/process
   record: std.process
+  section: child-processes
+  declaration: /core/process
+- name: /core/process
+  record: std.process
   section: process
   declaration: /core/process
 - name: /core/process
@@ -248,6 +252,14 @@ symbols:
   record: std.process-signals
   section: ''
   declaration: /core/process-signals
+- name: /core/process/child
+  record: manual.changelog.unreleased
+  section: changes-2026-11-19
+  declaration: /core/process/child
+- name: /core/process/child
+  record: std.process
+  section: child-processes
+  declaration: /core/process/child
 - name: /core/random
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -524,6 +536,10 @@ symbols:
   record: std.documents.typed-decoding
   section: opt-in
   declaration: allow-unknown
+- name: already-exists
+  record: std.filesystem
+  section: error-kinds
+  declaration: already-exists
 - name: and
   record: book.decisions-and-repetition
   section: what-we-learned
@@ -1072,6 +1088,10 @@ symbols:
   record: lang.ownership.movement
   section: move-semantics
   declaration: break
+- name: broken-pipe
+  record: std.filesystem
+  section: error-kinds
+  declaration: broken-pipe
 - name: budget
   record: book.values-and-names
   section: exercises
@@ -1532,6 +1552,10 @@ symbols:
   record: book.async
   section: joining-tasks-and-observing-outcomes
   declaration: child
+- name: child-process
+  record: std.process
+  section: child-streams
+  declaration: child-process
 - name: CHROME
   record: manual.changelog.unreleased
   section: changes-2026-10-28
@@ -1660,6 +1684,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-sinks
   declaration: close
+- name: close-input
+  record: std.process
+  section: child-streams
+  declaration: close-input
 - name: close-snapshot
   record: tool.source-intelligence
   section: snapshots
@@ -1971,24 +1999,25 @@ symbols:
 - name: construct
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function construct; failure bool, detail string
+  declaration: function construct; failure bool, detail string, category string|none = none
 - name: construct
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function construct; exists bool, failure bool, detail string
+  declaration: function construct; exists bool, failure bool, detail string, category string|none = none
 - name: construct
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function construct; target path, failure bool, detail string
+  declaration: function construct; target path, failure bool, detail string, category string|none = none
 - name: construct
   record: std.filesystem
   section: compiler-synopsis
   declaration: function construct; kind string, size int, readonly bool, permission-detail string, failure
-    bool, detail string
+    bool, detail string, category string|none = none
 - name: construct
   record: std.filesystem
   section: compiler-synopsis
-  declaration: function construct; data bytes, completed int, end bool, failure bool, detail string
+  declaration: function construct; data bytes, completed int, end bool, failure bool, detail string, category
+    string|none = none
 - name: construct
   record: std.paths
   section: compiler-synopsis
@@ -2309,6 +2338,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: async-analysis-boundaries
   declaration: crates/terrane-compiler/src/semantics/task_groups.rs
+- name: create
+  record: std.filesystem
+  section: handles
+  declaration: create
 - name: create_llvm_prof
   record: tool.profiling
   section: sample-profile-application-example
@@ -2321,6 +2354,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: created-item
+- name: crosses-devices
+  record: std.filesystem
+  section: error-kinds
+  declaration: crosses-devices
 - name: cube-root
   record: lang.numerics.floating-point
   section: operations
@@ -2653,10 +2690,26 @@ symbols:
   record: tool.packages.rust-dependencies
   section: workflow
   declaration: Directly callable
+- name: directory
+  record: std.process
+  section: child-processes
+  declaration: directory
 - name: directory-handle
   record: std.filesystem
   section: compiler-synopsis
   declaration: class directory-handle
+- name: directory-listing
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: class directory-listing
+- name: directory-listing.entries
+  record: std.filesystem
+  section: directories-and-links
+  declaration: directory-listing.entries
+- name: directory-not-empty
+  record: std.filesystem
+  section: error-kinds
+  declaration: directory-not-empty
 - name: discarded-count
   record: book.async
   section: carrying-log-events-through-typed-channels
@@ -2958,6 +3011,10 @@ symbols:
   section: whole-file-synopsis
   declaration: end
 - name: end
+  record: std.process
+  section: child-streams
+  declaration: end
+- name: end
   record: std.text-bytes-codecs
   section: string-operations
   declaration: end
@@ -3013,9 +3070,17 @@ symbols:
   record: lang.types.generics
   section: limits
   declaration: Envelope
+- name: environment
+  record: std.process
+  section: child-processes
+  declaration: environment
 - name: environment-pair
   record: book.testing-and-debugging
   section: drive-the-built-application
+  declaration: environment-pair
+- name: environment-pair
+  record: std.process
+  section: child-processes
   declaration: environment-pair
 - name: Error
   record: app.error-boundaries
@@ -3065,6 +3130,10 @@ symbols:
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
   declaration: class error-holder
+- name: error-kind
+  record: std.filesystem
+  section: error-kinds
+  declaration: error-kind
 - name: 'ERROR:'
   record: tool.rust-package-integrations.godot
   section: verification
@@ -3080,6 +3149,10 @@ symbols:
 - name: errors
   record: book.namespaces-imports-and-packages
   section: from-one-file-to-a-project
+  declaration: errors
+- name: errors
+  record: std.process
+  section: child-streams
   declaration: errors
 - name: errors/
   record: book.namespaces-imports-and-packages
@@ -3129,6 +3202,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: example/library
+- name: exclusive
+  record: std.filesystem
+  section: handles
+  declaration: exclusive
 - name: executable
   record: tool.packages.terrane-packages
   section: package-manifest
@@ -3145,6 +3222,10 @@ symbols:
   record: std.process
   section: process
   declaration: exit
+- name: exit-code
+  record: std.process
+  section: child-streams
+  declaration: exit-code
 - name: exit-status
   record: std.process
   section: process
@@ -3208,6 +3289,10 @@ symbols:
 - name: failed
   record: std.documents.typed-decoding
   section: mapping
+  declaration: failed
+- name: failed
+  record: std.filesystem
+  section: error-kinds
   declaration: failed
 - name: failed
   record: std.filesystem
@@ -3409,6 +3494,14 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: function file-sync-data filesystem-operation-result; capability filesystem, file ref file-handle
+- name: file-too-large
+  record: std.filesystem
+  section: directories-and-links
+  declaration: file-too-large
+- name: file-too-large
+  record: std.filesystem
+  section: error-kinds
+  declaration: file-too-large
 - name: file-write
   record: std.filesystem
   section: compiler-synopsis
@@ -3462,10 +3555,47 @@ symbols:
   record: std.filesystem
   section: filesystem
   declaration: filesystem-capability
+- name: filesystem-create-directories
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-create-directories filesystem-operation-result; capability filesystem,
+    target path
+- name: filesystem-create-directories
+  record: std.filesystem
+  section: directories-and-links
+  declaration: filesystem-create-directories
+- name: filesystem-create-directory
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-create-directory filesystem-operation-result; capability filesystem,
+    target path
+- name: filesystem-create-directory
+  record: std.filesystem
+  section: directories-and-links
+  declaration: filesystem-create-directory
+- name: filesystem-create-hard-link
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-create-hard-link filesystem-operation-result; capability filesystem,
+    target path, link path
+- name: filesystem-create-symlink
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-create-symlink filesystem-operation-result; capability filesystem,
+    target path, link path, directory bool = false
 - name: filesystem-exists
   record: std.filesystem
   section: compiler-synopsis
   declaration: function filesystem-exists existence-result; capability filesystem, target path
+- name: filesystem-list-directory
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-list-directory directory-listing; capability filesystem, target path,
+    limit int
+- name: filesystem-list-directory
+  record: std.filesystem
+  section: directories-and-links
+  declaration: filesystem-list-directory
 - name: filesystem-metadata
   record: std.filesystem
   section: compiler-synopsis
@@ -3513,8 +3643,30 @@ symbols:
   declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target path
 - name: filesystem-remove
   record: std.filesystem
+  section: directories-and-links
+  declaration: filesystem-remove
+- name: filesystem-remove
+  record: std.filesystem
   section: whole-file-synopsis
   declaration: filesystem-remove
+- name: filesystem-remove-directory
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-remove-directory filesystem-operation-result; capability filesystem,
+    target path
+- name: filesystem-remove-directory
+  record: std.filesystem
+  section: directories-and-links
+  declaration: filesystem-remove-directory
+- name: filesystem-remove-directory-tree
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem,
+    target path
+- name: filesystem-remove-directory-tree
+  record: std.filesystem
+  section: directories-and-links
+  declaration: filesystem-remove-directory-tree
 - name: filesystem-rename
   record: std.filesystem
   section: compiler-synopsis
@@ -4569,6 +4721,10 @@ symbols:
   record: internals.collections.lifetime
   section: descriptor-metadata
   declaration: inherently_identity_bearing
+- name: inherit-environment
+  record: std.process
+  section: child-processes
+  declaration: inherit-environment
 - name: initialize
   record: tool.debugging
   section: lifecycle
@@ -4596,6 +4752,10 @@ symbols:
 - name: input
   record: book.native-program
   section: the-semantic-model-between-source-and-rust
+  declaration: input
+- name: input
+  record: std.process
+  section: child-streams
   declaration: input
 - name: input-priority
   record: book.types
@@ -4997,6 +5157,10 @@ symbols:
   record: std.core-display
   section: interpolation
   declaration: interpolation-renderer
+- name: interrupted
+  record: std.filesystem
+  section: error-kinds
+  declaration: interrupted
 - name: into-native
   record: internals.execution.runtime-selection
   section: readiness-io
@@ -5017,6 +5181,14 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: invalid
+- name: invalid-data
+  record: std.filesystem
+  section: directories-and-links
+  declaration: invalid-data
+- name: invalid-data
+  record: std.filesystem
+  section: error-kinds
+  declaration: invalid-data
 - name: invalid-duration
   record: std.time
   section: tickers
@@ -5025,6 +5197,10 @@ symbols:
   record: std.time
   section: values
   declaration: invalid-duration
+- name: invalid-input
+  record: std.filesystem
+  section: error-kinds
+  declaration: invalid-input
 - name: invalid-name
   record: tool.source-intelligence
   section: edits
@@ -5125,6 +5301,10 @@ symbols:
   record: lang.types.scalars
   section: scalar-types
   declaration: is
+- name: is-a-directory
+  record: std.filesystem
+  section: error-kinds
+  declaration: is-a-directory
 - name: is-available
   record: lang.collections.protocols
   section: sequential-pipelines
@@ -5357,6 +5537,10 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: LIBRARY_PATH
+- name: limit
+  record: std.filesystem
+  section: directories-and-links
+  declaration: limit
 - name: linear
   record: lang.lexical-structure.keywords
   section: structural-words
@@ -5795,6 +5979,10 @@ symbols:
   declaration: message
 - name: message
   record: std.filesystem
+  section: error-kinds
+  declaration: message
+- name: message
+  record: std.filesystem
   section: whole-file-synopsis
   declaration: message
 - name: message
@@ -6109,6 +6297,10 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: native-text
+- name: native-text
+  record: std.process
+  section: child-processes
+  declaration: native-text
 - name: native-tools
   record: tool.build-time-tools
   section: annotation-driven-generation
@@ -6394,6 +6586,10 @@ symbols:
   section: opt-in
   declaration: none
 - name: none
+  record: std.filesystem
+  section: error-kinds
+  declaration: none
+- name: none
   record: std.networking.operations
   section: cancellation
   declaration: none
@@ -6473,10 +6669,18 @@ symbols:
   record: lang.declarations.bindings
   section: declarations
   declaration: not
+- name: not-a-directory
+  record: std.filesystem
+  section: error-kinds
+  declaration: not-a-directory
 - name: not-a-number
   record: lang.numerics.floating-point
   section: values
   declaration: not-a-number
+- name: not-found
+  record: std.filesystem
+  section: error-kinds
+  declaration: not-found
 - name: not-yet-analyzed
   record: tool.source-intelligence
   section: queries
@@ -6589,12 +6793,13 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: function open-file file-handle; capability filesystem, target path, readable bool, writable
-    bool, create bool = false, truncate bool = false
+    bool, create bool = false, truncate bool = false, exclusive bool = false, append bool = false
 - name: open-file-beneath
   record: std.filesystem
   section: compiler-synopsis
   declaration: function open-file-beneath file-handle; capability filesystem, directory ref directory-handle,
-    relative path, readable bool, writable bool, create bool = false, truncate bool = false
+    relative path, readable bool, writable bool, create bool = false, truncate bool = false, exclusive
+    bool = false, append bool = false
 - name: open-snapshot
   record: tool.source-intelligence
   section: snapshots
@@ -6711,10 +6916,18 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: OsString
+- name: other
+  record: std.filesystem
+  section: error-kinds
+  declaration: other
 - name: out
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
   declaration: out
+- name: out-of-memory
+  record: std.filesystem
+  section: error-kinds
+  declaration: out-of-memory
 - name: outcome.accepted
   record: book.namespaces-imports-and-packages
   section: dependencies
@@ -6731,6 +6944,10 @@ symbols:
   record: lang.functions.callable-types
   section: syntax
   declaration: Outer
+- name: output
+  record: std.process
+  section: child-streams
+  declaration: output
 - name: Output
   record: tool.packages.rust-dependencies
   section: async-projected-calls
@@ -7095,6 +7312,10 @@ symbols:
   record: tool.profiling
   section: commands
   declaration: perf
+- name: permission-denied
+  record: std.filesystem
+  section: error-kinds
+  declaration: permission-denied
 - name: pipeline-sequential
   record: book.text-and-collections
   section: building-collections-from-existing-values
@@ -7139,6 +7360,10 @@ symbols:
   record: internals.projection.resolution
   section: projection-gap-census
   declaration: Point
+- name: poll
+  record: std.process
+  section: child-streams
+  declaration: poll
 - name: power
   record: lang.numerics.floating-point
   section: operations
@@ -7352,6 +7577,10 @@ symbols:
   section: namespace-paths
   declaration: prn
 - name: process
+  record: std.process
+  section: child-processes
+  declaration: process
+- name: process
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: process
@@ -7359,6 +7588,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: process
+- name: process-error
+  record: std.process
+  section: capture
+  declaration: process-error
 - name: process-fixture
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -7379,6 +7612,10 @@ symbols:
   record: std.process
   section: process
   declaration: process-host-name-result
+- name: process-options
+  record: std.process
+  section: child-processes
+  declaration: process-options
 - name: process-result
   record: book.testing-and-debugging
   section: drive-the-built-application
@@ -7623,6 +7860,18 @@ symbols:
   record: std.streams
   section: byte-text-streams
   declaration: read-into-async
+- name: read-only-filesystem
+  record: std.filesystem
+  section: error-kinds
+  declaration: read-only-filesystem
+- name: read-stderr
+  record: std.process
+  section: child-streams
+  declaration: read-stderr
+- name: read-stdout
+  record: std.process
+  section: child-streams
+  declaration: read-stdout
 - name: read-write-lock
   record: book.async
   section: sharing-mutable-state-by-giving-it-one-owner
@@ -7831,6 +8080,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: remote_requires_exact_inputs
+- name: remove-environment
+  record: std.process
+  section: child-processes
+  declaration: remove-environment
 - name: rename-capture
   record: tool.source-intelligence
   section: edits
@@ -8141,9 +8394,21 @@ symbols:
   section: drive-the-built-application
   declaration: run-process
 - name: run-process
+  record: std.process
+  section: capture
+  declaration: run-process
+- name: run-process
+  record: std.process
+  section: child-processes
+  declaration: run-process
+- name: run-process
   record: tool.packages.testing
   section: execution
   declaration: run-process
+- name: run-process-async
+  record: std.process
+  section: child-processes
+  declaration: run-process-async
 - name: runtime-error
   record: internals.testing.conformance-timing
   section: bounded-expected-runtime-failures
@@ -9080,6 +9345,10 @@ symbols:
   record: book.terrane-shaped-programs
   section: keep-concurrency-within-a-scope
   declaration: spawn
+- name: spawn-process
+  record: std.process
+  section: child-processes
+  declaration: spawn-process
 - name: spawn_blocking
   record: internals.execution.runtime-selection
   section: readiness-io
@@ -9140,6 +9409,10 @@ symbols:
   record: internals.testing.conformance-timing
   section: consolidation-boundaries
   declaration: static-call-throw-inference
+- name: status.timed-out
+  record: std.process
+  section: capture
+  declaration: status.timed-out
 - name: std
   record: app.error-boundaries
   section: projected-dependencies
@@ -9196,6 +9469,10 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: stopOnEntry
+- name: storage-full
+  record: std.filesystem
+  section: error-kinds
+  declaration: storage-full
 - name: str
   record: tool.packages.rust-dependencies
   section: async-members
@@ -10077,6 +10354,10 @@ symbols:
   section: native-transport
   declaration: tcp-stream.into-native
 - name: terminate
+  record: std.process
+  section: child-streams
+  declaration: terminate
+- name: terminate
   record: tool.debugging
   section: lifecycle
   declaration: terminate
@@ -10672,6 +10953,14 @@ symbols:
   record: std.time
   section: tickers
   declaration: tick
+- name: timed-out
+  record: std.filesystem
+  section: error-kinds
+  declaration: timed-out
+- name: timed-out
+  record: std.process
+  section: child-streams
+  declaration: timed-out
 - name: title
   record: book.classes-interfaces-and-traits
   section: defining-a-class
@@ -10716,6 +11005,10 @@ symbols:
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: to_json
+- name: too-many-links
+  record: std.filesystem
+  section: error-kinds
+  declaration: too-many-links
 - name: tool
   record: manual.changelog.unreleased
   section: changes-2026-10-21
@@ -10849,12 +11142,20 @@ symbols:
   section: scalar-types
   declaration: 'true'
 - name: 'true'
+  record: std.process
+  section: child-processes
+  declaration: 'true'
+- name: 'true'
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: 'true'
 - name: truncate
   record: lang.numerics.conversion
   section: declared-family
+  declaration: truncate
+- name: truncate
+  record: std.filesystem
+  section: handles
   declaration: truncate
 - name: truth
   record: lang.classes.protocols
@@ -11080,6 +11381,10 @@ symbols:
   record: std.documents.typed-decoding
   section: native-boundary
   declaration: unbounded_depth
+- name: unexpected-eof
+  record: std.filesystem
+  section: error-kinds
+  declaration: unexpected-eof
 - name: unique-words
   record: book.text-and-collections
   section: project-word-frequency
@@ -11191,6 +11496,10 @@ symbols:
 - name: unsupported
   record: lang.declarations.annotations
   section: docs-and-metadata
+  declaration: unsupported
+- name: unsupported
+  record: std.filesystem
+  section: error-kinds
   declaration: unsupported
 - name: unsupported
   record: tool.source-intelligence
@@ -11548,6 +11857,10 @@ symbols:
   record: lang.functions.fluent-apis
   section: async-terminals
   declaration: wait
+- name: wait
+  record: std.process
+  section: child-streams
+  declaration: wait
 - name: warning
   record: internals.observability.runtime
   section: ownership
@@ -11728,6 +12041,10 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: workbench.colorCustomizations
+- name: would-block
+  record: std.filesystem
+  section: error-kinds
+  declaration: would-block
 - name: wrap
   record: lang.functions.call-layout
   section: column-ownership
@@ -11764,10 +12081,18 @@ symbols:
   record: std.streams
   section: byte-text-streams
   declaration: write-all
+- name: write-input
+  record: std.process
+  section: child-streams
+  declaration: write-input
 - name: write-progress
   record: internals.execution.runtime-selection
   section: stream-adapters
   declaration: write-progress
+- name: write-zero
+  record: std.filesystem
+  section: error-kinds
+  declaration: write-zero
 - name: writing-plan
   record: book.terrane-shaped-programs
   section: exercises

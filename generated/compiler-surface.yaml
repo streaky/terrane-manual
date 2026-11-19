@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 44279dc68cf424cb7e7e3431a33176641b4ea744adfb3fb55febdc453e7ef43e
+  input-sha256: 183ec190265b903ce0db296894ddadb316b38457829eb4fcd51b68c600ce81b7
 format: 1
 generated: true
 modules:
@@ -207,81 +207,108 @@ modules:
 - source: crates/terrane-compiler/src/core/filesystem.trn
   declarations:
   - declaration: class filesystem-operation-result
-    line: 5
-  - declaration: function construct; failure bool, detail string
-    line: 9
-  - declaration: class existence-result
     line: 13
-  - declaration: function construct; exists bool, failure bool, detail string
+  - declaration: function construct; failure bool, detail string, category string|none = none
     line: 18
-  - declaration: class path-result
+  - declaration: class existence-result
     line: 23
-  - declaration: function construct; target path, failure bool, detail string
-    line: 28
-  - declaration: class file-metadata
-    line: 33
-  - declaration: function construct; kind string, size int, readonly bool, permission-detail string, failure
-      bool, detail string
+  - declaration: function construct; exists bool, failure bool, detail string, category string|none =
+      none
+    line: 29
+  - declaration: class path-result
+    line: 35
+  - declaration: function construct; target path, failure bool, detail string, category string|none =
+      none
     line: 41
-  - declaration: class file-data
-    line: 49
-  - declaration: function construct; data bytes, completed int, end bool, failure bool, detail string
+  - declaration: class file-metadata
+    line: 47
+  - declaration: function construct; kind string, size int, readonly bool, permission-detail string, failure
+      bool, detail string, category string|none = none
     line: 56
+  - declaration: class file-data
+    line: 65
+  - declaration: function construct; data bytes, completed int, end bool, failure bool, detail string,
+      category string|none = none
+    line: 73
+  - declaration: class directory-listing
+    line: 81
   - declaration: class file-handle
-    line: 63
+    line: 93
   - declaration: class directory-handle
-    line: 76
+    line: 108
   - declaration: function open-file file-handle; capability filesystem, target path, readable bool, writable
-      bool, create bool = false, truncate bool = false
-    line: 89
+      bool, create bool = false, truncate bool = false, exclusive bool = false, append bool = false
+    line: 123
   - declaration: function file-read file-data; capability filesystem, file ref file-handle, limit int
-    line: 96
+    line: 131
   - declaration: function file-write file-data; capability filesystem, file ref file-handle, data bytes,
       offset int = 0
-    line: 100
+    line: 135
   - declaration: function file-flush filesystem-operation-result; capability filesystem, file ref file-handle
-    line: 104
+    line: 139
   - declaration: function file-sync-data filesystem-operation-result; capability filesystem, file ref
       file-handle
-    line: 108
+    line: 143
   - declaration: function file-sync-all filesystem-operation-result; capability filesystem, file ref file-handle
-    line: 112
-  - declaration: function file-close filesystem-operation-result; capability filesystem, file file-handle
-    line: 116
-  - declaration: class filesystem
-    line: 120
-  - declaration: function filesystem-capability filesystem
-    line: 126
-  - declaration: function filesystem-exists existence-result; capability filesystem, target path
-    line: 130
-  - declaration: function filesystem-metadata file-metadata; capability filesystem, target path
-    line: 134
-  - declaration: function filesystem-symlink-metadata file-metadata; capability filesystem, target path
-    line: 138
-  - declaration: function filesystem-canonical path-result; capability filesystem, target path
-    line: 142
-  - declaration: function filesystem-realpath path-result; capability filesystem, target path
     line: 147
+  - declaration: function file-close filesystem-operation-result; capability filesystem, file file-handle
+    line: 151
+  - declaration: class filesystem
+    line: 155
+  - declaration: function filesystem-capability filesystem
+    line: 161
+  - declaration: function filesystem-exists existence-result; capability filesystem, target path
+    line: 165
+  - declaration: function filesystem-metadata file-metadata; capability filesystem, target path
+    line: 169
+  - declaration: function filesystem-symlink-metadata file-metadata; capability filesystem, target path
+    line: 173
+  - declaration: function filesystem-canonical path-result; capability filesystem, target path
+    line: 177
+  - declaration: function filesystem-realpath path-result; capability filesystem, target path
+    line: 182
   - declaration: function filesystem-read-link path-result; capability filesystem, target path
-    line: 150
+    line: 185
   - declaration: function filesystem-open-beneath directory-handle; capability filesystem, directory path,
       relative path, cross-filesystem bool = false
-    line: 157
+    line: 192
   - declaration: function open-file-beneath file-handle; capability filesystem, directory ref directory-handle,
-      relative path, readable bool, writable bool, create bool = false, truncate bool = false
-    line: 164
+      relative path, readable bool, writable bool, create bool = false, truncate bool = false, exclusive
+      bool = false, append bool = false
+    line: 200
   - declaration: function filesystem-read-bounded file-data; capability filesystem, target path, limit
       int
-    line: 172
+    line: 209
   - declaration: function filesystem-write-atomic filesystem-operation-result; capability filesystem,
       target path, data bytes
-    line: 176
+    line: 213
   - declaration: function filesystem-rename filesystem-operation-result; capability filesystem, source
       path, destination path
-    line: 180
+    line: 217
   - declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target
       path
-    line: 184
+    line: 221
+  - declaration: function filesystem-create-directory filesystem-operation-result; capability filesystem,
+      target path
+    line: 225
+  - declaration: function filesystem-create-directories filesystem-operation-result; capability filesystem,
+      target path
+    line: 229
+  - declaration: function filesystem-list-directory directory-listing; capability filesystem, target path,
+      limit int
+    line: 233
+  - declaration: function filesystem-remove-directory filesystem-operation-result; capability filesystem,
+      target path
+    line: 237
+  - declaration: function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem,
+      target path
+    line: 243
+  - declaration: function filesystem-create-symlink filesystem-operation-result; capability filesystem,
+      target path, link path, directory bool = false
+    line: 248
+  - declaration: function filesystem-create-hard-link filesystem-operation-result; capability filesystem,
+      target path, link path
+    line: 252
 - source: crates/terrane-compiler/src/core/io.trn
   declarations:
   - declaration: class cancellation-token
@@ -613,6 +640,40 @@ modules:
     line: 155
   - declaration: function encode-native-string string; value native-string
     line: 158
+- source: crates/terrane-compiler/src/core/process_child.trn
+  declarations:
+  - declaration: class process-error implements throwable
+    line: 7
+  - declaration: function render string
+    line: 13
+  - declaration: class process-options
+    line: 16
+  - declaration: class process-observation
+    line: 22
+  - declaration: class process-output
+    line: 35
+  - declaration: class process-capture
+    line: 43
+  - declaration: class child-input-stream
+    line: 57
+  - declaration: class child-output-stream
+    line: 72
+  - declaration: class child-process
+    line: 87
+  - declaration: function poll process-observation throws process-error
+    line: 96
+  - declaration: function terminate throws process-error
+    line: 103
+  - declaration: function input child-input-stream
+    line: 107
+  - declaration: function output child-output-stream
+    line: 110
+  - declaration: function errors child-output-stream
+    line: 113
+  - declaration: function run-process process-capture throws process-error; program string, args (list
+      of string)|none = none, options process-options|none = none, input bytes = b'', timeout-ms int =
+      30000, stdout-limit int = 1048576, stderr-limit int = 1048576
+    line: 182
 - source: crates/terrane-compiler/src/core/process_signals.trn
   declarations:
   - declaration: class process-signal-error implements throwable
