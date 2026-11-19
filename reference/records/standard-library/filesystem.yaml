@@ -133,7 +133,7 @@ documentation:
             function filesystem-list-directory directory-listing; capability filesystem, target path, limit int
             function filesystem-remove-directory filesystem-operation-result; capability filesystem, target path
             function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem, target path
-            function filesystem-create-symlink filesystem-operation-result; capability filesystem, target path, link path, directory bool = false
+            function filesystem-create-symlink filesystem-operation-result; capability filesystem, target path, link path
             function filesystem-create-hard-link filesystem-operation-result; capability filesystem, target path, link path
           response: null
           diagnostic: null
@@ -149,7 +149,7 @@ documentation:
             `directory-listing.entries`, not full paths or metadata. Order is unspecified
             and the result is not a snapshot of a changing directory. The nonnegative
             `limit` bounds the entry count, not bytes. Exceeding it produces
-            `file-too-large`. A non-UTF-8 name produces `invalid-data` rather than a lossy
+            `too-many-entries`. A non-UTF-8 name produces `invalid-data` rather than a lossy
             name. Failure returns no partial entries.
 
             `filesystem-remove` remains file removal. `filesystem-remove-directory` removes
@@ -159,10 +159,9 @@ documentation:
             as a link or rejected according to host behavior.
 
             A symbolic link stores the supplied target, which need not exist. Relative
-            target paths resolve from the link's parent. Set `directory = true` when
-            creating a directory symlink on Windows; Unix ignores this flag. Symlink
-            creation is subject to host support and privileges. Hard links are subject to
-            native filesystem constraints and do not copy file contents.
+            target paths resolve from the link's parent. The same operation creates links to
+            files and directories on Linux. Hard links are subject to native filesystem
+            constraints and do not copy file contents.
 
             These operations use ordinary host path resolution, not the directory-handle
             confinement policy. In particular, recursive removal does not constrain
@@ -213,11 +212,11 @@ documentation:
             host's diagnostic message. Successful operations report `none`. Named failures
             include `not-found`, `permission-denied`, `already-exists`, `not-a-directory`,
             `is-a-directory`, `directory-not-empty`, `read-only-filesystem`, `storage-full`,
-            `file-too-large`, `crosses-devices`, `invalid-input`, `invalid-data`,
-            `timed-out`, `would-block`, `interrupted`, `unexpected-eof`, `write-zero`,
-            `broken-pipe`, `too-many-links`, `unsupported`, and `out-of-memory`.
-            Unclassified failures report `other`. Which host failures occur for an operation
-            can vary by platform.
+            `file-too-large`, `too-many-entries`, `crosses-devices`, `invalid-input`,
+            `invalid-data`, `timed-out`, `would-block`, `interrupted`, `unexpected-eof`,
+            `write-zero`, `broken-pipe`, `too-many-links`, `unsupported`, and
+            `out-of-memory`. Unclassified failures report `other`. Which host failures occur
+            for an operation can vary by platform.
     - id: example
       title: Read bounded UTF-8 and write atomically
       blocks:

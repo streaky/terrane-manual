@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 183ec190265b903ce0db296894ddadb316b38457829eb4fcd51b68c600ce81b7
+  input-sha256: 930c12eb44fae9e7dac440daea90640c9cfcb4850e80321d867635747a33288d
 format: 1
 generated: true
 diagnostics:
@@ -1001,20 +1001,20 @@ diagnostics:
   - package has no `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 485
+    line: 486
 - code: S2016
   messages:
   - package has more than one `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 504
+    line: 505
 - code: S2017
   messages:
   - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 461
+    line: 462
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 841
   - path: crates/terrane-compiler/src/semantics/model.rs
@@ -1135,7 +1135,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1017
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2223
+    line: 2220
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 701
 - code: S2032
@@ -1162,14 +1162,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 927
+    line: 929
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 883
+    line: 885
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 449
 - code: S2053
@@ -1210,7 +1210,7 @@ diagnostics:
   - 'in `{}`: {}'
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 573
+    line: 574
   - path: crates/terrane-compiler/src/consumer_tools.rs
     line: 391
   - path: crates/terrane-compiler/src/consumers.rs
@@ -1355,15 +1355,15 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1107
+    line: 1110
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1135
+    line: 1138
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 326
+    line: 327
 - code: T0001
   messages:
   - type parameter requires a name
@@ -1647,9 +1647,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 833
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2029
+    line: 2026
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2046
+    line: 2043
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 854
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1903,7 +1903,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 741
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2008
+    line: 2005
 - code: T0036
   messages:
   - '`.{}` requires an integer receiver'
@@ -1937,11 +1937,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1247
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2091
+    line: 2088
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2186
+    line: 2183
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2204
+    line: 2201
 - code: T0041
   messages:
   - iterator items require a statically known value type
@@ -2284,23 +2284,23 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1400
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1834
+    line: 1831
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1853
+    line: 1850
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1873
+    line: 1870
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1892
+    line: 1889
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1905
+    line: 1902
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1915
+    line: 1912
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1928
+    line: 1925
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1939
+    line: 1936
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1953
+    line: 1950
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 618
 - code: T0076
@@ -2457,7 +2457,7 @@ diagnostics:
   - caller-supplied conversion destination must be a concrete type descriptor
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2114
+    line: 2111
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 318
 - code: T0103
@@ -2498,7 +2498,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 620
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2233
+    line: 2230
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 346
 - code: T0106
@@ -2556,13 +2556,13 @@ diagnostics:
   - invalid channel `{operation}` invocation
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1777
+    line: 1774
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1785
+    line: 1782
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1797
+    line: 1794
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1818
+    line: 1815
 - code: T0110
   messages:
   - channel pair `{}` endpoint `{}` was already moved
@@ -3615,7 +3615,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 743
+    line: 744
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 375
 - code: W4002
@@ -3649,7 +3649,7 @@ diagnostics:
   - function `{}` is never referenced
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 743
+    line: 744
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 201
 - code: W4006

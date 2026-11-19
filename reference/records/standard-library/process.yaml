@@ -73,9 +73,8 @@ documentation:
             This does not make arbitrary programs safe to run. Select a trusted executable
             and environment; a bare executable name uses host search rules. The invoked
             program still interprets its own options and inputs. Use its `--` option
-            terminator when supported and appropriate. Windows programs with nonstandard
-            command-line parsers can interpret arguments differently; `.bat` and `.cmd`
-            targets are rejected rather than invoking the command interpreter implicitly.
+            terminator when supported and appropriate. Child execution is supported on
+            Linux.
 
             An optional `process-options` value sets `directory` (empty inherits the
             parent's working directory), `inherit-environment` (default `true`), explicit
@@ -106,17 +105,23 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            `run-process` blocks the calling thread; use `await run-process-async` in async
-            code. Both accept optional input bytes and close stdin after writing them. They
-            drain stdout and stderr concurrently, return raw bytes, and expose independent
-            truncation flags. The default retained limit is 1 MiB per stream. Data beyond a
-            limit is discarded, not buffered.
+            `run-process` blocks the calling thread and creates a runtime for the capture.
+            If called from a running async runtime, it also uses a separate worker thread
+            while the caller blocks. Prefer `await run-process-async` in async code.
 
-            The default deadline is 30 seconds. A deadline terminates the direct child, not
-            its process tree. `status.timed-out` distinguishes timeouts; a child's nonzero
-            exit is a returned observation, not a `process-error`. Launch and I/O failures
-            throw `process-error`. Check the status and truncation flags before using
-            captured output.
+            Both accept optional input bytes, then close stdin. If the child closes stdin
+            before consuming all the input, capture stops writing but still returns the
+            child's status and output. Both drain stdout and stderr concurrently, return raw
+            bytes, and expose independent truncation flags. The default retained limit is 1
+            MiB per stream. Data beyond a limit is discarded, not buffered.
+
+            The default deadline is 30 seconds and covers both the direct child and pipe
+            I/O. On timeout, capture terminates the direct child if it is still running; it
+            does not manage descendants. `status.timed-out` can be true alongside a normal
+            exit code if a descendant keeps an output pipe open after the direct child
+            exits. A nonzero exit is a returned observation, not a `process-error`. Launch
+            and other I/O failures throw `process-error`. Check the timeout and truncation
+            flags before using captured output.
     - id: child-streams
       title: Streaming child I/O
       blocks:
@@ -133,6 +138,10 @@ documentation:
             child. Read sizes are upper bounds, not exact counts. A zero-byte read does not
             probe for EOF. The API does not decode chunks; decode text incrementally when a
             code point may span reads.
+
+            An output view may outlive the owning handle. After the owner is dropped, a view
+            may still read buffered data and then report EOF. EOF only means the pipe
+            closed; use `wait` on the owner to observe the child's exit status.
 
             `poll` observes the child without waiting. `await child.wait` observes exit or
             returns `timed-out` without terminating the child; its timeout can be set to

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dfe18e85c8b32c7b0d30782a08b623ee7b7019b3053c61b0da1a5d4a14ace09e
+  input-sha256: ba65b7f3984e1afd141049a949ecfdec996dea51b3131947ece693da635638d1
 format: 2
 generated: true
 records:
@@ -2181,7 +2181,7 @@ records:
   - function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem, target
     path
   - function filesystem-create-symlink filesystem-operation-result; capability filesystem, target path,
-    link path, directory bool = false
+    link path
   - function filesystem-create-hard-link filesystem-operation-result; capability filesystem, target path,
     link path
 - id: std.paths

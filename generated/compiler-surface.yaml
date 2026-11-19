@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 183ec190265b903ce0db296894ddadb316b38457829eb4fcd51b68c600ce81b7
+  input-sha256: 930c12eb44fae9e7dac440daea90640c9cfcb4850e80321d867635747a33288d
 format: 1
 generated: true
 modules:
@@ -304,7 +304,7 @@ modules:
       target path
     line: 243
   - declaration: function filesystem-create-symlink filesystem-operation-result; capability filesystem,
-      target path, link path, directory bool = false
+      target path, link path
     line: 248
   - declaration: function filesystem-create-hard-link filesystem-operation-result; capability filesystem,
       target path, link path
