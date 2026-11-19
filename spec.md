@@ -227,6 +227,7 @@ Top-level fields:
 | `surface` | entity kinds | compiler | Compiler-known source-facing contract. |
 | `lifecycle` | yes | human/release | Publication status and compatibility history. |
 | `documentation` | yes | human | Title, summary, prose, examples, exercises, figures, and authored labels. |
+| `security` | security-contract only | human | Structured invariant, threat boundary, guidance, review considerations, and repository file associations; forbidden on other kinds. |
 | `provenance` | yes | shared | Specification, compiler, and conformance evidence. |
 
 Conceptual records such as language pages, tutorial chapters, and appendices have `surface: null`. Their explanations and authored structures live under `documentation` because they cannot be reconstructed merely by enumerating compiler symbols.
@@ -286,10 +287,86 @@ Format version 1 defines:
 | Language | `syntax`, `statement`, `expression`, `operator`, `literal`, `protocol` |
 | Object/API | `descriptor`, `class`, `interface`, `trait`, `function`, `method-family`, `method`, `property`, `field`, `constant` |
 | Tooling | `command`, `option`, `manifest-key`, `diagnostic` |
+| Security documentation | `security-contract` |
 
 A new kind requires a format update. Unknown kinds are errors.
 
-Entity kinds have a non-null `surface`. Organizational and conceptual language pages have `surface: null`. `chapter` and `appendix` identify authored reading roles; their order and displayed numbering come from `manual.yaml`, not their IDs or filenames. A protocol that has a compiler-visible descriptor uses a surface; a purely explanatory protocol page does not pretend to have one.
+Entity kinds have a non-null `surface`. Organizational and conceptual language pages have `surface: null`. `chapter` and `appendix` identify authored reading roles; their order and displayed numbering come from `manual.yaml`, not their IDs or filenames. A protocol that has a compiler-visible descriptor uses a surface; a purely explanatory protocol page does not pretend to have one. A `security-contract` is authored documentation with `surface: null`.
+
+### 7.1 Security-contract records
+
+Format 1 permits the additive top-level `security` field only when `kind: security-contract`; it is required for that kind and forbidden on every other kind. This makes the extension conditional and unambiguous while preserving the existing envelope and meanings of all existing kinds. A processor that does not recognize the kind or field must reject the record rather than silently omit its security content.
+
+The field is a strict mapping with exactly these keys:
+
+```yaml
+security:
+  audiences: [core, application]
+  invariant: >-
+    Markdown prose stating the security invariant this contract maintains.
+  threats:
+    - Markdown prose describing a relevant threat.
+  assumptions:
+    - Markdown prose describing an assumption.
+  limitations:
+    - Markdown prose describing a known limitation or evidence gap.
+  guidance: >-
+    Markdown prose explaining safe use and operational guidance.
+  review:
+    considerations:
+      - Markdown prose describing a consideration for review.
+  files:
+    - path: crates/example/src/lib.rs
+      role: enforcement
+      detail: This file's security relevance.
+    - path: tests/example.rs
+      role: evidence
+      detail: Evidence provided by this file.
+```
+
+`audiences` is a nonempty sequence of unique plain enum strings, each exactly
+`core` or `application`. Express both audiences as `[core, application]`; the
+value `both` is not defined. These are security audiences, not documentation
+tags or lifecycle metadata.
+
+`invariant` and `guidance` are nonempty Markdown prose strings. `threats`,
+`assumptions`, `limitations`, and `review.considerations` are nonempty
+sequences of nonempty Markdown prose strings. `review` has exactly the
+`considerations` field. `files` is a nonempty sequence of mappings, each with
+exactly `path`, `role`, and `detail`; all three are nonempty plain strings
+except that `role` is exactly `enforcement`, `dependency`, or `evidence`.
+Paths are unique, repository-relative POSIX-style paths: reject absolute
+paths, empty/`.`/`..` components, backslashes, and NUL. An `enforcement`
+path must end in `.rs` or `.trn`. At least one enforcement entry and one
+evidence entry are required. List a file only once; if a file contains inline
+tests, describe that in its one entry's detail.
+
+Validation checks path syntax only. These paths identify code-owned
+repository files; they are not publication assets, and a converter must not
+resolve or open them relative to the manual publication root. They are
+machine-readable review references, not a generated audit or proof of
+security. Limitations must state evidence gaps; neither the presence of
+evidence paths nor this format implies an audit, certification, or complete
+security review.
+
+The ordinary shared `documentation` metadata applies, including title,
+summary, tags, and optional blocks and sections. Tags remain search terms,
+not semantic security audiences. Security Markdown uses the manual's ordinary
+prose policy, including its raw-HTML and unsafe-URL restrictions; the security
+kind introduces no alternate Markdown dialect.
+
+When projecting a security contract, generated sections use these fixed,
+page-local IDs and visible headings: `security-overview` (Security overview),
+`security-invariant` (Invariant), `security-threats` (Threats),
+`security-assumptions` (Assumptions), `security-limitations` (Limitations),
+`security-guidance` (Guidance), `security-review` (Review considerations),
+and `security-files` (Code and evidence references). These IDs are reserved
+against authored section and block IDs. Render limitations conspicuously and
+include a visible notice that security-sensitive does not mean audited or
+certified. Render audiences with the labels Core and Application. Render
+files as an accessible typed table with Path, Role, and Security relevance
+headers. Structured security data is authoritative machine data; prose fields
+explain it and are not a second semantic representation.
 
 ## 8. Field ownership
 
@@ -304,6 +381,7 @@ Ownership is part of the format contract, not an implementation suggestion.
 | `lifecycle` | human/release | Never changed merely because a compiler entity appears or disappears. |
 | `documentation.status` | human | Scaffold may initialize it; sync does not promote it. |
 | Other `documentation` | human | Never semantically rewritten by sync. |
+| `security` | human | Preserved; never inferred from code, rewritten by compiler sync, or treated as an audit status. |
 | `provenance.compiler` | compiler | Updated from the emitted snapshot. |
 | `provenance.conformance` | compiler/tool plus review | Reconciled from verified evidence. |
 | `provenance.specification` | human | Preserved and validated. |

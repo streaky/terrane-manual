@@ -9,8 +9,48 @@ from pathlib import Path
 
 import yaml
 
-from generate_manual_catalog import diagnostic_inventory, load_yaml
+from generate_manual_catalog import catalog, diagnostic_inventory, load_yaml
 
+
+
+class SecurityCatalogTests(unittest.TestCase):
+    def test_includes_generated_security_sections_without_opening_repository_paths(self):
+        record = {
+            "id": "security.example",
+            "kind": "security-contract",
+            "documentation": {
+                "title": "Example",
+                "sections": [{"id": "authored", "title": "Authored", "sections": []}],
+            },
+            "security": {
+                "files": [{"path": "crates/not-present/src/lib.rs", "role": "evidence"}],
+            },
+        }
+        entry = {
+            "record": record,
+            "manual": "reference",
+            "group": "Security",
+            "position": 1,
+            "source": "reference/security/example.yaml",
+        }
+
+        result = catalog([entry], compiler_root=None)
+
+        sections = result["records"][0]["sections"]
+        self.assertEqual(
+            [(section["id"], section["title"]) for section in sections],
+            [
+                ("security-overview", "Security overview"),
+                ("security-invariant", "Invariant"),
+                ("security-threats", "Threats"),
+                ("security-assumptions", "Assumptions"),
+                ("security-limitations", "Limitations"),
+                ("security-guidance", "Guidance"),
+                ("security-review", "Review considerations"),
+                ("security-files", "Code and evidence references"),
+                ("authored", "Authored"),
+            ],
+        )
 
 class DiagnosticInventoryTests(unittest.TestCase):
     def test_ignores_test_sources_and_inline_test_modules(self):

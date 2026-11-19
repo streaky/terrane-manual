@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f92dae5ffac09f713b726068c00b916280b9a770b66ac2de31d3621031d0e510
+  input-sha256: 44279dc68cf424cb7e7e3431a33176641b4ea744adfb3fb55febdc453e7ef43e
 format: 1
 generated: true
 modules:
@@ -266,22 +266,22 @@ modules:
     line: 150
   - declaration: function filesystem-open-beneath directory-handle; capability filesystem, directory path,
       relative path, cross-filesystem bool = false
-    line: 155
+    line: 157
   - declaration: function open-file-beneath file-handle; capability filesystem, directory ref directory-handle,
       relative path, readable bool, writable bool, create bool = false, truncate bool = false
-    line: 162
+    line: 164
   - declaration: function filesystem-read-bounded file-data; capability filesystem, target path, limit
       int
-    line: 169
+    line: 172
   - declaration: function filesystem-write-atomic filesystem-operation-result; capability filesystem,
       target path, data bytes
-    line: 173
+    line: 176
   - declaration: function filesystem-rename filesystem-operation-result; capability filesystem, source
       path, destination path
-    line: 177
+    line: 180
   - declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target
       path
-    line: 181
+    line: 184
 - source: crates/terrane-compiler/src/core/io.trn
   declarations:
   - declaration: class cancellation-token

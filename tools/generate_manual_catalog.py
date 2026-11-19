@@ -306,6 +306,29 @@ def section_outline(section_values: Iterable[dict[str, Any]]) -> list[dict[str, 
         for section in section_values
     ]
 
+SECURITY_SECTIONS = [
+    ("security-overview", "Security overview"),
+    ("security-invariant", "Invariant"),
+    ("security-threats", "Threats"),
+    ("security-assumptions", "Assumptions"),
+    ("security-limitations", "Limitations"),
+    ("security-guidance", "Guidance"),
+    ("security-review", "Review considerations"),
+    ("security-files", "Code and evidence references"),
+]
+
+
+def record_section_outline(record: dict[str, Any]) -> list[dict[str, Any]]:
+    documentation = record.get("documentation", {})
+    authored = section_outline(documentation.get("sections", []) or [])
+    if record.get("kind") != "security-contract":
+        return authored
+    generated = [
+        {"id": section_id, "title": title, "sections": []}
+        for section_id, title in SECURITY_SECTIONS
+    ]
+    return generated + authored
+
 
 def catalog(entries: list[dict[str, Any]], compiler_root: Path | None) -> dict[str, Any]:
     records = []
@@ -331,7 +354,7 @@ def catalog(entries: list[dict[str, Any]], compiler_root: Path | None) -> dict[s
                     "conformance": provenance.get("conformance", []),
                     "compiler": provenance.get("compiler"),
                 },
-                "sections": section_outline(documentation.get("sections", []) or []),
+                "sections": record_section_outline(record),
                 "declaration-synopsis": record_synopsis(record, compiler_root),
             }
         )
