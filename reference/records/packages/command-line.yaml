@@ -27,6 +27,22 @@ documentation:
     - execution
     - dependencies
   sections:
+    - id: version
+      title: Compiler version and build identity
+      blocks:
+        - type: markdown
+          markdown: |-
+            `terrane --version` (or `terrane -V`) reports the Terrane package version, build
+            identity, and the Rust build and projection Rustdoc toolchains.
+
+            Development builds record the full Git commit and branch at build time. A
+            detached checkout is identified as detached HEAD; a build without usable Git
+            metadata still reports its version and identifies itself as a development build.
+
+            Distributors can enable the CLI crate's Cargo feature `release-build` to report
+            `release` and omit Git details. The version still comes from the workspace
+            manifest. Cargo's `--release` selects an optimization profile and does not
+            enable this feature.
     - id: commands
       title: Running a source file
       blocks:

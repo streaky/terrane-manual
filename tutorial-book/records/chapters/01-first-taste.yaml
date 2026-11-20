@@ -165,23 +165,9 @@ documentation:
 
         - type: markdown
           markdown: |-
-            A successful current checkout reports a version in this shape:
-        - type: example
-          id: legacy-fence-006
-          title: null
-          language: text
-          mode: illustrative
-          target: null
-          timeout-ms: null
-          source: |2
-            terrane 0.1.0
-          response: null
-          diagnostic: null
-          markdown: null
-
-        - type: markdown
-          markdown: |-
-            The exact version will change as Terrane develops.
+            The command reports the Terrane and Rust toolchain versions. A build from a Git
+            checkout also reports its commit and branch unless it was explicitly built for
+            release.
 
             Throughout the documentation, examples assume `terrane` is installed and
             available on `PATH`, so the same command works from any directory:

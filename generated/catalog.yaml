@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1f55059a8f22eb145977fae14c89c96115e650577503f22ff275d2c118d68585
+  input-sha256: d44ded8ca56d1cff20a251e5e1dc61f36a76feda53e2e790067a5ba453799933
 format: 2
 generated: true
 records:
@@ -2842,6 +2842,9 @@ records:
     - terrane-library-package
     compiler: null
   sections:
+  - id: version
+    title: Compiler version and build identity
+    sections: []
   - id: commands
     title: Running a source file
     sections: []
