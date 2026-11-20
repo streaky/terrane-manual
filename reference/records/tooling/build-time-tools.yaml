@@ -102,6 +102,11 @@ documentation:
             Configuration currently requires a non-empty canonical declaration selection
             even when the tool uses it only as an anchor for file-driven generation.
             Annotations are not required.
+        - type: markdown
+          markdown: |-
+            Terrane executables can use `/core/build/consumer` for the request and response
+            protocol and `/core/build/consumer/cache` to reuse generated source. Both are
+            optional; packages may also use an executable written in another language.
       sections:
         - id: selecting-and-building-tools
           title: Selecting and building tools
@@ -237,6 +242,48 @@ documentation:
                 this namespace requires the `process` capability. The generator remains an
                 ordinary package-owned executable; importing the helpers does not select or run
                 a consumer.
+            - type: example
+              id: consumer-helper-signatures
+              title: Bundled protocol helper signatures
+              language: terrane
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                function read-request document-value throws consumer-error;
+                function emit-source; identity string, source string
+                function emit-error; declaration document-value, message string
+                function get document-value; value document-value, name string
+                function at document-value; value document-value, index int
+                function text string; value document-value
+                function truth bool; value document-value
+                function scalar document-value throws consumer-error; value document-value
+                function annotation-payload document-value throws consumer-error; declaration document-value, suffix string, namespace string
+                function selected document-value throws consumer-error; request document-value, kind string
+                function quote-terrane-string string; value string
+              response: null
+              diagnostic: null
+            - type: markdown
+              markdown: |-
+                `read-request` reads bounded UTF-8 JSON from stdin and throws `consumer-error`
+                for input failure, invalid JSON, or a request without format 1 and a
+                declarations list. Call one response helper per invocation: each writes one JSON
+                response to stdout. `emit-source` returns one generated unit; `emit-error`
+                returns one diagnostic and uses the declaration's origin or span when available.
+
+                Unlike document field and item lookup, `get` and `at` return a document `none`
+                value on lookup failure rather than a failed result. `text` exposes the
+                document's scalar text; `truth` tests only the document boolean `true`. `scalar`
+                unwraps a tagged metadata scalar or passes through document `none`; unsupported
+                kinds and invalid numbers throw `consumer-error`.
+
+                `annotation-payload` looks up the exact namespace and annotation name on a
+                declaration, returning its map of tagged metadata values or document `none` if
+                absent. Repeated applications and malformed payload entries throw
+                `consumer-error`. `selected` returns the single declaration of the requested
+                kind and throws `consumer-error` if there are zero or multiple matches.
+                `quote-terrane-string` emits a double-quoted Terrane source literal, escaping
+                backslashes, quotes, supported control characters, and interpolation braces.
         - id: generated-source-lifecycle
           title: Preparation and generated-source lifecycle
           blocks:
@@ -280,6 +327,23 @@ documentation:
                 `store` is best-effort and does not fail generation when an atomic write fails
                 or the encoded entry exceeds its size bound. Consumers without preparation
                 context may generate normally without caching.
+            - type: example
+              id: consumer-cache-signatures
+              title: Bundled source cache signatures
+              language: terrane
+              mode: illustrative
+              target: null
+              timeout-ms: null
+              source: |-
+                class source-cache
+                    function construct; request document-value, inputs list of string, metadata document-value|none = none
+                    function load string|none;
+                    function store; source string
+              response: null
+              diagnostic: null
+              markdown: |-
+                `load` returns `none` on a cache miss; `store` remembers a generated source for
+                the current key. These methods do not write the protocol response.
         - id: editor-preparation-and-trust
           title: Editor preparation and workspace trust
           blocks:

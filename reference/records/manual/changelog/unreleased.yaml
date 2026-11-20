@@ -652,8 +652,11 @@ documentation:
             - **Breaking — bundled build consumer helpers.** Import `/core/build/consumer`
               and `/core/build/consumer/cache` in place of
               `/terrane/annotation-consumer-protocol` and `/terrane/consumer-cache`. Remove
-              the corresponding path dependencies from consumer manifests. Package-owned
-              generators are still selected and built as before. See
+              the corresponding path dependencies from consumer manifests. Replace
+              `annotation` with `annotation-payload` and `quote` with
+              `quote-terrane-string`; use document operations for presence checks and JSON
+              quoting, and keep generator-specific option parsing in the generator.
+              Package-owned generators are still selected and built as before. See
               [[tool.build-time-tools#protocol-and-diagnostics]].
   see-also:
     - manual.changelog

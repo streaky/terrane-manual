@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8ce624399fb4bfbcb0eeaf8b13294b72caa74ae79fff6dababdea7045b95a2d9
+  input-sha256: 38587e385bca2b88406bb54ef2af349e4947b1b19166181a9f8c1bc143b94157
 format: 1
 generated: true
 symbols:
@@ -72,9 +72,17 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-20
   declaration: /core/build/consumer
+- name: /core/build/consumer
+  record: tool.build-time-tools
+  section: declaration-consumers
+  declaration: /core/build/consumer
 - name: /core/build/consumer/cache
   record: manual.changelog.unreleased
   section: changes-2026-11-20
+  declaration: /core/build/consumer/cache
+- name: /core/build/consumer/cache
+  record: tool.build-time-tools
+  section: declaration-consumers
   declaration: /core/build/consumer/cache
 - name: /core/collections
   record: book.decisions-and-repetition
@@ -580,6 +588,14 @@ symbols:
   record: lang.types.unions
   section: unions
   declaration: and
+- name: annotation
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: annotation
+- name: annotation-payload
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: annotation-payload
 - name: annotation-target
   record: lang.declarations.annotations
   section: model
@@ -7828,6 +7844,14 @@ symbols:
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
   declaration: quit
+- name: quote
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: quote
+- name: quote-terrane-string
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: quote-terrane-string
 - name: r
   record: lang.numerics.arithmetic
   section: integer-operators
