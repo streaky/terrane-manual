@@ -35,9 +35,10 @@ documentation:
             `terrane --version` (or `terrane -V`) reports the Terrane package version, build
             identity, and the Rust build and projection Rustdoc toolchains.
 
-            Development builds record the full Git commit and branch at build time. A
-            detached checkout is identified as detached HEAD; a build without usable Git
-            metadata still reports its version and identifies itself as a development build.
+            Development builds record an abbreviated Git commit hash and the branch at build
+            time. A detached checkout is identified as detached HEAD; a build without usable
+            Git metadata still reports its version and identifies itself as a development
+            build.
 
             Distributors can enable the CLI crate's Cargo feature `release-build` to report
             `release` and omit Git details. The version still comes from the workspace
