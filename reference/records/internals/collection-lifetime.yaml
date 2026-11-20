@@ -36,6 +36,7 @@ documentation:
             - collection-identity-lifetime
             - map-key-removal
             - stable-list-sorting
+            - resource-owning-collections
           markdown: |-
             List replacement and stable sorting perform copy-on-write separation before
             mutation. A displaced logical value is dropped before the Terrane call returns
@@ -43,17 +44,24 @@ documentation:
             readable and releases that value at its own lifetime boundary. Separation never
             exposes backing sharing as identity.
 
-            List removal uses `Vec::remove` after separation. Ordered-map removal uses one
-            `IndexMap::shift_remove`, preserving the remaining order without rebuilding the
-            map. Unordered maps store each key's iteration position beside its value, and
-            unordered sets store an equivalent item-position index. New items append, while
-            removal uses `swap_remove` and repairs the one moved position. Unique insertion
-            and removal are therefore expected amortized constant time, and traversal
-            remains deterministic for the operation history. Both map representations test a
-            shared miss before separation; a successful shared mutation clones backing
-            storage once. Removal returns the stored value without an earlier drop.
-            List-only `clear` and ordered collection destruction release elements in backing
-            iteration order.
+            Resource-owning lists and maps never create a second logical owner of backing
+            storage. Their mutation paths access unique backing directly, with no element
+            `Clone` bound or fallback separation; a removed resource leaves in its existing
+            ownership lineage. Ordinary copyable collections continue to use the same
+            copy-on-write paths.
+
+            List removal uses `Vec::remove` on unique storage, separating copyable backing
+            first when shared. Ordered-map removal uses one `IndexMap::shift_remove`,
+            preserving the remaining order without rebuilding the map. Unordered maps store
+            each key's iteration position beside its value, and unordered sets store an
+            equivalent item-position index. New items append, while removal uses
+            `swap_remove` and repairs the one moved position. Unique insertion and removal
+            are therefore expected amortized constant time, and traversal remains
+            deterministic for the operation history. Both map representations test a shared
+            miss before separation; a successful shared mutation clones backing storage
+            once. Removal returns the stored value without an earlier drop. List-only
+            `clear` and ordered collection destruction release elements in backing iteration
+            order.
 
             Sorting calls Rust's stable slice sort once on unique backing storage. The
             emitted comparator is monomorphic for the admitted item descriptor, performs no

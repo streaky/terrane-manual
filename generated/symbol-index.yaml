@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 38587e385bca2b88406bb54ef2af349e4947b1b19166181a9f8c1bc143b94157
+  input-sha256: 19b14a780efffb19070dcd88e176429e2e4ad5c3044911203fb50a3e9d4f2186
 format: 1
 generated: true
 symbols:
@@ -1652,6 +1652,10 @@ symbols:
   record: tool.packages.package-manifest
   section: capabilities-and-effects
   declaration: clocks
+- name: Clone
+  record: internals.collections.lifetime
+  section: mutation-release-points
+  declaration: Clone
 - name: Clone
   record: internals.integration-boundaries
   section: tracking
@@ -5609,6 +5613,10 @@ symbols:
   record: std.collections
   section: construction-and-types
   declaration: list
+- name: list
+  record: std.collections
+  section: lookup
+  declaration: list
 - name: List
   record: tool.packages.rust-interop
   section: inline-rust
@@ -5912,6 +5920,10 @@ symbols:
 - name: map
   record: std.collections
   section: collection-kinds
+  declaration: map
+- name: map
+  record: std.collections
+  section: lookup
   declaration: map
 - name: Map
   record: tool.packages.rust-interop
@@ -11492,6 +11504,10 @@ symbols:
 - name: unordered-map
   record: std.collections
   section: collection-kinds
+  declaration: unordered-map
+- name: unordered-map
+  record: std.collections
+  section: lookup
   declaration: unordered-map
 - name: unordered-set
   record: lang.classes.fields

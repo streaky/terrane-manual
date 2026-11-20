@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ade7d0234b6b9359dc7e16bb11b549cfdb8a6c6b7912a9f27a1fae291d84073a
+  input-sha256: fb5fa3659dd328239cf0bf48439a420517e3e192cd57f434585393b05c43c02c
 format: 1
 generated: true
 diagnostics:
@@ -995,7 +995,7 @@ diagnostics:
   - unresolved name `{name}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4901
+    line: 4971
 - code: S2015
   messages:
   - package has no `main` function
@@ -1049,7 +1049,7 @@ diagnostics:
   - plain assignment cannot replace namespace binding `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5465
+    line: 5535
   - path: crates/terrane-compiler/src/semantics/scopes.rs
     line: 535
 - code: S2022
@@ -1071,15 +1071,15 @@ diagnostics:
   - binding `{}` cannot reference itself in its initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5369
+    line: 5439
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5432
+    line: 5502
 - code: S2024
   messages:
   - namespace binding initialization has a dependency cycle
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5503
+    line: 5573
 - code: S2025
   messages:
   - namespace variable `{}` cannot be public
@@ -1092,9 +1092,9 @@ diagnostics:
   - namespace variable `{name}` cannot be imported outside its namespace
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5183
+    line: 5253
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5203
+    line: 5273
 - code: S2027
   messages:
   - Rust dependency `{dependency}` is not declared in `package.toml`
@@ -1233,7 +1233,7 @@ diagnostics:
   - named local function cannot capture enclosing binding `{}`; use an anonymous closure
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4815
+    line: 4885
 - code: S2063
   messages:
   - an explicit import alias must differ from the imported name
@@ -1394,11 +1394,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/generics.rs
     line: 114
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1771
+    line: 1796
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3289
+    line: 3314
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9975
+    line: 10000
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 599
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1427,9 +1427,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1206
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 331
+    line: 332
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 711
+    line: 712
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 190
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
@@ -1608,7 +1608,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 2175
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 300
+    line: 301
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 54
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1626,9 +1626,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 219
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1704
+    line: 1729
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2348
+    line: 2373
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 385
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -1645,7 +1645,7 @@ diagnostics:
   - '`.{member_name}` requires a floating receiver'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 833
+    line: 834
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 2026
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -1689,7 +1689,7 @@ diagnostics:
   - function `{name}` must return `{expected}`
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3290
+    line: 3360
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 482
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
@@ -1869,7 +1869,7 @@ diagnostics:
   - '`{receiver_type}` has no member `.{member_name}`'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 859
+    line: 860
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 836
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1950,13 +1950,13 @@ diagnostics:
   - an empty iterator requires an explicit item type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1223
+    line: 1224
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1234
+    line: 1235
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1243
+    line: 1244
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1253
+    line: 1254
 - code: T0042
   messages:
   - collection items require a statically known value type
@@ -1966,15 +1966,15 @@ diagnostics:
   - map values must have one statically known type
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 164
+    line: 165
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 189
+    line: 190
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 220
+    line: 221
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1130
+    line: 1131
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1141
+    line: 1142
 - code: T0043
   messages:
   - an empty `{collection}` requires an explicit item type
@@ -1982,9 +1982,9 @@ diagnostics:
   - '/core/collections::'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 230
+    line: 231
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1152
+    line: 1153
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 324
 - code: T0044
@@ -1994,11 +1994,11 @@ diagnostics:
   - entry keys must be immutable scalar values
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1073
+    line: 1074
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1085
+    line: 1086
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1106
+    line: 1107
 - code: T0045
   messages:
   - '`entry` requires exactly a key and value'
@@ -2010,23 +2010,23 @@ diagnostics:
   - '`iteration-step` requires exactly one item'
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 357
+    line: 358
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 689
+    line: 690
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 825
+    line: 826
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 868
+    line: 869
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 937
+    line: 938
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 953
+    line: 954
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 990
+    line: 991
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1096
+    line: 1097
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1168
+    line: 1169
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 314
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2043,7 +2043,7 @@ diagnostics:
   - indexed assignment is not supported for `{other}`
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 973
+    line: 974
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 155
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2082,7 +2082,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 357
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3246
+    line: 3271
 - code: T0054
   messages:
   - cyclic class or interface inheritance is not supported
@@ -2125,11 +2125,11 @@ diagnostics:
     inside the try or move consumption outside the try
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 275
+    line: 278
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 286
+    line: 289
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2542
+    line: 2612
   - path: crates/terrane-compiler/src/semantics/scoped_regions/try_captures.rs
     line: 56
 - code: T0059
@@ -2142,28 +2142,28 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership/exclusive_loans.rs
     line: 329
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3986
+    line: 4056
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4525
+    line: 4595
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4572
+    line: 4642
 - code: T0060
   messages:
   - '{context} initializer type cannot be inferred'
   - class field initializer is unavailable
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2380
+    line: 2405
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2397
+    line: 2422
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2425
+    line: 2450
 - code: T0061
   messages:
   - class field `{}` contributed to `{}` has no canonical default and requires an initializer
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2461
+    line: 2486
 - code: T0062
   messages:
   - class `{}` must provide a `message string` field to implement `throwable`
@@ -2171,29 +2171,29 @@ diagnostics:
   - class `{}` does not implement interface member `{}.{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2046
+    line: 2071
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2058
+    line: 2083
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2214
+    line: 2239
 - code: T0063
   messages:
   - field `{}` conflicts with a method in the effective members of `{}`
   - class `{}` inherits conflicting member `{member}` from traits {}
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1560
+    line: 1585
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2313
+    line: 2338
 - code: T0064
   messages:
   - borrowing requires a supported owner-proven name, field, or collection element
   - '`{operator}` requires a supported owner-proven name, field, or collection element'
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3191
+    line: 3261
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3708
+    line: 3778
 - code: T0065
   messages:
   - object field type cannot be inferred
@@ -2213,30 +2213,30 @@ diagnostics:
   - 'class `{}` implements `{}.{}` with an incompatible signature: {mismatch}'
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2094
+    line: 2119
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2249
+    line: 2274
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2260
+    line: 2285
 - code: T0068
   messages:
   - returned reference is not proven to originate from one declared reference-parameter lender
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3550
+    line: 3620
 - code: T0069
   messages:
   - native target rejects descriptor fields whose `shared ref` ownership graph can form a strong cycle;
     use ordinary `ref` for a non-owning back-edge
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4771
+    line: 4841
 - code: T0070
   messages:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 9993
+    line: 10018
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -2411,7 +2411,7 @@ diagnostics:
   - resource-owning class `{}` cannot extend or use a copyable object contract
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1349
+    line: 1372
 - code: T0099
   messages:
   - '`.coerce` accepts one destination, or a destination and one conversion callback'
@@ -2438,17 +2438,17 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 300
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1363
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1396
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1410
+    line: 1388
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 1421
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 1435
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 1446
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1163
+    line: 1166
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1352
+    line: 1400
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
     line: 97
 - code: T0102
@@ -2695,11 +2695,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 1281
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8007
+    line: 8032
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8008
+    line: 8033
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8030
+    line: 8055
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 866
 - code: T0118
@@ -2708,11 +2708,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 763
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4202
+    line: 4227
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7924
+    line: 7949
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7993
+    line: 8018
 - code: T0119
   messages:
   - mutable callback inputs require an identity-preserving native representation
@@ -2789,33 +2789,33 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects/native_associated.rs
     line: 91
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4222
+    line: 4247
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4398
+    line: 4423
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4770
+    line: 4795
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4890
+    line: 4915
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4923
+    line: 4948
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4992
+    line: 5017
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5024
+    line: 5049
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5058
+    line: 5083
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5198
+    line: 5223
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6366
+    line: 6391
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6375
+    line: 6400
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6790
+    line: 6815
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7536
+    line: 7561
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8060
+    line: 8085
   - path: crates/terrane-compiler/src/semantics/scope_flow.rs
     line: 844
   - path: crates/terrane-compiler/src/semantics/scoped_regions/native_loans.rs
@@ -2834,7 +2834,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2849
+    line: 2874
 - code: T0121
   messages:
   - immediate projected generic bounds require a concrete native or source object argument
@@ -2867,30 +2867,30 @@ diagnostics:
   - class `{}` cannot implement `{}` because field `{}` does not satisfy the projected {requirement} obligation
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1805
+    line: 1830
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1949
+    line: 1974
 - code: T0123
   messages:
   - class `{}` must declare `consuming destruct` to implement projected interface `{}` because it requires
     canonical Rust `Drop`
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1973
+    line: 1998
 - code: T0124
   messages:
   - resource-owning class `{}` cannot implement projected asynchronous borrowed receiver `{}` because
     cancellation cleanup cannot be separated from the ended Rust borrow
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2000
+    line: 2025
 - code: T0125
   messages:
   - class `{}` cannot implement projected asynchronous interface `{}` without an asynchronous `main` runtime
     context
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2026
+    line: 2051
 - code: T0126
   messages:
   - interface `{}` cannot cross the boxed projected boundary because its erased wrapper does not satisfy
@@ -2913,21 +2913,21 @@ diagnostics:
   - a projected interface annotation requires all associated types to be closed
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1828
+    line: 1853
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1839
+    line: 1864
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1851
+    line: 1876
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1920
+    line: 1945
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2988
+    line: 3013
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3000
+    line: 3025
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3017
+    line: 3042
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3038
+    line: 3063
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 297
 - code: T0128
@@ -2966,61 +2966,61 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 834
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3796
+    line: 3821
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3805
+    line: 3830
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4820
+    line: 4845
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6600
+    line: 6625
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6757
+    line: 6782
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6899
+    line: 6924
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6934
+    line: 6959
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6955
+    line: 6980
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6966
+    line: 6991
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6993
+    line: 7018
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7010
+    line: 7035
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7029
+    line: 7054
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7060
+    line: 7085
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7128
+    line: 7153
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7147
+    line: 7172
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7182
+    line: 7207
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7203
+    line: 7228
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7211
+    line: 7236
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7296
+    line: 7321
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7322
+    line: 7347
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7557
+    line: 7582
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7605
+    line: 7630
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7941
+    line: 7966
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7959
+    line: 7984
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7962
+    line: 7987
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7986
+    line: 8011
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8022
+    line: 8047
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8158
+    line: 8183
 - code: T0130
   messages:
   - unsafe function `{name}` cannot be used as a function value; invoke it directly with `unsafe`
@@ -3063,9 +3063,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 634
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 1758
+    line: 1783
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 2192
+    line: 2217
   - path: crates/terrane-compiler/src/semantics/selection.rs
     line: 218
   - path: crates/terrane-compiler/src/semantics/selection.rs
@@ -3115,11 +3115,16 @@ diagnostics:
   - inline Rust cannot directly access non-copyable binding `{}`; use a typed Terrane adapter
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 885
+    line: 888
 - code: T0135
   messages:
   - collection operation cannot implicitly copy non-Clone or unconstrained elements; use a concrete typed
     adapter
+  - resource collection indexing cannot produce an owned value; use `ref collection[index]`
+  - resource maps do not support reference iteration; use borrowed indexing or iterate over `keys`
+  - resource collections cannot be iterated by value; use `for` over `ref collection`
+  - resource collection mutation must be a standalone statement because its result would copy the collection
+  - resource collection values cannot be copied; use borrowed indexing or reference iteration
   - persistent list indexing cannot copy an item containing a non-Clone projected foreign value (`collections/consume-non-clone-foreign-items`)
   - persistent list iteration cannot consume an item containing a non-Clone projected foreign value (`collections/consume-non-clone-foreign-items`)
   - a consuming callable field must be explicitly moved out before invocation
@@ -3137,31 +3142,41 @@ diagnostics:
   - call cannot preserve a non-Clone or unconstrained value borrowed by an earlier argument
   sources:
   - path: crates/terrane-compiler/src/semantics/collections.rs
-    line: 1281
+    line: 1282
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 1358
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 1388
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 1396
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 1415
+  - path: crates/terrane-compiler/src/semantics/collections.rs
+    line: 1428
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 729
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 395
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 105
+    line: 108
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 157
+    line: 160
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 174
+    line: 177
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 202
+    line: 205
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 252
+    line: 255
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 782
+    line: 785
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 801
+    line: 804
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 1986
+    line: 2056
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2438
+    line: 2508
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2552
+    line: 2622
 - code: T0136
   messages:
   - '`construct` is invoked through `instance` and cannot declare `unsafe`'
@@ -3214,7 +3229,7 @@ diagnostics:
     observer binding
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3643
+    line: 3713
 - code: T0143
   messages:
   - a guarded method cannot receive an alias of its receiver's shared storage
@@ -3229,26 +3244,26 @@ diagnostics:
     consuming callable when ownership permits
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5122
+    line: 5192
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5136
+    line: 5206
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 5161
+    line: 5231
 - code: T0145
   messages:
   - returning a reference borrowed from a callable's captured environment is not supported
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3538
+    line: 3608
 - code: T0146
   messages:
   - explicit `ref` is not allowed in a return expression
   - explicit reference construction is not allowed at a call argument
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3223
+    line: 3293
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3254
+    line: 3324
 - code: T0147
   messages:
   - cannot mutate a value through an ordinary read-only reference
@@ -3267,7 +3282,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 1729
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3455
+    line: 3525
   - path: crates/terrane-compiler/src/semantics/reference_validation.rs
     line: 88
 - code: T0149
@@ -3285,11 +3300,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership/callable_captures.rs
     line: 194
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 2531
+    line: 2601
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4484
+    line: 4554
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 4644
+    line: 4714
 - code: T0150
   messages:
   - repeatable async callables cannot retain borrowed environments; use a consuming async function or
@@ -3302,7 +3317,7 @@ diagnostics:
   - a callable that captures borrowed references cannot escape its lexical scope
   sources:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
-    line: 3352
+    line: 3422
 - code: T0210
   messages:
   - enum `{}` requires a fully selected application with {} type argument(s)

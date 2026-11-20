@@ -658,6 +658,10 @@ documentation:
               quoting, and keep generator-specific option parsing in the generator.
               Package-owned generators are still selected and built as before. See
               [[tool.build-time-tools#protocol-and-diagnostics]].
+            - **Added — move-only lists and maps.** Lists, ordered maps, and unordered maps
+              can own resources without copying or implicitly sharing them. Insert and
+              remove by transfer, borrow entries by index or key, and iterate over resource
+              lists by reference. See [[std.collections#lookup]].
   see-also:
     - manual.changelog
     - lang.types.references

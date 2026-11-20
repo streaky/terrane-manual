@@ -78,7 +78,7 @@ documentation:
             - type: map of Key, Value
               contents: One value per immutable scalar key.
               order: Key insertion order is observable.
-              shape: Variable membership; supports lookup and insertion/replacement, but not key removal or clear.
+              shape: Variable membership; supports lookup, insertion/replacement, and key removal, but not clear.
             - type: unordered-map of Key, Value
               contents: One value per immutable scalar key.
               order: Deterministic but does not preserve insertion order.
@@ -149,6 +149,7 @@ documentation:
           evidence:
             - collection-lookup-errors
             - checked-map-int-refinement
+            - resource-owning-collections
           markdown: |-
             `items[index]`, `items.get; index`, and `items.get.checked; index` read lists
             and tuples. Default indexing and `.get` throw `index-error` when the integer is
@@ -168,6 +169,20 @@ documentation:
             capability reports T0135. An explicit `move` of the newly inserted argument
             alone does not establish that existing elements can be copied during separation.
             Borrow elements when a snapshot is not required.
+
+            A `list`, `map`, or `unordered-map` with resource-owning elements or mapped
+            values is itself move-only. Constructing it or inserting a resource transfers
+            ownership into the collection. Assignment and by-value calls transfer the
+            collection as a whole. Copyable collections retain their existing copy-on-write
+            semantics.
+
+            Use `ref items[index]` or a reference parameter to borrow an element, and
+            `for item in ref items` to iterate over a resource list without taking its
+            items. For a resource map, iterate over `.keys;` and borrow values by key. Owned
+            indexing, `.get`, `.get.checked`, and value-snapshot iteration are unavailable;
+            map `.values;` and `.entries;` also need value copies. Mutation must not
+            invalidate a live element borrow. This does not extend resource storage to sets
+            or tuples.
     - id: lists-and-tuples
       title: Lists and tuples
       blocks:
@@ -182,6 +197,7 @@ documentation:
             - tuple-type-boundaries
             - tuple-append-fixed
             - stable-list-sorting
+            - resource-owning-collections
           markdown: |-
             Lists expose `.length`, integer indexing, `.get.checked`, `.append; value`,
             `.set; index, value`, `.remove; index`, `.clear;`, `.sort;`, and
@@ -190,6 +206,11 @@ documentation:
             index throws `index-error`. Sorting is stable and admits only integer, floating,
             and string item descriptors; it rejects optional, union, boolean, object,
             collection, reference, resource, and comparator-callback forms.
+
+            For a move-only list, use append, set, and clear as statements: their ordinary
+            expression results would copy the updated list. Removal still returns the
+            original stored item by transfer. Replacement and clear release the values they
+            displace, and dropping the list releases what remains.
 
             Tuples expose `.length`, integer indexing, and `.get.checked`. They are
             homogeneous and fixed-length after construction, so they have no append, set,
@@ -220,9 +241,14 @@ documentation:
             Enumerating `.keys;` does not copy the values and therefore does not require the
             map's value parameter to be cloneable.
 
-            Iterating a map yields `entry of Key, Value`. A `for` loop may bind that entry
-            as one value or destructure it directly as `for key, value in mapping`. The loop
-            bindings are logical values; changing them does not mutate the map.
+            For a move-only map, use set as a statement. Both removal forms transfer the
+            stored value without copying it, and dropping the map releases the remaining
+            values.
+
+            Iterating a map with copyable values yields `entry of Key, Value`. A `for` loop
+            may bind that entry as one value or destructure it directly as
+            `for key, value in mapping`. The loop bindings are logical values; changing them
+            does not mutate the map.
     - id: sets
       title: Sets
       blocks:
