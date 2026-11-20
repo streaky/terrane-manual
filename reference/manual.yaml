@@ -84,6 +84,10 @@ navigation:
       - source: records/standard-library/streams.yaml
       - source: records/standard-library/urls.yaml
       - source: records/standard-library/uuid.yaml
+  - group: API reference
+    children:
+      - source: records/api/core/codecs.yaml
+      - source: records/api/core/codecs/encode-hex.yaml
   - group: Packages
     children:
       - source: records/packages/package-manifest.yaml

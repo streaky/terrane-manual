@@ -1,0 +1,44 @@
+format: 1
+id: api.core.codecs
+kind: namespace
+surface:
+  symbol: /core/codecs
+  aliases: []
+  namespace: null
+  owner: null
+  visibility: public
+  availability:
+    targets: [linux]
+    feature: null
+  origin:
+    category: compiler
+    package: core
+lifecycle:
+  status: current
+  stability: experimental
+documentation:
+  status: complete
+  title: /core/codecs
+  title-style: code
+  summary: Convert bytes to and from hexadecimal and Base64 text, or construct bytes from octets.
+  tags: [codecs, hex, base64, bytes]
+  sections:
+    - id: documented-entities
+      title: Documented entities
+      blocks:
+        - type: markdown
+          markdown: |-
+            This API listing currently covers one function. For the rest of the namespace
+            and how its codecs fit together, see [[std.codecs]] and
+            [[std.text-bytes-codecs#octets-and-codecs]].
+        - type: entity-index
+          query:
+            namespace: api.core.codecs
+            statuses: [current, deprecated]
+          sort: symbol
+          layout: compact
+  see-also: []
+provenance:
+  specification: []
+  conformance: []
+  compiler: null

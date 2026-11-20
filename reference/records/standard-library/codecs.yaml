@@ -41,7 +41,11 @@ documentation:
             Reusable codec values retain their selected codec and policy through use. The
             same strict alphabet and padding rules apply when encoding or decoding through a
             retained codec value or through a direct operation.
-  see-also: []
+  see-also:
+    - id: api.core.codecs
+      label: /core/codecs API reference
+    - id: api.core.codecs.encode-hex#signature-default
+      label: encode-hex signature and parameters
 
 provenance:
   specification:

@@ -18,6 +18,7 @@ It contains two publications:
   [application development map](reference/records/manual/application-development-map.yaml).
 - Looking up package configuration: use the
   [complete package manifest reference](reference/records/packages/package-manifest.yaml).
+- Looking up a documented API entity: start with the [/core/codecs pilot](reference/records/api/core/codecs.yaml). See [API entity authoring](spec.md#81-authoring-api-entity-pages) for the format and ownership split.
 - Looking up a function, operation, manifest key, diagnostic, or namespace: search
   [the generated symbol index](generated/symbol-index.yaml).
 - Checking whether surprising behavior is intended: compare the normative reference

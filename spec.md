@@ -390,6 +390,37 @@ A sync tool must preserve human-owned scalar spelling, Markdown block contents, 
 
 A plain parse-and-reserialize implementation that reformats the whole file is non-conforming. The implementation must either edit a YAML concrete syntax tree or splice canonically serialized owned subtrees into the existing document without touching authored spans.
 
+### 8.1 Authoring API entity pages
+
+Use one format-1 record per public Terrane entity, not a new document format per
+kind. Organize the files under `reference/records/api/` by source namespace and
+then by owning type. Use `surface.namespace` on top-level entities and
+`surface.owner` on members. A namespace overview can query `namespace`; a class
+page can query `owner` to list its methods, fields, and constants without
+maintaining a second inventory. Constructors carry signatures on the class
+record; static and instance methods have separate records when they are
+separately addressable and carry the applicable receiver or static contract.
+Keep topic pages for rules that span entities, and link to them from the entity
+page rather than copying their explanations.
+
+The `/core/codecs::encode-hex` pilot illustrates an independently useful page:
+show the public spelling and declaration, explain each parameter and the return
+value, state failure behavior and important edge cases, and include a runnable
+example with expected output. Use stable page, signature, and example IDs for
+cross-references. A type without a corresponding entity page may leave its
+`entity` link null; link to a relevant language topic in the prose instead.
+
+For the pilot, the surface is transcribed from the Terrane declaration and
+`provenance.compiler` is null: the rendered catalogue is derived from the YAML
+records, not yet extracted from compiler metadata. Before expanding coverage,
+prefer resolved declaration metadata for signatures, ownership, effects, types,
+and origin; keep usage explanations and examples in the manual. Source comments
+can supply short descriptions where they help readers of the implementation,
+but are not required and do not override the semantic surface or replace the
+manual's examples. New entity publication and reconciliation tooling is written
+in Terrane. The existing manual-wide Python refresh still produces the general
+catalog and legacy indexes; it is not the entity reconciliation pipeline.
+
 ## 9. Compiler surface schema
 
 ### 9.1 Common entity fields
@@ -1062,7 +1093,7 @@ Term IDs are globally unique and share the documentation-set registry.
   layout: table
 ```
 
-At least one query constraint is required. Supported sort modes are `symbol`, `title`, and `manual`; layouts are `table`, `list`, and `compact`. Results come from the assembled IR. Authors do not maintain a second member list in Markdown.
+At least one query constraint is required. `namespace` selects top-level entities by their `surface.namespace` record ID; `owner` selects members by their `surface.owner` record ID. Supported sort modes are `symbol`, `title`, and `manual`; layouts are `table`, `list`, and `compact`. Results come from the assembled IR. Authors do not maintain a second member list in Markdown.
 
 ### 11.12 Related references
 
@@ -1175,7 +1206,7 @@ See [[lang.functions.arguments#evaluation-order|evaluation order]].
 See [[rule.call.arguments.left-to-right]].
 ```
 
-The target before `|` is a global ID with an optional local `#section-or-block`. The optional label is Markdown inline content. Reference links cannot nest. Literal `[[` is escaped as `\[[`.
+The target before `|` is a global ID with an optional local anchor, such as `#evaluation-order` or `#signature-default`. Signature anchors use `signature-` followed by the signature's stable local ID and share the page-local ID space with sections and blocks. The optional label is Markdown inline content. Reference links cannot nest. Literal `[[` is escaped as `\[[`.
 
 The default label is:
 
@@ -1183,6 +1214,7 @@ The default label is:
 - the canonical code-styled ID or configured short label for a rule;
 - the defined term name for a term;
 - the authored title for a local section, example, exercise, image, or admonition;
+- the code-styled declaration for a signature;
 - the local ID when an addressable unit has no authored title.
 
 Unresolved targets, ambiguous redirects, filtered required targets, and references to non-public local IDs are errors. Normal Markdown links must not point to a manual YAML source file; authors use stable `[[...]]` identities rather than source paths.

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ba65b7f3984e1afd141049a949ecfdec996dea51b3131947ece693da635638d1
+  input-sha256: 8e711376587fb2679a18930bb5c8cddf1190a3b3c2ea0cd8483b61c401ac837a
 format: 1
 generated: true
 symbols:
@@ -2462,6 +2462,10 @@ symbols:
   record: std.text-bytes-codecs
   section: octets-and-codecs
   declaration: decode-error
+- name: decode-hex
+  record: api.core.codecs.encode-hex
+  section: behavior
+  declaration: decode-hex
 - name: decode-hex
   record: std.text-bytes-codecs
   section: compiler-synopsis

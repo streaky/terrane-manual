@@ -1,0 +1,101 @@
+format: 1
+id: api.core.codecs.encode-hex
+kind: function
+surface:
+  symbol: /core/codecs::encode-hex
+  aliases: []
+  namespace: api.core.codecs
+  owner: null
+  visibility: public
+  availability:
+    targets: [linux]
+    feature: null
+  origin:
+    category: compiler
+    package: core
+  signatures:
+    - id: default
+      form: declaration
+      display: function encode-hex string; data bytes
+      receiver: null
+      parameters:
+        - id: data
+          name: data
+          type:
+            display: bytes
+            entity: null
+            arguments: []
+            nullable: false
+          mode: required
+          default: null
+          passing: value
+      returns:
+        type:
+          display: string
+          entity: null
+          arguments: []
+          nullable: false
+      throws: []
+      contracts:
+        asynchronous: false
+        receiver-mutation: none
+lifecycle:
+  status: current
+  stability: experimental
+documentation:
+  status: complete
+  title: encode-hex
+  title-style: code
+  summary: Encodes bytes as lowercase hexadecimal text.
+  tags: [bytes, encoding, hexadecimal]
+  callables:
+    default:
+      parameters:
+        data: The [[lang.text.bytes|bytes]] to encode, in input order. Text is not accepted directly; encode it to bytes first, for example with [[std.text-bytes-codecs#encodings|UTF-8 encoding]].
+      returns: Two lowercase hexadecimal digits per byte, including a leading zero digit for bytes below 16. The result has no prefix, separators, or whitespace. Empty input returns an empty string.
+      throws: {}
+  sections:
+    - id: examples
+      title: Examples
+      blocks:
+        - type: example
+          id: encode-bytes
+          title: Encode a byte literal and an empty input
+          language: terrane
+          mode: run
+          source: |-
+            namespace reference-examples/hex
+
+            from /core/codecs import encode-hex
+
+            function main;
+              print; (encode-hex; b'TRN')
+              print; '[', (encode-hex; b''), ']'
+          response:
+            kind: stdout
+            language: text
+            display: shown
+            content: |
+              54524e
+              []
+    - id: behavior
+      title: Behavior and errors
+      blocks:
+        - type: markdown
+          markdown: |-
+            Every byte value has a hexadecimal representation, so encoding does not throw.
+            It does not decode, interpret, or validate the character encoding of the input.
+            Use `decode-hex` to go in the other direction; decoding can fail if the text is
+            not valid hexadecimal.
+  see-also:
+    - id: api.core.codecs
+      label: null
+    - id: std.codecs#codecs
+      label: Hex decoding and Base64
+provenance:
+  specification:
+    - document: language-spec
+      section: "9"
+  conformance:
+    - tests/conformance/run/grouped-imports
+  compiler: null
