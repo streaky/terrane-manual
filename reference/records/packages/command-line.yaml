@@ -230,6 +230,29 @@ documentation:
             Run from the compiler repository with `terrane` installed on `PATH`. The
             consumer fixture loads only this exported interface; it does not load the
             tracked producer source.
+    - id: reference-snapshot
+      title: Exporting API reference snapshots
+      blocks:
+        - type: markdown
+          markdown: |-
+            `terrane reference-snapshot` exports format 1 JSON from the compiler's resolved
+            Terrane surface. It accepts a manifest, package directory, or source file and
+            requires an explicit scope and output path. A namespace scope covers that
+            namespace as loaded by the input, and never qualifies for release removals.
+            `all` covers the selected manifest package's supported production declarations,
+            not bundled core or Rust dependencies. Unsupported declarations are listed as
+            omissions; an incomplete snapshot cannot establish that an API was removed.
+
+            The snapshot includes a Terrane declaration view of Rust projections for
+            inspection. The standalone `tools/reference-sync` tool uses the structured
+            metadata to update manual records; it does not parse that declaration view.
+        - type: example
+          id: export-reference-snapshot
+          title: Export the codecs namespace
+          language: console
+          mode: illustrative
+          source: |-
+            terrane reference-snapshot tests/conformance/run/grouped-imports/case.trn --scope /core/codecs --output codecs.json
     - id: package-management
       title: Hashing and installing Terrane libraries
       blocks:

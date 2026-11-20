@@ -1529,8 +1529,8 @@ navigation:
   - group: Core API
     numbering: none
     children:
-      - source: records/api/core/output/index.yaml
-      - source: records/api/core/types/string/index.yaml
+      - source: records/api/core/output.yaml
+      - source: records/api/core/types/string.yaml
   - generated:
       title: Diagnostics
       query:
@@ -1694,7 +1694,7 @@ Requirements:
 - Entities are sorted by reference ID.
 - Maps with semantically unordered content use canonical key order.
 - No wall-clock time, host path, random ID, or directory traversal order enters the snapshot.
-- Target/profile selection is explicit and recorded.
+- The current host target and resolved package profile are recorded. The command does not select a separate cross-compilation target.
 - Projected dependency entities retain their Terrane projection spelling and package provenance.
 - Unsupported public declarations are reported in `omissions`. Scoped exports and manifest exports with omissions are not complete. For release reconciliation, `all` currently covers only production declarations of the selected manifest package, not bundled core or demand-selected Rust dependencies.
 
@@ -1712,13 +1712,11 @@ Default invocation is read-only and emits a semantic change report. A separate `
 
 ### 18.1 Matching
 
-Matching order is:
-
-1. exact stable reference ID;
-2. explicit rename mapping in `lifecycle/renames.yaml`;
-3. otherwise unmatched.
-
-Symbol similarity is diagnostic evidence only. The tool must not infer a rename solely because an old and new symbol look alike.
+Sync matches existing pages by exact reference ID. An unmatched compiler
+entity is a scaffold candidate; an unmatched manual page is left alone except
+when evaluating a release removal. Explicit rename entries are review
+notices, not a second way to match or move records automatically. The tool
+does not infer renames from spelling.
 
 ### 18.2 Newly emitted entity
 
@@ -1739,13 +1737,16 @@ lifecycle:
 documentation:
   status: missing
   title: null
-  title-style: null
+  title-style: text
   summary: null
   tags: []
-  callables: {}
   sections: []
   see-also: []
-provenance: {}
+provenance:
+  specification: []
+  conformance: []
+  compiler:
+    profile: bundled-core
 ```
 
 The compiler-owned fields are filled from the snapshot. The tool leaves new
@@ -1754,22 +1755,17 @@ until reviewed. Match and review them before moving them into the publication.
 
 ### 18.3 Changed entity
 
-For a matched entity, sync computes a typed diff:
+Sync reports the ID of a record to be updated, and shows changed declaration
+display text and canonical symbols. Structure-only changes may have no
+display-text difference; inspect the generated YAML diff for those changes.
+Descriptions keyed to missing signatures, parameters, or thrown types are
+retained and reported as stale. The report does not audit missing descriptions.
 
-```text
-api.core.types.string.concat
-  signature default
-    parameter values
-      type: string -> text-display
-```
-
-With `--write`, it replaces the compiler-owned surface and compiler provenance. It then validates authored attachments:
-
-- descriptions keyed by retained signature and parameter IDs remain attached;
-- descriptions keyed by disappeared IDs are retained but reported as stale;
-- new signature components without documentation are reported as missing;
-- lifecycle and prose are unchanged;
-- a changed canonical symbol is reported prominently even when the stable identity matches.
+With `--write`, sync replaces changed compiler-owned surface data and updates
+compiler provenance as needed. The input package and host profile establish
+release comparability in the snapshot; bundled core records instead carry the
+stable `bundled-core` provenance marker. Lifecycle and prose are unchanged
+during a normal update. Writes are atomic per record, not across the checkout.
 
 ### 18.4 Missing entity
 
@@ -1785,36 +1781,19 @@ entity as removed.
 
 ### 18.5 Explicit rename
 
-`lifecycle/renames.yaml` uses stable IDs:
-
-```yaml
-format: 1
-renames:
-  - from: api.core.output.write-line
-    to: api.core.output.print
-    in: "0.3"
-    preserve-redirect: true
-```
-
-A rename cannot target an existing unrelated identity. Redirects are generated from the mapping. The destination record owns the current surface; historical rendering may retain the source record according to policy.
+`reference/lifecycle/renames.yaml` is an optional format-1 map with a `renames`
+list. Each entry has distinct `from` and `to` API IDs, and each `from` may occur
+only once. For an unmatched current or deprecated page, a matching `from`
+suppresses automatic retirement and prints the proposed destination for
+review. The sync tool does not validate destination ownership, apply release
+gates, move written prose, or generate redirects.
 
 ### 18.6 Report
 
-A sync report groups:
-
-```text
-added
-changed
-renamed
-missing-from-compiler
-stale-documentation
-missing-documentation
-lifecycle-conflicts
-profile-only-differences
-unchanged
-```
-
-Every item carries stable IDs and field paths. A machine-readable report uses the same typed paths as the record schema.
+The report is human-readable: it lists additions, updates, removals, rename
+notices, removed entities that reappeared, and stale callable documentation,
+then prints a count of planned or applied changes. There is no machine-readable
+diff or report of every unmatched record.
 
 ## 19. Assembly and rendering
 
