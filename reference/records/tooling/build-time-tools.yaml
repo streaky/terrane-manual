@@ -229,6 +229,14 @@ documentation:
                 Consumer tools are trusted executables; this mechanism does not claim process
                 isolation. Execution is synchronous and no wall-clock timeout is currently part
                 of the contract.
+            - type: markdown
+              markdown: |-
+                Terrane consumer executables can import `/core/build/consumer` for
+                `read-request`, `emit-source`, `emit-error`, and related protocol helpers. These
+                helpers are bundled with the compiler and need no manifest dependency. Importing
+                this namespace requires the `process` capability. The generator remains an
+                ordinary package-owned executable; importing the helpers does not select or run
+                a consumer.
         - id: generated-source-lifecycle
           title: Preparation and generated-source lifecycle
           blocks:
@@ -261,16 +269,17 @@ documentation:
                 outputs, not retaining them.
             - type: markdown
               markdown: |-
-                The optional `terrane/consumer-cache` helper under
-                `tools/annotation-consumers/cache` stores an exact input key and generated
-                source using bounded reads and atomic writes. Executable identity and arguments
-                always participate; its caller supplies external input contents and any relevant
-                metadata explicitly. Omitting metadata allows a metadata-independent generator
-                to reuse source across unrelated caller edits. The helper does not discover
-                dependencies or make policy for the compiler. Cache reads that fail or contain
-                invalid data are misses; `store` is best-effort and does not fail generation
-                when an atomic write fails or the encoded entry exceeds its size bound.
-                Consumers without preparation context may generate normally without caching.
+                The optional `source-cache` helper from `/core/build/consumer/cache` stores an
+                exact input key and generated source using bounded reads and atomic writes. It
+                needs no manifest dependency, but requires `filesystem` and `process`
+                capabilities. Executable identity and arguments always participate; its caller
+                supplies external input contents and any relevant metadata explicitly. Omitting
+                metadata allows a metadata-independent generator to reuse source across
+                unrelated caller edits. The helper does not discover dependencies or make policy
+                for the compiler. Cache reads that fail or contain invalid data are misses;
+                `store` is best-effort and does not fail generation when an atomic write fails
+                or the encoded entry exceeds its size bound. Consumers without preparation
+                context may generate normally without caching.
         - id: editor-preparation-and-trust
           title: Editor preparation and workspace trust
           blocks:
@@ -337,8 +346,8 @@ documentation:
         - type: markdown
           markdown: |-
             The tracked CLI and codec reference fixtures exercise the existing-executable
-            `command` form. The reference consumers and their shared protocol library are
-            written in Terrane. Build the compiler first, then run
+            `command` form. The reference consumers are written in Terrane and import the
+            bundled protocol helpers. Build the compiler first, then run
             `sh tools/annotation-consumers/build.sh`. The helper builds the CLI and codec
             executables into `target/annotation-consumers/` and installs fixture copies
             under `.trn/consumers/`. Neither consumer is required to build the compiler, and

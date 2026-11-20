@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ada3611bca01c79c25266dd55154384a9cd4c80f5a4dae39ccd9eb38dab9caaf
+  input-sha256: f713f695be92274ef1a72e8477b869e1b478e89c7b81e83168a53a1489a9b5cd
 format: 1
 generated: true
 diagnostics:
@@ -943,40 +943,40 @@ diagnostics:
   - malformed import
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 491
+    line: 493
 - code: S2007
   messages:
   - namespace path escapes above root
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 503
+    line: 505
 - code: S2008
   messages:
   - import has no name
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 521
+    line: 523
 - code: S2009
   messages:
   - unresolved name `{}` in `{}`
   - unknown namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 650
+    line: 652
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 660
+    line: 662
 - code: S2010
   messages:
   - name `{}` is inaccessible
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 625
+    line: 627
 - code: S2011
   messages:
   - object import collides on `{name}`; use an `as` alias
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 687
+    line: 689
 - code: S2012
   messages:
   - duplicate binding `{name}` in the same lexical scope
@@ -1149,7 +1149,7 @@ diagnostics:
   - namespace-wide dependency imports are not implemented; import dependency objects explicitly
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 570
+    line: 572
 - code: S2050
   messages: []
   sources:
@@ -1239,7 +1239,7 @@ diagnostics:
   - an explicit import alias must differ from the imported name
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 545
+    line: 547
 - code: S2110
   messages:
   - ",\n        "
@@ -3641,9 +3641,9 @@ diagnostics:
   - namespace-wide import leaves declared `{name}` from `{}` in place instead of `{}`
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 700
+    line: 702
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
-    line: 717
+    line: 719
 - code: W4005
   messages:
   - function `{}` is never referenced

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ada3611bca01c79c25266dd55154384a9cd4c80f5a4dae39ccd9eb38dab9caaf
+  input-sha256: f713f695be92274ef1a72e8477b869e1b478e89c7b81e83168a53a1489a9b5cd
 format: 1
 generated: true
 modules:
@@ -12,6 +12,50 @@ modules:
     line: 8
   - declaration: class descriptor
     line: 15
+- source: crates/terrane-compiler/src/core/build_consumer.trn
+  declarations:
+  - declaration: function error-origin document-value
+    line: 15
+  - declaration: class consumer-error implements throwable
+    line: 18
+  - declaration: function construct; declaration document-value, message string
+    line: 22
+  - declaration: function render string
+    line: 26
+  - declaration: function get document-value; value document-value, name string
+    line: 29
+  - declaration: function at document-value; value document-value, index int
+    line: 35
+  - declaration: function text string; value document-value
+    line: 41
+  - declaration: function truth bool; value document-value
+    line: 44
+  - declaration: function has bool; value document-value, name string
+    line: 47
+  - declaration: function scalar document-value throws consumer-error; value document-value
+    line: 51
+  - declaration: function annotation document-value throws consumer-error; declaration document-value,
+      suffix string, namespace string
+    line: 70
+  - declaration: function quote string; value string
+    line: 109
+  - declaration: function selected document-value throws consumer-error; request document-value, kind
+      string
+    line: 120
+  - declaration: function option string|none throws consumer-error; name string
+    line: 135
+  - declaration: function flag bool; name string
+    line: 158
+  - declaration: function json-quote string; value string
+    line: 165
+  - declaration: function read-request document-value throws consumer-error
+    line: 169
+  - declaration: function emit-source; identity string, source string
+    line: 186
+  - declaration: function emit-error; declaration document-value, message string
+    line: 203
+- source: crates/terrane-compiler/src/core/build_consumer_cache.trn
+  declarations: []
 - source: crates/terrane-compiler/src/core/codecs.trn
   declarations:
   - declaration: class decode-result

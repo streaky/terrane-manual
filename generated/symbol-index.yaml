@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e94b3966723a528a8ff07c7be02a91750ff267a0294a56d7a049627868f8c322
+  input-sha256: 8ce624399fb4bfbcb0eeaf8b13294b72caa74ae79fff6dababdea7045b95a2d9
 format: 1
 generated: true
 symbols:
@@ -68,6 +68,14 @@ symbols:
   record: lang.declarations.annotations
   section: model
   declaration: /core/annotations
+- name: /core/build/consumer
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: /core/build/consumer
+- name: /core/build/consumer/cache
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: /core/build/consumer/cache
 - name: /core/collections
   record: book.decisions-and-repetition
   section: ranges-and-ordinary-iteration
@@ -436,6 +444,14 @@ symbols:
   record: std.networking.operations
   section: listener-backlog
   declaration: /proc/sys/net/core/somaxconn
+- name: /terrane/annotation-consumer-protocol
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: /terrane/annotation-consumer-protocol
+- name: /terrane/consumer-cache
+  record: manual.changelog.unreleased
+  section: changes-2026-11-20
+  declaration: /terrane/consumer-cache
 - name: /work-report/errors
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths

@@ -649,6 +649,12 @@ documentation:
               declarations and a Rust projection view. The Terrane reference sync tool uses
               the snapshot to refresh generated manual signatures without replacing authored
               documentation. See [[tool.packages.command-line#reference-snapshot]].
+            - **Breaking — bundled build consumer helpers.** Import `/core/build/consumer`
+              and `/core/build/consumer/cache` in place of
+              `/terrane/annotation-consumer-protocol` and `/terrane/consumer-cache`. Remove
+              the corresponding path dependencies from consumer manifests. Package-owned
+              generators are still selected and built as before. See
+              [[tool.build-time-tools#protocol-and-diagnostics]].
   see-also:
     - manual.changelog
     - lang.types.references
