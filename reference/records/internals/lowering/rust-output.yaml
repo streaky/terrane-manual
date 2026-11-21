@@ -47,6 +47,12 @@ documentation:
             is needed, lowering emits only the entrypoint, without a support include. Output
             regeneration removes an obsolete generated support sidecar.
 
+            For executables without source-debug output or opaque Rust, lowering omits
+            ordinary Rust functions not reachable from emitted entrypoints, test dispatch or
+            other retained items. Callable values count as references. Library artifacts
+            retain their definitions. Terrane still semantically checks authored bodies even
+            when the resulting executable does not use them.
+
             Ordinary reference arguments and results are declaration-directed. Semantic
             validation proves the argument place and returned lender path; lowering emits a
             borrow or reborrow without cloning or upgrading the owner. Argument-site and
