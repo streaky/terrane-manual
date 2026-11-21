@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 93282ddc1ff12a99772c4bbab24cd66d64d64f395d0d04d52f0eec2681f3fc75
+  input-sha256: a2f9f14a5549aa838d2456615665412ae6e54131e278f6624e87266bcfdbd522
 format: 1
 generated: true
 diagnostics:
@@ -1398,7 +1398,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 3329
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 10042
+    line: 10024
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 599
   - path: crates/terrane-compiler/src/semantics/types.rs
@@ -2239,7 +2239,7 @@ diagnostics:
   - the selected minimal profile does not retain reflection metadata
   sources:
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 10060
+    line: 10042
 - code: T0071
   messages:
   - descriptor has no retained member `{member_name}`
@@ -2698,11 +2698,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 1281
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8074
+    line: 8056
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8075
+    line: 8057
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8097
+    line: 8079
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 866
 - code: T0118
@@ -2711,11 +2711,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 763
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4269
+    line: 4251
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7991
+    line: 7973
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8060
+    line: 8042
 - code: T0119
   messages:
   - mutable callback inputs require an identity-preserving native representation
@@ -2792,33 +2792,33 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects/native_associated.rs
     line: 91
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4289
+    line: 4271
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4465
+    line: 4447
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4837
+    line: 4819
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4957
+    line: 4939
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4990
+    line: 4972
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5059
+    line: 5041
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5091
+    line: 5073
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5125
+    line: 5107
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 5265
+    line: 5247
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6433
+    line: 6415
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6442
+    line: 6424
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6857
+    line: 6839
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7603
+    line: 7585
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8127
+    line: 8109
   - path: crates/terrane-compiler/src/semantics/scope_flow.rs
     line: 845
   - path: crates/terrane-compiler/src/semantics/scoped_regions/native_loans.rs
@@ -2969,61 +2969,61 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/native_constructors.rs
     line: 834
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3863
+    line: 3845
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 3872
+    line: 3854
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 4887
+    line: 4869
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6667
+    line: 6649
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6824
+    line: 6806
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 6966
+    line: 6948
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7001
+    line: 6983
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7022
+    line: 7004
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7033
+    line: 7015
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7060
+    line: 7042
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7077
+    line: 7059
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7096
+    line: 7078
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7127
+    line: 7109
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7195
+    line: 7177
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7214
+    line: 7196
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7249
+    line: 7231
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7270
+    line: 7252
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7278
+    line: 7260
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7363
+    line: 7345
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7389
+    line: 7371
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7624
+    line: 7606
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 7672
+    line: 7654
+  - path: crates/terrane-compiler/src/semantics/objects.rs
+    line: 7990
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 8008
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8026
+    line: 8011
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8029
+    line: 8035
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8053
+    line: 8071
   - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8089
-  - path: crates/terrane-compiler/src/semantics/objects.rs
-    line: 8225
+    line: 8207
 - code: T0130
   messages:
   - unsafe function `{name}` cannot be used as a function value; invoke it directly with `unsafe`
@@ -3335,11 +3335,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/enums.rs
     line: 141
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 821
+    line: 817
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1064
+    line: 1060
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1093
+    line: 1089
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1123
 - code: T0211
@@ -3381,9 +3381,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/enums.rs
     line: 267
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 700
+    line: 696
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 879
+    line: 875
 - code: T0216
   messages:
   - '`none` cannot bind payloads'
@@ -3403,25 +3403,25 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/enums.rs
     line: 297
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 712
+    line: 708
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 730
+    line: 726
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 739
+    line: 735
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 747
+    line: 743
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 762
+    line: 758
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 910
+    line: 906
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 955
+    line: 951
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 966
+    line: 962
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 979
+    line: 975
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 990
+    line: 986
 - code: T0217
   messages:
   - non-exhaustive native enum match requires an `else` arm
@@ -3441,27 +3441,27 @@ diagnostics:
   - enum application disagrees with its destination
   sources:
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 803
+    line: 799
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 813
+    line: 809
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 835
+    line: 831
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 848
+    line: 844
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 927
+    line: 923
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 935
+    line: 931
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1041
+    line: 1037
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1047
+    line: 1043
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1055
+    line: 1051
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1078
+    line: 1074
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1123
+    line: 1119
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 944
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -3477,9 +3477,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/enums.rs
     line: 278
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 887
+    line: 883
   - path: crates/terrane-compiler/src/semantics/enums.rs
-    line: 1000
+    line: 996
 - code: T0220
   messages:
   - construction must initialize every required field on every successful path; missing {}
