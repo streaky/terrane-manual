@@ -60,20 +60,22 @@ documentation:
             - native_test_timeout_terminates_the_isolated_process
             - end_to_end_artifact_passes_inputs_and_drains_large_output
           markdown: |-
-            The compiler semantically analyzes production sources and every populated test
-            root before selection, then lowers and backend-validates one native dispatch
-            registry only for each tier containing a selected case. Consequently, filters
-            never hide frontend errors, while a backend-only failure in an unselected tier
-            is reported when that tier is selected. `--list` and an empty selection do not
-            lower or build runners. The CLI runs each selected case in a fresh working
-            directory and process with a deterministic seed, controlled environment and
-            arguments, incrementally bounded stdout/stderr, and an enforced typed deadline.
-            A crash, exit, or timeout is confined to that case. End-to-end cases receive the
-            actual built application as `string|none` through `application-artifact`.
-            Capability-gated `/core/testing/process` provides clonable value-style
-            `process-fixture` builders whose independent snapshots carry arguments,
-            environment, standard input, and deadline into `run-process`. Results expose
-            independent stdout and stderr truncation flags.
+            Discovery covers production sources and every populated test root before
+            selection. For each tier containing a selected case, the CLI lowers and
+            backend-validates a native dispatch registry. The CLI can reuse successful
+            discovery and compiled runner artifacts for exactly matching inputs, including
+            generated sources; it never caches test outcomes. Filters never hide frontend
+            errors, while a backend-only failure in an unselected tier is reported when that
+            tier is selected. `--list` and an empty selection do not lower or build runners.
+            The CLI runs each selected case in a fresh working directory and process with a
+            deterministic seed, controlled environment and arguments, incrementally bounded
+            stdout/stderr, and an enforced typed deadline. A crash, exit, or timeout is
+            confined to that case. End-to-end cases receive the actual built application as
+            `string|none` through `application-artifact`. Capability-gated
+            `/core/testing/process` provides clonable value-style `process-fixture` builders
+            whose independent snapshots carry arguments, environment, standard input, and
+            deadline into `run-process`. Results expose independent stdout and stderr
+            truncation flags.
     - id: framework
       title: Assertions and reports
       blocks:
