@@ -664,6 +664,9 @@ documentation:
               lists by reference. Expression removal through a `mutable ref` operates on the
               caller's collection. Named arguments continue to track ownership transfers.
               See [[std.collections#lookup]].
+            - **Fixed — built-in collection mutator argument names.** Unknown or misplaced
+              names now report a source diagnostic. Use positional arguments or name them in
+              their documented order. See [[std.collections#lookup]].
   see-also:
     - manual.changelog
     - lang.types.references
