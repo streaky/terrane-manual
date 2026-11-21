@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 95159d8ea782b81060197cd6daf9286f40f1019efc28fe9ae02fc37bba8e6c00
+  input-sha256: 36b6c514f9cc2fda023cea71df1fddeb4178f0ace205d7ec919c675a94006a2d
 format: 1
 generated: true
 symbols:
@@ -4697,6 +4697,10 @@ symbols:
   record: lang.lexical-structure.source-layout
   section: utf8-layout
   declaration: INDENT
+- name: index
+  record: std.collections
+  section: lookup
+  declaration: index
 - name: index-error
   record: book.errors
   section: designing-useful-error-values
@@ -5381,6 +5385,10 @@ symbols:
   record: lang.lexical-structure.keywords
   section: always-reserved
   declaration: item
+- name: item
+  record: std.collections
+  section: lookup
+  declaration: item
 - name: Item
   record: std.concurrency.channels
   section: construction
@@ -5473,6 +5481,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-03
   declaration: JsonDocument
+- name: key
+  record: std.collections
+  section: lookup
+  declaration: key
 - name: key-length
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -11813,6 +11825,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-03
   declaration: Value
+- name: value
+  record: std.collections
+  section: lookup
+  declaration: value
 - name: value
   record: std.concurrency.channels
   section: operations

@@ -33,8 +33,7 @@ documentation:
             A package must admit `filesystem` in `profile.capabilities` before it may import
             `/core/filesystem`. Calling `filesystem-capability` acquires the authority value
             passed as the first parameter to filesystem operations. Possessing a `path`
-            alone grants no access. These capability and import requirements are part of the
-            compiler's implemented standard-library surface, not a deferred design.
+            alone grants no access.
 
             The authority is an ordinary value parameter. File and directory handles are
             resource-owning values: functions taking `file ref file-handle` borrow a live
