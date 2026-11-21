@@ -188,11 +188,12 @@ documentation:
             `(ref items[index]).name`. An indexed argument for a reference-typed parameter
             is borrowed by the parameter contract instead.
 
-            Built-in mutator arguments stay in written order even when named. Append and add
-            accept `value` or `item`. Set uses `index` for lists or `key` for maps in the
-            first slot and `value` in the second. Remove accepts `index`, `key`, or `value`
-            or `item` for sets; checked map removal accepts `key`. Unknown or misplaced
-            names are rejected.
+            Built-in lookup and mutator arguments stay in written order even when named.
+            Both lookup forms accept `index` for lists and tuples or `key` for maps. Append
+            and add accept `value` or `item`. Set uses `index` for lists or `key` for maps
+            in the first slot and `value` in the second. Remove accepts `index` for lists,
+            `key` for maps, or `value` or `item` for sets. Checked map removal accepts
+            `key`. Unknown or misplaced names are rejected.
     - id: lists-and-tuples
       title: Lists and tuples
       blocks:
