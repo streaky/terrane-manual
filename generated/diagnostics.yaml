@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d6e3ce64781af24cd5c6f64d797a765a85b7ea0b77a60f2fd04057cdb81aec10
+  input-sha256: f0d68dc462ccfc03e8486d7c398151a2ff07ff142c82beb7dbf6c47ff6cbbd58
 format: 1
 generated: true
 diagnostics:
@@ -1496,12 +1496,12 @@ diagnostics:
   sources:
   - path: crates/terrane-compiler/src/lowering/runtime_support.rs
     line: 955
+  - path: crates/terrane-compiler/src/semantics/assignment_tickets.rs
+    line: 115
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 253
   - path: crates/terrane-compiler/src/semantics/bindings.rs
     line: 270
-  - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 420
 - code: T0008
   messages:
   - '`{}` from `{source_type}` requires one numeric destination'
@@ -1672,17 +1672,17 @@ diagnostics:
   - an `if` statement requires a condition
   sources:
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 649
+    line: 638
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 925
+    line: 914
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 951
+    line: 940
+  - path: crates/terrane-compiler/src/semantics/scope_validation.rs
+    line: 953
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 964
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 975
-  - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 993
+    line: 982
 - code: T0015
   messages:
   - the declared return type `{expected}` is owned, but the returned value is `ref {expected}`
@@ -1694,15 +1694,15 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/ownership.rs
     line: 3353
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 482
+    line: 471
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 1176
+    line: 1165
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 1182
+    line: 1171
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 1220
+    line: 1209
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 1252
+    line: 1241
   - path: crates/terrane-compiler/src/semantics/types.rs
     line: 2226
 - code: T0016
@@ -1745,7 +1745,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 518
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 878
+    line: 867
 - code: T0017
   messages:
   - '`{member}` is not valid syntax; use `.coerce.{}`'
@@ -2820,7 +2820,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/objects.rs
     line: 8109
   - path: crates/terrane-compiler/src/semantics/scope_flow.rs
-    line: 844
+    line: 845
   - path: crates/terrane-compiler/src/semantics/scoped_regions/native_loans.rs
     line: 176
   - path: crates/terrane-compiler/src/semantics/scoped_regions/native_loans.rs
@@ -3551,11 +3551,11 @@ diagnostics:
   - a scoped-access capture requires a callable owned within the same region
   sources:
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
+    line: 649
+  - path: crates/terrane-compiler/src/semantics/scope_validation.rs
     line: 660
   - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 671
-  - path: crates/terrane-compiler/src/semantics/scope_validation.rs
-    line: 693
+    line: 682
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
     line: 233
   - path: crates/terrane-compiler/src/semantics/scoped_regions.rs
