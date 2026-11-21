@@ -33,7 +33,8 @@ documentation:
             A package must admit `filesystem` in `profile.capabilities` before it may import
             `/core/filesystem`. Calling `filesystem-capability` acquires the authority value
             passed as the first parameter to filesystem operations. Possessing a `path`
-            alone grants no access.
+            alone grants no access. These capability and import requirements are part of the
+            compiler's implemented standard-library surface, not a deferred design.
 
             The authority is an ordinary value parameter. File and directory handles are
             resource-owning values: functions taking `file ref file-handle` borrow a live
@@ -266,11 +267,13 @@ documentation:
 
             File and directory handles are resource-owning linear values: ownership is
             transferred rather than duplicated. Releasing the underlying host resource is
-            idempotent, using the same resource-release discipline as streams.
-            Resource-owning collection types are rejected. File handles provide
-            descriptor-backed `flush`, `sync-data`, and `sync-all` operations. When a file
-            write completes only partially, its result reports the completed offset so that
-            writing can resume at the correct position.
+            idempotent, using the same resource-release discipline as streams. Lists and
+            ordered/unordered maps may contain resource-owning values using move-only
+            storage; insertion transfers ownership, while sets and tuples still reject such
+            elements. See [[std.collections#lookup]]. File handles provide descriptor-backed
+            `flush`, `sync-data`, and `sync-all` operations. When a file write completes
+            only partially, its result reports the completed offset so that writing can
+            resume at the correct position.
 
             Whole-file reads require an explicit bound. If the content exceeds that bound,
             the read fails rather than returning truncated data. Atomic replacement creates

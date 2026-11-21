@@ -661,7 +661,9 @@ documentation:
             - **Added — move-only lists and maps.** Lists, ordered maps, and unordered maps
               can own resources without copying or implicitly sharing them. Insert and
               remove by transfer, borrow entries by index or key, and iterate over resource
-              lists by reference. See [[std.collections#lookup]].
+              lists by reference. Expression removal through a `mutable ref` operates on the
+              caller's collection. Named arguments continue to track ownership transfers.
+              See [[std.collections#lookup]].
   see-also:
     - manual.changelog
     - lang.types.references

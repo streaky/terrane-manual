@@ -183,6 +183,10 @@ documentation:
             map `.values;` and `.entries;` also need value copies. Mutation must not
             invalidate a live element borrow. This does not extend resource storage to sets
             or tuples.
+
+            Indexed field and method access requires an explicit borrow, as in
+            `(ref items[index]).name`. An indexed argument for a reference-typed parameter
+            is borrowed by the parameter contract instead.
     - id: lists-and-tuples
       title: Lists and tuples
       blocks:
