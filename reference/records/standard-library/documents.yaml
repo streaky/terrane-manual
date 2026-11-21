@@ -201,12 +201,12 @@ documentation:
             diagnostic paths. It transfers owned strings and map keys into the destination.
             Dynamic document APIs retain eagerly computed observable encoded values. Those
             snapshots do not impose a second 16 MiB output ceiling on parsing with a raised
-            byte budget or on document construction. Repeated incremental mutation still
-            re-encodes the complete document and can have quadratic cost; no lazy
-            encoded-property redesign is implemented. Use typed streaming encoding when
-            materializing a dynamic tree is unnecessary. Custom document encoding uses the
-            canonical UTF-16 key order, while finite float encoding uses compact,
-            round-tripping notation for extreme magnitudes.
+            byte budget or on document construction. List construction and map finalization
+            build the tree and encode it once. Appending entries does not encode the growing
+            map; explicitly finalizing it after every append repeats that work. Use typed
+            streaming encoding when materializing a dynamic tree is unnecessary. Custom
+            document encoding uses the canonical UTF-16 key order, while finite float
+            encoding uses compact, round-tripping notation for extreme magnitudes.
 provenance:
   specification:
     - document: language-spec

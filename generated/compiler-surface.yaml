@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 24a983d3812732e82b8121159102b293b1403832bbadfe180550bb2ddcfcaaf0
+  input-sha256: 1376c81ead01f5fb9b247cb4ecd053fae6c00dca70db9151add6434b9d1be3dc
 format: 1
 generated: true
 modules:
@@ -226,20 +226,18 @@ modules:
   - declaration: function make-document-decimal document-result; value string
     line: 122
   - declaration: class document-map-entries
-    line: 124
-  - declaration: function construct
-    line: 127
+    line: 125
   - declaration: function append-document-map-entry document-map-entries; entries document-map-entries,
       key string, value document-value
-    line: 133
+    line: 131
   - declaration: function make-document-list document-result; values list of document-value
-    line: 137
+    line: 135
   - declaration: function make-document-map document-result; entries document-map-entries
-    line: 145
+    line: 138
   - declaration: function mapping-required-fields list of string; mapping document-mapping
-    line: 147
+    line: 140
   - declaration: function decode-document document-result; value document-value, mapping document-mapping
-    line: 172
+    line: 165
 - source: crates/terrane-compiler/src/core/filesystem.trn
   declarations:
   - declaration: class filesystem-operation-result
