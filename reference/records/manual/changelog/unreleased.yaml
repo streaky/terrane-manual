@@ -697,6 +697,10 @@ documentation:
               and optional captures. Invalid patterns and incomplete searches, such as
               backtracking-limit exhaustion, raise distinct typed errors. See [[std.regex]].
               `text-range` can now be written in type annotations and function signatures.
+            - **Added — package-default test suites.** Bare `terrane test` uses the current
+              directory. A manifest can select a nested suite with `testing.suite`, and
+              tests can locate static fixtures with `test-package-root` without changing
+              their isolated working directory. See [[tool.packages.testing]].
   see-also:
     - manual.changelog
     - lang.types.references

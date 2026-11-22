@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 03a61dba0c149f4125ca2703034c67bcdf45bec853c8dfe12992ed277fc51c14
+  input-sha256: d4a48d53a4d979679800f1b5f14b3a2005820e33e51be5e0bb01817f9355f622
 format: 1
 generated: true
 modules:
@@ -1072,8 +1072,10 @@ modules:
     line: 226
   - declaration: function test-tier string|none
     line: 229
+  - declaration: function test-package-root string|none
+    line: 232
   - declaration: function advance-time none throws test-failure; nanoseconds int
-    line: 233
+    line: 236
 - source: crates/terrane-compiler/src/core/testing_process.trn
   declarations:
   - declaration: class process-fixture

@@ -158,6 +158,11 @@ documentation:
               default: required non-empty table
               repeatability: once per namespace
               example: app = "src"
+            - path: testing.suite
+              type: bounded relative path to a nested package.toml
+              default: test the package directly
+              repeatability: once, mutually exclusive with test roots and testing.profile
+              example: suite = "tests/suite/package.toml"
             - path: testing.unit
               type: bounded relative directory
               default: tests/unit

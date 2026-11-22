@@ -34,10 +34,12 @@ documentation:
           since: null
           evidence:
             - native_test_command_reports_isolated_cases_deterministically
+            - bare_test_runs_manifest_suite_with_its_fixture_root
             - test_discovery_ignores_nested_compiler_inventory
           markdown: |-
-            `terrane test <package>` discovers top-level, parameterless `test-*` functions
-            returning `none` below `tests/unit`, `tests/integration`, and
+            `terrane test` uses the current directory unless an explicit package directory
+            or manifest is supplied. It discovers top-level, parameterless `test-*`
+            functions returning `none` below `tests/unit`, `tests/integration`, and
             `tests/end-to-end`. Functions remain ordinary Terrane declarations and may be
             synchronous, asynchronous, or throwing. Discovery order is tier,
             package-relative source path, source order, and function name. Recursive
@@ -49,6 +51,11 @@ documentation:
             selects a test profile name, capability allowlist, and panic policy; omitted
             settings inherit the ordinary package profile. Tests acquire no capability
             absent from those declarations.
+
+            As an alternative to overriding test roots or profiles, `[testing]` may set
+            `suite` to a bounded relative path to a nested `package.toml`. This selects that
+            package for testing only. The suite owns the roots, profile, consumers, and
+            end-to-end artifact. A selected suite cannot select another suite.
     - id: execution
       title: Running isolated cases
       blocks:
@@ -105,6 +112,10 @@ documentation:
             timeout milliseconds, per-tier compilation status and diagnostics, stable case
             identities, structured outcomes and causes, source spans, precise durations, and
             byte-exact incrementally bounded output with independent truncation flags.
+
+            `test-package-root` returns the absolute directory of the selected package (the
+            suite directory when configured), or `none` without CLI test context. Use it to
+            locate checked-in fixtures independently of the case working directory.
   see-also:
     - tool.packages.command-line
 

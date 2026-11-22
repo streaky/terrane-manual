@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 60cfc47e69d5e6eb186d5e6887072b3a86729c43e7be300056719baf8e0a61ef
+  input-sha256: b3066f601e710735a22d4dda14e545d60b9e6ccda30015d1c412543a4d99c783
 format: 1
 generated: true
 symbols:
@@ -6780,6 +6780,10 @@ symbols:
   record: tool.packages.testing
   section: discovery
   declaration: none
+- name: none
+  record: tool.packages.testing
+  section: framework
+  declaration: none
 - name: normal
   record: lang.numerics.floating-point
   section: values
@@ -7254,6 +7258,10 @@ symbols:
 - name: package.toml
   record: tool.packages.terrane-packages
   section: package-manifest
+  declaration: package.toml
+- name: package.toml
+  record: tool.packages.testing
+  section: discovery
   declaration: package.toml
 - name: package_uses_advanced_streams
   record: internals.execution.runtime-selection
@@ -9852,6 +9860,10 @@ symbols:
   record: internals.testing.conformance-timing
   section: consolidation-boundaries
   declaration: suite
+- name: suite
+  record: tool.packages.testing
+  section: discovery
+  declaration: suite
 - name: summarize
   record: book.testing-and-debugging
   section: choose-the-test-boundary-deliberately
@@ -10840,6 +10852,14 @@ symbols:
   record: tool.packages.command-line
   section: generated-package-state
   declaration: test
+- name: test-package-root
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: test-package-root
+- name: test-package-root
+  record: tool.packages.testing
+  section: framework
+  declaration: test-package-root
 - name: test-scenario
   record: internals.optimization.proof-guided-lowering
   section: compiler-synopsis
@@ -10868,6 +10888,14 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: testing.profile
+- name: testing.suite
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: testing.suite
+- name: testing.suite
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: testing.suite
 - name: testing.unit
   record: tool.packages.package-manifest
   section: fields
