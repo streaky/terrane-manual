@@ -683,6 +683,11 @@ documentation:
             - **Changed — reuse unchanged test compilation.** The CLI can reuse discovery
               and runner compilation; it still runs the selected cases every time. See
               [[tool.packages.command-line#compilation-reuse]].
+            - **Changed — faster semantic analysis.** The compiler indexes mutation sites
+              instead of repeatedly scanning syntax for each binding, and can reuse those
+              candidates for unchanged files. For larger source sets it also checks flow,
+              calls, and moves across files in parallel while preserving diagnostic order.
+              See [[tool.packages.command-line#compilation-reuse]].
             - **Added — owned temporary files and directories.** `/core/filesystem` can
               create private temporary entries that clean up on drop. Explicit deletion
               reports errors; `keep;` transfers responsibility to the caller. See

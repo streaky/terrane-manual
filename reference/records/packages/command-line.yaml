@@ -112,13 +112,15 @@ documentation:
             native dependency inputs, Cargo configuration, and environment inputs. Same-size
             edits are changes; timestamps alone never authorize reuse.
 
-            On a package snapshot miss, binding analysis can still reuse cached mutation
-            sites for unchanged source files. This cache records file-local candidates, not
-            resolved mutation decisions. Terrane reconciles those candidates against the
-            current package's types and callable contracts, so an edit can change the
-            verdict for a caller whose own text has not changed. If semantic normalization
-            rewrites a file's syntax, reuse also requires the normalized syntax shape to
-            match.
+            On a package snapshot miss, binding analysis can still reuse file-local mutation
+            candidates from `.trn/cache/mutation-sites/`. Each source path gets one slot.
+            Reuse requires exact source contents and matching normalized syntax, because
+            edits elsewhere can change how a file is normalized. Terrane resolves the cached
+            candidates against current types and callable contracts rather than caching
+            whether a particular binding is mutable. Renamed and deleted paths leave unused
+            slots until `.trn/cache` is removed. A single compilation may see only one test
+            tier, so absence from that compilation is not proof that a cached path is no
+            longer in use.
 
             The compiler build identity includes Rust, bundled Terrane and TOML source
             inputs in the selected compiler, Rust-analysis, ABI and support crates, plus
@@ -195,9 +197,11 @@ documentation:
             compilation reuse, declaration-metadata reuse, and aggregate native query hits
             on stderr.
 
-            Each snapshot kind keeps one entry per package. Switching debug/profile or other
-            compiler options replaces the compilation entry; alternating modes may
-            recompute. Native artifact profiles retain their separate artifact slots.
+            Compilation, declaration, and native reconciliation snapshots each keep one
+            entry per package; test snapshots are separate per tier and phase. Switching
+            debug/profile or other compiler options can replace the compilation entry, so
+            alternating modes may recompute. Native artifact profiles retain their separate
+            artifact slots.
     - id: generated-package-state
       title: Generated package state and version control
       blocks:
