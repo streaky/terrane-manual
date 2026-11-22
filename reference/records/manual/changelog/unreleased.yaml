@@ -691,6 +691,7 @@ documentation:
               patterns with lookaround and backreferences, and returns first-match ranges
               and optional captures. Invalid patterns and incomplete searches, such as
               backtracking-limit exhaustion, raise distinct typed errors. See [[std.regex]].
+              `text-range` can now be written in type annotations and function signatures.
   see-also:
     - manual.changelog
     - lang.types.references

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 509222983f004a0fe6b9ec4c0eb94689ee862526e27a15cf8c669a7ccd872661
+  input-sha256: 2ad30ae4f83259bca2f23d839d5d6485c056fcbe88f201549eb43e7204f26744
 format: 1
 generated: true
 symbols:
@@ -8211,6 +8211,10 @@ symbols:
   record: std.regex
   section: compiling-and-searching
   declaration: regex-error
+- name: regex-error
+  record: std.regex
+  section: dialect
+  declaration: regex-error
 - name: regex-match-error
   record: std.regex
   section: compiler-synopsis
@@ -8227,6 +8231,10 @@ symbols:
   record: std.regex
   section: compiling-and-searching
   declaration: regex-pattern
+- name: regex-syntax
+  record: std.regex
+  section: dialect
+  declaration: regex-syntax
 - name: registers
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -9688,6 +9696,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: async-members
   declaration: str
+- name: STRASSE
+  record: std.regex
+  section: dialect
+  declaration: STRASSE
 - name: strict-total
   record: book.errors
   section: exercises
@@ -9800,6 +9812,10 @@ symbols:
   record: std.text-bytes-codecs
   section: text-and-bytes
   declaration: string
+- name: string.case-fold
+  record: std.regex
+  section: dialect
+  declaration: string.case-fold
 - name: string.encode
   record: std.text-bytes-codecs
   section: encodings
@@ -10907,6 +10923,14 @@ symbols:
 - name: text-range
   record: lang.text.unicode
   section: unicode-views
+  declaration: text-range
+- name: text-range
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: text-range
+- name: text-range
+  record: std.regex
+  section: captures
   declaration: text-range
 - name: text-reader
   record: std.streams

@@ -36,6 +36,14 @@ documentation:
             All three search methods can throw `regex-match-error` when the engine cannot
             complete the search, including when it reaches the backtracking limit. `false`
             and `none` mean the search finished without a match.
+
+            Regex search is first-match only: there is no match iteration, regex
+            replacement, regex split, or search-from-offset operation. Slicing the input
+            changes the origin of range offsets and the meaning of anchors and lookbehind;
+            it is not equivalent to searching from an offset.
+
+            Bundled facilities are loaded as namespaces, not per imported symbol. Importing
+            only a regex error type can still link the regex backend.
         - type: example
           id: core-regex-example
           title: Extracting a named capture
@@ -69,7 +77,9 @@ documentation:
 
             Ranges retain the original immutable text and use the same byte, scalar, and
             grapheme views as literal-search ranges. UTF-8 byte offsets are measured from
-            the start of the original input and the end is exclusive.
+            the start of the original input and the end is exclusive. Write `text-range` in
+            type annotations and function signatures without importing it; `text-range|none`
+            expresses an optional result.
     - id: dialect
       title: Pattern syntax and limits
       blocks:
@@ -82,6 +92,17 @@ documentation:
             for ASCII protocols. Case-sensitive matching is the default; pass
             `case-insensitive=true` or use the dialect's inline flags.
 
+            Matching compares Unicode scalars, not grapheme clusters. For example, a dot can
+            match the base letter of a decomposed accented character without consuming its
+            combining mark. Case-insensitive matching uses the engine's simple case folding,
+            not Terrane's full `string.case-fold`: `straße` does not case-insensitively
+            match `STRASSE`. Regex character classes, word boundaries, and folding follow
+            the regex engine's Unicode tables, outside Terrane's ICU4X Unicode profile. The
+            workspace lock currently uses `regex-syntax` tables from Unicode 16.0.0;
+            generated builds resolve the engine's transitive dependencies in their own Cargo
+            locks. Updating ICU4X does not update regex matching; it can change the grapheme
+            view of a returned range.
+
             Lookahead (`(?=...)`, `(?!...)`), lookbehind (`(?<=...)`, `(?<!...)`), and
             numbered (`\1`) and named (`\k<name>`) backreferences use the same `compile`
             function. No flag is needed. The engine delegates regular parts to its automata
@@ -89,14 +110,18 @@ documentation:
             guarantee of PCRE, Python, or ECMAScript compatibility.
 
             The engine limits VM program size at compile time and backtracking steps per
-            search at run time. A backtracking limit is not a wall-clock deadline, a total
-            memory bound, or a budget across multiple searches. Applications accepting
-            caller-supplied patterns and text must bound their own workload.
+            search at run time. Variable-length lookbehind can raise `regex-error` at
+            compile time if its reverse DFA needs more than the configured cache capacity. A
+            backtracking limit is not a wall-clock deadline, a total memory bound, or a
+            budget across multiple searches. Applications accepting caller-supplied patterns
+            and text must bound their own workload.
   see-also:
     - lang.text.search
 
 provenance:
-  specification: []
+  specification:
+    - document: language-scoreboard
+      section: regex
   conformance: []
   compiler: null
 

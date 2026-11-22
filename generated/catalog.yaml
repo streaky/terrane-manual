@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 509222983f004a0fe6b9ec4c0eb94689ee862526e27a15cf8c669a7ccd872661
+  input-sha256: 2ad30ae4f83259bca2f23d839d5d6485c056fcbe88f201549eb43e7204f26744
 format: 2
 generated: true
 records:
@@ -2307,7 +2307,9 @@ records:
   documentation-status: complete
   surface: /core/regex
   provenance:
-    specification: []
+    specification:
+    - document: language-scoreboard
+      section: regex
     conformance: []
     compiler: null
   sections:

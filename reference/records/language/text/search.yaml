@@ -67,7 +67,8 @@ documentation:
             Unicode-scalar, and grapheme views. Non-empty literal searches compare scalar
             sequences rather than requiring matches to align with grapheme boundaries. A
             match may therefore end inside a grapheme, so grapheme-oriented access must use
-            the checked view.
+            the checked view. The type name `text-range` can be written without an import,
+            including as `text-range|none` in bindings and function signatures.
 
             The empty pattern has explicit grapheme-boundary behavior:
 
