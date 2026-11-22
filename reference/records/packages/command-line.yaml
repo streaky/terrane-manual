@@ -112,6 +112,14 @@ documentation:
             native dependency inputs, Cargo configuration, and environment inputs. Same-size
             edits are changes; timestamps alone never authorize reuse.
 
+            On a package snapshot miss, binding analysis can still reuse cached mutation
+            sites for unchanged source files. This cache records file-local candidates, not
+            resolved mutation decisions. Terrane reconciles those candidates against the
+            current package's types and callable contracts, so an edit can change the
+            verdict for a caller whose own text has not changed. If semantic normalization
+            rewrites a file's syntax, reuse also requires the normalized syntax shape to
+            match.
+
             The compiler build identity includes Rust, bundled Terrane and TOML source
             inputs in the selected compiler, Rust-analysis, ABI and support crates, plus
             their manifests/build scripts and workspace toolchain inputs. Hidden files and
@@ -126,9 +134,10 @@ documentation:
             scripts can inspect any environment variable; the whole environment is
             conservatively keyed. Terminal changes can therefore miss in that case.
 
-            External disk/environment inputs are captured before work and rechecked before
-            publishing. A change during analysis or consumer execution suppresses
-            reuse/publication rather than storing old results under new inputs.
+            For package-wide snapshots, external disk/environment inputs are captured before
+            work and rechecked before publishing. A change during analysis or consumer
+            execution suppresses reuse/publication rather than storing old results under new
+            inputs.
 
             Declaration consumers have a separate successful metadata snapshot in
             `.trn/cache/declarations.json`. Successful declaration analysis remains reusable
