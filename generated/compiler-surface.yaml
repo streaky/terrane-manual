@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fe52440bcb926870df5e5504c825b805a3820413a878f993574e3c6f2dea7ff6
+  input-sha256: d19f1698fd8aefe1381c0e701a377d5e0aa4142521aac26570aee02f5f845f33
 format: 1
 generated: true
 modules:
@@ -834,23 +834,27 @@ modules:
     line: 5
   - declaration: function render string
     line: 11
-  - declaration: class regex-captures
+  - declaration: class regex-match-error implements throwable
     line: 14
-  - declaration: function group text-range|none; index int
+  - declaration: function render string
     line: 20
-  - declaration: function named-group text-range|none; name string
+  - declaration: class regex-captures
     line: 23
-  - declaration: class regex-pattern
-    line: 26
-  - declaration: function matches bool; text string
+  - declaration: function group text-range|none; index int
+    line: 29
+  - declaration: function named-group text-range|none; name string
     line: 32
-  - declaration: function match text-range|none; text string
+  - declaration: class regex-pattern
     line: 35
-  - declaration: function captures regex-captures|none; text string
-    line: 38
+  - declaration: function matches bool throws regex-match-error; text string
+    line: 41
+  - declaration: function match text-range|none throws regex-match-error; text string
+    line: 46
+  - declaration: function captures regex-captures|none throws regex-match-error; text string
+    line: 51
   - declaration: function compile regex-pattern throws regex-error; pattern string, case-insensitive bool
       = false
-    line: 44
+    line: 63
 - source: crates/terrane-compiler/src/core/streams.trn
   declarations:
   - declaration: class stream-operation-result

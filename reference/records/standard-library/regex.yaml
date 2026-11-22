@@ -15,7 +15,7 @@ documentation:
   status: complete
   title: Regular expressions
   title-style: text
-  summary: Compiled Unicode text patterns with typed compile errors and source ranges for matches and captures.
+  summary: Compiled Unicode patterns with lookaround, backreferences, typed errors, and source-backed captures.
   tags: [standard-library, regex, string-search]
   sections:
     - id: compiling-and-searching
@@ -32,6 +32,10 @@ documentation:
             returns the first match as `text-range|none`. These are searches, not
             whole-string matches; use `\A` and `\z` to require the entire string. String
             `contains` and `find` remain literal searches.
+
+            All three search methods can throw `regex-match-error` when the engine cannot
+            complete the search, including when it reaches the backtracking limit. `false`
+            and `none` mean the search finished without a match.
         - type: example
           id: core-regex-example
           title: Extracting a named capture
@@ -71,16 +75,23 @@ documentation:
       blocks:
         - type: markdown
           markdown: |-
-            Patterns use the [Rust regex syntax](https://docs.rs/regex/latest/regex/#syntax)
+            Patterns use
+            [fancy-regex syntax](https://docs.rs/fancy-regex/0.20.2/fancy_regex/#syntax)
             without enclosing delimiters. The API works on `string`, not `bytes`. Matching
             is Unicode-aware and does not normalize input. Use ASCII classes such as `[0-9]`
             for ASCII protocols. Case-sensitive matching is the default; pass
             `case-insensitive=true` or use the dialect's inline flags.
 
-            Lookaround and backreferences are unsupported. This is not a PCRE, Python, or
-            ECMAScript compatibility layer. A single search has a worst-case bound
-            proportional to compiled pattern size times input size; applications still need
-            to bound the total input and number of searches they accept from a caller.
+            Lookahead (`(?=...)`, `(?!...)`), lookbehind (`(?<=...)`, `(?<!...)`), and
+            numbered (`\1`) and named (`\k<name>`) backreferences use the same `compile`
+            function. No flag is needed. The engine delegates regular parts to its automata
+            matcher and uses backtracking where the pattern requires it. This is not a
+            guarantee of PCRE, Python, or ECMAScript compatibility.
+
+            The engine limits VM program size at compile time and backtracking steps per
+            search at run time. A backtracking limit is not a wall-clock deadline, a total
+            memory bound, or a budget across multiple searches. Applications accepting
+            caller-supplied patterns and text must bound their own workload.
   see-also:
     - lang.text.search
 

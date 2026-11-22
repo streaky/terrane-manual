@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5a2778a7895b1c28ee7e9f6f6eed8ce96f8dd7f1f678f83105a2a370393b5c29
+  input-sha256: 509222983f004a0fe6b9ec4c0eb94689ee862526e27a15cf8c669a7ccd872661
 format: 1
 generated: true
 symbols:
@@ -1371,7 +1371,7 @@ symbols:
 - name: captures
   record: std.regex
   section: compiler-synopsis
-  declaration: function captures regex-captures|none; text string
+  declaration: function captures regex-captures|none throws regex-match-error; text string
 - name: CARGO_BUILD_TARGET
   record: internals.projection.resolution
   section: identity
@@ -1900,6 +1900,10 @@ symbols:
 - name: compile
   record: std.regex
   section: compiling-and-searching
+  declaration: compile
+- name: compile
+  record: std.regex
+  section: dialect
   declaration: compile
 - name: CompilerOptions::retain_rust_definitions
   record: internals.lowering.rust-output
@@ -3470,6 +3474,10 @@ symbols:
 - name: 'false'
   record: std.logging
   section: async-transport
+  declaration: 'false'
+- name: 'false'
+  record: std.regex
+  section: compiling-and-searching
   declaration: 'false'
 - name: 'false'
   record: tool.debugging
@@ -6047,7 +6055,7 @@ symbols:
 - name: match
   record: std.regex
   section: compiler-synopsis
-  declaration: function match text-range|none; text string
+  declaration: function match text-range|none throws regex-match-error; text string
 - name: match-rule
   record: lang.lexical-structure.keywords
   section: naming-guidance
@@ -6055,7 +6063,7 @@ symbols:
 - name: matches
   record: std.regex
   section: compiler-synopsis
-  declaration: function matches bool; text string
+  declaration: function matches bool throws regex-match-error; text string
 - name: max-bytes
   record: std.documents.typed-decoding
   section: dynamic-documents
@@ -6735,6 +6743,10 @@ symbols:
 - name: none
   record: std.regex
   section: captures
+  declaration: none
+- name: none
+  record: std.regex
+  section: compiling-and-searching
   declaration: none
 - name: none
   record: std.time
@@ -8199,6 +8211,14 @@ symbols:
   record: std.regex
   section: compiling-and-searching
   declaration: regex-error
+- name: regex-match-error
+  record: std.regex
+  section: compiler-synopsis
+  declaration: class regex-match-error implements throwable
+- name: regex-match-error
+  record: std.regex
+  section: compiling-and-searching
+  declaration: regex-match-error
 - name: regex-pattern
   record: std.regex
   section: compiler-synopsis

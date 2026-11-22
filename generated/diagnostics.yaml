@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: fe52440bcb926870df5e5504c825b805a3820413a878f993574e3c6f2dea7ff6
+  input-sha256: d19f1698fd8aefe1381c0e701a377d5e0aa4142521aac26570aee02f5f845f33
 format: 1
 generated: true
 diagnostics:
@@ -1135,7 +1135,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1017
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2243
+    line: 2256
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 701
 - code: S2032
@@ -1650,9 +1650,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 868
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2049
+    line: 2062
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2066
+    line: 2079
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 854
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1906,7 +1906,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 741
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2028
+    line: 2041
 - code: T0036
   messages:
   - '`.{}` requires an integer receiver'
@@ -1940,11 +1940,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1251
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2111
+    line: 2124
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2206
+    line: 2219
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2224
+    line: 2237
 - code: T0041
   messages:
   - iterator items require a statically known value type
@@ -2287,23 +2287,23 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1404
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1854
+    line: 1867
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1873
+    line: 1886
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1893
-  - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1912
+    line: 1906
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1925
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1935
+    line: 1938
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1948
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1959
+    line: 1961
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1973
+    line: 1972
+  - path: crates/terrane-compiler/src/semantics/expressions.rs
+    line: 1986
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 618
 - code: T0076
@@ -2460,7 +2460,7 @@ diagnostics:
   - caller-supplied conversion destination must be a concrete type descriptor
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2134
+    line: 2147
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 318
 - code: T0103
@@ -2501,7 +2501,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 620
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2253
+    line: 2266
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 346
 - code: T0106
@@ -2559,13 +2559,13 @@ diagnostics:
   - invalid channel `{operation}` invocation
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1797
+    line: 1810
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1805
+    line: 1818
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1817
+    line: 1830
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1838
+    line: 1851
 - code: T0110
   messages:
   - channel pair `{}` endpoint `{}` was already moved

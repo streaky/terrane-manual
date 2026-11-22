@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5a2778a7895b1c28ee7e9f6f6eed8ce96f8dd7f1f678f83105a2a370393b5c29
+  input-sha256: 509222983f004a0fe6b9ec4c0eb94689ee862526e27a15cf8c669a7ccd872661
 format: 2
 generated: true
 records:
@@ -2296,7 +2296,7 @@ records:
   - function decode-base64 decode-result; text string, url-safe bool, padded bool
 - id: std.regex
   title: Regular expressions
-  summary: Compiled Unicode text patterns with typed compile errors and source ranges for matches and
+  summary: Compiled Unicode patterns with lookaround, backreferences, typed errors, and source-backed
     captures.
   kind: topic
   manual: reference
@@ -2323,13 +2323,15 @@ records:
   declaration-synopsis:
   - class regex-error implements throwable
   - function render string
+  - class regex-match-error implements throwable
+  - function render string
   - class regex-captures
   - function group text-range|none; index int
   - function named-group text-range|none; name string
   - class regex-pattern
-  - function matches bool; text string
-  - function match text-range|none; text string
-  - function captures regex-captures|none; text string
+  - function matches bool throws regex-match-error; text string
+  - function match text-range|none throws regex-match-error; text string
+  - function captures regex-captures|none throws regex-match-error; text string
   - function compile regex-pattern throws regex-error; pattern string, case-insensitive bool = false
 - id: app.collection-string-idioms
   title: Collection and string idioms
