@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 506c2233ec4206c9bc3d5820d8a2b4016040bf8d71fff00adbf86b57a9cf191c
+  input-sha256: 5a2778a7895b1c28ee7e9f6f6eed8ce96f8dd7f1f678f83105a2a370393b5c29
 format: 1
 generated: true
 symbols:
@@ -288,6 +288,18 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/random/uuid
+- name: /core/regex
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: /core/regex
+- name: /core/regex
+  record: std.regex
+  section: ''
+  declaration: /core/regex
+- name: /core/regex
+  record: std.regex
+  section: compiling-and-searching
+  declaration: /core/regex
 - name: /core/streams
   record: std.streams
   section: byte-text-streams
@@ -1249,6 +1261,10 @@ symbols:
   section: interpolation
   declaration: bytes
 - name: bytes
+  record: std.regex
+  section: dialect
+  declaration: bytes
+- name: bytes
   record: std.text-bytes-codecs
   section: text-and-bytes
   declaration: bytes
@@ -1352,6 +1368,10 @@ symbols:
   record: tool.profiling
   section: sample-profile-feedback
   declaration: capture.exit_status
+- name: captures
+  record: std.regex
+  section: compiler-synopsis
+  declaration: function captures regex-captures|none; text string
 - name: CARGO_BUILD_TARGET
   record: internals.projection.resolution
   section: identity
@@ -1872,6 +1892,15 @@ symbols:
   record: internals.testing.conformance-timing
   section: reviewed-lowering-artifacts
   declaration: Compilation::rust_files_for
+- name: compile
+  record: std.regex
+  section: compiler-synopsis
+  declaration: function compile regex-pattern throws regex-error; pattern string, case-insensitive bool
+    = false
+- name: compile
+  record: std.regex
+  section: compiling-and-searching
+  declaration: compile
 - name: CompilerOptions::retain_rust_definitions
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -2137,6 +2166,10 @@ symbols:
 - name: contains
   record: lang.text.search
   section: string-search
+  declaration: contains
+- name: contains
+  record: std.regex
+  section: compiling-and-searching
   declaration: contains
 - name: contains
   record: std.text-bytes-codecs
@@ -3868,6 +3901,10 @@ symbols:
   section: string-search
   declaration: find
 - name: find
+  record: std.regex
+  section: compiling-and-searching
+  declaration: find
+- name: find
   record: tool.source-intelligence
   section: queries
   declaration: find
@@ -4475,6 +4512,10 @@ symbols:
   record: lang.functions.fluent-apis
   section: value-builders
   declaration: greeting
+- name: group
+  record: std.regex
+  section: compiler-synopsis
+  declaration: function group text-range|none; index int
 - name: gzip
   record: std.compression
   section: compression
@@ -5996,10 +6037,6 @@ symbols:
   section: activation-and-boundaries
   declaration: match
 - name: match
-  record: lang.text.search
-  section: string-search
-  declaration: match
-- name: match
   record: manual.changelog.unreleased
   section: changes-2026-10-04
   declaration: match
@@ -6007,14 +6044,18 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-10-12
   declaration: match
+- name: match
+  record: std.regex
+  section: compiler-synopsis
+  declaration: function match text-range|none; text string
 - name: match-rule
   record: lang.lexical-structure.keywords
   section: naming-guidance
   declaration: match-rule
 - name: matches
-  record: lang.text.search
-  section: string-search
-  declaration: matches
+  record: std.regex
+  section: compiler-synopsis
+  declaration: function matches bool; text string
 - name: max-bytes
   record: std.documents.typed-decoding
   section: dynamic-documents
@@ -6283,6 +6324,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: name
+- name: named-group
+  record: std.regex
+  section: compiler-synopsis
+  declaration: function named-group text-range|none; name string
 - name: named-logger
   record: std.logging
   section: construction
@@ -6686,6 +6731,10 @@ symbols:
 - name: none
   record: std.networking.operations
   section: operations
+  declaration: none
+- name: none
+  record: std.regex
+  section: captures
   declaration: none
 - name: none
   record: std.time
@@ -8138,6 +8187,26 @@ symbols:
   record: book.values-and-names
   section: why-terrane-why-calls-use-semicolon
   declaration: refresh
+- name: regex-captures
+  record: std.regex
+  section: compiler-synopsis
+  declaration: class regex-captures
+- name: regex-error
+  record: std.regex
+  section: compiler-synopsis
+  declaration: class regex-error implements throwable
+- name: regex-error
+  record: std.regex
+  section: compiling-and-searching
+  declaration: regex-error
+- name: regex-pattern
+  record: std.regex
+  section: compiler-synopsis
+  declaration: class regex-pattern
+- name: regex-pattern
+  record: std.regex
+  section: compiling-and-searching
+  declaration: regex-pattern
 - name: registers
   record: book.testing-and-debugging
   section: debug-from-the-terrane-boundary-inward
@@ -8264,6 +8333,10 @@ symbols:
   declaration: render
 - name: render
   record: std.filesystem
+  section: compiler-synopsis
+  declaration: function render string
+- name: render
+  record: std.regex
   section: compiler-synopsis
   declaration: function render string
 - name: render-category
@@ -9698,6 +9771,10 @@ symbols:
 - name: string
   record: std.core-display
   section: interpolation
+  declaration: string
+- name: string
+  record: std.regex
+  section: dialect
   declaration: string
 - name: string
   record: std.text-bytes-codecs

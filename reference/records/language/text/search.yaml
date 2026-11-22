@@ -78,9 +78,9 @@ documentation:
 
             These operations perform literal search only. There is no case-insensitive
             search child; case-insensitive workflows explicitly apply `case-fold` to both
-            operands. Regular-expression operations remain `match` and `matches`. They are
-            not children of `contains`, and string search does not switch behavior according
-            to an argument’s runtime kind.
+            operands. Use [[std.regex]] for compiled patterns, regex matching, and capture
+            groups. `contains` and `find` never interpret their argument as a regular
+            expression.
   see-also: []
 
 provenance:

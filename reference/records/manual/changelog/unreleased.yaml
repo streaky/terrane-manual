@@ -687,6 +687,9 @@ documentation:
               create private temporary entries that clean up on drop. Explicit deletion
               reports errors; `keep;` transfers responsibility to the caller. See
               [[std.filesystem#temporary-paths]].
+            - **Added — regular expressions.** `/core/regex` compiles reusable Unicode text
+              patterns and returns first-match ranges and optional captures. Invalid
+              patterns raise a typed error. See [[std.regex]].
   see-also:
     - manual.changelog
     - lang.types.references

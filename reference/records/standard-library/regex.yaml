@@ -1,0 +1,94 @@
+format: 1
+id: std.regex
+kind: topic
+surface: /core/regex
+
+lifecycle:
+  status: current
+  stability: experimental
+  since: "0.1"
+  deprecated-since: null
+  removed-since: null
+  replacement: null
+
+documentation:
+  status: complete
+  title: Regular expressions
+  title-style: text
+  summary: Compiled Unicode text patterns with typed compile errors and source ranges for matches and captures.
+  tags: [standard-library, regex, string-search]
+  sections:
+    - id: compiling-and-searching
+      title: Compiling and searching
+      blocks:
+        - type: markdown
+          markdown: |-
+            Import `compile` from `/core/regex` and reuse the returned `regex-pattern`
+            across searches. Invalid or unsupported patterns and patterns that exceed the
+            engine's compiled-size limit throw `regex-error`. The error message is
+            diagnostic text, not a machine-readable error code.
+
+            A pattern's `matches; text` tests for a match anywhere. Its `match; text`
+            returns the first match as `text-range|none`. These are searches, not
+            whole-string matches; use `\A` and `\z` to require the entire string. String
+            `contains` and `find` remain literal searches.
+        - type: example
+          id: core-regex-example
+          title: Extracting a named capture
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            from /core/regex import compile
+
+            function main;
+              pattern = compile; '(?<number>[0-9]+)'
+              found = pattern.captures; 'pid=123'
+              if found != none
+                number = found.named-group; 'number'
+                if number != none
+                  print; number.text
+          response: null
+          diagnostic: null
+          markdown: null
+    - id: captures
+      title: Captures and offsets
+      blocks:
+        - type: markdown
+          markdown: |-
+            Use `captures; text` when you need groups from the first match. It returns
+            `regex-captures|none`. `group; 0` returns the full match; numbered groups start
+            at one in opening-parenthesis order. Use `named-group; name` for a named
+            capture. A missing or nonparticipating group returns `none`. A participating
+            empty group returns a zero-width range, not `none`.
+
+            Ranges retain the original immutable text and use the same byte, scalar, and
+            grapheme views as literal-search ranges. UTF-8 byte offsets are measured from
+            the start of the original input and the end is exclusive.
+    - id: dialect
+      title: Pattern syntax and limits
+      blocks:
+        - type: markdown
+          markdown: |-
+            Patterns use the [Rust regex syntax](https://docs.rs/regex/latest/regex/#syntax)
+            without enclosing delimiters. The API works on `string`, not `bytes`. Matching
+            is Unicode-aware and does not normalize input. Use ASCII classes such as `[0-9]`
+            for ASCII protocols. Case-sensitive matching is the default; pass
+            `case-insensitive=true` or use the dialect's inline flags.
+
+            Lookaround and backreferences are unsupported. This is not a PCRE, Python, or
+            ECMAScript compatibility layer. A single search has a worst-case bound
+            proportional to compiled pattern size times input size; applications still need
+            to bound the total input and number of searches they accept from a caller.
+  see-also:
+    - lang.text.search
+
+provenance:
+  specification: []
+  conformance: []
+  compiler: null
+
+implementation:
+  compiler:
+    - crates/terrane-compiler/src/core/regex.trn

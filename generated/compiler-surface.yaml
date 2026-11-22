@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 77889b873ecece5267dcb7e6bf73df45b9adddbd9459462ec715c46199edb4f4
+  input-sha256: fe52440bcb926870df5e5504c825b805a3820413a878f993574e3c6f2dea7ff6
 format: 1
 generated: true
 modules:
@@ -828,6 +828,29 @@ modules:
     line: 177
   - declaration: function signature-equals bool; left signature-value, right signature-value
     line: 180
+- source: crates/terrane-compiler/src/core/regex.trn
+  declarations:
+  - declaration: class regex-error implements throwable
+    line: 5
+  - declaration: function render string
+    line: 11
+  - declaration: class regex-captures
+    line: 14
+  - declaration: function group text-range|none; index int
+    line: 20
+  - declaration: function named-group text-range|none; name string
+    line: 23
+  - declaration: class regex-pattern
+    line: 26
+  - declaration: function matches bool; text string
+    line: 32
+  - declaration: function match text-range|none; text string
+    line: 35
+  - declaration: function captures regex-captures|none; text string
+    line: 38
+  - declaration: function compile regex-pattern throws regex-error; pattern string, case-insensitive bool
+      = false
+    line: 44
 - source: crates/terrane-compiler/src/core/streams.trn
   declarations:
   - declaration: class stream-operation-result
