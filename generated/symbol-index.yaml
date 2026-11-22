@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 68c73152e893016d6972c4724ca500303da3518fc30716ed52f3f7e7473fe4a0
+  input-sha256: 506c2233ec4206c9bc3d5820d8a2b4016040bf8d71fff00adbf86b57a9cf191c
 format: 1
 generated: true
 symbols:
@@ -3185,6 +3185,10 @@ symbols:
 - name: error-kind
   record: std.filesystem
   section: error-kinds
+  declaration: error-kind
+- name: error-kind
+  record: std.filesystem
+  section: temporary-paths
   declaration: error-kind
 - name: 'ERROR:'
   record: tool.rust-package-integrations.godot

@@ -191,7 +191,9 @@ documentation:
             directories and `0600` for files, subject to the process umask. A file starts
             empty and is not held open by the Terrane owner; use the regular filesystem
             operations to access it. Creation failures throw `temporary-path-error` with the
-            host error message. A non-UTF-8 absolute path is not exposed.
+            host error message. The caught throwable does not expose a portable `error-kind`
+            for creation failures; do not branch on host message text. A non-UTF-8 absolute
+            path is not exposed.
 
             `location;` borrows the owner and returns an absolute `path`. The path value
             does not extend the owner's lifetime. Keep the owner alive until all work using

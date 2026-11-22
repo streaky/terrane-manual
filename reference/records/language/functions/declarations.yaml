@@ -56,7 +56,9 @@ documentation:
             mutually and shadow a function from an outer scope. Their declaration names
             cannot be reassigned or replaced by a binding in the same scope; duplicate
             declarations remain errors. Ordinary mutable bindings retain source-ordered
-            assignment and replacement behavior.
+            assignment and replacement behavior. A function declared inside a method follows
+            these same rules: it is not a class member or lifecycle method and cannot be
+            selected through an instance.
 
             Named local functions do not capture enclosing callable bindings, including
             parameters, local variables, and instance receiver state; such references are
