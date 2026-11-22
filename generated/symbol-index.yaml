@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b3066f601e710735a22d4dda14e545d60b9e6ccda30015d1c412543a4d99c783
+  input-sha256: 58e42c9b84cd72398b89c28e1249a866702c7fc34a461abe0ab76cc60f59ae08
 format: 1
 generated: true
 symbols:
@@ -1391,6 +1391,10 @@ symbols:
 - name: CARGO_HOME
   record: tool.packages.command-line
   section: compilation-reuse
+  declaration: CARGO_HOME
+- name: CARGO_HOME
+  record: tool.packages.testing
+  section: execution
   declaration: CARGO_HOME
 - name: cargo_workspace.rs
   record: internals.projection.resolution
@@ -4600,6 +4604,10 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: HOME
+- name: HOME
+  record: tool.packages.testing
+  section: execution
+  declaration: HOME
 - name: HOST
   record: tool.packages.command-line
   section: compilation-reuse
@@ -6782,6 +6790,10 @@ symbols:
   declaration: none
 - name: none
   record: tool.packages.testing
+  section: execution
+  declaration: none
+- name: none
+  record: tool.packages.testing
   section: framework
   declaration: none
 - name: normal
@@ -7407,6 +7419,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: path
+- name: PATH
+  record: tool.packages.testing
+  section: execution
+  declaration: PATH
 - name: PATH
   record: tool.profiling
   section: sample-profile-application-example
@@ -8760,9 +8776,17 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: RUSTUP_HOME
+- name: RUSTUP_HOME
+  record: tool.packages.testing
+  section: execution
+  declaration: RUSTUP_HOME
 - name: RUSTUP_TOOLCHAIN
   record: tool.packages.command-line
   section: compilation-reuse
+  declaration: RUSTUP_TOOLCHAIN
+- name: RUSTUP_TOOLCHAIN
+  record: tool.packages.testing
+  section: execution
   declaration: RUSTUP_TOOLCHAIN
 - name: S
   record: tool.diagnostics
@@ -10852,6 +10876,10 @@ symbols:
   record: tool.packages.command-line
   section: generated-package-state
   declaration: test
+- name: test-compiler
+  record: tool.packages.testing
+  section: execution
+  declaration: test-compiler
 - name: test-package-root
   record: manual.changelog.unreleased
   section: changes-2026-11-22
@@ -10876,6 +10904,14 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: test_support.rs
+- name: testing.compiler
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: testing.compiler
+- name: testing.compiler
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: testing.compiler
 - name: testing.end-to-end
   record: tool.packages.package-manifest
   section: fields
@@ -10896,6 +10932,18 @@ symbols:
   record: tool.packages.package-manifest
   section: fields
   declaration: testing.suite
+- name: testing.timeout-ms
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: testing.timeout-ms
+- name: testing.timeout-ms
+  record: tool.packages.package-manifest
+  section: fields
+  declaration: testing.timeout-ms
+- name: testing.timeout-ms
+  record: tool.packages.testing
+  section: framework
+  declaration: testing.timeout-ms
 - name: testing.unit
   record: tool.packages.package-manifest
   section: fields

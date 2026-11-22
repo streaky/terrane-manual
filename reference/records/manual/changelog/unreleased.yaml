@@ -701,6 +701,9 @@ documentation:
               directory. A manifest can select a nested suite with `testing.suite`, and
               tests can locate static fixtures with `test-package-root` without changing
               their isolated working directory. See [[tool.packages.testing]].
+            - **Added — compiler-backed test cases.** Suites can opt in to the invoking
+              compiler and the toolchain environment with `testing.compiler`, and set a
+              per-case default with `testing.timeout-ms`. See [[tool.packages.testing]].
   see-also:
     - manual.changelog
     - lang.types.references

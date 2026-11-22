@@ -161,8 +161,18 @@ documentation:
             - path: testing.suite
               type: bounded relative path to a nested package.toml
               default: test the package directly
-              repeatability: once, mutually exclusive with test roots and testing.profile
+              repeatability: once, mutually exclusive with other testing settings
               example: suite = "tests/suite/package.toml"
+            - path: testing.compiler
+              type: boolean
+              default: false
+              repeatability: once
+              example: compiler = true
+            - path: testing.timeout-ms
+              type: positive integer in milliseconds
+              default: 30000
+              repeatability: once, overridden by --timeout
+              example: timeout-ms = 120000
             - path: testing.unit
               type: bounded relative directory
               default: tests/unit
