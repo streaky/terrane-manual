@@ -120,17 +120,17 @@ documentation:
             duration-only program can retain bundled asynchronous time declarations. Its
             synchronous `main` still has no executor wrapper; dependency admission does not
             itself create a runtime. The optional advanced-stream bundle uses a conservative
-            emitted-unit demand test, not general call-graph reachability or dead-code
-            elimination. Any authored asynchronous function activates the bundle, even if it
-            does not call an advanced stream operation. Retained bundled consumers
-            participate only through canonical IO/time bindings, because the fast path omits
-            those units. This retains the duration type needed by testing helpers without
-            treating filesystem capability intrinsics or raw host types as demand for
-            asynchronous streams. The stream, IO, and time units themselves are excluded
-            from that scan. This remains conservative: an unused bundled IO/time import can
-            activate the bundle; this is not general declaration reachability or a promise
-            to eliminate every helper. The decision is made by
-            `package_uses_advanced_streams` in
+            emitted-unit demand test before executable function pruning. Any authored
+            asynchronous function activates the bundle, even if it does not call an advanced
+            stream operation. Retained bundled consumers participate only through canonical
+            IO/time bindings, because the fast path omits those units. This retains the
+            duration type needed by testing helpers without treating filesystem capability
+            intrinsics or raw host types as demand for asynchronous streams. The stream, IO,
+            and time units themselves are excluded from that scan. This remains
+            conservative: an unused bundled IO/time import can activate the bundle. Later
+            executable pruning does not recompute runtime flags or Cargo dependencies, so
+            removing the last async function can leave Tokio and some async support in the
+            build. The bundle decision is made by `package_uses_advanced_streams` in
             `crates/terrane-compiler/src/lowering/helpers.rs`.
 
             Simple and cancellation-aware async support share awaited-destructor execution

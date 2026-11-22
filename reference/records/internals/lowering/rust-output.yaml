@@ -49,9 +49,14 @@ documentation:
 
             For executables without source-debug output or opaque Rust, lowering omits
             ordinary Rust functions not reachable from emitted entrypoints, test dispatch or
-            other retained items. Callable values count as references. Library artifacts
-            retain their definitions. Terrane still semantically checks authored bodies even
-            when the resulting executable does not use them.
+            other retained items. Callable values count as references. Library artifacts,
+            source-debug builds, and builds with authored or inline Rust or projected macros
+            retain their definitions. Compiler clients that append opaque Rust after
+            lowering must set `CompilerOptions::retain_rust_definitions`. Terrane still
+            semantically checks authored bodies even when pruned. A backend-only error in an
+            unused body can surface when the body is retained, for example in a library or a
+            source-debug build. Runtime bundle and Cargo dependency selection remain
+            conservative and are not recomputed after pruning.
 
             Ordinary reference arguments and results are declaration-directed. Semantic
             validation proves the argument place and returned lender path; lowering emits a

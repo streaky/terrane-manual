@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 8e24975ce60aee477d3f27f3bc0d3430fbc09eeb56d5be9704a23e8919d5aed4
+  input-sha256: deca508d1f47bc399f0d30cedcf4f5f58b5da94f86a9971cebb801d16275b055
 format: 1
 generated: true
 symbols:
@@ -1868,6 +1868,10 @@ symbols:
   record: internals.testing.conformance-timing
   section: reviewed-lowering-artifacts
   declaration: Compilation::rust_files_for
+- name: CompilerOptions::retain_rust_definitions
+  record: internals.lowering.rust-output
+  section: rust-lowering
+  declaration: CompilerOptions::retain_rust_definitions
 - name: complete
   record: book.testing-and-debugging
   section: begin-with-one-observable-behavior
@@ -10621,6 +10625,10 @@ symbols:
   record: internals.testing.conformance-timing
   section: focused-execution-and-cache-locality
   declaration: TERRANE_CONFORMANCE_FILTER
+- name: TERRANE_DEMAND_CACHE
+  record: tool.packages.command-line
+  section: compilation-reuse
+  declaration: TERRANE_DEMAND_CACHE
 - name: terrane_program
   record: internals.build.toolchain-profiles
   section: generated-artifacts

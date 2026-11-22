@@ -670,6 +670,19 @@ documentation:
             - **Fixed — bulk document construction.** List construction and map finalization
               encode a completed tree once instead of rebuilding and re-encoding it after
               each entry. See [[std.documents#implementation-notes]].
+    # Compiler: 66f234c6, 363e0982.
+    - id: changes-2026-11-22
+      title: "2026-11-22"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Changed — smaller generated Rust output.** Eligible executable builds omit
+              unreachable generated Rust functions without skipping source checking. See
+              [[internals.lowering.rust-output]] for the exclusions and for how compiler
+              clients can retain definitions when appending Rust.
+            - **Changed — reuse unchanged test compilation.** The CLI can reuse discovery
+              and runner compilation; it still runs the selected cases every time. See
+              [[tool.packages.command-line#compilation-reuse]].
   see-also:
     - manual.changelog
     - lang.types.references

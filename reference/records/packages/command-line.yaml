@@ -142,6 +142,19 @@ documentation:
             published, including after a later consumer rejection when the inputs remain
             unchanged.
 
+            Test discovery and runner compilation keep one successful exact snapshot per
+            tier and phase: `.trn/cache/test-<tier>-discovery.json` and
+            `.trn/cache/test-<tier>-runner.json`. Discovery still covers every populated
+            tier before filters apply. Runner keys include the selected compiler options and
+            dispatch registry inputs. Test verdicts are never cached; selected cases run in
+            fresh processes.
+
+            `TERRANE_DEMAND_CACHE` optionally shares generated-Rust identifier summaries
+            across consumers that enable compiler persistence. Point it at a trusted
+            directory: entries influence which Rust definitions are emitted. The cache is
+            disposable and has no automatic eviction; the user owns cleanup. It does not
+            cache semantic checking or test verdicts.
+
             An edited source invalidates the exact compilation snapshot, but unchanged
             native semantic queries can reuse `.trn/cache/native-reconciliation.json`. This
             cache is keyed by the compiler, the full projected semantic graph, and each
