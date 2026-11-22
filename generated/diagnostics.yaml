@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 60b0ce7b5e339a8a3d6b604121f2fe8c4264edcd993241d892aa240bc5118d8d
+  input-sha256: 91af58abe1b5ef8bc4753d2ffbdacfb91a6e9de97d9c3fa0124237e51c24d14e
 format: 1
 generated: true
 diagnostics:
@@ -3216,7 +3216,7 @@ diagnostics:
     references'
   sources:
   - path: crates/terrane-compiler/src/semantics/finite_source_types.rs
-    line: 121
+    line: 129
   - path: crates/terrane-compiler/src/semantics/generic_recursion.rs
     line: 251
   - path: crates/terrane-compiler/src/semantics/types.rs
