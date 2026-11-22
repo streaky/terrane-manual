@@ -56,6 +56,11 @@ documentation:
             bounded relative path to a nested `package.toml`. This selects that package for
             testing only. The suite owns the roots, profile, consumers, and end-to-end
             artifact. A selected suite cannot select another suite.
+
+            Ordinary package loads validate the syntax of `testing.suite` but do not resolve
+            its target. A test invocation selects the suite from the outer manifest before
+            loading any package sources or resolving dependencies. If the suite uses the
+            outer package as a dependency, normal dependency loading still applies.
     - id: execution
       title: Running isolated cases
       blocks:
@@ -83,6 +88,10 @@ documentation:
             whose independent snapshots carry arguments, environment, standard input, and
             deadline into `run-process`. Results expose independent stdout and stderr
             truncation flags.
+
+            Each invocation removes only its own run directory on normal completion.
+            Interrupting the runner can leave files under `.trn/test/run/`. Clear this
+            disposable state only when no test runs are active.
 
             A suite that needs to build or inspect another Terrane package during a case can
             opt in with `testing.compiler = true`. Then `test-compiler` returns the absolute

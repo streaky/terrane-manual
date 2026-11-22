@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 58e42c9b84cd72398b89c28e1249a866702c7fc34a461abe0ab76cc60f59ae08
+  input-sha256: b56824b97357a2299b35d47ca02523c47a38938007b6757fcd16685ef299cb68
 format: 1
 generated: true
 symbols:
@@ -10931,6 +10931,10 @@ symbols:
 - name: testing.suite
   record: tool.packages.package-manifest
   section: fields
+  declaration: testing.suite
+- name: testing.suite
+  record: tool.packages.testing
+  section: discovery
   declaration: testing.suite
 - name: testing.timeout-ms
   record: manual.changelog.unreleased
