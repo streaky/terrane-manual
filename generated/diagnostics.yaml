@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: dabe360f6376559915596b6cc1b5eab99abe2ac69ba13ae233d6ca1098acadce
+  input-sha256: d5d8c88d14bfb9d6a9282d6df56a0d3ba505576b84f09d72bb1c5d05351c798e
 format: 1
 generated: true
 diagnostics:
@@ -1001,20 +1001,20 @@ diagnostics:
   - package has no `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 487
+    line: 494
 - code: S2016
   messages:
   - package has more than one `main` function
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 506
+    line: 513
 - code: S2017
   messages:
   - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 463
+    line: 470
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 841
   - path: crates/terrane-compiler/src/semantics/model.rs
@@ -1162,14 +1162,14 @@ diagnostics:
   - test function `{}` must be parameterless and return `none`
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1020
+    line: 1027
 - code: S2052
   messages:
   - duplicate test identity `{}`
   - " },\n            if test_identity {\n                format!(\n                    "
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 887
+    line: 894
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 449
 - code: S2053
@@ -1210,7 +1210,7 @@ diagnostics:
   - 'in `{}`: {}'
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 575
+    line: 582
   - path: crates/terrane-compiler/src/consumer_tools.rs
     line: 391
   - path: crates/terrane-compiler/src/consumers.rs
@@ -1355,15 +1355,15 @@ diagnostics:
   - generated Rust `{}` is not canonical
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1246
+    line: 1253
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 1274
+    line: 1281
 - code: S9005
   messages:
   - this is an internal compiler defect; report the source program and compiler version
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 328
+    line: 335
 - code: T0001
   messages:
   - type parameter requires a name
@@ -3634,7 +3634,7 @@ diagnostics:
   - binding `{}` is never read
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 745
+    line: 752
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 375
 - code: W4002
@@ -3668,7 +3668,7 @@ diagnostics:
   - function `{}` is never referenced
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
-    line: 745
+    line: 752
   - path: crates/terrane-compiler/src/semantics/diagnostics.rs
     line: 201
 - code: W4006
