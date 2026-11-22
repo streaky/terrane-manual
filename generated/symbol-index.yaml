@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: deca508d1f47bc399f0d30cedcf4f5f58b5da94f86a9971cebb801d16275b055
+  input-sha256: 68c73152e893016d6972c4724ca500303da3518fc30716ed52f3f7e7473fe4a0
 format: 1
 generated: true
 symbols:
@@ -152,6 +152,10 @@ symbols:
   record: lang.errors.handling
   section: structured-errors
   declaration: /core/errors
+- name: /core/filesystem
+  record: manual.changelog.unreleased
+  section: changes-2026-11-22
+  declaration: /core/filesystem
 - name: /core/filesystem
   record: std.filesystem
   section: ''
@@ -3627,6 +3631,16 @@ symbols:
   section: compiler-synopsis
   declaration: function filesystem-create-symlink filesystem-operation-result; capability filesystem,
     target path, link path
+- name: filesystem-create-temporary-directory
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-create-temporary-directory temporary-path throws temporary-path-error;
+    capability filesystem, parent path|none = none
+- name: filesystem-create-temporary-file
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function filesystem-create-temporary-file temporary-path throws temporary-path-error; capability
+    filesystem, parent path|none = none
 - name: filesystem-exists
   record: std.filesystem
   section: compiler-synopsis
@@ -3657,6 +3671,10 @@ symbols:
   record: std.filesystem
   section: compiler-synopsis
   declaration: class filesystem-operation-result
+- name: filesystem-operation-result
+  record: std.filesystem
+  section: temporary-paths
+  declaration: filesystem-operation-result
 - name: filesystem-read-bounded
   record: std.filesystem
   section: compiler-synopsis
@@ -5689,6 +5707,10 @@ symbols:
   record: tool.source-intelligence
   section: queries
   declaration: locate
+- name: location
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function location path
 - name: log
   record: internals.lowering.rust-output
   section: rust-lowering
@@ -7196,6 +7218,10 @@ symbols:
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance
   declaration: parcel
+- name: parent
+  record: std.filesystem
+  section: temporary-paths
+  declaration: parent
 - name: parity
   record: book.functions
   section: project-turn-the-number-classifier-into-functions
@@ -7267,6 +7293,10 @@ symbols:
 - name: path
   record: std.filesystem
   section: authority
+  declaration: path
+- name: path
+  record: std.filesystem
+  section: temporary-paths
   declaration: path
 - name: path
   record: std.paths
@@ -8228,6 +8258,10 @@ symbols:
   record: std.core-display
   section: interpolation
   declaration: render
+- name: render
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: function render string
 - name: render-category
   record: book.classes-interfaces-and-traits
   section: exercises
@@ -10433,6 +10467,22 @@ symbols:
   record: std.networking.operations
   section: native-transport
   declaration: tcp-stream.into-native
+- name: temporary-path
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: class temporary-path
+- name: temporary-path
+  record: std.filesystem
+  section: temporary-paths
+  declaration: temporary-path
+- name: temporary-path-error
+  record: std.filesystem
+  section: compiler-synopsis
+  declaration: class temporary-path-error implements throwable
+- name: temporary-path-error
+  record: std.filesystem
+  section: temporary-paths
+  declaration: temporary-path-error
 - name: terminate
   record: std.process
   section: child-streams
@@ -11065,6 +11115,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: stream-adapters
   declaration: tls.trn
+- name: TMPDIR
+  record: std.filesystem
+  section: temporary-paths
+  declaration: TMPDIR
 - name: to
   record: book.types
   section: function-types

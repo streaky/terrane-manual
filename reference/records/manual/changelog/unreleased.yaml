@@ -683,6 +683,10 @@ documentation:
             - **Changed — reuse unchanged test compilation.** The CLI can reuse discovery
               and runner compilation; it still runs the selected cases every time. See
               [[tool.packages.command-line#compilation-reuse]].
+            - **Added — owned temporary files and directories.** `/core/filesystem` can
+              create private temporary entries that clean up on drop. Explicit deletion
+              reports errors; `keep;` transfers responsibility to the caller. See
+              [[std.filesystem#temporary-paths]].
   see-also:
     - manual.changelog
     - lang.types.references

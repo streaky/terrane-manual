@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: deca508d1f47bc399f0d30cedcf4f5f58b5da94f86a9971cebb801d16275b055
+  input-sha256: 68c73152e893016d6972c4724ca500303da3518fc30716ed52f3f7e7473fe4a0
 format: 2
 generated: true
 records:
@@ -2123,6 +2123,9 @@ records:
   - id: directories-and-links
     title: Directory and link management
     sections: []
+  - id: temporary-paths
+    title: Temporary files and directories
+    sections: []
   - id: handles
     title: Handle-based I/O
     sections: []
@@ -2142,6 +2145,14 @@ records:
   - function construct; exists bool, failure bool, detail string, category string|none = none
   - class path-result
   - function construct; target path, failure bool, detail string, category string|none = none
+  - class temporary-path-error implements throwable
+  - function render string
+  - class temporary-path
+  - function location path
+  - function filesystem-create-temporary-directory temporary-path throws temporary-path-error; capability
+    filesystem, parent path|none = none
+  - function filesystem-create-temporary-file temporary-path throws temporary-path-error; capability filesystem,
+    parent path|none = none
   - class file-metadata
   - function construct; kind string, size int, readonly bool, permission-detail string, failure bool,
     detail string, category string|none = none

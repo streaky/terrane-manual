@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 875fd71851e4a510932edeec33a65fd5304d26c09c3cdb313e7f7641be6bf133
+  input-sha256: 199acc6125ae220aff55d85e830395690a1be4af81aa8e134f8af0b06eaed5cd
 format: 1
 generated: true
 modules:
@@ -241,108 +241,122 @@ modules:
 - source: crates/terrane-compiler/src/core/filesystem.trn
   declarations:
   - declaration: class filesystem-operation-result
-    line: 13
+    line: 14
   - declaration: function construct; failure bool, detail string, category string|none = none
-    line: 18
+    line: 19
   - declaration: class existence-result
-    line: 23
+    line: 24
   - declaration: function construct; exists bool, failure bool, detail string, category string|none =
       none
-    line: 29
+    line: 30
   - declaration: class path-result
-    line: 35
+    line: 36
   - declaration: function construct; target path, failure bool, detail string, category string|none =
       none
-    line: 41
+    line: 42
+  - declaration: class temporary-path-error implements throwable
+    line: 48
+  - declaration: function render string
+    line: 54
+  - declaration: class temporary-path
+    line: 57
+  - declaration: function location path
+    line: 63
+  - declaration: function filesystem-create-temporary-directory temporary-path throws temporary-path-error;
+      capability filesystem, parent path|none = none
+    line: 83
+  - declaration: function filesystem-create-temporary-file temporary-path throws temporary-path-error;
+      capability filesystem, parent path|none = none
+    line: 86
   - declaration: class file-metadata
-    line: 47
+    line: 89
   - declaration: function construct; kind string, size int, readonly bool, permission-detail string, failure
       bool, detail string, category string|none = none
-    line: 56
+    line: 98
   - declaration: class file-data
-    line: 65
+    line: 107
   - declaration: function construct; data bytes, completed int, end bool, failure bool, detail string,
       category string|none = none
-    line: 73
+    line: 115
   - declaration: class directory-listing
-    line: 81
+    line: 123
   - declaration: class file-handle
-    line: 93
+    line: 135
   - declaration: class directory-handle
-    line: 108
+    line: 150
   - declaration: function open-file file-handle; capability filesystem, target path, readable bool, writable
       bool, create bool = false, truncate bool = false, exclusive bool = false, append bool = false
-    line: 123
+    line: 165
   - declaration: function file-read file-data; capability filesystem, file ref file-handle, limit int
-    line: 131
+    line: 173
   - declaration: function file-write file-data; capability filesystem, file ref file-handle, data bytes,
       offset int = 0
-    line: 135
+    line: 177
   - declaration: function file-flush filesystem-operation-result; capability filesystem, file ref file-handle
-    line: 139
+    line: 181
   - declaration: function file-sync-data filesystem-operation-result; capability filesystem, file ref
       file-handle
-    line: 143
-  - declaration: function file-sync-all filesystem-operation-result; capability filesystem, file ref file-handle
-    line: 147
-  - declaration: function file-close filesystem-operation-result; capability filesystem, file file-handle
-    line: 151
-  - declaration: class filesystem
-    line: 155
-  - declaration: function filesystem-capability filesystem
-    line: 161
-  - declaration: function filesystem-exists existence-result; capability filesystem, target path
-    line: 165
-  - declaration: function filesystem-metadata file-metadata; capability filesystem, target path
-    line: 169
-  - declaration: function filesystem-symlink-metadata file-metadata; capability filesystem, target path
-    line: 173
-  - declaration: function filesystem-canonical path-result; capability filesystem, target path
-    line: 177
-  - declaration: function filesystem-realpath path-result; capability filesystem, target path
-    line: 182
-  - declaration: function filesystem-read-link path-result; capability filesystem, target path
     line: 185
+  - declaration: function file-sync-all filesystem-operation-result; capability filesystem, file ref file-handle
+    line: 189
+  - declaration: function file-close filesystem-operation-result; capability filesystem, file file-handle
+    line: 193
+  - declaration: class filesystem
+    line: 197
+  - declaration: function filesystem-capability filesystem
+    line: 203
+  - declaration: function filesystem-exists existence-result; capability filesystem, target path
+    line: 207
+  - declaration: function filesystem-metadata file-metadata; capability filesystem, target path
+    line: 211
+  - declaration: function filesystem-symlink-metadata file-metadata; capability filesystem, target path
+    line: 215
+  - declaration: function filesystem-canonical path-result; capability filesystem, target path
+    line: 219
+  - declaration: function filesystem-realpath path-result; capability filesystem, target path
+    line: 224
+  - declaration: function filesystem-read-link path-result; capability filesystem, target path
+    line: 227
   - declaration: function filesystem-open-beneath directory-handle; capability filesystem, directory path,
       relative path, cross-filesystem bool = false
-    line: 192
+    line: 234
   - declaration: function open-file-beneath file-handle; capability filesystem, directory ref directory-handle,
       relative path, readable bool, writable bool, create bool = false, truncate bool = false, exclusive
       bool = false, append bool = false
-    line: 200
+    line: 242
   - declaration: function filesystem-read-bounded file-data; capability filesystem, target path, limit
       int
-    line: 209
+    line: 251
   - declaration: function filesystem-write-atomic filesystem-operation-result; capability filesystem,
       target path, data bytes
-    line: 213
+    line: 255
   - declaration: function filesystem-rename filesystem-operation-result; capability filesystem, source
       path, destination path
-    line: 217
+    line: 259
   - declaration: function filesystem-remove filesystem-operation-result; capability filesystem, target
       path
-    line: 221
+    line: 263
   - declaration: function filesystem-create-directory filesystem-operation-result; capability filesystem,
       target path
-    line: 225
+    line: 267
   - declaration: function filesystem-create-directories filesystem-operation-result; capability filesystem,
       target path
-    line: 229
+    line: 271
   - declaration: function filesystem-list-directory directory-listing; capability filesystem, target path,
       limit int
-    line: 233
+    line: 275
   - declaration: function filesystem-remove-directory filesystem-operation-result; capability filesystem,
       target path
-    line: 237
+    line: 279
   - declaration: function filesystem-remove-directory-tree filesystem-operation-result; capability filesystem,
       target path
-    line: 243
+    line: 285
   - declaration: function filesystem-create-symlink filesystem-operation-result; capability filesystem,
       target path, link path
-    line: 248
+    line: 290
   - declaration: function filesystem-create-hard-link filesystem-operation-result; capability filesystem,
       target path, link path
-    line: 252
+    line: 294
 - source: crates/terrane-compiler/src/core/io.trn
   declarations:
   - declaration: class cancellation-token

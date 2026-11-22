@@ -166,6 +166,49 @@ documentation:
             These operations use ordinary host path resolution, not the directory-handle
             confinement policy. In particular, recursive removal does not constrain
             resolution of the supplied path's parents or forbid crossing mount points.
+    - id: temporary-paths
+      title: Temporary files and directories
+      blocks:
+        - type: example
+          id: temporary-path-synopsis
+          title: null
+          language: terrane
+          mode: illustrative
+          target: null
+          timeout-ms: null
+          source: |-
+            function filesystem-create-temporary-directory temporary-path throws temporary-path-error; capability filesystem, parent path|none = none
+            function filesystem-create-temporary-file temporary-path throws temporary-path-error; capability filesystem, parent path|none = none
+          response: null
+          diagnostic: null
+          markdown: null
+        - type: markdown
+          markdown: |-
+            Both functions create a fresh entry exclusively in an existing directory. Omit
+            `parent` to use the host temporary directory (`TMPDIR` on Linux when set). The
+            returned `temporary-path` owns cleanup of the new entry. Names are random, with
+            no caller-controlled name component. Permissions are at most `0700` for
+            directories and `0600` for files, subject to the process umask. A file starts
+            empty and is not held open by the Terrane owner; use the regular filesystem
+            operations to access it. Creation failures throw `temporary-path-error` with the
+            host error message. A non-UTF-8 absolute path is not exposed.
+
+            `location;` borrows the owner and returns an absolute `path`. The path value
+            does not extend the owner's lifetime. Keep the owner alive until all work using
+            that path (including child processes) is finished.
+
+            Dropping the owner attempts deletion without reporting errors. `delete;`
+            consumes the owner and returns a `filesystem-operation-result`; an already
+            absent entry counts as success. For a directory, deletion is recursive and does
+            not traverse symlinks encountered in its tree. Failure may leave some or all
+            contents and is not retried automatically; save the `location;` first if the
+            caller needs to recover. `keep;` consumes the owner, returns its path without
+            moving the entry on disk, and gives the caller responsibility for deletion.
+
+            Use a trusted parent with stable path resolution. This is pathname-based
+            ownership, not directory-handle confinement or a guarantee about replaced
+            entries. Do not rename or replace a managed entry while the owner is live.
+            Best-effort cleanup does not cover abrupt process termination.
     - id: handles
       title: Handle-based I/O
       blocks:
