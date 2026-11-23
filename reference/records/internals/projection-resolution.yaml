@@ -660,6 +660,14 @@ documentation:
             payload access must not extend aliased receiver guards across sibling formatting
             operands or replace shared-async handles with `self`.
 
+            Demand for a method reached through a projected field follows the field's
+            canonical native owner even if that owner's type is not explicitly imported.
+            Direct receiver lowering normalizes grouping before selecting the field place.
+            Synchronous optional string-slice results carry their native text conversion
+            through output alias substitution. An owned-text result must finish conversion
+            inside any temporary receiver guard, before it leaves the native invocation's
+            panic boundary.
+
             Live lender checks compare canonical owner-and-projection paths for field/index
             replacement, explicit field moves and mutating member calls. Reaching values and
             backwards liveness follow execution edges, not lexical offsets: mutually
