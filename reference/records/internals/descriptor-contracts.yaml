@@ -82,6 +82,11 @@ documentation:
             fields, parameters, and results. Member access on an inferred nested value
             therefore does not depend on separately importing the leaf class name into the
             consumer namespace.
+
+            Class conformance checks use the defining unit and full canonical identity.
+            Imported copies do not repeat the check: the first encounter in the original
+            traversal determines diagnostic priority. Interface signature checks still use
+            each unit's visible methods.
   see-also:
     - lang.types.descriptors
     - lang.classes.protocols
