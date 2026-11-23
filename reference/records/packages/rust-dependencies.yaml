@@ -253,12 +253,12 @@ documentation:
             provided native trait methods retain the same borrowing through generated
             interface facades, including reference receivers.
 
-            A synchronous Rust `&str` result crosses as owned `string`, and `Option<&str>`
-            crosses as owned `string|none`. Both rules apply to the successful payload of a
-            projected Rust `Result`, including through an output type alias. A present
-            string is copied directly from the lender while it is valid; `None` performs no
-            text copy. This rule does not make optional borrows of opaque native objects
-            storable or admit borrowed results on asynchronous calls.
+            Synchronous Rust `&str` and `&[u8]` results cross as owned `string` and `bytes`,
+            respectively. Optional versions preserve absence; the same rules apply to the
+            successful payload of a projected Rust `Result`, including through an output
+            type alias. Only a present value is copied, while its lender remains valid. This
+            does not make optional borrows of opaque native objects storable or admit
+            borrowed results on asynchronous calls.
 
             Reading a COW-backed list through that boundary does not separate its backing
             storage. A subsequent Terrane mutation still separates shared backing before

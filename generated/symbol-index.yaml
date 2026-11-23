@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e617e41fc8507bcf86ba6afcad001f11d1553a6927a5e532eaaa3eaa18637cf7
+  input-sha256: 236f4280dc8ef7db555759e1da6dbdf1d50da7483130bfe903bbec0e7bf135e5
 format: 1
 generated: true
 symbols:
@@ -6776,10 +6776,6 @@ symbols:
   record: tool.packages.rust-dependencies
   section: callbacks
   declaration: none
-- name: None
-  record: tool.packages.rust-dependencies
-  section: crossed-types
-  declaration: None
 - name: none
   record: tool.packages.rust-dependencies
   section: foreign-value-ownership
