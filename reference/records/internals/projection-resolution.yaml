@@ -1177,6 +1177,8 @@ documentation:
             selections use that metadata through recursive signatures, factory results, and
             borrowed operation graphs. Native capability queries prove the exact closed
             representation, rather than copying optimistic generic-declaration flags.
+            Substitution invalidates a cached native path when its applied arguments change,
+            so a closed result cannot still compare as the open receiver template.
             Standard-library types reachable from a declared provider's public signatures
             load their defining Rustdoc surface into that provider namespace while
             preserving canonical native ownership. Field and method inference, destination

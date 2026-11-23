@@ -451,6 +451,7 @@ documentation:
             - native-field-text
             - native-optional-text
             - native-scoped-text
+            - native-typed-metadata
             - projected-borrowed-interior-binding
             - projected-borrowed-interior-return
             - native-generic-executor
@@ -470,6 +471,11 @@ documentation:
             A parenthesized public native field used as a method receiver retains the same
             field place as the ungrouped receiver. Producing owned text from a method on
             that field does not snapshot the field owner.
+
+            An explicit native `Clone` terminal on a borrowed value can return an owned
+            snapshot. Its selected generic arguments, including defaults inherited from the
+            receiver, remain the same when the result enters explicitly typed source
+            storage. The terminal clones the selected native value, not its lender.
 
             Shared and mutable native optional borrows support map and and_then to produce
             owned results, and cloned to request an explicit owned snapshot. Invalid

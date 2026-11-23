@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ecf03d43e9183e2b36ef148189d37e642672cbc0dc45a979c2ed74d7c268578c
+  input-sha256: e617e41fc8507bcf86ba6afcad001f11d1553a6927a5e532eaaa3eaa18637cf7
 format: 1
 generated: true
 symbols:
@@ -1711,6 +1711,10 @@ symbols:
 - name: Clone
   record: manual.changelog.unreleased
   section: changes-2026-11-15
+  declaration: Clone
+- name: Clone
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
   declaration: Clone
 - name: Clone
   record: tool.packages.rust-dependencies
