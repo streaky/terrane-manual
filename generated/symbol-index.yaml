@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 604736d7838b08101b6360bdcb112616354f98d65bbdfaef7abb6b661c9530b1
+  input-sha256: 4ea9d1b526c6c3aa6ea7192269a6e7983b0418f4c8ba4b375f0b627cda6d10f1
 format: 1
 generated: true
 symbols:
@@ -3932,6 +3932,10 @@ symbols:
   record: lang.text.search
   section: string-search
   declaration: find.count
+- name: find_map
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: find_map
 - name: finish
   record: lang.functions.fluent-apis
   section: receiver-design

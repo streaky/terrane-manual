@@ -676,6 +676,15 @@ documentation:
             enclosing call needs more than one lowering observation of its receiver.
             Setup-free producers remain nested expressions for joint Rust inference.
 
+            A synchronous projected receiver chain may begin with a lifetime-bearing borrow
+            of a shared owner when its native loan terminates along receiver edges without
+            suspension. The bridge acquires one guard and stages all intermediate receiver
+            views in that region, including a mutable iterator terminal. For a scoped native
+            `Iterator<Item = &T>` with an admitted nominal element and a family-wide
+            implementation, `find_map` lends each element to a synchronous callback
+            returning an owned optional result. It does not collect the iterator or snapshot
+            its elements.
+
             Live lender checks compare canonical owner-and-projection paths for field/index
             replacement, explicit field moves and mutating member calls. Reaching values and
             backwards liveness follow execution edges, not lexical offsets: mutually
