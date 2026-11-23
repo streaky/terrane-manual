@@ -253,8 +253,9 @@ documentation:
             provided native trait methods retain the same borrowing through generated
             interface facades, including reference receivers.
 
-            A synchronous Rust `Option<&str>` result crosses as owned `string|none`,
-            including as the successful payload of a projected Rust `Result`. A present
+            A synchronous Rust `&str` result crosses as owned `string`, and `Option<&str>`
+            crosses as owned `string|none`. Both rules apply to the successful payload of a
+            projected Rust `Result`, including through an output type alias. A present
             string is copied directly from the lender while it is valid; `None` performs no
             text copy. This rule does not make optional borrows of opaque native objects
             storable or admit borrowed results on asynchronous calls.
@@ -449,6 +450,7 @@ documentation:
             - projected-borrowed-interior-graphs
             - native-field-text
             - native-optional-text
+            - native-scoped-text
             - projected-borrowed-interior-binding
             - projected-borrowed-interior-return
             - native-generic-executor

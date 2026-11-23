@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d07e160df3ccb2596c7b4d71c1f78be2e6f030d5b525b14e762f7d95ae7a813d
+  input-sha256: ecf03d43e9183e2b36ef148189d37e642672cbc0dc45a979c2ed74d7c268578c
 format: 1
 generated: true
 symbols:
@@ -9851,6 +9851,10 @@ symbols:
 - name: string
   record: std.text-bytes-codecs
   section: text-and-bytes
+  declaration: string
+- name: string
+  record: tool.packages.rust-dependencies
+  section: crossed-types
   declaration: string
 - name: string.case-fold
   record: std.regex
