@@ -485,6 +485,12 @@ documentation:
             Constructed borrowed views use the separate lifetime-coupled callback contract,
             not ordinary storage.
 
+            A supported native iterator lending shared nominal items can use `find_map` to
+            return the first owned optional result supplied by a synchronous callback. This
+            traverses the native iterator without collecting it or copying its items. A loan
+            from a shared-reference receiver must terminate in the synchronous receiver
+            chain; it cannot be passed as an argument or held across an await.
+
             A callback may mutate its borrowed parameter only when the selected native
             callback supplies a mutable reference. Passing it through a shared map or
             and_then edge is a source error (T0139), not a deferred Rust backend failure.
