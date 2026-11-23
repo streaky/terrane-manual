@@ -675,11 +675,11 @@ documentation:
             intermediate views stay inside the bridge; the existing terminal conversion
             determines what leaves it. A staged producer executes once even when its
             enclosing call needs more than one lowering observation of its receiver. A
-            mutable intermediate receiver can require staging the chain even without a
-            guard, so a Rust temporary does not expire before the terminal borrows it. Other
-            setup-free producers stay nested for joint Rust inference and share the exit
-            call's panic boundary. Separately staged producers preserve their own native
-            member attribution.
+            mutable consumer of a chain of local-lender views can require lexical staging
+            even without a guard. Setup-free expression-scoped producers stay nested for
+            joint Rust inference and share the owned exit's panic boundary; wrapping a
+            mutable borrow producer by itself can try to return a loan of a closure capture.
+            Separately staged producers preserve their own native member attribution.
 
             A synchronous projected receiver chain may begin with a lifetime-bearing borrow
             of a shared owner when its native loan terminates along receiver edges without
