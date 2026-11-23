@@ -188,12 +188,15 @@ documentation:
             code actions. Ordinary open/change analysis does not compile generated Rust. The
             custom `terrane/generatedRust` request lazily opens a short-lived generated
             snapshot from the exact current package and editor overlays, exposes exact-build
-            source associations, and closes it before responding. Rename returns versioned
-            workspace edits and maps tooling errors to JSON-RPC invalid params (`-32602`)
-            while retaining the tooling code and explanation. UTF-8, UTF-16, or UTF-32 LSP
-            positions are negotiated and converted only at the protocol boundary; compiler
-            spans remain canonical UTF-8 byte offsets. Token highlighting retains a direct
-            lossless-lexer encoding pass and does not define syntax or semantic meaning.
+            source associations with the corresponding rendered Rust text, and closes it
+            before responding. Clients can display the actual generated item, including its
+            projected native bridge, without reimplementing lowering. Rename returns
+            versioned workspace edits and maps tooling errors to JSON-RPC invalid params
+            (`-32602`) while retaining the tooling code and explanation. UTF-8, UTF-16, or
+            UTF-32 LSP positions are negotiated and converted only at the protocol boundary;
+            compiler spans remain canonical UTF-8 byte offsets. Token highlighting retains a
+            direct lossless-lexer encoding pass and does not define syntax or semantic
+            meaning.
 
             Introducing an alias by changing `from /namespace import f` to
             `from /namespace import f as x` is not an LSP rename operation. Rename must not

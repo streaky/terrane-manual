@@ -669,6 +669,13 @@ documentation:
             native invocation's panic boundary. A receiver-only forwarded method with an
             explicit native path uses that conversion even without a source callable facade.
 
+            For a synchronous terminal on a projected receiver chain, code generation
+            assembles staged receiver setup in one lexical bridge. Guards and native
+            intermediate views stay inside the bridge; the existing terminal conversion
+            determines what leaves it. A staged producer executes once even when its
+            enclosing call needs more than one lowering observation of its receiver.
+            Setup-free producers remain nested expressions for joint Rust inference.
+
             Live lender checks compare canonical owner-and-projection paths for field/index
             replacement, explicit field moves and mutating member calls. Reaching values and
             backwards liveness follow execution edges, not lexical offsets: mutually
