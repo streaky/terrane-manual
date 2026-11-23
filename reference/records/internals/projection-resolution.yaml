@@ -662,12 +662,13 @@ documentation:
 
             Demand for a method reached through a projected field follows the field's
             canonical native owner even if that owner's type is not explicitly imported.
-            Direct receiver lowering normalizes grouping before selecting the field place.
-            Synchronous string and byte slices, including optional results, retain their
-            native conversion through output alias substitution. An owned scalar result must
-            finish conversion inside any temporary receiver guard, before it leaves the
-            native invocation's panic boundary. A receiver-only forwarded method with an
-            explicit native path uses that conversion even without a source callable facade.
+            Receiver place selection normalizes grouping and resolves shared and mutable
+            receiver loans before rendering the call. String and byte slices, including
+            optional results, retain their native conversion through output alias
+            substitution. An owned result finishes conversion before dropping a temporary
+            receiver guard. A receiver-only forwarding method emitted as a direct native
+            call uses the same result conversion and error mapping as a native call with a
+            source facade.
 
             For a synchronous terminal on a projected receiver chain, code generation
             assembles staged receiver setup in one lexical bridge. Guards and native
