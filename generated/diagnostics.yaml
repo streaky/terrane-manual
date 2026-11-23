@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c94714d546febd67a9b1273dabcf1d3700c38ee7647ba6e0cf2cd6c3f3f78b1f
+  input-sha256: 298178974a524c50bfbc52cef4f92f790decd550ef73c5b92c9b353fbe0b0b1e
 format: 1
 generated: true
 diagnostics:
@@ -1768,7 +1768,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 1503
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1786
+    line: 1815
 - code: T0020
   messages:
   - bare `throw` is only valid inside a catch clause
@@ -2376,7 +2376,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 117
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1858
+    line: 1887
   - path: crates/terrane-compiler/src/semantics/bindings/capture_lifetimes.rs
     line: 307
 - code: T0085
@@ -2587,7 +2587,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1755
+    line: 1784
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
@@ -2772,13 +2772,13 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 1471
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1567
+    line: 1568
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1588
+    line: 1589
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1609
+    line: 1610
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1726
+    line: 1727
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 244
   - path: crates/terrane-compiler/src/semantics/calls.rs
