@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: ce34cb1ca7d4b79213cd693eb78ed99aa62623c799666e6de0cfd00e5a5c72be
+  input-sha256: 2aa50ddbc48d4d0a50ffd635b1be0cf8b4bbf0126d082af564c36ff86c2199fc
 format: 1
 generated: true
 symbols:
@@ -3913,6 +3913,10 @@ symbols:
   section: async-projected-endpoints
   declaration: finally
 - name: find
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: find
+- name: find
   record: lang.text.search
   section: string-search
   declaration: find
@@ -3935,6 +3939,14 @@ symbols:
 - name: find_map
   record: internals.projection.resolution
   section: native-receiver-regions
+  declaration: find_map
+- name: find_map
+  record: manual.changelog.unreleased
+  section: changes-2026-11-23
+  declaration: find_map
+- name: find_map
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
   declaration: find_map
 - name: finish
   record: lang.functions.fluent-apis
@@ -5512,6 +5524,10 @@ symbols:
   record: book.terrane-shaped-programs
   section: use-iteration-rather-than-managing-indexes
   declaration: iterator
+- name: Iterator
+  record: internals.projection.resolution
+  section: native-receiver-regions
+  declaration: Iterator
 - name: iterator
   record: lang.collections.protocols
   section: source-iteration

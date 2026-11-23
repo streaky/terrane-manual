@@ -686,6 +686,15 @@ documentation:
             returning an owned optional result. It does not collect the iterator or snapshot
             its elements.
 
+            This guard proof currently requires a shared-reference receiver; a
+            lifetime-bearing result borrowed from a field behind a guard is rejected.
+            Extending it requires a proof of the field's physical guard and lender path
+            through the entire receiver chain, including aliasing and suspension checks.
+            `find_map` is the only synthesized borrowed-iterator terminal, not general
+            native `Iterator` projection. A sibling operation needs its own item and return
+            ownership contract (for example, `find` can return a borrowed item), callback
+            ABI proof, and conformance for short-circuiting and rejected escapes.
+
             Live lender checks compare canonical owner-and-projection paths for field/index
             replacement, explicit field moves and mutating member calls. Reaching values and
             backwards liveness follow execution edges, not lexical offsets: mutually
