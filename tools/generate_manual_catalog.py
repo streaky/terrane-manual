@@ -87,27 +87,41 @@ def mask_rust_literals_and_comments(text: str) -> str:
     return "".join(chars)
 
 
-def test_masked_rust_text(text: str) -> str:
+def diagnostic_source_text(text: str) -> str:
     masked = mask_rust_literals_and_comments(text)
     test_module = re.compile(
         r"#\s*\[\s*cfg\s*\(\s*test\s*\)\s*\]\s*"
         r"(?:#\s*\[[^\]]*\]\s*)*"
         r"(?:(?:pub(?:\s*\([^)]*\))?)\s+)?mod\s+[A-Za-z_][A-Za-z_0-9]*\s*\{"
     )
+    matches_macro = re.compile(r"\bmatches\s*!\s*([({\[])")
     chars = list(text)
-    for match in test_module.finditer(masked):
-        opening = masked.find("{", match.start(), match.end())
-        depth = 1
+
+    def blank_group(start: int, opening: int, *, pattern_only: bool = False) -> None:
+        closers = {"(": ")", "{": "}", "[": "]"}
+        stack = [closers[masked[opening]]]
         end = opening + 1
-        while end < len(masked) and depth:
-            if masked[end] == "{":
-                depth += 1
-            elif masked[end] == "}":
-                depth -= 1
+        while end < len(masked) and stack:
+            char = masked[end]
+            if char in closers:
+                stack.append(closers[char])
+            elif char == stack[-1]:
+                stack.pop()
+            elif pattern_only and len(stack) == 1 and char == ",":
+                start = end + 1
+                pattern_only = False
             end += 1
-        for index in range(match.start(), end):
+        if pattern_only:
+            return
+        for index in range(start, end):
             if chars[index] not in "\r\n":
                 chars[index] = " "
+
+    for match in test_module.finditer(masked):
+        blank_group(match.start(), match.end() - 1)
+    # A diagnostic code in a pattern is a reference, not a diagnostic emission.
+    for match in matches_macro.finditer(masked):
+        blank_group(match.start(), match.start(1), pattern_only=True)
     return "".join(chars)
 
 
@@ -452,9 +466,9 @@ def diagnostic_inventory(compiler_root: Path) -> dict[str, Any]:
         if is_test_source(path.relative_to(source_root)):
             continue
         text = path.read_text(encoding="utf-8")
-        test_masked = test_masked_rust_text(text)
+        source_text = diagnostic_source_text(text)
         for match in CODE_RE.finditer(text):
-            if test_masked[match.start()] == " ":
+            if source_text[match.start()] == " ":
                 continue
             code = match.group(1)
             line = text.count("\n", 0, match.start()) + 1
@@ -466,7 +480,7 @@ def diagnostic_inventory(compiler_root: Path) -> dict[str, Any]:
             message_match = re.search(r'"((?:[^"\\]|\\.){8,})"', following)
             if message_match:
                 message_start = match.end() + 1 + message_match.start()
-                if test_masked[message_start] == " ":
+                if source_text[message_start] == " ":
                     continue
                 message = bytes(message_match.group(1), "utf-8").decode("unicode_escape")
                 if message not in entry["messages"]:

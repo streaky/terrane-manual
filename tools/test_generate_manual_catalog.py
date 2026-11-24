@@ -99,6 +99,31 @@ class DiagnosticInventoryTests(unittest.TestCase):
         ])
 
 
+    def test_matches_patterns_are_not_diagnostic_emissions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "crates/terrane-compiler/src"
+            source.mkdir(parents=True)
+            (source / "tooling.rs").write_text(
+                'fn emit() { diagnostic("S0005", "Actual diagnostic"); }\n'
+                'fn filter(code: &str) -> bool {\n'
+                '    matches![\n'
+                '        normalize(code, r#"]"#),\n'
+                '        "S0005" | "S2002" | "S2017"\n'
+                '    ]\n'
+                '}\n'
+                'fn after() { diagnostic("S9999", "Diagnostic after the filter"); }\n',
+                encoding="utf-8",
+            )
+            diagnostics = diagnostic_inventory(root)["diagnostics"]
+
+        self.assertEqual([item["code"] for item in diagnostics], ["S0005", "S9999"])
+        self.assertEqual(diagnostics[0]["messages"], ["Actual diagnostic"])
+        self.assertEqual(diagnostics[0]["sources"], [
+            {"path": "crates/terrane-compiler/src/tooling.rs", "line": 1},
+        ])
+        self.assertEqual(diagnostics[1]["messages"], ["Diagnostic after the filter"])
+
 
 class ManualYamlValidationTests(unittest.TestCase):
     def test_nested_duplicates_report_both_source_locations(self):
