@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: f1dcdb4391703823080e339b60d0a123a09cc9c7ab195fa618da1ec809db7459
+  input-sha256: b567db565a1a346ac5bd3433254368faec7a0ccea91b18f1b1457cc7caf2d46e
 format: 1
 generated: true
 symbols:
@@ -1274,6 +1274,10 @@ symbols:
   declaration: bytes
 - name: bytes
   record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: bytes
+- name: bytes
+  record: tool.packages.rust-dependencies
   section: crossed-types
   declaration: bytes
 - name: bytes-from-octets
@@ -2531,6 +2535,10 @@ symbols:
   record: std.text-bytes-codecs
   section: compiler-synopsis
   declaration: function decode decode-result; text string, padded bool
+- name: decode
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: decode
 - name: decode-base64
   record: std.text-bytes-codecs
   section: compiler-synopsis
