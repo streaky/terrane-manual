@@ -253,6 +253,14 @@ documentation:
             provided native trait methods retain the same borrowing through generated
             interface facades, including reference receivers.
 
+            A direct `NativeType::from; value` call can use Rust's canonical `From` trait on
+            a closed, owned projected nominal when it has no projected inherent `from`
+            member. A `ref string` argument lends `&str`; an owned `string` uses `String`
+            and can be transferred with `move`. The explicit destination and input determine
+            the operation. Terrane rejects a missing implementation even if the source
+            implements `Into` in the other direction. This is not an implicit conversion or
+            a first-class generic function.
+
             Synchronous Rust `&str` and `&[u8]` results cross as owned `string` and `bytes`,
             respectively. Optional versions preserve absence; the same rules apply to the
             successful payload of a projected Rust `Result`, including through an output

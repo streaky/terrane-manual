@@ -922,6 +922,24 @@ documentation:
             before region validation and lowering. Only `scoped-access` is currently
             implemented; unsupported operations are errors, not placeholder realizations.
             This machinery is not a package-specific mutex lowering path.
+    - id: native-from-bridges
+      title: Checked native conversion bridges
+      blocks:
+        - type: markdown
+          markdown: |-
+            The owned projected nominal exposes a direct `from` candidate, not a claim that
+            it implements every conversion. A projected inherent static operation takes
+            precedence. At the source call, the existing projected argument specialization
+            closes the physical input representation. The dependency oracle proves the
+            destination's exact standard `From` bound against the locked Rust graph; a
+            reference input must be valid for its call lifetime. This proof does not reverse
+            an arbitrary `Into` implementation.
+
+            The successful semantic specialization stores the concrete trait-qualified
+            target and the matching projected argument ABI. Lowering consumes that plan
+            directly, retaining the standard native call boundary. Semantic hover shows the
+            target from that same specialization, and the generated-Rust request returns the
+            rendered artifact. No editor-side proof or reconstructed bridge is needed.
     - id: destination-results
       title: Destination-result proof
       blocks:

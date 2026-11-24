@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 1168bc8327c256f7bebbfcf8092de7ac8829e938c552270695eeefeefbb51ff2
+  input-sha256: a0373e08509b90b93a1b2301b0acbae85e7cf5bc082e5758e0ac0be177bdc4ea
 format: 1
 generated: true
 symbols:
@@ -4332,6 +4332,26 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: frames
+- name: from
+  record: internals.projection.resolution
+  section: native-from-bridges
+  declaration: from
+- name: From
+  record: internals.projection.resolution
+  section: native-from-bridges
+  declaration: From
+- name: From
+  record: manual.changelog.unreleased
+  section: changes-2026-11-24
+  declaration: From
+- name: From
+  record: tool.packages.rust-dependencies
+  section: crossed-types
+  declaration: From
+- name: from
+  record: tool.packages.rust-dependencies
+  section: crossed-types
+  declaration: from
 - name: from_json
   record: lang.declarations.annotations
   section: docs-and-metadata
@@ -5308,6 +5328,14 @@ symbols:
   record: std.filesystem
   section: error-kinds
   declaration: interrupted
+- name: Into
+  record: internals.projection.resolution
+  section: native-from-bridges
+  declaration: Into
+- name: Into
+  record: tool.packages.rust-dependencies
+  section: crossed-types
+  declaration: Into
 - name: into-native
   record: internals.execution.runtime-selection
   section: readiness-io
@@ -6283,6 +6311,10 @@ symbols:
 - name: move
   record: std.collections
   section: lookup
+  declaration: move
+- name: move
+  record: tool.packages.rust-dependencies
+  section: crossed-types
   declaration: move
 - name: ms
   record: tool.packages.testing
@@ -9876,6 +9908,10 @@ symbols:
   record: tool.packages.rust-dependencies
   section: crossed-types
   declaration: string
+- name: String
+  record: tool.packages.rust-dependencies
+  section: crossed-types
+  declaration: String
 - name: string.case-fold
   record: std.regex
   section: dialect
