@@ -570,6 +570,14 @@ documentation:
             borrowed bytes before producing owned text. Reading the same native result as a
             standalone Terrane `bytes` value still owns the bytes; the optimization does not
             extend the loan or bypass shared guards.
+
+            For a synchronous shared-receiver method whose sole generic input is an owned
+            `int` and does not affect the result type, projection prefers the ordinary
+            native `i64` ABI. If its bounds reject `i64` and prove exactly one of `isize`
+            and `usize`, it can use that ABI with a checked conversion at the argument site.
+            Explicit generic selections are not changed. Conversion failures occur before
+            invoking the dependency; a failure returned by the dependency retains its native
+            error descriptor.
         - type: example
           id: example.dependencies.borrowed-interior-snapshot
           language: terrane

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b567db565a1a346ac5bd3433254368faec7a0ccea91b18f1b1457cc7caf2d46e
+  input-sha256: d5266850d82dbee184b94b81086afa901babbcb978e0c1c2e5f059755957fd60
 format: 1
 generated: true
 symbols:
@@ -4714,6 +4714,10 @@ symbols:
   declaration: i64
 - name: i64
   record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: i64
+- name: i64
+  record: tool.packages.rust-dependencies
   section: payload-enums
   declaration: i64
 - name: ICU4X_VERSION
@@ -5134,6 +5138,10 @@ symbols:
   declaration: int
 - name: int
   record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: int
+- name: int
+  record: tool.packages.rust-dependencies
   section: foreign-value-ownership
   declaration: int
 - name: int
@@ -5515,6 +5523,10 @@ symbols:
 - name: isize
   record: manual.changelog.unreleased
   section: changes-2026-11-13
+  declaration: isize
+- name: isize
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
   declaration: isize
 - name: isize
   record: tool.packages.rust-dependencies
@@ -12047,6 +12059,10 @@ symbols:
 - name: usize
   record: manual.changelog.unreleased
   section: changes-2026-11-13
+  declaration: usize
+- name: usize
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
   declaration: usize
 - name: usize
   record: tool.packages.rust-dependencies
