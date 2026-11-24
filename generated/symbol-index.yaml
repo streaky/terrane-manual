@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d5266850d82dbee184b94b81086afa901babbcb978e0c1c2e5f059755957fd60
+  input-sha256: 3ca1b200cd5e659aed77cdc8d06e9066635caa6e145cfc04947432bc893d6e9e
 format: 1
 generated: true
 symbols:
@@ -6108,6 +6108,10 @@ symbols:
   record: tool.packages.rust-interop
   section: inline-rust
   declaration: Map
+- name: map_collect
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: map_collect
 - name: mark-complete
   record: book.classes-interfaces-and-traits
   section: objects-as-behavior

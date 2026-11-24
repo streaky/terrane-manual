@@ -578,6 +578,11 @@ documentation:
             Explicit generic selections are not changed. Conversion failures occur before
             invoking the dependency; a failure returned by the dependency retains its native
             error descriptor.
+
+            A projected shared slice of concrete, non-generic native objects can be consumed
+            immediately by `map_collect`. A synchronous visitor borrows each element in
+            slice order and returns an owned value; only the resulting list leaves the
+            expression. Neither the lender nor its slice is cloned.
         - type: example
           id: example.dependencies.borrowed-interior-snapshot
           language: terrane
