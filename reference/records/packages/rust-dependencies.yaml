@@ -583,6 +583,12 @@ documentation:
             immediately by `map_collect`. A synchronous visitor borrows each element in
             slice order and returns an owned value; only the resulting list leaves the
             expression. Neither the lender nor its slice is cloned.
+
+            A scoped native iterator that yields shared references to native objects also
+            supports `map_collect` and `filter_map_collect`. The latter skips `none`
+            results. Both visit items in iterator order without retaining the visitor,
+            lending each item only for the duration of the call. The returned list owns its
+            elements.
         - type: example
           id: example.dependencies.borrowed-interior-snapshot
           language: terrane

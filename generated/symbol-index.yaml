@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 3ca1b200cd5e659aed77cdc8d06e9066635caa6e145cfc04947432bc893d6e9e
+  input-sha256: 1e64bdfeb4b7e09978a41eeb8012fa8dee7a4b65f5c5f0c8a0514d55b84da594
 format: 1
 generated: true
 symbols:
@@ -3832,6 +3832,10 @@ symbols:
   record: manual.changelog.unreleased
   section: changes-2026-11-15
   declaration: filter
+- name: filter_map_collect
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: filter_map_collect
 - name: final
   record: book.values-and-names
   section: giving-a-value-a-name
@@ -6855,6 +6859,10 @@ symbols:
 - name: none
   record: tool.editor-support
   section: editor-support
+  declaration: none
+- name: none
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
   declaration: none
 - name: none
   record: tool.packages.rust-dependencies
