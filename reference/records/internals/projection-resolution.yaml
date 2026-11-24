@@ -300,6 +300,10 @@ documentation:
             record atomically. Workspace resolution serializes manifest, Rustdoc output, and
             projection history writes for a package.
 
+            A cache hit skips Cargo entirely. Build scripts can read arbitrary inherited
+            variables, so environments that differ only in incidental shell or editor
+            variables can still miss the same Rustdoc record.
+
             Trait recovery indexes defining Rustdoc trait declarations and prepares
             signature path maps once per document. Discovery considers all admissible
             implementations of a declined operation before consuming the decline. A
@@ -945,6 +949,10 @@ documentation:
             directly, retaining the standard native call boundary. Semantic hover shows the
             target from that same specialization, and the generated-Rust request returns the
             rendered artifact. No editor-side proof or reconstructed bridge is needed.
+
+            The unchecked candidate is not an admitted inventory member or an editor
+            completion. Compiler-owned declarations can spell a real projected static
+            `from`; authored classes cannot declare that name.
     - id: destination-results
       title: Destination-result proof
       blocks:

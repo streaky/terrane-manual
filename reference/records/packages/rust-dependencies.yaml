@@ -259,7 +259,9 @@ documentation:
             and can be transferred with `move`. The explicit destination and input determine
             the operation. Terrane rejects a missing implementation even if the source
             implements `Into` in the other direction. This is not an implicit conversion or
-            a first-class generic function.
+            a first-class generic function. The fallback is checked at the call site, not
+            advertised as an admitted inventory member. It does not permit authored classes
+            to declare a static function named `from`.
 
             Synchronous Rust `&str` and `&[u8]` results cross as owned `string` and `bytes`,
             respectively. Optional versions preserve absence; the same rules apply to the
