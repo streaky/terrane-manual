@@ -1669,50 +1669,51 @@ documentation:
             `.trn/projection-cache.json` stores disposable local projection cache/history.
             It remains restricted to current imports. The file orders demanded unavailable
             declarations and a required-admitted index first, active compiler-owned Terrane
-            source second, and the unreachable unavailable inventory last. Deterministic
-            `Generated source unit` markers introduce the active source. Each marker starts
-            an ordinary one-namespace virtual source unit, so a single physical artifact may
-            contain `/deps/iced`, `/deps/iced/application`, and other namespaces without
-            weakening the authored-source `S2002` rule. Package analysis splits and
-            syntax-validates every unit before replacing the artifact; namespace dependency
-            cycles do not prevent independent unit generation. Native identity and Terrane
-            source naming are separate. Canonical public re-exports and repeated
-            observations of one exact Rust type share one readable nominal declaration. A
-            unique closed generic uses its constructor name; actual collisions first gain
-            deterministic path-derived qualifiers and use a short digest only if those
-            qualifiers still collide. Closed numeric specializations of one Rust type
-            constructor likewise share one public declaration: for example, `Point<f32>` and
-            `Point<u32>` both appear as `Point`. Exact native type arguments and provider
-            paths remain compiler-owned semantic metadata, select only methods admitted for
-            that specialization, and lower to the corresponding generic Rust type. Admitted
-            nominal classes emit the union of already-projectable instance methods, static
-            methods, associated constants, and enum constructors whose rendered declarations
-            are syntax-valid Terrane source, independently of current imports. A projected
-            associated constant is exposed as `constant` and selected with `Type::CONSTANT`.
-            Rustdoc remains authoritative for item visibility and declared type. When its
-            value is absent, projection recovers the exact expression from the
-            Cargo-resolved source file and parses that file once per projection pass. A
-            conservatively translated scalar, tuple, array, or arithmetic expression becomes
-            a Terrane initializer; every other constant remains compiler-backed and lowers
-            directly to its canonical native associated-constant path. Universal panic
-            translation is implicit for projected calls and is not repeated as
-            `throws dependency-panic` on every generated declaration. Projected Rust
-            `Result` declarations retain a generic `throws dependency-error` inventory
-            marker; native admission metadata selects the actual admitted typed error
-            identity or supported standard-library fallback at the boundary. Projection
-            parses each candidate declaration before admitting it to the generated unit.
-            Admitted members whose rendered declaration is not yet syntax-valid remain
-            adjacent inert comments with the exact parser rejection. Public native members
-            that remain unavailable are likewise retained immediately inside the owning
-            class as inert comments with their native path, recoverable signature, and exact
-            projection gap; the complete unavailable records still appear in the report
-            section. This preserves class structure without making an omitted or declined
-            member callable. When Rustdoc provides the nominal shape of a demanded
-            unavailable struct, enum, type alias, or trait, projection also emits an active
-            class or interface skeleton under its public `/deps/<package>` namespace. Native
-            generic and lifetime parameters that Terrane cannot yet express are retained as
-            residual obligations in adjacent comments, and such a skeleton is not registered
-            for lowering or treated as projection success.
+            source second, and the unreachable unavailable inventory last. Every physical
+            line of native inventory metadata, including multiline Rust paths and
+            signatures, remains a comment. Only `Generated source unit` markers at the start
+            of a line introduce active source. Each marker starts an ordinary one-namespace
+            virtual source unit, so a single physical artifact may contain `/deps/iced`,
+            `/deps/iced/application`, and other namespaces without weakening the
+            authored-source `S2002` rule. Package analysis splits and syntax-validates every
+            unit before replacing the artifact; namespace dependency cycles do not prevent
+            independent unit generation. Native identity and Terrane source naming are
+            separate. Canonical public re-exports and repeated observations of one exact
+            Rust type share one readable nominal declaration. A unique closed generic uses
+            its constructor name; actual collisions first gain deterministic path-derived
+            qualifiers and use a short digest only if those qualifiers still collide. Closed
+            numeric specializations of one Rust type constructor likewise share one public
+            declaration: for example, `Point<f32>` and `Point<u32>` both appear as `Point`.
+            Exact native type arguments and provider paths remain compiler-owned semantic
+            metadata, select only methods admitted for that specialization, and lower to the
+            corresponding generic Rust type. Admitted nominal classes emit the union of
+            already-projectable instance methods, static methods, associated constants, and
+            enum constructors whose rendered declarations are syntax-valid Terrane source,
+            independently of current imports. A projected associated constant is exposed as
+            `constant` and selected with `Type::CONSTANT`. Rustdoc remains authoritative for
+            item visibility and declared type. When its value is absent, projection recovers
+            the exact expression from the Cargo-resolved source file and parses that file
+            once per projection pass. A conservatively translated scalar, tuple, array, or
+            arithmetic expression becomes a Terrane initializer; every other constant
+            remains compiler-backed and lowers directly to its canonical native
+            associated-constant path. Universal panic translation is implicit for projected
+            calls and is not repeated as `throws dependency-panic` on every generated
+            declaration. Projected Rust `Result` declarations retain a generic
+            `throws dependency-error` inventory marker; native admission metadata selects
+            the actual admitted typed error identity or supported standard-library fallback
+            at the boundary. Projection parses each candidate declaration before admitting
+            it to the generated unit. Admitted members whose rendered declaration is not yet
+            syntax-valid remain adjacent inert comments with the exact parser rejection.
+            Public native members that remain unavailable are likewise retained immediately
+            inside the owning class as inert comments with their native path, recoverable
+            signature, and exact projection gap; the complete unavailable records still
+            appear in the report section. This preserves class structure without making an
+            omitted or declined member callable. When Rustdoc provides the nominal shape of
+            a demanded unavailable struct, enum, type alias, or trait, projection also emits
+            an active class or interface skeleton under its public `/deps/<package>`
+            namespace. Native generic and lifetime parameters that Terrane cannot yet
+            express are retained as residual obligations in adjacent comments, and such a
+            skeleton is not registered for lowering or treated as projection success.
 
             Each unavailable declaration retains its canonical path and exact decline
             reason. Demanded functions whose native shape can be recovered retain a
