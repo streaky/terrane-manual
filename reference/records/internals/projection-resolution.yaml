@@ -623,6 +623,12 @@ documentation:
             methods, cloned view, and nested results retain its lenders; a native trait
             proof is not an outlives proof.
 
+            Native bridge lowering passes the projected operation and the call site's
+            checked specialization to Rust emission together. For a synchronous receiver
+            chain that needs a lexical region, the region retains the producer operations
+            and stages their views under the owned exit. A checked conversion without such a
+            chain uses its selected native target without introducing a region.
+
             Apply projected method contracts after collecting declarations and before
             initial source-binding inference. Scoped native results retain their nominal
             family at that provisional stage so a consuming `Self` continuation can expose

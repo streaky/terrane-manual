@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 7e28666b7d54c11255a4d093bdcf4ae6a5643da146019fdfd9795ffa7255f473
+  input-sha256: 0a156ae05a8c1ba7aa8b165d9fed4be3689b71a22795a6441c3113522d71c3f9
 format: 1
 generated: true
 diagnostics:
@@ -118,9 +118,13 @@ diagnostics:
 - code: S0005
   messages:
   - duplicate namespace declaration
+  - ")\n                });\n            } else {\n                syntax_invalid |= !diagnostics.is_empty();\n\
+    \                units.push(SourceUnit {\n                    relative_path: PathBuf::from(format!("
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 28
+  - path: crates/terrane-compiler/src/tooling.rs
+    line: 765
 - code: S1001
   messages:
   - unexpected dedent
@@ -914,9 +918,13 @@ diagnostics:
 - code: S2002
   messages:
   - each source unit must declare exactly one namespace
+  - ")\n                });\n            } else {\n                syntax_invalid |= !diagnostics.is_empty();\n\
+    \                units.push(SourceUnit {\n                    relative_path: PathBuf::from(format!("
   sources:
   - path: crates/terrane-compiler/src/semantics/namespaces.rs
     line: 21
+  - path: crates/terrane-compiler/src/tooling.rs
+    line: 765
 - code: S2003
   messages:
   - namespace declaration requires an unanchored path
@@ -1012,6 +1020,7 @@ diagnostics:
   messages:
   - Terrane library packages cannot declare a `main` function
   - cannot declare into compiler-owned namespace `{}`
+  - snapshot/{file_id}.trn
   sources:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 472
@@ -1019,6 +1028,8 @@ diagnostics:
     line: 888
   - path: crates/terrane-compiler/src/semantics/model.rs
     line: 822
+  - path: crates/terrane-compiler/src/tooling.rs
+    line: 765
 - code: S2018
   messages:
   - compiler-owned declaration `{text}` is not kebab-case
