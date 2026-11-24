@@ -723,6 +723,9 @@ documentation:
               a concrete Rust conversion for a projected native destination, preserving a
               borrowed or owned input. Hover shows the selected Rust operation. See
               [[tool.packages.rust-dependencies#crossed-types]].
+            - **Added — consuming byte decoding.** Explicitly moving bytes into `decode`
+              lets strict UTF-8 decoding reuse the input allocation, with the same typed
+              errors and byte offsets as borrowed decoding. See [[lang.text.encodings]].
   see-also:
     - manual.changelog
     - lang.types.references

@@ -1,9 +1,13 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: b2e0e5d2d50750ac2f15f7f9b6fe961d87f3e9858df135e3d1e81b91038cb1ad
+  input-sha256: 877ec982e80338d5a50ee4fefd18a4e74a3677d19f45206c1a0d24b3c3c83b98
 format: 1
 generated: true
 symbols:
+- name: (move bytes).decode
+  record: std.text-bytes-codecs
+  section: encodings
+  declaration: (move bytes).decode; encoding
 - name: /
   record: book.namespaces-imports-and-packages
   section: namespaces-and-paths
@@ -2515,6 +2519,10 @@ symbols:
   record: lang.declarations.annotations
   section: docs-and-metadata
   declaration: DeclarationInterface
+- name: decode
+  record: manual.changelog.unreleased
+  section: changes-2026-11-24
+  declaration: decode
 - name: decode
   record: std.text-bytes-codecs
   section: compiler-synopsis

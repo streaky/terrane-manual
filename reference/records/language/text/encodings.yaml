@@ -37,6 +37,11 @@ documentation:
             trailing input. The reported offset is measured in the supplied bytes, including
             for UTF-16 and UTF-32.
 
+            For owned bytes, `(move data).decode; codec` consumes the receiver instead of
+            borrowing it. UTF-8 decoding validates the input and reuses the byte allocation
+            for the resulting string. UTF-16 and UTF-32 still transcode into new UTF-8
+            storage. Both forms report the same decode errors.
+
             `bytes` is an immutable sequence of octets, distinct from `string`. Its `length`
             counts octets, iteration yields `uint8`, and it has no scalar-text display.
             Integer indexing returns `uint8`; a negative, unrepresentable, or out-of-bounds

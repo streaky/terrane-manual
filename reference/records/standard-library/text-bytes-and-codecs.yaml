@@ -98,6 +98,10 @@ documentation:
               result: string
               failure: Throws decode-error for invalid complete input.
               ownership: Reads bytes and returns owned text.
+            - declaration: (move bytes).decode; encoding
+              result: string
+              failure: Throws decode-error for invalid complete input.
+              ownership: Consumes bytes; valid UTF-8 reuses the input allocation.
 
     - id: string-operations
       title: Common string operations
