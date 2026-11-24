@@ -290,16 +290,21 @@ documentation:
             removing, or renaming a `/deps` import can intentionally change the lock even
             when `package.toml` and `package-lock.toml` are unchanged. The compiler and
             language server derive the same demand set from current authored source; editor
-            requests overlay the unsaved document before resolving. Supplemental owner
-            rustdoc is cached independently by exact owner package, crate, hidden-item mode,
-            target, containment, pinned toolchain, and rustdoc format so distinct
-            source-demand projections can reuse the expensive owner document without sharing
-            facade aliases. Each distinct owner crate has one stable record under
-            `.trn/dependencies/owner-rustdoc/<crate-name>.json`. Package/version, target,
-            containment, hidden-item mode, toolchain, and format contribute to the identity
-            stored inside that record. Mismatches regenerate and atomically replace it;
-            distinct owners do not evict each other. Legacy hash-named projection and owner
-            records are removed without touching unrelated dependency-workspace files.
+            requests overlay the unsaved document before resolving. Rustdoc metadata has a
+            separate cache so projection schema or source-demand changes need not rerun
+            Rustdoc. Its identity includes the generated Cargo manifest and lock, local Rust
+            source and effective Cargo configuration identity, inherited environment, exact
+            package and crate, target, hidden-item mode, containment, and pinned Rustdoc
+            toolchain and format. Public dependency and supplemental owner records are
+            separate. A miss generates and validates the document before replacing its
+            record atomically. Workspace resolution serializes manifest, Rustdoc output, and
+            projection history writes for a package.
+
+            Trait recovery indexes defining Rustdoc trait declarations and prepares
+            signature path maps once per document. Discovery considers all admissible
+            implementations of a declined operation before consuming the decline. A
+            collision must not make a method available on the unqualified owner by discovery
+            order; distinct trait-qualified contracts remain separate.
     - id: callbacks
       title: Concrete callback projection
       blocks:
