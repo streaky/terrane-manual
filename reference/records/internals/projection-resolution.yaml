@@ -627,7 +627,14 @@ documentation:
             checked specialization to Rust emission together. For a synchronous receiver
             chain that needs a lexical region, the region retains the producer operations
             and stages their views under the owned exit. A checked conversion without such a
-            chain uses its selected native target without introducing a region.
+            chain uses its selected native target without introducing a region. After
+            intrinsic dispatch, source and projected invocations share an ordered lowering
+            path: prepare operands against the selected ABI, resolve the emitted target and
+            receiver, construct the invocation, then apply result conversion and error
+            handling. A staged producer and its terminal use the same setup order: receiver
+            guard, shared arguments, receiver temporaries, native inputs. Source operand
+            failures therefore retain the caller's site, while native failures retain the
+            dependency boundary.
 
             Apply projected method contracts after collecting declarations and before
             initial source-binding inference. Scoped native results retain their nominal
