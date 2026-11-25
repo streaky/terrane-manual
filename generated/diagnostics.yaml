@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6758c21d8d859ba6f4fcb665ba9fb29f648ef3274c731755cb48101f285234bb
+  input-sha256: 75c209c53f23e462e0c6a1580cbfc33e384f663876d1c8506f48ab3957db7aa5
 format: 1
 generated: true
 diagnostics:
@@ -1780,7 +1780,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 1503
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1837
+    line: 1873
 - code: T0020
   messages:
   - bare `throw` is only valid inside a catch clause
@@ -2388,7 +2388,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 117
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1909
+    line: 1945
   - path: crates/terrane-compiler/src/semantics/bindings/capture_lifetimes.rs
     line: 307
 - code: T0085
@@ -2510,11 +2510,14 @@ diagnostics:
 - code: T0105
   messages:
   - 'Rust dependency static member `{member_name}` on class `{}` is not projected: {reason}'
+  - 'Rust dependency member `{name}` is not projected: {reason}'
   - class `{}` has no static member `{member_name}`
   - conversion callback must accept exactly one `{source_type}` parameter
   sources:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 663
+  - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
+    line: 1808
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 2266
   - path: crates/terrane-compiler/src/semantics/numeric.rs
@@ -2599,7 +2602,7 @@ diagnostics:
   - chain-only dependency value must terminate within one expression
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
-    line: 1803
+    line: 1839
 - code: T0113
   messages:
   - field metadata is only valid on instance fields
