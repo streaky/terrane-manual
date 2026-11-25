@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 16a135b783f513f90e3095c95f0810700f3209559c317321193fdd472ae404f7
+  input-sha256: cd3064031eb0456d4dc8946372df9e65bde77c7914a21f55bfa1a07b276ce5a7
 format: 1
 generated: true
 symbols:
@@ -1295,6 +1295,10 @@ symbols:
 - name: bytes.append-utf8-ranges
   record: lang.text.bytes
   section: bytes
+  declaration: bytes.append-utf8-ranges
+- name: bytes.append-utf8-ranges
+  record: manual.changelog.unreleased
+  section: changes-2026-11-25
   declaration: bytes.append-utf8-ranges
 - name: bytes.decode
   record: std.text-bytes-codecs
@@ -9308,6 +9312,10 @@ symbols:
   record: std.time
   section: deadlines
   declaration: select
+- name: select_text_value
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: select_text_value
 - name: selected_target
   record: internals.projection.resolution
   section: identity
@@ -11172,6 +11180,10 @@ symbols:
   record: std.text-bytes-codecs
   section: string-operations
   declaration: text.split
+- name: TextValue
+  record: tool.packages.rust-dependencies
+  section: borrowed-interiors
+  declaration: TextValue
 - name: this
   record: book.classes-interfaces-and-traits
   section: constructing-an-instance

@@ -54,12 +54,13 @@ documentation:
 
             `bytes.append-utf8-ranges` moves or copies a supplied output string, then walks
             the input ranges separated by a supplied `uint8` octet. It appends a range only
-            when its octets pass the supplied synchronous `function from uint8 to bool` and
-            the range is valid UTF-8. Rejected ranges do not affect their neighbours. The
-            supplied separator is appended before each accepted range if the output is
-            already nonempty. Empty ranges are accepted, so they add a separator only after
-            nonempty output. The byte ranges do not become owned bytes or strings during
-            traversal.
+            when its octets pass the supplied synchronous, infallible
+            `function from uint8 to bool` and the range is valid UTF-8. Rejected ranges do
+            not affect their neighbours. The supplied separator is appended before each
+            accepted range if the output is already nonempty. Empty ranges are accepted, so
+            they add a separator only after nonempty output. Borrowed ranges are not
+            individually copied. Shared byte storage is snapshotted once, before invoking
+            the predicate, so the predicate never runs with the byte receiver’s guard held.
   see-also: []
 
 provenance:

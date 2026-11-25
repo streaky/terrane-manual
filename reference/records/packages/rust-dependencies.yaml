@@ -598,10 +598,14 @@ documentation:
 
             A native optional enum with a single-field variant lending a shared slice can
             expose `select_<variant>` followed by `get_cloned` in the same expression. The
-            selector returns no slice for an absent value or a different variant. An
-            unsigned `uint64` index must fit the native slice index and be in bounds. The
-            terminal requires a cloneable concrete element type and clones only the selected
-            element; the slice and its lender are not copied.
+            selector uses the Rust variant name converted to snake case (for example,
+            `TextValue` becomes `select_text_value`). A collision adds a numeric `_variant`
+            suffix without consuming another variant's canonical spelling. A selector is
+            unavailable when its enum cannot be named through an authored dependency's
+            public Rust exports. The selector returns no slice for an absent value or a
+            different variant. An unsigned `uint64` index must fit the native slice index
+            and be in bounds. The terminal requires a cloneable concrete element type and
+            clones only the selected element; the slice and its lender are not copied.
         - type: example
           id: example.dependencies.borrowed-interior-snapshot
           language: terrane
