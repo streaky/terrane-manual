@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c60dd1a64986715b51400d9013bd3388b4c9b493e3fc4ee47b32b6cdd0ad2a0f
+  input-sha256: ec1b62172317aa899b787f72813a7999f88fa643dd14951dace8f8f47e22bab5
 format: 1
 generated: true
 symbols:
@@ -5151,6 +5151,10 @@ symbols:
 - name: int
   record: manual.changelog.unreleased
   section: changes-2026-11-13
+  declaration: int
+- name: int
+  record: manual.changelog.unreleased
+  section: changes-2026-11-26
   declaration: int
 - name: int
   record: std.core-display
