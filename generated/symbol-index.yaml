@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: c60dd1a64986715b51400d9013bd3388b4c9b493e3fc4ee47b32b6cdd0ad2a0f
+  input-sha256: 01b5e3dad83f7e825aa0a227046c9078a288ad1b95d3f8f38c7ed85acb224882
 format: 1
 generated: true
 symbols:
@@ -10592,6 +10592,10 @@ symbols:
   record: tool.packages.command-line
   section: compilation-reuse
   declaration: TARGET
+- name: target/
+  record: tool.packages.command-line
+  section: version
+  declaration: target/
 - name: target/annotation-consumers/
   record: tool.build-time-tools
   section: annotation-driven-generation
@@ -10803,6 +10807,10 @@ symbols:
 - name: terrane
   record: tool.packages.command-line
   section: scripts
+  declaration: terrane
+- name: terrane
+  record: tool.packages.command-line
+  section: version
   declaration: terrane
 - name: terrane
   record: tool.profiling
@@ -12620,6 +12628,10 @@ symbols:
   record: tool.source-intelligence
   section: language-server
   declaration: x
+- name: XDG_CONFIG_HOME
+  record: tool.packages.command-line
+  section: version
+  declaration: XDG_CONFIG_HOME
 - name: y
   record: book.introduction
   section: examples

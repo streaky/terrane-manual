@@ -44,6 +44,16 @@ documentation:
             `release` and omit Git details. The version still comes from the workspace
             manifest. Cargo's `--release` selects an optimization profile and does not
             enable this feature.
+
+            When `terrane` resolves to a binary under its build checkout's `target/`
+            directory, it compares the current compiler inputs with its build fingerprint.
+            By default, a mismatch prints a warning and the command continues. To prevent
+            tests or other commands from running with a known-stale compiler, create an
+            empty file at `~/.config/terrane/require-current-compiler` (or under
+            `$XDG_CONFIG_HOME/terrane/` if `XDG_CONFIG_HOME` is an absolute path). With the
+            file present, a mismatch prints rebuild instructions and exits with status `6`
+            before dispatching any command. Remove the file to restore the default. If the
+            fingerprint cannot be verified, the warning remains nonfatal.
     - id: commands
       title: Running a source file
       blocks:
