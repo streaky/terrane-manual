@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: d51955fe4f602d8a92ef994804b46336a1f3119fbe02019669ae55359e8231bd
+  input-sha256: ab58a24bcefaa810712898ef109f12edcd0e295691937196531abb57672997e7
 format: 1
 generated: true
 diagnostics:
@@ -910,7 +910,7 @@ diagnostics:
   messages: []
   sources:
   - path: crates/terrane-compiler/src/package.rs
-    line: 289
+    line: 293
 - code: S2002
   messages:
   - each source unit must declare exactly one namespace
@@ -1218,7 +1218,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
     line: 225
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs
-    line: 328
+    line: 338
 - code: S2061
   messages:
   - 'origin: {} bytes {}..{} (source unavailable; exported declaration metadata)'

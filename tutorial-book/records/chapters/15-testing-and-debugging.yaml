@@ -1135,6 +1135,13 @@ documentation:
             and Call Stack views for the same source-level investigation described above;
             see [[tool.debugging#commands]] for launch settings.
 
+            To compare a Terrane line with its generated code, save the file and run
+            **Terrane: Show Lowered Rust**. It inspects the exact native debug build,
+            including outside a debugging session; during debugging, you can also select a
+            mapped frame in the Call Stack. Use **Show Assembly** to add native
+            instructions. See [[tool.editor-support#editor-support]] for the editor
+            workflow.
+
             The debugger CLI, DAP adapter, and provenance schema are experimental in 0.1.
             Linux x86-64 with LLDB 22 is exercised end to end, including standard DAP
             step-in/step-out, recursive step-over, fatal native stops, disconnect during

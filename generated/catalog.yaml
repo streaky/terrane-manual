@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 01b5e3dad83f7e825aa0a227046c9078a288ad1b95d3f8f38c7ed85acb224882
+  input-sha256: dd43337057dc7d07adaeaac2dc16b1ad15b3c09c6320b1116e935e19d6aeec30
 format: 2
 generated: true
 records:
@@ -3222,8 +3222,8 @@ records:
   declaration-synopsis: []
 - id: tool.debugging
   title: Native source debugging
-  summary: Builds debug-profile Terrane executables with versioned, build-bound provenance and translates
-    source debugger operations to one selected LLDB DAP backend.
+  summary: Builds debug-profile Terrane artifacts with versioned, build-bound provenance for source inspection
+    and translates executable debugger operations to one selected LLDB DAP backend.
   kind: topic
   manual: reference
   group: Tooling

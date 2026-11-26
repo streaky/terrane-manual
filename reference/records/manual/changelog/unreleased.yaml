@@ -742,6 +742,16 @@ documentation:
             - **Added — stale compiler guard.** Developers can opt in to exit status `6`
               instead of running a command with a known-stale checkout binary. See
               [[tool.packages.command-line#version]] for the marker file.
+            - **Added — VS Code exact-build source inspection.** Show Lowered Rust follows a
+              saved Terrane selection or paused debugger frame. Optionally show assembly
+              beside the generated Rust. Standalone inspection supports libraries as well as
+              executables. See [[tool.editor-support#editor-support]].
+            - **Added — VS Code security regions.** Wrap selected Terrane or Rust lines in
+              security contract markers, see paired regions, and get marker warnings while
+              editing. See [[tool.editor-support#editor-support]].
+            - **Fixed — editor navigation and diagnostics.** Go to Implementation finds
+              derived class overrides, and diagnostics explain when an error elsewhere
+              blocks package analysis. See [[tool.source-intelligence#language-server]].
   see-also:
     - manual.changelog
     - lang.types.references

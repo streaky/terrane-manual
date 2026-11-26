@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 01b5e3dad83f7e825aa0a227046c9078a288ad1b95d3f8f38c7ed85acb224882
+  input-sha256: dd43337057dc7d07adaeaac2dc16b1ad15b3c09c6320b1116e935e19d6aeec30
 format: 1
 generated: true
 symbols:
@@ -556,6 +556,10 @@ symbols:
   record: std.time
   section: values
   declaration: add
+- name: address
+  record: tool.debugging
+  section: commands
+  declaration: address
 - name: AddrParseError
   record: manual.changelog.unreleased
   section: changes-2026-11-14
@@ -800,6 +804,10 @@ symbols:
   record: tool.source-intelligence
   section: language-server
   declaration: as
+- name: assembly
+  record: tool.debugging
+  section: commands
+  declaration: assembly
 - name: assert
   record: book.testing-and-debugging
   section: write-assertions-that-explain-the-contract
@@ -1200,6 +1208,10 @@ symbols:
   record: lang.functions.fluent-apis
   section: consuming-builders
   declaration: builder
+- name: buildRoot
+  record: tool.debugging
+  section: provenance
+  declaration: buildRoot
 - name: byte-reader
   record: std.streams
   section: byte-text-streams
@@ -2715,10 +2727,22 @@ symbols:
   record: internals.observability.runtime
   section: dependency-bridge
   declaration: dependency_sink_layer
+- name: dependency_source_roots
+  record: tool.debugging
+  section: provenance
+  declaration: dependency_source_roots
+- name: dependency_sources
+  record: tool.debugging
+  section: provenance
+  declaration: dependency_sources
 - name: dependency_subscriber
   record: internals.observability.runtime
   section: dependency-bridge
   declaration: dependency_subscriber
+- name: dependencyRoots
+  record: tool.debugging
+  section: provenance
+  declaration: dependencyRoots
 - name: Deref
   record: internals.projection.resolution
   section: native-receiver-regions
@@ -3514,6 +3538,10 @@ symbols:
 - name: 'false'
   record: tool.debugging
   section: commands
+  declaration: 'false'
+- name: 'false'
+  record: tool.editor-support
+  section: editor-support
   declaration: 'false'
 - name: fetch_one
   record: book.namespaces-imports-and-packages
@@ -4748,6 +4776,10 @@ symbols:
   record: internals.projection.resolution
   section: resolution
   declaration: Id
+- name: identity
+  record: tool.debugging
+  section: provenance
+  declaration: identity
 - name: if
   record: book.classes-interfaces-and-traits
   section: project-model-a-small-task-list
@@ -5020,6 +5052,10 @@ symbols:
   record: std.time
   section: values
   declaration: instant
+- name: instruction
+  record: tool.debugging
+  section: commands
+  declaration: instruction
 - name: int
   record: book.async
   section: declaring-and-awaiting-asynchronous-work
@@ -5776,6 +5812,14 @@ symbols:
   record: std.filesystem
   section: directories-and-links
   declaration: limit
+- name: line
+  record: tool.debugging
+  section: commands
+  declaration: line
+- name: line
+  record: tool.debugging
+  section: frames-values
+  declaration: line
 - name: linear
   record: lang.lexical-structure.keywords
   section: structural-words
@@ -7012,6 +7056,10 @@ symbols:
   record: std.networking.operations
   section: operations
   declaration: O_NONBLOCK
+- name: objdump
+  record: tool.debugging
+  section: commands
+  declaration: objdump
 - name: object
   record: lang.types.descriptors
   section: type-descriptors
@@ -7276,6 +7324,10 @@ symbols:
   section: changes-2026-10-15
   declaration: owner/package
 - name: owner/package
+  record: tool.debugging
+  section: provenance
+  declaration: owner/package
+- name: owner/package
   record: tool.packages.package-manifest
   section: terrane-library-dependencies
   declaration: owner/package
@@ -7506,6 +7558,22 @@ symbols:
 - name: PATH
   record: tool.debugging
   section: commands
+  declaration: PATH
+- name: path
+  record: tool.debugging
+  section: commands
+  declaration: path
+- name: path
+  record: tool.debugging
+  section: frames-values
+  declaration: path
+- name: path
+  record: tool.debugging
+  section: provenance
+  declaration: path
+- name: PATH
+  record: tool.editor-support
+  section: editor-support
   declaration: PATH
 - name: PATH
   record: tool.packages.command-line
@@ -8801,6 +8869,10 @@ symbols:
   section: local-module
   declaration: rust
 - name: rust
+  record: tool.debugging
+  section: commands
+  declaration: rust
+- name: rust
   record: tool.diagnostics
   section: unread-bindings
   declaration: rust
@@ -9698,8 +9770,16 @@ symbols:
   declaration: source
 - name: source
   record: tool.debugging
+  section: commands
+  declaration: source
+- name: source
+  record: tool.debugging
   section: provenance
   declaration: source
+- name: sourceRoot
+  record: tool.debugging
+  section: provenance
+  declaration: sourceRoot
 - name: sources
   record: lang.declarations.annotations
   section: docs-and-metadata
@@ -10801,6 +10881,10 @@ symbols:
   section: commands
   declaration: terrane
 - name: terrane
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane
+- name: terrane
   record: tool.packages.command-line
   section: declaration-interface
   declaration: terrane
@@ -10824,6 +10908,10 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: terrane-debug
+- name: terrane-debug-disassembly-v2.json
+  record: tool.debugging
+  section: commands
+  declaration: terrane-debug-disassembly-v2.json
 - name: terrane-debug-v1
   record: tool.debugging
   section: commands
@@ -10924,6 +11012,10 @@ symbols:
   record: tool.debugging
   section: commands
   declaration: terrane.debugger.path
+- name: terrane.debugger.path
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.debugger.path
 - name: terrane.rustBlockBackground
   record: tool.editor-support
   section: editor-support
@@ -10936,6 +11028,14 @@ symbols:
   record: tool.editor-support
   section: editor-support
   declaration: terrane.rustBlocks.decorate
+- name: terrane.securityRegions.decorate
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.securityRegions.decorate
+- name: terrane.securityRegions.rust
+  record: tool.editor-support
+  section: editor-support
+  declaration: terrane.securityRegions.rust
 - name: terrane.server.path
   record: tool.editor-support
   section: editor-support
@@ -10992,6 +11092,18 @@ symbols:
   record: internals.execution.runtime-selection
   section: mutable-async-callables
   declaration: TerraneAsyncMutableState::with_receiver
+- name: terraneGenerated
+  record: tool.debugging
+  section: frames-values
+  declaration: terraneGenerated
+- name: terraneRelocation
+  record: tool.debugging
+  section: commands
+  declaration: terraneRelocation
+- name: terraneRelocation
+  record: tool.debugging
+  section: provenance
+  declaration: terraneRelocation
 - name: TerraneSite
   record: lang.errors.handling
   section: structured-errors

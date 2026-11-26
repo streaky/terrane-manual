@@ -103,8 +103,11 @@ documentation:
             and `generated-rust` consume the same compiler snapshot through either stdio or
             one-shot query transport. Interface-method references contain only sites
             resolved directly to that interface identity; concrete-receiver calls belong to
-            the concrete override. Implementation queries connect the interface contract to
-            those implementing methods, including from a concrete method use.
+            the concrete override. Implementation queries connect interface contracts to
+            implementing classes and methods, including from a concrete method use.
+            Navigation from a method declared on a derived interface does not include
+            classes implementing only an ancestor interface. For a class method,
+            implementation queries also return overrides in derived classes.
 
             Structural selectors may constrain kind, child field, containing span, source
             text, token kind, or canonical symbol/descriptor identity. With recovery
@@ -187,16 +190,23 @@ documentation:
             implementations, identity-safe rename, document symbols, formatting, and source
             code actions. Ordinary open/change analysis does not compile generated Rust. The
             custom `terrane/generatedRust` request lazily opens a short-lived generated
-            snapshot from the exact current package and editor overlays, exposes exact-build
-            source associations with the corresponding rendered Rust text, and closes it
-            before responding. Clients can display the actual generated item, including its
-            projected native bridge, without reimplementing lowering. Rename returns
-            versioned workspace edits and maps tooling errors to JSON-RPC invalid params
-            (`-32602`) while retaining the tooling code and explanation. UTF-8, UTF-16, or
-            UTF-32 LSP positions are negotiated and converted only at the protocol boundary;
-            compiler spans remain canonical UTF-8 byte offsets. Token highlighting retains a
-            direct lossless-lexer encoding pass and does not define syntax or semantic
-            meaning.
+            snapshot from the current package and editor overlays, exposes source
+            associations with the corresponding rendered Rust text, and closes it before
+            responding. This is not the debugger's exact native artifact view. Clients can
+            display the actual generated item, including its projected native bridge,
+            without reimplementing lowering. Rename returns versioned workspace edits and
+            maps tooling errors to JSON-RPC invalid params (`-32602`) while retaining the
+            tooling code and explanation. UTF-8, UTF-16, or UTF-32 LSP positions are
+            negotiated and converted only at the protocol boundary; compiler spans remain
+            canonical UTF-8 byte offsets. Token highlighting retains a direct lossless-lexer
+            encoding pass and does not define syntax or semantic meaning.
+
+            When an error elsewhere prevents package analysis, the language server reports
+            `Package analysis blocked by an error in …` in affected open documents so
+            missing semantic results are not silent. The diagnostic identifies the blocking
+            source and error, which may be in a dependency or generated unit rather than an
+            open editor. Diagnostics for the affected documents are refreshed as the shared
+            package snapshot changes.
 
             Introducing an alias by changing `from /namespace import f` to
             `from /namespace import f as x` is not an LSP rename operation. Rename must not
