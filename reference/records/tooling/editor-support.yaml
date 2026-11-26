@@ -108,13 +108,17 @@ documentation:
             expensive grammar tokenization is incremental.
 
             **Terrane: Show Lowered Rust** opens a read-only view beside the saved Terrane
-            editor and follows the selected source line. Outside a Terrane debug session the
-            extension prepares a native debug artifact, refreshes the view after saves, and
-            builds on demand when changing files or after a session ends. During a Terrane
-            debug session it uses that session's artifact; select a mapped frame in the Call
-            Stack to inspect the paused location. Save source edits before comparing, and
-            restart the debug session if the source no longer matches the running build.
-            **Show Assembly** adds either build instructions or the paused frame's live
+            editor and follows the selected source line. Outside a debug session it reuses
+            the current artifact when a query validates the selected source against that
+            build. Switching to an uncovered or changed source builds it in its own context;
+            an unrelated query error, such as a missing disassembler, is shown without a
+            rebuild. After a build fails, cursor moves and assembly toggles keep showing the
+            error. Save a Terrane file or run **Show Lowered Rust** again to retry. During a
+            Terrane debug session the view uses the session's artifact; select a mapped
+            frame in the Call Stack to inspect the paused location. When the session ends,
+            the view builds on demand again. Save source edits before comparing, and restart
+            the debug session if the source no longer matches the running build. **Show
+            Assembly** adds either build instructions or the paused frame's live
             disassembly. Rust-only mode hides and skips disassembly, but still inspects the
             exact native build, not the language server's generated snapshot of editor
             buffers. The view requires a trusted workspace and uses `terrane.debugger.path`
