@@ -64,7 +64,13 @@ documentation:
             the nightly toolchain for Rust dependency projection, including the matching
             Rust standard library sources. The versions come from the installed Terrane
             binary, not the current package or a moving rustup channel. Repeating the
-            command skips requirements that are already installed.
+            command skips requirements that are already installed. New toolchains follow
+            your existing rustup profile; installation does not switch your default
+            toolchain. On a dedicated builder, run `rustup set profile minimal` first to
+            avoid optional components such as local Rust docs. Normal compilation does not
+            install pinned toolchains implicitly. Projection can need the nightly even when
+            Rustdoc output is cached: checking that cache against the current Cargo
+            configuration can itself require the pinned Cargo.
 
             Use `terrane toolchain check` for a read-only, offline check. A missing
             requirement produces a nonzero exit status; use the install command while
@@ -85,8 +91,9 @@ documentation:
             missing lock for a package with Rust dependencies is an error. Once all locked
             crates are cached, the same command can run offline. This prepares the locked
             projection graph, not every dependency that generated native code might later
-            introduce. Use `terrane toolchain install` separately for the compilers and
-            `terrane build` for projection and compilation.
+            introduce. To prepare a fully offline build, run `terrane build <package>` once
+            while connected for the same target and profile, and retain that Cargo cache.
+            Use `terrane toolchain install` separately for the compilers.
     - id: commands
       title: Running a source file
       blocks:

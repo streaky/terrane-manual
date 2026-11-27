@@ -752,6 +752,17 @@ documentation:
             - **Fixed — editor navigation and diagnostics.** Go to Implementation finds
               derived class overrides, and diagnostics explain when an error elsewhere
               blocks package analysis. See [[tool.source-intelligence#language-server]].
+    - id: changes-2026-11-27
+      title: "2026-11-27"
+      blocks:
+        - type: markdown
+          markdown: |-
+            - **Added — build preparation commands.** `terrane toolchain install` provisions
+              pinned Rust tools; `terrane toolchain check` verifies them offline.
+              `terrane fetch <package>` downloads locked projection crates for the package
+              and its build-time consumers without compiling either. See
+              [[tool.packages.command-line#toolchain]] and
+              [[tool.packages.command-line#fetch]].
   see-also:
     - manual.changelog
     - lang.types.references
