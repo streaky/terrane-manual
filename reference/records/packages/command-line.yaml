@@ -54,6 +54,23 @@ documentation:
             file present, a mismatch prints rebuild instructions and exits with status `6`
             before dispatching any command. Remove the file to restore the default. If the
             fingerprint cannot be verified, the warning remains nonfatal.
+    - id: toolchain
+      title: Provisioning and checking Rust toolchains
+      blocks:
+        - type: markdown
+          markdown: |-
+            After installing Terrane, run `terrane toolchain install` during machine or
+            container setup. The CLI uses rustup to provision the stable build toolchain and
+            the nightly toolchain for Rust dependency projection, including the matching
+            Rust standard library sources. The versions come from the installed Terrane
+            binary, not the current package or a moving rustup channel. Repeating the
+            command skips requirements that are already installed.
+
+            Use `terrane toolchain check` for a read-only, offline check. A missing
+            requirement produces a nonzero exit status; use the install command while
+            connected or provision the builder before moving it offline. Neither command
+            installs system linkers, downloads application dependencies, or replaces the
+            package's selected Rust compilation profile.
     - id: commands
       title: Running a source file
       blocks:

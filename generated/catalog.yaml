@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6ba0fd58ef438a2842b3c2b70a3ec70fd235ffaf4162528efbf1024d759b4036
+  input-sha256: 5dfd9bf11f00d01f1e2c14675e54f850383223d706d993c4b79ef285435059f3
 format: 2
 generated: true
 records:
@@ -2911,6 +2911,9 @@ records:
   sections:
   - id: version
     title: Compiler version and build identity
+    sections: []
+  - id: toolchain
+    title: Provisioning and checking Rust toolchains
     sections: []
   - id: commands
     title: Running a source file
