@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 5dfd9bf11f00d01f1e2c14675e54f850383223d706d993c4b79ef285435059f3
+  input-sha256: 0937991b817971f625aacd147b4e62188cfc8df768947cb8b63e6c8fa0dda228
 format: 2
 generated: true
 records:
@@ -2914,6 +2914,9 @@ records:
     sections: []
   - id: toolchain
     title: Provisioning and checking Rust toolchains
+    sections: []
+  - id: fetch
+    title: Fetching locked Rust dependencies
     sections: []
   - id: commands
     title: Running a source file

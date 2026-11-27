@@ -71,6 +71,22 @@ documentation:
             connected or provision the builder before moving it offline. Neither command
             installs system linkers, downloads application dependencies, or replaces the
             package's selected Rust compilation profile.
+    - id: fetch
+      title: Fetching locked Rust dependencies
+      blocks:
+        - type: markdown
+          markdown: |-
+            Run `terrane fetch <package>` while preparing a clean developer machine or build
+            image. Give it the package directory, not a lockfile. Fetch discovers the
+            package's build-time consumers and prepares Cargo's cache from the published
+            dependency locks without compiling the package or executing consumer tools.
+
+            Fetch does not generate, update, or replace `terrane-dependencies.lock`. A
+            missing lock for a package with Rust dependencies is an error. Once all locked
+            crates are cached, the same command can run offline. This prepares the locked
+            projection graph, not every dependency that generated native code might later
+            introduce. Use `terrane toolchain install` separately for the compilers and
+            `terrane build` for projection and compilation.
     - id: commands
       title: Running a source file
       blocks:

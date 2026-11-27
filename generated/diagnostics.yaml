@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: e52ef35d219fda48642a500dff2215c0e242c51550c235ed3ad75f69c1d0f19a
+  input-sha256: c88fe09ce6986bbc4c5426469e5d3b0e246ab09acd8e6746d6c5454be36fc955
 format: 1
 generated: true
 diagnostics:
@@ -1212,7 +1212,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/compiler.rs
     line: 584
   - path: crates/terrane-compiler/src/consumer_tools.rs
-    line: 391
+    line: 444
   - path: crates/terrane-compiler/src/consumers.rs
     line: 1090
   - path: crates/terrane-compiler/src/tooling/consumer_preparation.rs

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6ba0fd58ef438a2842b3c2b70a3ec70fd235ffaf4162528efbf1024d759b4036
+  input-sha256: 0937991b817971f625aacd147b4e62188cfc8df768947cb8b63e6c8fa0dda228
 format: 1
 generated: true
 symbols:
@@ -10955,6 +10955,10 @@ symbols:
 - name: terrane-dependencies.lock
   record: manual.changelog.unreleased
   section: changes-2026-10-16
+  declaration: terrane-dependencies.lock
+- name: terrane-dependencies.lock
+  record: tool.packages.command-line
+  section: fetch
   declaration: terrane-dependencies.lock
 - name: terrane-dependencies.lock
   record: tool.packages.rust-dependencies
