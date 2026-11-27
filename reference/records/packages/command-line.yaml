@@ -427,6 +427,11 @@ documentation:
             - manifest-shebang-missing-namespace
             - shebang-script-without-main
           markdown: |-
+            On Linux, once the artifact is ready, both `terrane run` and direct script
+            execution replace the CLI process with the program. Its PID, process group,
+            terminal and standard streams remain those of the invocation. Signals and exit
+            status therefore reach the program and its caller without a CLI relay.
+
             A direct single-file source beginning at byte zero with `#!` is an executable
             script. The shebang is ordinary comment trivia. The source may omit `namespace`,
             in which case the compiler supplies an implementation-owned identity outside the

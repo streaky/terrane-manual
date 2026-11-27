@@ -54,6 +54,13 @@ documentation:
             fields together with a lossless native-string value. The returned host-name data
             is owned, preserves non-Unicode platform data, and exposes no host handle.
 
+            `current-process-id` and `current-process-group-id` return the numeric Linux
+            identities of the caller and its group. They are snapshots for observation, not
+            handles for signaling. `current-executable` reports the running binary's native
+            path, not the source file or the caller's spelling of argv[0]. It throws
+            `process-identity-error` if the host cannot report the path. Check `is-text`
+            before using a native path as a Unicode string.
+
             An `exit-status` is valid only when constructed from an exact integer in the
             inclusive range `0..=255`. An invalid construction does not terminate the
             process; it returns `valid=false` with the sentinel status `255`. Validation and
@@ -82,6 +89,12 @@ documentation:
             and `native-text` from `/core/process` for ordinary text values. Removals are
             applied after overrides. Overrides are child-local; starting a child never
             changes the parent's working directory or environment.
+
+            Children inherit the caller's Linux process group by default. Terminal Ctrl+C
+            sends SIGINT to all members of the foreground group: do not forward the same
+            interrupt again if the child is already in that group. Set `new-process-group`
+            on the options to `true` to start the child as leader of a separate group. This
+            does not detach the child into a new session or transfer terminal control.
         - type: example
           id: capture-literal-arguments
           title: Pass input as a literal argument
@@ -149,6 +162,11 @@ documentation:
             `exit-code` is absent when the host reports no numeric exit code. Dropping the
             owning handle requests termination of a still-running child. The API does not
             manage descendants.
+
+            For cooperative shutdown, use `await child.send-signal` with a `process-signal`
+            from `/core/process-signals`, then wait for the child to exit. This signals the
+            owned child only, not its descendants or process group. A child can handle or
+            ignore a signal; sending one is not evidence it has exited.
         - type: example
           id: read-child-output
           title: Read bounded chunks from a child

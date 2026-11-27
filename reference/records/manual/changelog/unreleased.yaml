@@ -763,6 +763,11 @@ documentation:
               and its build-time consumers without compiling either. See
               [[tool.packages.command-line#toolchain]] and
               [[tool.packages.command-line#fetch]].
+            - **Changed — Linux foreground execution.** Run and shebang invocations exec the
+              built program, preserving its PID and signal exit status. Child process
+              options support a separate process group, and spawned children can receive a
+              cooperative signal without forcing termination. See
+              [[tool.packages.command-line#scripts]] and [[std.process#child-streams]].
   see-also:
     - manual.changelog
     - lang.types.references

@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4a76f6fd0d423740860b8622f3d4d9e3cf224232fca2af51be1d042373b5f013
+  input-sha256: 6a814fbce8f2db94a5f0f6f83950f0aebd7649758c8ac3673dfe2990406d0e67
 format: 1
 generated: true
 modules:
@@ -643,85 +643,95 @@ modules:
 - source: crates/terrane-compiler/src/core/process.trn
   declarations:
   - declaration: class native-string
-    line: 5
+    line: 6
   - declaration: function construct; encoded string
-    line: 10
+    line: 11
   - declaration: class environment-entry
-    line: 15
+    line: 16
   - declaration: function construct; name native-string, entry-value native-string
-    line: 19
+    line: 20
+  - declaration: class process-identity-error implements throwable
+    line: 24
+  - declaration: function render string
+    line: 30
+  - declaration: function current-process-id int
+    line: 33
+  - declaration: function current-process-group-id int
+    line: 36
+  - declaration: function current-executable native-string throws process-identity-error
+    line: 39
   - declaration: class process-host-name-result
-    line: 23
+    line: 45
   - declaration: function construct; did-fail bool, is-available bool, detail string, result-value native-string
-    line: 29
+    line: 51
   - declaration: function process-host-name process-host-name-result
-    line: 35
+    line: 57
   - declaration: function arguments list of native-string
-    line: 40
+    line: 62
   - declaration: function environment list of environment-entry
-    line: 49
+    line: 71
   - declaration: class cli-schema
-    line: 60
+    line: 82
   - declaration: function construct; declared list of string
-    line: 63
+    line: 85
   - declaration: class command-line
-    line: 66
+    line: 88
   - declaration: function schema-has bool; schema cli-schema, sought string
-    line: 75
+    line: 97
   - declaration: function parse-command-line command-line; schema cli-schema, supplied list of native-string
-    line: 81
+    line: 103
   - declaration: class exit-status
-    line: 122
+    line: 144
   - declaration: function make-exit-status exit-status; requested int
-    line: 127
+    line: 149
   - declaration: function exit; status exit-status
-    line: 136
-  - declaration: function native-text native-string; value string
-    line: 139
-  - declaration: function native-raw native-string; value bytes
-    line: 143
-  - declaration: function native-text-value string|none; value native-string
-    line: 147
-  - declaration: function native-raw-value bytes; value native-string
-    line: 152
-  - declaration: function environment-pair environment-entry; key native-string, item native-string
-    line: 155
-  - declaration: function encode-native-string string; value native-string
     line: 158
+  - declaration: function native-text native-string; value string
+    line: 161
+  - declaration: function native-raw native-string; value bytes
+    line: 165
+  - declaration: function native-text-value string|none; value native-string
+    line: 169
+  - declaration: function native-raw-value bytes; value native-string
+    line: 174
+  - declaration: function environment-pair environment-entry; key native-string, item native-string
+    line: 177
+  - declaration: function encode-native-string string; value native-string
+    line: 180
 - source: crates/terrane-compiler/src/core/process_child.trn
   declarations:
   - declaration: class process-error implements throwable
-    line: 7
+    line: 8
   - declaration: function render string
-    line: 13
+    line: 14
   - declaration: class process-options
-    line: 16
+    line: 17
   - declaration: class process-observation
-    line: 22
+    line: 24
   - declaration: class process-output
-    line: 35
+    line: 37
   - declaration: class process-capture
-    line: 43
+    line: 45
   - declaration: class child-input-stream
-    line: 57
+    line: 59
   - declaration: class child-output-stream
-    line: 72
+    line: 74
   - declaration: class child-process
-    line: 87
+    line: 89
   - declaration: function poll process-observation throws process-error
-    line: 96
+    line: 98
   - declaration: function terminate throws process-error
-    line: 103
+    line: 105
   - declaration: function input child-input-stream
-    line: 107
-  - declaration: function output child-output-stream
-    line: 110
-  - declaration: function errors child-output-stream
     line: 113
+  - declaration: function output child-output-stream
+    line: 116
+  - declaration: function errors child-output-stream
+    line: 119
   - declaration: function run-process process-capture throws process-error; program string, args (list
       of string)|none = none, options process-options|none = none, input bytes = b'', timeout-ms int =
       30000, stdout-limit int = 1048576, stderr-limit int = 1048576
-    line: 182
+    line: 188
 - source: crates/terrane-compiler/src/core/process_signals.trn
   declarations:
   - declaration: class process-signal-error implements throwable

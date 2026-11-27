@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 4a76f6fd0d423740860b8622f3d4d9e3cf224232fca2af51be1d042373b5f013
+  input-sha256: 6a814fbce8f2db94a5f0f6f83950f0aebd7649758c8ac3673dfe2990406d0e67
 format: 1
 generated: true
 diagnostics:
@@ -1135,7 +1135,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/analysis.rs
     line: 1064
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2256
+    line: 2260
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 711
 - code: S2032
@@ -1662,9 +1662,9 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/collections.rs
     line: 868
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2062
+    line: 2066
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2079
+    line: 2083
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 882
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
@@ -1918,7 +1918,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/calls.rs
     line: 822
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2041
+    line: 2045
 - code: T0036
   messages:
   - '`.{}` requires an integer receiver'
@@ -1952,11 +1952,11 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1251
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2124
+    line: 2128
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2219
+    line: 2223
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2237
+    line: 2241
 - code: T0041
   messages:
   - iterator items require a statically known value type
@@ -2275,7 +2275,7 @@ diagnostics:
     state
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 718
+    line: 719
 - code: T0074
   messages:
   - '`task-group` requires one child result type descriptor'
@@ -2302,23 +2302,23 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 1404
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1867
+    line: 1871
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1886
+    line: 1890
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1906
+    line: 1910
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1925
+    line: 1929
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1938
+    line: 1942
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1948
+    line: 1952
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1961
+    line: 1965
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1972
+    line: 1976
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1986
+    line: 1990
   - path: crates/terrane-compiler/src/semantics/member_inference.rs
     line: 628
 - code: T0076
@@ -2333,9 +2333,9 @@ diagnostics:
   - task group cannot be copied, moved, borrowed, or returned; use its operations in the owning scope
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 820
+    line: 821
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 834
+    line: 835
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
     line: 31
   - path: crates/terrane-compiler/src/semantics/task_groups.rs
@@ -2475,7 +2475,7 @@ diagnostics:
   - caller-supplied conversion destination must be a concrete type descriptor
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2147
+    line: 2151
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 318
 - code: T0103
@@ -2498,9 +2498,9 @@ diagnostics:
   - caller-supplied conversion callback must be synchronous
   sources:
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 893
+    line: 894
   - path: crates/terrane-compiler/src/semantics/bindings/async_tasks.rs
-    line: 907
+    line: 908
   - path: crates/terrane-compiler/src/semantics/expressions.rs
     line: 804
   - path: crates/terrane-compiler/src/semantics/expressions.rs
@@ -2519,7 +2519,7 @@ diagnostics:
   - path: crates/terrane-compiler/src/semantics/bindings/callbacks.rs
     line: 1808
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 2266
+    line: 2270
   - path: crates/terrane-compiler/src/semantics/numeric.rs
     line: 346
 - code: T0106
@@ -2577,13 +2577,13 @@ diagnostics:
   - invalid channel `{operation}` invocation
   sources:
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1810
+    line: 1814
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1818
+    line: 1822
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1830
+    line: 1834
   - path: crates/terrane-compiler/src/semantics/expressions.rs
-    line: 1851
+    line: 1855
 - code: T0110
   messages:
   - channel pair `{}` endpoint `{}` was already moved

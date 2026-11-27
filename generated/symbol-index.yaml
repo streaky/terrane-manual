@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 246861c4106a204d7ef0ef11fbd5cdfca8b4faa90c8e34c8fab6fbae42e316cc
+  input-sha256: 9f1240be69560597f650970db973318aa7215a9f2fce7296ce7df812c58b745c
 format: 1
 generated: true
 symbols:
@@ -272,6 +272,10 @@ symbols:
   record: tool.packages.terrane-packages
   section: package-manifest
   declaration: /core/process
+- name: /core/process-signals
+  record: std.process
+  section: child-streams
+  declaration: /core/process-signals
 - name: /core/process-signals
   record: std.process-signals
   section: ''
@@ -2483,6 +2487,18 @@ symbols:
   record: lang.numerics.floating-point
   section: operations
   declaration: cube-root
+- name: current-executable
+  record: std.process
+  section: process
+  declaration: current-executable
+- name: current-process-group-id
+  record: std.process
+  section: process
+  declaration: current-process-group-id
+- name: current-process-id
+  record: std.process
+  section: process
+  declaration: current-process-id
 - name: cwd
   record: tool.debugging
   section: commands
@@ -6664,6 +6680,10 @@ symbols:
   record: internals.execution.runtime-selection
   section: stream-adapters
   declaration: networking.trn
+- name: new-process-group
+  record: std.process
+  section: child-processes
+  declaration: new-process-group
 - name: NEWLINE
   record: lang.lexical-structure.source-layout
   section: utf8-layout
@@ -7975,6 +7995,10 @@ symbols:
   record: std.process
   section: process
   declaration: process-host-name-result
+- name: process-identity-error
+  record: std.process
+  section: process
+  declaration: process-identity-error
 - name: process-options
   record: std.process
   section: child-processes
@@ -7983,6 +8007,10 @@ symbols:
   record: book.testing-and-debugging
   section: drive-the-built-application
   declaration: process-result
+- name: process-signal
+  record: std.process
+  section: child-streams
+  declaration: process-signal
 - name: process-signal::interrupt
   record: std.process-signals
   section: subscriptions
