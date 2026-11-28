@@ -1,6 +1,6 @@
 generation:
   tool: tools/generate_manual_catalog.py
-  input-sha256: 6a814fbce8f2db94a5f0f6f83950f0aebd7649758c8ac3673dfe2990406d0e67
+  input-sha256: e732216d4eda0c9de28266bb30c1b2527a72caed744cceac6df8f8c2c2d936f4
 format: 1
 generated: true
 modules:
@@ -732,21 +732,23 @@ modules:
       of string)|none = none, options process-options|none = none, input bytes = b'', timeout-ms int =
       30000, stdout-limit int = 1048576, stderr-limit int = 1048576
     line: 188
+- source: crates/terrane-compiler/src/core/process_signal.trn
+  declarations:
+  - declaration: class process-signal
+    line: 3
 - source: crates/terrane-compiler/src/core/process_signals.trn
   declarations:
   - declaration: class process-signal-error implements throwable
     line: 7
   - declaration: function render string
     line: 13
-  - declaration: class process-signal
-    line: 16
   - declaration: class process-signal-event
-    line: 34
+    line: 16
   - declaration: class process-signal-subscription
-    line: 48
+    line: 30
   - declaration: function process-signals process-signal-subscription throws process-signal-error; selected
       set of process-signal
-    line: 68
+    line: 50
 - source: crates/terrane-compiler/src/core/random.trn
   declarations:
   - declaration: class byte-result
